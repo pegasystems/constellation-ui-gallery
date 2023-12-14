@@ -1,0 +1,81 @@
+{
+  "name": "pega-compare",
+  "version": "1.0.0",
+  "description": "",
+  "organization": "Pega",
+  "main": "src/index.js",
+  "scripts": {
+    "startStorybook": "start-storybook --port 6040 --quiet",
+    "lint": "run-p -cl lint:*",
+    "authenticate": "custom-dx-components authenticate",
+    "buildComponent": "custom-dx-components buildComponent",
+    "buildAllComponents": "custom-dx-components buildAllComponents",
+    "create": "custom-dx-components create",
+    "createAll": "custom-dx-components createAll",
+    "publish": "custom-dx-components publish",
+    "publishAll": "custom-dx-components publishAll",
+    "rename": "custom-dx-components rename",
+    "list": "custom-dx-components list",
+    "validate-schema": "custom-dx-components validateSchema",
+    "update": "custom-dx-components update",
+    "delete": "custom-dx-components delete",
+    "deleteAll": "custom-dx-components deleteAll",
+    "lint:types": "tsc --noEmit",
+    "lint:es": "eslint .",
+    "lint:styles": "stylelint \"./**/*.@(js|jsx|ts|tsx)\"",
+    "lint:format": "prettier -c .",
+    "lint:spelling": "cspell --no-progress **/*"
+  },
+  "scriptsComments": {
+    "build": "tsc -b tsconfig.build.json",
+    "fix": "run-p -cl fix:*",
+    "fix:es": "eslint --fix .",
+    "fix:format": "prettier -w ."
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "pega"
+  ],
+  "author": "",
+  "license": "Enter License",
+  "sideEffects": false,
+  "dependencies": {
+    "@pega/cosmos-react-core": "^3.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "@pega/configs": "^0.5.3",
+    "@pega/tsconfig": "^0.6.0",
+    "@pega/custom-dx-components": "^8.8.17",
+    "@pega/eslint-config": "^0.3.2",
+    "@storybook/addon-knobs": "^6.3.1",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/react": "^6.5.12",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "eslint": "^8.4.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-mdx": "^2.0.5",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-sonarjs": "^0.11.0",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "npm-quick-run": "^1.18.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "2.7.1",
+    "stylelint": "^14.11.0",
+    "typescript": "~4.8.3"
+  }
+}

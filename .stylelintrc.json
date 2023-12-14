@@ -1,0 +1,4 @@
+{
+  "extends": ["@pega/stylelint-config"],
+  "ignoreFiles": ["node_modules/**", "lib/**", "!.storybook", ".storybook/public"]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "0.2",
+  "import": "@pega/cspell-config",
+  "language": "en-US",
+  "ignorePaths": [
+    "package-lock.json",
+    "**/*.tsbuildinfo",
+    "**/node_modules/**",
+    "lib",
+    "**/.DS_Store",
+    "**/*.zip",
+    "**/*.tgz"
+  ]
+}

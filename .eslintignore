@@ -1,0 +1,8 @@
+webpack.config.js
+src/helpers/config_access.js
+*.html
+*.css
+*.json
+*.md
+*.svg
+*.zip

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg
+  width="777px"
+  height="480px"
+  viewBox="0 0 777 480"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+  <title>my vector image</title>
+  <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="#FFFFFF" stroke="none" />
+  <g class="currentLayer" style="pointer-events:all">
+    <title>Layer 1</title>
+    <rect
+      fill="#4a90d6"
+      stroke="#222222"
+      stroke-width="2"
+      stroke-linejoin="round"
+      stroke-dashoffset=""
+      fill-rule="nonzero"
+      id="svg_1"
+      x="57"
+      y="67"
+      width="59"
+      height="51"
+      style="color: rgb(0, 0, 0);"
+      class=""
+    />
+    <rect
+      fill="#4a90d6"
+      stroke="#222222"
+      stroke-width="2"
+      stroke-linejoin="round"
+      stroke-dashoffset=""
+      fill-rule="nonzero"
+      x="186.60698699951172"
+      y="66.91266390681267"
+      width="59"
+      height="51"
+      style="color: rgb(0, 0, 0);"
+      class=""
+      id="svg_8"
+    />
+    <rect
+      fill="#4a90d6"
+      stroke="#222222"
+      stroke-width="2"
+      stroke-linejoin="round"
+      stroke-dashoffset=""
+      fill-rule="nonzero"
+      x="121.54148483276367"
+      y="66.91266250610352"
+      width="59"
+      height="51"
+      style="color: rgb(0, 0, 0);"
+      class=""
+      id="svg_7"
+    />
+    <path
+      fill="#4a90d6"
+      fill-opacity="1"
+      stroke="#222222"
+      stroke-opacity="1"
+      stroke-width="2"
+      stroke-dasharray="none"
+      stroke-linejoin="round"
+      stroke-linecap="butt"
+      stroke-dashoffset=""
+      fill-rule="nonzero"
+      opacity="1"
+      marker-start=""
+      marker-mid=""
+      marker-end="url(#Arrow1Lend)"
+      d="M62.34410842229482,90.75109645904854 L236.1432379550069,91.62445891901191 "
+      id="svg_9"
+      class=""
+    />
+    <path
+      fill="#4a90d6"
+      fill-opacity="1"
+      stroke="#222222"
+      stroke-opacity="1"
+      stroke-width="2"
+      stroke-dasharray="none"
+      stroke-linejoin="round"
+      stroke-linecap="butt"
+      stroke-dashoffset=""
+      fill-rule="nonzero"
+      opacity="1"
+      marker-start=""
+      marker-mid=""
+      marker-end=""
+      id="svg_14"
+      d="M214.30917622110917,90.3144151831617 "
+      style="color: rgb(0, 0, 0);"
+      class=""
+    />
+  </g>
+  <defs>
+    <marker id="Arrow1Lend" refX="0" refY="0" orient="auto" overflow="visible">
+      <path
+        transform="matrix(-.8 0 0 -.8 -10 0)"
+        d="M0 0l5-5-17.5 5 17.5 5-5-5z"
+        fill-rule="evenodd"
+        stroke="#000"
+        stroke-width="1pt"
+        style="fill: rgb(34, 34, 34); stroke: rgb(34, 34, 34); stroke-dasharray: none;"
+      />
+    </marker>
+  </defs>
+</svg>
