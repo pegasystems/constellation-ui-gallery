@@ -1,21 +1,37 @@
-# Using Custom Components in Constellation
+# Constellation UI Gallery
 
-## Overview
+Gallery of DX components for Constellation UI.
 
-This project provides you with an environment to extend Constellation by giving you tools to create and publish custom components that are not available from the Constellation installation.
+A complete demo of the application is available at https://pegasystems.github.io/uplus-wss/.
 
-## Prerequisites
+## For developers
 
-Ensure you have access to the following in your system:
+To build and compile the application - use the following commands:
 
-- Pega Infinity Server version 8.7 or later
+### Tools to install
 
-- Git version 2.30 or later
+install npm from https://nodejs.org/en/download/
 
-- System node version 18
+### Project setup
 
-- System npm version 8
+```
+npm install
+```
 
-## Latest Documentation
+### Storybook
 
-Find the latest documentation on using **DX Component Builder** [here](https://docs.pega.com/bundle/constellation-dx-components-88/page/constellation-dx-components/custom-components/lifecycle-dx-cosmos-components.html)
+```
+npm run startStorybook
+```
+
+### Compiles and minifies for production
+
+```
+npm run buildAllComponents
+```
+
+### Publish to a Pega Platform
+
+```
+npm run publishAll
+```
