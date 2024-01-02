@@ -35,6 +35,13 @@ npm run buildAllComponents
 
 ### Publish to a Pega Platform
 
+Install the 'keys' folder provided by the Custom DX Component builder package and edit the tasks.config.json file with your rulesetName, rulsetVersion, server URL, clientID, user and password
+```
+npm run authenticate
+```
+if the authenticate works - you can publish by running
+
 ```
 npm run publishAll
 ```
+If having issues - see https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/command-line-references-constellation-dx-components.html
