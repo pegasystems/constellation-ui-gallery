@@ -23,8 +23,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Build with Gradle
-      run: ./gradlew -Prelease.useLastTag=false clean build
     - name: Mend Unified Agent Scan
       env:
         WS_PRODUCTNAME: ${{vars.MEND_PRODUCT_NAME}}
