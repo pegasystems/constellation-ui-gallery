@@ -1,0 +1,31 @@
+# Workflow name
+name: Validate PRs
+
+on:
+  # Event for the workflow to run on
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['18.x']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Storybook
+        run: npm build-storybook
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && npm test-storybook"

@@ -2,6 +2,7 @@
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
   "compilerOptions": {
+    "jsx": "react",
     "noEmit": true,
     "allowJs": true,
     "moduleResolution": "node"

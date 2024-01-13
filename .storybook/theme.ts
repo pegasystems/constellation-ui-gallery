@@ -1,10 +1,8 @@
-import { create } from '@storybook/theming/create';
-
-import logo from './pega-logo.svg';
+import { create } from '@storybook/theming';
 
 const primaryColor = '#005EA7';
 const secondaryColor = '#0076D1';
-const purple = '#433254';
+const blue = '#0d2b65';
 const black = '#262626';
 const white = '#F0F0F0';
 
@@ -12,7 +10,7 @@ export default create({
   base: 'light',
 
   colorPrimary: secondaryColor,
-  colorSecondary: purple,
+  colorSecondary: blue,
 
   // UI
   appBg: 'white',
@@ -21,7 +19,7 @@ export default create({
   appBorderRadius: 4,
 
   // Typography
-  fontBase: '"Open Sans", sans-serif',
+  fontBase: "'Open Sans', sans-serif",
   fontCode: 'monospace',
 
   // Text colors
@@ -39,6 +37,7 @@ export default create({
   inputTextColor: black,
   inputBorderRadius: 4,
 
-  brandTitle: 'Pega Component System',
-  brandImage: logo
+  brandTitle: 'Constellation UI Gallery',
+  brandUrl: 'https://design.pega.com',
+  brandImage: './pega-logo.svg'
 });

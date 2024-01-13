@@ -16,7 +16,7 @@ type info = {
 };
 
 export default {
-  title: 'Compare Table Layout',
+  title: 'Components/Compare Table Layout',
   argTypes: {
     heading: {
       control: 'text'
