@@ -2,28 +2,36 @@ import { useState, useEffect } from 'react';
 import {
   FieldGroup,
   FieldValueList,
+  type FieldValueListItem,
   RadioButtonGroup,
   Progress,
   RadioButton,
   Text
 } from '@pega/cosmos-react-core';
-import PropTypes from 'prop-types';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 
 // includes in bundle
 import getAllFields from './utils';
 
-export default function PegaExtensionsCompareTableLayout(props) {
+type TableLayoutProps = {
+  displayFormat: string;
+  heading: string;
+  selectionProperty?: string;
+  currencyFormat: string;
+  getPConnect: any;
+};
+
+export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps) {
   const { displayFormat, heading, selectionProperty, currencyFormat, getPConnect } = props;
   const [numCols, setNumCols] = useState(0);
   const [numFields, setNumFields] = useState(0);
-  const [fields, setFields] = useState();
+  const [fields, setFields] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(true);
-  const [selection, setSelection] = useState([]);
+  const [selection, setSelection] = useState<Array<boolean>>([]);
 
   const metadata = getPConnect().getRawMetadata();
 
-  const selectObject = (ID, index) => {
+  const selectObject = (ID: any, index: number) => {
     if (metadata.config.selectionProperty) {
       const prop = metadata.config.selectionProperty.replace('@P ', '');
       getPConnect().setValue(prop, ID);
@@ -35,14 +43,17 @@ export default function PegaExtensionsCompareTableLayout(props) {
     setSelection(sel);
   };
 
-  const genField = (componentType, val) => {
+  const genField = (componentType: string, val: string) => {
     const field = {
       type: componentType,
       config: {
         text: `${val}`,
         value: `${val}`,
         label: '',
-        displayMode: 'DISPLAY_ONLY'
+        displayMode: 'DISPLAY_ONLY',
+        displayAs: '',
+        negative: '',
+        notation: ''
       }
     };
     if (componentType === 'URL') {
@@ -62,12 +73,12 @@ export default function PegaExtensionsCompareTableLayout(props) {
     const tmpFields = getAllFields(getPConnect);
     if (tmpFields && tmpFields[0] && tmpFields[0].value) {
       setNumCols(tmpFields[0].value.length);
-      tmpFields.forEach(child => {
+      tmpFields.forEach((child: any) => {
         if (
           child.componentType &&
-          !window.PCore.getComponentsRegistry().getLazyComponent(child.componentType)
+          !(window as any).PCore.getComponentsRegistry().getLazyComponent(child.componentType)
         ) {
-          window.PCore.getAssetLoader()
+          (window as any).PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
               setNumFields(prevCount => prevCount + 1);
@@ -76,7 +87,7 @@ export default function PegaExtensionsCompareTableLayout(props) {
           setNumFields(prevCount => prevCount + 1);
         }
         if (typeof selectionProperty !== 'undefined' && child.label === 'ID') {
-          child.value.forEach((val, index) => {
+          child.value.forEach((val: any, index: number) => {
             if (val === selectionProperty) {
               const sel = [];
               for (let i = 0; i < child.value.length; i += 1) {
@@ -105,8 +116,8 @@ export default function PegaExtensionsCompareTableLayout(props) {
     return (
       <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
         <RadioButtonGroup variant='card' label={heading} inline>
-          {fields[0].value.map((val, i) => {
-            const fvl = [];
+          {fields[0].value.map((val: any, i: number) => {
+            const fvl: Array<FieldValueListItem> = [];
             let objectId = '';
             fields.forEach((child, j) => {
               if (j > 0) {
@@ -150,7 +161,7 @@ export default function PegaExtensionsCompareTableLayout(props) {
         <thead>
           <tr>
             <th>Name</th>
-            {fields[0].value.map(val => {
+            {fields[0].value.map((val: string) => {
               const field = {
                 type: 'Text',
                 config: {
@@ -182,7 +193,7 @@ export default function PegaExtensionsCompareTableLayout(props) {
                   <tr className='selection'>
                     <th>Selection</th>
                     {child.value &&
-                      child.value.map((val, j) => {
+                      child.value.map((val: any, j: number) => {
                         return (
                           <td>
                             <RadioButton
@@ -200,7 +211,7 @@ export default function PegaExtensionsCompareTableLayout(props) {
                 <tr>
                   <th>{child.label}</th>
                   {child.value &&
-                    child.value.map(val => {
+                    child.value.map((val: any) => {
                       return genField(child.componentType, val);
                     })}
                 </tr>
@@ -214,16 +225,3 @@ export default function PegaExtensionsCompareTableLayout(props) {
     </StyledPegaExtensionsCompareTableLayoutWrapper>
   );
 }
-
-PegaExtensionsCompareTableLayout.defaultProps = {
-  displayFormat: 'spreadsheet',
-  heading: '',
-  currencyFormat: 'standard'
-};
-
-PegaExtensionsCompareTableLayout.propTypes = {
-  displayFormat: PropTypes.string,
-  heading: PropTypes.string,
-  currencyFormat: PropTypes.string,
-  getPConnect: PropTypes.func.isRequired
-};

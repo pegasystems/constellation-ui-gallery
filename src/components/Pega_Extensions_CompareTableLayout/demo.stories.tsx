@@ -1,16 +1,96 @@
-export default function genResponse(displayFormat) {
+import type { StoryObj } from '@storybook/react';
+import PegaExtensionsCompareTableLayout from './index';
+import { CurrencyDisplay } from '@pega/cosmos-react-core';
+
+type configInfo = {
+  value?: Array<any>;
+  componentType?: string;
+  label?: string;
+  heading?: string;
+};
+
+type info = {
+  config: configInfo;
+  type: string;
+  children?: Array<info>;
+};
+
+export default {
+  title: 'Compare Table Layout',
+  argTypes: {
+    heading: {
+      control: 'text'
+    },
+    displayFormat: {
+      options: ['spreadsheet', 'financialreport', 'radio-button-card'],
+      control: 'select'
+    },
+    currencyFormat: {
+      options: ['standard', 'compact', 'parentheses'],
+      control: 'select'
+    },
+    getPConnect: {
+      table: {
+        disable: true
+      }
+    }
+  },
+  component: PegaExtensionsCompareTableLayout
+};
+
+if (!(window as any).PCore) {
+  (window as any).PCore = {
+    getComponentsRegistry: () => {
+      return {
+        getLazyComponent: (f: string) => f
+      };
+    }
+  };
+}
+
+const genComponent = (config: any, format: any) => {
+  if (config.type === 'Currency') {
+    if (config.config.negative === 'parentheses') {
+      return (
+        <CurrencyDisplay
+          currencyISOCode='USD'
+          value={config.config.value}
+          formattingOptions={{
+            negative: 'parentheses',
+            notation: 'standard'
+          }}
+        />
+      );
+    }
+    return (
+      <CurrencyDisplay
+        currencyISOCode='USD'
+        value={config.config.value}
+        formattingOptions={{
+          notation: format
+        }}
+      />
+    );
+  }
+  return config.config.text;
+};
+
+const genResponse = (displayFormat: string) => {
   const demoView = {
     name: 'demoView',
     type: 'View',
     config: {
       template: 'Pega_Extensions_CompareTableLayout',
       ruleClass: 'Work-',
-      selectionProperty: 'S-1'
+      selectionProperty: 'S-1',
+      inheritedProps: []
     },
     children: [
       {
         name: 'A',
-        type: 'Region'
+        type: 'Region',
+        children: [] as Array<info>,
+        getPConnect: () => {}
       }
     ],
     classID: 'Work-MyComponents'
@@ -267,4 +347,48 @@ export default function genResponse(displayFormat) {
     };
   };
   return demoView;
-}
+};
+
+type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
+export const Default: Story = {
+  render: args => {
+    const props = {
+      template: 'Pega_Extensions_CompareTableLayout',
+      heading: args.heading,
+      selectionProperty: 'caseid',
+      displayFormat: args.displayFormat,
+      currencyFormat: args.currencyFormat,
+      getPConnect: () => {
+        return {
+          getChildren: () => {
+            return genResponse(args.displayFormat).children;
+          },
+          getRawMetadata: () => {
+            return genResponse(args.displayFormat);
+          },
+          getInheritedProps: () => {
+            return genResponse(args.displayFormat).config.inheritedProps;
+          },
+          createComponent: (config: any) => {
+            return genComponent(config, args.currencyFormat);
+          },
+          setInheritedProp: () => {
+            /* nothing */
+          },
+          setValue: () => {
+            /* nothing */
+          },
+          resolveConfigProps: (f: string) => {
+            return f;
+          }
+        };
+      }
+    };
+    return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;
+  },
+  args: {
+    heading: 'Heading',
+    displayFormat: 'spreadsheet',
+    currencyFormat: 'standard'
+  }
+};

@@ -1,4 +1,4 @@
-import type { DecoratorFn } from '@storybook/react';
+import type { Preview, DecoratorFn } from '@storybook/react';
 import {
   Configuration,
   PopoverManager,
@@ -6,6 +6,15 @@ import {
   ModalManager,
   WorkTheme
 } from '@pega/cosmos-react-core';
+
+export const preview: Preview = {
+  parameters: {
+    controls: { expanded: true },
+    docs: {
+      toc: true // Enables the table of contents
+    }
+  }
+};
 
 export const decorators: Array<DecoratorFn> = [
   (Story, context) => {

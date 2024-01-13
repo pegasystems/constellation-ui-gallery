@@ -3,7 +3,7 @@
  * metadata of all regions.
  * @param {Function} pConnect PConnect of a Template component.
  */
-export default function getAllFields(pConnect) {
+export default function getAllFields(pConnect: any) {
   const metadata = pConnect().getRawMetadata();
   if (!metadata.children) {
     return [];
@@ -11,7 +11,7 @@ export default function getAllFields(pConnect) {
 
   let allFields = [];
 
-  const makeField = f => {
+  const makeField = (f: any) => {
     let category = 0;
     if (f.type === 'Group') {
       category = f.children && f.children.length > 0 ? 2 : 1;
@@ -25,11 +25,11 @@ export default function getAllFields(pConnect) {
 
   const hasRegions = !!metadata.children[0]?.children;
   if (hasRegions) {
-    metadata.children.forEach(region =>
-      region.children.forEach(field => {
+    metadata.children.forEach((region: any) =>
+      region.children.forEach((field: any) => {
         allFields.push(makeField(field));
         if (field.type === 'Group' && field.children) {
-          field.children.forEach(gf => allFields.push(makeField(gf)));
+          field.children.forEach((gf: any) => allFields.push(makeField(gf)));
         }
       })
     );

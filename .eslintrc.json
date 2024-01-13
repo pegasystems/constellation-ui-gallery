@@ -7,9 +7,8 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {},
       "node": {
-        "extensions": [".js", ".jsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     },
     "react": {

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.div(({ displayFormat }) => {
+export default styled.div(({ displayFormat }: { displayFormat: string }) => {
   switch (displayFormat) {
     case 'radio-button-card':
       return css`
