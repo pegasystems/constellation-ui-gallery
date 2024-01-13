@@ -11,6 +11,7 @@ on:
       - master
 jobs:
   build:
+    timeout-minutes: 8
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,8 +25,21 @@ jobs:
         run: npm ci
       - name: Build Storybook
         run: npm run build-storybook
-      - name: Serve Storybook and run tests
+      - name: Serve Files
+        uses: Eun/http-server-action@v1
+        with:
+          directory: ${{ github.workspace }}/storybook-static
+          port: 6006
+          no-cache: false
+          index-files: |
+            ["index.html", "index.htm"]
+          allowed-methods: |
+            ["GET", "HEAD"]
+          log: "log.txt"
+          logTime: "true"
+      - name: test http server
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && npm run test-storybook"
+          curl -vvvv http://localhost:6006/index.html
+          cat log.txt
+       - name: Run tests
+        run: npm run test-storybook
