@@ -1,10 +1,10 @@
 # Constellation UI Gallery
 
-This project is used to provide a gallery of Custom DX components for Constellation UI.
+This project is used to provide a gallery of Constellation DX components.
 
-These components are tested on Pega Platform 23.1 and might not run on older versions of the Pega Platform - For older versions, it is recommended to download the supported version of the Custom DX Component builder package @pega/custom-dx-components@XXXX for your Pega Platform version and create new components using the command line utility 'npm run create'.
+These components have been tested on Pega 23.1 and might not run on older versions of the platform - For older versions, the recommendation is to download the supported version of the Constellation DX Component builder package @pega/custom-dx-components@XXXX supported by your Pega Platform version and create new components using the command line utility 'npm run create'.
 
-A complete demo of the application is available at https://pegasystems.github.io/constellation-ui-gallery/
+A UI Gallery of these Constellation DX components is available at https://pegasystems.github.io/constellation-ui-gallery/
 
 Pre-build versions of these components is available as a RAP file that you can import into your Pega application - see https://github.com/pegasystems/constellation-ui-gallery/releases
 
@@ -40,7 +40,7 @@ npm run buildAllComponents
 
 ### Publish to a Pega Platform
 
-Install the 'keys' folder provided by the Custom DX Component builder package and edit the tasks.config.json file with your rulesetName, rulesetVersion, server URL, clientID, user and password
+Install the 'keys' folder provided by the Constellation DX Component builder package and edit the tasks.config.json file with your rulesetName, rulesetVersion, server URL, clientID, user and password
 
 ```
 npm run authenticate

@@ -6,3 +6,4 @@ src/helpers/config_access.js
 *.md
 *.svg
 *.zip
+*.mdx

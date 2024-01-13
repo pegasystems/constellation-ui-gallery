@@ -1,20 +1,19 @@
-import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import { Meta, Primary, Controls, Story} from '@storybook/blocks';
 import * as DemoStories from './demo.stories';
 
 <Meta of={DemoStories} />
 
-# Button
+# Overview
 
-A CompareTableLayout is ...
+The CompareTableLayout component is a template component that let you compare side-by-side different objects. It will present different instances of an object for comparison and will present the ability to select one of this instance.
+To support selection, you need to have a field called ID in one of the properties to render and you need to set a field name that will be used to store the selected value. In the demo, only the 'spreadsheet' format allows to turn on/off the ability to select an object.
+For more details on how to use this component, see https://support.pega.com/discussion/how-implement-compare-and-select-pattern-constellation-ui
 
 <Primary />
 
-## Props
+## Properties
+
+Setting a field in the 'selectionProperty' parameter in authoring will let you select one of the objects presented in the table.
+You can also change some of the display to look more like a financial report as well as customize how currency values are rendered.
 
 <Controls />
-
-## Stories
-
-### Primary
-
-{/* ... */}

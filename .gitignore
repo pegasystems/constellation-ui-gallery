@@ -1,6 +1,7 @@
 lib
 keys
 storybook-static
+tasks.config.json
 
 # Logs
 logs

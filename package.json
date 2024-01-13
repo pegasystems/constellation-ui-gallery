@@ -25,7 +25,9 @@
     "delete": "custom-dx-components delete",
     "deleteAll": "custom-dx-components deleteAll",
     "lint:es": "eslint ./src",
-    "fix:es": "eslint --fix ./src"
+    "fix:es": "eslint --fix ./src",
+    "promoteWebPack": "custom-dx-components promoteWebPack",
+    "revertWebPack": "custom-dx-components revertWebPack"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,10 @@
   "license": "Apache-2.0",
   "sideEffects": false,
   "dependencies": {
+    "@fullcalendar/core": "^6.1.10",
+    "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/react": "^6.1.10",
+    "@fullcalendar/timegrid": "^6.1.10",
     "@pega/cosmos-react-core": "^4.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

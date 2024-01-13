@@ -3,15 +3,14 @@ import {
   Configuration,
   PopoverManager,
   Toaster,
-  ModalManager,
-  WorkTheme
+  ModalManager
 } from '@pega/cosmos-react-core';
 
 export const preview: Preview = {
   parameters: {
     controls: { expanded: true },
     docs: {
-      toc: true // Enables the table of contents
+      toc: true
     }
   }
 };
@@ -31,23 +30,3 @@ export const decorators: Array<DecoratorFn> = [
     );
   }
 ];
-
-export const parameters = {
-  backgrounds: {
-    default: 'App',
-    values: [
-      {
-        name: 'App',
-        value: WorkTheme.base.palette['app-background']
-      },
-      {
-        name: 'Primary',
-        value: WorkTheme.base.palette['primary-background']
-      },
-      {
-        name: 'Secondary',
-        value: WorkTheme.base.palette['secondary-background']
-      }
-    ]
-  }
-};

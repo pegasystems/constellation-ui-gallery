@@ -16,7 +16,7 @@ type info = {
 };
 
 export default {
-  title: 'Components/Compare Table Layout',
+  title: 'Template/Compare Table Layout',
   argTypes: {
     heading: {
       control: 'text'
@@ -29,6 +29,11 @@ export default {
       options: ['standard', 'compact', 'parentheses'],
       control: 'select'
     },
+    selectionProperty: {
+      options: [ 'Select an object', 'Read-only'],
+      control: { type: 'radio' },
+      if: { arg: 'displayFormat', neq: 'radio-button-card' },
+    },
     getPConnect: {
       table: {
         disable: true
@@ -38,15 +43,13 @@ export default {
   component: PegaExtensionsCompareTableLayout
 };
 
-if (!(window as any).PCore) {
-  (window as any).PCore = {
-    getComponentsRegistry: () => {
-      return {
-        getLazyComponent: (f: string) => f
-      };
-    }
-  };
-}
+(window as any).PCore = {
+  getComponentsRegistry: () => {
+    return {
+      getLazyComponent: (f: string) => f
+    };
+  }
+};
 
 const genComponent = (config: any, format: any) => {
   if (config.type === 'Currency') {
@@ -75,14 +78,14 @@ const genComponent = (config: any, format: any) => {
   return config.config.text;
 };
 
-const genResponse = (displayFormat: string) => {
+const genResponse = (displayFormat: string, selectionProperty: string) => {
   const demoView = {
     name: 'demoView',
     type: 'View',
     config: {
       template: 'Pega_Extensions_CompareTableLayout',
       ruleClass: 'Work-',
-      selectionProperty: 'S-1',
+      ...( selectionProperty ? {selectionProperty} : ''),
       inheritedProps: []
     },
     children: [
@@ -145,7 +148,7 @@ const genResponse = (displayFormat: string) => {
         config: {
           value: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
           componentType: 'TextInput',
-          label: 'Model'
+          label: 'ID'
         },
         type: 'ScalarList'
       },
@@ -338,6 +341,16 @@ const genResponse = (displayFormat: string) => {
         type: 'ScalarList'
       }
     ];
+    if(selectionProperty) {
+      demoView.children[0].children.push({
+        config: {
+          value: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
+          componentType: 'TextInput',
+          label: 'ID'
+        },
+        type: 'ScalarList'
+      });
+    }
   }
   demoView.children[0].getPConnect = () => {
     return {
@@ -352,22 +365,23 @@ const genResponse = (displayFormat: string) => {
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
 export const Default: Story = {
   render: args => {
+    const selProp = args.selectionProperty === 'Select an object'? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',
       heading: args.heading,
-      selectionProperty: 'caseid',
+      selectionProperty: selProp,
       displayFormat: args.displayFormat,
       currencyFormat: args.currencyFormat,
       getPConnect: () => {
         return {
           getChildren: () => {
-            return genResponse(args.displayFormat).children;
+            return genResponse(args.displayFormat, selProp).children;
           },
           getRawMetadata: () => {
-            return genResponse(args.displayFormat);
+            return genResponse(args.displayFormat, selProp);
           },
           getInheritedProps: () => {
-            return genResponse(args.displayFormat).config.inheritedProps;
+            return genResponse(args.displayFormat, selProp).config.inheritedProps;
           },
           createComponent: (config: any) => {
             return genComponent(config, args.currencyFormat);
@@ -389,6 +403,7 @@ export const Default: Story = {
   args: {
     heading: 'Heading',
     displayFormat: 'spreadsheet',
-    currencyFormat: 'standard'
+    currencyFormat: 'standard',
+    selectionProperty: 'Select an object'
   }
 };

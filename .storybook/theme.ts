@@ -38,6 +38,6 @@ export default create({
   inputBorderRadius: 4,
 
   brandTitle: 'Constellation UI Gallery',
-  brandUrl: 'https://design.pega.com',
+  brandUrl: 'https://github.com/pegasystems/constellation-ui-gallery',
   brandImage: './pega-logo.svg'
 });
