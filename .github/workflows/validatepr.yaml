@@ -25,8 +25,7 @@ jobs:
         run: npm ci
       - name: Build Storybook
         run: npm run build-storybook
-      - name: Serve Files
-        uses: Eun/http-server-action@v1
+      - uses: Eun/http-server-action@v1
         with:
           directory: ${{ github.workspace }}/storybook-static
           port: 6006
@@ -37,9 +36,9 @@ jobs:
             ["GET", "HEAD"]
           log: "log.txt"
           logTime: "true"
-      - name: test http server
+      - name: Test http server
         run: |
           curl -vvvv http://localhost:6006/index.html
           cat log.txt
-       - name: Run tests
+      - name: Run tests
         run: npm run test-storybook
