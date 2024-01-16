@@ -17,7 +17,7 @@
     },
     {
       "name": "localAction",
-      "label": "Localaction name",
+      "label": "Local Action ID",
       "format": "TEXT"
     },
     {

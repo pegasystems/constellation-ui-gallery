@@ -23,7 +23,7 @@
     {
       "name": "height",
       "label": "Height (in px)",
-      "format": "INTEGER"
+      "format": "NUMBER"
     },
     {
       "name": "showMinimap",
