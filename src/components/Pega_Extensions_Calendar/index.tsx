@@ -13,6 +13,7 @@ import {
   CardContent,
   Button
 } from '@pega/cosmos-react-core';
+import StyledEventWrapper from './styles';
 
 const VIEW_TYPE = {
   DAY: 'timeGridDay',
@@ -21,7 +22,7 @@ const VIEW_TYPE = {
 };
 
 type CalendarProps = {
-  title: string;
+  heading: string;
   dataPage: string;
   createClassname?: string;
   defaultViewMode: string;
@@ -58,7 +59,7 @@ type DateInfo = {
 */
 export default function PegaExtensionsCalendar(props: CalendarProps) {
   const {
-    title = '',
+    heading = '',
     dataPage = '',
     createClassname = '',
     defaultViewMode = 'Monthly',
@@ -152,7 +153,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       return linkEl;
     }
     return (
-      <>
+      <StyledEventWrapper>
         <Text variant='h3'>{eventInfo.event.title}</Text>
         <FieldValueList
           variant='inline'
@@ -177,7 +178,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
             }
           ]}
         />
-      </>
+      </StyledEventWrapper>
     );
   };
 
@@ -245,7 +246,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
           ) : undefined
         }
       >
-        <Text variant='h2'>{title}</Text>
+        <Text variant='h2'>{heading}</Text>
       </CardHeader>
       <CardContent>
         <FullCalendar

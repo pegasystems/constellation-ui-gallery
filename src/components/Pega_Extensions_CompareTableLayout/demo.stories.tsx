@@ -43,14 +43,6 @@ export default {
   component: PegaExtensionsCompareTableLayout
 };
 
-(window as any).PCore = {
-  getComponentsRegistry: () => {
-    return {
-      getLazyComponent: (f: string) => f
-    };
-  }
-};
-
 const genComponent = (config: any, format: any) => {
   if (config.type === 'Currency') {
     if (config.config.negative === 'parentheses') {
@@ -365,6 +357,13 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
 export const Default: Story = {
   render: args => {
+    (window as any).PCore = {
+      getComponentsRegistry: () => {
+        return {
+          getLazyComponent: (f: string) => f
+        };
+      }
+    };
     const selProp = args.selectionProperty === 'Select an object'? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',

@@ -11,8 +11,8 @@
   "subtype": ["PAGE", "CASE"],
   "properties": [
     {
-      "name": "title",
-      "label": "Label value",
+      "name": "heading",
+      "label": "Heading",
       "format": "TEXT"
     },
     {
@@ -59,7 +59,7 @@
     }
   ],
   "defaultConfig": {
-    "title": "Calendar",
+    "heading": "Calendar",
     "dataPage": "",
     "defaultViewMode": "Monthly"
   }

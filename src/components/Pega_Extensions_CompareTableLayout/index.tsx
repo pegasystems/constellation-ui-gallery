@@ -21,12 +21,25 @@ type TableLayoutProps = {
   getPConnect: any;
 };
 
+type FieldObj = {
+  type: string;
+  config: {
+    text: string;
+    value: string;
+    label: string;
+     displayMode: string;
+     displayAs?: string;
+     negative?: string;
+     notation?: string;
+  };
+};
+
 export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps) {
   const { displayFormat, heading, selectionProperty, currencyFormat, getPConnect } = props;
-  const [numCols, setNumCols] = useState(0);
-  const [numFields, setNumFields] = useState(0);
+  const [numCols, setNumCols] = useState<number>(0);
+  const [numFields, setNumFields] = useState<number>(0);
   const [fields, setFields] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selection, setSelection] = useState<Array<boolean>>([]);
 
   const metadata = getPConnect().getRawMetadata();
@@ -36,24 +49,21 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
       const prop = metadata.config.selectionProperty.replace('@P ', '');
       getPConnect().setValue(prop, ID);
     }
-    const sel = [];
+    const sel : Array<boolean> = [];
     for (let i = 0; i < numCols; i += 1) {
       sel.push(i === index);
     }
     setSelection(sel);
   };
 
-  const genField = (componentType: string, val: string) => {
-    const field = {
+  const genField = (componentType: string, val: any) => {
+    const field : FieldObj = {
       type: componentType,
       config: {
         text: `${val}`,
         value: `${val}`,
         label: '',
-        displayMode: 'DISPLAY_ONLY',
-        displayAs: '',
-        negative: '',
-        notation: ''
+        displayMode: 'DISPLAY_ONLY'
       }
     };
     if (componentType === 'URL') {
@@ -89,7 +99,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
         if (typeof selectionProperty !== 'undefined' && child.label === 'ID') {
           child.value.forEach((val: any, index: number) => {
             if (val === selectionProperty) {
-              const sel = [];
+              const sel : Array<boolean> = [];
               for (let i = 0; i < child.value.length; i += 1) {
                 sel.push(i === index);
               }
@@ -103,7 +113,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
   }, [displayFormat, currencyFormat, selectionProperty]);
 
   useEffect(() => {
-    if (fields && numFields === fields.length) {
+    if (fields && fields.length > 0 && numFields === fields.length) {
       setLoading(false);
     }
   }, [numFields, fields]);
@@ -119,7 +129,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
           {fields[0].value.map((val: any, i: number) => {
             const fvl: Array<FieldValueListItem> = [];
             let objectId = '';
-            fields.forEach((child, j) => {
+            fields.forEach((child: any, j: number) => {
               if (j > 0) {
                 if (child.label === 'ID') {
                   objectId = child.value[i];
@@ -174,7 +184,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
           </tr>
         </thead>
         <tbody>
-          {fields.map((child, i) => {
+          {fields.map((child: any, i: number) => {
             if (i > 0) {
               if (child.heading) {
                 return (
