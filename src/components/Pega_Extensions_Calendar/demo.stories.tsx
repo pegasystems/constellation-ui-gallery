@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import PegaExtensionsCalendar from './index';
 
 export default {
-  title: 'Widget/Calendar',
+  title: 'Widgets/Calendar',
   argTypes: {
     heading: {
       control: 'text'
@@ -158,57 +158,57 @@ const setPCore = () => {
       };
     }
   };
-}
+};
 
 type Story = StoryObj<typeof PegaExtensionsCalendar>;
 export const Default: Story = {
   render: args => {
-      setPCore();
-      const props = {
-        dataPage: '',
-        heading: args.heading,
-        createClassname: args.createClassname,
-        defaultViewMode: args.defaultViewMode,
-        nowIndicator: args.nowIndicator,
-        weekendIndicator: args.weekendIndicator,
-        getPConnect: () => {
-          return {
-            getActionsApi: () => {
-              return {
-                openWorkByHandle: () => {
-                  /* nothing */
-                },
-                createWork: (className: string) => {
-                  // eslint-disable-next-line no-alert
-                  alert(`Create case type with className:${className}`);
-                },
-                updateFieldValue: () => {
-                  /* nothing */
-                },
-                triggerFieldChange: () => {
-                  /* nothing */
-                },
-                showCasePreview: () => {
-                  /* nothing */
-                }
-              };
-            },
-            ignoreSuggestion: () => {
-              /* nothing */
-            },
-            acceptSuggestion: () => {
-              /* nothing */
-            },
-            setInheritedProps: () => {
-              /* nothing */
-            },
-            resolveConfigProps: () => {
-              /* nothing */
-            }
-          };
-        }
-      };
-      return <PegaExtensionsCalendar {...props} />;
+    setPCore();
+    const props = {
+      dataPage: '',
+      heading: args.heading,
+      createClassname: args.createClassname,
+      defaultViewMode: args.defaultViewMode,
+      nowIndicator: args.nowIndicator,
+      weekendIndicator: args.weekendIndicator,
+      getPConnect: () => {
+        return {
+          getActionsApi: () => {
+            return {
+              openWorkByHandle: () => {
+                /* nothing */
+              },
+              createWork: (className: string) => {
+                // eslint-disable-next-line no-alert
+                alert(`Create case type with className:${className}`);
+              },
+              updateFieldValue: () => {
+                /* nothing */
+              },
+              triggerFieldChange: () => {
+                /* nothing */
+              },
+              showCasePreview: () => {
+                /* nothing */
+              }
+            };
+          },
+          ignoreSuggestion: () => {
+            /* nothing */
+          },
+          acceptSuggestion: () => {
+            /* nothing */
+          },
+          setInheritedProps: () => {
+            /* nothing */
+          },
+          resolveConfigProps: () => {
+            /* nothing */
+          }
+        };
+      }
+    };
+    return <PegaExtensionsCalendar {...props} />;
   },
   args: {
     heading: 'Heading',

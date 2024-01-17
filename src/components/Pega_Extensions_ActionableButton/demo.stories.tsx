@@ -2,12 +2,15 @@ import type { StoryObj } from '@storybook/react';
 import PegaExtensionsActionableButton from './index';
 
 export default {
-  title: 'Field/Actionable button',
+  title: 'Fields/Actionable button',
   argTypes: {
     label: {
       control: 'text'
     },
     localAction: {
+      control: 'text'
+    },
+    value: {
       control: 'text'
     },
     getPConnect: {
@@ -42,6 +45,7 @@ export const Default: Story = {
     const props = {
       label: args.label,
       localAction: args.localAction,
+      value: args.value,
       getPConnect: () => {
         return {
           getStateProps: () => {
@@ -68,6 +72,7 @@ export const Default: Story = {
   },
   args: {
     label: 'Launch',
-    localAction: 'pyEditDetails'
+    localAction: 'pyEditDetails',
+    value: 'Work-Case C-123'
   }
 };

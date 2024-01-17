@@ -16,7 +16,7 @@ type info = {
 };
 
 export default {
-  title: 'Template/Compare Table Layout',
+  title: 'Templates/Compare Table Layout',
   argTypes: {
     heading: {
       control: 'text'
@@ -30,9 +30,9 @@ export default {
       control: 'select'
     },
     selectionProperty: {
-      options: [ 'Select an object', 'Read-only'],
+      options: ['Select an object', 'Read-only'],
       control: { type: 'radio' },
-      if: { arg: 'displayFormat', neq: 'radio-button-card' },
+      if: { arg: 'displayFormat', neq: 'radio-button-card' }
     },
     getPConnect: {
       table: {
@@ -77,7 +77,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
     config: {
       template: 'Pega_Extensions_CompareTableLayout',
       ruleClass: 'Work-',
-      ...( selectionProperty ? {selectionProperty} : ''),
+      ...(selectionProperty ? { selectionProperty } : ''),
       inheritedProps: []
     },
     children: [
@@ -333,7 +333,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
         type: 'ScalarList'
       }
     ];
-    if(selectionProperty) {
+    if (selectionProperty) {
       demoView.children[0].children.push({
         config: {
           value: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
@@ -364,7 +364,7 @@ export const Default: Story = {
         };
       }
     };
-    const selProp = args.selectionProperty === 'Select an object'? '.prop1' : '';
+    const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',
       heading: args.heading,

@@ -5,6 +5,15 @@ import * as DemoStories from './demo.stories';
 
 # Overview
 
+The actionable button component is a field level component that can be used on any form view or details view. It allows to drop inside any view a button that can be used to trigger a local action.
+
+This is similar to the 'Edit' button inside the Case View Summary but this Constellation DX Component can be put inside a form directly. Using visible when condition, the action can be shown to a user only if a specific condition is met.
+The button can also be used in a Details tab or other read-only tab to provide a quick access to the local action.
+
+The local action will always run in a modal dialog - the content of the modal could be a form or could be used to display read only information. This component will also only work on Case type.
+
+To use this component, select the field 'Instance key' from the object that you want to run the local action against (this is the pzInsKey) and enter the name of the local action ID to execute (for example pyUpdateCaseDetails).
+
 <Primary />
 
 ## Props

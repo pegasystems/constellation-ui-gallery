@@ -3,7 +3,7 @@ import { FieldValueList } from '@pega/cosmos-react-core';
 import PegaExtensionsFieldGroupAsRow from './index';
 
 export default {
-  title: 'Template/Field Group As Row',
+  title: 'Templates/Field Group As Row',
   argTypes: {
     heading: {
       control: 'text'
