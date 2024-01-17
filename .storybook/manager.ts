@@ -3,7 +3,9 @@ import myTheme from './theme';
 
 addons.setConfig({
   theme: myTheme,
+  enableShortcuts: false,
+  showToolbar: false,
   sidebar: {
-    showRoots: true
+    showRoots: false
   }
 });
