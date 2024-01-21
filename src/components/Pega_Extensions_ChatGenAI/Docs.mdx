@@ -1,0 +1,28 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Chat GenAI DX Component allows to leverage Pega GenAI to help users of your application. To configure the component, you just need to pass
+a page level Data Page that will receive the prompt(s) of the user as parameter and will send back as response the output from the Pega GenAI rule.
+
+The component lets you set the height of the card - you can set a maximum height or let it expand indefinitely. You can also set a boolean parameter called 'sendAllUserContext' that let you decide if the user will send a single prompt every time,
+or if the previous prompts sent by the user need to be sent to the GenAI rule in order to maintain the context and create a conversation. If 'sendAllUserContext' is set to 'true',
+a 'reset' button will be displayed in the header of the widget and will let you clear the conversation and start a new one.
+
+The storybook demo will simulate the answer from a GenAI assistant. If you are running the storybook example from your local machine, you can implement your own API to connect to other LLM models and generate real response.
+Look at the variable 'simulateGenAIResponse' for an example of how to do this.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Implementation details
+
+Here is an example of single page Data page that could use the Pega GenAI. For more details, download the sample application available in the [release section of the project](https://github.com/pegasystems/constellation-ui-gallery/releases)
+
+![Architecture](AIAssistantDataPage.png)

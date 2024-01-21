@@ -22,8 +22,8 @@
     },
     {
       "name": "height",
-      "label": "Height (in px)",
-      "format": "NUMBER"
+      "label": "Height of the diagram",
+      "format": "TEXT"
     },
     {
       "name": "showMinimap",
@@ -63,6 +63,10 @@
   ],
   "defaultConfig": {
     "heading": "Network Diagram",
-    "dataPage": ""
+    "dataPage": "",
+    "height": "30rem",
+    "showMinimap": true,
+    "showRefresh": true,
+    "edgePath": "bezier"
   }
 }

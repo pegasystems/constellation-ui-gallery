@@ -13,7 +13,7 @@ export default {
       }
     },
     height: {
-      control: 'number'
+      control: 'text'
     },
     showMinimap: {
       control: 'boolean'
@@ -71,7 +71,7 @@ const setPCore = () => {
     getSemanticUrlUtils: () => {
       return {
         getResolvedSemanticURL: () => {
-          return undefined;
+          return window.location.href;
         },
         getActions: () => {
           return {
@@ -318,7 +318,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    height: 500,
+    height: '30rem',
     showMinimap: true,
     showControls: true,
     showRefresh: true,
