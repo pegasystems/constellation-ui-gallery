@@ -1,0 +1,144 @@
+import type { StoryObj } from '@storybook/react';
+import PegaExtensionsPasswordInput from './index';
+
+export default {
+  title: 'Fields/Password Input',
+  argTypes: {
+    label: {
+      control: 'text'
+    },
+    value: {
+      control: 'text'
+    },
+    helperText: {
+      control: 'text'
+    },
+    testId: {
+      control: 'text'
+    },
+    placeholder: {
+      control: 'text'
+    },
+    validatemessage: {
+      control: 'text'
+    },
+    disabled: {
+      control: 'boolean'
+    },
+    readOnly: {
+      control: 'boolean'
+    },
+    required: {
+      control: 'boolean'
+    },
+    hideLabel: {
+      control: 'boolean'
+    },
+    fieldMetadata: {
+      table: {
+        disable: true
+      }
+    },
+    additionalProps: {
+      table: {
+        disable: true
+      }
+    },
+    displayMode: {
+      table: {
+        disable: true
+      }
+    },
+    variant: {
+      table: {
+        disable: true
+      }
+    },
+    getPConnect: {
+      table: {
+        disable: true
+      }
+    }
+  },
+  component: PegaExtensionsPasswordInput
+};
+
+const setPCore = () => {
+  (window as any).PCore = {
+    getComponentsRegistry: () => {
+      return {
+        getLazyComponent: (f: string) => f
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getTimeZone: () => 'local'
+      };
+    }
+  };
+};
+
+type Story = StoryObj<typeof PegaExtensionsPasswordInput>;
+
+export const Default: Story = {
+  render: args => {
+    setPCore();
+    const props = {
+      ...args,
+      getPConnect: () => {
+        return {
+          getStateProps: () => {
+            return {
+              value: 'C-123'
+            };
+          },
+          getActionsApi: () => {
+            return {
+              openWorkByHandle: () => {
+                /* nothing */
+              },
+              createWork: () => {
+                /* nothing */
+              },
+              updateFieldValue: () => {
+                /* nothing */
+              },
+              triggerFieldChange: () => {
+                /* nothing */
+              },
+              showCasePreview: () => {
+                /* nothing */
+              }
+            };
+          },
+          ignoreSuggestion: () => {
+            /* nothing */
+          },
+          acceptSuggestion: () => {
+            /* nothing */
+          },
+          setInheritedProps: () => {
+            /* nothing */
+          },
+          resolveConfigProps: () => {
+            /* nothing */
+          }
+        };
+      }
+    };
+    return <PegaExtensionsPasswordInput {...props} />;
+  },
+  args: {
+    label: 'Password',
+    value: 'demo',
+    helperText: 'Enter a password with one uppercase letter and one special character',
+    testId: '',
+    placeholder: '',
+    validatemessage: '',
+    disabled: false,
+    readOnly: false,
+    required: false,
+    hideLabel: false,
+    hasSuggestions: false
+  }
+};
