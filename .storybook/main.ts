@@ -10,6 +10,9 @@ const config: StorybookConfig = {
   addons: ['@storybook/addon-essentials'],
   docs: {
     autodocs: true
+  },
+  typescript: {
+    check: true
   }
 };
 
