@@ -13,6 +13,7 @@ import { useCallback, useEffect, useRef, useState, type ReactElement } from 'rea
 import { Message, TypeIndicator, type MessageProps } from '@pega/cosmos-react-social';
 import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
 import * as sendIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/send.icon';
+import * as robotSolid from '@pega/cosmos-react-core/lib/components/Icon/icons/robot-solid.icon';
 
 import { StyledCardContent, StyledGenAIComponent } from './styles';
 
@@ -29,7 +30,7 @@ type ChatGenAIProps = {
   getPConnect: any;
 };
 
-registerIcon(resetIcon, sendIcon);
+registerIcon(resetIcon, sendIcon, robotSolid);
 
 export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
   const {

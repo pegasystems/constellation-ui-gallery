@@ -4,19 +4,10 @@ import PegaExtensionsChatGenAI from './index';
 export default {
   title: 'Widgets/Chat GenAI',
   argTypes: {
-    heading: {
-      control: 'text'
-    },
     dataPage: {
       table: {
         disable: true
       }
-    },
-    maxHeight: {
-      control: 'text'
-    },
-    sendAllUserContext: {
-      control: 'boolean'
     },
     getPConnect: {
       table: {
