@@ -8,7 +8,7 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
           min-width: 300px;
         }
         & fieldset > div > label > div {
-          align-items: start!important;
+          align-items: start !important;
         }
       `;
     case 'financialreport':

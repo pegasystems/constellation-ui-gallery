@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
-import { type EventContentArg, type EventClickArg } from '@fullcalendar/core'
+import { type EventContentArg, type EventClickArg } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -32,19 +32,19 @@ type CalendarProps = {
 };
 
 type Event = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    item: any;
-}
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  item: any;
+};
 
 type DateInfo = {
-  view: { type: string};
+  view: { type: string };
   startStr?: string;
   start?: Date;
   end?: Date;
-}
+};
 /*
   Demo of the Calendar component using fullcalendar React component - this 3rd party lib is open source with MIT license
   Notes on the implementation:
@@ -69,7 +69,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   } = props;
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
-  let dateInfo : DateInfo = { view: { type: VIEW_TYPE.MONTH}};
+  let dateInfo: DateInfo = { view: { type: VIEW_TYPE.MONTH } };
   const dateInfoStr = localStorage.getItem('fullcalendar');
   if (dateInfoStr) {
     dateInfo = JSON.parse(dateInfoStr);
@@ -77,7 +77,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       /* If showing month - find the date in the middle to get the month */
       const endDate = new Date(dateInfo.end).valueOf();
       const startDate = new Date(dateInfo.start).valueOf();
-      const middle = new Date( endDate - ((endDate - startDate) / 2) );
+      const middle = new Date(endDate - (endDate - startDate) / 2);
       dateInfo.startStr = `${middle.toISOString().substring(0, 7)}-01`;
     }
   }
@@ -138,7 +138,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
             caseClassName: obj.pxObjClass
           });
         }}
-        onClick={ (e : MouseEvent<HTMLButtonElement>) => {
+        onClick={(e: MouseEvent<HTMLButtonElement>) => {
           /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
@@ -185,10 +185,10 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   const loadEvents = () => {
     (window as any).PCore.getDataApiUtils()
       .getData(dataPage, {})
-      .then((response : any) => {
+      .then((response: any) => {
         if (response.data.data !== null) {
-          const tmpevents : Array<Event> = [];
-          response.data.data.forEach((item : any) => {
+          const tmpevents: Array<Event> = [];
+          response.data.data.forEach((item: any) => {
             tmpevents.push({
               id: item.pzInsKey,
               title: item.pyLabel,
@@ -202,14 +202,14 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       });
   };
 
-  const handleEventClick = (eventClickInfo : EventClickArg)=> {
+  const handleEventClick = (eventClickInfo: EventClickArg) => {
     const eventDetails = eventClickInfo.event.extendedProps;
     getPConnect()
       .getActionsApi()
       .openWorkByHandle(eventDetails.item.pzInsKey, eventDetails.item.pxObjClass);
   };
 
-  const handleDateChange = (objInfo:any) => {
+  const handleDateChange = (objInfo: any) => {
     localStorage.setItem('fullcalendar', JSON.stringify(objInfo));
   };
 

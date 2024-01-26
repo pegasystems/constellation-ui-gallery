@@ -1,47 +1,47 @@
-import { type EdgeProps, getBezierPath, getStraightPath, getSmoothStepPath, EdgeLabelRenderer, BaseEdge } from 'reactflow';
+import {
+  type EdgeProps,
+  getBezierPath,
+  getStraightPath,
+  getSmoothStepPath,
+  EdgeLabelRenderer,
+  BaseEdge
+} from 'reactflow';
 
 const CustomEdge = (props: EdgeProps) => {
-  const {
-    id,
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    data,
-  } = props;
-  let edgePath: string; let labelX: number; let labelY: number;
-  if(data.path === 'straight') {
+  const { id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
+  let edgePath: string;
+  let labelX: number;
+  let labelY: number;
+  if (data.path === 'straight') {
     [edgePath, labelX, labelY] = getStraightPath({
       sourceX,
       sourceY,
       targetX,
       targetY
     });
-  } else if(data.path === 'step') {
+  } else if (data.path === 'step') {
     [edgePath, labelX, labelY] = getSmoothStepPath({
       sourceX,
       sourceY,
       sourcePosition,
       targetX,
       targetY,
-      targetPosition,
+      targetPosition
     });
   } else {
-  [edgePath, labelX, labelY] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+    [edgePath, labelX, labelY] = getBezierPath({
+      sourceX,
+      sourceY,
+      sourcePosition,
+      targetX,
+      targetY,
+      targetPosition
+    });
   }
 
-  let className = "custom-edge nodrag nopan";
-  if(data.type) {
-    className += ` ${data.type.toLowerCase()}`
+  let className = 'custom-edge nodrag nopan';
+  if (data.type) {
+    className += ` ${data.type.toLowerCase()}`;
   }
   return (
     <>
@@ -49,7 +49,7 @@ const CustomEdge = (props: EdgeProps) => {
       <EdgeLabelRenderer>
         <div
           style={{
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
           }}
           className={className}
         >

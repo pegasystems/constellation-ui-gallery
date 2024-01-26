@@ -107,7 +107,7 @@ const MaskedInputDemo = (inputs: MaskedInputProps) => {
 };
 
 export const Default: Story = MaskedInputDemo({
-  label: 'ZipCode',
+  label: 'Zip Code',
   mask: '00000-0000',
   value: '',
   helperText: '#####-####',
@@ -121,25 +121,25 @@ export const Default: Story = MaskedInputDemo({
   hasSuggestions: false
 });
 
-export const IbanDemo: Story = MaskedInputDemo({
-  label: 'Iban',
+export const IBAN: Story = MaskedInputDemo({
+  label: 'IBAN (International Bank Account Number)',
   mask: 'AA00 0000 0000 0000 0000 0000 A00',
   helperText: '#### #### #### #### #### #### ###'
 });
 
-export const CreditCardDemo: Story = MaskedInputDemo({
+export const CreditCard: Story = MaskedInputDemo({
   label: 'Credit Card number',
   mask: '0000 0000 0000 0000'
 });
 
-export const IPAddressDemo: Story = MaskedInputDemo({
+export const IPAddress: Story = MaskedInputDemo({
   label: 'IP Address',
   mask: '0[00].0[00].0[00].0[00]',
   helperText: '(0-255).(0-255).(0-255).(0-255)'
 });
 
 export const ZipCode: Story = MaskedInputDemo({
-  label: 'ZipCode (extended code optional)',
+  label: 'Zip Code (extended code optional)',
   mask: '00000[-0000]',
   helperText: '#####-####'
 });

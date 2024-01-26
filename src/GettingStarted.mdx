@@ -6,14 +6,12 @@ import { Meta } from '@storybook/blocks';
 
 Welcome to the UI gallery of Constellation DX Components. This guide will help you get started and connect you to the essential resources you need.
 
-## UI/UX Design Guidelines
-
 Before you dive into designing, familiarize yourself with our Constellation design guidelines. They provide valuable insights into our design philosophy and standards.
 
-- [UI/UX Guidelines Document](https://design.pega.com)
+- [UI/UX Guidelines](https://design.pega.com)
 - [Best practices](https://design.pega.com/design/getting-started/)
 
-## Implementing a Constellation DX Component
+## Implementing a Constellation DX component
 
 Before you start to reuse and customize some of the components presented in this UI Gallery, please review our best practices when creating a Constellation DX Component:
 
@@ -24,19 +22,19 @@ The Constellation DX Components allows to extend the library of out-of-the-box a
 
 ![Architecture](Overview.png)
 
-Here are a set o best practices when implementing a Constellation DX Component:
+Here are a set of best practices when implementing a Constellation DX Component:
 
-### Separate the presentation from and the business logic
+### Separate presentation and business logic
 
-Separate the presentation and the business logic of the component. For consistency, the Constellation DX component should reuse the components already provided by the Constellation component library available at https://design.pega.com/develop.
+For consistency, the Constellation DX component should reuse the components already provided by the Constellation component library available at [design.pega.com/develop](https://design.pega.com/develop).
 
-### Use PCore and PConnect publics API
+### Use PCore and PConnect public APIs
 
-When making calls to the platform, handle all the requests through the getPConnect object passed to your component. For more details see [Using PCore and PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html)
+When making calls to the platform, handle all the requests through the getPConnect object passed to your component. For more details see [Using PCore and PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html).
 
 ### Use styled component library and design tokens
 
-Reuses the OOTB design tokens provided by the theme and use styled component to add some additional styles to your Constellation DX Component
+Reuses the OOTB design tokens provided by the theme and use styled component to add some additional styles to your Constellation DX Component. There are theme tokens for colors, spacing, border-radius, typography etc at base level and specific components.
 
 ### Use Typescript
 
@@ -44,12 +42,12 @@ Typescript is highly recommended for writing a Constellation DX component. Stron
 
 ### Use rem instead of px
 
-REM is a relative unit calculated based on the root font size. It is recommended to use rem as unit for font sizes or spacing rather than px. This ensures that any future change in root font size gets translated accordingly to all components
+REM is a relative unit calculated based on the root font size. It is recommended to use rem as unit for font sizes or spacing rather than px. This ensures that any future change in root font size gets translated accordingly to all components.
 
 ### Prefer functional components over class components
 
-Functional components helps to group related code together in a single block thus making the code more readable
+Functional components helps to group related code together in a single block thus making the code more readable.
 
 ### Review accessibility of the component before starting to code
 
-If using a 3rd party library to implement a Constellation DX component, it is important to evaluate the library in terms of accessibility compliance with WCAG (Web Content Accessibility Guidelines) 2.1.
+If using a 3rd party library to implement a Constellation DX component, it is important to evaluate the library in terms of accessibility compliance with [WCAG (Web Content Accessibility Guidelines) 2.1](https://www.w3.org/TR/WCAG21/).
