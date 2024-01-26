@@ -6,7 +6,8 @@ import {
   RadioButtonGroup,
   Progress,
   RadioButton,
-  Text
+  Text,
+  createUID
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 
@@ -162,6 +163,8 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
       </StyledPegaExtensionsCompareTableLayoutWrapper>
     );
   }
+
+  const tableId = createUID();
   return (
     <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
       <table>
@@ -171,7 +174,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
         <thead>
           <tr>
             <th>Name</th>
-            {fields[0].value.map((val: string) => {
+            {fields[0].value.map((val: string, idx: number) => {
               const field = {
                 type: 'Text',
                 config: {
@@ -179,7 +182,11 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                   displayMode: 'DISPLAY_ONLY'
                 }
               };
-              return <th>{getPConnect().createComponent(field)}</th>;
+              return (
+                <th scope='col' id={`${tableId}-col-${idx}`}>
+                  {getPConnect().createComponent(field)}
+                </th>
+              );
             })}
           </tr>
         </thead>
@@ -207,6 +214,8 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                         return (
                           <td>
                             <RadioButton
+                              id={`${tableId}-radio-${j}`}
+                              aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
                               variant='card'
                               label='Select'
                               checked={selection.length >= j ? selection[j] : false}
@@ -219,7 +228,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                 );
               return (
                 <tr>
-                  <th>{child.label}</th>
+                  <th scope='row'>{child.label}</th>
                   {child.value &&
                     child.value.map((val: any) => {
                       return genField(child.componentType, val);
