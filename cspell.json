@@ -9,6 +9,20 @@
     "lib",
     "**/.DS_Store",
     "**/*.zip",
-    "**/*.tgz"
+    "**/*.tgz",
+    ".eslintrc.json"
+  ],
+  "allowCompoundWords": true,
+  "words": [
+    "camelcase",
+    "daygrid",
+    "fullcalendar",
+    "IBAN",
+    "imask",
+    "Lenovo",
+    "OPENWORKBYHANDLE",
+    "pasteable",
+    "reactflow",
+    "timegrid"
   ]
 }

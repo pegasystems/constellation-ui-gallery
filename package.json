@@ -1,9 +1,17 @@
 {
-  "name": "pega-compare",
+  "name": "pega-constellation-ui-gallery",
   "version": "1.0.0",
-  "description": "",
-  "organization": "Pega",
-  "main": "src/index.js",
+  "description": "A UI Gallery of Constellation DX Components",
+  "keywords": [
+    "pega"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pegasystems/constellation-ui-gallery.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Pegasystems",
+  "sideEffects": false,
   "scripts": {
     "start": "storybook dev --port 6006",
     "build-storybook": "storybook build --docs",
@@ -25,20 +33,16 @@
     "delete": "custom-dx-components delete",
     "deleteAll": "custom-dx-components deleteAll",
     "lint:es": "eslint ./src",
+    "lint:spelling": "cspell --color --no-progress ./src",
+    "lint:styles": "stylelint --color --cache --cache-location node_modules/.cache/stylelint/ \"./**/*.@(js|jsx|ts|tsx|html)\"",
+    "lint:format": "prettier --color --loglevel warn -c .",
+    "lint:pkg": "sort-package-json --check package.json packages/*/package.json",
     "fix:es": "eslint --fix ./src",
+    "fix:format": "prettier --color --loglevel warn -w .",
+    "fix:pkg": "sort-package-json package.json packages/*/package.json",
     "promoteWebPack": "custom-dx-components promoteWebPack",
     "revertWebPack": "custom-dx-components revertWebPack"
   },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "keywords": [
-    "pega"
-  ],
-  "author": "",
-  "license": "Apache-2.0",
-  "sideEffects": false,
   "dependencies": {
     "@fullcalendar/core": "^6.1.10",
     "@fullcalendar/daygrid": "^6.1.10",
@@ -73,6 +77,8 @@
     "@types/react-dom": "^18.2.18",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "cspell": "^6.31.1",
+    "cspell-dict-lorem-ipsum": "^1.1.2",
     "eslint": "^8.4.1",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^27.6.1",
@@ -87,9 +93,11 @@
     "jest-environment-jsdom": "^29.3.1",
     "npm-quick-run": "^1.16.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.1.1",
+    "prettier": "^2.8.6",
+    "sort-package-json": "^2.6.0",
     "storybook": "^7.6.7",
     "stylelint": "^16.1.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "organization": "Pega"
 }
