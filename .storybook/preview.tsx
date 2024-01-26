@@ -1,10 +1,5 @@
 import type { Preview, DecoratorFn } from '@storybook/react';
-import {
-  Configuration,
-  PopoverManager,
-  Toaster,
-  ModalManager
-} from '@pega/cosmos-react-core';
+import { Configuration, PopoverManager, Toaster, ModalManager } from '@pega/cosmos-react-core';
 
 export const preview: Preview = {
   parameters: {

@@ -36,8 +36,8 @@ jobs:
             ["index.html", "index.htm"]
           allowed-methods: |
             ["GET", "HEAD"]
-          log: "log.txt"
-          logTime: "true"
+          log: 'log.txt'
+          logTime: 'true'
       - name: Test http server
         run: |
           curl -vvvv http://localhost:6006/index.html

@@ -107,7 +107,9 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
       });
     });
     data.pyEdges.forEach((element: any, i: number) => {
-      const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${tmpNodesHash[element.pyTo]} with label: ${element.pyLabel}`;
+      const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${
+        tmpNodesHash[element.pyTo]
+      } with label: ${element.pyLabel}`;
       initialEdges.push({
         id: element.pyID || `edge-${i}`,
         source: element.pyFrom,

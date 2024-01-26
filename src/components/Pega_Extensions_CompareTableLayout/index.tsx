@@ -27,10 +27,10 @@ type FieldObj = {
     text: string;
     value: string;
     label: string;
-     displayMode: string;
-     displayAs?: string;
-     negative?: string;
-     notation?: string;
+    displayMode: string;
+    displayAs?: string;
+    negative?: string;
+    notation?: string;
   };
 };
 
@@ -49,7 +49,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
       const prop = metadata.config.selectionProperty.replace('@P ', '');
       getPConnect().setValue(prop, ID);
     }
-    const sel : Array<boolean> = [];
+    const sel: Array<boolean> = [];
     for (let i = 0; i < numCols; i += 1) {
       sel.push(i === index);
     }
@@ -57,7 +57,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
   };
 
   const genField = (componentType: string, val: any) => {
-    const field : FieldObj = {
+    const field: FieldObj = {
       type: componentType,
       config: {
         text: `${val}`,
@@ -99,7 +99,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
         if (typeof selectionProperty !== 'undefined' && child.label === 'ID') {
           child.value.forEach((val: any, index: number) => {
             if (val === selectionProperty) {
-              const sel : Array<boolean> = [];
+              const sel: Array<boolean> = [];
               for (let i = 0; i < child.value.length; i += 1) {
                 sel.push(i === index);
               }
