@@ -1,0 +1,68 @@
+{
+  "name": "Pega_Extensions_UtilityList",
+  "label": "Utility List",
+  "description": "List of objects for the utility column",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_UtilityList",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name",
+      "format": "TEXT"
+    },
+    {
+      "name": "setCaseID",
+      "label": "Pass case context to the Data page as parameter",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "icon",
+      "label": "Icon",
+      "format": "SELECT",
+      "defaultValue": "clipboard",
+      "source": [
+        {
+          "key": "information",
+          "value": "information"
+        },
+        {
+          "key": "polaris",
+          "value": "polaris"
+        },
+        {
+          "key": "clipboard",
+          "value": "clipboard"
+        }
+      ]
+    },
+    {
+      "name": "primaryField",
+      "label": "Primary field",
+      "format": "TEXT"
+    },
+    {
+      "name": "secondaryFields",
+      "label": "Secondary fields (comma-separated)",
+      "format": "TEXT"
+    },
+    {
+      "name": "secondaryFieldTypes",
+      "label": "Secondary field types (comma-separated)",
+      "format": "TEXT"
+    }
+  ],
+  "defaultConfig": {
+    "heading": "List of objects",
+    "setCaseID": false
+  }
+}
