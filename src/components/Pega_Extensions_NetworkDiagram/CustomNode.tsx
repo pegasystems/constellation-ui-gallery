@@ -1,30 +1,42 @@
 import { useMemo, type MouseEvent } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
-import styled from 'styled-components';
-import { Link } from '@pega/cosmos-react-core';
+import styled, { css } from 'styled-components';
+import { Link, Icon, registerIcon } from '@pega/cosmos-react-core';
+import * as userIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/user.icon';
+import * as storeIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/store.icon';
 
-const Node = styled.div`
-  padding: 5px;
-  color: #000;
-  background: #fff;
+registerIcon(userIcon, storeIcon);
+const Node = styled.div(({ theme }: { theme: any }) => {
+  return css`
+    padding: 0.25rem;
+    color: ${theme.base.palette['foreground-color']};
+    background: ${theme.base.palette['primary-background']};
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 
-  button,
-  label {
-    max-width: 150px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-spacing: normal;
-    overflow: hidden;
-  }
-  .react-flow__handle.react-flow__handle-top,
-  .react-flow__handle.react-flow__handle-bottom {
-    background: #fff;
-  }
-  div.react-flow__handle.connectionindicator {
-    pointer-events: none;
-    cursor: none;
-  }
-`;
+    svg {
+      height: 3rem;
+      width: 3rem;
+    }
+    button,
+    label {
+      max-width: 8rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-spacing: normal;
+      overflow: hidden;
+    }
+    .react-flow__handle.react-flow__handle-top,
+    .react-flow__handle.react-flow__handle-bottom {
+      background: ${theme.base.palette['primary-background']};
+    }
+    div.react-flow__handle.connectionindicator {
+      pointer-events: none;
+      cursor: none;
+    }
+  `;
+});
 
 type renderNodeProps = {
   type?: string;
@@ -33,14 +45,13 @@ type renderNodeProps = {
   id: string;
   label: string;
   getPConnect?: any;
+  theme: any;
 };
 
 const renderNode = (props: renderNodeProps) => {
-  const { type, key, objClass, id, label, getPConnect } = props;
-  let className = '';
-  if (type) {
-    className += type.toLowerCase();
-  }
+  const { type, key, objClass, id, label, getPConnect, theme } = props;
+  let icon = 'user';
+  if (type === 'Corporation') icon = 'store';
   const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
     (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
     { caseClassName: objClass },
@@ -71,9 +82,9 @@ const renderNode = (props: renderNodeProps) => {
     );
 
   return (
-    <Node>
+    <Node theme={theme}>
       <Handle type='target' position={Position.Top} />
-      <div className={className}></div>
+      <Icon name={icon} />
       {linkEl}
       <Handle type='source' position={Position.Bottom} />
     </Node>

@@ -11,7 +11,8 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Button
+  Button,
+  Configuration
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
 
@@ -236,46 +237,50 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   }, []);
 
   return (
-    <Card>
-      <CardHeader
-        actions={
-          createClassname ? (
-            <Button variant='primary' onClick={addNewEvent}>
-              Create
-            </Button>
-          ) : undefined
-        }
-      >
-        <Text variant='h2'>{heading}</Text>
-      </CardHeader>
-      <CardContent>
-        <FullCalendar
-          ref={calendarRef}
-          headerToolbar={{
-            left: 'prev,next',
-            center: 'title',
-            right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
-          }}
-          plugins={[dayGridPlugin, timeGridPlugin]}
-          initialView={getDefaultView()}
-          selectable
-          nowIndicator={nowIndicator}
-          weekends={weekendIndicator}
-          allDayText='All day'
-          slotMinTime='07:00:00'
-          slotMaxTime='19:00:00'
-          height={650}
-          slotEventOverlap={false}
-          events={events}
-          eventContent={renderEventContent}
-          eventClick={handleEventClick}
-          datesSet={handleDateChange}
-          initialDate={
-            dateInfo !== null && dateInfo.startStr ? dateInfo.startStr.substring(0, 10) : undefined
+    <Configuration>
+      <Card>
+        <CardHeader
+          actions={
+            createClassname ? (
+              <Button variant='primary' onClick={addNewEvent}>
+                Create
+              </Button>
+            ) : undefined
           }
-          slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
-        />
-      </CardContent>
-    </Card>
+        >
+          <Text variant='h2'>{heading}</Text>
+        </CardHeader>
+        <CardContent>
+          <FullCalendar
+            ref={calendarRef}
+            headerToolbar={{
+              left: 'prev,next',
+              center: 'title',
+              right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
+            }}
+            plugins={[dayGridPlugin, timeGridPlugin]}
+            initialView={getDefaultView()}
+            selectable
+            nowIndicator={nowIndicator}
+            weekends={weekendIndicator}
+            allDayText='All day'
+            slotMinTime='07:00:00'
+            slotMaxTime='19:00:00'
+            height={650}
+            slotEventOverlap={false}
+            events={events}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
+            datesSet={handleDateChange}
+            initialDate={
+              dateInfo !== null && dateInfo.startStr
+                ? dateInfo.startStr.substring(0, 10)
+                : undefined
+            }
+            slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
+          />
+        </CardContent>
+      </Card>
+    </Configuration>
   );
 }

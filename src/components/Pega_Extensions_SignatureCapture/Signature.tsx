@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import SignaturePad, { type Options } from 'signature_pad';
+import { useTheme } from '@pega/cosmos-react-core';
 
 interface SignatureProps extends Options {
   canvasProps?: React.CanvasHTMLAttributes<HTMLCanvasElement>;
@@ -11,7 +12,7 @@ const Signature = (props: SignatureProps) => {
   const refCanvas = useRef<HTMLCanvasElement>(null);
   const refSignaturePad = useRef<SignaturePad>();
   const { signaturePadRef, canvasProps, onEndStroke } = props;
-
+  const theme = useTheme();
   const clearCanvas = () => {
     return refSignaturePad?.current?.clear();
   };
@@ -41,7 +42,9 @@ const Signature = (props: SignatureProps) => {
     const canvas = refCanvas?.current;
     if (!canvas) return;
 
-    const signaturePad = new SignaturePad(canvas);
+    const signaturePad = new SignaturePad(canvas, {
+      penColor: theme.base.palette['foreground-color']
+    });
     refSignaturePad.current = signaturePad;
     if (signaturePadRef) {
       signaturePadRef.current = signaturePad;

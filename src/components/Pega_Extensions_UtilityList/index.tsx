@@ -6,6 +6,7 @@ import {
   useModalManager,
   SummaryList,
   MetaList,
+  Configuration,
   type SummaryListItem,
   type ModalMethods
 } from '@pega/cosmos-react-core';
@@ -110,19 +111,21 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
 
   if (!primaryField || !dataPage) return null;
   return (
-    <Flex container={{ direction: 'column' }}>
-      <SummaryList
-        name={heading}
-        headingTag='h3'
-        icon={icon}
-        count={loading ? undefined : objects.length}
-        items={objects?.slice(0, 3)}
-        loading={loading}
-        noItemsText='No items'
-        onViewAll={() => {
-          viewAllModalRef.current = create(viewAllModal);
-        }}
-      />
-    </Flex>
+    <Configuration>
+      <Flex container={{ direction: 'column' }}>
+        <SummaryList
+          name={heading}
+          headingTag='h3'
+          icon={icon}
+          count={loading ? undefined : objects.length}
+          items={objects?.slice(0, 3)}
+          loading={loading}
+          noItemsText='No items'
+          onViewAll={() => {
+            viewAllModalRef.current = create(viewAllModal);
+          }}
+        />
+      </Flex>
+    </Configuration>
   );
 }

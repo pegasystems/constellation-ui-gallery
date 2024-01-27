@@ -1,5 +1,13 @@
 import { useEffect, useMemo } from 'react';
-import { Text, Card, CardHeader, CardContent, Button } from '@pega/cosmos-react-core';
+import {
+  Text,
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  Configuration,
+  useTheme
+} from '@pega/cosmos-react-core';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -85,6 +93,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
+  const theme = useTheme();
 
   const defaultViewport = { x: 0, y: 0, zoom: 3 };
 
@@ -103,7 +112,8 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
           label: element.pyLabel,
           key: element.pzInsKey,
           objClass: element.pyClassName,
-          getPConnect
+          getPConnect,
+          theme
         },
         position,
         type: 'custom'
@@ -117,16 +127,16 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
         id: element.pyID || `edge-${i}`,
         source: element.pyFrom,
         target: element.pyTo,
-        data: { type: element.pyCategory, label: element.pyLabel, path: edgePath },
+        data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
         markerEnd: {
           type: MarkerType.ArrowClosed,
           width: 20,
           height: 20,
-          color: '#000'
+          color: theme.base.palette['foreground-color']
         },
         style: {
           strokeWidth: 2,
-          stroke: '#000'
+          stroke: theme.base.palette['foreground-color']
         },
         type: 'custom',
         ariaLabel
@@ -145,36 +155,38 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
   }, [height, edgePath]);
 
   return (
-    <Card>
-      <CardHeader
-        actions={
-          showRefresh ? (
-            <Button variant='primary' onClick={getNodesDetails}>
-              Refresh
-            </Button>
-          ) : undefined
-        }
-      >
-        <Text variant='h2'>{heading}</Text>
-      </CardHeader>
-      <CardContent>
-        <StyledPegaExtensionsNetworkDiagram height={height}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            fitView
-            defaultViewport={defaultViewport}
-            proOptions={{ hideAttribution: true }}
-          >
-            {showMinimap ? <MiniMap /> : null}
-            {showControls ? <Controls /> : null}
-          </ReactFlow>
-        </StyledPegaExtensionsNetworkDiagram>
-      </CardContent>
-    </Card>
+    <Configuration>
+      <Card>
+        <CardHeader
+          actions={
+            showRefresh ? (
+              <Button variant='primary' onClick={getNodesDetails}>
+                Refresh
+              </Button>
+            ) : undefined
+          }
+        >
+          <Text variant='h2'>{heading}</Text>
+        </CardHeader>
+        <CardContent>
+          <StyledPegaExtensionsNetworkDiagram height={height} theme={theme}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              nodeTypes={nodeTypes}
+              edgeTypes={edgeTypes}
+              fitView
+              defaultViewport={defaultViewport}
+              proOptions={{ hideAttribution: true }}
+            >
+              {showMinimap ? <MiniMap /> : null}
+              {showControls ? <Controls /> : null}
+            </ReactFlow>
+          </StyledPegaExtensionsNetworkDiagram>
+        </CardContent>
+      </Card>
+    </Configuration>
   );
 }

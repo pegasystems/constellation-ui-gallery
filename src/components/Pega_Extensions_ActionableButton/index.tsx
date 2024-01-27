@@ -1,4 +1,4 @@
-import { Flex, Button } from '@pega/cosmos-react-core';
+import { Flex, Button, Configuration } from '@pega/cosmos-react-core';
 
 type ActionableButtonProps = {
   label: string;
@@ -20,9 +20,11 @@ const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
       });
     };
     return (
-      <Flex container={{ direction: 'row' }}>
-        <Button onClick={LaunchLocalAction}>{label}</Button>
-      </Flex>
+      <Configuration>
+        <Flex container={{ direction: 'row' }}>
+          <Button onClick={LaunchLocalAction}>{label}</Button>
+        </Flex>
+      </Configuration>
     );
   }
   return null;

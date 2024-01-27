@@ -1,4 +1,4 @@
-import { FieldGroup, Flex } from '@pega/cosmos-react-core';
+import { FieldGroup, Flex, Configuration } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsFieldGroupAsRowWrapper from './styles';
 
 type FieldGroupAsRowProps = {
@@ -10,14 +10,16 @@ export default function PegaExtensionsFieldGroupAsRow(props: FieldGroupAsRowProp
   const { heading, children } = props;
 
   return (
-    <FieldGroup name={heading}>
-      <StyledPegaExtensionsFieldGroupAsRowWrapper>
-        {children.map((child: any, i: number) => (
-          <Flex container={{ direction: 'column' }} key={`r-${i + 1}`}>
-            {child}
-          </Flex>
-        ))}
-      </StyledPegaExtensionsFieldGroupAsRowWrapper>
-    </FieldGroup>
+    <Configuration>
+      <FieldGroup name={heading}>
+        <StyledPegaExtensionsFieldGroupAsRowWrapper>
+          {children.map((child: any, i: number) => (
+            <Flex container={{ direction: 'column' }} key={`r-${i + 1}`}>
+              {child}
+            </Flex>
+          ))}
+        </StyledPegaExtensionsFieldGroupAsRowWrapper>
+      </FieldGroup>
+    </Configuration>
   );
 }

@@ -7,7 +7,8 @@ import {
   Text,
   TextArea,
   Icon,
-  registerIcon
+  registerIcon,
+  Configuration
 } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useRef, useState, type ReactElement } from 'react';
 import { Message, TypeIndicator, type MessageProps } from '@pega/cosmos-react-social';
@@ -165,30 +166,37 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
   }, [sendAllUserContext]);
 
   return (
-    <StyledGenAIComponent>
-      <Card>
-        <CardHeader
-          actions={
-            sendAllUserContext ? (
-              <Button variant='secondary' label='Restart conversation' icon onClick={resetContext}>
-                <Icon name='reset' />
-              </Button>
-            ) : undefined
-          }
-        >
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <StyledCardContent ref={cardRef} maxHeight={maxHeight}>
-          {history.length ? (
-            <Flex container={{ direction: 'column', pad: 1 }}>
-              {history.map(e => (
-                <div key={e.id}>{e.value}</div>
-              ))}
-            </Flex>
-          ) : null}
-        </StyledCardContent>
-        {questionArea}
-      </Card>
-    </StyledGenAIComponent>
+    <Configuration>
+      <StyledGenAIComponent>
+        <Card>
+          <CardHeader
+            actions={
+              sendAllUserContext ? (
+                <Button
+                  variant='secondary'
+                  label='Restart conversation'
+                  icon
+                  onClick={resetContext}
+                >
+                  <Icon name='reset' />
+                </Button>
+              ) : undefined
+            }
+          >
+            <Text variant='h2'>{heading}</Text>
+          </CardHeader>
+          <StyledCardContent ref={cardRef} maxHeight={maxHeight}>
+            {history.length ? (
+              <Flex container={{ direction: 'column', pad: 1 }}>
+                {history.map(e => (
+                  <div key={e.id}>{e.value}</div>
+                ))}
+              </Flex>
+            ) : null}
+          </StyledCardContent>
+          {questionArea}
+        </Card>
+      </StyledGenAIComponent>
+    </Configuration>
   );
 }

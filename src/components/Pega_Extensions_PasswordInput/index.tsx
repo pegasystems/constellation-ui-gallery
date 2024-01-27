@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { Input, FieldValueList, Text } from '@pega/cosmos-react-core';
+import { Input, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
 
 type PasswordInputProps = {
   getPConnect: any;
@@ -84,40 +84,42 @@ const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
   }
 
   return (
-    <Input
-      {...additionalProps}
-      type='password'
-      label={label}
-      labelHidden={hideLabel}
-      info={validatemessage || helperText}
-      data-testid={testId}
-      value={inputValue}
-      status={status}
-      placeholder={placeholder}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
-      maxLength={maxLength}
-      onChange={(e: MouseEvent<HTMLInputElement>) => {
-        if (hasSuggestions) {
-          setStatus(undefined);
-        }
-        setInputValue(e.currentTarget.value);
-        if (value !== e.currentTarget.value) {
-          actions.updateFieldValue(propName, e.currentTarget.value);
-          hasValueChange.current = true;
-        }
-      }}
-      onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
-          actions.triggerFieldChange(propName, e.currentTarget.value);
+    <Configuration>
+      <Input
+        {...additionalProps}
+        type='password'
+        label={label}
+        labelHidden={hideLabel}
+        info={validatemessage || helperText}
+        data-testid={testId}
+        value={inputValue}
+        status={status}
+        placeholder={placeholder}
+        disabled={disabled}
+        readOnly={readOnly}
+        required={required}
+        maxLength={maxLength}
+        onChange={(e: MouseEvent<HTMLInputElement>) => {
           if (hasSuggestions) {
-            pConn.ignoreSuggestion();
+            setStatus(undefined);
           }
-          hasValueChange.current = false;
-        }
-      }}
-    />
+          setInputValue(e.currentTarget.value);
+          if (value !== e.currentTarget.value) {
+            actions.updateFieldValue(propName, e.currentTarget.value);
+            hasValueChange.current = true;
+          }
+        }}
+        onBlur={(e: MouseEvent<HTMLInputElement>) => {
+          if ((!value || hasValueChange.current) && !readOnly) {
+            actions.triggerFieldChange(propName, e.currentTarget.value);
+            if (hasSuggestions) {
+              pConn.ignoreSuggestion();
+            }
+            hasValueChange.current = false;
+          }
+        }}
+      />
+    </Configuration>
   );
 };
 

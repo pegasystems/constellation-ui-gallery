@@ -22,7 +22,8 @@
       "border-radius": 0.25
     },
     "form-control": {
-      "border-radius": 0.25
+      "border-radius": 0.25,
+      "border-color": "#d53e0b"
     }
   }
 }

@@ -63,7 +63,7 @@ const CustomEdge = (props: EdgeProps) => {
         markerEnd={markerEnd}
         style={{
           strokeWidth: 2,
-          stroke: '#000'
+          stroke: data.theme.base.palette['foreground-color']
         }}
       />
       <EdgeLabelRenderer>

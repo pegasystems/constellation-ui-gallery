@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Button, Flex, FormField, FormControl } from '@pega/cosmos-react-core';
+import { Button, Flex, FormField, FormControl, Configuration } from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
 import StyledPegaExtensionsSignatureCaptureWrapper from './styles';
@@ -82,52 +82,54 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   };
 
   return (
-    <StyledPegaExtensionsSignatureCaptureWrapper>
-      <Flex container={{ direction: 'column' }}>
-        <FormField
-          label={label}
-          labelHidden={hideLabel}
-          info={info}
-          status={status}
-          required={required}
-          disabled={disabled}
-          readOnly={readOnly}
-          testId={testId}
-        >
-          <FormControl
-            ariaLabel={label}
+    <Configuration>
+      <StyledPegaExtensionsSignatureCaptureWrapper>
+        <Flex container={{ direction: 'column' }}>
+          <FormField
+            label={label}
+            labelHidden={hideLabel}
+            info={info}
+            status={status}
             required={required}
             disabled={disabled}
             readOnly={readOnly}
+            testId={testId}
           >
-            {readOnly || disabled ? (
-              <img src={inputValue} />
-            ) : (
-              <>
-                <Signature
-                  signaturePadRef={ref}
-                  canvasProps={{
-                    style: {
-                      width: '100%',
-                      height: 200
-                    }
-                  }}
-                  onEndStroke={onEndStroke}
-                />
-                <Flex container={{ direction: 'row' }}>
-                  <Button className='accept' onClick={handleAccept} disabled={!hasValueChanged}>
-                    Accept
-                  </Button>
-                  <Button className='clear' onClick={handleCLear}>
-                    Clear
-                  </Button>
-                </Flex>
-              </>
-            )}
-          </FormControl>
-        </FormField>
-      </Flex>
-    </StyledPegaExtensionsSignatureCaptureWrapper>
+            <FormControl
+              ariaLabel={label}
+              required={required}
+              disabled={disabled}
+              readOnly={readOnly}
+            >
+              {readOnly || disabled ? (
+                <img src={inputValue} />
+              ) : (
+                <>
+                  <Signature
+                    signaturePadRef={ref}
+                    canvasProps={{
+                      style: {
+                        width: '100%',
+                        height: 200
+                      }
+                    }}
+                    onEndStroke={onEndStroke}
+                  />
+                  <Flex container={{ direction: 'row', justify: 'between' }}>
+                    <Button className='accept' onClick={handleAccept} disabled={!hasValueChanged}>
+                      Accept
+                    </Button>
+                    <Button className='clear' onClick={handleCLear}>
+                      Clear
+                    </Button>
+                  </Flex>
+                </>
+              )}
+            </FormControl>
+          </FormField>
+        </Flex>
+      </StyledPegaExtensionsSignatureCaptureWrapper>
+    </Configuration>
   );
 };
 
