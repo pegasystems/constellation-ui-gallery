@@ -15,7 +15,7 @@
   "scripts": {
     "start": "storybook dev --port 6006",
     "build-storybook": "storybook build --docs",
-    "storybook-docs": "storybook dev --docs",
+    "storybook-docs": "storybook dev --docs --port 6006",
     "test-storybook": "test-storybook",
     "lint": "run-p -cl lint:*",
     "fix": "run-p -cl fix:*",

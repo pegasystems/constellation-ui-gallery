@@ -1,0 +1,28 @@
+{
+  "base": {
+    "palette": {
+      "brand-primary": "#005501",
+      "app-background": "#f0f9f2",
+      "border-line": "#005501"
+    }
+  },
+  "components": {
+    "app-shell": {
+      "nav": {
+        "background-color": "#005501"
+      }
+    },
+    "avatar": {
+      "background-color": "#005501"
+    },
+    "card": {
+      "border-radius": "0rem"
+    },
+    "button": {
+      "border-radius": 0.25
+    },
+    "form-control": {
+      "border-radius": 0.25
+    }
+  }
+}
