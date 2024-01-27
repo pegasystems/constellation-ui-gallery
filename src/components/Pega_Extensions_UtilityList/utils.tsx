@@ -17,29 +17,28 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
       { caseClassName: item.pxObjClass },
       { workID: item.pyID }
     );
-    const linkEl =
-      item.pxObjClass && item.pyID && linkURL ? (
-        <Link
-          href={linkURL}
-          previewable
-          onPreview={() => {
-            getPConnect().getActionsApi().showCasePreview(encodeURI(item.pzInsKey), {
-              caseClassName: item.pxObjClass
-            });
-          }}
-          onClick={(e: MouseEvent<HTMLButtonElement>) => {
-            /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
-            if (!e.metaKey && !e.ctrlKey) {
-              e.preventDefault();
-              getPConnect().getActionsApi().openWorkByHandle(item.pzInsKey, item.pxObjClass);
-            }
-          }}
-        >
-          {value}
-        </Link>
-      ) : (
-        value
-      );
+    const linkEl = linkURL ? (
+      <Link
+        href={linkURL}
+        previewable
+        onPreview={() => {
+          getPConnect().getActionsApi().showCasePreview(encodeURI(item.pzInsKey), {
+            caseClassName: item.pxObjClass
+          });
+        }}
+        onClick={(e: MouseEvent<HTMLButtonElement>) => {
+          /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            getPConnect().getActionsApi().openWorkByHandle(item.pzInsKey, item.pxObjClass);
+          }
+        }}
+      >
+        {value}
+      </Link>
+    ) : (
+      value
+    );
 
     return linkEl;
   }

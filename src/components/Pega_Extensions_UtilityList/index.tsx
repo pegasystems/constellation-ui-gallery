@@ -106,13 +106,14 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
           setLoading(false);
         });
     }
-  }, [dataPage, primaryField, secondaryFields]);
+  }, [dataPage, primaryField, secondaryFields, secondaryFieldTypes]);
 
   if (!primaryField || !dataPage) return null;
   return (
     <Flex container={{ direction: 'column' }}>
       <SummaryList
         name={heading}
+        headingTag='h3'
         icon={icon}
         count={loading ? undefined : objects.length}
         items={objects?.slice(0, 3)}
