@@ -5,6 +5,7 @@ import ReactFlow, {
   useEdgesState,
   MiniMap,
   Controls,
+  MarkerType,
   type EdgeTypes,
   type Node,
   type Edge
@@ -73,7 +74,7 @@ const edgeTypes: EdgeTypes = {
 export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps) {
   const {
     heading = '',
-    height = '30rem',
+    height = '40rem',
     showMinimap = true,
     showControls = true,
     showRefresh = true,
@@ -84,6 +85,8 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
+
+  const defaultViewport = { x: 0, y: 0, zoom: 3 };
 
   const getNodesDetails = async () => {
     const initialNodes: Array<Node> = [];
@@ -115,6 +118,16 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
         source: element.pyFrom,
         target: element.pyTo,
         data: { type: element.pyCategory, label: element.pyLabel, path: edgePath },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 20,
+          height: 20,
+          color: '#000'
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: '#000'
+        },
         type: 'custom',
         ariaLabel
       });
@@ -154,6 +167,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             fitView
+            defaultViewport={defaultViewport}
             proOptions={{ hideAttribution: true }}
           >
             {showMinimap ? <MiniMap /> : null}

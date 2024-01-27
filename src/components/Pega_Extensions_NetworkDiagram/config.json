@@ -64,7 +64,7 @@
   "defaultConfig": {
     "heading": "Network Diagram",
     "dataPage": "",
-    "height": "30rem",
+    "height": "40rem",
     "showMinimap": true,
     "showRefresh": true,
     "edgePath": "bezier"

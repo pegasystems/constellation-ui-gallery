@@ -8,7 +8,18 @@ import {
 } from 'reactflow';
 
 const CustomEdge = (props: EdgeProps) => {
-  const { id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
+  const {
+    id,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    sourcePosition,
+    targetPosition,
+    data,
+    markerStart,
+    markerEnd
+  } = props;
   let edgePath: string;
   let labelX: number;
   let labelY: number;
@@ -45,7 +56,16 @@ const CustomEdge = (props: EdgeProps) => {
   }
   return (
     <>
-      <BaseEdge id={id} path={edgePath} />
+      <BaseEdge
+        id={id}
+        path={edgePath}
+        markerStart={markerStart}
+        markerEnd={markerEnd}
+        style={{
+          strokeWidth: 2,
+          stroke: '#000'
+        }}
+      />
       <EdgeLabelRenderer>
         <div
           style={{

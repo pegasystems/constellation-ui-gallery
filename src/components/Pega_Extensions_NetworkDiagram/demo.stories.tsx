@@ -4,29 +4,10 @@ import PegaExtensionsNetworkDiagram from './index';
 export default {
   title: 'Widgets/Network Diagram',
   argTypes: {
-    heading: {
-      control: 'text'
-    },
     dataPage: {
       table: {
         disable: true
       }
-    },
-    height: {
-      control: 'text'
-    },
-    showMinimap: {
-      control: 'boolean'
-    },
-    showControls: {
-      control: 'boolean'
-    },
-    showRefresh: {
-      control: 'boolean'
-    },
-    edgePath: {
-      options: ['bezier', 'straight', 'step'],
-      control: 'select'
     },
     getPConnect: {
       table: {
@@ -318,7 +299,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    height: '30rem',
+    height: '40rem',
     showMinimap: true,
     showControls: true,
     showRefresh: true,

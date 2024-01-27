@@ -45,10 +45,30 @@ export default styled.div(({ height }: { height: string }) => {
     }
     .react-flow__edge-path,
     .react-flow__connection-path {
-      stroke: #b1b1b7;
+      stroke: #000;
       stroke-width: 1;
       fill: none;
     }
+    .react-flow__edge:focus > .react-flow__edge-path,
+    .react-flow__edge:hover > .react-flow__edge-path,
+    .react-flow__edge:active > .react-flow__edge-path,
+    .react-flow__edge:focus > .react-flow__connection-path,
+    .react-flow__edge:hover > .react-flow__connection-path,
+    .react-flow__edge:active > .react-flow__connection-path {
+      stroke: #076bc9 !important;
+    }
+    .react-flow__node-custom {
+      border: 1px solid #fff;
+    }
+    .react-flow__node-custom:focus,
+    .react-flow__node-custom:hover,
+    .react-flow__node-custom:active {
+      border: 1px solid #076bc9;
+    }
+    div.react-flow__handle.connectionindicator {
+      visibility: hidden;
+    }
+
     .react-flow__edge {
       pointer-events: visibleStroke;
       cursor: pointer;
