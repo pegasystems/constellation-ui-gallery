@@ -33,11 +33,11 @@ const setPCore = () => {
           if (ID === 'LINK-ATTACHMENT DEMOURL') {
             return Promise.resolve({ data: 'https://www.pega.com' });
           } else if (ID === 'LINK-ATTACHMENT DEMOPNG') {
-            return getFile('/Overview.png');
+            return getFile('./Overview.png');
           } else if (ID === 'LINK-ATTACHMENT DEMODOCX') {
-            return getFile('/SampleWord.docx');
+            return getFile('./SampleWord.docx');
           } else if (ID === 'LINK-ATTACHMENT DEMOPDF') {
-            return getFile('/SamplePDF.pdf');
+            return getFile('./SamplePDF.pdf');
           }
         },
         getCaseAttachments: () => {
@@ -209,6 +209,7 @@ export const Default: Story = {
     heading: 'Display attachments',
     categories: '',
     useLightBox: false,
-    displayFormat: 'list'
+    displayFormat: 'list',
+    icon: 'clipboard'
   }
 };
