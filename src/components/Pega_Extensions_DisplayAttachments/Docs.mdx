@@ -1,0 +1,25 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Display Attachments allows to render the attachments in a read-only mode. This widget is not a replacement of the attachment widget since it does not let you upload, delete or edit existing attachments.
+
+You can filter the attachments to display by providing a comma-separated list of categories. You can also change the 'displayFormat' to render either as a list (when using in the Utility column)
+or as a set of tiles (when rendered in a Details view).
+
+Images can also be rendered in a Lightbox component instead of being opened in a new browser tab.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Here is an example of using the Display Attachments widget using the 'tiles' displayFormat inside a details tab or using the 'list' displayFormat in the utility column.
+
+![Example of using the Dsiplay Attachments in a Case View](DisplayAttachments_Demo.png)

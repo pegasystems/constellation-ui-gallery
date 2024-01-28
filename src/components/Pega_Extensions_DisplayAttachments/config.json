@@ -1,0 +1,69 @@
+{
+  "name": "Pega_Extensions_DisplayAttachments",
+  "label": "Display Attachments",
+  "description": "Display the attachments for a specific category",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_DisplayAttachments",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "categories",
+      "label": "Categories (comma-separated)",
+      "format": "TEXT"
+    },
+    {
+      "name": "icon",
+      "label": "Icon",
+      "format": "SELECT",
+      "defaultValue": "clipboard",
+      "source": [
+        {
+          "key": "information",
+          "value": "information"
+        },
+        {
+          "key": "polaris",
+          "value": "polaris"
+        },
+        {
+          "key": "clipboard",
+          "value": "clipboard"
+        }
+      ]
+    },
+    {
+      "name": "displayFormat",
+      "label": "Display format",
+      "format": "SELECT",
+      "defaultValue": "list",
+      "source": [
+        {
+          "key": "list",
+          "value": "List"
+        },
+        {
+          "key": "tiles",
+          "value": "Tiles"
+        }
+      ]
+    },
+    {
+      "name": "useLightBox",
+      "label": "Show images using LightBox",
+      "format": "BOOLEAN"
+    }
+  ],
+  "defaultConfig": {
+    "heading": "List of attachments",
+    "categories": ""
+  }
+}
