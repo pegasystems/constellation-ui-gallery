@@ -147,6 +147,7 @@ const preview: Preview = {
               --addon-backgrounds-gradient-secondary 0.3s;
           }
 
+          .sb-story.sb-unstyled,
           ${selector} {
             background: ${background} !important;
             transition: background-color 0.3s;

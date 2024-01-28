@@ -4,32 +4,10 @@ import PegaExtensionsSignatureCapture from './index';
 export default {
   title: 'Fields/Signature Capture',
   argTypes: {
-    label: {
-      control: 'text'
-    },
     value: {
-      control: 'text'
-    },
-    helperText: {
-      control: 'text'
-    },
-    testId: {
-      control: 'text'
-    },
-    validatemessage: {
-      control: 'text'
-    },
-    disabled: {
-      control: 'boolean'
-    },
-    readOnly: {
-      control: 'boolean'
-    },
-    required: {
-      control: 'boolean'
-    },
-    hideLabel: {
-      control: 'boolean'
+      table: {
+        disable: true
+      }
     },
     displayMode: {
       table: {

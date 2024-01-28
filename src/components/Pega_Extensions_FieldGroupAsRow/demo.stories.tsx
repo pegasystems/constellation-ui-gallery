@@ -5,9 +5,6 @@ import PegaExtensionsFieldGroupAsRow from './index';
 export default {
   title: 'Templates/Field Group As Row',
   argTypes: {
-    heading: {
-      control: 'text'
-    },
     getPConnect: {
       table: {
         disable: true
@@ -113,7 +110,7 @@ export const Default: Story = {
   render: args => {
     const props = {
       template: 'FieldGroupAsRow',
-      heading: args.heading,
+      ...args,
       getPConnect: () => {
         return {
           getChildren: () => {

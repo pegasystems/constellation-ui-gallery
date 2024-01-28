@@ -12,7 +12,8 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Configuration
+  Configuration,
+  useTheme
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
 
@@ -26,7 +27,7 @@ type CalendarProps = {
   heading: string;
   dataPage: string;
   createClassname?: string;
-  defaultViewMode: string;
+  defaultViewMode: 'Monthly' | 'Weekly' | 'Daily';
   nowIndicator: boolean;
   weekendIndicator: boolean;
   getPConnect: any;
@@ -70,6 +71,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   } = props;
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
+  const theme = useTheme();
   let dateInfo: DateInfo = { view: { type: VIEW_TYPE.MONTH } };
   const dateInfoStr = localStorage.getItem('fullcalendar');
   if (dateInfoStr) {
@@ -129,9 +131,12 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
         previewable
         style={
           isdayGrid
-            ? {}
+            ? {
+                wordBreak: 'break-all'
+              }
             : {
-                color: '#FFF'
+                color: '#FFF',
+                wordBreak: 'break-all'
               }
         }
         onPreview={() => {
@@ -154,7 +159,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       return linkEl;
     }
     return (
-      <StyledEventWrapper>
+      <StyledEventWrapper theme={theme}>
         <Text variant='h3'>{eventInfo.event.title}</Text>
         <FieldValueList
           variant='inline'

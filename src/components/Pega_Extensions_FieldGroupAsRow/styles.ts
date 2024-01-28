@@ -1,6 +1,7 @@
+import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export default styled.div(() => {
+export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
   return css`
     & > div > div {
       max-width: unset;
@@ -18,7 +19,7 @@ export default styled.div(() => {
     & fieldset {
       min-width: 40ch;
       flex: 1;
-      border-right: 0.0625rem solid rgb(207, 207, 207);
+      border-right: 0.0625rem solid ${theme.base.palette['border-line']};
       margin-right: 1rem;
       padding-right: 1rem;
     }
@@ -32,7 +33,7 @@ export default styled.div(() => {
     }
 
     & img {
-      max-height: 200px;
+      max-height: 12rem;
     }
   `;
 });

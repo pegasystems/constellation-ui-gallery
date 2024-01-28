@@ -18,17 +18,6 @@ type info = {
 export default {
   title: 'Templates/Compare Table Layout',
   argTypes: {
-    heading: {
-      control: 'text'
-    },
-    displayFormat: {
-      options: ['spreadsheet', 'financialreport', 'radio-button-card'],
-      control: 'select'
-    },
-    currencyFormat: {
-      options: ['standard', 'compact', 'parentheses'],
-      control: 'select'
-    },
     selectionProperty: {
       options: ['Select an object', 'Read-only'],
       control: { type: 'radio' },
@@ -367,10 +356,8 @@ export const Default: Story = {
     const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',
-      heading: args.heading,
+      ...args,
       selectionProperty: selProp,
-      displayFormat: args.displayFormat,
-      currencyFormat: args.currencyFormat,
       getPConnect: () => {
         return {
           getChildren: () => {

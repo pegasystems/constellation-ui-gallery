@@ -78,10 +78,7 @@ export const Default: Story = {
   render: args => {
     setPCore();
     const props = {
-      dataPage: '',
-      heading: args.heading,
-      maxHeight: args.maxHeight,
-      sendAllUserContext: args.sendAllUserContext,
+      ...args,
       getPConnect: () => {
         return {
           getContextName: () => ''
@@ -93,6 +90,7 @@ export const Default: Story = {
   args: {
     heading: 'AI Assistant',
     maxHeight: 'auto',
-    sendAllUserContext: false
+    sendAllUserContext: false,
+    dataPage: ''
   }
 };

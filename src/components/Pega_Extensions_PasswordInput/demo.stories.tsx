@@ -4,36 +4,6 @@ import PegaExtensionsPasswordInput from './index';
 export default {
   title: 'Fields/Password Input',
   argTypes: {
-    label: {
-      control: 'text'
-    },
-    value: {
-      control: 'text'
-    },
-    helperText: {
-      control: 'text'
-    },
-    testId: {
-      control: 'text'
-    },
-    placeholder: {
-      control: 'text'
-    },
-    validatemessage: {
-      control: 'text'
-    },
-    disabled: {
-      control: 'boolean'
-    },
-    readOnly: {
-      control: 'boolean'
-    },
-    required: {
-      control: 'boolean'
-    },
-    hideLabel: {
-      control: 'boolean'
-    },
     fieldMetadata: {
       table: {
         disable: true

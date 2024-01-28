@@ -16,10 +16,10 @@ import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 import getAllFields from './utils';
 
 type TableLayoutProps = {
-  displayFormat: string;
   heading: string;
+  displayFormat: 'spreadsheet' | 'financialreport' | 'radio-button-card';
   selectionProperty?: string;
-  currencyFormat: string;
+  currencyFormat: 'standard' | 'compact' | 'parentheses';
   getPConnect: any;
 };
 

@@ -256,12 +256,7 @@ export const Default: Story = {
     setPCore();
     const props = {
       dataPage: '',
-      heading: args.heading,
-      height: args.height,
-      showMinimap: args.showMinimap,
-      showControls: args.showControls,
-      showRefresh: args.showRefresh,
-      edgePath: args.edgePath,
+      ...args,
       getPConnect: () => {
         return {
           getActionsApi: () => {

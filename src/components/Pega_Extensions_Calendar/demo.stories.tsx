@@ -4,22 +4,6 @@ import PegaExtensionsCalendar from './index';
 export default {
   title: 'Widgets/Calendar',
   argTypes: {
-    heading: {
-      control: 'text'
-    },
-    defaultViewMode: {
-      options: ['Monthly', 'Weekly', 'Daily'],
-      control: 'select'
-    },
-    createClassname: {
-      control: 'text'
-    },
-    nowIndicator: {
-      control: 'boolean'
-    },
-    weekendIndicator: {
-      control: 'boolean'
-    },
     dataPage: {
       table: {
         disable: true
@@ -165,12 +149,7 @@ export const Default: Story = {
   render: args => {
     setPCore();
     const props = {
-      dataPage: '',
-      heading: args.heading,
-      createClassname: args.createClassname,
-      defaultViewMode: args.defaultViewMode,
-      nowIndicator: args.nowIndicator,
-      weekendIndicator: args.weekendIndicator,
+      ...args,
       getPConnect: () => {
         return {
           getActionsApi: () => {
@@ -212,9 +191,10 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    createClassname: '',
+    createClassname: 'Work-Class1',
     defaultViewMode: 'Monthly',
     nowIndicator: true,
-    weekendIndicator: true
+    weekendIndicator: true,
+    dataPage: ''
   }
 };

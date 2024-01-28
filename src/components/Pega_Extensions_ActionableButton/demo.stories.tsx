@@ -4,15 +4,6 @@ import PegaExtensionsActionableButton from './index';
 export default {
   title: 'Fields/Actionable button',
   argTypes: {
-    label: {
-      control: 'text'
-    },
-    localAction: {
-      control: 'text'
-    },
-    value: {
-      control: 'text'
-    },
     getPConnect: {
       table: {
         disable: true
@@ -43,9 +34,7 @@ export const Default: Story = {
   render: args => {
     setPCore();
     const props = {
-      label: args.label,
-      localAction: args.localAction,
-      value: args.value,
+      ...args,
       getPConnect: () => {
         return {
           getStateProps: () => {

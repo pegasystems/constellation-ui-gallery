@@ -90,20 +90,28 @@ const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
-    return <Text>{displayComp}</Text>;
+    return (
+      <Configuration>
+        <Text>{displayComp}</Text>
+      </Configuration>
+    );
   } else if (displayMode === 'LABELS_LEFT') {
     return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
+      <Configuration>
+        <FieldValueList
+          variant={hideLabel ? 'stacked' : variant}
+          data-testid={testId}
+          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+        />
+      </Configuration>
     );
   } else if (displayMode === 'STACKED_LARGE_VAL') {
     return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
+      <Configuration>
+        <Text variant='h1' as='span'>
+          {displayComp}
+        </Text>
+      </Configuration>
     );
   }
 
