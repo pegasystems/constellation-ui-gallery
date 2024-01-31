@@ -20,9 +20,9 @@ Explain the problem and include additional details to help maintainers reproduce
 - **Explain which behavior you expected to see instead and why.**
 - **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem.
 
-### Suggesting Enhancements
+### Suggesting Enhancements or Proposing New Components
 
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/pegasystems/constellation-ui-gallery/issues).
+Both of these are tracked as [GitHub issues](https://github.com/pegasystems/constellation-ui-gallery/issues).
 
 - **Use a clear and descriptive title** for the issue to identify the suggestion.
 - **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
