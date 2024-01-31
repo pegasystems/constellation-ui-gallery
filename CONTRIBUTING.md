@@ -2,7 +2,7 @@
 
 We welcome contributions to the Constellation UI Gallery repository.
 
-All participants are expected to adhere to the [Code of Conduct](https://github.com/pegasystems/constellation-ui-gallery/CODE_OF_CONDUCT.md) and treat each other with respect.
+All participants are expected to adhere to the [Code of Conduct](https://github.com/pegasystems/constellation-ui-gallery/blob/contribution_updates/CODE_OF_CONDUCT.md) and treat each other with respect.
 
 The following is a set of guidelines for contributing to this repository, which is hosted on GitHub.
 
