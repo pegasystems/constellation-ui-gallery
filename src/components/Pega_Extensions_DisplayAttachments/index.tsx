@@ -119,12 +119,12 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
     const listOfAttachments: Array<any> = [];
     const listOfCategories = categories.split(',');
     response.forEach((attachment: any) => {
-      const currentCategory = attachment.category?.trim().toLocaleLowerCase();
+      const currentCategory = attachment.category?.trim();
       /* Filter the attachment categories */
       if (categories && listOfCategories.length > 0) {
         let isValidCategory = false;
         listOfCategories.forEach((categoryVal: string) => {
-          if (currentCategory === categoryVal.trim().toLocaleLowerCase()) {
+          if (currentCategory.toLocaleLowerCase() === categoryVal.trim().toLocaleLowerCase()) {
             isValidCategory = true;
           }
         });
@@ -132,15 +132,24 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
       }
       const dateTime = <DateTimeDisplay value={attachment.createTime} variant='relative' />;
       const secondaryItems = [
-        currentCategory,
+        currentCategory === 'pxDocument' ? 'Document' : currentCategory,
         dateTime,
         attachment.createdByName ?? attachment.createdBy
       ];
 
-      const mimetype = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');
-      attachment.mimeType = mimetype;
-      const kind = getKindFromMimeType(mimetype ?? '');
+      attachment.mimeType = getMimeTypeFromFile(
+        attachment.fileName || attachment.nameWithExt || ''
+      );
+      const kind = getKindFromMimeType(attachment.mimeType ?? '');
       const visual = <FileVisual type={kind} />;
+      if (!attachment.mimeType) {
+        if (attachment.category === 'Correspondence') {
+          attachment.mimeType = 'text/html';
+          attachment.extension = 'html';
+        } else {
+          attachment.mimeType = 'text/plain';
+        }
+      }
       const bCanUseLightBox = useLightBox && kind === 'image';
       const isDownloadable = attachment.links?.download;
       listOfAttachments.push({

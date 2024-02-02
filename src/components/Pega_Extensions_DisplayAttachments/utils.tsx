@@ -43,7 +43,11 @@ const fileDownload = (data: string, attachment: any, headers: any) => {
   const name = attachment.extension
     ? `${attachment.name}.${attachment.extension}`
     : attachment.fileName;
-  downloadBlob(isContentBase64(headers) ? atob(data) : data, name, attachment.mimeType);
+  downloadBlob(
+    isContentBase64(headers) ? base64ToArrayBuffer(data) : data,
+    name,
+    attachment.mimeType
+  );
 };
 
 /* Main utility function do handle what to do when clicking on an attachment
