@@ -15,12 +15,8 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["node_modules", "packages/*/lib", "!.storybook", ".storybook/public"],
+  "ignorePatterns": ["packages/*/lib", "!.storybook", ".storybook/public"],
   "rules": {
-    // Prettier recommends running separately from a linter.
-    // https://prettier.io/docs/en/integrating-with-linters.html#notes
-    "prettier/prettier": "off",
-
     // Disable rules from shared configs we're not ready for yet.
     "sonarjs/cognitive-complexity": "off",
     "sonarjs/no-identical-functions": "off",
@@ -135,28 +131,8 @@
       "files": "*.@(ts|tsx)",
       "rules": {
         "@typescript-eslint/method-signature-style": ["error", "property"],
-        // "@typescript-eslint/ban-types": [
-        //   "warn",
-        //   {
-        //     "types": {
-        //       "Omit": "Please use the 'OmitStrict' type from 'src/types/' instead.",
-        //       "object": false,
-        //       "Function": false
-        //     },
-        //     "extendDefaults": true
-        //   }
-        // ],
-
         "quotes": "off",
         "@typescript-eslint/quotes": "off"
-        // [
-        //   "error",
-        //   "single",
-        //   {
-        //     "avoidEscape": true,
-        //     "allowTemplateLiterals": false
-        //   }
-        // ]
       }
     },
     {
@@ -171,14 +147,6 @@
           }
         ]
       }
-    },
-    {
-      "files": "*.@(js|jsx|ts|tsx|mdx)",
-      "rules": {}
-    },
-    {
-      "files": ".storybook/*.js",
-      "extends": ["@pega/eslint-config/script"]
     },
     {
       "files": "*/**/mocks/**.@(mocks|styles).@(tsx|ts)",
