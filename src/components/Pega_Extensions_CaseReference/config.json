@@ -1,0 +1,33 @@
+{
+  "name": "Pega_Extensions_CaseReference",
+  "label": "Case reference",
+  "description": "Case reference",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_CaseReference",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Label value",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "key": "selectionProperty",
+      "format": "PROPERTY",
+      "name": "selectionProperty",
+      "label": "Selection Property",
+      "required": true
+    },
+    {
+      "name": "visibility",
+      "label": "Visible",
+      "format": "VISIBILITY"
+    }
+  ],
+  "defaultConfig": {}
+}
