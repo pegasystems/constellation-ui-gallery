@@ -1,10 +1,12 @@
-# Constellation UI Gallery
+# Constellation DX Components UI Gallery
 
-For advanced use cases, the Constellation architecture allows professional front-end developers who are knowledgeable in ReactJS and web technologies to extend Constellation by programmatically assembling the core Constellation presentational components, and using the Constellation DX API to build custom components. These component are referred as 'Constellation DX components'. This site is a repository of examples of these components. You can use them directly in your application or customize it from the source code. This gallery of Constellation DX components will help you getting started and follow the best practices when implementing these components.
+Constellation's flexible architecture empowers advanced users (professional front-end developers with ReactJS and web technology expertise) to extend the platform. You can achieve this by programmatically combining core Constellation presentational components and leveraging the Constellation DX API to build custom components, known as "Constellation DX components."
+
+This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
 
 These components have been tested on Pega 23.1 and might not run on older versions of the platform - For older versions, the recommendation is to download the supported version of the Constellation DX Component builder package @pega/custom-dx-components@XXXX supported by your Pega Platform version and create new components using the command line utility 'npm run create'.
 
-A demonstration of the Constellation DX components is available at [pegasystems.github.io/constellation-ui-gallery](https://pegasystems.github.io/constellation-ui-gallery/)
+A complete demonstration of these Constellation DX components is available at [pegasystems.github.io/constellation-ui-gallery](https://pegasystems.github.io/constellation-ui-gallery/)
 
 Pre-build versions of these components is available as a RAP file that you can import into your Pega application - see [github.com/pegasystems/constellation-ui-gallery/releases](https://github.com/pegasystems/constellation-ui-gallery/releases)
 
