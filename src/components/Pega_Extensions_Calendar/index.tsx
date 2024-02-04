@@ -4,6 +4,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {
+  registerIcon,
+  Icon,
   Text,
   Status,
   Link,
@@ -16,6 +18,9 @@ import {
   useTheme
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
+import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
+
+registerIcon(plusIcon);
 
 const VIEW_TYPE = {
   DAY: 'timeGridDay',
@@ -109,7 +114,9 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
 
   const addNewEvent = () => {
     if (createClassname) {
-      getPConnect().getActionsApi().createWork(createClassname, {});
+      getPConnect().getActionsApi().createWork(createClassname, {
+        openCaseViewAfterCreate: false
+      });
     }
   };
 
@@ -247,8 +254,8 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
         <CardHeader
           actions={
             createClassname ? (
-              <Button variant='primary' onClick={addNewEvent}>
-                Create
+              <Button variant='simple' label='Create new event' icon compact onClick={addNewEvent}>
+                <Icon name='plus' />
               </Button>
             ) : undefined
           }

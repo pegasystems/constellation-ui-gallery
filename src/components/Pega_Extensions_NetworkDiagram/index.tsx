@@ -1,5 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import {
+  registerIcon,
+  Icon,
   Text,
   Card,
   CardHeader,
@@ -24,7 +26,9 @@ import StyledPegaExtensionsNetworkDiagram from './styles';
 
 import CustomNode from './CustomNode';
 import CustomEdge from './CustomEdge';
+import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 
+registerIcon(plusIcon);
 interface StringHashMap {
   [key: string]: string;
 }
@@ -160,8 +164,14 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
         <CardHeader
           actions={
             showRefresh ? (
-              <Button variant='primary' onClick={getNodesDetails}>
-                Refresh
+              <Button
+                variant='simple'
+                label='Reload diagram'
+                icon
+                compact
+                onClick={getNodesDetails}
+              >
+                <Icon name='plus' />
               </Button>
             ) : undefined
           }

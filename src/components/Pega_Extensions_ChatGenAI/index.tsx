@@ -173,9 +173,10 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
             actions={
               sendAllUserContext ? (
                 <Button
-                  variant='secondary'
+                  variant='simple'
                   label='Restart conversation'
                   icon
+                  compact
                   onClick={resetContext}
                 >
                   <Icon name='reset' />
