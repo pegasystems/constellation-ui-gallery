@@ -4,9 +4,13 @@ import { Meta } from '@storybook/blocks';
 
 # Getting Started
 
-Welcome to the UI gallery of Constellation DX Components. This guide will help you get started and connect you to the essential resources you need.
+Welcome to the Constellation DX Components UI Gallery!
 
-Before you dive into designing, familiarize yourself with our Constellation design guidelines. They provide valuable insights into our design philosophy and standards.
+Constellation's flexible architecture empowers advanced users (professional front-end developers with ReactJS and web technology expertise) to extend the platform. You can achieve this by programmatically combining core Constellation presentational components and leveraging the Constellation DX API to build custom components, known as "Constellation DX components."
+
+This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
+
+Before diving in, take a moment to review our Constellation design guidelines. This valuable resource offers insights into our design philosophy and ensures consistency across your creations.
 
 - [UI/UX Guidelines](https://design.pega.com)
 - [Best practices](https://design.pega.com/design/getting-started/)
@@ -24,13 +28,13 @@ The Constellation DX Components allows to extend the library of out-of-the-box a
 
 Here are a set of best practices when implementing a Constellation DX Component:
 
-### Separate presentation and business logic
+### Leverage the Constellation Presentational Component Library
 
-For consistency, the Constellation DX component should reuse the components already provided by the Constellation component library available at [design.pega.com/develop](https://design.pega.com/develop).
+For consistency, the Constellation DX component should reuse the components already provided by the Constellation component library available at [design.pega.com/develop](https://design.pega.com/develop). This best pratice includes using the Icon component and the list of icons provided as part of the library.
 
 ### Use PCore and PConnect public APIs
 
-When making calls to the platform, handle all the requests through the getPConnect object passed to your component. For more details see [Using PCore and PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html).
+When making calls to the platform, handle all the requests through the getPConnect object passed to your component as well as the global PCore object. For more details see [Using PCore and PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html).
 
 ### Use styled component library and design tokens
 
@@ -42,7 +46,7 @@ Typescript is highly recommended for writing a Constellation DX component. Stron
 
 ### Use rem instead of px
 
-REM is a relative unit calculated based on the root font size. It is recommended to use rem as unit for font sizes or spacing rather than px. This ensures that any future change in root font size gets translated accordingly to all components.
+Rem (short for “root-em”) units dictate an element's font size relative to the size of the root element. It is recommended to use rem as unit for font sizes or spacing rather than px. This ensures that any future change in root font size gets translated accordingly to all components.
 
 ### Prefer functional components over class components
 
