@@ -8,7 +8,7 @@
   "allowedApplications": [],
   "componentKey": "Pega_Extensions_DisplayAttachments",
   "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
+  "subtype": "CASE",
   "properties": [
     {
       "name": "heading",
@@ -16,9 +16,21 @@
       "format": "TEXT"
     },
     {
+      "name": "useAttachmentEndpoint",
+      "label": "Use the attachment endpoint",
+      "format": "BOOLEAN"
+    },
+    {
       "name": "categories",
       "label": "Categories (comma-separated)",
-      "format": "TEXT"
+      "format": "TEXT",
+      "visibility": "($this.useAttachmentEndpoint = true)"
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name",
+      "format": "TEXT",
+      "visibility": "($this.useAttachmentEndpoint = false)"
     },
     {
       "name": "icon",
@@ -64,6 +76,8 @@
   ],
   "defaultConfig": {
     "heading": "List of attachments",
-    "categories": ""
+    "categories": "",
+    "dataPage": "",
+    "useAttachmentEndpoint": true
   }
 }

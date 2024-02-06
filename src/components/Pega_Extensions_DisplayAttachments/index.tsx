@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect, type MouseEvent } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
-  DateTimeDisplay,
   registerIcon,
   Modal,
   Flex,
@@ -10,13 +9,7 @@ import {
   useModalManager,
   SummaryList,
   SummaryItem,
-  MetaList,
   Configuration,
-  FileVisual,
-  getKindFromMimeType,
-  getMimeTypeFromFile,
-  Link,
-  Icon,
   Lightbox,
   Grid
 } from '@pega/cosmos-react-core';
@@ -26,7 +19,7 @@ import type {
   LightboxItem,
   LightboxProps
 } from '@pega/cosmos-react-core';
-import { canPreviewFile, downloadFile, downloadBlob } from './utils';
+import { downloadBlob, addAttachment } from './utils';
 import { StyledCardContent, StyledHeading } from './styles';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
@@ -68,7 +61,9 @@ registerIcon(
 
 type UtilityListProps = {
   heading: string;
+  useAttachmentEndpoint: boolean;
   categories?: string;
+  dataPage: string;
   icon?: 'information' | 'polaris' | 'clipboard';
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
@@ -78,6 +73,8 @@ type UtilityListProps = {
 export default function PegaExtensionsDisplayAttachments(props: UtilityListProps) {
   const {
     heading = 'List of objects',
+    useAttachmentEndpoint = true,
+    dataPage = '',
     categories = '',
     displayFormat = 'summaryList',
     icon = 'clipboard',
@@ -119,60 +116,40 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
     const listOfAttachments: Array<any> = [];
     const listOfCategories = categories.split(',');
     response.forEach((attachment: any) => {
-      const currentCategory = attachment.category?.trim();
-      /* Filter the attachment categories */
-      if (categories && listOfCategories.length > 0) {
-        let isValidCategory = false;
-        listOfCategories.forEach((categoryVal: string) => {
-          if (currentCategory.toLocaleLowerCase() === categoryVal.trim().toLocaleLowerCase()) {
-            isValidCategory = true;
-          }
-        });
-        if (!isValidCategory) return;
-      }
-      const dateTime = <DateTimeDisplay value={attachment.createTime} variant='relative' />;
-      const secondaryItems = [
-        currentCategory === 'pxDocument' ? 'Document' : currentCategory,
-        dateTime,
-        attachment.createdByName ?? attachment.createdBy
-      ];
-
-      attachment.mimeType = getMimeTypeFromFile(
-        attachment.fileName || attachment.nameWithExt || ''
-      );
-      const kind = getKindFromMimeType(attachment.mimeType ?? '');
-      const visual = <FileVisual type={kind} />;
-      if (!attachment.mimeType) {
-        if (attachment.category === 'Correspondence') {
-          attachment.mimeType = 'text/html';
-          attachment.extension = 'html';
-        } else {
-          attachment.mimeType = 'text/plain';
+      const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
+      if (useAttachmentEndpoint) {
+        /* Filter the attachment categories */
+        if (categories && listOfCategories.length > 0) {
+          let isValidCategory = false;
+          listOfCategories.forEach((categoryVal: string) => {
+            if (currentCategory.toLocaleLowerCase() === categoryVal.trim().toLocaleLowerCase()) {
+              isValidCategory = true;
+            }
+          });
+          if (!isValidCategory) return;
         }
+      } else {
+        attachment = {
+          ...attachment,
+          category: attachment.pyCategory,
+          name: attachment.pyMemo,
+          ID: attachment.pzInsKey,
+          type: attachment.pyFileCategory,
+          fileName: attachment.pyFileName,
+          mimeType: attachment.pyTopic,
+          categoryName: attachment.pyLabel,
+          createTime: attachment.pxCreateDateTime,
+          createdByName: attachment.pxCreateOpName
+        };
       }
-      const bCanUseLightBox = useLightBox && kind === 'image';
-      const isDownloadable = attachment.links?.download;
-      listOfAttachments.push({
-        id: attachment.ID,
-        visual,
-        primary: isDownloadable ? (
-          <Link
-            href='#'
-            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              setElemRef(e.currentTarget);
-              downloadFile(attachment, getPConnect, bCanUseLightBox ? setImages : undefined);
-            }}
-          >
-            {attachment.name}{' '}
-            {(attachment.type === 'URL' || (canPreviewFile(kind) && !bCanUseLightBox)) && (
-              <Icon name='open' />
-            )}
-          </Link>
-        ) : (
-          attachment.name
-        ),
-        secondary: <MetaList items={secondaryItems} />
+      addAttachment({
+        currentCategory,
+        attachment,
+        listOfAttachments,
+        getPConnect,
+        setImages,
+        useLightBox,
+        setElemRef
       });
     });
     setAttachments(listOfAttachments);
@@ -181,15 +158,36 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
 
   useEffect(() => {
     const pConn = getPConnect();
-    const attachmentUtils = (window as any).PCore.getAttachmentUtils();
-    const caseID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
-    attachmentUtils
-      .getCaseAttachments(caseID, pConn.getContextName())
-      .then((resp: any) => loadAttachments(resp))
-      .catch(() => {
-        setLoading(false);
-      });
-  }, [categories, useLightBox]);
+    if (useAttachmentEndpoint) {
+      const attachmentUtils = (window as any).PCore.getAttachmentUtils();
+      const caseID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      attachmentUtils
+        .getCaseAttachments(caseID, pConn.getContextName())
+        .then((resp: any) => loadAttachments(resp))
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      const CaseInstanceKey = pConn.getValue(
+        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
+      );
+      const payload = {
+        dataViewParameters: [{ LinkRefFrom: CaseInstanceKey }]
+      };
+      (window as any).PCore.getDataApiUtils()
+        .getData(dataPage, payload, pConn.getContextName())
+        .then((response: any) => {
+          if (response.data.data !== null) {
+            loadAttachments(response.data.data);
+          } else {
+            setLoading(false);
+          }
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
+  }, [categories, useLightBox, useAttachmentEndpoint]);
 
   return (
     <Configuration>

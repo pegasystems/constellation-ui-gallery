@@ -27,6 +27,70 @@ async function getFile(url: string) {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getDataApiUtils: () => {
+      return {
+        getData: () => {
+          return Promise.resolve({
+            data: {
+              data: [
+                {
+                  pxObjClass: 'Link-Attachment',
+                  pxCreateOpName: 'John Smith',
+                  pxCreateDateTime: '2024-01-28T14:54:50.323Z',
+                  pyMemo: 'pega.com',
+                  pzInsKey: 'LINK-ATTACHMENT DEMOURL',
+                  pyTopic: 'application/octet-stream',
+                  pyCategory: 'URL',
+                  pyLabel: 'URL'
+                },
+                {
+                  pxObjClass: 'Link-Attachment',
+                  pxCreateOpName: 'Marc Doe',
+                  pyFileName: 'demoPDF.pdf',
+                  pyTopic: 'application/pdf',
+                  pyFileCategory: 'FILE',
+                  pyLabel: 'File',
+                  pxCreateDateTime: '2024-01-28T13:18:43.193Z',
+                  pyMemo: 'demoPDF',
+                  pzInsKey: 'LINK-ATTACHMENT DEMOPDF',
+                  pyCategory: 'File'
+                },
+                {
+                  pxObjClass: 'Link-Attachment',
+                  pyCategory: 'Correspondence',
+                  pyMemo: 'Hello',
+                  pyTopic: 'application/octet-stream',
+                  pxCreateDateTime: '2024-01-28T14:54:50.323Z',
+                  pxCreateOpName: 'John Smith',
+                  pzInsKey: 'LINK-ATTACHMENT OK5NF|-COMPUTER-WORK F-11015!20240206T121808.330 GMT'
+                },
+                {
+                  pxObjClass: 'Link-Attachment',
+                  pyCategory: 'File',
+                  pyMemo: 'Demo Word',
+                  pyTopic:
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                  pxCreateDateTime: '2024-01-28T14:54:50.323Z',
+                  pxCreateOpName: 'John Smith',
+                  pyFileName: 'Test.docx',
+                  pzInsKey: 'LINK-ATTACHMENT DEMODOCX'
+                },
+                {
+                  pxObjClass: 'Link-Attachment',
+                  pyCategory: 'Image',
+                  pyMemo: 'Screenshot',
+                  pyTopic: 'image/png',
+                  pyFileName: 'demoImage.png',
+                  pxCreateDateTime: '2024-01-28T14:54:50.323Z',
+                  pxCreateOpName: 'Sue Lee',
+                  pzInsKey: 'LINK-ATTACHMENT DEMOPNG'
+                }
+              ]
+            }
+          });
+        }
+      };
+    },
     getAttachmentUtils: () => {
       return {
         downloadAttachment: (ID: string) => {
@@ -209,6 +273,8 @@ export const Default: Story = {
     heading: 'Display attachments',
     categories: '',
     useLightBox: false,
+    useAttachmentEndpoint: true,
+    dataPage: 'D_AttachmentListRO',
     displayFormat: 'list',
     icon: 'clipboard'
   }

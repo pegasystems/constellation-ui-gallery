@@ -1,6 +1,7 @@
+import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export default styled.div(() => {
+export const StyledSignatureContent = styled.div(() => {
   return css`
     & button {
       border-radius: 0;
@@ -9,3 +10,12 @@ export default styled.div(() => {
     }
   `;
 });
+
+export const StyledSignatureReadOnlyContent = styled.div(
+  ({ theme }: { theme: typeof themeDefinition }) => {
+    return css`
+      max-width: 40ch;
+      border: 0.0625rem solid ${theme.base.palette['border-line']};
+    `;
+  }
+);

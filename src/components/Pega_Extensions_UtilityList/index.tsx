@@ -103,6 +103,8 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
         .then((response: any) => {
           if (response.data.data !== null) {
             loadObjects(response.data.data);
+          } else {
+            setLoading(false);
           }
         })
         .catch(() => {

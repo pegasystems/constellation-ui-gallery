@@ -1,4 +1,13 @@
-import { getKindFromMimeType, DateTimeDisplay } from '@pega/cosmos-react-core';
+import { type MouseEvent } from 'react';
+import {
+  getKindFromMimeType,
+  DateTimeDisplay,
+  MetaList,
+  FileVisual,
+  getMimeTypeFromFile,
+  Link,
+  Icon
+} from '@pega/cosmos-react-core';
 
 export const canPreviewFile = (type: string) => {
   return type === 'image' || type === 'pdf';
@@ -97,4 +106,65 @@ export const downloadFile = (attachment: any, getPConnect: any, setImages?: any)
         fileDownload(content.data, attachment, content.headers);
       }
     });
+};
+
+type addAttachmentProps = {
+  currentCategory: string;
+  attachment: any;
+  listOfAttachments: any;
+  getPConnect: any;
+  setImages: any;
+  useLightBox: boolean;
+  setElemRef: any;
+};
+
+export const addAttachment = (props: addAttachmentProps) => {
+  const {
+    currentCategory,
+    attachment,
+    listOfAttachments,
+    getPConnect,
+    setImages,
+    useLightBox,
+    setElemRef
+  } = props;
+  const dateTime = <DateTimeDisplay value={new Date(attachment.createTime)} variant='relative' />;
+  const secondaryItems = [
+    currentCategory === 'pxDocument' ? 'Document' : currentCategory,
+    dateTime,
+    attachment.createdByName ?? attachment.createdBy
+  ];
+
+  attachment.mimeType = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');
+  const kind = getKindFromMimeType(attachment.mimeType ?? '');
+  const visual = <FileVisual type={kind} />;
+  if (!attachment.mimeType) {
+    if (attachment.category === 'Correspondence') {
+      attachment.mimeType = 'text/html';
+      attachment.extension = 'html';
+    } else {
+      attachment.mimeType = 'text/plain';
+    }
+  }
+  const bCanUseLightBox = useLightBox && kind === 'image';
+  listOfAttachments.push({
+    id: attachment.ID,
+    visual,
+    primary: (
+      <Link
+        href='#'
+        onClick={(e: MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault();
+          setElemRef(e.currentTarget);
+          downloadFile(attachment, getPConnect, bCanUseLightBox ? setImages : undefined);
+        }}
+      >
+        {attachment.name}{' '}
+        {(attachment.type === 'URL' || (canPreviewFile(kind) && !bCanUseLightBox)) && (
+          <Icon name='open' />
+        )}
+      </Link>
+    ),
+    secondary: <MetaList items={secondaryItems} />
+  });
 };

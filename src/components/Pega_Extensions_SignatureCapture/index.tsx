@@ -1,8 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
-import { Button, Flex, FormField, FormControl, Configuration } from '@pega/cosmos-react-core';
+import {
+  FieldValueList,
+  Text,
+  Image,
+  Button,
+  Flex,
+  FormField,
+  FormControl,
+  Configuration,
+  useTheme
+} from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
-import StyledPegaExtensionsSignatureCaptureWrapper from './styles';
+import { StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
 
 type SignatureCaptureProps = {
   getPConnect: any;
@@ -16,14 +26,24 @@ type SignatureCaptureProps = {
   required?: boolean;
   testId?: string;
   displayMode?: string;
+  variant?: any;
 };
 
 const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
-  const { value, getPConnect, validatemessage, label, hideLabel, helperText, testId, displayMode } =
-    props;
+  const {
+    value,
+    getPConnect,
+    validatemessage,
+    label,
+    hideLabel = false,
+    helperText,
+    testId,
+    displayMode,
+    variant
+  } = props;
 
   const ref = useRef<SignaturePad>();
-
+  const theme = useTheme();
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
@@ -50,13 +70,31 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
     }
   }, [validatemessage]);
 
-  const displayComp = value ? '***********' : '';
-  if (
-    displayMode === 'DISPLAY_ONLY' ||
-    displayMode === 'LABELS_LEFT' ||
-    displayMode === 'STACKED_LARGE_VAL'
-  ) {
-    return <img src={displayComp} />;
+  const displayComp = value ? (
+    <StyledSignatureReadOnlyContent theme={theme}>
+      <Image alt={label} src={value} />
+    </StyledSignatureReadOnlyContent>
+  ) : null;
+  if (displayMode === 'DISPLAY_ONLY') {
+    return <Configuration>{displayComp}</Configuration>;
+  } else if (displayMode === 'LABELS_LEFT') {
+    return (
+      <Configuration>
+        <FieldValueList
+          variant={hideLabel ? 'stacked' : variant}
+          data-testid={testId}
+          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+        />
+      </Configuration>
+    );
+  } else if (displayMode === 'STACKED_LARGE_VAL') {
+    return (
+      <Configuration>
+        <Text variant='h1' as='span'>
+          {displayComp}
+        </Text>
+      </Configuration>
+    );
   }
 
   const onEndStroke = () => {
@@ -83,7 +121,7 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
 
   return (
     <Configuration>
-      <StyledPegaExtensionsSignatureCaptureWrapper>
+      <StyledSignatureContent>
         <Flex container={{ direction: 'column' }}>
           <FormField
             label={label}
@@ -128,7 +166,7 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
             </FormControl>
           </FormField>
         </Flex>
-      </StyledPegaExtensionsSignatureCaptureWrapper>
+      </StyledSignatureContent>
     </Configuration>
   );
 };

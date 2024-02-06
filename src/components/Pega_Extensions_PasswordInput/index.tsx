@@ -28,7 +28,7 @@ const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
     placeholder,
     validatemessage,
     label,
-    hideLabel,
+    hideLabel = false,
     helperText,
     testId,
     fieldMetadata,
