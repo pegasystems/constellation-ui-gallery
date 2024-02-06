@@ -7,7 +7,10 @@ import * as DemoStories from './demo.stories';
 
 The Display Attachments allows to render the attachments in a read-only mode. This widget is not a replacement of the attachment widget since it does not let you upload, delete or edit existing attachments.
 
-You can filter the attachments to display by providing a comma-separated list of categories. You can also change the 'displayFormat' to render either as a list (when using in the Utility column)
+If 'useAttachmentEndpoint' is true, the widget will use the OOB attachment DX API to retrieve all the attachments - You can then filter the attachments to display by providing a comma-separated list of categories. If this parameter is false,
+you can provide a list DataPage that will be used to get all the attachments - the filtering can then be done inside the DP directly and no filtering is done on the client. The Data page will be called with the parameter 'LinkRefFrom' that will contain the case InsKey. To create this DP, you can look at how the DP D_AttachmentList and customize the report definition
+
+You can also change the 'displayFormat' to render either as a list (when using in the Utility column)
 or as a set of tiles (when rendered in a Details view).
 
 Images can also be rendered in a Lightbox component instead of being opened in a new browser tab.
@@ -22,4 +25,4 @@ Images can also be rendered in a Lightbox component instead of being opened in a
 
 Here is an example of using the Display Attachments widget using the 'tiles' displayFormat inside a details tab or using the 'list' displayFormat in the utility column.
 
-![Example of using the Dsiplay Attachments in a Case View](DisplayAttachments_Demo.png)
+![Example of using the Display Attachments in a Case View](DisplayAttachments_Demo.png)
