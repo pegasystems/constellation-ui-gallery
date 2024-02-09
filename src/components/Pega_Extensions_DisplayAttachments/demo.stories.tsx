@@ -27,6 +27,16 @@ async function getFile(url: string) {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getMessagingServiceManager: () => {
+      return {
+        subscribe: () => {
+          /* nothing */
+        },
+        unsubscribe: () => {
+          /* nothing */
+        }
+      };
+    },
     getDataApiUtils: () => {
       return {
         getData: () => {
@@ -274,6 +284,7 @@ export const Default: Story = {
     categories: '',
     useLightBox: false,
     useAttachmentEndpoint: true,
+    enableDownloadAll: false,
     dataPage: 'D_AttachmentListRO',
     displayFormat: 'list',
     icon: 'clipboard'

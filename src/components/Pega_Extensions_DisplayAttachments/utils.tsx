@@ -4,7 +4,6 @@ import {
   DateTimeDisplay,
   MetaList,
   FileVisual,
-  getMimeTypeFromFile,
   Link,
   Icon
 } from '@pega/cosmos-react-core';
@@ -64,12 +63,17 @@ const fileDownload = (data: string, attachment: any, headers: any) => {
     - if URL, will open the link in a new tab
     - Otherwise, will download the file
  */
-export const downloadFile = (attachment: any, getPConnect: any, setImages?: any) => {
+export const downloadFile = (
+  attachment: any,
+  getPConnect: any,
+  setImages: any,
+  bForceDownload: boolean
+) => {
   const kind = getKindFromMimeType(attachment.mimeType);
   (window as any).PCore.getAttachmentUtils()
     .downloadAttachment(attachment.ID, getPConnect().getContextName(), attachment.responseType)
     .then((content: any) => {
-      if (canPreviewFile(kind)) {
+      if (canPreviewFile(kind) && !bForceDownload) {
         let arrayBuf: Uint8Array | BlobPart;
         if (isContentBinary(content.headers)) arrayBuf = content.data;
         else arrayBuf = base64ToArrayBuffer(content.data);
@@ -135,17 +139,8 @@ export const addAttachment = (props: addAttachmentProps) => {
     attachment.createdByName ?? attachment.createdBy
   ];
 
-  attachment.mimeType = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');
   const kind = getKindFromMimeType(attachment.mimeType ?? '');
   const visual = <FileVisual type={kind} />;
-  if (!attachment.mimeType) {
-    if (attachment.category === 'Correspondence') {
-      attachment.mimeType = 'text/html';
-      attachment.extension = 'html';
-    } else {
-      attachment.mimeType = 'text/plain';
-    }
-  }
   const bCanUseLightBox = useLightBox && kind === 'image';
   listOfAttachments.push({
     id: attachment.ID,
@@ -156,7 +151,7 @@ export const addAttachment = (props: addAttachmentProps) => {
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
           setElemRef(e.currentTarget);
-          downloadFile(attachment, getPConnect, bCanUseLightBox ? setImages : undefined);
+          downloadFile(attachment, getPConnect, bCanUseLightBox ? setImages : undefined, false);
         }}
       >
         {attachment.name}{' '}

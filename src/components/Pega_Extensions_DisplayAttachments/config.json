@@ -21,6 +21,11 @@
       "format": "BOOLEAN"
     },
     {
+      "name": "enableDownloadAll",
+      "label": "Enable download all action",
+      "format": "BOOLEAN"
+    },
+    {
       "name": "categories",
       "label": "Categories (comma-separated)",
       "format": "TEXT",
@@ -78,6 +83,7 @@
     "heading": "List of attachments",
     "categories": "",
     "dataPage": "",
-    "useAttachmentEndpoint": true
+    "useAttachmentEndpoint": true,
+    "enableDownloadAll": false
   }
 }

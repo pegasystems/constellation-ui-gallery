@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import {
   registerIcon,
+  Button,
+  Icon,
+  CardHeader,
+  CardContent,
   Modal,
   Flex,
-  Card,
   Text,
   EmptyState,
   useModalManager,
@@ -11,7 +14,9 @@ import {
   SummaryItem,
   Configuration,
   Lightbox,
-  Grid
+  Grid,
+  getMimeTypeFromFile,
+  useTheme
 } from '@pega/cosmos-react-core';
 import type {
   SummaryListItem,
@@ -19,8 +24,8 @@ import type {
   LightboxItem,
   LightboxProps
 } from '@pega/cosmos-react-core';
-import { downloadBlob, addAttachment } from './utils';
-import { StyledCardContent, StyledHeading } from './styles';
+import { downloadBlob, addAttachment, downloadFile } from './utils';
+import StyledCardContent from './styles';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -67,6 +72,7 @@ type UtilityListProps = {
   icon?: 'information' | 'polaris' | 'clipboard';
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
+  enableDownloadAll?: boolean;
   getPConnect: any;
 };
 
@@ -79,16 +85,18 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
     displayFormat = 'summaryList',
     icon = 'clipboard',
     useLightBox = false,
+    enableDownloadAll = false,
     getPConnect
   } = props;
   const { create } = useModalManager();
   const [attachments, setAttachments] = useState<Array<SummaryListItem>>([]);
+  const [files, setFiles] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [elemRef, setElemRef] = useState<HTMLElement>();
   const [images, setImages] = useState<LightboxProps['items'] | null>(null);
 
   const viewAllModalRef = useRef<ModalMethods<any>>();
-
+  const theme = useTheme();
   const viewAllModal = () => {
     return (
       <Configuration>
@@ -97,6 +105,12 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
         </Modal>
       </Configuration>
     );
+  };
+
+  const downloadAll = () => {
+    files?.forEach((attachment: any) => {
+      downloadFile(attachment, getPConnect, undefined, true);
+    });
   };
 
   const onLightboxItemClose = () => {
@@ -114,6 +128,7 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
 
   const loadAttachments = (response: Array<any> = []) => {
     const listOfAttachments: Array<any> = [];
+    const listOfFiles: Array<any> = [];
     const listOfCategories = categories.split(',');
     response.forEach((attachment: any) => {
       const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
@@ -142,6 +157,18 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
           createdByName: attachment.pxCreateOpName
         };
       }
+      attachment.mimeType = getMimeTypeFromFile(
+        attachment.fileName || attachment.nameWithExt || ''
+      );
+      if (!attachment.mimeType) {
+        if (attachment.category === 'Correspondence') {
+          attachment.mimeType = 'text/html';
+          attachment.extension = 'html';
+        } else {
+          attachment.mimeType = 'text/plain';
+        }
+      }
+      listOfFiles.push(attachment);
       addAttachment({
         currentCategory,
         attachment,
@@ -152,11 +179,12 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
         setElemRef
       });
     });
+    setFiles(listOfFiles);
     setAttachments(listOfAttachments);
     setLoading(false);
   };
 
-  useEffect(() => {
+  const initialLoad = () => {
     const pConn = getPConnect();
     if (useAttachmentEndpoint) {
       const attachmentUtils = (window as any).PCore.getAttachmentUtils();
@@ -187,12 +215,40 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
           setLoading(false);
         });
     }
-  }, [categories, useLightBox, useAttachmentEndpoint]);
+  };
+
+  /* Subscribe to changes to the assignment case */
+  useEffect(() => {
+    const caseID = getPConnect().getValue(
+      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
+    );
+    const filter = {
+      matcher: 'ATTACHMENTS',
+      criteria: {
+        ID: caseID
+      }
+    };
+    const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+      filter,
+      () => {
+        /* If an attachment is added- force a reload of the events */
+        initialLoad();
+      },
+      getPConnect().getContextName()
+    );
+    return () => {
+      (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
+    };
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll]);
+
+  useEffect(() => {
+    initialLoad();
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll]);
 
   return (
     <Configuration>
-      <Flex container={{ direction: 'column' }}>
-        {displayFormat === 'list' ? (
+      {displayFormat === 'list' ? (
+        <Flex container={{ direction: 'column' }}>
           <SummaryList
             name={heading}
             headingTag='h3'
@@ -204,40 +260,64 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
             onViewAll={() => {
               viewAllModalRef.current = create(viewAllModal);
             }}
+            actions={
+              enableDownloadAll
+                ? [
+                    {
+                      text: 'Download all',
+                      id: 'Download all',
+                      icon: 'download',
+                      onClick: () => {
+                        downloadAll();
+                      }
+                    }
+                  ]
+                : undefined
+            }
           />
-        ) : (
-          <Flex container={{ direction: 'column' }}>
-            <Text variant='h2' as={StyledHeading}>
-              {heading}
-            </Text>
+        </Flex>
+      ) : (
+        <Flex container={{ direction: 'column' }}>
+          <CardHeader
+            actions={
+              enableDownloadAll ? (
+                <Button variant='simple' label='Download all' icon compact onClick={downloadAll}>
+                  <Icon name='download' />
+                </Button>
+              ) : undefined
+            }
+          >
+            <Text variant='h2'>{heading}</Text>
+          </CardHeader>
+          <CardContent>
             {attachments?.length > 0 ? (
               <Grid
                 container={{ pad: 0, gap: 1 }}
-                xl={{ container: { cols: 'repeat(6, 1fr)', rows: 'repeat(6, 1fr)' } }}
-                lg={{ container: { cols: 'repeat(4, 1fr)', rows: 'repeat(6, 1fr)' } }}
-                md={{ container: { cols: 'repeat(4, 1fr)', rows: 'repeat(6, 1fr)' } }}
-                sm={{ container: { cols: 'repeat(2, 1fr)', rows: 'repeat(6, 1fr)' } }}
-                xs={{ container: { cols: 'repeat(1, 1fr)', rows: 'repeat(6, 1fr)' } }}
+                xl={{ container: { cols: 'repeat(6, 1fr)', rows: 'repeat(1, 1fr)' } }}
+                lg={{ container: { cols: 'repeat(4, 1fr)', rows: 'repeat(1, 1fr)' } }}
+                md={{ container: { cols: 'repeat(3, 1fr)', rows: 'repeat(1, 1fr)' } }}
+                sm={{ container: { cols: 'repeat(2, 1fr)', rows: 'repeat(1, 1fr)' } }}
+                xs={{ container: { cols: 'repeat(1, 1fr)', rows: 'repeat(1, 1fr)' } }}
               >
                 {attachments.map((attachment: any) => (
-                  <Card as={StyledCardContent}>
+                  <StyledCardContent theme={theme}>
                     <SummaryItem {...attachment}></SummaryItem>
-                  </Card>
+                  </StyledCardContent>
                 ))}
               </Grid>
             ) : (
               <EmptyState message='No items' />
             )}
-          </Flex>
-        )}
-        {images && (
-          <Lightbox
-            items={images}
-            onAfterClose={onLightboxItemClose}
-            onItemDownload={onLightboxItemDownload}
-          />
-        )}
-      </Flex>
+          </CardContent>
+        </Flex>
+      )}
+      {images && (
+        <Lightbox
+          items={images}
+          onAfterClose={onLightboxItemClose}
+          onItemDownload={onLightboxItemDownload}
+        />
+      )}
     </Configuration>
   );
 }
