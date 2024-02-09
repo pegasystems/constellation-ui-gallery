@@ -436,14 +436,15 @@ export default styled.div(
       }
       .division {
         background: #ffcc00;
-        color: #fff;
+        color: #000;
       }
       .subsidiary {
-        background: rgb(35, 158, 156);
-        color: #fff;
+        background: #59dbd9;
+        color: #000;
       }
       .ownership {
-        background: #f87330;
+        background: #ffc3a4;
+        color: #000;
       }
     `;
   }
