@@ -23,7 +23,7 @@ export const loadDetails = async (props: loadDetailsProps) => {
       const transientItemID = getPConnect()
         .getContainerManager()
         .addTransientItem({
-          id: `CardDetails${id}`,
+          id: `${detailsViewName}${id}`,
           data: {}
         });
       getPConnect().getContainerManager().updateTransientData({
@@ -31,7 +31,7 @@ export const loadDetails = async (props: loadDetailsProps) => {
         data: res.data.data.dataInfo
       });
       const messageConfig = {
-        meta: fetchViewResources('CardDetails', getPConnect(), classname),
+        meta: fetchViewResources(detailsViewName, getPConnect(), classname),
         options: {
           contextName: transientItemID,
           context: transientItemID,
