@@ -1,0 +1,72 @@
+{
+  "name": "Pega_Extensions_QRCode",
+  "label": "QRCode",
+  "description": "QRCode",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_QRCode",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "key": "inputProperty",
+      "format": "PROPERTY",
+      "name": "inputProperty",
+      "required": true,
+      "label": "Input Property",
+      "match": "propertyRef"
+    },
+    {
+      "key": "outputProperty",
+      "format": "PROPERTY",
+      "name": "outputProperty",
+      "label": "Output Property",
+      "match": "propertyRef"
+    },
+    {
+      "label": "Input settings",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "helperText",
+          "label": "Helper text",
+          "format": "TEXT"
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {}
+}

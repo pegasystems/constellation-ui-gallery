@@ -1,0 +1,118 @@
+{
+  "name": "Pega_Extensions_Barcode",
+  "label": "Barcode",
+  "description": "Barcode",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_Barcode",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "format",
+      "label": "Default format",
+      "format": "SELECT",
+      "defaultValue": "CODE128",
+      "source": [
+        {
+          "key": "EAN8",
+          "value": "EAN8"
+        },
+        {
+          "key": "EAN13",
+          "value": "EAN13"
+        },
+        {
+          "key": "CODE128",
+          "value": "CODE128"
+        },
+        {
+          "key": "CODE39",
+          "value": "CODE39"
+        },
+        {
+          "key": "ITF14",
+          "value": "ITF14"
+        },
+        {
+          "key": "MSI",
+          "value": "MSI"
+        },
+        {
+          "key": "UPC",
+          "value": "upc"
+        },
+        {
+          "key": "Pharmacode",
+          "value": "pharmacode"
+        }
+      ]
+    },
+    {
+      "key": "inputProperty",
+      "format": "PROPERTY",
+      "name": "inputProperty",
+      "label": "Input Property",
+      "required": true,
+      "match": "propertyRef"
+    },
+    {
+      "key": "outputProperty",
+      "format": "PROPERTY",
+      "name": "outputProperty",
+      "label": "Output Property",
+      "match": "propertyRef"
+    },
+    {
+      "name": "displayValue",
+      "label": "Show barcode value",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "label": "Input settings",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "helperText",
+          "label": "Helper text",
+          "format": "TEXT"
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {}
+}
