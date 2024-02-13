@@ -4,11 +4,12 @@ import StyledWrapper from './styles';
 
 type QRCodeCompProps = {
   label: string;
+  value: string;
   inputProperty: string;
-  outputProperty?: string;
   helperText?: string;
   validatemessage?: string;
   hideLabel: boolean;
+  readOnly?: boolean;
   testId?: string;
   getPConnect: any;
 };
@@ -17,33 +18,35 @@ export default function PegaExtensionsQRCode(props: QRCodeCompProps) {
   const {
     inputProperty,
     label,
-    outputProperty,
+    value,
     validatemessage,
     hideLabel = false,
+    readOnly,
     helperText,
     testId,
     getPConnect
   } = props;
   const pConn = getPConnect();
-  const [inputValue, setInputValue] = useState(inputProperty);
+  const [outputValue, setOutputValue] = useState(value);
   const [info, setInfo] = useState(validatemessage || helperText);
   const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
     undefined
   );
 
   const actions = pConn.getActionsApi();
-  const propName = pConn.getStateProps().outputProperty;
+  const propName = pConn.getStateProps().value;
 
   useEffect(() => {
-    setInputValue(inputProperty);
-    if (validatemessage !== '') {
-      setStatus('error');
+    if (!readOnly) {
+      if (validatemessage !== '') {
+        setStatus('error');
+      }
+      if (status !== 'success') {
+        setStatus(validatemessage !== '' ? 'error' : undefined);
+      }
+      setInfo(validatemessage || helperText);
     }
-    if (status !== 'success') {
-      setStatus(validatemessage !== '' ? 'error' : undefined);
-    }
-    setInfo(validatemessage || helperText);
-  }, [inputProperty, validatemessage, helperText]);
+  }, [inputProperty, validatemessage, helperText, readOnly]);
 
   return (
     <Configuration>
@@ -57,17 +60,21 @@ export default function PegaExtensionsQRCode(props: QRCodeCompProps) {
             testId={testId}
           >
             <FormControl ariaLabel={label}>
-              <QRCode
-                value={inputValue}
-                label={label}
-                onLoad={(event: SyntheticEvent<HTMLImageElement, Event>) => {
-                  const blob = (event.currentTarget as HTMLImageElement)?.src;
-                  if (blob && propName && outputProperty !== blob) {
-                    // update outputProperty with new base64 content
-                    actions.updateFieldValue(propName, blob);
-                  }
-                }}
-              />
+              {readOnly ? (
+                <img src={outputValue} />
+              ) : (
+                <QRCode
+                  value={inputProperty}
+                  label={label}
+                  onLoad={(event: SyntheticEvent<HTMLImageElement, Event>) => {
+                    const blob = (event.currentTarget as HTMLImageElement)?.src;
+                    if (blob && propName) {
+                      actions.updateFieldValue(propName, blob);
+                      setOutputValue(blob);
+                    }
+                  }}
+                />
+              )}
             </FormControl>
           </FormField>
         </Flex>

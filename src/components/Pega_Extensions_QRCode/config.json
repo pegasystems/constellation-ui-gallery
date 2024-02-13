@@ -17,28 +17,27 @@
       "required": true
     },
     {
-      "key": "inputProperty",
-      "format": "PROPERTY",
-      "name": "inputProperty",
-      "required": true,
-      "label": "Input Property",
-      "match": "propertyRef"
-    },
-    {
-      "key": "outputProperty",
-      "format": "PROPERTY",
-      "name": "outputProperty",
-      "label": "Output Property",
-      "match": "propertyRef"
+      "name": "readOnly",
+      "label": "Edit mode",
+      "format": "READONLY"
     },
     {
       "label": "Input settings",
       "format": "GROUP",
+      "visibility": "(!readOnly = true)",
       "properties": [
         {
           "name": "helperText",
           "label": "Helper text",
           "format": "TEXT"
+        },
+        {
+          "key": "inputProperty",
+          "format": "PROPERTY",
+          "name": "inputProperty",
+          "required": true,
+          "label": "Input Property",
+          "match": "propertyRef"
         }
       ]
     },

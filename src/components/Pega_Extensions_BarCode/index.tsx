@@ -19,33 +19,36 @@ export enum BarcodeType {
 interface BarCodeExtProps {
   format: BarcodeType;
   label: string;
-  outputProperty?: string;
+  value: string;
   inputProperty: string;
   displayValue: boolean;
   helperText?: string;
   validatemessage?: string;
   hideLabel: boolean;
+  readOnly?: boolean;
   testId?: string;
   getPConnect: any;
 }
 
 export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
   const {
+    value,
     label,
     inputProperty,
     format = BarcodeType.CODE128,
     displayValue,
-    outputProperty,
     validatemessage,
     hideLabel = false,
+    readOnly,
     helperText,
     testId,
     getPConnect
   } = props;
   const BarcodeRef = useRef<any>(null);
   const pConn = getPConnect();
+  const [outputValue, setOutputValue] = useState(value);
   const actions = pConn.getActionsApi();
-  const propName = pConn.getStateProps().outputProperty;
+  const propName = pConn.getStateProps().value;
   const [info, setInfo] = useState(validatemessage || helperText);
   const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
     undefined
@@ -57,42 +60,44 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
       const serializer = new XMLSerializer();
       const content = btoa(serializer.serializeToString(svg));
       const blob = `data:image/svg+xml;base64,${content}`;
-      if (outputProperty === blob) return;
       actions.updateFieldValue(propName, blob);
+      setOutputValue(blob);
     }
   }
   useEffect(() => {
-    if (validatemessage !== '') {
-      setStatus('error');
+    if (!readOnly) {
+      if (validatemessage !== '') {
+        setStatus('error');
+      }
+      if (status !== 'success') {
+        setStatus(validatemessage !== '' ? 'error' : undefined);
+      }
+      setInfo(validatemessage || helperText);
+      BarcodeRef.current.innerHTML = '';
+      BarcodeRef.current.style.display = 'none';
+      try {
+        JsBarcode(BarcodeRef.current, inputProperty, {
+          format,
+          displayValue,
+          width: 2,
+          height: 100,
+          fontOptions: '',
+          font: 'monospace',
+          textAlign: 'center',
+          textPosition: 'bottom',
+          textMargin: 2,
+          fontSize: 20,
+          background: '#ffffff',
+          lineColor: '#000000',
+          margin: 10
+        });
+      } catch (msg: any) {
+        setInfo(msg);
+        setStatus('error');
+      }
+      updateChanges();
     }
-    if (status !== 'success') {
-      setStatus(validatemessage !== '' ? 'error' : undefined);
-    }
-    setInfo(validatemessage || helperText);
-    BarcodeRef.current.innerHTML = '';
-    BarcodeRef.current.style.display = 'none';
-    try {
-      JsBarcode(BarcodeRef.current, inputProperty, {
-        format,
-        displayValue,
-        width: 2,
-        height: 100,
-        fontOptions: '',
-        font: 'monospace',
-        textAlign: 'center',
-        textPosition: 'bottom',
-        textMargin: 2,
-        fontSize: 20,
-        background: '#ffffff',
-        lineColor: '#000000',
-        margin: 10
-      });
-    } catch (msg: any) {
-      setInfo(msg);
-      setStatus('error');
-    }
-    updateChanges();
-  }, [inputProperty, displayValue, format, validatemessage, helperText]);
+  }, [inputProperty, displayValue, format, validatemessage, helperText, readOnly]);
 
   return (
     <Configuration>
@@ -105,10 +110,14 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
           testId={testId}
         >
           <FormControl ariaLabel={label}>
-            <StyledWrapper>
-              {status === 'error' ? <ErrorState message='Invalid barcode' /> : null}
-              <svg ref={BarcodeRef} />
-            </StyledWrapper>
+            {readOnly ? (
+              <img src={outputValue} />
+            ) : (
+              <StyledWrapper>
+                {status === 'error' ? <ErrorState message='Invalid barcode' /> : null}
+                <svg ref={BarcodeRef} />
+              </StyledWrapper>
+            )}
           </FormControl>
         </FormField>
       </Flex>

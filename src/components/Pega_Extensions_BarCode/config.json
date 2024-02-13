@@ -1,12 +1,12 @@
 {
-  "name": "Pega_Extensions_Barcode",
-  "label": "Barcode",
-  "description": "Barcode",
+  "name": "Pega_Extensions_BarCode",
+  "label": "BarCode",
+  "description": "BarCode",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",
   "allowedApplications": [],
-  "componentKey": "Pega_Extensions_Barcode",
+  "componentKey": "Pega_Extensions_BarCode",
   "type": "Field",
   "subtype": "Text",
   "properties": [
@@ -17,74 +17,73 @@
       "required": true
     },
     {
-      "name": "format",
-      "label": "Default format",
-      "format": "SELECT",
-      "defaultValue": "CODE128",
-      "source": [
-        {
-          "key": "EAN8",
-          "value": "EAN8"
-        },
-        {
-          "key": "EAN13",
-          "value": "EAN13"
-        },
-        {
-          "key": "CODE128",
-          "value": "CODE128"
-        },
-        {
-          "key": "CODE39",
-          "value": "CODE39"
-        },
-        {
-          "key": "ITF14",
-          "value": "ITF14"
-        },
-        {
-          "key": "MSI",
-          "value": "MSI"
-        },
-        {
-          "key": "UPC",
-          "value": "upc"
-        },
-        {
-          "key": "Pharmacode",
-          "value": "pharmacode"
-        }
-      ]
-    },
-    {
-      "key": "inputProperty",
-      "format": "PROPERTY",
-      "name": "inputProperty",
-      "label": "Input Property",
-      "required": true,
-      "match": "propertyRef"
-    },
-    {
-      "key": "outputProperty",
-      "format": "PROPERTY",
-      "name": "outputProperty",
-      "label": "Output Property",
-      "match": "propertyRef"
-    },
-    {
-      "name": "displayValue",
-      "label": "Show barcode value",
-      "format": "BOOLEAN",
-      "defaultValue": true
+      "name": "readOnly",
+      "label": "Edit mode",
+      "format": "READONLY"
     },
     {
       "label": "Input settings",
       "format": "GROUP",
+      "visibility": "(!readOnly = true)",
       "properties": [
         {
           "name": "helperText",
           "label": "Helper text",
           "format": "TEXT"
+        },
+        {
+          "key": "inputProperty",
+          "format": "PROPERTY",
+          "name": "inputProperty",
+          "required": true,
+          "label": "Input Property",
+          "match": "propertyRef"
+        },
+        {
+          "name": "format",
+          "label": "Default format",
+          "format": "SELECT",
+          "defaultValue": "CODE128",
+          "source": [
+            {
+              "key": "EAN8",
+              "value": "EAN8"
+            },
+            {
+              "key": "EAN13",
+              "value": "EAN13"
+            },
+            {
+              "key": "CODE128",
+              "value": "CODE128"
+            },
+            {
+              "key": "CODE39",
+              "value": "CODE39"
+            },
+            {
+              "key": "ITF14",
+              "value": "ITF14"
+            },
+            {
+              "key": "MSI",
+              "value": "MSI"
+            },
+            {
+              "key": "UPC",
+              "value": "upc"
+            },
+            {
+              "key": "Pharmacode",
+              "value": "pharmacode"
+            }
+          ]
+        },
+        {
+          "name": "displayValue",
+          "label": "Show barcode value",
+          "format": "BOOLEAN",
+          "defaultValue": true
         }
       ]
     },

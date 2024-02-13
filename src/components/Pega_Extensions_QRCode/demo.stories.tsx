@@ -4,7 +4,7 @@ import PegaExtensionsQRCode from './index';
 export default {
   title: 'Fields/QRCode',
   argTypes: {
-    outputProperty: {
+    value: {
       table: {
         disable: true
       }
@@ -34,7 +34,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              outputProperty: '.QRCodeImg'
+              value: 'QRCodeImg'
             };
           },
           getActionsApi: () => {
@@ -52,10 +52,12 @@ export const Default: Story = {
   },
   args: {
     label: 'QRCode',
+    value: '',
     inputProperty: 'https://www.pega.com',
     helperText: 'Scan with your phone',
     testId: '',
     validatemessage: '',
+    readOnly: false,
     hideLabel: false
   }
 };

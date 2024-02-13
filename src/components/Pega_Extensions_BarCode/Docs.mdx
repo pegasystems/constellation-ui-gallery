@@ -5,8 +5,12 @@ import * as DemoStories from './demo.stories';
 
 # Overview
 
-The Barcode field will let you generate a barcode from a property. The component can generate different format of barcodes.
-The Barcode, formatted as a base64 image, can be stored in a separate property and used in a detail view or in a createPDF automation.
+The Barcode field will let you generate different formats of barcode. The field property associated with the component will store a base64 svg image of the barcode.
+If the component is inside a form and editable, it is possible to enter an input property that will be used to generate the barcode on the client.
+If the component is marked as readonly, the field property will render the barcode image directly.
+You need to make sure that the field property is of type text and is long enough to store a complete base64 image (set the length to 50000).
+
+If you can want display the barcode inside a createPDF shape, you can pass the text field as an image inside the section rule configured to generate the PDF.
 
 <Primary />
 
@@ -17,7 +21,7 @@ The Barcode, formatted as a base64 image, can be stored in a separate property a
 # Example
 
 Here is a demo of how to configure this component in App Studio. For this example, we have created a 'Service' case type and we will render Barcode based on `inputProperty`.
-Assuming you have published the component, When configuring the field, we need to ensure that `inputProperty` is bound to a property defined in `Data Model` it could be prefilled one or text input as shown in the demo.
+When changing the value of the input property in the form, the barcode is automatically re-generated.
 
 ![Card details configuration](Barcode_Configuration.jpg)
 
@@ -27,24 +31,10 @@ Here is a view of runtime preview
 
 # Generating a Printable QR Code PDF
 
-In this section, we will discuss how to generate a QR code in the view and make it ready to be printed as a PDF. This builds upon our previous demonstration of generating a QR code in the view.
-
-## Step 1: Create a Property for Storage
-
-First, we need to create a property on the `Data Model` of the case that will handle the storage of the barcode blob. For example, we can create a property named `BarcodeImg`. This property will be referenced from the view authoring under the `outputProperty` of the Barcode configuration.
-
-! Note: ensure that `BarcodeImg` type is `Text(Paragraph)` !
-
-![Barcode Blob Storage](Barcode_Storage.jpg)
-
-## Step 2: Add a Shape in Case Designer
-
-Once the `BarcodeImg` property is set up, we can create a PDF Section from the Dev Studio. This section should contain an image which references the `BarcodeImg` property.
-
-! Note: Enable `Revert to traditional section-based authoring`, this will allow to add respective image reference !
+You can insert the field property created by the component into a PDF by including it as an image. Before configuring the createPDF shape, revert to traditional UI to open the section rule that will be used to generate the PDF document.
 
 ![Add PDF Section](Barcode_PDF_Configuration.jpg)
 
 And that's it! We now have a QR code that can be generated in the view and printed as a PDF.
 
-![Demo](Barcode_PDF_Demo.gif)
+![Demo](Barcode_PDF_Demo.jpg)
