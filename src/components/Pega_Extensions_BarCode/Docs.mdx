@@ -1,0 +1,50 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Barcode field will let you generate a barcode from a property. The component can generate different format of barcodes.
+The Barcode, formatted as a base64 image, can be stored in a separate property and used in a detail view or in a createPDF automation.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+Here is a demo of how to configure this component in App Studio. For this example, we have created a 'Service' case type and we will render Barcode based on `inputProperty`.
+Assuming you have published the component, When configuring the field, we need to ensure that `inputProperty` is bound to a property defined in `Data Model` it could be prefilled one or text input as shown in the demo.
+
+![Card details configuration](Barcode_Configuration.jpg)
+
+Here is a view of runtime preview
+
+![Demo](Barcode_Demo.jpg)
+
+# Generating a Printable QR Code PDF
+
+In this section, we will discuss how to generate a QR code in the view and make it ready to be printed as a PDF. This builds upon our previous demonstration of generating a QR code in the view.
+
+## Step 1: Create a Property for Storage
+
+First, we need to create a property on the `Data Model` of the case that will handle the storage of the barcode blob. For example, we can create a property named `BarcodeImg`. This property will be referenced from the view authoring under the `outputProperty` of the Barcode configuration.
+
+! Note: ensure that `BarcodeImg` type is `Text(Paragraph)` !
+
+![Barcode Blob Storage](Barcode_Storage.jpg)
+
+## Step 2: Add a Shape in Case Designer
+
+Once the `BarcodeImg` property is set up, we can create a PDF Section from the Dev Studio. This section should contain an image which references the `BarcodeImg` property.
+
+! Note: Enable `Revert to traditional section-based authoring`, this will allow to add respective image reference !
+
+![Add PDF Section](Barcode_PDF_Configuration.jpg)
+
+And that's it! We now have a QR code that can be generated in the view and printed as a PDF.
+
+![Demo](Barcode_PDF_Demo.gif)
