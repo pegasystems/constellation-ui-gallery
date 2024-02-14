@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import {
   registerIcon,
   Icon,
@@ -101,7 +101,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
 
   const defaultViewport = { x: 0, y: 0, zoom: 3 };
 
-  const getNodesDetails = async () => {
+  const getNodesDetails = useCallback(async () => {
     const initialNodes: Array<Node> = [];
     const initialEdges: Array<Edge> = [];
     const tmpNodesHash: StringHashMap = {};
@@ -152,11 +152,11 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
     );
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
-  };
+  }, [edgePath, getPConnect, setEdges, setNodes, theme]);
 
   useEffect(() => {
     getNodesDetails();
-  }, [height, edgePath]);
+  }, [height, edgePath, getNodesDetails]);
 
   return (
     <Configuration>

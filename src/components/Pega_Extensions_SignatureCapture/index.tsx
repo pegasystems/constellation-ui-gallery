@@ -68,7 +68,7 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
     if (status !== 'success') {
       setStatus(validatemessage !== '' ? 'error' : undefined);
     }
-  }, [validatemessage]);
+  }, [status, validatemessage]);
 
   const displayComp = value ? (
     <StyledSignatureReadOnlyContent theme={theme}>

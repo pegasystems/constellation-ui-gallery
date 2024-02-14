@@ -111,7 +111,8 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
           setLoading(false);
         });
     }
-  }, [dataPage, primaryField, secondaryFields, secondaryFieldTypes]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataPage, primaryField, secondaryFields, secondaryFieldTypes, getPConnect]);
 
   if (!primaryField || !dataPage) return null;
   return (

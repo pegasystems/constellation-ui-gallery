@@ -48,17 +48,14 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
   const [loading, setLoading] = useState(false);
   const genAIErrorMessage = 'Unable to process the request. Please try again after sometime.';
 
-  const loadResponse = useCallback(
-    (response: string) => {
-      const id = `A#${history.length}`;
-      const item = {
-        id,
-        value: <Message message={response} direction='in' senderType='agent' senderId={id} />
-      };
-      setHistory(prev => [...prev, item]);
-    },
-    [history.length]
-  );
+  const loadResponse = (response: string) => {
+    const id = `A#${history.length}`;
+    const item = {
+      id,
+      value: <Message message={response} direction='in' senderType='agent' senderId={id} />
+    };
+    setHistory(prev => [...prev, item]);
+  };
 
   const postQuestion = useCallback(
     (userPrompt: string) => {
@@ -86,7 +83,8 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
           setLoading(false);
         });
     },
-    [getPConnect, loadResponse, genAIErrorMessage]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dataPage, getPConnect, loadResponse]
   );
 
   const submitQuestion = useCallback(() => {
@@ -158,7 +156,7 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
         cardRef.current.scrollTop = cardRef.current.scrollHeight;
       }
     }, 0);
-  }, [history]);
+  }, [history, maxHeight]);
 
   // useEffect to reset the context
   useEffect(() => {

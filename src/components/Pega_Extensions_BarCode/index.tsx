@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import JsBarcode from 'jsbarcode';
 import { Configuration, Flex, FormControl, FormField, ErrorState } from '@pega/cosmos-react-core';
 import { useEffect, useRef, useState } from 'react';
@@ -54,16 +53,6 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
     undefined
   );
 
-  function updateChanges() {
-    const svg = BarcodeRef.current;
-    if (svg && propName) {
-      const serializer = new XMLSerializer();
-      const content = btoa(serializer.serializeToString(svg));
-      const blob = `data:image/svg+xml;base64,${content}`;
-      actions.updateFieldValue(propName, blob);
-      setOutputValue(blob);
-    }
-  }
   useEffect(() => {
     if (!readOnly) {
       if (validatemessage !== '') {
@@ -95,9 +84,26 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
         setInfo(msg);
         setStatus('error');
       }
-      updateChanges();
+      const svg = BarcodeRef.current;
+      if (svg && propName) {
+        const serializer = new XMLSerializer();
+        const content = btoa(serializer.serializeToString(svg));
+        const blob = `data:image/svg+xml;base64,${content}`;
+        actions.updateFieldValue(propName, blob);
+        setOutputValue(blob);
+      }
     }
-  }, [inputProperty, displayValue, format, validatemessage, helperText, readOnly]);
+  }, [
+    inputProperty,
+    displayValue,
+    format,
+    validatemessage,
+    helperText,
+    readOnly,
+    status,
+    propName,
+    actions
+  ]);
 
   return (
     <Configuration>

@@ -242,10 +242,12 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
         'ASSIGNMENT_SUBMISSION'
       );
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     loadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

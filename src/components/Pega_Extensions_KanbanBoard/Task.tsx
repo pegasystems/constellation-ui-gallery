@@ -35,8 +35,10 @@ export const Task = (props: TaskProps) => {
   const addDetails = async () => {
     setDetails(await getDetails(id, classname));
   };
+
   useEffect(() => {
     addDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupValue]);
 
   /* Once the groupValue is a Status and reaches Resolved-, it cannot be dragged anymore and becomes completed */

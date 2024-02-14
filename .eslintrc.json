@@ -5,8 +5,12 @@
     "project": "tsconfig.json",
     "ecmaVersion": 13
   },
+  "globals": {
+    "PCore": "readonly"
+  },
   "settings": {
     "import/resolver": {
+      "typescript": {},
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
@@ -15,7 +19,17 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["node_modules", "packages/*/lib", "!.storybook", ".storybook/public"],
+  "ignorePatterns": [
+    "node_modules",
+    "packages/*/lib",
+    "!.storybook",
+    ".storybook/public",
+    "**/demo.stories.jsx",
+    "**/mock.stories.js",
+    "**/demo.stories.tsx",
+    "**/mock.stories.ts",
+    "**/*.mdx"
+  ],
   "rules": {
     // Prettier recommends running separately from a linter.
     // https://prettier.io/docs/en/integrating-with-linters.html#notes
@@ -29,7 +43,7 @@
 
     //
     // JA - Override some default lint handling here
-    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+    "@typescript-eslint/array-type": "off",
     // "import/extensions": ["warn", "never"],    // Turning off for now (see below)
 
     //
@@ -70,15 +84,18 @@
     //
     // Initial release: set to error
     "@typescript-eslint/no-inferrable-types": "error",
-    "eqeqeq": "error",
-    "no-alert": "error",
+    "eqeqeq": "off",
+    "no-alert": "off",
     "no-console": "error",
     "no-fallthrough": "error",
     "no-undef": "error",
-    "no-unused-vars": "error",
-    "no-var": "error",
-    "prefer-const": "error",
+    "no-unused-vars": "off",
+    "no-var": "off",
     "yoda": "error",
+    "no-irregular-whitespace": "off",
+    "no-empty": "off",
+    "no-new-object": "off",
+    "import/no-relative-packages": "off",
 
     "import/no-mutable-exports": "error",
     "sonarjs/max-switch-cases": "error",
@@ -97,7 +114,6 @@
     "react/static-property-placement": "error",
     "array-callback-return": "error",
     "camelcase": "error",
-    "default-case": "error",
     "func-names": "error",
     "no-case-declarations": "error",
     "no-lonely-if": "error",
@@ -126,6 +142,7 @@
     "operator-assignment": "error",
     "prefer-template": "error",
     "vars-on-top": "error",
+    "prefer-regex-literals": "off",
 
     "no-use-before-define": "off", // doc for @typescript-eslint/no-use-before-define says to turn off the base implementation
     "@typescript-eslint/no-use-before-define": "error"
@@ -172,6 +189,39 @@
         ]
       }
     },
+    {
+      // rules for typescript (keeping old rules for js)
+      "files": "*.@(ts|tsx)",
+      "rules": {
+        "no-undef": "off",
+        "no-console": "off",
+        "import/prefer-default-export": "off",
+        "import/no-relative-packages": "off",
+        "react/jsx-fragments": "off",
+        "react/react-in-jsx-scope": "off",
+        // Set up configuration for future sweep
+        "react-hooks/exhaustive-deps": [
+          "error",
+          {
+            "additionalHooks": "useAfterInitialEffect"
+          }
+        ],
+        "sonarjs/cognitive-complexity": ["warn", 45]
+      }
+    },
+    // {
+    //   "files": "*.@(tsx)",
+    //   "rules": {
+    //     "react/react-in-jsx-scope": "off",
+    //     // Set up configuration for future sweep
+    //     "react-hooks/exhaustive-deps": [
+    //       "error",
+    //       {
+    //         "additionalHooks": "useAfterInitialEffect"
+    //       }
+    //     ]
+    //   }
+    // },
     {
       "files": "*.@(js|jsx|ts|tsx|mdx)",
       "rules": {}

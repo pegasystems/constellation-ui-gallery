@@ -46,7 +46,7 @@ export default function PegaExtensionsQRCode(props: QRCodeCompProps) {
       }
       setInfo(validatemessage || helperText);
     }
-  }, [inputProperty, validatemessage, helperText, readOnly]);
+  }, [inputProperty, validatemessage, helperText, readOnly, status]);
 
   return (
     <Configuration>

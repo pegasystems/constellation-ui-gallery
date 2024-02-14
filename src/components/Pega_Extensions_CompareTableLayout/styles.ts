@@ -5,7 +5,7 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
     case 'radio-button-card':
       return css`
         & fieldset > div {
-          min-width: 300px;
+          min-width: 20rem;
         }
         & fieldset > div > label > div {
           align-items: start !important;
@@ -35,6 +35,11 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
           padding: 0.5rem;
         }
 
+        & tbody th {
+          font-weight: 400;
+          text-align: start;
+        }
+
         & thead > tr > th:first-child {
           opacity: 0;
         }
@@ -45,11 +50,6 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
 
         tr.total.cat-2 {
           background-color: rgba(207, 207, 207, 0.3);
-        }
-
-        & tbody th {
-          font-weight: 400;
-          text-align: start;
         }
 
         & tbody tr.total > th {
@@ -73,7 +73,7 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
 
         & td,
         & th {
-          border: 1px solid rgb(190, 190, 190);
+          border: 0.125rem solid rgb(190, 190, 190);
           padding: 0.5rem 1rem;
         }
 
@@ -104,7 +104,7 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
         }
 
         & .selection label {
-          border: 2px solid rgb(190, 190, 190);
+          border: 0.25rem solid rgb(190, 190, 190);
         }
 
         & .selection label > div {

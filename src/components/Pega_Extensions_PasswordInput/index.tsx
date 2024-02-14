@@ -62,7 +62,7 @@ const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
     } else if (!hasSuggestions && status !== 'success') {
       setStatus(validatemessage !== '' ? 'error' : undefined);
     }
-  }, [validatemessage, hasSuggestions]);
+  }, [validatemessage, hasSuggestions, status]);
 
   const displayComp = value ? '***********' : '';
   if (displayMode === 'DISPLAY_ONLY') {

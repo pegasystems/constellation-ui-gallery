@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   registerIcon,
   Button,
@@ -126,65 +126,68 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
     });
   };
 
-  const loadAttachments = (response: Array<any> = []) => {
-    const listOfAttachments: Array<any> = [];
-    const listOfFiles: Array<any> = [];
-    const listOfCategories = categories.split(',');
-    response.forEach((attachment: any) => {
-      const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
-      if (useAttachmentEndpoint) {
-        /* Filter the attachment categories */
-        if (categories && listOfCategories.length > 0) {
-          let isValidCategory = false;
-          listOfCategories.forEach((categoryVal: string) => {
-            if (currentCategory.toLocaleLowerCase() === categoryVal.trim().toLocaleLowerCase()) {
-              isValidCategory = true;
-            }
-          });
-          if (!isValidCategory) return;
-        }
-      } else {
-        attachment = {
-          ...attachment,
-          category: attachment.pyCategory,
-          name: attachment.pyMemo,
-          ID: attachment.pzInsKey,
-          type: attachment.pyFileCategory,
-          fileName: attachment.pyFileName,
-          mimeType: attachment.pyTopic,
-          categoryName: attachment.pyLabel,
-          createTime: attachment.pxCreateDateTime,
-          createdByName: attachment.pxCreateOpName
-        };
-      }
-      attachment.mimeType = getMimeTypeFromFile(
-        attachment.fileName || attachment.nameWithExt || ''
-      );
-      if (!attachment.mimeType) {
-        if (attachment.category === 'Correspondence') {
-          attachment.mimeType = 'text/html';
-          attachment.extension = 'html';
+  const loadAttachments = useCallback(
+    (response: Array<any> = []) => {
+      const listOfAttachments: Array<any> = [];
+      const listOfFiles: Array<any> = [];
+      const listOfCategories = categories.split(',');
+      response.forEach((attachment: any) => {
+        const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
+        if (useAttachmentEndpoint) {
+          /* Filter the attachment categories */
+          if (categories && listOfCategories.length > 0) {
+            let isValidCategory = false;
+            listOfCategories.forEach((categoryVal: string) => {
+              if (currentCategory.toLocaleLowerCase() === categoryVal.trim().toLocaleLowerCase()) {
+                isValidCategory = true;
+              }
+            });
+            if (!isValidCategory) return;
+          }
         } else {
-          attachment.mimeType = 'text/plain';
+          attachment = {
+            ...attachment,
+            category: attachment.pyCategory,
+            name: attachment.pyMemo,
+            ID: attachment.pzInsKey,
+            type: attachment.pyFileCategory,
+            fileName: attachment.pyFileName,
+            mimeType: attachment.pyTopic,
+            categoryName: attachment.pyLabel,
+            createTime: attachment.pxCreateDateTime,
+            createdByName: attachment.pxCreateOpName
+          };
         }
-      }
-      listOfFiles.push(attachment);
-      addAttachment({
-        currentCategory,
-        attachment,
-        listOfAttachments,
-        getPConnect,
-        setImages,
-        useLightBox,
-        setElemRef
+        attachment.mimeType = getMimeTypeFromFile(
+          attachment.fileName || attachment.nameWithExt || ''
+        );
+        if (!attachment.mimeType) {
+          if (attachment.category === 'Correspondence') {
+            attachment.mimeType = 'text/html';
+            attachment.extension = 'html';
+          } else {
+            attachment.mimeType = 'text/plain';
+          }
+        }
+        listOfFiles.push(attachment);
+        addAttachment({
+          currentCategory,
+          attachment,
+          listOfAttachments,
+          getPConnect,
+          setImages,
+          useLightBox,
+          setElemRef
+        });
       });
-    });
-    setFiles(listOfFiles);
-    setAttachments(listOfAttachments);
-    setLoading(false);
-  };
+      setFiles(listOfFiles);
+      setAttachments(listOfAttachments);
+      setLoading(false);
+    },
+    [categories, getPConnect, useAttachmentEndpoint, useLightBox]
+  );
 
-  const initialLoad = () => {
+  const initialLoad = useCallback(() => {
     const pConn = getPConnect();
     if (useAttachmentEndpoint) {
       const attachmentUtils = (window as any).PCore.getAttachmentUtils();
@@ -215,7 +218,7 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
           setLoading(false);
         });
     }
-  };
+  }, [dataPage, getPConnect, loadAttachments, useAttachmentEndpoint]);
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
@@ -239,11 +242,11 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
     return () => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
-  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll]);
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 
   useEffect(() => {
     initialLoad();
-  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll]);
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, initialLoad]);
 
   return (
     <Configuration>

@@ -112,7 +112,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
       });
       setFields(tmpFields);
     }
-  }, [displayFormat, currencyFormat, selectionProperty]);
+  }, [displayFormat, currencyFormat, selectionProperty, getPConnect]);
 
   useEffect(() => {
     if (fields && fields.length > 0 && numFields === fields.length) {

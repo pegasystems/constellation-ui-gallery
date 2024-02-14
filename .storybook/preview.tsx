@@ -43,7 +43,6 @@ const themeMachines = Object.fromEntries(
   ])
 );
 
-// eslint-disable-next-line no-console
 window.addEventListener('error', console.error);
 
 const preview: Preview = {

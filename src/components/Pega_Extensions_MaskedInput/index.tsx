@@ -75,7 +75,7 @@ const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
         setMask(IMask(ref.current, maskOptions));
       }
     }
-  }, [ref, mask]);
+  }, [ref, mask, disabled, readOnly, maskObj]);
 
   useEffect(() => {
     if (validatemessage !== '') {
@@ -86,7 +86,7 @@ const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
     } else if (!hasSuggestions && status !== 'success') {
       setStatus(validatemessage !== '' ? 'error' : undefined);
     }
-  }, [validatemessage, hasSuggestions]);
+  }, [validatemessage, hasSuggestions, status]);
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {

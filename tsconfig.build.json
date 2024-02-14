@@ -1,9 +1,13 @@
 {
-  "extends": "@pega/tsconfig/index.json",
+  "extends": "./tsconfig.json",
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.js", "./src/**/*.jsx"],
-  "exclude": ["./src/**/*.mdx", "./src/**/*.stories.tsx"],
+  "exclude": [
+    "./src/**/*.stories.ts",
+    "./src/**/*.stories.tsx",
+    "./src/**/*.stories.js",
+    "./src/**/*.stories.jsx"
+  ],
   "compilerOptions": {
-    "jsx": "react-jsx",
     "noEmit": false,
     "composite": true,
     "rootDir": "./src",

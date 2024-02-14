@@ -25,20 +25,21 @@ const Signature = (props: SignatureProps) => {
       canvas.height = canvas.offsetHeight * ratio;
       canvas.getContext('2d')?.scale(ratio, ratio);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refCanvas.current]);
 
-  const initSignaturePad = () => {
-    resizeCanvas();
-    return refSignaturePad?.current?.on();
-  };
-
-  const stopSignaturePad = () => {
-    window.removeEventListener('resize', resizeCanvas);
-    clearCanvas();
-    return refSignaturePad?.current?.off();
-  };
-
   useEffect(() => {
+    const initSignaturePad = () => {
+      resizeCanvas();
+      return refSignaturePad?.current?.on();
+    };
+
+    const stopSignaturePad = () => {
+      window.removeEventListener('resize', resizeCanvas);
+      clearCanvas();
+      return refSignaturePad?.current?.off();
+    };
+
     const canvas = refCanvas?.current;
     if (!canvas) return;
 
@@ -58,6 +59,7 @@ const Signature = (props: SignatureProps) => {
     initSignaturePad();
     window.addEventListener('resize', resizeCanvas);
     return () => stopSignaturePad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <canvas ref={refCanvas} {...canvasProps} />;

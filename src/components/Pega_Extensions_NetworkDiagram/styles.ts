@@ -16,14 +16,12 @@ export default styled.div(
       }
       .react-flow__pane {
         z-index: 1;
-        cursor: -webkit-grab;
         cursor: grab;
       }
       .react-flow__pane.selection {
         cursor: pointer;
       }
       .react-flow__pane.dragging {
-        cursor: -webkit-grabbing;
         cursor: grabbing;
       }
       .react-flow__viewport {
@@ -47,7 +45,7 @@ export default styled.div(
       }
       .react-flow__edge-path,
       .react-flow__connection-path {
-        stroke: #000;
+        stroke: #000000;
         stroke-width: 1;
         fill: none;
       }
@@ -60,12 +58,12 @@ export default styled.div(
         stroke: ${theme.base.palette['brand-primary']} !important;
       }
       .react-flow__node-custom {
-        border: 1px solid ${theme.base.palette['primary-background']};
+        border: 0.125rem solid ${theme.base.palette['primary-background']};
       }
       .react-flow__node-custom:focus,
       .react-flow__node-custom:hover,
       .react-flow__node-custom:active {
-        border: 1px solid ${theme.base.palette['brand-primary']};
+        border: 0.125rem solid ${theme.base.palette['brand-primary']};
       }
       div.react-flow__handle.connectionindicator {
         visibility: hidden;
@@ -77,12 +75,10 @@ export default styled.div(
       }
       .react-flow__edge.animated path {
         stroke-dasharray: 5;
-        -webkit-animation: dashdraw 0.5s linear infinite;
         animation: dashdraw 0.5s linear infinite;
       }
       .react-flow__edge.animated path.react-flow__edge-interaction {
         stroke-dasharray: none;
-        -webkit-animation: none;
         animation: none;
       }
       .react-flow__edge.inactive {
@@ -96,7 +92,7 @@ export default styled.div(
       .react-flow__edge.selected .react-flow__edge-path,
       .react-flow__edge:focus .react-flow__edge-path,
       .react-flow__edge:focus-visible .react-flow__edge-path {
-        stroke: #555;
+        stroke: #555555;
       }
       .react-flow__edge-textwrapper {
         pointer-events: all;
@@ -106,8 +102,6 @@ export default styled.div(
       }
       .react-flow__edge .react-flow__edge-text {
         pointer-events: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
         user-select: none;
       }
       .react-flow__connection {
@@ -115,7 +109,6 @@ export default styled.div(
       }
       .react-flow__connection .animated {
         stroke-dasharray: 5;
-        -webkit-animation: dashdraw 0.5s linear infinite;
         animation: dashdraw 0.5s linear infinite;
       }
       .react-flow__connectionline {
@@ -127,17 +120,13 @@ export default styled.div(
       }
       .react-flow__node {
         position: absolute;
-        -webkit-user-select: none;
-        -moz-user-select: none;
         user-select: none;
         pointer-events: all;
         transform-origin: 0 0;
         box-sizing: border-box;
-        cursor: -webkit-grab;
         cursor: grab;
       }
       .react-flow__node.dragging {
-        cursor: -webkit-grabbing;
         cursor: grabbing;
       }
       .react-flow__nodesselection {
@@ -148,18 +137,17 @@ export default styled.div(
       .react-flow__nodesselection-rect {
         position: absolute;
         pointer-events: all;
-        cursor: -webkit-grab;
         cursor: grab;
       }
       .react-flow__handle {
         position: absolute;
         pointer-events: none;
-        min-width: 5px;
-        min-height: 5px;
-        width: 6px;
-        height: 6px;
+        min-width: 0.3rem;
+        min-height: 0.3rem;
+        width: 0.3rem;
+        height: 0.3rem;
         background: #1a192b;
-        border: 1px solid white;
+        border: 0.125rem solid white;
         border-radius: 100%;
       }
       .react-flow__handle.connectionindicator {
@@ -169,21 +157,21 @@ export default styled.div(
       .react-flow__handle-bottom {
         top: auto;
         left: 50%;
-        bottom: -4px;
+        bottom: -0.25rem;
         transform: translate(-50%, 0);
       }
       .react-flow__handle-top {
         left: 50%;
-        top: -4px;
+        top: -0.25rem;
         transform: translate(-50%, 0);
       }
       .react-flow__handle-left {
         top: 50%;
-        left: -4px;
+        left: -0.25rem;
         transform: translate(0, -50%);
       }
       .react-flow__handle-right {
-        right: -4px;
+        right: -0.25rem;
         top: 50%;
         transform: translate(0, -50%);
       }
@@ -194,7 +182,7 @@ export default styled.div(
       .react-flow__panel {
         position: absolute;
         z-index: 5;
-        margin: 15px;
+        margin: 1rem;
       }
       .react-flow__panel.top {
         top: 0;
@@ -213,14 +201,14 @@ export default styled.div(
         transform: translateX(-50%);
       }
       .react-flow__attribution {
-        font-size: 10px;
+        font-size: 0.7rem;
         background: rgba(255, 255, 255, 0.5);
-        padding: 2px 3px;
+        padding: 0.25rem 0.3rem;
         margin: 0;
       }
       .react-flow__attribution a {
         text-decoration: none;
-        color: #999;
+        color: #999999;
       }
       @-webkit-keyframes dashdraw {
         from {
@@ -242,10 +230,10 @@ export default styled.div(
         user-select: none;
       }
       .react-flow__edge.updating .react-flow__edge-path {
-        stroke: #777;
+        stroke: #777777;
       }
       .react-flow__edge-text {
-        font-size: 10px;
+        font-size: 0.7rem;
       }
       .react-flow__node.selectable:focus,
       .react-flow__node.selectable:focus-visible {
@@ -255,13 +243,13 @@ export default styled.div(
       .react-flow__node-input,
       .react-flow__node-output,
       .react-flow__node-group {
-        padding: 10px;
-        border-radius: 3px;
-        width: 150px;
-        font-size: 12px;
-        color: #222;
+        padding: 0.7rem;
+        border-radius: 0.25rem;
+        width: 10rem;
+        font-size: 0.6rem;
+        color: #222222;
         text-align: center;
-        border-width: 1px;
+        border-width: 0.125rem;
         border-style: solid;
         border-color: #1a192b;
         background-color: white;
@@ -270,7 +258,7 @@ export default styled.div(
       .react-flow__node-input.selectable:hover,
       .react-flow__node-output.selectable:hover,
       .react-flow__node-group.selectable:hover {
-        box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0.125rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
       }
       .react-flow__node-default.selectable.selected,
       .react-flow__node-default.selectable:focus,
@@ -284,7 +272,7 @@ export default styled.div(
       .react-flow__node-group.selectable.selected,
       .react-flow__node-group.selectable:focus,
       .react-flow__node-group.selectable:focus-visible {
-        box-shadow: 0 0 0 0.5px #1a192b;
+        box-shadow: 0 0 0 0.125rem #1a192b;
       }
       .react-flow__node-group {
         background-color: rgba(240, 240, 240, 0.25);
@@ -292,7 +280,7 @@ export default styled.div(
       .react-flow__nodesselection-rect,
       .react-flow__selection {
         background: rgba(0, 89, 220, 0.08);
-        border: 1px dotted rgba(0, 89, 220, 0.8);
+        border: 0.125rem dotted rgba(0, 89, 220, 0.8);
       }
       .react-flow__nodesselection-rect:focus,
       .react-flow__nodesselection-rect:focus-visible,
@@ -301,31 +289,29 @@ export default styled.div(
         outline: none;
       }
       .react-flow__controls {
-        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
       }
       .react-flow__controls-button {
         border: none;
         background: #fefefe;
-        border-bottom: 1px solid #eee;
+        border-bottom: 0.125rem solid #eeeeee;
         box-sizing: content-box;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 16px;
-        height: 16px;
+        width: 1rem;
+        height: 1rem;
         cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
         user-select: none;
-        padding: 5px;
+        padding: 0.3rem;
       }
       .react-flow__controls-button:hover {
         background: #f4f4f4;
       }
       .react-flow__controls-button svg {
         width: 100%;
-        max-width: 12px;
-        max-height: 12px;
+        max-width: 0.7rem;
+        max-height: 0.7rem;
       }
       .react-flow__controls-button:disabled {
         pointer-events: none;
@@ -334,7 +320,7 @@ export default styled.div(
         fill-opacity: 0.4;
       }
       .react-flow__minimap {
-        background-color: #fff;
+        background-color: #ffffff;
       }
       .react-flow__resize-control {
         position: absolute;
@@ -355,12 +341,11 @@ export default styled.div(
       .react-flow__resize-control.top.right {
         cursor: nesw-resize;
       }
-      /* handle styles */
       .react-flow__resize-control.handle {
-        width: 4px;
-        height: 4px;
-        border: 1px solid #fff;
-        border-radius: 1px;
+        width: 0.25rem;
+        height: 0.25rem;
+        border: 0.125rem solid #ffffff;
+        border-radius: 0.125rem;
         background-color: #3367d9;
         transform: translate(-50%, -50%);
       }
@@ -392,7 +377,6 @@ export default styled.div(
       .react-flow__resize-control.handle.bottom.right {
         left: 100%;
       }
-      /* line styles */
       .react-flow__resize-control.line {
         border-color: #3367d9;
         border-width: 0;
@@ -400,51 +384,51 @@ export default styled.div(
       }
       .react-flow__resize-control.line.left,
       .react-flow__resize-control.line.right {
-        width: 1px;
+        width: 0.125rem;
         transform: translate(-50%, 0);
         top: 0;
         height: 100%;
       }
       .react-flow__resize-control.line.left {
         left: 0;
-        border-left-width: 1px;
+        border-left-width: 0.125rem;
       }
       .react-flow__resize-control.line.right {
         left: 100%;
-        border-right-width: 1px;
+        border-right-width: 0.125rem;
       }
       .react-flow__resize-control.line.top,
       .react-flow__resize-control.line.bottom {
-        height: 1px;
+        height: 0.125rem;
         transform: translate(0, -50%);
         left: 0;
         width: 100%;
       }
       .react-flow__resize-control.line.top {
         top: 0;
-        border-top-width: 1px;
+        border-top-width: 0.125rem;
       }
       .react-flow__resize-control.line.bottom {
-        border-bottom-width: 1px;
+        border-bottom-width: 0.125rem;
         top: 100%;
       }
       .custom-edge {
         position: absolute;
-        padding: 5px;
-        border-radius: 5px;
-        font-size: 10px;
+        padding: 0.3rem;
+        border-radius: 0.3rem;
+        font-size: 0.6rem;
       }
       .division {
         background: #ffcc00;
-        color: #000;
+        color: #000000;
       }
       .subsidiary {
         background: #59dbd9;
-        color: #000;
+        color: #000000;
       }
       .ownership {
         background: #ffc3a4;
-        color: #000;
+        color: #000000;
       }
     `;
   }
