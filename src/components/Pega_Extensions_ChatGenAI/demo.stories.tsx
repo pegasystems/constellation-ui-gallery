@@ -49,7 +49,7 @@ async function getRealGenAIResponse(message: Array<string>) {
 }
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getDataPageUtils: () => {
       return {
         getPageDataAsync: (
@@ -70,7 +70,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsChatGenAI>;
@@ -82,7 +82,7 @@ export const Default: Story = {
       getPConnect: () => {
         return {
           getContextName: () => ''
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsChatGenAI {...props} />;

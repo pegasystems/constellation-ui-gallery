@@ -19,7 +19,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f
@@ -141,7 +141,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCalendar>;
@@ -184,7 +184,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsCalendar {...props} />;

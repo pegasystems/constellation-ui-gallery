@@ -83,7 +83,7 @@ const tasks: any = {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {
@@ -186,7 +186,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsKanbanBoard>;
@@ -238,7 +238,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsKanbanBoard {...props} />;

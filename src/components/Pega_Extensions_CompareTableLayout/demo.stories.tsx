@@ -346,13 +346,13 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
 export const Default: Story = {
   render: args => {
-    (window as any).PCore = {
+    PCore = {
       getComponentsRegistry: () => {
         return {
           getLazyComponent: (f: string) => f
         };
       }
-    };
+    } as unknown as typeof PCore;
     const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',
@@ -381,7 +381,7 @@ export const Default: Story = {
           resolveConfigProps: (f: string) => {
             return f;
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;

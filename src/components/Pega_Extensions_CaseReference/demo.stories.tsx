@@ -24,7 +24,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f
@@ -47,7 +47,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCaseReference>;
@@ -64,7 +64,7 @@ export const Default: Story = {
               value: 'C-123'
             };
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsCaseReference {...props} />;

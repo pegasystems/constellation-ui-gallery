@@ -19,9 +19,9 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     /* Nothing */
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsQRCode>;
@@ -45,7 +45,7 @@ export const Default: Story = {
               }
             };
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsQRCode {...props} />;

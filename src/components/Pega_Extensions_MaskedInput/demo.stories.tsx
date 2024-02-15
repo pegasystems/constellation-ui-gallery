@@ -34,7 +34,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f
@@ -45,7 +45,7 @@ const setPCore = () => {
         getTimeZone: () => 'local'
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 const setPConnect = () => {
@@ -86,7 +86,7 @@ const setPConnect = () => {
     resolveConfigProps: () => {
       /* nothing */
     }
-  };
+  } as unknown as typeof PConnect;
 };
 
 type Story = StoryObj<typeof PegaExtensionsMaskedInput>;
