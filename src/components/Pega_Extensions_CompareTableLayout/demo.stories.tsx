@@ -2,18 +2,18 @@ import type { StoryObj } from '@storybook/react';
 import PegaExtensionsCompareTableLayout from './index';
 import { CurrencyDisplay } from '@pega/cosmos-react-core';
 
-type configInfo = {
+interface configInfo {
   value?: Array<any>;
   componentType?: string;
   label?: string;
   heading?: string;
-};
+}
 
-type info = {
+interface info {
   config: configInfo;
   type: string;
   children?: Array<info>;
-};
+}
 
 export default {
   title: 'Templates/Compare Table Layout',

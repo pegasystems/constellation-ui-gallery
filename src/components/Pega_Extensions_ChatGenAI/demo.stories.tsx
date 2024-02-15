@@ -26,10 +26,10 @@ const sleep = (m: number) =>
     setTimeout(r, m);
   });
 
-type ChatItem = {
+interface ChatItem {
   role: string;
   content: string;
-};
+}
 
 /* Sample function to call a GenAI endpoint to simulate real response */
 async function getRealGenAIResponse(message: Array<string>) {

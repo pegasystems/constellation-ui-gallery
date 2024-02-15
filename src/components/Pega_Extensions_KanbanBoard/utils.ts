@@ -5,20 +5,21 @@
   the id parameter is the ID of the case (pyID)
 
   */
-type loadDetailsProps = {
+interface loadDetailsProps {
   id: string;
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
+
 export const loadDetails = async (props: loadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
-  await (window as any).PCore.getDataApiUtils()
+  await PCore.getDataApiUtils()
     .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
     .then(async (res: any) => {
-      const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+      const { fetchViewResources, updateViewResources } = PCore.getViewResources();
       await updateViewResources(res.data);
       const transientItemID = getPConnect()
         .getContainerManager()
@@ -40,21 +41,21 @@ export const loadDetails = async (props: loadDetailsProps) => {
       };
       messageConfig.meta.config.showLabel = false;
       messageConfig.meta.config.pyID = id;
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      const c11nEnv = PCore.createPConnect(messageConfig);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
     });
   return myElem;
 };
 
-type updateGroupValueProps = {
+interface updateGroupValueProps {
   groupValue: string;
   groupProperty: string;
   columns: any;
   setColumns: any;
   task: any;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 /* This method will update the case groupValue automatically using the edit action
    triggered through the pyUpdateCaseDetails local action. You can run some post-processing through this local action to
    set other values in the case.
@@ -66,7 +67,7 @@ export const updateGroupValue = (props: updateGroupValueProps) => {
   const { groupValue, groupProperty, columns, setColumns, task, getPConnect } = props;
 
   const context = getPConnect().getContextName();
-  (window as any).PCore.getDataApiUtils()
+  PCore.getDataApiUtils()
     .getCaseEditLock(task.insKey, context)
     .then((response: any) => {
       const payload: any = {};
@@ -74,7 +75,7 @@ export const updateGroupValue = (props: updateGroupValueProps) => {
       content[groupProperty] = groupValue;
       payload[task.insKey] = content;
 
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .updateCaseEditFieldsData(task.insKey, payload, response.headers.etag, context)
         .then(() => {
           task.groupValue = groupValue;

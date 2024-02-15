@@ -3,11 +3,11 @@ import { Droppable } from '@hello-pangea/dnd';
 import { Task } from './Task';
 import { StyledColumn } from './styles';
 
-export type ColumnProps = {
+export interface ColumnProps {
   title: string;
   id: string;
   tasks: any;
-};
+}
 
 export const Column = (props: ColumnProps) => {
   const { title, id, tasks } = props;

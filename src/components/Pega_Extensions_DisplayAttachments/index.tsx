@@ -26,7 +26,7 @@ import type {
 } from '@pega/cosmos-react-core';
 import { downloadBlob, addAttachment, downloadFile } from './utils';
 import StyledCardContent from './styles';
-
+import { PConnect } from '@pega/pcore-pconnect-typedefs';
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
@@ -64,7 +64,7 @@ registerIcon(
   paperClipIcon
 );
 
-type UtilityListProps = {
+interface UtilityListProps {
   heading: string;
   useAttachmentEndpoint: boolean;
   categories?: string;
@@ -73,8 +73,8 @@ type UtilityListProps = {
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
   enableDownloadAll?: boolean;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 export default function PegaExtensionsDisplayAttachments(props: UtilityListProps) {
   const {
@@ -190,8 +190,8 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
   const initialLoad = useCallback(() => {
     const pConn = getPConnect();
     if (useAttachmentEndpoint) {
-      const attachmentUtils = (window as any).PCore.getAttachmentUtils();
-      const caseID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const attachmentUtils = PCore.getAttachmentUtils();
+      const caseID = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       attachmentUtils
         .getCaseAttachments(caseID, pConn.getContextName())
         .then((resp: any) => loadAttachments(resp))
@@ -199,13 +199,11 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
           setLoading(false);
         });
     } else {
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
         dataViewParameters: [{ LinkRefFrom: CaseInstanceKey }]
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
@@ -222,16 +220,14 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    const caseID = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const filter = {
       matcher: 'ATTACHMENTS',
       criteria: {
         ID: caseID
       }
     };
-    const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+    const attachSubId = PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         /* If an attachment is added- force a reload of the events */
@@ -240,7 +236,7 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
       getPConnect().getContextName()
     );
     return () => {
-      (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
+      PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
   }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 

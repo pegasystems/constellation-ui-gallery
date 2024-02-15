@@ -2,7 +2,7 @@ import { useEffect, useState, type SyntheticEvent } from 'react';
 import { Configuration, Flex, FormControl, FormField, QRCode } from '@pega/cosmos-react-core';
 import StyledWrapper from './styles';
 
-type QRCodeCompProps = {
+interface QRCodeCompProps {
   label: string;
   value: string;
   inputProperty: string;
@@ -11,8 +11,8 @@ type QRCodeCompProps = {
   hideLabel: boolean;
   readOnly?: boolean;
   testId?: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 export default function PegaExtensionsQRCode(props: QRCodeCompProps) {
   const {

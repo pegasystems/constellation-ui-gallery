@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { Input, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
 
-type PasswordInputProps = {
-  getPConnect: any;
+export interface PasswordInputProps {
+  getPConnect: () => typeof PConnect;
   label: string;
   value: string;
   helperText?: string;
@@ -18,7 +18,7 @@ type PasswordInputProps = {
   displayMode?: string;
   variant?: any;
   hasSuggestions?: boolean;
-};
+}
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file

@@ -14,8 +14,8 @@ import SignaturePad from 'signature_pad';
 import Signature from './Signature';
 import { StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
 
-type SignatureCaptureProps = {
-  getPConnect: any;
+export interface SignatureCaptureProps {
+  getPConnect: () => typeof PConnect;
   label: string;
   value: string;
   helperText?: string;
@@ -27,7 +27,7 @@ type SignatureCaptureProps = {
   testId?: string;
   displayMode?: string;
   variant?: any;
-};
+}
 
 const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   const {

@@ -1,10 +1,10 @@
 import { FieldGroup, Flex, Configuration, useTheme } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsFieldGroupAsRowWrapper from './styles';
 
-type FieldGroupAsRowProps = {
+interface FieldGroupAsRowProps {
   heading: string;
   children: any;
-};
+}
 
 export default function PegaExtensionsFieldGroupAsRow(props: FieldGroupAsRowProps) {
   const { heading, children } = props;

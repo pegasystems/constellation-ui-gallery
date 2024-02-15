@@ -12,7 +12,7 @@ import {
 import { Draggable } from '@hello-pangea/dnd';
 import { StyledCardContent } from './styles';
 
-export type TaskProps = {
+export interface TaskProps {
   title: string;
   index: number;
   insKey: string;
@@ -22,7 +22,7 @@ export type TaskProps = {
   details?: any;
   getDetails: any;
   editTask: any;
-};
+}
 
 export const Task = (props: TaskProps) => {
   const { index, insKey, classname, id, title, groupValue, details, getDetails, editTask } = props;

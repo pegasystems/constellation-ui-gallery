@@ -1,11 +1,11 @@
 import { Flex, Button, Configuration } from '@pega/cosmos-react-core';
 
-type ActionableButtonProps = {
+export interface ActionableButtonProps {
   label: string;
   value: string;
   localAction: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
   const { getPConnect, label, value, localAction } = props;
