@@ -182,7 +182,7 @@ export const loadDetails = async (props: loadDetailsProps) => {
   return myElem;
 };
 
-type UpdateItemDetails = {
+export type UpdateItemDetails = {
   item: Task;
   updatedFieldValueList: any;
   getPConnect: any;
@@ -200,7 +200,6 @@ export const updateItemDetails = async (props: UpdateItemDetails) => {
   const response = await (window as any).PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
 
   const payload: any = { [pzInsKey]: updatedFieldValueList };
-
   const updateResult = await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
     pzInsKey,
     payload,

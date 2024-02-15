@@ -48,6 +48,18 @@ export default {
 };
 
 const currentDate = new Date();
+const LOCAL_STORAGE_KEY = 'ganttchart';
+
+const getDataFromStorage = () => {
+  const item = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (item !== null) {
+    return JSON.parse(item);
+  }
+  return item;
+};
+
+const saveDataToStorage = (data: any) =>
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 
 const tasks: any = {
   'P-1001': {
@@ -160,17 +172,22 @@ const setPCore = () => {
             {
               name: 'ID',
               value: (
-                <Link href='https://www.pega.com' target='_blank'>
-                  {id}
-                </Link>
+                <h3>
+                  <Link href='/' previewable>
+                    {id}
+                  </Link>
+                </h3>
               )
             },
             { name: 'Description', value: tasks[id].pyDescription },
             { name: 'Progress', value: tasks[id].Progress },
-            { name: 'Start', value: <DateTimeDisplay variant='datetime' value={tasks[id].End} /> },
+            {
+              name: 'Start',
+              value: <DateTimeDisplay variant='datetime' value={tasks[id].StartDate} />
+            },
             {
               name: 'End',
-              value: <DateTimeDisplay variant='datetime' value={tasks[id].End} />
+              value: <DateTimeDisplay variant='datetime' value={tasks[id].EndDate} />
             }
           ];
           return <FieldValueList variant='stacked' fields={fields} />;
@@ -239,7 +256,24 @@ const setPCore = () => {
             }
           });
         },
-        updateCaseEditFieldsData: () => {
+        updateCaseEditFieldsData: (
+          pzInsKey: string,
+          payload: any,
+          etag: string,
+          context: string
+        ) => {
+          let tasksFromWebStorage = getDataFromStorage();
+          if (tasksFromWebStorage) {
+            const taskIndex = tasksFromWebStorage.findIndex((x: any) => x.pzInsKey === pzInsKey);
+            let task = tasksFromWebStorage[taskIndex];
+            task = { ...task, ...payload[pzInsKey] };
+            tasksFromWebStorage = [
+              ...tasksFromWebStorage.slice(0, taskIndex),
+              task,
+              ...tasksFromWebStorage.slice(taskIndex + 1)
+            ];
+            saveDataToStorage(tasksFromWebStorage);
+          }
           return Promise.resolve();
         },
         getDataObjectView: () => {
@@ -254,9 +288,12 @@ const setPCore = () => {
           });
         },
         getData: () => {
+          const ganttData = getDataFromStorage();
+          const mockData = Array.from(Object.entries(tasks).map((val: any) => val[1]));
+          if (!ganttData) saveDataToStorage(mockData);
           return Promise.resolve({
             data: {
-              data: Array.from(Object.entries(tasks).map((val: any) => val[1]))
+              data: ganttData || mockData
             }
           });
         }

@@ -189,9 +189,9 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
           getPConnect,
           item: task,
           updatedFieldValueList: {
-            Progress: gtrTask.progress,
-            Start: gtrTask.start,
-            End: gtrTask.end
+            [progressFieldName]: gtrTask.progress,
+            [startDateFieldName]: gtrTask.start,
+            [endDateFieldName]: gtrTask.end
           }
         });
         if (eventType === 'dateChange') {
