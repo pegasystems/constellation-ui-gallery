@@ -26,9 +26,9 @@ import StyledPegaExtensionsNetworkDiagram from './styles';
 
 import CustomNode from './CustomNode';
 import CustomEdge from './CustomEdge';
-import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
+import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
 
-registerIcon(plusIcon);
+registerIcon(resetIcon);
 interface StringHashMap {
   [key: string]: string;
 }
@@ -171,7 +171,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
                 compact
                 onClick={getNodesDetails}
               >
-                <Icon name='plus' />
+                <Icon name='reset' />
               </Button>
             ) : undefined
           }
