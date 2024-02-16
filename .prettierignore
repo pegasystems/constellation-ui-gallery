@@ -1,0 +1,12 @@
+node_modules
+.storybook/public
+.storybook/static
+.coverage
+lib
+build
+./types
+.cache
+*.tsbuildinfo
+CHANGELOG.md
+**/public
+*.svg

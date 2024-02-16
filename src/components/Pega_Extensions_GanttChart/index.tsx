@@ -1,7 +1,6 @@
-import { useEffect, useState, useMemo, type MouseEventHandler, type FC } from 'react';
+import { useEffect, useState, useMemo, type MouseEventHandler, type FC, useCallback } from 'react';
 import { type Task as GTRTask } from 'gantt-task-react';
 import { Gantt } from 'gantt-task-react';
-// import { PCore } from '@pega/pcore-pconnect-typedefs';
 
 import {
   registerIcon,
@@ -137,7 +136,7 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
     }
   };
 
-  const initializeGanttData = async () => {
+  const initializeGanttData = useCallback(async () => {
     setLoaderTasks(true);
     const data = await loadGanttData(
       dataPage,
@@ -151,24 +150,35 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
     setTasks(data);
     setLoaderTasks(false);
     return data;
-  };
+  }, [
+    dataPage,
+    categoryFieldName,
+    parentFieldName,
+    dependenciesFieldName,
+    startDateFieldName,
+    endDateFieldName,
+    progressFieldName
+  ]);
 
-  const refreshDetailsCard = async (task?: GTRTask) => {
-    if (task) {
-      setLoaderDetails(true);
-      const extendedTaskProps = tasks.find(t => t.id === task.id)?.extendedProps;
-      const newDetails = await loadDetails({
-        id: task.id,
-        classname: extendedTaskProps.pxObjClass,
-        detailsDataPage,
-        detailsViewName,
-        getPConnect
-      });
+  const refreshDetailsCard = useCallback(
+    async (task?: GTRTask) => {
+      if (task) {
+        setLoaderDetails(true);
+        const extendedTaskProps = tasks.find(t => t.id === task.id)?.extendedProps;
+        const newDetails = await loadDetails({
+          id: task.id,
+          classname: extendedTaskProps.pxObjClass,
+          detailsDataPage,
+          detailsViewName,
+          getPConnect
+        });
 
-      setDetails(newDetails);
-      setLoaderDetails(false);
-    } else setDetails(undefined);
-  };
+        setDetails(newDetails);
+        setLoaderDetails(false);
+      } else setDetails(undefined);
+    },
+    [detailsDataPage, detailsViewName, getPConnect, tasks]
+  );
 
   const handleTaskSelect = async (task: GTRTask, isSelected: boolean) => {
     setSelectedTask(prev => {
@@ -248,7 +258,7 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
 
   useEffect(() => {
     initializeGanttData();
-  }, []);
+  }, [initializeGanttData]);
 
   useOuterEvent('mousedown', [popoverEl, popoverTarget], () => {
     // closePopover();
@@ -281,12 +291,12 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
         'ASSIGNMENT_SUBMISSION'
       );
     };
-  }, []);
+  }, [initializeGanttData]);
 
   useEffect(() => {
     if (popoverTarget) refreshDetailsCard(selectedTask);
     else refreshDetailsCard();
-  }, [selectedTask, popoverTarget]);
+  }, [selectedTask, popoverTarget, refreshDetailsCard]);
 
   return (
     <Configuration>
