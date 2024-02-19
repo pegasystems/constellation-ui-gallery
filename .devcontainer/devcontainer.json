@@ -1,0 +1,21 @@
+{
+  "name": "constellation-ui-gallery",
+  "forwardPorts": [6006, 4010],
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "stylelint.vscode-stylelint",
+        "streetsidesoftware.code-spell-checker",
+        "styled-components.vscode-styled-components"
+      ]
+    }
+  }
+}
