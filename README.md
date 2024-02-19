@@ -36,6 +36,22 @@ npm install
 npm run start
 ```
 
+### Unit testing
+
+For unit test results, you can run:
+
+```shell
+npm run test
+```
+
+For unit test coverage, you can run:
+
+```shell
+npm run coverage
+```
+
+The coverage report index.html will be in the 'coverage' folder
+
 ### Compiles and minifies for production
 
 ```shell

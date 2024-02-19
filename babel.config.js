@@ -13,12 +13,7 @@ module.exports = function (api) {
     '@babel/preset-typescript',
     ['@babel/preset-react', { runtime: 'automatic' }]
   ];
-  const plugins = [
-    ['@babel/plugin-transform-modules-commonjs'],
-    ['@babel/plugin-transform-destructuring'],
-    ['@babel/plugin-transform-template-literals'],
-    ['@babel/plugin-transform-classes']
-  ];
+  const plugins = [];
 
   return {
     presets,
