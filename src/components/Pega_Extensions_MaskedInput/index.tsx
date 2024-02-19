@@ -2,8 +2,8 @@ import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { Input, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
 import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
 
-export type MaskedInputProps = {
-  getPConnect?: any;
+export interface MaskedInputProps {
+  getPConnect: () => typeof PConnect;
   label: string;
   mask: string;
   value?: string;
@@ -20,7 +20,7 @@ export type MaskedInputProps = {
   displayMode?: string;
   variant?: any;
   hasSuggestions?: boolean;
-};
+}
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file

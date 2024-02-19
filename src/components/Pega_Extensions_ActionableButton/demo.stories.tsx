@@ -1,5 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import PegaExtensionsActionableButton from './index';
+import type ActionsApi from '@pega/pcore-pconnect-typedefs/actions/api';
 
 export default {
   title: 'Fields/Actionable button',
@@ -14,7 +15,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f
@@ -25,7 +26,7 @@ const setPCore = () => {
         getTimeZone: () => 'local'
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsActionableButton>;
@@ -44,17 +45,13 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              openLocalAction: {
-                bind: () => {
-                  return (name: string, options: any) => {
-                    // eslint-disable-next-line no-alert
-                    alert(`Launch local action ${name} for ${options.caseID}`);
-                  };
-                }
+              openLocalAction: (name: string, options: any) => {
+                // eslint-disable-next-line no-alert
+                alert(`Launch local action ${name} for ${options.caseID}`);
               }
             };
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsActionableButton {...props} />;

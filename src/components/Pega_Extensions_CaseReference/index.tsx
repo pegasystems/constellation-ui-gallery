@@ -1,20 +1,20 @@
 import { type MouseEvent } from 'react';
 import { Link, Configuration } from '@pega/cosmos-react-core';
 
-type ActionableButtonProps = {
+export interface ActionableButtonProps {
   value: string;
   fieldMetadata: any;
   selectionProperty: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
   const { getPConnect, fieldMetadata, selectionProperty, value } = props;
   if (value) {
     const objClass = fieldMetadata?.classID;
     const key = selectionProperty;
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: objClass },
       { workID: value }
     );

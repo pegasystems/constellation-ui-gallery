@@ -26,7 +26,7 @@ interface BarCodeExtProps {
   hideLabel: boolean;
   readOnly?: boolean;
   testId?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
@@ -47,7 +47,7 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
   const pConn = getPConnect();
   const [outputValue, setOutputValue] = useState(value);
   const actions = pConn.getActionsApi();
-  const propName = pConn.getStateProps().value;
+  const propName = (pConn.getStateProps() as { value: string }).value;
   const [info, setInfo] = useState(validatemessage || helperText);
   const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
     undefined

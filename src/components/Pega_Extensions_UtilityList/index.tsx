@@ -15,7 +15,7 @@ import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/ic
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
 import { renderObjectField } from './utils';
 
-type UtilityListProps = {
+interface UtilityListProps {
   heading?: string;
   icon: 'information' | 'polaris' | 'clipboard';
   dataPage: string;
@@ -23,8 +23,8 @@ type UtilityListProps = {
   primaryField: string;
   secondaryFields?: string;
   secondaryFieldTypes?: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 /* To register more icon, you need to import them as shown above */
 registerIcon(polarisIcon, informationIcon, clipboardIcon);
@@ -92,13 +92,11 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
         dataViewParameters: [{ CaseInstanceKey }]
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(dataPage, setCaseID ? payload : {}, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {

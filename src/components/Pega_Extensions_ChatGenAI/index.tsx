@@ -15,21 +15,20 @@ import { Message, TypeIndicator, type MessageProps } from '@pega/cosmos-react-so
 import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
 import * as sendIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/send.icon';
 import * as robotSolid from '@pega/cosmos-react-core/lib/components/Icon/icons/robot-solid.icon';
-
 import { StyledCardContent, StyledGenAIComponent } from './styles';
 
-type HistoryItem = {
+interface HistoryItem {
   id: string;
   value: ReactElement<MessageProps>;
-};
+}
 
-type ChatGenAIProps = {
+interface ChatGenAIProps {
   heading: string;
   dataPage: string;
   maxHeight: string;
   sendAllUserContext: boolean;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 registerIcon(resetIcon, sendIcon, robotSolid);
 
@@ -71,7 +70,7 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
         return previous;
       });
       const context = getPConnect().getContextName();
-      (window as any).PCore.getDataPageUtils()
+      PCore.getDataPageUtils()
         .getPageDataAsync(dataViewName, context, parameters, { invalidateCache: true })
         .then(({ pyMessage }: { pyMessage: string }) => {
           loadResponse(pyMessage ?? genAIErrorMessage);

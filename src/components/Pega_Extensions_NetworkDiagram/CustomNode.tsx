@@ -38,22 +38,22 @@ const Node = styled.div(({ theme }: { theme: any }) => {
   `;
 });
 
-type renderNodeProps = {
+interface renderNodeProps {
   type?: string;
   key?: string;
   objClass?: string;
   id: string;
   label: string;
-  getPConnect?: any;
+  getPConnect?: () => typeof PConnect;
   theme: any;
-};
+}
 
 const renderNode = (props: renderNodeProps) => {
   const { type, key, objClass, id, label, getPConnect, theme } = props;
   let icon = 'user';
   if (type === 'Corporation') icon = 'store';
-  const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-    (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+  const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+    PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
     { caseClassName: objClass },
     { workID: id }
   );

@@ -131,7 +131,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     const regionAChildren = mainResponse.children[0].children.map((child: any) => {

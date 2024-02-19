@@ -2,18 +2,18 @@ import type { StoryObj } from '@storybook/react';
 import PegaExtensionsCompareTableLayout from './index';
 import { CurrencyDisplay } from '@pega/cosmos-react-core';
 
-type configInfo = {
+interface configInfo {
   value?: Array<any>;
   componentType?: string;
   label?: string;
   heading?: string;
-};
+}
 
-type info = {
+interface info {
   config: configInfo;
   type: string;
   children?: Array<info>;
-};
+}
 
 export default {
   title: 'Templates/Compare Table Layout',
@@ -346,13 +346,13 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
 export const Default: Story = {
   render: args => {
-    (window as any).PCore = {
+    PCore = {
       getComponentsRegistry: () => {
         return {
           getLazyComponent: (f: string) => f
         };
       }
-    };
+    } as unknown as typeof PCore;
     const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
     const props = {
       template: 'Pega_Extensions_CompareTableLayout',
@@ -381,7 +381,7 @@ export const Default: Story = {
           resolveConfigProps: (f: string) => {
             return f;
           }
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;

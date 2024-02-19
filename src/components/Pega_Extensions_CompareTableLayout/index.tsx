@@ -11,19 +11,22 @@ import {
   Configuration
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
-
-// includes in bundle
 import getAllFields from './utils';
 
-type TableLayoutProps = {
+interface TableLayoutProps {
   heading: string;
   displayFormat: 'spreadsheet' | 'financialreport' | 'radio-button-card';
   selectionProperty?: string;
   currencyFormat: 'standard' | 'compact' | 'parentheses';
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
-type FieldObj = {
+interface MetaDataObj {
+  config: {
+    selectionProperty: string;
+  };
+}
+interface FieldObj {
   type: string;
   config: {
     text: string;
@@ -34,7 +37,7 @@ type FieldObj = {
     negative?: string;
     notation?: string;
   };
-};
+}
 
 export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps) {
   const { displayFormat, heading, selectionProperty, currencyFormat, getPConnect } = props;
@@ -47,8 +50,8 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
   const metadata = getPConnect().getRawMetadata();
 
   const selectObject = (ID: any, index: number) => {
-    if (metadata.config.selectionProperty) {
-      const prop = metadata.config.selectionProperty.replace('@P ', '');
+    if ((metadata as MetaDataObj).config.selectionProperty) {
+      const prop = (metadata as MetaDataObj).config.selectionProperty.replace('@P ', '');
       getPConnect().setValue(prop, ID);
     }
     const sel: Array<boolean> = [];
@@ -88,9 +91,9 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
       tmpFields.forEach((child: any) => {
         if (
           child.componentType &&
-          !(window as any).PCore.getComponentsRegistry().getLazyComponent(child.componentType)
+          !PCore.getComponentsRegistry().getLazyComponent(child.componentType)
         ) {
-          (window as any).PCore.getAssetLoader()
+          PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
               setNumFields(prevCount => prevCount + 1);

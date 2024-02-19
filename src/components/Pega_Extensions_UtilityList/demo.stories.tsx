@@ -24,7 +24,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {}
@@ -108,7 +108,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsUtilityList>;
@@ -121,7 +121,7 @@ export const Default: Story = {
         return {
           getContextName: () => '',
           getValue: () => 'C-123'
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsUtilityList {...props} />;

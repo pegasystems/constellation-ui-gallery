@@ -65,12 +65,12 @@ const fileDownload = (data: string, attachment: any, headers: any) => {
  */
 export const downloadFile = (
   attachment: any,
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
   setImages: any,
   bForceDownload: boolean
 ) => {
   const kind = getKindFromMimeType(attachment.mimeType);
-  (window as any).PCore.getAttachmentUtils()
+  PCore.getAttachmentUtils()
     .downloadAttachment(attachment.ID, getPConnect().getContextName(), attachment.responseType)
     .then((content: any) => {
       if (canPreviewFile(kind) && !bForceDownload) {
@@ -112,15 +112,15 @@ export const downloadFile = (
     });
 };
 
-type addAttachmentProps = {
+interface addAttachmentProps {
   currentCategory: string;
   attachment: any;
   listOfAttachments: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   setImages: any;
   useLightBox: boolean;
   setElemRef: any;
-};
+}
 
 export const addAttachment = (props: addAttachmentProps) => {
   const {

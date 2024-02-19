@@ -17,7 +17,7 @@ import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plu
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
 
 registerIcon(plusIcon, pencilIcon);
-type KanbanBoardProps = {
+interface KanbanBoardProps {
   heading: string;
   dataPage: string;
   createClassname?: string;
@@ -26,8 +26,8 @@ type KanbanBoardProps = {
   groupProperty: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
   const {
@@ -125,7 +125,7 @@ export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
 
   const loadTasks = () => {
     setLoading(true);
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(dataPage, {})
       .then(async (response: any) => {
         if (response.data.data !== null) {
@@ -178,8 +178,8 @@ export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks();
@@ -187,8 +187,8 @@ export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
       'ASSIGNMENT_SUBMISSION'
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION'
       );
     };

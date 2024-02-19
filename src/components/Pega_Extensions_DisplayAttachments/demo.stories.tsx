@@ -26,7 +26,7 @@ async function getFile(url: string) {
 }
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getMessagingServiceManager: () => {
       return {
         subscribe: () => {
@@ -261,7 +261,7 @@ const setPCore = () => {
         }
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsDisplayAttachments>;
@@ -274,7 +274,7 @@ export const Default: Story = {
         return {
           getContextName: () => '',
           getValue: () => 'C-123'
-        };
+        } as unknown as typeof PConnect;
       }
     };
     return <PegaExtensionsDisplayAttachments {...props} />;

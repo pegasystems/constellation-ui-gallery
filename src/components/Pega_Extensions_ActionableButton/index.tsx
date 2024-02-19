@@ -1,19 +1,17 @@
 import { Flex, Button, Configuration } from '@pega/cosmos-react-core';
 
-type ActionableButtonProps = {
+export interface ActionableButtonProps {
   label: string;
   value: string;
   localAction: string;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
   const { getPConnect, label, value, localAction } = props;
   if (value && localAction) {
     const LaunchLocalAction = () => {
-      const actionsAPI = getPConnect().getActionsApi();
-      const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
-      openLocalAction(localAction, {
+      getPConnect().getActionsApi().openLocalAction(localAction, {
         caseID: value,
         containerName: 'modal',
         type: 'express'

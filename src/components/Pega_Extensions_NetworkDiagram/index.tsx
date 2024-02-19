@@ -33,15 +33,15 @@ interface StringHashMap {
   [key: string]: string;
 }
 
-type NetworkDiagramProps = {
+interface NetworkDiagramProps {
   heading: string;
   height: string;
   showMinimap: boolean;
   showControls: boolean;
   showRefresh: boolean;
   edgePath: 'bezier' | 'straight' | 'step';
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
 const position = { x: 0, y: 0 };
 const dagreGraph = new dagre.graphlib.Graph();
@@ -105,7 +105,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
     const initialNodes: Array<Node> = [];
     const initialEdges: Array<Edge> = [];
     const tmpNodesHash: StringHashMap = {};
-    const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync('D_DemoGraph', '');
+    const data: any = await PCore.getDataPageUtils().getPageDataAsync('D_DemoGraph', '');
     data.pyNodes.forEach((element: any) => {
       tmpNodesHash[element.pyID] = element.pyLabel;
       initialNodes.push({

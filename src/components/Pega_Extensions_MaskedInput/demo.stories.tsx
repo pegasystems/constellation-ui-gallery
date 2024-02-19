@@ -34,7 +34,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f
@@ -45,7 +45,7 @@ const setPCore = () => {
         getTimeZone: () => 'local'
       };
     }
-  };
+  } as unknown as typeof PCore;
 };
 
 const setPConnect = () => {
@@ -86,7 +86,7 @@ const setPConnect = () => {
     resolveConfigProps: () => {
       /* nothing */
     }
-  };
+  } as unknown as typeof PConnect;
 };
 
 type Story = StoryObj<typeof PegaExtensionsMaskedInput>;
@@ -118,34 +118,40 @@ export const Default: Story = MaskedInputDemo({
   readOnly: false,
   required: false,
   hideLabel: false,
-  hasSuggestions: false
+  hasSuggestions: false,
+  getPConnect: setPConnect
 });
 
 export const IBAN: Story = MaskedInputDemo({
   label: 'IBAN (International Bank Account Number)',
   mask: 'AA00 0000 0000 0000 0000 0000 A00',
-  helperText: '#### #### #### #### #### #### ###'
+  helperText: '#### #### #### #### #### #### ###',
+  getPConnect: setPConnect
 });
 
 export const CreditCard: Story = MaskedInputDemo({
   label: 'Credit Card number',
-  mask: '0000 0000 0000 0000'
+  mask: '0000 0000 0000 0000',
+  getPConnect: setPConnect
 });
 
 export const IPAddress: Story = MaskedInputDemo({
   label: 'IP Address',
   mask: '0[00].0[00].0[00].0[00]',
-  helperText: '(0-255).(0-255).(0-255).(0-255)'
+  helperText: '(0-255).(0-255).(0-255).(0-255)',
+  getPConnect: setPConnect
 });
 
 export const ZipCode: Story = MaskedInputDemo({
   label: 'Zip Code (extended code optional)',
   mask: '00000[-0000]',
-  helperText: '#####-####'
+  helperText: '#####-####',
+  getPConnect: setPConnect
 });
 
 export const SSN: Story = MaskedInputDemo({
   label: 'SSN',
   mask: '000 00 0000',
-  helperText: '### ## ####'
+  helperText: '### ## ####',
+  getPConnect: setPConnect
 });

@@ -28,30 +28,30 @@ const VIEW_TYPE = {
   MONTH: 'dayGridMonth'
 };
 
-type CalendarProps = {
+interface CalendarProps {
   heading: string;
   dataPage: string;
   createClassname?: string;
   defaultViewMode: 'Monthly' | 'Weekly' | 'Daily';
   nowIndicator: boolean;
   weekendIndicator: boolean;
-  getPConnect: any;
-};
+  getPConnect: () => typeof PConnect;
+}
 
-type Event = {
+interface Event {
   id: string;
   title: string;
   start: Date;
   end: Date;
   item: any;
-};
+}
 
-type DateInfo = {
+interface DateInfo {
   view: { type: string };
   startStr?: string;
   start?: Date;
   end?: Date;
-};
+}
 /*
   Demo of the Calendar component using fullcalendar React component - this 3rd party lib is open source with MIT license
   Notes on the implementation:
@@ -127,8 +127,8 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       isdayGrid = false;
     }
     const eventDateStr = `${obj.StartTime.substring(0, 5)} - ${obj.EndTime.substring(0, 5)}`;
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj.pxObjClass },
       { workID: obj.pyID }
     );
@@ -196,7 +196,7 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   };
 
   const loadEvents = () => {
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(dataPage, {})
       .then((response: any) => {
         if (response.data.data !== null) {
@@ -228,8 +228,8 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadEvents();
@@ -237,8 +237,8 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
       'ASSIGNMENT_SUBMISSION'
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION'
       );
     };
