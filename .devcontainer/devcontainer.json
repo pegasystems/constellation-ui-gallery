@@ -3,8 +3,7 @@
   "forwardPorts": [6006, 4010],
   "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
   "remoteEnv": {
-    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "NODE_EXTRA_CA_CERTS": ".devcontainer/root_ca.crt"
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
   },
   "postCreateCommand": "npm install",
   "customizations": {

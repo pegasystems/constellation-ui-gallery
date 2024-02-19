@@ -134,3 +134,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 .DS_Store
+
+# Devcontainer certs
+.devcontainer/root_ca.crt

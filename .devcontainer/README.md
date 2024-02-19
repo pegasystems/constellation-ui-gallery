@@ -13,8 +13,17 @@ npm notice
 you are most probably behind a proxy / corporate network. To resolve this issue:
 1. Open in a new browser tab `https://registry.npmjs.org/`
 2. Follow [here](https://www.howtogeek.com/292076/how-do-you-view-ssl-certificate-details-in-google-chrome/) to get Root CA and click on `Export` to extract certificate content
-3. Copy and paste the content inside `root_ca.crt` present in `.devcontainer/`
-4. In Vs Code `cmd/ctrl` + `shift` + `p` and select the **Dev Containers: Rebuild and Reopen in container** command to rebuild and open container.
+3. Copy and paste the content inside `root_ca.crt` that should be created under `.devcontainer/`
+4. add the following env variable to map Root CA into the container
+```json
+    [...]
+  "remoteEnv": {
+    [...]
+    "NODE_EXTRA_CA_CERTS": ".devcontainer/root_ca.crt"
+  },
+    [...]
+```
+5. In VS Code `cmd/ctrl` + `shift` + `p` and select the **Dev Containers: Rebuild and Reopen in container** command to rebuild and open container.
 
 
 References:
