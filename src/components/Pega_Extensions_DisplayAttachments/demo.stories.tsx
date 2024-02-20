@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsDisplayAttachments from './index';
+import PegaExtensionsDisplayAttachments, { type UtilityListProps } from './index';
 
 export default {
   title: 'Widgets/Display Attachments',
@@ -112,6 +112,8 @@ const setPCore = () => {
             return getFile('./SampleWord.docx');
           } else if (ID === 'LINK-ATTACHMENT DEMOPDF') {
             return getFile('./SamplePDF.pdf');
+          } else {
+            return Promise.resolve({ data: 'https://www.pega.com' });
           }
         },
         getCaseAttachments: () => {
@@ -265,28 +267,44 @@ const setPCore = () => {
 };
 
 type Story = StoryObj<typeof PegaExtensionsDisplayAttachments>;
-export const Default: Story = {
-  render: args => {
-    setPCore();
-    const props = {
-      ...args,
-      getPConnect: () => {
-        return {
-          getContextName: () => '',
-          getValue: () => 'C-123'
-        };
-      }
-    };
-    return <PegaExtensionsDisplayAttachments {...props} />;
-  },
-  args: {
-    heading: 'Display attachments',
-    categories: '',
-    useLightBox: false,
-    useAttachmentEndpoint: true,
-    enableDownloadAll: false,
-    dataPage: 'D_AttachmentListRO',
-    displayFormat: 'list',
-    icon: 'clipboard'
-  }
+
+const DisplayAttachmentsDemo = (inputs: UtilityListProps) => {
+  return {
+    render: (args: UtilityListProps) => {
+      setPCore();
+      const props = {
+        ...args,
+        getPConnect: () => {
+          return {
+            getContextName: () => '',
+            getValue: () => 'C-123'
+          };
+        }
+      };
+      return <PegaExtensionsDisplayAttachments {...props} />;
+    },
+    args: inputs
+  };
 };
+
+export const Default: Story = DisplayAttachmentsDemo({
+  heading: 'Display attachments',
+  categories: '',
+  useLightBox: false,
+  useAttachmentEndpoint: true,
+  enableDownloadAll: false,
+  dataPage: 'D_AttachmentListRO',
+  displayFormat: 'list',
+  icon: 'clipboard'
+});
+
+export const Tiles: Story = DisplayAttachmentsDemo({
+  heading: 'Display attachments',
+  categories: '',
+  useLightBox: true,
+  useAttachmentEndpoint: true,
+  enableDownloadAll: true,
+  dataPage: 'D_AttachmentListRO',
+  displayFormat: 'tiles',
+  icon: 'clipboard'
+});

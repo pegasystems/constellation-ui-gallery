@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
 import {
   FieldGroup,
@@ -15,12 +16,12 @@ import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 // includes in bundle
 import getAllFields from './utils';
 
-type TableLayoutProps = {
+export type TableLayoutProps = {
   heading: string;
   displayFormat: 'spreadsheet' | 'financialreport' | 'radio-button-card';
   selectionProperty?: string;
   currencyFormat: 'standard' | 'compact' | 'parentheses';
-  getPConnect: any;
+  getPConnect?: any;
 };
 
 type FieldObj = {
@@ -58,7 +59,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
     setSelection(sel);
   };
 
-  const genField = (componentType: string, val: any) => {
+  const genField = (componentType: string, val: any, key: string) => {
     const field: FieldObj = {
       type: componentType,
       config: {
@@ -78,7 +79,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
         field.config.notation = currencyFormat;
       }
     }
-    return <td>{getPConnect().createComponent(field)}</td>;
+    return <td key={key}>{getPConnect().createComponent(field)}</td>;
   };
 
   useEffect(() => {
@@ -142,7 +143,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                       name: child.label,
                       value:
                         child.value && child.value.length >= i
-                          ? genField(child.componentType, child.value[i])
+                          ? genField(child.componentType, child.value[i], `card-${i}-${j}`)
                           : ''
                     });
                   }
@@ -155,6 +156,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                       <FieldValueList fields={fvl} />
                     </FieldGroup>
                   }
+                  key={`rb-${i}`}
                   id={val}
                   onChange={() => selectObject(objectId, i)}
                   checked={selection.length >= i ? selection[i] : false}
@@ -187,7 +189,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                   }
                 };
                 return (
-                  <th scope='col' id={`${tableId}-col-${idx}`}>
+                  <th scope='col' key={`${tableId}-col-${idx}`} id={`${tableId}-col-${idx}`}>
                     {getPConnect().createComponent(field)}
                   </th>
                 );
@@ -199,7 +201,7 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
               if (i > 0) {
                 if (child.heading) {
                   return (
-                    <tr className={`total cat-${child.category}`}>
+                    <tr key={`total-cat-${i}`} className={`total cat-${child.category}`}>
                       <th colSpan={numCols + 1}>{child.heading}</th>
                     </tr>
                   );
@@ -211,12 +213,12 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                   metadata.config.selectionProperty
                 )
                   return (
-                    <tr className='selection'>
+                    <tr key={`reg-row-${i}`} className='selection'>
                       <th>Selection</th>
                       {child.value &&
                         child.value.map((val: any, j: number) => {
                           return (
-                            <td>
+                            <td key={`${tableId}-cell-${i}-${j}`}>
                               <RadioButton
                                 id={`${tableId}-radio-${j}`}
                                 aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
@@ -231,11 +233,11 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
                     </tr>
                   );
                 return (
-                  <tr>
+                  <tr key={`reg-row-${i}`}>
                     <th scope='row'>{child.label}</th>
                     {child.value &&
-                      child.value.map((val: any) => {
-                        return genField(child.componentType, val);
+                      child.value.map((val: any, j: number) => {
+                        return genField(child.componentType, val, `${tableId}-row-${i}-${j}`);
                       })}
                   </tr>
                 );

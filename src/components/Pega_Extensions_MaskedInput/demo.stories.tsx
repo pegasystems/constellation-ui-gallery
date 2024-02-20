@@ -111,7 +111,7 @@ export const Default: Story = MaskedInputDemo({
   mask: '00000-0000',
   value: '',
   helperText: '#####-####',
-  testId: '',
+  testId: 'maskedinput',
   placeholder: '',
   validatemessage: '',
   disabled: false,

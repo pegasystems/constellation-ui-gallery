@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsCompareTableLayout from './index';
+import PegaExtensionsCompareTableLayout, { type TableLayoutProps } from './index';
 import { CurrencyDisplay } from '@pega/cosmos-react-core';
 
 type configInfo = {
@@ -344,52 +344,71 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
 };
 
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
-export const Default: Story = {
-  render: args => {
-    (window as any).PCore = {
-      getComponentsRegistry: () => {
-        return {
-          getLazyComponent: (f: string) => f
-        };
-      }
-    };
-    const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
-    const props = {
-      template: 'Pega_Extensions_CompareTableLayout',
-      ...args,
-      selectionProperty: selProp,
-      getPConnect: () => {
-        return {
-          getChildren: () => {
-            return genResponse(args.displayFormat, selProp).children;
-          },
-          getRawMetadata: () => {
-            return genResponse(args.displayFormat, selProp);
-          },
-          getInheritedProps: () => {
-            return genResponse(args.displayFormat, selProp).config.inheritedProps;
-          },
-          createComponent: (config: any) => {
-            return genComponent(config, args.currencyFormat);
-          },
-          setInheritedProp: () => {
-            /* nothing */
-          },
-          setValue: () => {
-            /* nothing */
-          },
-          resolveConfigProps: (f: string) => {
-            return f;
-          }
-        };
-      }
-    };
-    return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;
-  },
-  args: {
-    heading: 'Heading',
-    displayFormat: 'spreadsheet',
-    currencyFormat: 'standard',
-    selectionProperty: 'Select an object'
-  }
+
+const CompareTableDemo = (inputs: TableLayoutProps) => {
+  return {
+    render: (args: TableLayoutProps) => {
+      (window as any).PCore = {
+        getComponentsRegistry: () => {
+          return {
+            getLazyComponent: (f: string) => f
+          };
+        }
+      };
+      const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
+      const props = {
+        template: 'Pega_Extensions_CompareTableLayout',
+        ...args,
+        selectionProperty: selProp,
+        getPConnect: () => {
+          return {
+            getChildren: () => {
+              return genResponse(args.displayFormat, selProp).children;
+            },
+            getRawMetadata: () => {
+              return genResponse(args.displayFormat, selProp);
+            },
+            getInheritedProps: () => {
+              return genResponse(args.displayFormat, selProp).config.inheritedProps;
+            },
+            createComponent: (config: any) => {
+              return genComponent(config, args.currencyFormat);
+            },
+            setInheritedProp: () => {
+              /* nothing */
+            },
+            setValue: () => {
+              /* nothing */
+            },
+            resolveConfigProps: (f: string) => {
+              return f;
+            }
+          };
+        }
+      };
+      return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;
+    },
+    args: inputs
+  };
 };
+
+export const Default: Story = CompareTableDemo({
+  heading: 'Heading',
+  displayFormat: 'spreadsheet',
+  currencyFormat: 'standard',
+  selectionProperty: 'Select an object'
+});
+
+export const RadioButton: Story = CompareTableDemo({
+  heading: 'Radio-button',
+  displayFormat: 'radio-button-card',
+  currencyFormat: 'standard',
+  selectionProperty: 'Select an object'
+});
+
+export const FinancialReport: Story = CompareTableDemo({
+  heading: 'Financial report',
+  displayFormat: 'financialreport',
+  currencyFormat: 'standard',
+  selectionProperty: 'Select an object'
+});

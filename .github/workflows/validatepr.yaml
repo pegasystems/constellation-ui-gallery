@@ -27,6 +27,8 @@ jobs:
         run: npx playwright install --with-deps
       - name: Build Storybook
         run: npm run build-storybook
+      - name: Run unit test
+        run: npm run test
       - uses: Eun/http-server-action@v1
         with:
           directory: ${{ github.workspace }}/storybook-static
