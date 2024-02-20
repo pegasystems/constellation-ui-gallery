@@ -1,8 +1,10 @@
 const packagesToTranspile = [
   '@pega/cosmos-react-core',
   '@pega/cosmos-react-social',
+  '@pega/cosmos-react-rte',
   '@pega/cosmos-react-work',
-  'shortcuts'
+  'shortcuts',
+  'preact'
 ];
 const packagesToTranspileStr = packagesToTranspile.map(p => `${p}`).join('|');
 

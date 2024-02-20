@@ -64,7 +64,7 @@ registerIcon(
   paperClipIcon
 );
 
-type UtilityListProps = {
+export type UtilityListProps = {
   heading: string;
   useAttachmentEndpoint: boolean;
   categories?: string;
@@ -73,7 +73,7 @@ type UtilityListProps = {
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
   enableDownloadAll?: boolean;
-  getPConnect: any;
+  getPConnect?: any;
 };
 
 export default function PegaExtensionsDisplayAttachments(props: UtilityListProps) {

@@ -327,6 +327,7 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
                 <RadioButtonGroup inline>
                   {viewModeOptions.map(tab => (
                     <RadioButton
+                      key={tab.id}
                       label={tab.name}
                       id={tab.id}
                       checked={tab.id === activeViewMode}

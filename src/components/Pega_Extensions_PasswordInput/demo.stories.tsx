@@ -102,7 +102,7 @@ export const Default: Story = {
     label: 'Password',
     value: 'demo',
     helperText: 'Enter a password with one uppercase letter and one special character',
-    testId: '',
+    testId: 'PasswordID',
     placeholder: '',
     validatemessage: '',
     disabled: false,
