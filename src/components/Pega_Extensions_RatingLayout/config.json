@@ -1,0 +1,29 @@
+{
+  "name": "Pega_Extensions_RatingLayout",
+  "label": "Rating Layout",
+  "description": "Rating Layout",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_RatingLayout",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "properties": [
+    {
+      "name": "minWidth",
+      "label": "Slider min width",
+      "format": "TEXT",
+      "defaultValue": "40ch"
+    },
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields"]
+    }
+  ],
+  "defaultConfig": {
+    "minWidth": "40ch"
+  }
+}
