@@ -2,6 +2,7 @@
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
   "compilerOptions": {
+    "skipLibCheck": true,
     "noEmit": true,
     "allowJs": true,
     "importsNotUsedAsValues": "remove"
