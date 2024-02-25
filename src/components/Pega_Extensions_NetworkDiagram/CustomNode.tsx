@@ -1,7 +1,7 @@
 import { useMemo, type MouseEvent } from 'react';
 import { Handle, Position, type NodeProps } from 'reactflow';
 import styled, { css } from 'styled-components';
-import { Link, Icon, registerIcon } from '@pega/cosmos-react-core';
+import { Link, Icon, registerIcon, Text, StyledText, StyledLink } from '@pega/cosmos-react-core';
 import * as userIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/user.icon';
 import * as storeIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/store.icon';
 
@@ -19,9 +19,9 @@ const Node = styled.div(({ theme }: { theme: any }) => {
       height: 3rem;
       width: 3rem;
     }
-    button,
-    label {
-      max-width: 8rem;
+    ${StyledLink},
+    ${StyledText} {
+      max-width: 30ch;
       text-overflow: ellipsis;
       white-space: nowrap;
       word-spacing: normal;
@@ -78,7 +78,7 @@ const renderNode = (props: renderNodeProps) => {
         {label}
       </Link>
     ) : (
-      <label>{label}</label>
+      <Text>{label}</Text>
     );
 
   return (

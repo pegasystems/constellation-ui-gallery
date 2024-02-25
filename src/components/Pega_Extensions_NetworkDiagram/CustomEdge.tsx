@@ -18,7 +18,8 @@ const CustomEdge = (props: EdgeProps) => {
     targetPosition,
     data,
     markerStart,
-    markerEnd
+    markerEnd,
+    ...restProps
   } = props;
   let edgePath: string;
   let labelX: number;
@@ -57,14 +58,11 @@ const CustomEdge = (props: EdgeProps) => {
   return (
     <>
       <BaseEdge
+        {...restProps}
         id={id}
         path={edgePath}
         markerStart={markerStart}
         markerEnd={markerEnd}
-        style={{
-          strokeWidth: 2,
-          stroke: data.theme.base.palette['foreground-color']
-        }}
       />
       <EdgeLabelRenderer>
         <div

@@ -3,6 +3,12 @@ import styled, { css } from 'styled-components';
 
 export default styled.div(
   ({ height, theme }: { height: string; theme: typeof themeDefinition }) => {
+    const {
+      components: {
+        button: { 'focus-shadow': focusShadow }
+      }
+    } = theme;
+
     return css`
       height: ${height};
       width: 100%;
@@ -55,15 +61,17 @@ export default styled.div(
       .react-flow__edge:focus > .react-flow__connection-path,
       .react-flow__edge:hover > .react-flow__connection-path,
       .react-flow__edge:active > .react-flow__connection-path {
-        stroke: ${theme.base.palette['brand-primary']} !important;
+        stroke: ${theme.base.palette.interactive} !important;
       }
       .react-flow__node-custom {
         border: 0.125rem solid ${theme.base.palette['primary-background']};
       }
+      .react-flow__node-custom:hover {
+        border: 0.125rem solid ${theme.base.palette.interactive};
+      }
       .react-flow__node-custom:focus,
-      .react-flow__node-custom:hover,
       .react-flow__node-custom:active {
-        border: 0.125rem solid ${theme.base.palette['brand-primary']};
+        box-shadow: ${focusShadow};
       }
       div.react-flow__handle.connectionindicator {
         visibility: hidden;
