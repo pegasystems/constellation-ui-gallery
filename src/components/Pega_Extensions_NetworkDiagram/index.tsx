@@ -181,6 +181,7 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
         <CardContent>
           <StyledPegaExtensionsNetworkDiagram height={height} theme={theme}>
             <ReactFlow
+              dir='ltr'
               nodes={nodes}
               edges={edges}
               onNodesChange={onNodesChange}
