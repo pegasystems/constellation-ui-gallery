@@ -1,5 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { FieldValueList, DateTimeDisplay } from '@pega/cosmos-react-core';
+import { FieldValueItem, DateTimeDisplay } from '@pega/cosmos-react-core';
+import { Details } from '@pega/cosmos-react-work';
 import PegaExtensionsKanbanBoard from './index';
 
 export default {
@@ -88,16 +89,29 @@ const setPCore = () => {
       getPConnect: () => ({
         createComponent: (meta: any) => {
           const id = meta.config.pyID;
-          const fields = [
-            { name: 'CaseID', value: id },
-            { name: 'Description', value: tasks[id].pyDescription },
-            { name: 'Assigned To', value: tasks[id].pxCreateOpName },
-            {
-              name: 'Due date',
-              value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />
-            }
+          const highlightedData = [
+            <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
           ];
-          return <FieldValueList variant='stacked' fields={fields} />;
+          return (
+            <Details highlightedData={highlightedData} collapsible={false}>
+              <FieldValueItem
+                key='Description'
+                variant='stacked'
+                name='Description'
+                value={tasks[id].pyDescription}
+              />
+              <FieldValueItem
+                key='Assigned To'
+                name='Assigned To'
+                value={tasks[id].pxCreateOpName}
+              />
+              <FieldValueItem
+                key='Due date'
+                name='Due date'
+                value={<DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />}
+              />
+            </Details>
+          );
         }
       })
     }),

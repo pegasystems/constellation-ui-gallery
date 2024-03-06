@@ -44,6 +44,7 @@
     "@hello-pangea/dnd": "^16.5.0",
     "@pega/cosmos-react-core": "^4.1.2",
     "@pega/cosmos-react-social": "^4.1.2",
+    "@pega/cosmos-react-work": "^4.2.2",
     "dagre": "^0.8.5",
     "gantt-task-react": "^0.3.9",
     "imask": "^7.3.0",

@@ -10,6 +10,15 @@ export const StyledCardContent = styled.div(({ theme }: { theme: typeof themeDef
       background: ${theme.base.palette['primary-background']};
       margin-bottom: 0.25rem;
     }
+    & dl:last-child {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-block-end: 0;
+    }
+    & dl:last-child > div,
+    & dl:last-child > dd {
+      padding-bottom: 0.5rem;
+    }
   `;
 });
 
