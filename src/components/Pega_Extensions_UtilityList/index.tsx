@@ -40,9 +40,11 @@ const ViewAllModal = ({
   loading: ModalProps['progress'];
 }) => {
   return (
-    <Modal heading={heading} count={objects.length} progress={loading}>
-      <SummaryList items={objects} />
-    </Modal>
+    <Configuration>
+      <Modal heading={heading} count={objects.length} progress={loading}>
+        <SummaryList items={objects} />
+      </Modal>
+    </Configuration>
   );
 };
 

@@ -21,6 +21,7 @@ import {
 import type {
   SummaryListItem,
   ModalMethods,
+  ModalProps,
   LightboxItem,
   LightboxProps
 } from '@pega/cosmos-react-core';
@@ -76,6 +77,24 @@ export type UtilityListProps = {
   getPConnect?: any;
 };
 
+const ViewAllModal = ({
+  heading,
+  attachments,
+  loading
+}: {
+  heading: ModalProps['heading'];
+  attachments: SummaryListItem[];
+  loading: ModalProps['progress'];
+}) => {
+  return (
+    <Configuration>
+      <Modal heading={heading} count={attachments.length} progress={loading}>
+        <SummaryList items={attachments} />
+      </Modal>
+    </Configuration>
+  );
+};
+
 export default function PegaExtensionsDisplayAttachments(props: UtilityListProps) {
   const {
     heading = 'List of objects',
@@ -97,15 +116,6 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
 
   const viewAllModalRef = useRef<ModalMethods<any>>();
   const theme = useTheme();
-  const viewAllModal = () => {
-    return (
-      <Configuration>
-        <Modal heading={heading} count={attachments.length} progress={loading}>
-          <SummaryList items={attachments} />
-        </Modal>
-      </Configuration>
-    );
-  };
 
   const downloadAll = () => {
     files?.forEach((attachment: any) => {
@@ -261,7 +271,7 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
             loading={loading}
             noItemsText='No items'
             onViewAll={() => {
-              viewAllModalRef.current = create(viewAllModal);
+              viewAllModalRef.current = create(ViewAllModal, { heading, attachments, loading });
             }}
             actions={
               enableDownloadAll
