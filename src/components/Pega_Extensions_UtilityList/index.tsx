@@ -8,7 +8,8 @@ import {
   MetaList,
   Configuration,
   type SummaryListItem,
-  type ModalMethods
+  type ModalMethods,
+  type ModalProps
 } from '@pega/cosmos-react-core';
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -29,6 +30,22 @@ type UtilityListProps = {
 /* To register more icon, you need to import them as shown above */
 registerIcon(polarisIcon, informationIcon, clipboardIcon);
 
+const ViewAllModal = ({
+  heading,
+  objects,
+  loading
+}: {
+  heading: ModalProps['heading'];
+  objects: SummaryListItem[];
+  loading: ModalProps['progress'];
+}) => {
+  return (
+    <Modal heading={heading} count={objects.length} progress={loading}>
+      <SummaryList items={objects} />
+    </Modal>
+  );
+};
+
 export default function PegaExtensionsUtilityList(props: UtilityListProps) {
   const {
     heading = 'List of objects',
@@ -44,16 +61,6 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
   const [objects, setObjects] = useState<Array<SummaryListItem>>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const viewAllModalRef = useRef<ModalMethods<any>>();
-
-  const viewAllModal = () => {
-    return (
-      <Configuration>
-        <Modal heading={heading} count={objects.length} progress={loading}>
-          <SummaryList items={objects} />
-        </Modal>
-      </Configuration>
-    );
-  };
 
   const loadObjects = (data: Array<any>) => {
     const tmpObjects: Array<SummaryListItem> = [];
@@ -127,7 +134,7 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
           loading={loading}
           noItemsText='No items'
           onViewAll={() => {
-            viewAllModalRef.current = create(viewAllModal);
+            viewAllModalRef.current = create(ViewAllModal, { heading, objects, loading });
           }}
         />
       </Flex>
