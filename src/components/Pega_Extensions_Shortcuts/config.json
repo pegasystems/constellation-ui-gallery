@@ -1,0 +1,32 @@
+{
+  "name": "Pega_Extensions_Shortcuts",
+  "label": "Shortcuts",
+  "description": "Render a list of shortcuts in a widget",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_Shortcuts",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "names",
+      "label": "Label of each shortcut (comma-separated)",
+      "format": "TEXT"
+    },
+    {
+      "name": "pages",
+      "label": "Name of each page with the class (e.g. Data-Portal.SearchPage), comma-separated list",
+      "format": "TEXT"
+    }
+  ],
+  "defaultConfig": {
+    "heading": "Shortcuts"
+  }
+}
