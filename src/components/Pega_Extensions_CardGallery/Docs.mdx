@@ -1,0 +1,25 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Card Gallery is similar to the Kanban board component except that instead of rendering a list of tasks grouped into different columns, it displays a gallery of cards in a responsive grid.
+Each card will represent a case or data object. The list of cards to render is passed using a page list Data Page. The component supports the following features:
+
+- Ability to create a new card through an action in the header by setting the 'createClassname' property
+- Tasks are rendered using a details view and not hardcoded inside the component, which allows to use visible when and other features to personalize the content of the card
+- Cards can be rendered horizontally (from left to right) or vertically (up / down). The vertically rendering is similar to a masonry layout and will optimize the available space.
+
+<Story of={DemoStories.Default} />
+
+## Props
+
+<Controls />
+
+# Example
+
+Here is a screenshot of how the card gallery can look like at runtime using the vertical rendering
+
+![Demo](CardGallery_Demo.jpg)

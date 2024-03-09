@@ -93,6 +93,8 @@ const preview: Preview = {
         const selector =
           context.viewMode === 'docs' ? `#anchor--${context.id} .docs-story` : '.sb-show-main';
 
+        const maxWidth = context.globals['fullscreen'] !== 'On' ? '1000px' : 'none';
+
         const themeMachine = themeMachines[context.globals['theme']];
 
         let background: string;
@@ -148,8 +150,17 @@ const preview: Preview = {
             background: ${background} !important;
             transition: background-color 0.3s;
           }
+
+          .sbdocs-content {
+            max-width: ${maxWidth}!important;
+          }
         `.styles;
-      }, [context.viewMode, context.globals['theme'], context.globals['backgrounds']]);
+      }, [
+        context.viewMode,
+        context.globals['theme'],
+        context.globals['backgrounds'],
+        context.globals['fullscreen']
+      ]);
 
       useStorybookEffect(() => {
         const id =
@@ -193,6 +204,15 @@ const preview: Preview = {
       toolbar: {
         icon: 'photo',
         items: ['Clear', 'App Background', 'Primary Background', 'Secondary Background']
+      }
+    },
+    fullscreen: {
+      name: 'Fullscreen',
+      description: 'Use all space',
+      defaultValue: 'Off',
+      toolbar: {
+        icon: 'grow',
+        items: ['Off', 'On']
       }
     },
     locale: {
