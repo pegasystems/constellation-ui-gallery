@@ -7,12 +7,15 @@ import {
   Flex,
   FormField,
   FormControl,
-  Configuration,
-  useTheme
+  Configuration
 } from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
-import { StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
+import {
+  StyledButtonsWrapper,
+  StyledSignatureContent,
+  StyledSignatureReadOnlyContent
+} from './styles';
 
 type SignatureCaptureProps = {
   getPConnect: any;
@@ -43,7 +46,6 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   } = props;
 
   const ref = useRef<SignaturePad>();
-  const theme = useTheme();
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
@@ -71,7 +73,7 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   }, [status, validatemessage]);
 
   const displayComp = value ? (
-    <StyledSignatureReadOnlyContent theme={theme}>
+    <StyledSignatureReadOnlyContent>
       <Image alt={label} src={value} />
     </StyledSignatureReadOnlyContent>
   ) : null;
@@ -153,12 +155,21 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
                     }}
                     onEndStroke={onEndStroke}
                   />
-                  <Flex container={{ direction: 'row', justify: 'between' }}>
-                    <Button className='accept' onClick={handleAccept} disabled={!hasValueChanged}>
-                      Accept
-                    </Button>
-                    <Button className='clear' onClick={handleCLear}>
+                  <Flex
+                    as={StyledButtonsWrapper}
+                    container={{ direction: 'row', justify: 'between', pad: [1] }}
+                  >
+                    <Button compact className='clear' onClick={handleCLear}>
                       Clear
+                    </Button>
+                    <Button
+                      compact
+                      variant='primary'
+                      className='accept'
+                      onClick={handleAccept}
+                      disabled={!hasValueChanged}
+                    >
+                      Accept
                     </Button>
                   </Flex>
                 </>
