@@ -3,8 +3,9 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 
 export const StyledCardContent = styled.div(() => {
   return css`
-    background: red;
+    background: #cc0000;
     height: 100%;
+    font-size: 1rem;
   `;
 });
 
@@ -12,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --fc-today-bg-color: none !important;
     --fc-event-border-color: none !important;
+    --fc-event-bg-color: #2778C8 !important;
   }
 `;
 

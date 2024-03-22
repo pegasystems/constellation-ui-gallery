@@ -267,8 +267,30 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
         <CardContent>
           <FullCalendar
             ref={calendarRef}
+            customButtons={{
+              prevButton: {
+                text: 'Previous',
+                click: () => {
+                  if (calendarRef) {
+                    const cal: any = calendarRef.current;
+                    const calendarAPI = cal.getApi();
+                    calendarAPI?.prev();
+                  }
+                }
+              },
+              nextButton: {
+                text: 'Next',
+                click: () => {
+                  if (calendarRef) {
+                    const cal: any = calendarRef.current;
+                    const calendarAPI = cal.getApi();
+                    calendarAPI?.next();
+                  }
+                }
+              }
+            }}
             headerToolbar={{
-              left: 'prev,next',
+              left: 'prevButton,nextButton',
               center: 'title',
               right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
             }}

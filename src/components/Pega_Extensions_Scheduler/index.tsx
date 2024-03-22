@@ -80,7 +80,8 @@ const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => {
           aria-label={description}
           style={{
             wordBreak: 'break-all',
-            color: '#FFFFFF'
+            color: '#FFFFFF',
+            fontSize: '1rem'
           }}
           onPreview={() => {
             getPConnect().getActionsApi().showCasePreview(encodeURI(obj.InsKey), {
