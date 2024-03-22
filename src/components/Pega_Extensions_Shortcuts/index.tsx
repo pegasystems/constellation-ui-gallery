@@ -1,41 +1,68 @@
-import { useState, useEffect, type MouseEvent } from 'react';
-import { Card, CardHeader, CardContent, Text, Link, Configuration } from '@pega/cosmos-react-core';
-import MainContent from './styles';
+import { type MouseEvent, useCallback } from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Text,
+  Link,
+  Configuration,
+  Flex
+} from '@pega/cosmos-react-core';
+import { SimpleContent, GroupedContent } from './styles';
 
 type ShortcutsProps = {
+  /** Display type of rendering
+   * @default simple
+   */
+  displayType: 'simple' | 'grouped';
+  /** Heading for the card - only used if displayType is simple
+   * @default Shortcuts
+   */
   heading?: string;
+  /** Label of each page (comma-separated) - only used if displayType is simple */
   names?: string;
+  /** Name of each page with the class (e.g. Data-Portal.SearchPage), comma-separated list - only used if displayType is simple */
   pages?: string;
+  /** JSON object passed a string - only used if displayType is grouped */
+  pageJSON?: string;
   getPConnect: any;
 };
 
 export default function PegaExtensionsShortcuts(props: ShortcutsProps) {
-  const { heading = 'List of objects', names = '', pages = '', getPConnect } = props;
-  const [objects, setObjects] = useState<Array<any>>([]);
+  const {
+    heading = 'Shortcuts',
+    displayType = 'simple',
+    names = '',
+    pages = '',
+    pageJSON = '',
+    getPConnect
+  } = props;
+  const { ACTION_SHOWVIEW } = (window as any).PCore.getSemanticUrlUtils().getActions();
 
-  useEffect(() => {
-    const tmpObjects: any = [];
-    const { ACTION_SHOWVIEW } = (window as any).PCore.getSemanticUrlUtils().getActions();
-    const labels = names.split(',');
-    pages.split(',').forEach((name: string, index: number) => {
-      const linkLabel = labels[index]?.trim();
-      if (!linkLabel) return;
-      const isURL = name.trim().indexOf('https://');
+  const generateLink = useCallback(
+    (name: string, page: string) => {
+      if (!name) return null;
+      const isURL = page.trim().indexOf('https://');
       if (isURL === 0) {
-        tmpObjects.push(<Link href={name.trim()}>{linkLabel}</Link>);
-        return;
+        return (
+          <Link key={name} href={page.trim()}>
+            {name}
+          </Link>
+        );
       }
-      const delimiter = name.indexOf('.');
-      if (delimiter === -1) return;
-      const pageClass = name.substring(0, delimiter).trim();
-      const pageName = name.substring(delimiter + 1).trim();
+      const delimiter = page.indexOf('.');
+      if (delimiter === -1) return null;
+
+      const pageClass = page.substring(0, delimiter).trim();
+      const pageName = page.substring(delimiter + 1).trim();
       const linkRef = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
         ACTION_SHOWVIEW,
         { page: pageName },
         ''
       );
-      tmpObjects.push(
+      return (
         <Link
+          key={name}
           href={linkRef}
           onClick={(e: MouseEvent<HTMLButtonElement>) => {
             /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
@@ -45,24 +72,56 @@ export default function PegaExtensionsShortcuts(props: ShortcutsProps) {
             }
           }}
         >
-          {linkLabel}
+          {name}
         </Link>
       );
-    });
-    setObjects(tmpObjects);
-  }, [names, pages, getPConnect]);
-
-  if (!names || !pages) return null;
-  return (
-    <Configuration>
-      <Card>
-        <CardHeader>
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <CardContent>
-          <MainContent>{objects.map((object: any) => object)}</MainContent>
-        </CardContent>
-      </Card>
-    </Configuration>
+    },
+    [ACTION_SHOWVIEW, getPConnect]
   );
+
+  if (displayType === 'simple') {
+    const objects: any = [];
+    const namesArray = names.split(',');
+    pages.split(',').forEach((page: string, index: number) => {
+      const name = namesArray[index]?.trim();
+      const linkEl = generateLink(name, page);
+      if (linkEl) objects.push(linkEl);
+    });
+    if (objects.length === 0) return null;
+    return (
+      <Configuration>
+        <Card>
+          <CardHeader>
+            <Text variant='h2'>{heading}</Text>
+          </CardHeader>
+          <CardContent>
+            <SimpleContent>{objects?.map((object: any) => object)}</SimpleContent>
+          </CardContent>
+        </Card>
+      </Configuration>
+    );
+  }
+  try {
+    const pageObj = JSON.parse(pageJSON);
+    const obj = pageObj.categories;
+    return (
+      <Configuration>
+        <Card>
+          <CardContent>
+            <GroupedContent>
+              {obj?.map((object: any) => (
+                <Flex container={{ direction: 'column' }}>
+                  <Text variant='h2'>{object.heading}</Text>
+                  {object.links?.map((link: any) => {
+                    return generateLink(link.name, link.page);
+                  })}
+                </Flex>
+              ))}
+            </GroupedContent>
+          </CardContent>
+        </Card>
+      </Configuration>
+    );
+  } catch (e) {}
+  return null;
 }
