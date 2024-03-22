@@ -11,19 +11,44 @@
   "subtype": ["PAGE", "CASE"],
   "properties": [
     {
+      "name": "displayType",
+      "label": "displayType",
+      "format": "SELECT",
+      "defaultValue": "simple",
+      "source": [
+        {
+          "key": "simple",
+          "value": "simple"
+        },
+        {
+          "key": "grouped",
+          "value": "grouped"
+        }
+      ]
+    },
+    {
       "name": "heading",
       "label": "Heading",
-      "format": "TEXT"
+      "format": "TEXT",
+      "visibility": "$this.displayType == 'simple'"
     },
     {
       "name": "names",
-      "label": "Label of each shortcut (comma-separated)",
-      "format": "TEXT"
+      "label": "Label of each page (comma-separated)",
+      "format": "TEXT",
+      "visibility": "$this.displayType == 'simple'"
     },
     {
       "name": "pages",
       "label": "Name of each page with the class (e.g. Data-Portal.SearchPage), comma-separated list",
-      "format": "TEXT"
+      "format": "TEXT",
+      "visibility": "$this.displayType == 'simple'"
+    },
+    {
+      "name": "pageJSON",
+      "label": "JSON of the categories and pages",
+      "format": "TEXT",
+      "visibility": "$this.displayType == 'grouped'"
     }
   ],
   "defaultConfig": {
