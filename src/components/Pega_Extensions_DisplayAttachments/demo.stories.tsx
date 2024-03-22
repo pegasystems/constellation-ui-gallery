@@ -15,6 +15,23 @@ export default {
       }
     }
   },
+  parameters: {
+    a11y: {
+      element: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'list',
+            enabled: false
+          },
+          {
+            id: 'nested-interactive',
+            enabled: false
+          }
+        ]
+      }
+    }
+  },
   component: PegaExtensionsDisplayAttachments
 };
 

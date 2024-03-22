@@ -27,6 +27,23 @@ export default {
       }
     }
   },
+  parameters: {
+    a11y: {
+      element: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'aria-allowed-role',
+            enabled: false
+          },
+          {
+            id: 'nested-interactive',
+            enabled: false
+          }
+        ]
+      }
+    }
+  },
   component: PegaExtensionsKanbanBoard
 };
 

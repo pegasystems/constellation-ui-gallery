@@ -11,7 +11,6 @@ import {
   ModalManager,
   PopoverManager,
   Toaster,
-  LiveLog,
   Aries2023Theme,
   Aries2023DarkTheme,
   ThemeMachine,
@@ -74,15 +73,13 @@ const preview: Preview = {
           disableDefaultFontLoading
           id='Preview'
         >
-          <LiveLog maxLength={context.args.liveLogMaxLength || 50}>
-            <PopoverManager>
-              <Toaster dismissAfter={5000}>
-                <ModalManager>
-                  <Story {...context} />
-                </ModalManager>
-              </Toaster>
-            </PopoverManager>
-          </LiveLog>
+          <PopoverManager>
+            <Toaster dismissAfter={5000}>
+              <ModalManager>
+                <Story {...context} />
+              </ModalManager>
+            </Toaster>
+          </PopoverManager>
         </Configuration>
       );
     },

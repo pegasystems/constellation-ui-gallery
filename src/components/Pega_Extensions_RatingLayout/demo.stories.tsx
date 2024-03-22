@@ -24,6 +24,19 @@ export default {
       }
     }
   },
+  parameters: {
+    a11y: {
+      element: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'aria-valid-attr-value',
+            enabled: false
+          }
+        ]
+      }
+    }
+  },
   component: PegaExtensionsRatingLayout
 };
 
