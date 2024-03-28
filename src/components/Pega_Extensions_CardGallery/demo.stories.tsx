@@ -260,6 +260,14 @@ const setPCore = (args: any) => {
         }
       };
     },
+    getConstants: () => {
+      return {
+        PUB_SUB_EVENTS: {
+          EVENT_DASHBOARD_FILTER_CHANGE: 'EVENT_DASHBOARD_FILTER_CHANGE',
+          EVENT_DASHBOARD_FILTER_CLEAR_ALL: 'EVENT_DASHBOARD_FILTER_CLEAR_ALL'
+        }
+      };
+    },
     getDataApiUtils: () => {
       return {
         getCaseEditLock: () => {
@@ -357,6 +365,7 @@ export const Default: Story = {
     heading: 'Card Gallery',
     createClassname: 'Work-UserStory',
     dataPage: '',
+    useInDashboard: false,
     minWidth: '400px',
     rendering: 'horizontal',
     detailsDataPage: '',

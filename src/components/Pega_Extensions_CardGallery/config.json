@@ -16,6 +16,12 @@
       "format": "TEXT"
     },
     {
+      "name": "useInDashboard",
+      "label": "Set to true if you are using in a dashboard - use a queryable data page",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
       "name": "dataPage",
       "label": "List Data Page name to get all objects",
       "format": "TEXT",
