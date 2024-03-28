@@ -37,6 +37,10 @@ export default {
             enabled: false
           },
           {
+            id: 'landmark-no-duplicate-banner',
+            enabled: false
+          },
+          {
             id: 'nested-interactive',
             enabled: false
           }

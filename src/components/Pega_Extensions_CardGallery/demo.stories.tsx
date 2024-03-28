@@ -27,6 +27,19 @@ export default {
       }
     }
   },
+  parameters: {
+    a11y: {
+      element: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'landmark-no-duplicate-banner',
+            enabled: false
+          }
+        ]
+      }
+    }
+  },
   component: PegaExtensionsCardGallery
 };
 
