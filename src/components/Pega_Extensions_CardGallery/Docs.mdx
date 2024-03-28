@@ -11,6 +11,9 @@ Each card will represent a case or data object. The list of cards to render is p
 - Ability to create a new card through an action in the header by setting the 'createClassname' property
 - Tasks are rendered using a details view and not hardcoded inside the component, which allows to use visible when and other features to personalize the content of the card
 - Cards can be rendered horizontally (from left to right) or vertically (up / down). The vertically rendering is similar to a masonry layout and will optimize the available space.
+- The Card Gallery component is also compatible with dashboard and will listen to filter changes if the property 'useInDashboard' is set
+
+Note: if 'useInDashboard' is true, the data page must be of type queryable and must be sourced from a Report Definition.
 
 <Story of={DemoStories.Default} />
 

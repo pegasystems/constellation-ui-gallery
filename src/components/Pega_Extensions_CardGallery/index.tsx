@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   registerIcon,
   Text,
@@ -7,11 +7,15 @@ import {
   Progress,
   Button,
   Icon,
-  Configuration
+  EmptyState,
+  ErrorState,
+  Configuration,
+  Flex
 } from '@pega/cosmos-react-core';
 import { Task } from './Task';
-import { loadDetails } from './utils';
+import { loadDetails, getFilters } from './utils';
 import { MainCard } from './styles';
+
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
 
@@ -19,6 +23,7 @@ registerIcon(plusIcon, pencilIcon);
 type CardGalleryProps = {
   heading: string;
   dataPage: string;
+  useInDashboard: boolean;
   numCards?: number;
   createClassname?: string;
   rendering: 'vertical' | 'horizontal';
@@ -32,6 +37,7 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
   const {
     heading = '',
     dataPage = '',
+    useInDashboard = true,
     numCards,
     createClassname = '',
     minWidth = '400px',
@@ -41,6 +47,9 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
     getPConnect
   } = props;
   const [tasks, setTasks] = useState<any>();
+  const filters = useRef<any>({});
+  const errorMsg = useRef<string>('');
+  const isEmpty = useRef<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const editTask = (id: string) => {
@@ -70,42 +79,95 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
     });
   };
 
-  const loadTasks = () => {
-    setLoading(true);
+  const loadTasks = (isFiltered: boolean) => {
+    let payload = {};
+    errorMsg.current = '';
+    if (useInDashboard) {
+      const filterExpr = getFilters(filters.current);
+      payload = {
+        dataViewParameters: {},
+        query: {
+          ...(filterExpr ? { filter: filterExpr } : null),
+          select: [
+            { field: 'pyID' },
+            { field: 'pyLabel' },
+            { field: 'pyStatusWork' },
+            { field: 'pzInsKey' },
+            { field: 'pxObjClass' }
+          ]
+        }
+      };
+    }
     (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, {})
+      .getData(dataPage, payload)
       .then(async (response: any) => {
-        if (response.data.data !== null) {
-          const tmpTasks: any = [];
-          response.data.data.forEach((item: any) => {
-            tmpTasks.push({
-              id: item.pyID,
-              title: item.pyLabel,
-              status: item.pyStatusWork,
-              classname: item.pxObjClass,
-              insKey: item.pzInsKey,
-              getDetails,
-              editTask
+        if (!isFiltered) {
+          /* First time - no data loaded */
+          if (response?.data?.data !== null) {
+            const tmpTasks: any = [];
+            response.data.data.forEach((item: any) => {
+              tmpTasks.push({
+                id: item.pyID,
+                title: item.pyLabel,
+                status: item.pyStatusWork,
+                classname: item.pxObjClass,
+                insKey: item.pzInsKey,
+                isVisible: true,
+                getDetails,
+                editTask
+              });
             });
-          });
-          let numTasks = tmpTasks.length;
-          if (numTasks > 0) {
-            tmpTasks.forEach(async (tmpTask: any) => {
-              const details = await getDetails(tmpTask.id, tmpTask.classname);
-              tmpTask.details = details;
-              numTasks -= 1;
-              if (numTasks === 0) {
-                setTasks(tmpTasks);
-                setLoading(false);
-              }
-            });
+            let numTasks = tmpTasks.length;
+            if (numTasks > 0) {
+              tmpTasks.forEach(async (tmpTask: any) => {
+                const details = await getDetails(tmpTask.id, tmpTask.classname);
+                tmpTask.details = details;
+                numTasks -= 1;
+                if (numTasks === 0) {
+                  setTasks(tmpTasks);
+                  setLoading(false);
+                  isEmpty.current = false;
+                }
+              });
+            } else {
+              setTasks(tmpTasks);
+              setLoading(false);
+              isEmpty.current = true;
+            }
           } else {
-            setTasks(tmpTasks);
+            setTasks([]);
             setLoading(false);
+            isEmpty.current = true;
           }
         } else {
-          setLoading(false);
+          setTasks((prevTasks: any[]) => {
+            const tmpTasks: any = [];
+            let tmpIsEmpty = true;
+            prevTasks?.forEach((tmpTask: any) => {
+              let isVisible = false;
+              response?.data?.data?.forEach((item: any) => {
+                if (item.pyID === tmpTask.id) {
+                  isVisible = true;
+                  tmpIsEmpty = false;
+                }
+              });
+              tmpTasks.push({ ...tmpTask, isVisible });
+            });
+            isEmpty.current = tmpIsEmpty;
+            return tmpTasks;
+          });
         }
+      })
+      .catch((error: any) => {
+        if (
+          error?.response?.data?.errorDetails?.length > 0 &&
+          error.response.data.errorDetails[0].localizedValue
+        ) {
+          errorMsg.current = error.response.data.errorDetails[0].localizedValue;
+        } else {
+          errorMsg.current = error.message;
+        }
+        setLoading(false);
       });
   };
 
@@ -115,7 +177,7 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
       (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
-        loadTasks();
+        loadTasks(false);
       },
       'ASSIGNMENT_SUBMISSION'
     );
@@ -128,10 +190,76 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /* Subscribe to dashboard filter changes only if useInDashboard is true */
   useEffect(() => {
-    loadTasks();
+    if (useInDashboard) {
+      (window as any).PCore.getPubSubUtils().subscribe(
+        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+        (data: any) => {
+          const { filterId, filterExpression } = data;
+          if (filterExpression) {
+            filters.current[filterId] = filterExpression;
+          } else {
+            delete filters.current[filterId];
+          }
+          loadTasks(true);
+        },
+        `dashboard-component-cardgallery`,
+        false,
+        getPConnect().getContextName()
+      );
+      (window as any).PCore.getPubSubUtils().subscribe(
+        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+        () => {
+          filters.current = {};
+          loadTasks(true);
+        },
+        `dashboard-component-cardgallery`,
+        false,
+        getPConnect().getContextName()
+      );
+      return () => {
+        (window as any).PCore.getPubSubUtils().unsubscribe(
+          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+          `dashboard-component-cardgallery`,
+          getPConnect().getContextName()
+        );
+        (window as any).PCore.getPubSubUtils().unsubscribe(
+          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+          `dashboard-component-cardgallery`,
+          getPConnect().getContextName()
+        );
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    loadTasks(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards]);
+
+  const genState = (content: ReactNode) => (
+    <Flex container={{ pad: 2 }} height={10}>
+      <Flex item={{ grow: 1, alignSelf: 'auto' }}>{content}</Flex>
+    </Flex>
+  );
+
+  let content;
+  if (loading) {
+    content = genState(<Progress placement='block' message='Loading content...' />);
+  } else if (errorMsg.current) {
+    content = genState(<ErrorState message={errorMsg.current} />);
+  } else if (isEmpty.current) {
+    content = genState(<EmptyState message='No items' />);
+  } else {
+    content = (
+      <MainCard rendering={rendering} minWidth={minWidth}>
+        {tasks?.map((task: any) => (task.isVisible ? <Task key={task.id} {...task}></Task> : null))}
+      </MainCard>
+    );
+  }
 
   return (
     <Configuration>
@@ -147,13 +275,8 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
         >
           <Text variant='h2'>{heading}</Text>
         </CardHeader>
-        <MainCard rendering={rendering} minWidth={minWidth}>
-          {loading ? (
-            <Progress placement='local' message='Loading content...' />
-          ) : (
-            tasks.map((task: any) => <Task key={task.id} {...task}></Task>)
-          )}
-        </MainCard>
+
+        {content}
       </Card>
     </Configuration>
   );
