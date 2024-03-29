@@ -1,11 +1,13 @@
 /* eslint-disable react/no-unused-prop-types */
 import { useState, useEffect } from 'react';
-import { Configuration, Flex, TabPanel, Tabs } from '@pega/cosmos-react-core';
+import { Configuration, FieldGroup, Flex, TabPanel, Tabs } from '@pega/cosmos-react-core';
 import RatingElem from './RatingElem';
 import StyledWrapper from './styles';
 import getAllFields from './utils';
 
 type RatingLayoutProps = {
+  label?: string;
+  showLabel?: boolean;
   getPConnect?: any;
   minWidth?: string;
   numCategories?: number;
@@ -21,9 +23,11 @@ interface Rating {
 }
 
 export default function PegaExtensionsRatingLayout(props: RatingLayoutProps) {
-  const { getPConnect, minWidth = '40ch' } = props;
+  const { getPConnect, label = '', showLabel = false, minWidth = '40ch' } = props;
   const [tabs, setTabs] = useState<Array<any>>([]);
   const [panelShown, changePanel] = useState('0');
+  // Get the inherited props from the parent to determine label settings
+  const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
   const handleTabChange = (id: string) => {
     changePanel(id);
   };
@@ -65,36 +69,38 @@ export default function PegaExtensionsRatingLayout(props: RatingLayoutProps) {
 
   return (
     <Configuration>
-      <Flex container={{ direction: 'column' }}>
-        <Flex item={{ grow: 1 }}>
-          <Tabs tabs={tabs} onTabClick={handleTabChange} currentTabId={panelShown} />
+      <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
+        <Flex container={{ direction: 'column' }}>
+          <Flex item={{ grow: 1 }}>
+            <Tabs tabs={tabs} onTabClick={handleTabChange} currentTabId={panelShown} />
+          </Flex>
+          <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
+            {tabs.map(tab => (
+              <TabPanel
+                tabId={tab.id}
+                currentTabId={panelShown}
+                key={tab.id}
+                style={{ width: '100%' }}
+              >
+                <StyledWrapper minWidth={minWidth}>
+                  {tab.content.map((content: Rating) => {
+                    return (
+                      <RatingElem
+                        key={content.id}
+                        label={content.label}
+                        value={content.value}
+                        path={content.path}
+                        getPConnect={getPConnect}
+                        propIndex={content.propIndex}
+                      />
+                    );
+                  })}
+                </StyledWrapper>
+              </TabPanel>
+            ))}
+          </Flex>
         </Flex>
-        <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
-          {tabs.map(tab => (
-            <TabPanel
-              tabId={tab.id}
-              currentTabId={panelShown}
-              key={tab.id}
-              style={{ width: '100%' }}
-            >
-              <StyledWrapper minWidth={minWidth}>
-                {tab.content.map((content: Rating) => {
-                  return (
-                    <RatingElem
-                      key={content.id}
-                      label={content.label}
-                      value={content.value}
-                      path={content.path}
-                      getPConnect={getPConnect}
-                      propIndex={content.propIndex}
-                    />
-                  );
-                })}
-              </StyledWrapper>
-            </TabPanel>
-          ))}
-        </Flex>
-      </Flex>
+      </FieldGroup>
     </Configuration>
   );
 }
