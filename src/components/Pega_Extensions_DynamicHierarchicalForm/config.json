@@ -1,0 +1,46 @@
+{
+  "name": "Pega_Extensions_DynamicHierarchicalForm",
+  "label": "Dynamic Hierarchical Form",
+  "description": "Dynamic Hierarchical Form",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_DynamicHierarchicalForm",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "properties": [
+    {
+      "name": "refreshActionLabel",
+      "label": "Label of the Refresh Action button",
+      "format": "TEXT"
+    },
+    {
+      "name": "showRefreshAction",
+      "label": "Show refresh action",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "name": "enableItemSelection",
+      "label": "Show multi-select picker",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "name": "Selection",
+      "label": "Selection",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields"]
+    },
+    {
+      "name": "Tabs",
+      "label": "Tabs",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields"]
+    }
+  ],
+  "defaultConfig": {
+    "refreshActionLabel": "Refresh details"
+  }
+}
