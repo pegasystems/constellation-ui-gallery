@@ -10,10 +10,12 @@ const Node = styled.div(({ theme }: { theme: any }) => {
   return css`
     padding: 0.25rem;
     color: ${theme.base.palette['foreground-color']};
-    background: ${theme.base.palette['primary-background']};
+    background: transparent;
     display: flex;
     flex-flow: column;
     align-items: center;
+    max-width: 10rem;
+    width: 10rem;
 
     svg {
       height: 3rem;
@@ -21,9 +23,11 @@ const Node = styled.div(({ theme }: { theme: any }) => {
     }
     ${StyledLink},
     ${StyledText} {
-      max-width: 30ch;
+      max-width: 9rem;
+      word-wrap: break-word;
       text-overflow: ellipsis;
       white-space: nowrap;
+      text-align: center;
       word-spacing: normal;
       overflow: hidden;
     }

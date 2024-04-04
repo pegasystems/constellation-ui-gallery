@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   registerIcon,
   Icon,
@@ -13,6 +13,8 @@ import {
 import ReactFlow, {
   useNodesState,
   useEdgesState,
+  useReactFlow,
+  ReactFlowProvider,
   MiniMap,
   Controls,
   MarkerType,
@@ -33,26 +35,42 @@ interface StringHashMap {
   [key: string]: string;
 }
 
-type NetworkDiagramProps = {
+export interface NetworkDiagramProps {
+  /** Heading of the widget */
   heading: string;
-  height: string;
-  showMinimap: boolean;
-  showControls: boolean;
-  showRefresh: boolean;
-  edgePath: 'bezier' | 'straight' | 'step';
+  /** Name of the data page that will be called to get the Nodes and Edges */
+  dataPage: string;
+  /** Height of the diagram
+   * @default 40rem
+   */
+  height?: string;
+  /** Show the minimap on the diagram
+   * @default true
+   */
+  showMinimap?: boolean;
+  /** Show the controls panel in the diagram
+   * @default true
+   */
+  showControls?: boolean;
+  /** Show the refresh button to reload the DP and recenter the diagram
+   * @default true
+   */
+  showRefresh?: boolean;
+  /** Type of layout for the edges
+   * @default bezier
+   */
+  edgePath?: 'bezier' | 'straight' | 'step';
   getPConnect: any;
-};
+}
 
 const position = { x: 0, y: 0 };
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+const nodeWidth = 160;
+const nodeHeight = 160;
 
-const nodeWidth = 150;
-const nodeHeight = 150;
-
-const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>, direction = 'TB') => {
-  const isHorizontal = direction === 'LR';
-  dagreGraph.setGraph({ rankdir: direction });
+const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>) => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+  dagreGraph.setGraph({ rankdir: 'TB' });
 
   nodes.forEach((node: Node) => {
     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -66,11 +84,11 @@ const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>, direction =
 
   nodes.forEach((node: any) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? 'left' : 'top';
-    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
+    node.targetPosition = 'top';
+    node.sourcePosition = 'bottom';
     node.position = {
-      x: nodeWithPosition.x - nodeWidth / 2,
-      y: nodeWithPosition.y - nodeHeight / 2
+      x: nodeWithPosition.x,
+      y: nodeWithPosition.y
     };
 
     return node;
@@ -78,99 +96,117 @@ const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>, direction =
 
   return { nodes, edges };
 };
-
 const edgeTypes: EdgeTypes = {
   custom: CustomEdge
 };
-
-export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps) {
+function Flow(props: any) {
   const {
-    heading = '',
+    dataPage = 'D_DemoGraph',
     height = '40rem',
     showMinimap = true,
     showControls = true,
-    showRefresh = true,
     edgePath = 'bezier',
+    counter,
     getPConnect
   } = props;
+
+  const { fitView } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
   const theme = useTheme();
 
-  const defaultViewport = { x: 0, y: 0, zoom: 3 };
-
-  const getNodesDetails = useCallback(async () => {
-    const initialNodes: Array<Node> = [];
-    const initialEdges: Array<Edge> = [];
-    const tmpNodesHash: StringHashMap = {};
-    const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync('D_DemoGraph', '');
-    data.pyNodes.forEach((element: any) => {
-      tmpNodesHash[element.pyID] = element.pyLabel;
-      initialNodes.push({
-        id: element.pyID,
-        data: {
-          id: element.pyID,
-          type: element.pyCategory,
-          label: element.pyLabel,
-          key: element.pzInsKey,
-          objClass: element.pyClassName,
-          getPConnect,
-          theme
-        },
-        position,
-        type: 'custom'
-      });
-    });
-    data.pyEdges.forEach((element: any, i: number) => {
-      const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${
-        tmpNodesHash[element.pyTo]
-      } with label: ${element.pyLabel}`;
-      initialEdges.push({
-        id: element.pyID || `edge-${i}`,
-        source: element.pyFrom,
-        target: element.pyTo,
-        data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          width: 20,
-          height: 20,
-          color: theme.base.palette['foreground-color']
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: theme.base.palette['foreground-color']
-        },
-        type: 'custom',
-        ariaLabel
-      });
-    });
-    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-      initialNodes,
-      initialEdges
-    );
-    setNodes(layoutedNodes);
-    setEdges(layoutedEdges);
-  }, [edgePath, getPConnect, setEdges, setNodes, theme]);
-
   useEffect(() => {
+    async function getNodesDetails() {
+      const initialNodes: Array<Node> = [];
+      const initialEdges: Array<Edge> = [];
+      const tmpNodesHash: StringHashMap = {};
+      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, '');
+      data.pyNodes.forEach((element: any) => {
+        tmpNodesHash[element.pyID] = element.pyLabel;
+        initialNodes.push({
+          id: element.pyID,
+          data: {
+            id: element.pyID,
+            type: element.pyCategory,
+            label: element.pyLabel,
+            key: element.pzInsKey,
+            objClass: element.pyClassName,
+            getPConnect,
+            theme
+          },
+          position,
+          type: 'custom'
+        });
+      });
+      data.pyEdges.forEach((element: any, i: number) => {
+        const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${
+          tmpNodesHash[element.pyTo]
+        } with label: ${element.pyLabel}`;
+        initialEdges.push({
+          id: element.pyID || `edge-${i}`,
+          source: element.pyFrom,
+          target: element.pyTo,
+          data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            width: 20,
+            height: 20,
+            color: theme.base.palette['foreground-color']
+          },
+          style: {
+            strokeWidth: 2,
+            stroke: theme.base.palette['foreground-color']
+          },
+          type: 'custom',
+          ariaLabel
+        });
+      });
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+        initialNodes,
+        initialEdges
+      );
+      setNodes(layoutedNodes);
+      setEdges(layoutedEdges);
+      setTimeout(() => {
+        fitView();
+      }, 10);
+    }
     getNodesDetails();
-  }, [height, edgePath, getNodesDetails]);
+  }, [height, edgePath, counter, setNodes, setEdges, getPConnect, theme, fitView, dataPage]);
 
+  return (
+    <ReactFlow
+      dir='ltr'
+      nodes={nodes}
+      edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
+      proOptions={{ hideAttribution: true }}
+    >
+      {showMinimap ? <MiniMap /> : null}
+      {showControls ? <Controls /> : null}
+    </ReactFlow>
+  );
+}
+
+export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps) {
+  const { showRefresh = true, heading = '', height = '40rem' } = props;
+  const theme = useTheme();
+  const [counter, setCounter] = useState<number>(1);
+  const refreshDiagram = () => {
+    setCounter(prev => prev + 1);
+  };
   return (
     <Configuration>
       <Card>
         <CardHeader
           actions={
             showRefresh ? (
-              <Button
-                variant='simple'
-                label='Reload diagram'
-                icon
-                compact
-                onClick={getNodesDetails}
-              >
+              <Button variant='simple' label='Reload diagram' icon compact onClick={refreshDiagram}>
                 <Icon name='reset' />
               </Button>
             ) : undefined
@@ -180,21 +216,9 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
         </CardHeader>
         <CardContent>
           <StyledPegaExtensionsNetworkDiagram height={height} theme={theme}>
-            <ReactFlow
-              dir='ltr'
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
-              fitView
-              defaultViewport={defaultViewport}
-              proOptions={{ hideAttribution: true }}
-            >
-              {showMinimap ? <MiniMap /> : null}
-              {showControls ? <Controls /> : null}
-            </ReactFlow>
+            <ReactFlowProvider>
+              <Flow {...props} counter={counter} />
+            </ReactFlowProvider>
           </StyledPegaExtensionsNetworkDiagram>
         </CardContent>
       </Card>
