@@ -13,12 +13,14 @@
     {
       "name": "heading",
       "label": "Heading",
-      "format": "TEXT"
+      "format": "TEXT",
+      "required": true
     },
     {
       "name": "dataPage",
       "label": "Data Page name",
-      "format": "TEXT"
+      "format": "TEXT",
+      "required": true
     },
     {
       "name": "height",
@@ -28,17 +30,20 @@
     {
       "name": "showMinimap",
       "label": "Show mini map",
-      "format": "BOOLEAN"
+      "format": "BOOLEAN",
+      "defaultValue": true
     },
     {
       "name": "showControls",
       "label": "Show controls",
-      "format": "BOOLEAN"
+      "format": "BOOLEAN",
+      "defaultValue": true
     },
     {
       "name": "showRefresh",
       "label": "Show refresh action",
-      "format": "BOOLEAN"
+      "format": "BOOLEAN",
+      "defaultValue": true
     },
     {
       "name": "edgePath",
@@ -65,8 +70,6 @@
     "heading": "Network Diagram",
     "dataPage": "",
     "height": "40rem",
-    "showMinimap": true,
-    "showRefresh": true,
     "edgePath": "bezier"
   }
 }
