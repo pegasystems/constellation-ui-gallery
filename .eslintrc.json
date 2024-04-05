@@ -152,35 +152,14 @@
       "files": "*.@(ts|tsx)",
       "rules": {
         "@typescript-eslint/method-signature-style": ["error", "property"],
-        // "@typescript-eslint/ban-types": [
-        //   "warn",
-        //   {
-        //     "types": {
-        //       "Omit": "Please use the 'OmitStrict' type from 'src/types/' instead.",
-        //       "object": false,
-        //       "Function": false
-        //     },
-        //     "extendDefaults": true
-        //   }
-        // ],
-
         "quotes": "off",
         "@typescript-eslint/quotes": "off"
-        // [
-        //   "error",
-        //   "single",
-        //   {
-        //     "avoidEscape": true,
-        //     "allowTemplateLiterals": false
-        //   }
-        // ]
       }
     },
     {
       "files": "*.@(jsx|tsx|mdx)",
       "rules": {
         "react/react-in-jsx-scope": "off",
-        // Set up configuration for future sweep
         "react-hooks/exhaustive-deps": [
           "off",
           {
@@ -209,19 +188,6 @@
         "sonarjs/cognitive-complexity": ["warn", 45]
       }
     },
-    // {
-    //   "files": "*.@(tsx)",
-    //   "rules": {
-    //     "react/react-in-jsx-scope": "off",
-    //     // Set up configuration for future sweep
-    //     "react-hooks/exhaustive-deps": [
-    //       "error",
-    //       {
-    //         "additionalHooks": "useAfterInitialEffect"
-    //       }
-    //     ]
-    //   }
-    // },
     {
       "files": "*.@(js|jsx|ts|tsx|mdx)",
       "rules": {}
