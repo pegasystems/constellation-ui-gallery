@@ -7,6 +7,7 @@ import {
   Button,
   Configuration
 } from '@pega/cosmos-react-core';
+import StyledCard from './styles';
 
 // interface for props
 export type CaseLauncherProps = {
@@ -38,7 +39,7 @@ export default function PegaExtensionsCaseLauncher(props: CaseLauncherProps) {
 
   return (
     <Configuration>
-      <Card>
+      <Card as={StyledCard}>
         <CardHeader>
           <Text variant='h2'>{heading}</Text>
         </CardHeader>
