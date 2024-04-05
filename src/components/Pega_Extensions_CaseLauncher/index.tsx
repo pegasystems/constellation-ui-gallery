@@ -21,16 +21,12 @@ export type CaseLauncherProps = {
   getPConnect: any;
 };
 
-// Duplicated runtime code from Constellation Design System Component
-
-// props passed in combination of props from property panel (config.json) and run time props from Constellation
-// any default values in config.pros should be set in defaultProps at bottom of this file
 export default function PegaExtensionsCaseLauncher(props: CaseLauncherProps) {
   const { heading, description, classFilter, labelPrimaryButton, getPConnect } = props;
   const pConn = getPConnect();
 
   /* Create a new case on click of the selected button */
-  const createCase = (className: any) => {
+  const createCase = (className: string) => {
     const options = {
       flowType: 'pyStartCase',
       containerName: 'primary',
@@ -49,7 +45,6 @@ export default function PegaExtensionsCaseLauncher(props: CaseLauncherProps) {
         <CardContent>{description}</CardContent>
         <CardFooter justify='end'>
           <Button
-            key={classFilter}
             variant='primary'
             onClick={() => {
               createCase(classFilter);

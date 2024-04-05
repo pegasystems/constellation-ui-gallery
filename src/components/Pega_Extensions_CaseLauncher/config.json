@@ -1,7 +1,7 @@
 {
   "name": "Pega_Extensions_CaseLauncher",
   "label": "Case Launcher",
-  "description": "Widget will render a heading, text and a button with start an case type flow.",
+  "description": "Widget will render a heading, text and a button to start a case",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",

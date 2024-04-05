@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-// @ts-nocheck
 import type { StoryObj } from '@storybook/react';
 
 import PegaExtensionsCaseLauncher from './index';
@@ -8,12 +6,6 @@ export default {
   title: 'Widgets/Case Launcher',
   component: PegaExtensionsCaseLauncher,
   argTypes: {
-    heading: {
-      control: { control: 'text' }
-    },
-    description: {
-      control: { control: 'text' }
-    },
     classFilter: {
       options: ['Work-'],
       control: { control: 'select' }
