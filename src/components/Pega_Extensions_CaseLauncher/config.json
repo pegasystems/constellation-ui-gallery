@@ -28,6 +28,7 @@
       "name": "classFilter",
       "label": "Case type (triggered by primary button)",
       "format": "SELECT",
+      "placeholder": "Choose option...",
       "source": {
         "name": "D_pyQuickCreate",
         "displayProp": "pyLabel",
