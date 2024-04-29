@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsGanttChart from './index';
+import { PegaExtensionsGanttChart } from './index';
 import { DateTimeDisplay, FieldValueList, Link } from '@pega/cosmos-react-core';
 
 export default {

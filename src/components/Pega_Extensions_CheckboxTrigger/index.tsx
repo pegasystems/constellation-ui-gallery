@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { Checkbox, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, Checkbox, FieldValueList, Text } from '@pega/cosmos-react-core';
 
 export type CheckboxTriggerProps = {
   getPConnect?: any;
@@ -21,7 +21,7 @@ export type CheckboxTriggerProps = {
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
+export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
   const {
     getPConnect,
     placeholder,
@@ -61,91 +61,81 @@ const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
-    return (
-      <Configuration>
-        <Text>{displayComp}</Text>
-      </Configuration>
-    );
+    return <Text>{displayComp}</Text>;
   } else if (displayMode === 'LABELS_LEFT') {
     return (
-      <Configuration>
-        <FieldValueList
-          variant='stacked'
-          data-testid={testId}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-        />
-      </Configuration>
+      <FieldValueList
+        variant='stacked'
+        data-testid={testId}
+        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+      />
     );
   } else if (displayMode === 'STACKED_LARGE_VAL') {
     return (
-      <Configuration>
-        <Text variant='h1' as='span'>
-          {displayComp}
-        </Text>
-      </Configuration>
+      <Text variant='h1' as='span'>
+        {displayComp}
+      </Text>
     );
   }
 
   return (
-    <Configuration>
-      <Checkbox
-        {...additionalProps}
-        label={label}
-        info={validatemessage || helperText}
-        data-testid={testId}
-        checked={inputValue}
-        status={status}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        onChange={(e: MouseEvent<HTMLInputElement>) => {
-          setInputValue(e.currentTarget.checked);
-          if (value !== e.currentTarget.checked) {
-            actions.updateFieldValue(propName, e.currentTarget.checked);
-            hasValueChange.current = true;
-            const context = getPConnect().getContextName();
-            const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo
-              ?.content;
+    <Checkbox
+      {...additionalProps}
+      label={label}
+      info={validatemessage || helperText}
+      data-testid={testId}
+      checked={inputValue}
+      status={status}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      onChange={(e: MouseEvent<HTMLInputElement>) => {
+        setInputValue(e.currentTarget.checked);
+        if (value !== e.currentTarget.checked) {
+          actions.updateFieldValue(propName, e.currentTarget.checked);
+          hasValueChange.current = true;
+          const context = getPConnect().getContextName();
+          const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo
+            ?.content;
 
-            /* To force the refresh, we will call a savable DP that will contain the current value and return the update content */
-            const itemData = (window as any).PCore.getContainerUtils().getContainerItemData(
-              getPConnect().getTarget(),
-              getPConnect().getContextName()
-            );
-            const key = itemData?.key ? JSON.parse(itemData.key) : {};
-            const newObj = { ...data };
-            delete newObj?.classID;
-            const bodyData = { ...newObj, ...key };
-            (window as any).PCore.getRestClient()
-              .invokeRestApi('createDataObject', {
-                body: { data: bodyData },
-                queryPayload: { data_view_ID: dataPage }
-              })
-              .then((resp: any) => {
-                const respData = resp?.data?.responseData;
-                const updateObj = { ...respData };
-                delete updateObj?.pzInsKey;
-                (window as any).PCore.getStore().dispatch({
-                  type: 'SET_PROPERTY',
-                  payload: {
-                    context: getPConnect().getContextName(),
-                    reference: 'dataInfo.content',
-                    value: updateObj
-                  }
-                });
+          /* To force the refresh, we will call a savable DP that will contain the current value and return the update content */
+          const itemData = (window as any).PCore.getContainerUtils().getContainerItemData(
+            getPConnect().getTarget(),
+            getPConnect().getContextName()
+          );
+          const key = itemData?.key ? JSON.parse(itemData.key) : {};
+          const newObj = { ...data };
+          delete newObj?.classID;
+          const bodyData = { ...newObj, ...key };
+          (window as any).PCore.getRestClient()
+            .invokeRestApi('createDataObject', {
+              body: { data: bodyData },
+              queryPayload: { data_view_ID: dataPage }
+            })
+            .then((resp: any) => {
+              const respData = resp?.data?.responseData;
+              const updateObj = { ...respData };
+              delete updateObj?.pzInsKey;
+              (window as any).PCore.getStore().dispatch({
+                type: 'SET_PROPERTY',
+                payload: {
+                  context: getPConnect().getContextName(),
+                  reference: 'dataInfo.content',
+                  value: updateObj
+                }
               });
-          }
-        }}
-        onBlur={(e: MouseEvent<HTMLInputElement>) => {
-          if ((!value || hasValueChange.current) && !readOnly) {
-            actions.triggerFieldChange(propName, e.currentTarget.checked);
-            hasValueChange.current = false;
-          }
-        }}
-      />
-    </Configuration>
+            });
+        }
+      }}
+      onBlur={(e: MouseEvent<HTMLInputElement>) => {
+        if ((!value || hasValueChange.current) && !readOnly) {
+          actions.triggerFieldChange(propName, e.currentTarget.checked);
+          hasValueChange.current = false;
+        }
+      }}
+    />
   );
 };
 
-export default PegaExtensionsCheckboxTrigger;
+export default withConfiguration(PegaExtensionsCheckboxTrigger);

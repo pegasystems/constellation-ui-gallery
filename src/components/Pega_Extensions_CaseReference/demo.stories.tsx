@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsCaseReference from './index';
+import { PegaExtensionsCaseReference } from './index';
 
 export default {
   title: 'Fields/Case reference',

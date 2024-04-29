@@ -3,6 +3,7 @@ import { type Task as GTRTask } from 'gantt-task-react';
 import { Gantt } from 'gantt-task-react';
 
 import {
+  withConfiguration,
   registerIcon,
   Icon,
   Text,
@@ -10,7 +11,6 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Configuration,
   Progress as ProgressComponent,
   Flex,
   Switch,
@@ -89,7 +89,7 @@ const HoverTooltip: FC<HoverTooltipProps> = props => {
     - 5 types of views are supported by default: Hourly, Daily, Weekly, Monthly and Yearly
     - Ability to toggle task list using 'showDetailsColumns' prop. This toggles the first 3 columns showing task name, start and end date.
 */
-export default function PegaExtensionsGanttChart(props: GanttChartProps) {
+export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
   const {
     heading,
     createClassname,
@@ -299,107 +299,106 @@ export default function PegaExtensionsGanttChart(props: GanttChartProps) {
   }, [selectedTask, popoverTarget, refreshDetailsCard]);
 
   return (
-    <Configuration>
-      <Card>
-        <CardHeader
-          actions={
-            createClassname ? (
-              <Button variant='simple' label='Create new task' icon compact onClick={addNewTask}>
-                <Icon name='plus' />
-              </Button>
-            ) : undefined
-          }
-        >
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <CardContent>
-          <ProgressComponent visible={loaderTasks} placement='local' message='loading' />
-          {!loaderTasks && tasks?.length === 0 && <EmptyState />}
-          {tasks?.length > 0 && (
-            <StyledGanttChartWrapper onMouseUp={handleGanttClick}>
-              <Flex container={{ gap: 1, pad: [0.5, 1], justify: 'between' }}>
-                <Switch
-                  id='switch'
-                  on={showDetailsColumnsOn}
-                  onChange={() => setShowDetailsColumnsOn(curr => !curr)}
-                  label='Show task list'
-                />
-                <RadioButtonGroup inline>
-                  {viewModeOptions.map(tab => (
-                    <RadioButton
-                      key={tab.id}
-                      label={tab.name}
-                      id={tab.id}
-                      checked={tab.id === activeViewMode}
-                      onChange={() => handleViewModeChange(tab.id as ViewModeType)}
-                    />
-                  ))}
-                </RadioButtonGroup>
-              </Flex>
-              {/* Gantt component starts here */}
-              <Gantt
-                timeStep={1000}
-                tasks={gtrTasks}
-                viewMode={ViewModeMap[activeViewMode]}
-                onDoubleClick={handleDoubleClick}
-                onDateChange={dragMode ? task => handleDragEvent(task, 'dateChange') : undefined}
-                onProgressChange={
-                  dragMode ? task => handleDragEvent(task, 'progressChange') : undefined
-                }
-                onSelect={handleTaskSelect}
-                onExpanderClick={handleExpandChange}
-                {...getCustomStyleOptions(theme, !popoverTarget ? HoverTooltip : () => null)}
-                listCellWidth={showDetailsColumnsOn ? undefined : ''}
-                columnWidth={getColumnWidth(activeViewMode)}
+    <Card>
+      <CardHeader
+        actions={
+          createClassname ? (
+            <Button variant='simple' label='Create new task' icon compact onClick={addNewTask}>
+              <Icon name='plus' />
+            </Button>
+          ) : undefined
+        }
+      >
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
+      <CardContent>
+        <ProgressComponent visible={loaderTasks} placement='local' message='loading' />
+        {!loaderTasks && tasks?.length === 0 && <EmptyState />}
+        {tasks?.length > 0 && (
+          <StyledGanttChartWrapper onMouseUp={handleGanttClick}>
+            <Flex container={{ gap: 1, pad: [0.5, 1], justify: 'between' }}>
+              <Switch
+                id='switch'
+                on={showDetailsColumnsOn}
+                onChange={() => setShowDetailsColumnsOn(curr => !curr)}
+                label='Show task list'
               />
-              {/* Gantt component ends here */}
-              {popoverTarget && selectedTask && (
-                <Popover arrow target={popoverTarget} show={!!popoverTarget} ref={setPopoverRef}>
-                  <Card style={{ minWidth: '20rem' }}>
-                    <CardHeader
-                      actions={
-                        <>
-                          {details && !loaderDetails && (
-                            <Button
-                              variant='simple'
-                              label={`Edit ${selectedTask.type}`}
-                              icon
-                              compact
-                              onClick={() => onEditItemFromDetails(selectedTask.id)}
-                            >
-                              <Icon name='pencil' />
-                            </Button>
-                          )}
+              <RadioButtonGroup inline>
+                {viewModeOptions.map(tab => (
+                  <RadioButton
+                    key={tab.id}
+                    label={tab.name}
+                    id={tab.id}
+                    checked={tab.id === activeViewMode}
+                    onChange={() => handleViewModeChange(tab.id as ViewModeType)}
+                  />
+                ))}
+              </RadioButtonGroup>
+            </Flex>
+            {/* Gantt component starts here */}
+            <Gantt
+              timeStep={1000}
+              tasks={gtrTasks}
+              viewMode={ViewModeMap[activeViewMode]}
+              onDoubleClick={handleDoubleClick}
+              onDateChange={dragMode ? task => handleDragEvent(task, 'dateChange') : undefined}
+              onProgressChange={
+                dragMode ? task => handleDragEvent(task, 'progressChange') : undefined
+              }
+              onSelect={handleTaskSelect}
+              onExpanderClick={handleExpandChange}
+              {...getCustomStyleOptions(theme, !popoverTarget ? HoverTooltip : () => null)}
+              listCellWidth={showDetailsColumnsOn ? undefined : ''}
+              columnWidth={getColumnWidth(activeViewMode)}
+            />
+            {/* Gantt component ends here */}
+            {popoverTarget && selectedTask && (
+              <Popover arrow target={popoverTarget} show={!!popoverTarget} ref={setPopoverRef}>
+                <Card style={{ minWidth: '20rem' }}>
+                  <CardHeader
+                    actions={
+                      <>
+                        {details && !loaderDetails && (
                           <Button
                             variant='simple'
-                            label='Close'
+                            label={`Edit ${selectedTask.type}`}
                             icon
                             compact
-                            onClick={() => closePopover()}
+                            onClick={() => onEditItemFromDetails(selectedTask.id)}
                           >
-                            <Icon name='times' />
+                            <Icon name='pencil' />
                           </Button>
-                        </>
-                      }
-                    >
-                      <Text variant='h3'>{selectedTask.name}</Text>
-                    </CardHeader>
-                    <CardContent>
-                      <ProgressComponent
-                        visible={loaderDetails}
-                        placement='local'
-                        message='loading'
-                      />
-                      {!details && <EmptyState />}
-                      {details}
-                    </CardContent>
-                  </Card>
-                </Popover>
-              )}
-            </StyledGanttChartWrapper>
-          )}
-        </CardContent>
-      </Card>
-    </Configuration>
+                        )}
+                        <Button
+                          variant='simple'
+                          label='Close'
+                          icon
+                          compact
+                          onClick={() => closePopover()}
+                        >
+                          <Icon name='times' />
+                        </Button>
+                      </>
+                    }
+                  >
+                    <Text variant='h3'>{selectedTask.name}</Text>
+                  </CardHeader>
+                  <CardContent>
+                    <ProgressComponent
+                      visible={loaderDetails}
+                      placement='local'
+                      message='loading'
+                    />
+                    {!details && <EmptyState />}
+                    {details}
+                  </CardContent>
+                </Card>
+              </Popover>
+            )}
+          </StyledGanttChartWrapper>
+        )}
+      </CardContent>
+    </Card>
   );
-}
+};
+export default withConfiguration(PegaExtensionsGanttChart);

@@ -1,5 +1,11 @@
 import JsBarcode from 'jsbarcode';
-import { Configuration, Flex, FormControl, FormField, ErrorState } from '@pega/cosmos-react-core';
+import {
+  withConfiguration,
+  Flex,
+  FormControl,
+  FormField,
+  ErrorState
+} from '@pega/cosmos-react-core';
 import { useEffect, useRef, useState } from 'react';
 import StyledWrapper from './styles';
 
@@ -15,7 +21,7 @@ export enum BarcodeType {
   PHARMACODE = 'pharmacode'
 }
 
-interface BarCodeExtProps {
+type BarCodeExtProps = {
   format: BarcodeType;
   label: string;
   value: string;
@@ -27,9 +33,9 @@ interface BarCodeExtProps {
   readOnly?: boolean;
   testId?: string;
   getPConnect: any;
-}
+};
 
-export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
+export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
   const {
     value,
     label,
@@ -106,27 +112,21 @@ export default function PegaExtensionsBarcode(props: BarCodeExtProps) {
   ]);
 
   return (
-    <Configuration>
-      <Flex container={{ direction: 'column', justify: 'center', alignItems: 'center' }}>
-        <FormField
-          label={label}
-          labelHidden={hideLabel}
-          info={info}
-          status={status}
-          testId={testId}
-        >
-          <FormControl ariaLabel={label}>
-            {readOnly ? (
-              <img src={outputValue} />
-            ) : (
-              <StyledWrapper>
-                {status === 'error' ? <ErrorState message='Invalid barcode' /> : null}
-                <svg ref={BarcodeRef} />
-              </StyledWrapper>
-            )}
-          </FormControl>
-        </FormField>
-      </Flex>
-    </Configuration>
+    <Flex container={{ direction: 'column', justify: 'center', alignItems: 'center' }}>
+      <FormField label={label} labelHidden={hideLabel} info={info} status={status} testId={testId}>
+        <FormControl ariaLabel={label}>
+          {readOnly ? (
+            <img src={outputValue} />
+          ) : (
+            <StyledWrapper>
+              {status === 'error' ? <ErrorState message='Invalid barcode' /> : null}
+              <svg ref={BarcodeRef} />
+            </StyledWrapper>
+          )}
+        </FormControl>
+      </FormField>
+    </Flex>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsBarCode);

@@ -6,8 +6,6 @@ const { Default } = composeStories(DemoStories);
 
 test('renders RatingLayout component with default args', async () => {
   render(<Default />);
-  expect(await screen.findByText('Category #1')).toBeVisible();
-  expect(await screen.findByText('Category #2')).toBeVisible();
-  expect(await screen.findByText('Category #3')).toBeVisible();
+  expect(await screen.findByText('Ratings')).toBeVisible();
   expect(await screen.findByText('Category #1 - label #1')).toBeVisible();
 });

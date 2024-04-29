@@ -1,11 +1,11 @@
 import {
+  withConfiguration,
   Card,
   CardHeader,
   CardContent,
   CardFooter,
   Text,
-  Button,
-  Configuration
+  Button
 } from '@pega/cosmos-react-core';
 import StyledCard from './styles';
 
@@ -22,7 +22,7 @@ export type CaseLauncherProps = {
   getPConnect: any;
 };
 
-export default function PegaExtensionsCaseLauncher(props: CaseLauncherProps) {
+export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   const { heading, description, classFilter, labelPrimaryButton, getPConnect } = props;
   const pConn = getPConnect();
 
@@ -38,23 +38,23 @@ export default function PegaExtensionsCaseLauncher(props: CaseLauncherProps) {
   };
 
   return (
-    <Configuration>
-      <Card as={StyledCard}>
-        <CardHeader>
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <CardContent>{description}</CardContent>
-        <CardFooter justify='end'>
-          <Button
-            variant='primary'
-            onClick={() => {
-              createCase(classFilter);
-            }}
-          >
-            {labelPrimaryButton}
-          </Button>
-        </CardFooter>
-      </Card>
-    </Configuration>
+    <Card as={StyledCard}>
+      <CardHeader>
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
+      <CardContent>{description}</CardContent>
+      <CardFooter justify='end'>
+        <Button
+          variant='primary'
+          onClick={() => {
+            createCase(classFilter);
+          }}
+        >
+          {labelPrimaryButton}
+        </Button>
+      </CardFooter>
+    </Card>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsCaseLauncher);

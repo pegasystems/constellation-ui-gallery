@@ -22,6 +22,7 @@
   "ignorePatterns": [
     "node_modules",
     "lib",
+    "storybook-static",
     "!.storybook",
     ".storybook/public",
     "**/demo.stories.jsx",

@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsQRCode from './index';
+import { PegaExtensionsQRCode } from './index';
 
 export default {
   title: 'Fields/QRCode',

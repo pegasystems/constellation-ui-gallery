@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsCalendar from './index';
+import { PegaExtensionsCalendar } from './index';
 
 export default {
   title: 'Widgets/Calendar',

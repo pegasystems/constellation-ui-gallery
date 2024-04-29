@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsBanner from './index';
+import { PegaExtensionsBanner } from './index';
 
 export default {
   title: 'Widgets/Banner',

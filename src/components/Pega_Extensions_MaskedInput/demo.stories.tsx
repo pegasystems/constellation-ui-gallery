@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsMaskedInput, { type MaskedInputProps } from './index';
+import { PegaExtensionsMaskedInput, type MaskedInputProps } from './index';
 
 export default {
   title: 'Fields/Masked Input',

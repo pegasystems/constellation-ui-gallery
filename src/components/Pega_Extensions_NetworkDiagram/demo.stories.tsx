@@ -1,6 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsNetworkDiagram from './index';
-import { type NetworkDiagramProps } from './index';
+import { PegaExtensionsNetworkDiagram, type NetworkDiagramProps } from './index';
 
 export default {
   title: 'Widgets/Network Diagram',

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { Input, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, Input, FieldValueList, Text } from '@pega/cosmos-react-core';
 import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
 
 export type MaskedInputProps = {
@@ -24,7 +24,7 @@ export type MaskedInputProps = {
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
+export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
   const {
     getPConnect,
     placeholder,
@@ -90,69 +90,59 @@ const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
-    return (
-      <Configuration>
-        <Text>{displayComp}</Text>
-      </Configuration>
-    );
+    return <Text>{displayComp}</Text>;
   } else if (displayMode === 'LABELS_LEFT') {
     return (
-      <Configuration>
-        <FieldValueList
-          variant={hideLabel ? 'stacked' : variant}
-          data-testid={testId}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-        />
-      </Configuration>
+      <FieldValueList
+        variant={hideLabel ? 'stacked' : variant}
+        data-testid={testId}
+        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+      />
     );
   } else if (displayMode === 'STACKED_LARGE_VAL') {
     return (
-      <Configuration>
-        <Text variant='h1' as='span'>
-          {displayComp}
-        </Text>
-      </Configuration>
+      <Text variant='h1' as='span'>
+        {displayComp}
+      </Text>
     );
   }
 
   return (
-    <Configuration>
-      <Input
-        {...additionalProps}
-        ref={ref}
-        label={label}
-        labelHidden={hideLabel}
-        info={validatemessage || helperText || mask}
-        data-testid={testId}
-        value={inputValue}
-        status={status}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        maxLength={maxLength}
-        onChange={(e: MouseEvent<HTMLInputElement>) => {
+    <Input
+      {...additionalProps}
+      ref={ref}
+      label={label}
+      labelHidden={hideLabel}
+      info={validatemessage || helperText || mask}
+      data-testid={testId}
+      value={inputValue}
+      status={status}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      maxLength={maxLength}
+      onChange={(e: MouseEvent<HTMLInputElement>) => {
+        if (hasSuggestions) {
+          setStatus(undefined);
+        }
+        setInputValue(e.currentTarget.value);
+        if (value !== e.currentTarget.value) {
+          actions.updateFieldValue(propName, e.currentTarget.value);
+          hasValueChange.current = true;
+        }
+      }}
+      onBlur={(e: MouseEvent<HTMLInputElement>) => {
+        if ((!value || hasValueChange.current) && !readOnly) {
+          actions.triggerFieldChange(propName, e.currentTarget.value);
           if (hasSuggestions) {
-            setStatus(undefined);
+            pConn.ignoreSuggestion();
           }
-          setInputValue(e.currentTarget.value);
-          if (value !== e.currentTarget.value) {
-            actions.updateFieldValue(propName, e.currentTarget.value);
-            hasValueChange.current = true;
-          }
-        }}
-        onBlur={(e: MouseEvent<HTMLInputElement>) => {
-          if ((!value || hasValueChange.current) && !readOnly) {
-            actions.triggerFieldChange(propName, e.currentTarget.value);
-            if (hasSuggestions) {
-              pConn.ignoreSuggestion();
-            }
-            hasValueChange.current = false;
-          }
-        }}
-      />
-    </Configuration>
+          hasValueChange.current = false;
+        }
+      }}
+    />
   );
 };
 
-export default PegaExtensionsMaskedInput;
+export default withConfiguration(PegaExtensionsMaskedInput);

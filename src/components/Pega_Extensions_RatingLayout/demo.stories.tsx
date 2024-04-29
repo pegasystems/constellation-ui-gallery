@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsRatingLayout from './index';
+import { PegaExtensionsRatingLayout } from './index';
 
 type configInfo = {
   values?: Array<any>;
@@ -177,6 +177,8 @@ export const Default: Story = {
   args: {
     minWidth: '40ch',
     numCategories: 3,
-    numRatings: 3
+    numRatings: 3,
+    label: 'Ratings',
+    showLabel: true
   }
 };

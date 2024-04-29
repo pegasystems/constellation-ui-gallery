@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsCheckboxTrigger, { type CheckboxTriggerProps } from './index';
+import { PegaExtensionsCheckboxTrigger, type CheckboxTriggerProps } from './index';
 
 export default {
   title: 'Fields/Checkbox Trigger',
@@ -156,6 +156,7 @@ export const Default: Story = CheckboxTriggerDemo({
   testId: 'demo',
   placeholder: '',
   validatemessage: '',
+  helperText: '',
   disabled: false,
   readOnly: false,
   required: false,

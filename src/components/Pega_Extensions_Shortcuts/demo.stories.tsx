@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsShortcuts from './index';
+import { PegaExtensionsShortcuts } from './index';
 
 export default {
   title: 'Widgets/Shortcuts',

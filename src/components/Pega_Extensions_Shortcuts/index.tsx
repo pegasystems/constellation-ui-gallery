@@ -1,11 +1,11 @@
 import { type MouseEvent, useCallback } from 'react';
 import {
+  withConfiguration,
   Card,
   CardHeader,
   CardContent,
   Text,
   Link,
-  Configuration,
   Flex
 } from '@pega/cosmos-react-core';
 import { SimpleContent, GroupedContent } from './styles';
@@ -28,7 +28,7 @@ type ShortcutsProps = {
   getPConnect: any;
 };
 
-export default function PegaExtensionsShortcuts(props: ShortcutsProps) {
+export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
   const {
     heading = 'Shortcuts',
     displayType = 'simple',
@@ -89,39 +89,36 @@ export default function PegaExtensionsShortcuts(props: ShortcutsProps) {
     });
     if (objects.length === 0) return null;
     return (
-      <Configuration>
-        <Card>
-          <CardHeader>
-            <Text variant='h2'>{heading}</Text>
-          </CardHeader>
-          <CardContent>
-            <SimpleContent>{objects?.map((object: any) => object)}</SimpleContent>
-          </CardContent>
-        </Card>
-      </Configuration>
+      <Card>
+        <CardHeader>
+          <Text variant='h2'>{heading}</Text>
+        </CardHeader>
+        <CardContent>
+          <SimpleContent>{objects?.map((object: any) => object)}</SimpleContent>
+        </CardContent>
+      </Card>
     );
   }
   try {
     const pageObj = JSON.parse(pageJSON);
     const obj = pageObj.categories;
     return (
-      <Configuration>
-        <Card>
-          <CardContent>
-            <GroupedContent>
-              {obj?.map((object: any) => (
-                <Flex container={{ direction: 'column' }}>
-                  <Text variant='h2'>{object.heading}</Text>
-                  {object.links?.map((link: any) => {
-                    return generateLink(link.name, link.page);
-                  })}
-                </Flex>
-              ))}
-            </GroupedContent>
-          </CardContent>
-        </Card>
-      </Configuration>
+      <Card>
+        <CardContent>
+          <GroupedContent>
+            {obj?.map((object: any) => (
+              <Flex container={{ direction: 'column' }}>
+                <Text variant='h2'>{object.heading}</Text>
+                {object.links?.map((link: any) => {
+                  return generateLink(link.name, link.page);
+                })}
+              </Flex>
+            ))}
+          </GroupedContent>
+        </CardContent>
+      </Card>
     );
   } catch (e) {}
   return null;
-}
+};
+export default withConfiguration(PegaExtensionsShortcuts);

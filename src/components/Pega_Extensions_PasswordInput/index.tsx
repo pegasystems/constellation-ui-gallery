@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { Input, FieldValueList, Text, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, Input, FieldValueList, Text } from '@pega/cosmos-react-core';
 
 type PasswordInputProps = {
   getPConnect: any;
@@ -22,7 +22,7 @@ type PasswordInputProps = {
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
+export const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
   const {
     getPConnect,
     placeholder,
@@ -84,43 +84,40 @@ const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
   }
 
   return (
-    <Configuration>
-      <Input
-        {...additionalProps}
-        type='password'
-        label={label}
-        labelHidden={hideLabel}
-        info={validatemessage || helperText}
-        data-testid={testId}
-        value={inputValue}
-        status={status}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        maxLength={maxLength}
-        onChange={(e: MouseEvent<HTMLInputElement>) => {
+    <Input
+      {...additionalProps}
+      type='password'
+      label={label}
+      labelHidden={hideLabel}
+      info={validatemessage || helperText}
+      data-testid={testId}
+      value={inputValue}
+      status={status}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      maxLength={maxLength}
+      onChange={(e: MouseEvent<HTMLInputElement>) => {
+        if (hasSuggestions) {
+          setStatus(undefined);
+        }
+        setInputValue(e.currentTarget.value);
+        if (value !== e.currentTarget.value) {
+          actions.updateFieldValue(propName, e.currentTarget.value);
+          hasValueChange.current = true;
+        }
+      }}
+      onBlur={(e: MouseEvent<HTMLInputElement>) => {
+        if ((!value || hasValueChange.current) && !readOnly) {
+          actions.triggerFieldChange(propName, e.currentTarget.value);
           if (hasSuggestions) {
-            setStatus(undefined);
+            pConn.ignoreSuggestion();
           }
-          setInputValue(e.currentTarget.value);
-          if (value !== e.currentTarget.value) {
-            actions.updateFieldValue(propName, e.currentTarget.value);
-            hasValueChange.current = true;
-          }
-        }}
-        onBlur={(e: MouseEvent<HTMLInputElement>) => {
-          if ((!value || hasValueChange.current) && !readOnly) {
-            actions.triggerFieldChange(propName, e.currentTarget.value);
-            if (hasSuggestions) {
-              pConn.ignoreSuggestion();
-            }
-            hasValueChange.current = false;
-          }
-        }}
-      />
-    </Configuration>
+          hasValueChange.current = false;
+        }
+      }}
+    />
   );
 };
-
-export default PegaExtensionsPasswordInput;
+export default withConfiguration(PegaExtensionsPasswordInput);

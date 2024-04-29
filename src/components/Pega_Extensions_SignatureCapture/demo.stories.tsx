@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsSignatureCapture from './index';
+import { PegaExtensionsSignatureCapture } from './index';
 
 export default {
   title: 'Fields/Signature Capture',

@@ -1,4 +1,4 @@
-import { Flex, Button, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, Flex, Button } from '@pega/cosmos-react-core';
 
 type ActionableButtonProps = {
   label: string;
@@ -7,7 +7,7 @@ type ActionableButtonProps = {
   getPConnect: any;
 };
 
-const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
+export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
   const { getPConnect, label, value, localAction } = props;
   if (value && localAction) {
     const LaunchLocalAction = () => {
@@ -20,14 +20,12 @@ const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
       });
     };
     return (
-      <Configuration>
-        <Flex container={{ direction: 'row' }}>
-          <Button onClick={LaunchLocalAction}>{label}</Button>
-        </Flex>
-      </Configuration>
+      <Flex container={{ direction: 'row' }}>
+        <Button onClick={LaunchLocalAction}>{label}</Button>
+      </Flex>
     );
   }
   return null;
 };
 
-export default PegaExtensionsActionableButton;
+export default withConfiguration(PegaExtensionsActionableButton);

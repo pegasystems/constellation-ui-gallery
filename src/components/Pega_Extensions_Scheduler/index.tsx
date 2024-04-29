@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import {
-  Configuration,
+  withConfiguration,
   FormControl,
   Flex,
   FormField,
@@ -56,7 +56,7 @@ export const convertTime = (v: string) => {
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => {
+export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => {
   const { getPConnect, label, hideLabel = false, testId, value } = props;
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef<FullCalendar | null>(null);
@@ -154,7 +154,7 @@ const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => {
   }, [getPConnect, value]);
 
   return (
-    <Configuration>
+    <>
       <GlobalStyle />
       <Flex container={{ direction: 'column' }}>
         <FormField label={label} labelHidden={hideLabel} testId={testId}>
@@ -191,8 +191,8 @@ const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => {
           </FormControl>
         </FormField>
       </Flex>
-    </Configuration>
+    </>
   );
 };
 
-export default PegaExtensionsScheduler;
+export default withConfiguration(PegaExtensionsScheduler);

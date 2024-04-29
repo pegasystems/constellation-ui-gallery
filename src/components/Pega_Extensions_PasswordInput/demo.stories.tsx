@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsPasswordInput from './index';
+import { PegaExtensionsPasswordInput } from './index';
 
 export default {
   title: 'Fields/Password Input',

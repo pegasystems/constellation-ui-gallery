@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { FieldValueList } from '@pega/cosmos-react-core';
-import PegaExtensionsFieldGroupAsRow from './index';
+import { PegaExtensionsFieldGroupAsRow } from './index';
 
 export default {
   title: 'Templates/Field Group As Row',

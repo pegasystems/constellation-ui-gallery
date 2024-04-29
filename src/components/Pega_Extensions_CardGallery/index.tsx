@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
+  withConfiguration,
   registerIcon,
   Text,
   Card,
@@ -9,7 +10,6 @@ import {
   Icon,
   EmptyState,
   ErrorState,
-  Configuration,
   Flex
 } from '@pega/cosmos-react-core';
 import { Task } from './Task';
@@ -33,7 +33,7 @@ type CardGalleryProps = {
   getPConnect: any;
 };
 
-export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
+export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const {
     heading = '',
     dataPage = '',
@@ -262,22 +262,22 @@ export default function PegaExtensionsCardGallery(props: CardGalleryProps) {
   }
 
   return (
-    <Configuration>
-      <Card>
-        <CardHeader
-          actions={
-            createClassname ? (
-              <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
-                <Icon name='plus' />
-              </Button>
-            ) : undefined
-          }
-        >
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
+    <Card>
+      <CardHeader
+        actions={
+          createClassname ? (
+            <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
+              <Icon name='plus' />
+            </Button>
+          ) : undefined
+        }
+      >
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
 
-        {content}
-      </Card>
-    </Configuration>
+      {content}
+    </Card>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsCardGallery);

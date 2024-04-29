@@ -1,6 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsDynamicHierarchicalForm from './index';
-import { type DynamicHierarchicalFormProps } from './index';
+import { PegaExtensionsDynamicHierarchicalForm, type DynamicHierarchicalFormProps } from './index';
 import {
   Checkbox,
   CheckboxGroup,
