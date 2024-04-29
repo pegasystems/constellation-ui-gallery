@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { FieldValueList } from '@pega/cosmos-react-core';
-import PegaExtensionsFormFullWidth from './index';
+import { PegaExtensionsFormFullWidth } from './index';
 
 export default {
   title: 'Templates/Form full width',

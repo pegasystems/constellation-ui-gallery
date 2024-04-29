@@ -1,7 +1,7 @@
 import type { StoryObj } from '@storybook/react';
 import { FieldValueItem, DateTimeDisplay } from '@pega/cosmos-react-core';
 import { Details } from '@pega/cosmos-react-work';
-import PegaExtensionsCardGallery from './index';
+import { PegaExtensionsCardGallery } from './index';
 
 export default {
   title: 'Widgets/Card Gallery',

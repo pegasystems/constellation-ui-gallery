@@ -1,4 +1,5 @@
 import {
+  withConfiguration,
   Button,
   Card,
   CardFooter,
@@ -7,8 +8,7 @@ import {
   Text,
   TextArea,
   Icon,
-  registerIcon,
-  Configuration
+  registerIcon
 } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useRef, useState, type ReactElement } from 'react';
 import { Message, TypeIndicator, type MessageProps } from '@pega/cosmos-react-social';
@@ -33,7 +33,7 @@ type ChatGenAIProps = {
 
 registerIcon(resetIcon, sendIcon, robotSolid);
 
-export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
+export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
   const {
     heading = 'AI Assistant',
     dataPage = '',
@@ -164,38 +164,38 @@ export default function PegaExtensionsChatGenAI(props: ChatGenAIProps) {
   }, [sendAllUserContext]);
 
   return (
-    <Configuration>
-      <StyledGenAIComponent>
-        <Card>
-          <CardHeader
-            actions={
-              sendAllUserContext ? (
-                <Button
-                  variant='simple'
-                  label='Restart conversation'
-                  icon
-                  compact
-                  onClick={resetContext}
-                >
-                  <Icon name='reset' />
-                </Button>
-              ) : undefined
-            }
-          >
-            <Text variant='h2'>{heading}</Text>
-          </CardHeader>
-          <StyledCardContent ref={cardRef} maxHeight={maxHeight}>
-            {history.length ? (
-              <Flex container={{ direction: 'column', pad: 1 }}>
-                {history.map(e => (
-                  <div key={e.id}>{e.value}</div>
-                ))}
-              </Flex>
-            ) : null}
-          </StyledCardContent>
-          {questionArea}
-        </Card>
-      </StyledGenAIComponent>
-    </Configuration>
+    <StyledGenAIComponent>
+      <Card>
+        <CardHeader
+          actions={
+            sendAllUserContext ? (
+              <Button
+                variant='simple'
+                label='Restart conversation'
+                icon
+                compact
+                onClick={resetContext}
+              >
+                <Icon name='reset' />
+              </Button>
+            ) : undefined
+          }
+        >
+          <Text variant='h2'>{heading}</Text>
+        </CardHeader>
+        <StyledCardContent ref={cardRef} maxHeight={maxHeight}>
+          {history.length ? (
+            <Flex container={{ direction: 'column', pad: 1 }}>
+              {history.map(e => (
+                <div key={e.id}>{e.value}</div>
+              ))}
+            </Flex>
+          ) : null}
+        </StyledCardContent>
+        {questionArea}
+      </Card>
+    </StyledGenAIComponent>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsChatGenAI);

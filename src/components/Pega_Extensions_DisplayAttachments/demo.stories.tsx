@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsDisplayAttachments, { type UtilityListProps } from './index';
+import { PegaExtensionsDisplayAttachments, type UtilityListProps } from './index';
 
 export default {
   title: 'Widgets/Display Attachments',

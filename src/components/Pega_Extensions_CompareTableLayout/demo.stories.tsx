@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsCompareTableLayout, { type TableLayoutProps } from './index';
+import { PegaExtensionsCompareTableLayout, type TableLayoutProps } from './index';
 import { CurrencyDisplay } from '@pega/cosmos-react-core';
 
 type configInfo = {

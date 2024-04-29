@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsChatGenAI from './index';
+import { PegaExtensionsChatGenAI } from './index';
 
 export default {
   title: 'Widgets/Chat GenAI',

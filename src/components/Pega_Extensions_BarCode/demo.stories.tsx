@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsBarCode, { BarcodeType } from './index';
+import { PegaExtensionsBarCode, BarcodeType } from './index';
 
 export default {
   title: 'Fields/Barcode',

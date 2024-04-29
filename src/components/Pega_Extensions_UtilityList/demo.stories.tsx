@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsUtilityList from './index';
+import { PegaExtensionsUtilityList } from './index';
 
 export default {
   title: 'Widgets/Utility List',

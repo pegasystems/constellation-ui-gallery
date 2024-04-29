@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  withConfiguration,
   registerIcon,
   Icon,
   Text,
@@ -7,7 +8,6 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Configuration,
   useTheme
 } from '@pega/cosmos-react-core';
 import ReactFlow, {
@@ -193,7 +193,7 @@ function Flow(props: any) {
   );
 }
 
-export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps) {
+export const PegaExtensionsNetworkDiagram = (props: NetworkDiagramProps) => {
   const { showRefresh = true, heading = '', height = '40rem' } = props;
   const theme = useTheme();
   const [counter, setCounter] = useState<number>(1);
@@ -201,27 +201,26 @@ export default function PegaExtensionsNetworkDiagram(props: NetworkDiagramProps)
     setCounter(prev => prev + 1);
   };
   return (
-    <Configuration>
-      <Card>
-        <CardHeader
-          actions={
-            showRefresh ? (
-              <Button variant='simple' label='Reload diagram' icon compact onClick={refreshDiagram}>
-                <Icon name='reset' />
-              </Button>
-            ) : undefined
-          }
-        >
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <CardContent>
-          <StyledPegaExtensionsNetworkDiagram height={height} theme={theme}>
-            <ReactFlowProvider>
-              <Flow {...props} counter={counter} />
-            </ReactFlowProvider>
-          </StyledPegaExtensionsNetworkDiagram>
-        </CardContent>
-      </Card>
-    </Configuration>
+    <Card>
+      <CardHeader
+        actions={
+          showRefresh ? (
+            <Button variant='simple' label='Reload diagram' icon compact onClick={refreshDiagram}>
+              <Icon name='reset' />
+            </Button>
+          ) : undefined
+        }
+      >
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
+      <CardContent>
+        <StyledPegaExtensionsNetworkDiagram height={height} theme={theme}>
+          <ReactFlowProvider>
+            <Flow {...props} counter={counter} />
+          </ReactFlowProvider>
+        </StyledPegaExtensionsNetworkDiagram>
+      </CardContent>
+    </Card>
   );
-}
+};
+export default withConfiguration(PegaExtensionsNetworkDiagram);

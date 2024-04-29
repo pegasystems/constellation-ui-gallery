@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import {
+  withConfiguration,
   FieldValueList,
   Text,
   Image,
   Button,
   Flex,
   FormField,
-  FormControl,
-  Configuration
+  FormControl
 } from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
@@ -32,7 +32,7 @@ type SignatureCaptureProps = {
   variant?: any;
 };
 
-const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
+export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   const {
     value,
     getPConnect,
@@ -78,24 +78,20 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
     </StyledSignatureReadOnlyContent>
   ) : null;
   if (displayMode === 'DISPLAY_ONLY') {
-    return <Configuration>{displayComp}</Configuration>;
+    return displayComp;
   } else if (displayMode === 'LABELS_LEFT') {
     return (
-      <Configuration>
-        <FieldValueList
-          variant={hideLabel ? 'stacked' : variant}
-          data-testid={testId}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-        />
-      </Configuration>
+      <FieldValueList
+        variant={hideLabel ? 'stacked' : variant}
+        data-testid={testId}
+        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+      />
     );
   } else if (displayMode === 'STACKED_LARGE_VAL') {
     return (
-      <Configuration>
-        <Text variant='h1' as='span'>
-          {displayComp}
-        </Text>
-      </Configuration>
+      <Text variant='h1' as='span'>
+        {displayComp}
+      </Text>
     );
   }
 
@@ -122,64 +118,62 @@ const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
   };
 
   return (
-    <Configuration>
-      <StyledSignatureContent>
-        <Flex container={{ direction: 'column' }}>
-          <FormField
-            label={label}
-            labelHidden={hideLabel}
-            info={info}
-            status={status}
+    <StyledSignatureContent>
+      <Flex container={{ direction: 'column' }}>
+        <FormField
+          label={label}
+          labelHidden={hideLabel}
+          info={info}
+          status={status}
+          required={required}
+          disabled={disabled}
+          readOnly={readOnly}
+          testId={testId}
+        >
+          <FormControl
+            ariaLabel={label}
             required={required}
             disabled={disabled}
             readOnly={readOnly}
-            testId={testId}
           >
-            <FormControl
-              ariaLabel={label}
-              required={required}
-              disabled={disabled}
-              readOnly={readOnly}
-            >
-              {readOnly || disabled ? (
-                <img src={inputValue} />
-              ) : (
-                <>
-                  <Signature
-                    signaturePadRef={ref}
-                    canvasProps={{
-                      style: {
-                        width: '100%',
-                        height: 200
-                      }
-                    }}
-                    onEndStroke={onEndStroke}
-                  />
-                  <Flex
-                    as={StyledButtonsWrapper}
-                    container={{ direction: 'row', justify: 'between', pad: [1] }}
+            {readOnly || disabled ? (
+              <img src={inputValue} />
+            ) : (
+              <>
+                <Signature
+                  signaturePadRef={ref}
+                  canvasProps={{
+                    style: {
+                      width: '100%',
+                      height: 200
+                    }
+                  }}
+                  onEndStroke={onEndStroke}
+                />
+                <Flex
+                  as={StyledButtonsWrapper}
+                  container={{ direction: 'row', justify: 'between', pad: [1] }}
+                >
+                  <Button compact className='clear' onClick={handleCLear}>
+                    Clear
+                  </Button>
+                  <Button
+                    compact
+                    variant='primary'
+                    className='accept'
+                    onClick={handleAccept}
+                    disabled={!hasValueChanged}
                   >
-                    <Button compact className='clear' onClick={handleCLear}>
-                      Clear
-                    </Button>
-                    <Button
-                      compact
-                      variant='primary'
-                      className='accept'
-                      onClick={handleAccept}
-                      disabled={!hasValueChanged}
-                    >
-                      Accept
-                    </Button>
-                  </Flex>
-                </>
-              )}
-            </FormControl>
-          </FormField>
-        </Flex>
-      </StyledSignatureContent>
-    </Configuration>
+                    Accept
+                  </Button>
+                </Flex>
+              </>
+            )}
+          </FormControl>
+        </FormField>
+      </Flex>
+    </StyledSignatureContent>
   );
 };
 
-export default PegaExtensionsSignatureCapture;
+export default withConfiguration(PegaExtensionsSignatureCapture);

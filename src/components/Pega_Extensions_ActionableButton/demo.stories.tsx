@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsActionableButton from './index';
+import { PegaExtensionsActionableButton } from './index';
 
 export default {
   title: 'Fields/Actionable button',

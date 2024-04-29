@@ -1,4 +1,4 @@
-import { Banner, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, Banner } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useState } from 'react';
 import MainContent from './styles';
 
@@ -12,7 +12,7 @@ type BannerProps = {
   getPConnect: any;
 };
 
-export default function PegaExtensionsBanner(props: BannerProps) {
+export const PegaExtensionsBanner = (props: BannerProps) => {
   const { variant = 'success', dataPage = '', getPConnect } = props;
   const [messages, setMessages] = useState<Array<string>>([]);
 
@@ -65,10 +65,10 @@ export default function PegaExtensionsBanner(props: BannerProps) {
 
   if (messages?.length === 0) return null;
   return (
-    <Configuration>
-      <MainContent>
-        <Banner variant={variant} messages={messages}></Banner>
-      </MainContent>
-    </Configuration>
+    <MainContent>
+      <Banner variant={variant} messages={messages}></Banner>
+    </MainContent>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsBanner);

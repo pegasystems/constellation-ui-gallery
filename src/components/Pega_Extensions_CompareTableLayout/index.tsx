@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
 import {
+  withConfiguration,
   FieldGroup,
   FieldValueList,
   type FieldValueListItem,
@@ -8,8 +9,7 @@ import {
   Progress,
   RadioButton,
   Text,
-  createUID,
-  Configuration
+  createUID
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 
@@ -37,7 +37,7 @@ type FieldObj = {
   };
 };
 
-export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps) {
+export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
   const { displayFormat, heading, selectionProperty, currencyFormat, getPConnect } = props;
   const [numCols, setNumCols] = useState<number>(0);
   const [numFields, setNumFields] = useState<number>(0);
@@ -127,127 +127,125 @@ export default function PegaExtensionsCompareTableLayout(props: TableLayoutProps
 
   if (displayFormat === 'radio-button-card') {
     return (
-      <Configuration>
-        <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
-          <RadioButtonGroup variant='card' label={heading} inline>
-            {fields[0].value.map((val: any, i: number) => {
-              const fvl: Array<FieldValueListItem> = [];
-              let objectId = '';
-              fields.forEach((child: any, j: number) => {
-                if (j > 0) {
-                  if (child.label === 'ID') {
-                    objectId = child.value[i];
-                  } else {
-                    fvl.push({
-                      id: child.label,
-                      name: child.label,
-                      value:
-                        child.value && child.value.length >= i
-                          ? genField(child.componentType, child.value[i], `card-${i}-${j}`)
-                          : ''
-                    });
-                  }
+      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
+        <RadioButtonGroup variant='card' label={heading} inline>
+          {fields[0].value.map((val: any, i: number) => {
+            const fvl: Array<FieldValueListItem> = [];
+            let objectId = '';
+            fields.forEach((child: any, j: number) => {
+              if (j > 0) {
+                if (child.label === 'ID') {
+                  objectId = child.value[i];
+                } else {
+                  fvl.push({
+                    id: child.label,
+                    name: child.label,
+                    value:
+                      child.value && child.value.length >= i
+                        ? genField(child.componentType, child.value[i], `card-${i}-${j}`)
+                        : ''
+                  });
                 }
-              });
-              return (
-                <RadioButton
-                  label={
-                    <FieldGroup name={val} headingTag='h3'>
-                      <FieldValueList fields={fvl} />
-                    </FieldGroup>
-                  }
-                  key={`rb-${i}`}
-                  id={val}
-                  onChange={() => selectObject(objectId, i)}
-                  checked={selection.length >= i ? selection[i] : false}
-                />
-              );
-            })}
-          </RadioButtonGroup>
-        </StyledPegaExtensionsCompareTableLayoutWrapper>
-      </Configuration>
+              }
+            });
+            return (
+              <RadioButton
+                label={
+                  <FieldGroup name={val} headingTag='h3'>
+                    <FieldValueList fields={fvl} />
+                  </FieldGroup>
+                }
+                key={`rb-${i}`}
+                id={val}
+                onChange={() => selectObject(objectId, i)}
+                checked={selection.length >= i ? selection[i] : false}
+              />
+            );
+          })}
+        </RadioButtonGroup>
+      </StyledPegaExtensionsCompareTableLayoutWrapper>
     );
   }
 
   const tableId = createUID();
   return (
-    <Configuration>
-      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
-        <table>
-          <caption>
-            <Text variant='h3'>{heading}</Text>
-          </caption>
-          <thead>
-            <tr>
-              <th>Name</th>
-              {fields[0].value.map((val: string, idx: number) => {
-                const field = {
-                  type: 'Text',
-                  config: {
-                    text: val,
-                    displayMode: 'DISPLAY_ONLY'
-                  }
-                };
-                return (
-                  <th scope='col' key={`${tableId}-col-${idx}`} id={`${tableId}-col-${idx}`}>
-                    {getPConnect().createComponent(field)}
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {fields.map((child: any, i: number) => {
-              if (i > 0) {
-                if (child.heading) {
-                  return (
-                    <tr key={`total-cat-${i}`} className={`total cat-${child.category}`}>
-                      <th colSpan={numCols + 1}>{child.heading}</th>
-                    </tr>
-                  );
+    <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
+      <table>
+        <caption>
+          <Text variant='h3'>{heading}</Text>
+        </caption>
+        <thead>
+          <tr>
+            <th>Name</th>
+            {fields[0].value.map((val: string, idx: number) => {
+              const field = {
+                type: 'Text',
+                config: {
+                  text: val,
+                  displayMode: 'DISPLAY_ONLY'
                 }
-                /* Show a selection with radioButton if the label is called ID and the selectionProperty is provided */
-                if (
-                  child.label === 'ID' &&
-                  typeof selectionProperty !== 'undefined' &&
-                  metadata.config.selectionProperty
-                )
-                  return (
-                    <tr key={`reg-row-${i}`} className='selection'>
-                      <th>Selection</th>
-                      {child.value &&
-                        child.value.map((val: any, j: number) => {
-                          return (
-                            <td key={`${tableId}-cell-${i}-${j}`}>
-                              <RadioButton
-                                id={`${tableId}-radio-${j}`}
-                                aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
-                                variant='card'
-                                label='Select'
-                                checked={selection.length >= j ? selection[j] : false}
-                                onChange={() => selectObject(val, j)}
-                              />
-                            </td>
-                          );
-                        })}
-                    </tr>
-                  );
+              };
+              return (
+                <th scope='col' key={`${tableId}-col-${idx}`} id={`${tableId}-col-${idx}`}>
+                  {getPConnect().createComponent(field)}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {fields.map((child: any, i: number) => {
+            if (i > 0) {
+              if (child.heading) {
                 return (
-                  <tr key={`reg-row-${i}`}>
-                    <th scope='row'>{child.label}</th>
+                  <tr key={`total-cat-${i}`} className={`total cat-${child.category}`}>
+                    <th colSpan={numCols + 1}>{child.heading}</th>
+                  </tr>
+                );
+              }
+              /* Show a selection with radioButton if the label is called ID and the selectionProperty is provided */
+              if (
+                child.label === 'ID' &&
+                typeof selectionProperty !== 'undefined' &&
+                metadata.config.selectionProperty
+              )
+                return (
+                  <tr key={`reg-row-${i}`} className='selection'>
+                    <th>Selection</th>
                     {child.value &&
                       child.value.map((val: any, j: number) => {
-                        return genField(child.componentType, val, `${tableId}-row-${i}-${j}`);
+                        return (
+                          <td key={`${tableId}-cell-${i}-${j}`}>
+                            <RadioButton
+                              id={`${tableId}-radio-${j}`}
+                              aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
+                              variant='card'
+                              label='Select'
+                              checked={selection.length >= j ? selection[j] : false}
+                              onChange={() => selectObject(val, j)}
+                            />
+                          </td>
+                        );
                       })}
                   </tr>
                 );
-              } else {
-                return null;
-              }
-            })}
-          </tbody>
-        </table>
-      </StyledPegaExtensionsCompareTableLayoutWrapper>
-    </Configuration>
+              return (
+                <tr key={`reg-row-${i}`}>
+                  <th scope='row'>{child.label}</th>
+                  {child.value &&
+                    child.value.map((val: any, j: number) => {
+                      return genField(child.componentType, val, `${tableId}-row-${i}-${j}`);
+                    })}
+                </tr>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </tbody>
+      </table>
+    </StyledPegaExtensionsCompareTableLayoutWrapper>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsCompareTableLayout);

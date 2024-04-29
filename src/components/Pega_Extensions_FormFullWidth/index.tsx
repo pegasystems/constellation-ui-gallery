@@ -1,4 +1,4 @@
-import { FieldGroup, Grid, Configuration } from '@pega/cosmos-react-core';
+import { withConfiguration, FieldGroup, Grid } from '@pega/cosmos-react-core';
 
 type FormFullWidthProps = {
   heading: string;
@@ -6,23 +6,22 @@ type FormFullWidthProps = {
   children: any;
 };
 
-export default function PegaExtensionsFormFullWidth(props: FormFullWidthProps) {
+export const PegaExtensionsFormFullWidth = (props: FormFullWidthProps) => {
   const { heading, NumCols, children } = props;
 
   const nCols = parseInt(NumCols, 10);
 
   return (
-    <Configuration>
-      <FieldGroup name={heading}>
-        <Grid
-          container={{
-            cols: `repeat(${nCols}, minmax(0, 1fr))`,
-            gap: 2
-          }}
-        >
-          {children}
-        </Grid>
-      </FieldGroup>
-    </Configuration>
+    <FieldGroup name={heading}>
+      <Grid
+        container={{
+          cols: `repeat(${nCols}, minmax(0, 1fr))`,
+          gap: 2
+        }}
+      >
+        {children}
+      </Grid>
+    </FieldGroup>
   );
-}
+};
+export default withConfiguration(PegaExtensionsFormFullWidth);

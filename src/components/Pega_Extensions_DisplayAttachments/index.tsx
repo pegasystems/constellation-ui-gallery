@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import {
+  withConfiguration,
   registerIcon,
   Button,
   Icon,
@@ -12,7 +13,6 @@ import {
   useModalManager,
   SummaryList,
   SummaryItem,
-  Configuration,
   Lightbox,
   Grid,
   getMimeTypeFromFile,
@@ -87,15 +87,13 @@ const ViewAllModal = ({
   loading: ModalProps['progress'];
 }) => {
   return (
-    <Configuration>
-      <Modal heading={heading} count={attachments.length} progress={loading}>
-        <SummaryList items={attachments} />
-      </Modal>
-    </Configuration>
+    <Modal heading={heading} count={attachments.length} progress={loading}>
+      <SummaryList items={attachments} />
+    </Modal>
   );
 };
 
-export default function PegaExtensionsDisplayAttachments(props: UtilityListProps) {
+export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
   const {
     heading = 'List of objects',
     useAttachmentEndpoint = true,
@@ -259,7 +257,7 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
   }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, initialLoad]);
 
   return (
-    <Configuration>
+    <>
       {displayFormat === 'list' ? (
         <Flex container={{ direction: 'column' }}>
           <SummaryList
@@ -331,6 +329,8 @@ export default function PegaExtensionsDisplayAttachments(props: UtilityListProps
           onItemDownload={onLightboxItemDownload}
         />
       )}
-    </Configuration>
+    </>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsDisplayAttachments);

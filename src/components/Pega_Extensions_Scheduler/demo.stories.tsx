@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import PegaExtensionsSchedulerProps from './index';
+import { PegaExtensionsScheduler } from './index';
 
 export default {
   title: 'Fields/Scheduler',
@@ -27,7 +27,7 @@ export default {
       description: 'End time'
     }
   },
-  component: PegaExtensionsSchedulerProps
+  component: PegaExtensionsScheduler
 };
 
 const genValue = (args: any) => {
@@ -89,7 +89,7 @@ const setPCore = () => {
   };
 };
 
-type Story = StoryObj<typeof PegaExtensionsSchedulerProps>;
+type Story = StoryObj<typeof PegaExtensionsScheduler>;
 
 export const Default: Story = {
   render: args => {
@@ -139,7 +139,7 @@ export const Default: Story = {
         };
       }
     };
-    return <PegaExtensionsSchedulerProps {...props} />;
+    return <PegaExtensionsScheduler {...props} />;
   },
   args: {
     eventDate: '20240215',

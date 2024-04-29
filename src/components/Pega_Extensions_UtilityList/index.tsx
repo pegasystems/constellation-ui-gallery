@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, type ReactNode } from 'react';
 import {
+  withConfiguration,
   registerIcon,
   Modal,
   Flex,
   useModalManager,
   SummaryList,
   MetaList,
-  Configuration,
   type SummaryListItem,
   type ModalMethods,
   type ModalProps
@@ -40,15 +40,13 @@ const ViewAllModal = ({
   loading: ModalProps['progress'];
 }) => {
   return (
-    <Configuration>
-      <Modal heading={heading} count={objects.length} progress={loading}>
-        <SummaryList items={objects} />
-      </Modal>
-    </Configuration>
+    <Modal heading={heading} count={objects.length} progress={loading}>
+      <SummaryList items={objects} />
+    </Modal>
   );
 };
 
-export default function PegaExtensionsUtilityList(props: UtilityListProps) {
+export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   const {
     heading = 'List of objects',
     icon = 'clipboard',
@@ -125,21 +123,20 @@ export default function PegaExtensionsUtilityList(props: UtilityListProps) {
 
   if (!primaryField || !dataPage) return null;
   return (
-    <Configuration>
-      <Flex container={{ direction: 'column' }}>
-        <SummaryList
-          name={heading}
-          headingTag='h3'
-          icon={icon}
-          count={loading ? undefined : objects.length}
-          items={objects?.slice(0, 3)}
-          loading={loading}
-          noItemsText='No items'
-          onViewAll={() => {
-            viewAllModalRef.current = create(ViewAllModal, { heading, objects, loading });
-          }}
-        />
-      </Flex>
-    </Configuration>
+    <Flex container={{ direction: 'column' }}>
+      <SummaryList
+        name={heading}
+        headingTag='h3'
+        icon={icon}
+        count={loading ? undefined : objects.length}
+        items={objects?.slice(0, 3)}
+        loading={loading}
+        noItemsText='No items'
+        onViewAll={() => {
+          viewAllModalRef.current = create(ViewAllModal, { heading, objects, loading });
+        }}
+      />
+    </Flex>
   );
-}
+};
+export default withConfiguration(PegaExtensionsUtilityList);

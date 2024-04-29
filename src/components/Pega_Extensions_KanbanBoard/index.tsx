@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
+  withConfiguration,
   registerIcon,
   Text,
   Card,
   CardHeader,
   Progress,
   Button,
-  Icon,
-  Configuration
+  Icon
 } from '@pega/cosmos-react-core';
 import { DragDropContext, type DropResult } from '@hello-pangea/dnd';
 import { loadDetails, updateGroupValue } from './utils';
@@ -29,7 +29,7 @@ type KanbanBoardProps = {
   getPConnect: any;
 };
 
-export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
+export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
   const {
     heading = '',
     dataPage = '',
@@ -203,36 +203,35 @@ export default function PegaExtensionsKanbanBoard(props: KanbanBoardProps) {
   if (!groups || !groupProperty) return null;
 
   return (
-    <Configuration>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Card>
-          <CardHeader
-            actions={
-              createClassname ? (
-                <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
-                  <Icon name='plus' />
-                </Button>
-              ) : undefined
-            }
-          >
-            <Text variant='h2'>{heading}</Text>
-          </CardHeader>
-          <MainCard height={height}>
-            {loading ? (
-              <Progress placement='local' message='Loading content...' />
-            ) : (
-              groupList.map((group: string) => (
-                <Column
-                  key={group}
-                  id={group}
-                  title={group}
-                  tasks={columns[group]?.taskList}
-                ></Column>
-              ))
-            )}
-          </MainCard>
-        </Card>
-      </DragDropContext>
-    </Configuration>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Card>
+        <CardHeader
+          actions={
+            createClassname ? (
+              <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
+                <Icon name='plus' />
+              </Button>
+            ) : undefined
+          }
+        >
+          <Text variant='h2'>{heading}</Text>
+        </CardHeader>
+        <MainCard height={height}>
+          {loading ? (
+            <Progress placement='local' message='Loading content...' />
+          ) : (
+            groupList.map((group: string) => (
+              <Column
+                key={group}
+                id={group}
+                title={group}
+                tasks={columns[group]?.taskList}
+              ></Column>
+            ))
+          )}
+        </MainCard>
+      </Card>
+    </DragDropContext>
   );
-}
+};
+export default withConfiguration(PegaExtensionsKanbanBoard);

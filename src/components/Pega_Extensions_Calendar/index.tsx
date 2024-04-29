@@ -4,6 +4,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import {
+  withConfiguration,
   registerIcon,
   Icon,
   Text,
@@ -14,7 +15,6 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Configuration,
   useTheme
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
@@ -64,7 +64,7 @@ type DateInfo = {
       will be refreshed automatically
     - Settings allow to show the now indicator (Red line) and show the week-ends - More settings could be exposed (height, persist context, views...)
 */
-export default function PegaExtensionsCalendar(props: CalendarProps) {
+export const PegaExtensionsCalendar = (props: CalendarProps) => {
   const {
     heading = '',
     dataPage = '',
@@ -251,72 +251,70 @@ export default function PegaExtensionsCalendar(props: CalendarProps) {
   }, []);
 
   return (
-    <Configuration>
-      <Card>
-        <CardHeader
-          actions={
-            createClassname ? (
-              <Button variant='simple' label='Create new event' icon compact onClick={addNewEvent}>
-                <Icon name='plus' />
-              </Button>
-            ) : undefined
-          }
-        >
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
-        <CardContent>
-          <FullCalendar
-            ref={calendarRef}
-            customButtons={{
-              prevButton: {
-                text: 'Previous',
-                click: () => {
-                  if (calendarRef) {
-                    const cal: any = calendarRef.current;
-                    const calendarAPI = cal.getApi();
-                    calendarAPI?.prev();
-                  }
-                }
-              },
-              nextButton: {
-                text: 'Next',
-                click: () => {
-                  if (calendarRef) {
-                    const cal: any = calendarRef.current;
-                    const calendarAPI = cal.getApi();
-                    calendarAPI?.next();
-                  }
+    <Card>
+      <CardHeader
+        actions={
+          createClassname ? (
+            <Button variant='simple' label='Create new event' icon compact onClick={addNewEvent}>
+              <Icon name='plus' />
+            </Button>
+          ) : undefined
+        }
+      >
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
+      <CardContent>
+        <FullCalendar
+          ref={calendarRef}
+          customButtons={{
+            prevButton: {
+              text: 'Previous',
+              click: () => {
+                if (calendarRef) {
+                  const cal: any = calendarRef.current;
+                  const calendarAPI = cal.getApi();
+                  calendarAPI?.prev();
                 }
               }
-            }}
-            headerToolbar={{
-              left: 'prevButton,nextButton',
-              center: 'title',
-              right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
-            }}
-            plugins={[dayGridPlugin, timeGridPlugin]}
-            initialView={getDefaultView()}
-            selectable
-            nowIndicator={nowIndicator}
-            weekends={weekendIndicator}
-            allDayText='All day'
-            slotMinTime='07:00:00'
-            slotMaxTime='19:00:00'
-            height={650}
-            slotEventOverlap={false}
-            events={events}
-            eventContent={renderEventContent}
-            eventClick={handleEventClick}
-            datesSet={handleDateChange}
-            initialDate={
-              dateInfo !== null && dateInfo.startStr
-                ? dateInfo.startStr.substring(0, 10)
-                : undefined
+            },
+            nextButton: {
+              text: 'Next',
+              click: () => {
+                if (calendarRef) {
+                  const cal: any = calendarRef.current;
+                  const calendarAPI = cal.getApi();
+                  calendarAPI?.next();
+                }
+              }
             }
-            slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
-          />
-        </CardContent>
-      </Card>
-    </Configuration>
+          }}
+          headerToolbar={{
+            left: 'prevButton,nextButton',
+            center: 'title',
+            right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
+          }}
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView={getDefaultView()}
+          selectable
+          nowIndicator={nowIndicator}
+          weekends={weekendIndicator}
+          allDayText='All day'
+          slotMinTime='07:00:00'
+          slotMaxTime='19:00:00'
+          height={650}
+          slotEventOverlap={false}
+          events={events}
+          eventContent={renderEventContent}
+          eventClick={handleEventClick}
+          datesSet={handleDateChange}
+          initialDate={
+            dateInfo !== null && dateInfo.startStr ? dateInfo.startStr.substring(0, 10) : undefined
+          }
+          slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
+        />
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default withConfiguration(PegaExtensionsCalendar);

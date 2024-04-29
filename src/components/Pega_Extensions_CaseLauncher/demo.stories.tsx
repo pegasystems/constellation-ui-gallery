@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 
-import PegaExtensionsCaseLauncher from './index';
+import { PegaExtensionsCaseLauncher } from './index';
 
 export default {
   title: 'Widgets/Case Launcher',
