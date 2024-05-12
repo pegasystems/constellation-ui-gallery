@@ -38,7 +38,7 @@ npm run start
 
 ### Linting
 
-Make sure to install the recommended VS Code extension. Before checking code, make sure that no error are reported:
+Make sure to install the recommended VS Code extensions. Before checking code, make sure that no error are reported:
 
 ```shell
 npm run lint
@@ -49,8 +49,6 @@ To fix some of the issues:
 ```shell
 npm run fix
 ```
-
-The coverage report index.html will be in the 'coverage' folder
 
 ### Unit testing
 
