@@ -118,7 +118,9 @@ export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
         </CardContent>
       </Card>
     );
-  } catch (e) {}
+  } catch (e) {
+    /* empty */
+  }
   return null;
 };
 export default withConfiguration(PegaExtensionsShortcuts);

@@ -67,7 +67,8 @@ export const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
   const displayComp = value ? '***********' : '';
   if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
-  } else if (displayMode === 'LABELS_LEFT') {
+  }
+  if (displayMode === 'LABELS_LEFT') {
     return (
       <FieldValueList
         variant={hideLabel ? 'stacked' : variant}
@@ -75,7 +76,8 @@ export const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
         fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
       />
     );
-  } else if (displayMode === 'STACKED_LARGE_VAL') {
+  }
+  if (displayMode === 'STACKED_LARGE_VAL') {
     return (
       <Text variant='h1' as='span'>
         {displayComp}

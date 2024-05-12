@@ -238,9 +238,8 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                     })}
                 </tr>
               );
-            } else {
-              return null;
             }
+            return null;
           })}
         </tbody>
       </table>

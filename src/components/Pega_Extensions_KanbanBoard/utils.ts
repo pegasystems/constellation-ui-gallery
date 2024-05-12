@@ -5,14 +5,14 @@
   the id parameter is the ID of the case (pyID)
 
   */
-type loadDetailsProps = {
+type LoadDetailsProps = {
   id: string;
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
   getPConnect: any;
 };
-export const loadDetails = async (props: loadDetailsProps) => {
+export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
   await (window as any).PCore.getDataApiUtils()
@@ -47,7 +47,7 @@ export const loadDetails = async (props: loadDetailsProps) => {
   return myElem;
 };
 
-type updateGroupValueProps = {
+type UpdateGroupValueProps = {
   groupValue: string;
   groupProperty: string;
   columns: any;
@@ -62,7 +62,7 @@ type updateGroupValueProps = {
   if the groupProperty is pyWorkStatus, then once the case becomes 'Resolved' (e.g. starts with Resolved-) then it is not possible
   to change the status through the edit local action. This is the reason why the Task will becomes read-only if the GroupValue starts by 'Resolved-'
 */
-export const updateGroupValue = (props: updateGroupValueProps) => {
+export const updateGroupValue = (props: UpdateGroupValueProps) => {
   const { groupValue, groupProperty, columns, setColumns, task, getPConnect } = props;
 
   const context = getPConnect().getContextName();

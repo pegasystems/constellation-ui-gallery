@@ -39,7 +39,7 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
       /* Retrieve the name of the embedded object */
       const paths = tmpFields[2].path?.split(' ');
       let path = '';
-      if (paths && paths.length == 2) {
+      if (paths && paths.length === 2) {
         path = paths[1].substring(0, paths[1].indexOf('[')).trim();
       }
       tmpFields[0].value.forEach((category: any, i: number) => {

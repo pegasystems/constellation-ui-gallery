@@ -1,9 +1,0 @@
-babel.config.js
-jest.config.js
-*.html
-*.css
-*.json
-*.md
-*.svg
-*.zip
-*.mdx

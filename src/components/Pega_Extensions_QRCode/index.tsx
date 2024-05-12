@@ -60,7 +60,7 @@ export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {
         >
           <FormControl ariaLabel={label}>
             {readOnly ? (
-              <img src={outputValue} />
+              <img alt='QR Code' src={outputValue} />
             ) : (
               <QRCode
                 value={inputProperty}

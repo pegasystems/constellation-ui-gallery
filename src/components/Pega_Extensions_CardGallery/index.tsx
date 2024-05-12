@@ -256,7 +256,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   } else {
     content = (
       <MainCard rendering={rendering} minWidth={minWidth}>
-        {tasks?.map((task: any) => (task.isVisible ? <Task key={task.id} {...task}></Task> : null))}
+        {tasks?.map((task: any) => (task.isVisible ? <Task key={task.id} {...task} /> : null))}
       </MainCard>
     );
   }

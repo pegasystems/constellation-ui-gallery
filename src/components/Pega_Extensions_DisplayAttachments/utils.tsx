@@ -4,8 +4,8 @@ import {
   DateTimeDisplay,
   MetaList,
   FileVisual,
-  Link,
-  Icon
+  Icon,
+  Button
 } from '@pega/cosmos-react-core';
 
 export const canPreviewFile = (type: string) => {
@@ -112,7 +112,7 @@ export const downloadFile = (
     });
 };
 
-type addAttachmentProps = {
+type AddAttachmentProps = {
   currentCategory: string;
   attachment: any;
   listOfAttachments: any;
@@ -122,7 +122,7 @@ type addAttachmentProps = {
   setElemRef: any;
 };
 
-export const addAttachment = (props: addAttachmentProps) => {
+export const addAttachment = (props: AddAttachmentProps) => {
   const {
     currentCategory,
     attachment,
@@ -146,8 +146,9 @@ export const addAttachment = (props: addAttachmentProps) => {
     id: attachment.ID,
     visual,
     primary: (
-      <Link
-        href='#'
+      <Button
+        aria-label={`Download ${attachment.name}`}
+        variant='link'
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
           setElemRef(e.currentTarget);
@@ -158,7 +159,7 @@ export const addAttachment = (props: addAttachmentProps) => {
         {(attachment.type === 'URL' || (canPreviewFile(kind) && !bCanUseLightBox)) && (
           <Icon name='open' />
         )}
-      </Link>
+      </Button>
     ),
     secondary: <MetaList items={secondaryItems} />
   });

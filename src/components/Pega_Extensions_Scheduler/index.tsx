@@ -39,7 +39,8 @@ type Event = {
 export const convertDate = (v: string) => {
   if (v?.length === 8) {
     return new Date(`${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T00:00:00`);
-  } else if (v?.length === 15) {
+  }
+  if (v?.length === 15) {
     return new Date(
       `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 15)}`
     );
@@ -65,6 +66,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
   const [initialDate, setInitialDate] = useState<string | undefined>();
 
   const renderEventContent = (eventInfo: EventContentArg) => {
+    // eslint-disable-next-line no-underscore-dangle
     const obj = eventInfo.event._def.extendedProps.item;
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
@@ -73,7 +75,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
     );
     if (obj.Name) {
       const description = `Event ${eventInfo.event.title} for ${obj.Name} from ${convertTime(obj.StartTime)} to from ${convertTime(obj.EndTime)}`;
-      const linkEl = (
+      return (
         <Link
           href={linkURL}
           previewable
@@ -99,7 +101,6 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
           {`${eventInfo.event.title} - ${obj.Name}`}
         </Link>
       );
-      return linkEl;
     }
     return <StyledCardContent>{eventInfo.event.title}</StyledCardContent>;
   };
@@ -150,7 +151,9 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
           }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      /* empty */
+    }
   }, [getPConnect, value]);
 
   return (
