@@ -9,7 +9,6 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import StyledWrapper from './styles';
 
-// eslint-disable-next-line no-shadow
 export enum BarcodeType {
   CODE128 = 'CODE128',
   EAN8 = 'EAN8',
@@ -116,7 +115,7 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
       <FormField label={label} labelHidden={hideLabel} info={info} status={status} testId={testId}>
         <FormControl ariaLabel={label}>
           {readOnly ? (
-            <img src={outputValue} />
+            <img alt='barcode' src={outputValue} />
           ) : (
             <StyledWrapper>
               {status === 'error' ? <ErrorState message='Invalid barcode' /> : null}

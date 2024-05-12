@@ -123,19 +123,17 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         if (products.current[index].pyGUID === prevId) {
           let newId = '';
           for (const [i, product] of products.current.entries()) {
-            if (product.IsSelected && index != i) {
+            if (product.IsSelected && index !== i) {
               newId = product.pyGUID;
               break;
             }
           }
           return newId;
-        } else {
-          return prevId;
         }
-      } else {
-        /* When checking a new product, always focus the tab */
-        return products.current[index].pyGUID;
+        return prevId;
       }
+      /* When checking a new product, always focus the tab */
+      return products.current[index].pyGUID;
     });
 
     setTabs(prevTabs => {

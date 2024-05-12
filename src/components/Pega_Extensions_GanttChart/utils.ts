@@ -140,14 +140,14 @@ export const viewModeOptions = Object.keys(ViewModeMap).map(key => ({
   the id parameter is the ID of the case (pyID)
 
   */
-type loadDetailsProps = {
+type LoadDetailsProps = {
   id: string;
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
   getPConnect: any;
 };
-export const loadDetails = async (props: loadDetailsProps) => {
+export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
   await (window as any).PCore.getDataApiUtils()
@@ -200,11 +200,10 @@ export const updateItemDetails = async (props: UpdateItemDetails) => {
   const response = await (window as any).PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
 
   const payload: any = { [pzInsKey]: updatedFieldValueList };
-  const updateResult = await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
+  return await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
     pzInsKey,
     payload,
     response.headers.etag,
     context
   );
-  return updateResult;
 };

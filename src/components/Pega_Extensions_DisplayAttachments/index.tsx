@@ -312,7 +312,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
               >
                 {attachments.map((attachment: any) => (
                   <StyledCardContent theme={theme}>
-                    <SummaryItem {...attachment}></SummaryItem>
+                    <SummaryItem {...attachment} />
                   </StyledCardContent>
                 ))}
               </Grid>

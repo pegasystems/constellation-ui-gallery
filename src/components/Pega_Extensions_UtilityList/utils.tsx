@@ -17,7 +17,7 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
       { caseClassName: item.pxObjClass },
       { workID: item.pyID }
     );
-    const linkEl = linkURL ? (
+    return linkURL ? (
       <Link
         href={linkURL}
         previewable
@@ -39,8 +39,6 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
     ) : (
       value
     );
-
-    return linkEl;
   }
   if (type === 'date') {
     return <DateTimeDisplay value={new Date(value)} variant='relative' />;

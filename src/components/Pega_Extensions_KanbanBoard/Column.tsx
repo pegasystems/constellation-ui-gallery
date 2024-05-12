@@ -19,7 +19,7 @@ export const Column = (props: ColumnProps) => {
         {provided => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {tasks?.map((task: any, index: number) => (
-              <Task key={task.id} index={index} {...task}></Task>
+              <Task key={task.id} index={index} {...task} />
             ))}
             {provided.placeholder}
           </div>

@@ -221,12 +221,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
             <Progress placement='local' message='Loading content...' />
           ) : (
             groupList.map((group: string) => (
-              <Column
-                key={group}
-                id={group}
-                title={group}
-                tasks={columns[group]?.taskList}
-              ></Column>
+              <Column key={group} id={group} title={group} tasks={columns[group]?.taskList} />
             ))
           )}
         </MainCard>

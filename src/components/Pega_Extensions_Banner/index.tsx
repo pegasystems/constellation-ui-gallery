@@ -66,7 +66,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   if (messages?.length === 0) return null;
   return (
     <MainContent>
-      <Banner variant={variant} messages={messages}></Banner>
+      <Banner variant={variant} messages={messages} />
     </MainContent>
   );
 };

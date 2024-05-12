@@ -121,6 +121,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   };
 
   const renderEventContent = (eventInfo: EventContentArg) => {
+    // eslint-disable-next-line no-underscore-dangle
     const obj = eventInfo.event._def.extendedProps.item;
     let isdayGrid = true;
     if (eventInfo.view.type === VIEW_TYPE.DAY || eventInfo.view.type === VIEW_TYPE.WEEK) {

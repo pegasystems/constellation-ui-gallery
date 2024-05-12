@@ -42,7 +42,7 @@ const Node = styled.div(({ theme }: { theme: any }) => {
   `;
 });
 
-type renderNodeProps = {
+type RenderNodeProps = {
   type?: string;
   key?: string;
   objClass?: string;
@@ -52,7 +52,7 @@ type renderNodeProps = {
   theme: any;
 };
 
-const renderNode = (props: renderNodeProps) => {
+const renderNode = (props: RenderNodeProps) => {
   const { type, key, objClass, id, label, getPConnect, theme } = props;
   let icon = 'user';
   if (type === 'Corporation') icon = 'store';
@@ -96,7 +96,6 @@ const renderNode = (props: renderNodeProps) => {
 };
 
 const CustomNode = (props: NodeProps) => {
-  const nodeEl = useMemo(() => renderNode(props.data), [props.data]);
-  return nodeEl;
+  return useMemo(() => renderNode(props.data), [props.data]);
 };
 export default CustomNode;

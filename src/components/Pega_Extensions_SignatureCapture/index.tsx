@@ -79,7 +79,8 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
   ) : null;
   if (displayMode === 'DISPLAY_ONLY') {
     return displayComp;
-  } else if (displayMode === 'LABELS_LEFT') {
+  }
+  if (displayMode === 'LABELS_LEFT') {
     return (
       <FieldValueList
         variant={hideLabel ? 'stacked' : variant}
@@ -87,7 +88,8 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
         fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
       />
     );
-  } else if (displayMode === 'STACKED_LARGE_VAL') {
+  }
+  if (displayMode === 'STACKED_LARGE_VAL') {
     return (
       <Text variant='h1' as='span'>
         {displayComp}
@@ -137,7 +139,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
             readOnly={readOnly}
           >
             {readOnly || disabled ? (
-              <img src={inputValue} />
+              <img alt='Signature' src={inputValue} />
             ) : (
               <>
                 <Signature
