@@ -64,7 +64,7 @@ export default styled.div(
         stroke: ${theme.base.palette.interactive} !important;
       }
       .react-flow__node-custom {
-        border: 0.125rem solid ${theme.base.palette['primary-background']};
+        border: 0.125rem solid transparent;
       }
       .react-flow__node-custom:hover {
         border: 0.125rem solid ${theme.base.palette.interactive};

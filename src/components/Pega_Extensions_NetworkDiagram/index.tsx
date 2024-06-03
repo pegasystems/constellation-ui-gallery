@@ -18,7 +18,7 @@ import ReactFlow, {
   MiniMap,
   Controls,
   MarkerType,
-  type EdgeTypes,
+  ConnectionMode,
   type Node,
   type Edge
 } from 'reactflow';
@@ -28,6 +28,7 @@ import StyledPegaExtensionsNetworkDiagram from './styles';
 
 import CustomNode from './CustomNode';
 import CustomEdge from './CustomEdge';
+import FloatingEdge from './FloatingEdge';
 import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
 
 registerIcon(resetIcon);
@@ -59,7 +60,7 @@ export interface NetworkDiagramProps {
   /** Type of layout for the edges
    * @default bezier
    */
-  edgePath?: 'bezier' | 'straight' | 'step';
+  edgePath?: 'bezier' | 'straight' | 'step' | 'floating';
   getPConnect: any;
 }
 
@@ -96,8 +97,9 @@ const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>) => {
 
   return { nodes, edges };
 };
-const edgeTypes: EdgeTypes = {
-  custom: CustomEdge
+const edgeTypes: any = {
+  custom: CustomEdge,
+  floating: FloatingEdge
 };
 function Flow(props: any) {
   const {
@@ -144,7 +146,7 @@ function Flow(props: any) {
         const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${
           tmpNodesHash[element.pyTo]
         } with label: ${element.pyLabel}`;
-        initialEdges.push({
+        const edge: any = {
           id: element.pyID || `edge-${i}`,
           source: element.pyFrom,
           target: element.pyTo,
@@ -159,16 +161,40 @@ function Flow(props: any) {
             strokeWidth: 2,
             stroke: theme.base.palette['foreground-color']
           },
-          type: 'custom',
+          type: 'floating',
           ariaLabel
-        });
+        };
+        if (edgePath !== 'floating') {
+          edge.type = 'custom';
+          edge.sourceHandle = 'c';
+          edge.targetHandle = 'a';
+        }
+        initialEdges.push(edge);
       });
       const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
         initialNodes,
         initialEdges
       );
-      setNodes(layoutedNodes);
-      setEdges(layoutedEdges);
+      if (edgePath !== 'floating') {
+        /* If fixed (top -> bottom - need to see if we need to reverse from bottom -> top ) */
+        const layoutedNodesHash: any = {};
+        layoutedNodes.forEach((node: any) => {
+          layoutedNodesHash[node.id] = node.position.y;
+        });
+        const layoutedEdgesUpdated = layoutedEdges.map((edge: any) => {
+          const src = layoutedNodesHash[edge.source];
+          const target = layoutedNodesHash[edge.target];
+          if (src > target) {
+            return { ...edge, sourceHandle: 'a', targetHandle: 'c' };
+          }
+          return edge;
+        });
+        setNodes(layoutedNodes);
+        setEdges(layoutedEdgesUpdated);
+      } else {
+        setNodes(layoutedNodes);
+        setEdges(layoutedEdges);
+      }
       setTimeout(() => {
         fitView();
       }, 10);
@@ -186,6 +212,7 @@ function Flow(props: any) {
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       proOptions={{ hideAttribution: true }}
+      connectionMode={ConnectionMode.Loose}
     >
       {showMinimap ? <MiniMap /> : null}
       {showControls ? <Controls /> : null}
