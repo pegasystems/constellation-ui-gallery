@@ -87,10 +87,10 @@ const renderNode = (props: RenderNodeProps) => {
 
   return (
     <Node theme={theme}>
-      <Handle type='target' position={Position.Top} />
+      <Handle type='source' position={Position.Top} id='a' />
       <Icon name={icon} />
       {linkEl}
-      <Handle type='source' position={Position.Bottom} />
+      <Handle type='source' position={Position.Bottom} id='c' />
     </Node>
   );
 };
