@@ -24,6 +24,8 @@ If you already have [VS Code](https://code.visualstudio.com/) and [Docker](https
 
 For more details, see [docs.pega.com](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/initialize-project.html)
 
+Note: Make sure to use `git clone git@github.com:pegasystems/constellation-ui-gallery.git` to download the source code of this repository instead of using the download option. If you download the code, you will not be able to publish the components and you will see the error 'Git needs to be installed' even if you have the git executable installed. This error is generated because you are missing the .git folder. If you face this issue, you can type `git init` to create the missing folder.  
+
 ### Project setup
 
 ```shell
