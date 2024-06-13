@@ -4,7 +4,7 @@ Constellation's flexible architecture empowers advanced users (professional fron
 
 This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
 
-These components have been tested on Pega 23.1 and might not run on older versions of the platform - For older versions, the recommendation is to download the supported version of the Constellation DX Component builder package @pega/custom-dx-components@XXXX supported by your Pega Platform version and create new components using the command line utility 'npm run create'.
+These components have been tested on Pega 23.1 and might not run on other versions of the Pega Platform - For other versions, the recommendation is to download the supported version of the Constellation DX Component builder package @pega/custom-dx-components@XXXX supported by your Pega Platform version and create new components using the command line utility 'npm run create' and then copy the code. You will likely need to modify / update the code, especially if there are CSS selectors. At some point, the project will support new version of the gallery using branches and versions.
 
 A complete demonstration of these Constellation DX components is available at [pegasystems.github.io/constellation-ui-gallery](https://pegasystems.github.io/constellation-ui-gallery/)
 
