@@ -1,0 +1,37 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Map component showcases how to run the ArcGIS Map component inside Constellation UI - The [ArcGIS Maps SDK for JavaScript](https://developers.arcgis.com/javascript/latest/) helps build interactive user experiences and 2D and 3D visualizations.
+
+The component supports the following features:
+
+- Center on a global map by providing latitude, longitude and zoom
+- Allow to draw a set of positions by clicking on the map - double click to terminate the polyline
+- Clear action to delete the trajectory
+- Read only mode when put in the display template
+- Can pass a URL field type that can be used to store a base64 image of the map
+
+To use this component, you will need an embedded data list with 2 fields: Latitude and Longitude. In a form template, add a new view based on this template and select the 2 properties
+from the embedded list data object - make sure to put the Latitude field first. If needed, you can specify a 3rd field on the case type formatted as URL that can hold
+an image of the map - the Image field must be large enough to hold the base64 content (see length to 50000) and should not have any validation enabled on the field for URL.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+Here is a demo of how to configure this component in App Studio. For this example, we have created a 'Map' case type and we will render Map component.
+The case type is composed of an embedded data list called 'Positions'
+
+![Embedded data model configuration](Map_Configuration_1.png)
+
+To use the template, add the fields to the region in this order
+
+![Template configuration](Map_Configuration_2.png)

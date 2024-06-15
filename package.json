@@ -37,6 +37,7 @@
     "fix:pkg": "sort-package-json package.json packages/*/package.json"
   },
   "dependencies": {
+    "@arcgis/core": "^4.29.10",
     "@fullcalendar/core": "^6.1.13",
     "@fullcalendar/daygrid": "^6.1.13",
     "@fullcalendar/react": "^6.1.13",

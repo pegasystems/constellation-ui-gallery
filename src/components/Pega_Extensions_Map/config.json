@@ -1,0 +1,55 @@
+{
+  "name": "Pega_Extensions_Map",
+  "label": "ESRI Map Component",
+  "description": "ESRI Map Component",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_Map",
+  "type": "Template",
+  "subtype": "FORM",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "Latitude",
+      "label": "Latitude",
+      "format": "TEXT"
+    },
+    {
+      "name": "Longitude",
+      "label": "Longitude",
+      "format": "TEXT"
+    },
+    {
+      "name": "Zoom",
+      "label": "Zoom",
+      "format": "TEXT"
+    },
+    {
+      "name": "height",
+      "label": "Height of the map",
+      "format": "TEXT"
+    },
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": [
+        "Fields"
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "heading": "Map",
+    "Latitude": "35",
+    "Longitude": "-110",
+    "Zoom": "4",
+    "height": "40rem"
+  }
+}
