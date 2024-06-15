@@ -14,8 +14,10 @@
   ],
   "allowCompoundWords": true,
   "words": [
+    "arcgis",
     "camelcase",
     "daygrid",
+    "ESRI",
     "fullcalendar",
     "Gantt",
     "IBAN",

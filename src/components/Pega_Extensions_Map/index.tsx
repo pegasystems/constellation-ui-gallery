@@ -1,0 +1,219 @@
+import {
+  withConfiguration,
+  useTheme,
+  Card,
+  Text,
+  CardContent,
+  CardHeader,
+  Button
+} from '@pega/cosmos-react-core';
+import MapView from '@arcgis/core/views/MapView';
+import Draw from '@arcgis/core/views/draw/Draw';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import Map from '@arcgis/core/Map';
+import { useEffect, useRef } from 'react';
+import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
+import { getAllFields, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
+
+type MapProps = {
+  getPConnect?: any;
+  heading?: string;
+  height?: string;
+  Latitude?: string;
+  Longitude?: string;
+  Zoom?: string;
+  displayMode: string;
+};
+
+type VerticesProps = {
+  ptLayer: GraphicsLayer;
+  view: MapView;
+  draw: Draw;
+  event: any;
+  embedDataRef: string;
+  latitudePropRef: string;
+  longitudePropRef: string;
+  imageMapRef: string;
+};
+
+export const PegaExtensionsMap = (props: MapProps) => {
+  const {
+    getPConnect,
+    heading = 'Map',
+    height = '40rem',
+    Latitude = '34',
+    Longitude = '-118',
+    Zoom = '8',
+    displayMode = ''
+  } = props;
+  const theme = useTheme();
+
+  const mapDiv = useRef(null);
+  const btnClearRef = useRef<HTMLButtonElement>(null);
+  const numPoints = useRef<number>(0);
+  const isLastActionClear = useRef<boolean>(false);
+
+  // Checks if the last vertex is making the line intersect itself.
+  const updateVertices = (vars: VerticesProps) => {
+    const {
+      ptLayer,
+      view,
+      draw,
+      event,
+      embedDataRef,
+      latitudePropRef,
+      longitudePropRef,
+      imageMapRef
+    } = vars;
+    // create a polyline from returned vertices
+    if (event.vertices.length > 1) {
+      createGraphic(ptLayer, view, event.vertices, true, theme);
+    }
+    if (event.type === 'draw-complete') {
+      const action = draw.create('polyline');
+      action.on(
+        ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
+        newEvent => {
+          updateVertices({ ...vars, event: newEvent });
+        }
+      );
+
+      /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
+      if (!isLastActionClear.current) {
+        deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+      } else {
+        isLastActionClear.current = false;
+      }
+      event.vertices.forEach((x: any, index: number) => {
+        addPoint(getPConnect, props, embedDataRef, longitudePropRef, latitudePropRef, index, x);
+      });
+      numPoints.current = event.vertices.length;
+
+      addScreenShot(getPConnect, view, imageMapRef);
+    }
+  };
+
+  /**
+   * Initialize application
+   */
+  useEffect(() => {
+    const tmpFields: any = getAllFields(getPConnect);
+
+    /* Incorrect configuration - need 2 embedded fields */
+    if (tmpFields.length < 2) return;
+
+    let embedDataRef = '';
+    let longitudePropRef = '';
+    let latitudePropRef = '';
+    let imageMapRef = '';
+    let map: Map;
+    let view: MapView;
+    let ptLayer: GraphicsLayer;
+
+    /* Retrieve the name of the embedded object */
+    let paths = tmpFields[0].path?.split(' ');
+    if (paths && paths.length === 2) {
+      embedDataRef = paths[1].substring(0, paths[1].indexOf('[')).trim();
+      latitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
+    }
+    paths = tmpFields[1].path?.split(' ');
+    if (paths && paths.length === 2) {
+      longitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
+    }
+    if (tmpFields.length >= 3) {
+      paths = tmpFields[2].path?.split(' ');
+      if (paths && paths.length === 2) {
+        imageMapRef = paths[1];
+      }
+    }
+
+    if (mapDiv.current) {
+      ptLayer = new GraphicsLayer();
+      map = new Map({
+        basemap: 'gray-vector',
+        layers: [ptLayer]
+      });
+
+      view = new MapView({
+        container: mapDiv.current,
+        map,
+        center: [parseFloat(Longitude), parseFloat(Latitude)],
+        zoom: parseFloat(Zoom)
+      });
+
+      const draw = new Draw({
+        view
+      });
+
+      view.focus();
+
+      if (displayMode !== 'DISPLAY_ONLY') {
+        if (btnClearRef?.current) {
+          view.ui.add([
+            {
+              component: btnClearRef.current,
+              position: 'top-right',
+              index: 1
+            }
+          ]);
+        }
+
+        const action = draw.create('polyline');
+        action.on(
+          ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
+          event => {
+            updateVertices({
+              ptLayer,
+              view,
+              draw,
+              event,
+              embedDataRef,
+              latitudePropRef,
+              longitudePropRef,
+              imageMapRef
+            });
+          }
+        );
+
+        if (btnClearRef?.current) {
+          btnClearRef.current.onclick = () => {
+            ptLayer.removeAll();
+            deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+            isLastActionClear.current = true;
+          };
+        }
+      }
+
+      /* If values are populated, load the polyline */
+      if (tmpFields.length > 1 && tmpFields[0].value?.length > 0) {
+        const vertices: any = [];
+        tmpFields[0].value.forEach((val: any, index: any) => {
+          vertices.push([tmpFields[1].value[index], val]);
+        });
+        numPoints.current = vertices.length;
+        createGraphic(ptLayer, view, vertices, false, theme);
+      }
+    }
+    return () => {
+      ptLayer.removeAll();
+      view.graphics.removeAll();
+      view.destroy();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Latitude, Longitude, Zoom, height, displayMode]);
+
+  return (
+    <Card>
+      <CardHeader>
+        <Text variant='h2'>{heading}</Text>
+      </CardHeader>
+      <CardContent>
+        <Button as={StyledClearBtn} ref={btnClearRef}>
+          Clear
+        </Button>
+        <StyledPegaExtensionsMap height={height} ref={mapDiv} />
+      </CardContent>
+    </Card>
+  );
+};
+export default withConfiguration(PegaExtensionsMap);
