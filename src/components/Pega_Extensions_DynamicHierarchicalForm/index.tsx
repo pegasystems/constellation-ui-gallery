@@ -10,10 +10,11 @@ import {
   Tabs,
   ComboBox,
   menuHelpers,
-  type MenuItemProps
+  type MenuItemProps,
+  type ComboBoxProps
 } from '@pega/cosmos-react-core';
 import getAllFields from './utils';
-import MainContent from './styles';
+import { MainContent, FixPopover } from './styles';
 
 export interface DynamicHierarchicalFormProps {
   /** Heading for this view */
@@ -56,6 +57,9 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   const [hasSelectedProduct, setHasSelectedProduct] = useState<boolean>(false);
   const productRef = useRef('');
   const productLabelRef = useRef('');
+  const productSelectionRequiredRef = useRef(false);
+  const [validatemessage, setValidateMessage] = useState<string>('');
+  const [status, setStatus] = useState<ComboBoxProps['status']>(undefined);
   const [items, setItems] = useState<Array<any>>([]);
   const [filterValue, setFilterValue] = useState('');
   const selected = useMemo(() => {
@@ -158,6 +162,15 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   };
 
   useEffect(() => {
+    if (validatemessage !== '') {
+      setStatus('error');
+    }
+    if (status !== 'success') {
+      setStatus(validatemessage !== '' ? 'error' : undefined);
+    }
+  }, [validatemessage, status]);
+
+  useEffect(() => {
     const SelectedProducts: any = getAllFields(0, getPConnect);
     const tmpFields: any = getAllFields(1, getPConnect);
     if (
@@ -174,11 +187,15 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     const content: any = (window as any).PCore.getStore().getState().data?.[context]?.caseInfo
       ?.content;
     productRef.current = SelectedProducts[0].authorContext.substring(1);
-    if (
-      SelectedProducts[0]?.inheritedProps?.length > 0 &&
-      SelectedProducts[0].inheritedProps[0]?.prop === 'label'
-    ) {
-      productLabelRef.current = SelectedProducts[0].inheritedProps[0]?.value;
+    productSelectionRequiredRef.current = false;
+    if (SelectedProducts[0]?.inheritedProps?.length > 0) {
+      for (const val of SelectedProducts[0].inheritedProps) {
+        if (val.prop === 'label') {
+          productLabelRef.current = val.value;
+        } else if (val.prop === 'required') {
+          productSelectionRequiredRef.current = true;
+        }
+      }
     }
     const Products = content[productRef.current];
     for (let i = 0; i < Products.length; i += 1) {
@@ -245,66 +262,76 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   }
 
   return (
-    <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
-      {enableItemSelection ? (
-        <ComboBox
-          mode='multi-select'
-          label={productLabelRef.current}
-          selected={{
-            items: selected,
-            onRemove: toggleItem
-          }}
-          value={filterValue}
-          onChange={e => {
-            setFilterValue(e.target.value);
-          }}
-          onBlur={() => {
-            setFilterValue('');
-          }}
-          menu={{
-            items: itemsToRender,
-            onItemClick: toggleItem,
-            accent: filterRegex,
-            emptyText: 'No items',
-            scrollAt: 6
-          }}
-        />
-      ) : null}
-      {hasSelectedProduct ? (
-        <MainContent>
-          {showRefreshAction ? <Button onClick={refreshForm}>{refreshActionLabel}</Button> : null}
-          <Flex container={{ direction: 'column', gap: 1 }}>
-            <Flex item={{ grow: 1 }}>
-              <Tabs
-                tabs={tabs.filter((tab: any) => tab.visible)}
-                onTabClick={handleTabChange}
-                currentTabId={panelShown}
-              />
+    <>
+      <FixPopover />
+      <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
+        {enableItemSelection ? (
+          <ComboBox
+            mode='multi-select'
+            label={productLabelRef.current}
+            required={productSelectionRequiredRef.current}
+            selected={{
+              items: selected,
+              onRemove: toggleItem
+            }}
+            info={validatemessage}
+            status={status}
+            onChange={e => {
+              setFilterValue(e.target.value);
+            }}
+            onBlur={(val: any) => {
+              if (val.length === 0 && productSelectionRequiredRef?.current) {
+                setValidateMessage('Cannot be blank');
+              } else {
+                setValidateMessage('');
+              }
+              setFilterValue('');
+            }}
+            menu={{
+              items: itemsToRender,
+              onItemClick: toggleItem,
+              accent: filterRegex,
+              emptyText: 'No items',
+              scrollAt: 6
+            }}
+          />
+        ) : null}
+        {hasSelectedProduct ? (
+          <MainContent>
+            {showRefreshAction ? <Button onClick={refreshForm}>{refreshActionLabel}</Button> : null}
+            <Flex container={{ direction: 'column', gap: 1 }}>
+              <Flex item={{ grow: 1 }}>
+                <Tabs
+                  tabs={tabs.filter((tab: any) => tab.visible)}
+                  onTabClick={handleTabChange}
+                  currentTabId={panelShown}
+                />
+              </Flex>
+              <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
+                {tabs.map(tab =>
+                  tab.visible ? (
+                    <TabPanel
+                      tabId={tab.id}
+                      currentTabId={panelShown}
+                      key={tab.id}
+                      style={{ width: '100%' }}
+                    >
+                      {tab.content}
+                    </TabPanel>
+                  ) : null
+                )}
+              </Flex>
             </Flex>
-            <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
-              {tabs.map(tab =>
-                tab.visible ? (
-                  <TabPanel
-                    tabId={tab.id}
-                    currentTabId={panelShown}
-                    key={tab.id}
-                    style={{ width: '100%' }}
-                  >
-                    {tab.content}
-                  </TabPanel>
-                ) : null
-              )}
+          </MainContent>
+        ) : (
+          <Flex container={{ pad: 2 }} style={{ height: '10rem' }}>
+            <Flex item={{ grow: 1, alignSelf: 'auto' }}>
+              <EmptyState message='No selected items' />
             </Flex>
           </Flex>
-        </MainContent>
-      ) : (
-        <Flex container={{ pad: 2 }} style={{ height: '10rem' }}>
-          <Flex item={{ grow: 1, alignSelf: 'auto' }}>
-            <EmptyState message='No selected items' />
-          </Flex>
-        </Flex>
-      )}
-    </FieldGroup>
+        )}
+      </FieldGroup>
+    </>
   );
 };
 export default withConfiguration(PegaExtensionsDynamicHierarchicalForm);
