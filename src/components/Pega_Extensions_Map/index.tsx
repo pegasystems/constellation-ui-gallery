@@ -11,6 +11,9 @@ import MapView from '@arcgis/core/views/MapView';
 import Draw from '@arcgis/core/views/draw/Draw';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import Map from '@arcgis/core/Map';
+import Search from '@arcgis/core/widgets/Search';
+import Track from '@arcgis/core/widgets/Track';
+import Sketch from '@arcgis/core/widgets/Sketch';
 import { useEffect, useRef } from 'react';
 import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
 import { getAllFields, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
@@ -23,6 +26,8 @@ type MapProps = {
   Longitude?: string;
   Zoom?: string;
   displayMode: string;
+  bFreeFormDrawing: boolean;
+  bShowSearch: boolean;
 };
 
 type VerticesProps = {
@@ -44,7 +49,9 @@ export const PegaExtensionsMap = (props: MapProps) => {
     Latitude = '34',
     Longitude = '-118',
     Zoom = '8',
-    displayMode = ''
+    displayMode = '',
+    bFreeFormDrawing = false,
+    bShowSearch = false
   } = props;
   const theme = useTheme();
 
@@ -99,31 +106,45 @@ export const PegaExtensionsMap = (props: MapProps) => {
   useEffect(() => {
     const tmpFields: any = getAllFields(getPConnect);
 
-    /* Incorrect configuration - need 2 embedded fields */
-    if (tmpFields.length < 2) return;
-
     let embedDataRef = '';
     let longitudePropRef = '';
     let latitudePropRef = '';
     let imageMapRef = '';
+    let locationRef = '';
     let map: Map;
     let view: MapView;
     let ptLayer: GraphicsLayer;
 
-    /* Retrieve the name of the embedded object */
-    let paths = tmpFields[0].path?.split(' ');
-    if (paths && paths.length === 2) {
-      embedDataRef = paths[1].substring(0, paths[1].indexOf('[')).trim();
-      latitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
-    }
-    paths = tmpFields[1].path?.split(' ');
-    if (paths && paths.length === 2) {
-      longitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
-    }
-    if (tmpFields.length >= 3) {
-      paths = tmpFields[2].path?.split(' ');
+    /* Retrieve the name of the embedded object when bFreeFormDrawing is false */
+    if (!bFreeFormDrawing && tmpFields.length >= 2) {
+      let paths = tmpFields[0].path?.split(' ');
       if (paths && paths.length === 2) {
-        imageMapRef = paths[1];
+        embedDataRef = paths[1].substring(0, paths[1].indexOf('[')).trim();
+        latitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
+      }
+      paths = tmpFields[1].path?.split(' ');
+      if (paths && paths.length === 2) {
+        longitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
+      }
+      if (tmpFields.length >= 3) {
+        paths = tmpFields[2].path?.split(' ');
+        if (paths && paths.length === 2) {
+          imageMapRef = paths[1];
+        }
+      }
+    }
+    /* Retrieve the name of the embedded object when bFreeFormDrawing is true */
+    if (bFreeFormDrawing && tmpFields.length > 0) {
+      if (tmpFields[0].type === 'Location') {
+        const locationPropPath = tmpFields[0].path?.replace('@P ', '');
+        const lastSeparator = locationPropPath.lastIndexOf('.');
+        locationRef = locationPropPath.substring(0, lastSeparator);
+      }
+      if (tmpFields.length >= 2) {
+        const paths = tmpFields[1].path?.split(' ');
+        if (paths && paths.length === 2) {
+          imageMapRef = paths[1];
+        }
       }
     }
 
@@ -145,44 +166,84 @@ export const PegaExtensionsMap = (props: MapProps) => {
         view
       });
 
-      view.focus();
-
       if (displayMode !== 'DISPLAY_ONLY') {
-        if (btnClearRef?.current) {
-          view.ui.add([
-            {
-              component: btnClearRef.current,
-              position: 'top-right',
-              index: 1
-            }
-          ]);
+        if (bFreeFormDrawing) {
+          const sketchWidget = new Sketch({
+            view,
+            layer: ptLayer
+          });
+          view.ui.add(sketchWidget, 'top-right');
         }
-
-        const action = draw.create('polyline');
-        action.on(
-          ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-          event => {
-            updateVertices({
-              ptLayer,
-              view,
-              draw,
-              event,
-              embedDataRef,
-              latitudePropRef,
-              longitudePropRef,
-              imageMapRef
+        if (bShowSearch) {
+          const searchWidget = new Search({
+            view
+          });
+          view.ui.add(searchWidget, 'top-right');
+          if (locationRef) {
+            searchWidget.on('select-result', (event: any) => {
+              const result = event.result;
+              if (result?.feature?.geometry) {
+                const latitude = result.feature.geometry.latitude;
+                const longitude = result.feature.geometry.longitude;
+                const messageConfig = {
+                  meta: props,
+                  options: {
+                    context: getPConnect().getContextName(),
+                    pageReference: `caseInfo.content${locationRef}`,
+                    target: getPConnect().getTarget()
+                  }
+                };
+                const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+                const actionsApi = c11nEnv.getPConnect().getActionsApi();
+                actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
+                actionsApi.updateFieldValue('.pyAddress', result.name);
+              }
             });
           }
-        );
+          const track = new Track({
+            view
+          });
+          view.ui.add(track, 'top-left');
+        }
 
-        if (btnClearRef?.current) {
-          btnClearRef.current.onclick = () => {
-            ptLayer.removeAll();
-            deletePoints(getPConnect, props, embedDataRef, numPoints.current);
-            isLastActionClear.current = true;
-          };
+        if (!bFreeFormDrawing) {
+          if (btnClearRef?.current) {
+            view.ui.add([
+              {
+                component: btnClearRef.current,
+                position: 'top-right',
+                index: 1
+              }
+            ]);
+          }
+
+          const action = draw.create('polyline');
+          action.on(
+            ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
+            event => {
+              updateVertices({
+                ptLayer,
+                view,
+                draw,
+                event,
+                embedDataRef,
+                latitudePropRef,
+                longitudePropRef,
+                imageMapRef
+              });
+            }
+          );
+
+          if (btnClearRef?.current) {
+            btnClearRef.current.onclick = () => {
+              ptLayer.removeAll();
+              deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+              isLastActionClear.current = true;
+            };
+          }
         }
       }
+      view.focus();
 
       /* If values are populated, load the polyline */
       if (tmpFields.length > 1 && tmpFields[0].value?.length > 0) {
@@ -200,7 +261,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       view.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Latitude, Longitude, Zoom, height, displayMode]);
+  }, [Latitude, Longitude, Zoom, height, displayMode, bFreeFormDrawing, bShowSearch]);
 
   return (
     <Card>
@@ -208,9 +269,9 @@ export const PegaExtensionsMap = (props: MapProps) => {
         <Text variant='h2'>{heading}</Text>
       </CardHeader>
       <CardContent>
-        <Button as={StyledClearBtn} ref={btnClearRef}>
-          Clear
-        </Button>
+        <StyledClearBtn hide={displayMode === 'DISPLAY_ONLY' || bFreeFormDrawing}>
+          <Button ref={btnClearRef}>Clear</Button>
+        </StyledClearBtn>
         <StyledPegaExtensionsMap height={height} ref={mapDiv} />
       </CardContent>
     </Card>
