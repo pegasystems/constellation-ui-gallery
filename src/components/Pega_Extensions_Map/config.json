@@ -14,27 +14,44 @@
       "name": "heading",
       "label": "Heading",
       "format": "TEXT",
-      "required": true
+      "required": true,
+      "defaultValue": "Map"
     },
     {
       "name": "Latitude",
       "label": "Latitude",
-      "format": "TEXT"
+      "format": "TEXT",
+      "defaultValue": "35"
     },
     {
       "name": "Longitude",
       "label": "Longitude",
-      "format": "TEXT"
+      "format": "TEXT",
+      "defaultValue": "-110"
     },
     {
       "name": "Zoom",
       "label": "Zoom",
-      "format": "TEXT"
+      "format": "TEXT",
+      "defaultValue": "4"
     },
     {
       "name": "height",
       "label": "Height of the map",
-      "format": "TEXT"
+      "format": "TEXT",
+      "defaultValue": "40rem"
+    },
+    {
+      "name": "bFreeFormDrawing",
+      "label": "Set to true if you want to draw on the map using the sketch tool",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
+      "name": "bShowSearch",
+      "label": "Set to true to display a search bar",
+      "format": "BOOLEAN",
+      "defaultValue": false
     },
     {
       "name": "A",

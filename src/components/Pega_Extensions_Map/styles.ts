@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
-export const StyledClearBtn = styled.button(({ displayMode }: { displayMode: string }) => {
-  if (displayMode === 'DISPLAY_ONLY') {
+export const StyledClearBtn = styled.div(({ hide }: { hide: boolean }) => {
+  if (hide) {
     return css`
       display: none;
     `;

@@ -158,6 +158,8 @@ export const Default: Story = {
     Latitude: '35',
     Longitude: '-110',
     Zoom: '4',
-    displayMode: 'EDITABLE'
+    displayMode: 'EDITABLE',
+    bFreeFormDrawing: false,
+    bShowSearch: false
   }
 };
