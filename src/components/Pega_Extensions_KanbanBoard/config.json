@@ -8,7 +8,10 @@
   "allowedApplications": [],
   "componentKey": "Pega_Extensions_KanbanBoard",
   "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
+  "subtype": [
+    "PAGE",
+    "CASE"
+  ],
   "properties": [
     {
       "name": "heading",
@@ -16,10 +19,22 @@
       "format": "TEXT"
     },
     {
-      "name": "dataPage",
-      "label": "List Data Page name to get all cases",
-      "format": "TEXT",
-      "required": true
+      "label": "Data source",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "dataPage",
+          "label": "List Data Page name to get all cases",
+          "format": "TEXT",
+          "required": true
+        },
+        {
+          "key": "contextProperty",
+          "format": "PROPERTY",
+          "name": "contextProperty",
+          "label": "Context for filtering the data page"
+        }
+      ]
     },
     {
       "name": "createClassname",

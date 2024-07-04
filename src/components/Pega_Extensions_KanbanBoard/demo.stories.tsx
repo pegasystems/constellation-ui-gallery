@@ -21,6 +21,12 @@ export default {
         disable: true
       }
     },
+    contextProperty: {
+      table: {
+        disable: true
+      }
+    },
+
     getPConnect: {
       table: {
         disable: true
@@ -232,6 +238,7 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getRawMetadata: () => {},
           getContextName: () => 'primary',
           getContainerManager: () => ({
             addTransientItem: () => {},
@@ -282,6 +289,7 @@ export const Default: Story = {
     heading: 'Kanban board',
     createClassname: 'Work-UserStory',
     dataPage: '',
+    contextProperty: '',
     height: '30rem',
     groups: 'New,Open,Pending-Review,Resolved-Completed',
     groupProperty: 'pyStatusWork',

@@ -36,8 +36,7 @@
           "format": "PROPERTY",
           "name": "inputProperty",
           "required": true,
-          "label": "Input Property",
-          "match": "propertyRef"
+          "label": "Input Property"
         }
       ]
     },

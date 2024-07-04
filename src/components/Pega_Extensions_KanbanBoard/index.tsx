@@ -20,6 +20,7 @@ registerIcon(plusIcon, pencilIcon);
 type KanbanBoardProps = {
   heading: string;
   dataPage: string;
+  contextProperty: any;
   createClassname?: string;
   height?: string;
   groups: string;
@@ -33,6 +34,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
   const {
     heading = '',
     dataPage = '',
+    contextProperty,
     createClassname = '',
     height = '30rem',
     groups = '',
@@ -125,8 +127,13 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
 
   const loadTasks = () => {
     setLoading(true);
+    const metadata = getPConnect().getRawMetadata();
+    let parameters = {};
+    if (typeof contextProperty !== 'undefined' && metadata?.config?.contextProperty) {
+      parameters = { dataViewParameters: { key: contextProperty } };
+    }
     (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, {})
+      .getData(dataPage, parameters)
       .then(async (response: any) => {
         if (response.data.data !== null) {
           const tmpColumns: any = {};
