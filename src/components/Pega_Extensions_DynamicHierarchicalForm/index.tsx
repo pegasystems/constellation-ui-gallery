@@ -15,6 +15,7 @@ import {
 } from '@pega/cosmos-react-core';
 import getAllFields from './utils';
 import { MainContent, FixPopover } from './styles';
+import '../create-nonce';
 
 export interface DynamicHierarchicalFormProps {
   /** Heading for this view */

@@ -1,4 +1,5 @@
 import { withConfiguration, FieldGroup, Grid } from '@pega/cosmos-react-core';
+import '../create-nonce';
 
 type FormFullWidthProps = {
   heading: string;

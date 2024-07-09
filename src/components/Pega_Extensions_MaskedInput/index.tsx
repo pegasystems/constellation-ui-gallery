@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Input, FieldValueList, Text } from '@pega/cosmos-react-core';
 import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
+import '../create-nonce';
 
 export type MaskedInputProps = {
   getPConnect?: any;

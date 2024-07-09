@@ -27,6 +27,7 @@ import type {
 } from '@pega/cosmos-react-core';
 import { downloadBlob, addAttachment, downloadFile } from './utils';
 import StyledCardContent from './styles';
+import '../create-nonce';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';

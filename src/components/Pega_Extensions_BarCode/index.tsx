@@ -8,6 +8,7 @@ import {
 } from '@pega/cosmos-react-core';
 import { useEffect, useRef, useState } from 'react';
 import StyledWrapper from './styles';
+import '../create-nonce';
 
 export enum BarcodeType {
   CODE128 = 'CODE128',

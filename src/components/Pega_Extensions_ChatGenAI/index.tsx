@@ -17,6 +17,7 @@ import * as sendIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/sen
 import * as robotSolid from '@pega/cosmos-react-core/lib/components/Icon/icons/robot-solid.icon';
 
 import { StyledCardContent, StyledGenAIComponent } from './styles';
+import '../create-nonce';
 
 type HistoryItem = {
   id: string;

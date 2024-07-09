@@ -15,6 +15,7 @@ import {
 import { Task } from './Task';
 import { loadDetails, getFilters } from './utils';
 import { MainCard } from './styles';
+import '../create-nonce';
 
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';

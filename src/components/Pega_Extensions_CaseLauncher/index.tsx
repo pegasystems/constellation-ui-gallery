@@ -8,6 +8,7 @@ import {
   Button
 } from '@pega/cosmos-react-core';
 import StyledCard from './styles';
+import '../create-nonce';
 
 // interface for props
 export type CaseLauncherProps = {
