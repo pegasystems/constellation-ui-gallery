@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, FieldValueList, Text } from '@pega/cosmos-react-core';
+import '../create-nonce';
 
 export type CheckboxTriggerProps = {
   getPConnect?: any;

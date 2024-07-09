@@ -9,6 +9,7 @@ import {
   Flex
 } from '@pega/cosmos-react-core';
 import { SimpleContent, GroupedContent } from './styles';
+import '../create-nonce';
 
 type ShortcutsProps = {
   /** Display type of rendering

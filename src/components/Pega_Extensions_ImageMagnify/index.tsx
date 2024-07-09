@@ -6,6 +6,7 @@ import {
   MagnifierPreview,
   MagnifierZoom
 } from 'react-image-magnifiers';
+import '../create-nonce';
 
 type PegaExtensionsImageMagnifyProps = {
   value: string;

@@ -16,6 +16,7 @@ import {
   StyledSignatureContent,
   StyledSignatureReadOnlyContent
 } from './styles';
+import '../create-nonce';
 
 type SignatureCaptureProps = {
   getPConnect: any;

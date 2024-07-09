@@ -19,6 +19,7 @@ import {
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
+import '../create-nonce';
 
 registerIcon(plusIcon);
 

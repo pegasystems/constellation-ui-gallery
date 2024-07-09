@@ -4,6 +4,7 @@ import { withConfiguration, FieldGroup, Flex, TabPanel, Tabs } from '@pega/cosmo
 import RatingElem from './RatingElem';
 import StyledWrapper from './styles';
 import getAllFields from './utils';
+import '../create-nonce';
 
 type RatingLayoutProps = {
   label?: string;

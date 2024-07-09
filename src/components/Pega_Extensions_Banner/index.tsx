@@ -1,6 +1,7 @@
 import { withConfiguration, Banner } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useState } from 'react';
 import MainContent from './styles';
+import '../create-nonce';
 
 type BannerProps = {
   /** Display type of rendering

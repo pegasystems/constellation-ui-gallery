@@ -15,6 +15,7 @@ import { Column } from './Column';
 import { MainCard } from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
+import '../create-nonce';
 
 registerIcon(plusIcon, pencilIcon);
 type KanbanBoardProps = {

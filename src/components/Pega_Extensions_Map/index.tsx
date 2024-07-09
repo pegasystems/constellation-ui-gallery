@@ -17,6 +17,7 @@ import Sketch from '@arcgis/core/widgets/Sketch';
 import { useEffect, useRef } from 'react';
 import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
 import { getAllFields, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
+import '../create-nonce';
 
 type MapProps = {
   getPConnect?: any;

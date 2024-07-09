@@ -12,6 +12,7 @@ import {
   createUID
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
+import '../create-nonce';
 
 // includes in bundle
 import getAllFields from './utils';

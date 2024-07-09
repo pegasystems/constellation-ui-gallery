@@ -15,6 +15,7 @@ import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
 import { renderObjectField } from './utils';
+import '../create-nonce';
 
 type UtilityListProps = {
   heading?: string;
