@@ -205,7 +205,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
           }
           loadTasks(true);
         },
-        `dashboard-component-cardgallery`,
+        'dashboard-component-cardgallery',
         false,
         getPConnect().getContextName()
       );
@@ -215,19 +215,19 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
           filters.current = {};
           loadTasks(true);
         },
-        `dashboard-component-cardgallery`,
+        'dashboard-component-cardgallery',
         false,
         getPConnect().getContextName()
       );
       return () => {
         (window as any).PCore.getPubSubUtils().unsubscribe(
           (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
-          `dashboard-component-cardgallery`,
+          'dashboard-component-cardgallery',
           getPConnect().getContextName()
         );
         (window as any).PCore.getPubSubUtils().unsubscribe(
           (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
-          `dashboard-component-cardgallery`,
+          'dashboard-component-cardgallery',
           getPConnect().getContextName()
         );
       };
