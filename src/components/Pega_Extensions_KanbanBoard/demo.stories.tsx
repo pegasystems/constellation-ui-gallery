@@ -49,6 +49,10 @@ export default {
           {
             id: 'nested-interactive',
             enabled: false
+          },
+          {
+            id: 'landmark-unique',
+            enabled: false
           }
         ]
       }

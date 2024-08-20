@@ -57,9 +57,7 @@
       "name": "A",
       "label": "Region A",
       "format": "CONTENTPICKER",
-      "addTypeList": [
-        "Fields"
-      ]
+      "addTypeList": ["Fields"]
     }
   ],
   "defaultConfig": {
