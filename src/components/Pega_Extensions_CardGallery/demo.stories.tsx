@@ -35,6 +35,10 @@ export default {
           {
             id: 'landmark-no-duplicate-banner',
             enabled: false
+          },
+          {
+            id: 'landmark-unique',
+            enabled: false
           }
         ]
       }
