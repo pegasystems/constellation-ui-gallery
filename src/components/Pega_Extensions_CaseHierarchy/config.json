@@ -1,0 +1,33 @@
+{
+  "name": "Pega_Extensions_CaseHierarchy",
+  "label": "Case Hierarchy Utility",
+  "description": "Hierarchy of the cases",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_CaseHierarchy",
+  "type": "Widget",
+  "subtype": "CASE",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name",
+      "format": "TEXT"
+    },
+    {
+      "name": "showParent",
+      "label": "Show parent case type",
+      "format": "BOOLEAN"
+    }
+  ],
+  "defaultConfig": {
+    "heading": "Case Hierarchy",
+    "showParent": false
+  }
+}
