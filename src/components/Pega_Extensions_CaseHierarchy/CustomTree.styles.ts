@@ -70,7 +70,6 @@ export const StyledCustomTreeLeaf = styled.div(() => {
 
 StyledCustomTreeLeaf.defaultProps = defaultThemeProp;
 
-// FIXME: any is used since typeof StyledNodeInteraction not playing nicely.
 export const StyledCustomTreeParent: any = styled(StyledNodeInteraction)(({ theme }) => {
   const { ltr } = useDirection();
 

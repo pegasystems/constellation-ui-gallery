@@ -301,7 +301,6 @@ const CustomTreeWithNodes: FunctionComponent<CustomTreeProps & ForwardProps> = f
           ]
         )}
       >
-        {/* FIXME: Types are having issues when styled(Tree) is typeof Tree. */}
         <StyledCustomTree {...restProps} ref={treeRef} nodes={nodes} nodeRenderer={NodeRenderer} />
       </CustomTreeContext.Provider>
     );
