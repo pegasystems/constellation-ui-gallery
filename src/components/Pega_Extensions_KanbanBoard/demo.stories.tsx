@@ -124,7 +124,7 @@ const setPCore = () => {
             <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
           ];
           return (
-            <Details highlightedData={highlightedData} collapsible={false}>
+            <Details name='Details' highlightedData={highlightedData} collapsible={false}>
               <FieldValueItem
                 key='Description'
                 variant='stacked'
