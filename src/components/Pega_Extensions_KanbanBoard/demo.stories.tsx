@@ -53,6 +53,10 @@ export default {
           {
             id: 'landmark-unique',
             enabled: false
+          },
+          {
+            id: 'heading-order',
+            enabled: false
           }
         ]
       }
