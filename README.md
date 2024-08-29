@@ -4,7 +4,12 @@ Constellation's flexible architecture empowers advanced users (professional fron
 
 This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
 
-These components have been tested on Pega 23.1 and might not run on other versions of the Pega Platform - For other versions, the recommendation is to download the supported version of the Constellation DX Component builder package @pega/custom-dx-components@XXXX supported by your Pega Platform version and create new components using the command line utility 'npm run create' and then copy the code. You will likely need to modify / update the code, especially if there are CSS selectors. At some point, the project will support new version of the gallery using branches and versions.
+These components have been tested on Pega '23 and '24 and might not run older other versions of the Pega Platform
+
+- Version 1.x and branch release/1.x.x should be used for Pega '23
+- Version 2.x and branch master should be used for Pega '24.1
+
+Older versions of the Pega Platform have not been tested and are not supported.
 
 A complete demonstration of these Constellation DX components is available at [pegasystems.github.io/constellation-ui-gallery](https://pegasystems.github.io/constellation-ui-gallery/)
 
@@ -22,7 +27,7 @@ You should have the following versions installed: System node version 18.x and n
 
 If you already have [VS Code](https://code.visualstudio.com/) and [Docker](https://docs.docker.com/get-docker/) installed, you can click [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/pegasystems/constellation-ui-gallery) to get started. Clicking these links will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
 
-For more details, see [docs.pega.com](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/initialize-project.html)
+For more details on building Constellation DX components, see [docs.pega.com](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/initialize-project.html)
 
 Note: Make sure to use `git clone git@github.com:pegasystems/constellation-ui-gallery.git` to download the source code of this repository instead of using the download option. If you download the code, you will not be able to publish the components and you will see the error 'Git needs to be installed' even if you have the git executable installed. This error is generated because you are missing the .git folder. If you face this issue, you can type `git init` to create the missing folder.
 

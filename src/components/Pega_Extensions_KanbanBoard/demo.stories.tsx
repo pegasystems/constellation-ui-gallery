@@ -53,6 +53,10 @@ export default {
           {
             id: 'landmark-unique',
             enabled: false
+          },
+          {
+            id: 'heading-order',
+            enabled: false
           }
         ]
       }
@@ -124,7 +128,7 @@ const setPCore = () => {
             <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
           ];
           return (
-            <Details highlightedData={highlightedData} collapsible={false}>
+            <Details name='Details' highlightedData={highlightedData} collapsible={false}>
               <FieldValueItem
                 key='Description'
                 variant='stacked'
