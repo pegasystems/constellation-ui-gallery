@@ -8,14 +8,34 @@ Welcome to the Constellation DX Components UI Gallery!
 
 Constellation's flexible architecture empowers advanced users (professional front-end developers with ReactJS and web technology expertise) to extend the platform. You can achieve this by programmatically combining core Constellation presentational components and leveraging the Constellation DX API to build custom components, known as "Constellation DX components."
 
-This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
+This gallery provides a collection of ready-to-use and customizable components. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing Constellation DX components.
+
+## How to use the UI Gallery
+
+Pre-built versions of these components is available as a RAP file for easy import into your Pega application. Get them on GitHub: [https://github.com/pegasystems/constellation-ui-gallery/releases](https://github.com/pegasystems/constellation-ui-gallery/releases)
+
+Each Constellation UI Gallery release offers two RAP files:
+
+- **ConstellationUIGallery_x_x_x.zip**: This includes a complete, standalone application called "Computerland" showcasing all the components in action.
+- **ConstellationUIGallery_x_x_x_COMPONENTS_ONLY.zip**: This leaner option provides only the Constellation DX components packaged as Rule-UI-Component rules.
+
+### Compatibility:
+
+These components are confirmed to work with Pega Platform versions 23 and 24. To ensure compatibility, follow these guidelines:
+
+- **Pega '23**: Use version 1.x and the release/1.x.x branch.
+- **Pega '24.1**: Use version 2.x and the master branch.
+
+### Important Note:
+
+While the components themselves are provided, some require additional setup to function fully. This might include creating specific classes, data pages, activities, or other rules within your application layer. If you choose the "Components Only" RAP, you'll need to recreate these supporting elements for runtime functionality.
+
+## Implementing a Constellation DX component
 
 Before diving in, take a moment to review our Constellation design guidelines. This valuable resource offers insights into our design philosophy and ensures consistency across your creations.
 
 - [UI/UX Guidelines](https://design.pega.com)
 - [Best practices](https://design.pega.com/design/getting-started/)
-
-## Implementing a Constellation DX component
 
 Before you start to reuse and customize some of the components presented in this UI Gallery, please review our best practices when creating a Constellation DX Component:
 
