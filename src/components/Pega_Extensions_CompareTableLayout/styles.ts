@@ -4,10 +4,17 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
   switch (displayFormat) {
     case 'radio-button-card':
       return css`
-        & fieldset > div {
-          min-width: 20rem;
+        color: red !important;
+        & > fieldset > div {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+          grid-gap: 0.5rem;
+          overflow: hidden;
         }
-        & fieldset > div > label > div {
+        & > fieldset > div > label {
+          display: block;
+        }
+        & > fieldset > div > label > div {
           align-items: start !important;
         }
       `;

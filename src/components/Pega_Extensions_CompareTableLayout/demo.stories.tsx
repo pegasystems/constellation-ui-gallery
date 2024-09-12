@@ -100,6 +100,18 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       },
       {
         config: {
+          value: [
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+            'Another description',
+            'simple description'
+          ],
+          componentType: 'TextInput',
+          label: 'Description'
+        },
+        type: 'ScalarList'
+      },
+      {
+        config: {
           value: ['16Gb', '8Gb', '8Gb'],
           componentType: 'TextInput',
           label: 'Memory'

@@ -34,5 +34,6 @@
         "subtype": "",
         "description": "",
         "icon": ""
-    }
+    },
+    "usePromotedWebPack": false
 }
