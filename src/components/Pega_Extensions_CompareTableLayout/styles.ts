@@ -4,7 +4,6 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
   switch (displayFormat) {
     case 'radio-button-card':
       return css`
-        color: red !important;
         & > fieldset > div {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
