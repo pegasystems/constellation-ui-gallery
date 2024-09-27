@@ -8,7 +8,7 @@
   "allowedApplications": [],
   "componentKey": "Pega_Extensions_CaseLauncher",
   "type": "Widget",
-  "subtype": "PAGE",
+  "subtype": ["PAGE", "CASE"],
   "properties": [
     {
       "name": "heading",
