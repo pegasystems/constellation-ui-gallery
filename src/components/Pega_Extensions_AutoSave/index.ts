@@ -9,51 +9,52 @@ type AutoSaveProps = {
 export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
   const { getPConnect, propertyName = '' } = props;
   const pConn = getPConnect();
-  if (!propertyName) return null;
-
-  const saveAssignment = () => {
-    /* Get the current case etag */
-    const etag = pConn.getValue('caseInfo.headers.etag');
-
-    const assignmentID = pConn.getValue(
-      (window as any).PCore.getConstants().CASE_INFO.ASSIGNMENT_ID
-    );
-    const actionID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID)
-      ? pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID)
-      : pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ASSIGNMENTACTION_ID);
-
-    /* Payload to resolve dx api */
-    const payload = {
-      queryPayload: {
-        assignmentID,
-        actionID
-      },
-      body: {
-        content: {
-          /* Property or field name */
-          pyDescription: pConn.getValue(propertyName)
-        }
-      },
-      headers: {
-        /* etag as part of header */
-        'if-match': etag
-      }
-    };
-
-    /* Triggers save dx api */
-    (window as any).PCore.getRestClient()
-      .invokeRestApi('save', payload)
-      .then((response: any) => {
-        /* Upon successful, update the latest etag. */
-        const updatedEtag = response.headers.etag;
-        (window as any).PCore.getContainerUtils().updateCaseContextEtag(
-          pConn.getContextName(),
-          updatedEtag
-        );
-      });
-  };
 
   useEffect(() => {
+    if (!propertyName) return;
+    const saveAssignment = () => {
+      /* Get the current case etag */
+      const etag = pConn.getValue('caseInfo.headers.etag');
+
+      const assignmentID = pConn.getValue(
+        (window as any).PCore.getConstants().CASE_INFO.ASSIGNMENT_ID
+      );
+      const actionID = pConn.getValue(
+        (window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID
+      )
+        ? pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID)
+        : pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ASSIGNMENTACTION_ID);
+
+      /* Payload to resolve dx api */
+      const payload = {
+        queryPayload: {
+          assignmentID,
+          actionID
+        },
+        body: {
+          content: {
+            /* Property or field name */
+            pyDescription: pConn.getValue(propertyName)
+          }
+        },
+        headers: {
+          /* etag as part of header */
+          'if-match': etag
+        }
+      };
+
+      /* Triggers save dx api */
+      (window as any).PCore.getRestClient()
+        .invokeRestApi('save', payload)
+        .then((response: any) => {
+          /* Upon successful, update the latest etag. */
+          const updatedEtag = response.headers.etag;
+          (window as any).PCore.getContainerUtils().updateCaseContextEtag(
+            pConn.getContextName(),
+            updatedEtag
+          );
+        });
+    };
     const subId = Date.now();
     /* Register field change event. */
     (window as any).PCore.getCascadeManager().registerFields(
@@ -74,8 +75,9 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
         subId
       );
     };
-  }, [propertyName]);
+  }, [pConn, propertyName]);
 
+  if (!propertyName) return null;
   return null;
 };
 

@@ -13,7 +13,7 @@ Each card will represent a case or data object. The list of cards to render is p
 - Cards can be rendered horizontally (from left to right) or vertically (up / down). The vertically rendering is similar to a masonry layout and will optimize the available space.
 - The Card Gallery component is also compatible with dashboard and will listen to filter changes if the property 'useInDashboard' is set
 
-Note: if 'useInDashboard' is true, the data page must be of type queryable and must be sourced from a Report Definition.
+Note: if 'useInDashboard' is true, the data page must be of type list - it must be 'queryable' and sourced from a Report Definition. Also the DP must return the following fields: 'pyID','pyLabel', 'pyStatusWork', 'pzInsKey', 'pxObjClass'. If you need other properties, you will need to update the code.
 
 <Story of={DemoStories.Default} />
 
