@@ -1,0 +1,138 @@
+{
+  "name": "Pega_Extensions_PegaSlider",
+  "label": "Pega Slider",
+  "description": "Pega Slider",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_PegaSlider",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "icon": "OneColumnPage.svg",
+  "properties": [
+    {
+      "name": "datasource",
+      "label": "Data source for Banner",
+      "defaultValue": "@DATASOURCE D_pyAnnouncements.pxResults",
+      "format": "DATASOURCE",
+      "properties": [
+        {
+          "name": "imageURL",
+          "label": "Image URL",
+          "required": true,
+          "defaultValue": "@P .pyImageURL"
+      },
+      {
+          "name": "description",
+          "label": "Image Description",
+          "required": false,
+          "defaultValue": "@P .pyDescription"
+      },
+      {
+          "name": "title",
+          "label": "Image Title",
+          "required": false,
+          "defaultValue": "@P .pyTitle"
+      }
+      ]
+    },
+    {
+      "name": "height",
+      "label": "Minimum height of the Banner",
+      "format": "TEXT"
+    },
+    {
+      "format": "SELECT",
+      "label": "Text Position",
+      "name": "textPosition",
+      "defaultValue": "TopLeft",
+      "source": [
+        { "key": "TopLeft", "value": "Top Left" },
+        { "key": "TopCenter", "value": "Top Center" },
+        { "key": "TopRight", "value": "Top Right" },
+        { "key": "CenterLeft", "value": "Center Left" },
+        { "key": "Center", "value": "Center" },
+        { "key": "CenterRight", "value": "Center Right" },
+        { "key": "BottomLeft", "value": "Bottom Left" },
+        { "key": "BottomCenter", "value": "Bottom Center" },
+        { "key": "BottomRight", "value": "Bottom Right" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "label": "Object Fit",
+      "name": "objectFit",
+      "defaultValue": "cover",
+      "source": [
+        { "key": "fill", "value": "Fill" },
+        { "key": "contain", "value": "Contain" },
+        { "key": "cover", "value": "Cover" },
+        { "key": "none", "value": "None" },
+        { "key": "scale-down", "value": "Scale Down" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "label": "Autoplay",
+      "name": "autoplay",
+      "defaultValue": "false",
+      "source": [
+        { "key": "true", "value": "Yes" },
+        { "key": "false", "value": "No" }
+      ]
+    },
+    {
+      "name": "autoplayDuration",
+      "label": "Autoplay Duration (ms)",
+      "format": "TEXT",
+      "defaultValue": "3000"
+    },
+    {
+      "format": "SELECT",
+      "label": "Control Type",
+      "name": "controlType",
+      "defaultValue": "Dots",
+      "source": [
+        { "key": "None", "value": "None" },
+        { "key": "Dots", "value": "Dots" },
+        { "key": "Buttons", "value": "Buttons" },
+        { "key": "Both", "value": "Both" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "label": "Animation Type",
+      "name": "animationType",
+      "defaultValue": "fade-in",
+      "source": [
+        { "key": "fade-in", "value": "Fade In" },
+        { "key": "fade-out", "value": "Fade Out" },
+        { "key": "slide-in", "value": "Slide In" },
+        { "key": "slide-out", "value": "Slide Out" },
+        { "key": "zoom-in", "value": "Zoom In" },
+        { "key": "zoom-out", "value": "Zoom Out" },
+        { "key": "bounce", "value": "Bounce" },
+        { "key": "shake", "value": "Shake" }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "height": "40rem",
+    "controlType": "dots",
+    "Autoplay": "yes",
+    "autoplayDuration": "3000",
+    "label": "Pega Slider"
+  }
+}
