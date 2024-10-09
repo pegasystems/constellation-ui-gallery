@@ -24,16 +24,16 @@
           "defaultValue": "@P .pyImageURL"
       },
       {
+        "name": "title",
+        "label": "Image Title",
+        "required": false,
+        "defaultValue": "@P .pyTitle"
+      },
+      {
           "name": "description",
           "label": "Image Description",
           "required": false,
           "defaultValue": "@P .pyDescription"
-      },
-      {
-          "name": "title",
-          "label": "Image Title",
-          "required": false,
-          "defaultValue": "@P .pyTitle"
       }
       ]
     },
@@ -133,6 +133,6 @@
     "controlType": "dots",
     "Autoplay": "yes",
     "autoplayDuration": "3000",
-    "label": "Pega Slider"
+    "label": "Image Slider"
   }
 }

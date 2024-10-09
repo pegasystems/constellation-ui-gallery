@@ -1,6 +1,6 @@
 // @ts-nocheck
 export const configProps = {
-  label: 'Pega Slider',
+  label: 'Image Slider',
   datasource: {
     source: [
       {
