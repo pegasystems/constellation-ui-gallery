@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   withConfiguration,
   registerIcon,
@@ -247,20 +247,22 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
     </Flex>
   );
 
-  let content;
-  if (loading) {
-    content = genState(<Progress placement='block' message='Loading content...' />);
-  } else if (errorMsg.current) {
-    content = genState(<ErrorState message={errorMsg.current} />);
-  } else if (isEmpty.current) {
-    content = genState(<EmptyState message='No items' />);
-  } else {
-    content = (
+  const content = useMemo(() => {
+    if (loading) {
+      return genState(<Progress placement='block' message='Loading content...' />);
+    }
+    if (errorMsg.current) {
+      return genState(<ErrorState message={errorMsg.current} />);
+    }
+    if (isEmpty.current) {
+      return genState(<EmptyState message='No items' />);
+    }
+    return (
       <MainCard rendering={rendering} minWidth={minWidth}>
         {tasks?.map((task: any) => (task.isVisible ? <Task key={task.id} {...task} /> : null))}
       </MainCard>
     );
-  }
+  }, [loading, tasks, rendering, minWidth]);
 
   return (
     <Card>
