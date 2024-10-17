@@ -29,7 +29,7 @@ const PegaSlider: React.FC<PegaSliderProps> = ({
   const imageSliderData = imageData?.source || [];
 
 // eslint-disable-next-line no-console
-console.log(imageSliderData, 'imageSliderData DX page')
+console.log(imageSliderData, 'Image Carousel Data DX page')
 
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);

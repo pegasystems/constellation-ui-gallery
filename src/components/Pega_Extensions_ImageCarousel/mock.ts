@@ -1,6 +1,6 @@
 // @ts-nocheck
 export const configProps = {
-  label: 'Image Slider',
+  label: 'Image Carousel',
   datasource: {
     source: [
       {

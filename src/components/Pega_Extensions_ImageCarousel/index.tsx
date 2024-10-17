@@ -8,7 +8,7 @@ import PegaSlider from './Slider';
 // interface for props
 interface PegaExtensionsPegaSliderProps extends PConnFieldProps {
   // eslint-disable-next-line react/no-unused-prop-types
-  imageData: any; // Ensure imageData is defined here
+  imageData: any;
   datasource: { source: [] };
   height?: string;
   controlType?: any;
@@ -21,9 +21,9 @@ interface PegaExtensionsPegaSliderProps extends PConnFieldProps {
 
 function PegaExtensionsPegaSlider(props: PegaExtensionsPegaSliderProps) {
   // eslint-disable-next-line no-console
-  console.log(props, 'index page props Pega Slider ');
+  console.log(props, 'index page props Image Carousel ');
   // eslint-disable-next-line no-console
-  console.log(props.datasource, 'i am pega datasource Pega Slider data');
+  console.log(props.datasource, 'i am pega datasource Image Carousel data');
 
   const {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

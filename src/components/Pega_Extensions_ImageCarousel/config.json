@@ -1,7 +1,7 @@
 {
-  "name": "Pega_Extensions_PegaSlider",
-  "label": "Pega Slider",
-  "description": "Pega Slider",
+  "name": "Pega_Extensions_Image_Carousel",
+  "label": "Image carousel",
+  "description": "Image carousel",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",
@@ -133,6 +133,6 @@
     "controlType": "dots",
     "Autoplay": "yes",
     "autoplayDuration": "3000",
-    "label": "Image Slider"
+    "label": "Image Carousel"
   }
 }

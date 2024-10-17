@@ -66,5 +66,5 @@ BasePegaExtensionsPegaSlider.args = {
   controlType: 'Dots',
   animationType: 'fade-in',
   visibility: true,
-  label: 'Image Slider',
+  label: 'Image Carousel',
 };
