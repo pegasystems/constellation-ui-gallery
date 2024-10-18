@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title='Libraries' />
+
+The following libraries are used in the Constellation Component Library:
+
+# Core Constellation libraries
+
+- **@pega/cosmos-xx** version 6.x for Pega 24.1
+
+The following libraries must be in sync with the Constellation component library to avoid dependency and side effect issues.
+
+- **React** 17.x
+- **Styled Components** 5.3.6 (exact version)
+
+There has been issues with the Styled Components library using different versions within the same document (especially different major versions) as well as incompatibilities with libraries using React 17 and React 18.
+
+# 3rd party libraries used at runtime
+
+When selecting a 3rd party lib, it is critical to select one that is compatible with React 17 and the Constellation Component library.
+
+The **fullcalendar** library is used for the Calendar component - [MIT License](https://github.com/fullcalendar/fullcalendar). Some components in this library require a commercial license but these components are not used in this project.
+
+The **hello-pangea/dnd** library is used to deliver the drag and drop functionality in the Kanban board - the version 16.x is compatible with React 17 but 17.x is not compatible - [Apache License](https://github.com/hello-pangea/dnd)
+
+The **ArcGIS Maps SDK** for JavaScript is used for the Map control - [Commercial License required](https://developers.arcgis.com/javascript/latest/licensing/)
+
+The **Dagre JS** is used for the Network Diagram component - There are 2 npm packages of this library but only one is maintained and updated called [@dagrejs/dagre](https://www.npmjs.com/package/@dagrejs/dagre) - [MIT License](https://github.com/dagrejs/dagre)
+
+The **gantt-task-react** library is used to render the Gantt component - [MIT License](https://github.com/MaTeMaTuK/gantt-task-react)
+
+The **imaskjs** library is used for the Input mask component - [MIT License](https://github.com/uNmAnNeR/imaskjs)
+
+The **jsbarcode** library is used for the barcode component - [MIT License](https://github.com/lindell/JsBarcode)
+
+The [transparentize](https://polished.js.org/docs/#transparentize) function from the **polished** library is used in the Gantt and CaseHierarchy component to descrease the opacity of a color - [MIT License](https://github.com/styled-components/polished)
+
+The image magnifier component uses the library **react-image-magnifiers** - [MIT License](https://github.com/adamrisberg/react-image-magnifiers)
+
+The network diagram component used the **reactflow** library - [MIT license](https://github.com/xyflow/xyflow)
+
+The signature component uses the **signature_pad** JavaScript library - [MIT License](https://github.com/szimek/signature_pad)
+
+# Development libraries
+
+For standard configurations (CSS, JS...), the **@pega/configs** library is used to provide standardized configuration for eslint, stylelint, prettier and cspell.
+
+For the documentation and developer experience, the **Storybook** library version 7.x is used.
+Each component provides a story that is used to run unit tests and accessibility tests. While Storybook 8 is available, this version has a strong dependency on React 18 and cannot be used with the Constellation component library.
+
+**ESlint** is used for linting and needs to be in sync with **@pega/configs** - As such version 8.x is used even if ESLint 9.x is available.
+
+For unit testing, the **@testing-library/react** is used and due to React 17 compatibility, the version 12.x is used.
+
+For accessibility testing, the libraries **axe-playwright** and **@storybook/addon-a11y** are used.

@@ -29,5 +29,7 @@
       "format": "VISIBILITY"
     }
   ],
-  "defaultConfig": {}
+  "defaultConfig": {
+    "detailFVLItem": true
+  }
 }

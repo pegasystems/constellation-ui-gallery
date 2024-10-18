@@ -66,5 +66,8 @@
       ]
     }
   ],
-  "defaultConfig": {}
+  "defaultConfig": {
+    "isFormWidth": true,
+    "detailFVLItem": true
+  }
 }

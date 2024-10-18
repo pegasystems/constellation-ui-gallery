@@ -22,7 +22,7 @@ import ReactFlow, {
   type Node,
   type Edge
 } from 'reactflow';
-import dagre from 'dagre';
+import dagre from '@dagrejs/dagre';
 
 import StyledPegaExtensionsNetworkDiagram from './styles';
 

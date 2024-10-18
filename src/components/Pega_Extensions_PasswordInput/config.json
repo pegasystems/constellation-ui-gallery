@@ -78,6 +78,7 @@
     }
   ],
   "defaultConfig": {
-    "label": "@L $this.label"
+    "label": "@L $this.label",
+    "detailFVLItem": true
   }
 }
