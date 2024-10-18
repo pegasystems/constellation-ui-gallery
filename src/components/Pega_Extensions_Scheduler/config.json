@@ -42,5 +42,8 @@
       ]
     }
   ],
-  "defaultConfig": {}
+  "defaultConfig": {
+    "isContainerWidth": true,
+    "detailFVLItem": true
+  }
 }

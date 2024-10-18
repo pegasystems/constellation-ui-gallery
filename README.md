@@ -73,6 +73,34 @@ npm run coverage
 
 The coverage report index.html will be in the 'coverage' folder
 
+### End to End testing
+
+End to end testing is done by loading each stories using playwright as well as running some accessibility testing on these stories. The results of accessibility is similar to the panel in storybook.
+
+To execute the end to end test locally, you need to first build the storybook as static:
+
+```shell
+npm run build-storybook
+```
+
+Install Playwright (only needed once)
+
+```shell
+npx playwright install
+```
+
+Serve the site though an http server on port 6006
+
+```shell
+serve -port 6006 storybook-static
+```
+
+In a separate terminal, run the suite of tests
+
+```shell
+npm run test-storybook
+```
+
 ### Compiles and minifies for production
 
 ```shell
