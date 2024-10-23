@@ -3,8 +3,8 @@ import { Slide, SlideImage, SliderTextContainer } from './styles';
 
 type SlideItemProps = {
   slide: {
-    title: React.ReactNode;  // Updated to ReactNode for flexibility
-    description: React.ReactNode;  // Updated to ReactNode for flexibility
+    title: string;
+    description: string;
     imageURL: string | undefined;
   };
   animationClass: string;
@@ -18,15 +18,12 @@ const SlideItem: React.FC<SlideItemProps> = ({
   animationClass,
   isActive,
   objectFit,
-  textPosition = 'Center',
+  textPosition = 'Center'
 }) => {
   return (
-    <Slide
-      animationClass={animationClass}
-      style={{ display: isActive ? 'block' : '' }}
-    >
+    <Slide animationClass={animationClass} style={{ display: isActive ? 'block' : '' }}>
       <SliderTextContainer position={textPosition}>
-        <h2 title="This is image slide title">{slide.title}</h2>
+        <h2 title='This is image slide title'>{slide.title}</h2>
         <p>{slide.description}</p>
       </SliderTextContainer>
       <SlideImage src={slide.imageURL} alt={`Slide ${slide.title}`} objectFit={objectFit} />

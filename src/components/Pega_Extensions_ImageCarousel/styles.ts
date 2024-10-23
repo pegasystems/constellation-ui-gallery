@@ -2,13 +2,6 @@
 import styled, { css } from 'styled-components';
 import { keyframes } from 'styled-components';
 
-export default styled.div(() => {
-  return css`
-    margin: 0px 0;
-
-  `;
-});
-
 export const SliderContainer = styled.div`
   position: relative;
   overflow: hidden;
@@ -25,7 +18,7 @@ export const SliderWrapper = styled.div<{ totalSlides: number; currentSlide: num
 export const SlideImage = styled.img<{ objectFit?: string }>`
   width: 100%;
   height: 100%;
-  object-fit: ${(props) => props.objectFit || 'cover'};
+  object-fit: ${props => props.objectFit || 'cover'};
   object-position: center;
 `;
 
@@ -64,7 +57,7 @@ export const DotsContainer = styled.div`
 `;
 
 export const Dot = styled.a<{ active: boolean }>`
-  background-color: ${(props) => (props.active ? '#285aa8' : '#b1b1b1')}; // Active dot color
+  background-color: ${props => (props.active ? '#285aa8' : '#b1b1b1')}; // Active dot color
   border: none;
   border-radius: 50%;
   height: 12px; // Size of the dot
@@ -83,26 +76,66 @@ export const SliderTextContainer = styled.div<{ position: string }>`
   width: 50%;
   ${({ position }) => {
     switch (position) {
-      case 'TopLeft':
-        return css`top: 20px; left: 50px; text-align: left;`;
       case 'TopCenter':
-        return css`top: 20px; left: 50%; transform: translateX(-50%); text-align: center;`;
+        return css`
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+        `;
       case 'TopRight':
-        return css`top: 20px; right: 50px; text-align: right;`;
+        return css`
+          top: 20px;
+          right: 50px;
+          text-align: right;
+        `;
       case 'CenterLeft':
-        return css`top: 50%; left: 50px; transform: translateY(-50%); text-align: left;`;
+        return css`
+          top: 50%;
+          left: 50px;
+          transform: translateY(-50%);
+          text-align: left;
+        `;
       case 'Center':
-        return css`top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;`;
+        return css`
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+        `;
       case 'CenterRight':
-        return css`top: 50%; right: 50px; transform: translateY(-50%); text-align: right;`;
+        return css`
+          top: 50%;
+          right: 50px;
+          transform: translateY(-50%);
+          text-align: right;
+        `;
       case 'BottomLeft':
-        return css`bottom: 20px; left: 50px; text-align: left;`;
+        return css`
+          bottom: 20px;
+          left: 50px;
+          text-align: left;
+        `;
       case 'BottomCenter':
-        return css`bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center;`;
+        return css`
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+        `;
       case 'BottomRight':
-        return css`bottom: 20px; right: 50px; text-align: right;`;
+        return css`
+          bottom: 20px;
+          right: 50px;
+          text-align: right;
+        `;
+      case 'TopLeft':
       default:
-        return css`top: 20px; left: 50px; text-align: left;`;
+        return css`
+          top: 20px;
+          left: 50px;
+          text-align: left;
+        `;
     }
   }}
 `;
@@ -241,24 +274,39 @@ export const Slide = styled.div<{ animationClass: string }>`
   position: relative;
   animation: ${({ animationClass }) => {
     switch (animationClass) {
-      case 'fade-in':
-        return css`${fadeIn} 0.5s forwards`;
       case 'fade-out':
-        return css`${fadeOut} 0.5s forwards`;
+        return css`
+          ${fadeOut} 0.5s forwards
+        `;
       case 'slide-in':
-        return css`${slideIn} 0.5s forwards`;
+        return css`
+          ${slideIn} 0.5s forwards
+        `;
       case 'slide-out':
-        return css`${slideOut} 0.5s forwards`;
+        return css`
+          ${slideOut} 0.5s forwards
+        `;
       case 'zoom-in':
-        return css`${zoomIn} 0.5s forwards`;
+        return css`
+          ${zoomIn} 0.5s forwards
+        `;
       case 'zoom-out':
-        return css`${zoomOut} 0.5s forwards`;
+        return css`
+          ${zoomOut} 0.5s forwards
+        `;
       case 'shake':
-        return css`${shake} 0.5s forwards`;
+        return css`
+          ${shake} 0.5s forwards
+        `;
       case 'bounce':
-        return css`${bounce} 0.5s forwards`;
+        return css`
+          ${bounce} 0.5s forwards
+        `;
+      case 'fade-in':
       default:
-        return css`${fadeIn} 0.5s forwards`;
+        return css`
+          ${fadeIn} 0.5s forwards
+        `;
     }
   }};
 `;
