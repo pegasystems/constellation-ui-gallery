@@ -10,7 +10,7 @@ export const SliderContainer = styled.div`
 export const SliderWrapper = styled.div<{ totalSlides: number; currentSlide: number }>`
   display: flex;
   transition: transform 0.5s ease-in-out;
-  transform: translateX(-${props => props.currentSlide * 100}%); // Changed to 100% per slide
+  transform: translateX(-${props => props.currentSlide * 100}%);
   width: 100%;
   height: 100%;
 `;
@@ -57,17 +57,17 @@ export const DotsContainer = styled.div`
 `;
 
 export const Dot = styled.a<{ active: boolean }>`
-  background-color: ${props => (props.active ? '#285aa8' : '#b1b1b1')}; // Active dot color
+  background-color: ${props => (props.active ? '#285aa8' : '#b1b1b1')};
   border: none;
   border-radius: 50%;
-  height: 12px; // Size of the dot
-  width: 12px; // Size of the dot
-  margin: 0 5px; // Spacing between dots
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #6293df; // Hover color
+    background-color: #6293df;
   }
 `;
 
