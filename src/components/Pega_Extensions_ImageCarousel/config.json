@@ -1,11 +1,12 @@
 {
-  "name": "Pega_Extensions_Image_Carousel",
+  "name": "Pega_Extensions_ImageCarousel",
   "label": "Image carousel",
   "description": "Image carousel",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",
   "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ImageCarousel",
   "type": "Widget",
   "subtype": ["PAGE", "CASE"],
   "properties": [
@@ -83,7 +84,7 @@
     {
       "name": "autoplayDuration",
       "label": "Autoplay Duration (ms)",
-      "format": "INTEGER",
+      "format": "NUMBER",
       "defaultValue": 3000
     },
     {

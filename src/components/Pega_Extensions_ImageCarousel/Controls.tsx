@@ -8,10 +8,10 @@ type SliderControlsProps = {
 
 const SliderControls: React.FC<SliderControlsProps> = ({ prevSlide, nextSlide }) => (
   <>
-    <ButtonPrev onClick={prevSlide} aria-label="Previous Slide">
+    <ButtonPrev onClick={prevSlide} aria-label='Previous Slide'>
       &#10094;
     </ButtonPrev>
-    <ButtonNext onClick={nextSlide} aria-label="Next Slide">
+    <ButtonNext onClick={nextSlide} aria-label='Next Slide'>
       &#10095;
     </ButtonNext>
   </>
