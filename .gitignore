@@ -137,3 +137,8 @@ dist
 
 # Devcontainer certs
 .devcontainer/root_ca.crt
+
+# library mode DXCB
+.store/
+Pega_ConstellationUIGallery/
+Pega_ConstellationUIGallery.zip
