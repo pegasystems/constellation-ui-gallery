@@ -4,7 +4,6 @@ import {
   withConfiguration,
   FieldGroup,
   FieldValueList,
-  type FieldValueListItem,
   RadioButtonGroup,
   Progress,
   RadioButton,
@@ -131,7 +130,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
       <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
         <RadioButtonGroup variant='card' label={heading} inline>
           {fields[0].value.map((val: any, i: number) => {
-            const fvl: Array<FieldValueListItem> = [];
+            const fvl: Array<{ id: string; name: string; value: JSX.Element | string }> = [];
             let objectId = '';
             fields.forEach((child: any, j: number) => {
               if (j > 0) {
