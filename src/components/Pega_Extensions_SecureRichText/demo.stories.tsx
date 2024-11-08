@@ -2,14 +2,49 @@
 // @ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PegaExtensionsSecureRichText from './index';
+import { PegaExtensionsSecureRichText } from './index';
 
-import { stateProps, configProps, fieldMetadata } from './mock';
+const fieldMetadata = {
+  classID: 'DIXL-MediaCo-Work-NewService',
+  type: 'Text',
+  displayAs: 'pxTextArea',
+  label: 'Paragraph sample'
+};
+
+const stateProps = {
+  value: '.ParagraphSample',
+  hasSuggestions: false
+};
 
 export default {
   title: 'Fields/Secure rich text editor',
   argTypes: {
     getPConnect: {
+      table: {
+        disable: true
+      }
+    },
+    displayMode: {
+      table: {
+        disable: true
+      }
+    },
+    additionalProps: {
+      table: {
+        disable: true
+      }
+    },
+    formatter: {
+      table: {
+        disable: true
+      }
+    },
+    isTableFormatter: {
+      table: {
+        disable: true
+      }
+    },
+    fieldMetadata: {
       table: {
         disable: true
       }
@@ -60,9 +95,7 @@ export const Default: Story = {
     setPCore();
     const props = {
       ...args,
-      value: configProps.value,
-      fieldMetadata,
-      hasSuggestions: configProps.hasSuggestions,
+
       getPConnect: () => {
         return {
           getStateProps: () => {
@@ -111,17 +144,15 @@ export const Default: Story = {
     return <PegaExtensionsSecureRichText {...props} />;
   },
   args: {
-    label: configProps.label,
-    helperText: configProps.helperText,
-    placeholder: configProps.placeholder,
-    testId: configProps.testId,
-    readOnly: configProps.readOnly,
-    disabled: configProps.disabled,
-    required: configProps.required,
-    status: configProps.status,
-    hideLabel: configProps.hideLabel,
-    displayMode: configProps.displayMode,
-    variant: configProps.variant,
-    validatemessage: configProps.validatemessage
+    label: 'Paragraph Sample',
+    value: '',
+    helperText: 'Paragraph Helper Text',
+    testId: 'paragraph-12345678',
+    placeholder: 'Paragraph Placeholder',
+    validatemessage: '',
+    disabled: false,
+    readOnly: false,
+    required: false,
+    hideLabel: false
   }
 };

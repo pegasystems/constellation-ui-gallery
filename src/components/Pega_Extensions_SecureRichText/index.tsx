@@ -8,29 +8,45 @@ import { handleEvent } from './utils';
 
 import { updateContentWithAbsoluteURLsOfImgSrcs } from './utils';
 import type { Features } from '@pega/pcore-pconnect-typedefs/environment-info/types.js';
+import { PConnect } from '@pega/pcore-pconnect-typedefs';
 import '../create-nonce';
 
 const toolbar = ['inline-styling', 'headers', 'lists', 'cut-copy-paste', 'indentation'];
 
 export interface RichTextProps {
-  value: string;
-  placeholder?: string;
-  required?: boolean;
+  /** field label */
   label: string;
-  hideLabel?: boolean;
-  getPConnect: () => typeof PConnect;
-  validatemessage?: string;
+  /** Value to be passed to the component */
+  value: string;
+  /** Helper text */
   helperText?: string;
-  disabled?: boolean;
-  readOnly?: boolean;
+  /** testId */
   testId?: string;
+  /** Placeholder string */
+  placeholder?: string;
+  /** Validation message */
+  validatemessage?: string;
+  /** is  field disabled */
+  disabled?: boolean;
+  /** is  field readOnly */
+  readOnly?: boolean;
+  /** is Required field */
+  required?: boolean;
+  /** hide label from the screen */
+  hideLabel?: boolean;
+  /** display mode */
   displayMode?: string;
+  /** additional props */
   additionalProps?: object;
+  /** formatter */
   formatter?: string;
+  /** is Table Formatter */
   isTableFormatter?: boolean;
+  /** fieldMetadata */
   fieldMetadata?: {
     additionalInformation: string;
   };
+  getPConnect: () => typeof PConnect;
 }
 
 interface EditorExtensionState extends EditorState {
@@ -44,7 +60,7 @@ interface EditorExtensionState extends EditorState {
   ) => void;
 }
 
-const PegaExtensionsSecureRichText = (props: RichTextProps) => {
+export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const {
     getPConnect,
     value = '',
