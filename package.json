@@ -46,6 +46,7 @@
     "@fullcalendar/timegrid": "^6.1.15",
     "@hello-pangea/dnd": "^16.6.0",
     "@pega/cosmos-react-core": "^6.0.10",
+    "@pega/cosmos-react-rte": "^6.0.10",
     "@pega/cosmos-react-social": "^6.0.10",
     "@pega/cosmos-react-work": "^6.0.10",
     "gantt-task-react": "^0.3.9",
