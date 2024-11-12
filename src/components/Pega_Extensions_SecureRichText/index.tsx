@@ -1,14 +1,11 @@
-import { useRef, useMemo, useEffect } from 'react';
-import { Editor, RichTextViewer, type EditorProps, type EditorState } from '@pega/cosmos-react-rte';
+import { useRef, useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
+import type { Editor as TinymceEditor } from 'tinymce/tinymce';
+import { Editor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte';
 import { Details } from '@pega/cosmos-react-work';
-import { FieldValueItem, NoValue, useToaster, withConfiguration } from '@pega/cosmos-react-core';
+import { FieldValueItem, NoValue, withConfiguration } from '@pega/cosmos-react-core';
 
 import { formatExists, textFormatter } from './utils';
-import { handleEvent } from './utils';
-
-import { updateContentWithAbsoluteURLsOfImgSrcs } from './utils';
-import type { Features } from '@pega/pcore-pconnect-typedefs/environment-info/types.js';
-import { PConnect } from '@pega/pcore-pconnect-typedefs';
 import '../create-nonce';
 
 const toolbar = ['inline-styling', 'headers', 'lists', 'cut-copy-paste', 'indentation'];
@@ -46,19 +43,36 @@ export interface RichTextProps {
   fieldMetadata?: {
     additionalInformation: string;
   };
-  getPConnect: () => typeof PConnect;
+  getPConnect: any;
 }
 
-interface EditorExtensionState extends EditorState {
-  appendImage: (
-    imageData: {
-      src: string | ArrayBuffer;
-      alt: string;
-      attachmentId?: string;
-    },
-    id: string
-  ) => void;
-}
+const sanitizeConfig = {
+  FORBID_TAGS: [
+    'img', // Image tag
+    'picture', // Picture container for responsive images
+    'source', // Source tag for picture/video
+    'link', // Link tag, often used for favicon
+    'meta', // Meta tags like og:image or twitter:image
+    'svg', // SVG, as it can contain embedded images
+    'image', // <image> tag within SVG
+    'video', // Video tag with poster attribute
+    'iframe', // Iframe, which could load external content
+    'embed', // Embed, often used for SVG or images
+    'object', // Object, used to embed images or SVG
+    'a' // Anchor tag for links
+  ],
+  FORBID_ATTR: [
+    'src', // Commonly used for image URLs
+    'srcset', // Used in responsive images
+    'data', // Used in object/embed elements
+    'href', // Attribute for links and favicon
+    'poster', // Poster image in video tag
+    'style', // Inline styles, might contain background images
+    'xlink:href' // Used for linking in SVG
+  ],
+  ALLOWED_URI_REGEXP: /^$/, // Disallow all URIs in any tags
+  FORCE_BODY: true // Ensure entire body is sanitized
+};
 
 export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const {
@@ -78,43 +92,45 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
   const { formatter } = props;
   const pConn = getPConnect();
-  const editorRef = useRef<EditorExtensionState>(null);
+  const editorRef = useRef<EditorState>(null);
+  const [sanitizedValue, setSanitizedValue] = useState(value);
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
     ? {
         content: fieldAdditionalInfo
       }
     : undefined;
-  const toasterContext = useToaster();
-  const actionSequencer = useMemo(() => PCore.getActionsSequencer(), []);
-  const form: Features['form'] & { enableRTEImageAttachments?: boolean } =
-    PCore.getEnvironmentInfo().environmentInfoObject?.features?.form || {
-      attachmentPageInstructionEnabled: false
-    };
-  const { enableRTEImageAttachments = false } = form;
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
     prop => prop === true || (typeof prop === 'string' && prop === 'true')
   );
 
+  const sanitizeContent = (editorContent: string) => {
+    const sanitized = DOMPurify.sanitize(editorContent, sanitizeConfig);
+    setSanitizedValue(sanitized);
+    editorRef.current?.insertHtml(sanitized, true);
+  };
+
   useEffect(() => {
-    editorRef.current?.insertHtml(value, true);
+    sanitizeContent(value);
   }, [value]);
 
-  const updatedRteContent = useMemo(() => {
-    return updateContentWithAbsoluteURLsOfImgSrcs(value, pConn);
-  }, [value, pConn]);
+  const onInit = (editor: TinymceEditor) => {
+    editor.on('paste', () => {
+      sanitizeContent(editorRef.current?.getHtml() || '');
+    });
+  };
 
-  const displayComponent = updatedRteContent ? (
-    <RichTextViewer content={updatedRteContent} type='html' />
+  const displayComponent = sanitizedValue ? (
+    <RichTextViewer content={sanitizedValue} type='html' />
   ) : (
     <NoValue />
   );
 
   if (displayMode === 'DISPLAY_ONLY' && formatter) {
     if (isTableFormatter && formatExists(formatter)) {
-      return textFormatter(formatter, value);
+      return textFormatter(formatter, sanitizedValue);
     }
 
     return displayComponent;
@@ -150,65 +166,25 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
     const handleBlur = () => {
       if (editorRef.current) {
-        const editorValue = editorRef.current.getHtml();
         const property = pConn.getStateProps().value;
-        if (!editorValue) {
-          pConn.getValidationApi().validate(editorValue);
+        if (!sanitizedValue) {
+          pConn.getValidationApi().validate(sanitizedValue);
         }
-        if (value !== editorValue) {
-          handleEvent(actionsApi, 'changeNblur', property, editorValue);
+        if (value !== sanitizedValue) {
+          actionsApi.updateFieldValue(property, sanitizedValue);
+          actionsApi.triggerFieldChange(property, sanitizedValue);
         }
       }
-    };
-
-    const onImageAdded: EditorProps['onImageAdded'] = (image, id) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (enableRTEImageAttachments) {
-          actionSequencer.registerBlockingAction(pConn.getContextName()).then(() => {
-            PCore.getAttachmentUtils()
-              .uploadAttachment(
-                image,
-                () => {},
-                () => {},
-                pConn.getContextName()
-              )
-              .then((response: { ID?: string }) => {
-                const relativePath = PCore.getAttachmentUtils().getAttachmentURL(response.ID || '');
-                editorRef.current?.appendImage(
-                  { src: relativePath || '', alt: image.name, attachmentId: response.ID },
-                  id
-                );
-                const editorValue = editorRef.current?.getHtml();
-                const property = pConn.getStateProps().value;
-                handleEvent(actionsApi, 'change', property, editorValue || '');
-                actionSequencer.deRegisterBlockingAction(pConn.getContextName()).catch(() => {});
-              })
-              .catch(() => {
-                editorRef.current?.appendImage({ src: '', alt: '' }, id);
-                const uploadFailMsg = pConn.getLocalizedValue('Upload failed');
-                toasterContext.push({
-                  content: uploadFailMsg
-                });
-                actionSequencer.cancelDeferredActionsOnError(pConn.getContextName());
-              });
-          });
-        } else {
-          editorRef.current?.appendImage({ src: reader.result || '', alt: image.name }, id);
-        }
-      };
-      reader.readAsDataURL(image);
     };
 
     richTextComponent = (
       <Editor
         {...additionalProps}
         toolbar={toolbar}
-        onImageAdded={onImageAdded}
         label={label}
         labelHidden={hideLabel}
         info={validatemessage || helperText}
-        defaultValue={updatedRteContent}
+        defaultValue={value}
         status={status}
         placeholder={placeholder}
         disabled={disabled}
@@ -219,6 +195,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
         {...actions}
         onChange={handleChange}
         onBlur={handleBlur}
+        onInit={onInit}
       />
     );
   }
