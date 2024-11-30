@@ -25,26 +25,26 @@ export const SlideImage = styled.img<{ objectFit?: string }>`
 export const ButtonPrev = styled.button`
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 1rem;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   font-size: 2rem;
-  color: #fff;
+  color: #ffffff;
   z-index: 10;
 `;
 
 export const ButtonNext = styled.button`
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 1rem;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   font-size: 2rem;
-  color: #fff;
+  color: #ffffff;
   z-index: 10;
 `;
 
@@ -53,16 +53,16 @@ export const DotsContainer = styled.div`
   justify-content: center;
   z-index: 9999;
   position: relative;
-  top: -20px;
+  top: -1.5rem;
 `;
 
 export const Dot = styled.a<{ active: boolean }>`
   background-color: ${props => (props.active ? '#285aa8' : '#b1b1b1')};
   border: none;
   border-radius: 50%;
-  height: 12px;
-  width: 12px;
-  margin: 0 5px;
+  height: 1rem;
+  width: 1rem;
+  margin: 0 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
@@ -78,21 +78,21 @@ export const SliderTextContainer = styled.div<{ position: string }>`
     switch (position) {
       case 'TopCenter':
         return css`
-          top: 20px;
+          top: 1.5rem;
           left: 50%;
           transform: translateX(-50%);
           text-align: center;
         `;
       case 'TopRight':
         return css`
-          top: 20px;
-          right: 50px;
+          top: 1.5rem;
+          right: 3rem;
           text-align: right;
         `;
       case 'CenterLeft':
         return css`
           top: 50%;
-          left: 50px;
+          left: 3rem;
           transform: translateY(-50%);
           text-align: left;
         `;
@@ -106,34 +106,34 @@ export const SliderTextContainer = styled.div<{ position: string }>`
       case 'CenterRight':
         return css`
           top: 50%;
-          right: 50px;
+          right: 3rem;
           transform: translateY(-50%);
           text-align: right;
         `;
       case 'BottomLeft':
         return css`
-          bottom: 20px;
-          left: 50px;
+          bottom: 1.5rem;
+          left: 3rem;
           text-align: left;
         `;
       case 'BottomCenter':
         return css`
-          bottom: 20px;
+          bottom: 1.5rem;
           left: 50%;
           transform: translateX(-50%);
           text-align: center;
         `;
       case 'BottomRight':
         return css`
-          bottom: 20px;
-          right: 50px;
+          bottom: 1.5rem;
+          right: 3rem;
           text-align: right;
         `;
       case 'TopLeft':
       default:
         return css`
-          top: 20px;
-          left: 50px;
+          top: 1.5rem;
+          left: 3rem;
           text-align: left;
         `;
     }
@@ -268,45 +268,32 @@ export const rotateCounterClockwise = keyframes`
 `;
 
 export const Slide = styled.div<{ animationClass: string }>`
+  /* stylelint-disable no-unknown-animations */
   min-width: 100%;
   opacity: 1;
   height: 100%;
   position: relative;
-  animation: ${({ animationClass }) => {
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  animation-name: ${({ animationClass }) => {
     switch (animationClass) {
       case 'fade-out':
-        return css`
-          ${fadeOut} 0.5s forwards
-        `;
+        return fadeOut;
       case 'slide-in':
-        return css`
-          ${slideIn} 0.5s forwards
-        `;
+        return slideIn;
       case 'slide-out':
-        return css`
-          ${slideOut} 0.5s forwards
-        `;
+        return slideOut;
       case 'zoom-in':
-        return css`
-          ${zoomIn} 0.5s forwards
-        `;
+        return zoomIn;
       case 'zoom-out':
-        return css`
-          ${zoomOut} 0.5s forwards
-        `;
+        return zoomOut;
       case 'shake':
-        return css`
-          ${shake} 0.5s forwards
-        `;
+        return shake;
       case 'bounce':
-        return css`
-          ${bounce} 0.5s forwards
-        `;
+        return bounce;
       case 'fade-in':
       default:
-        return css`
-          ${fadeIn} 0.5s forwards
-        `;
+        return fadeIn;
     }
   }};
 `;

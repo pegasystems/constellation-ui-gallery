@@ -22,16 +22,25 @@
       "label": "Number of columns",
       "defaultValue": "1",
       "source": [
-        { "key": "1", "value": "One" },
-        { "key": "2", "value": "Two" },
-        { "key": "3", "value": "Three" }
+        {
+          "key": "1",
+          "value": "One"
+        },
+        {
+          "key": "2",
+          "value": "Two"
+        },
+        {
+          "key": "3",
+          "value": "Three"
+        }
       ]
     },
     {
       "name": "A",
       "label": "Region A",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Fields", "Views"],
+      "addTypeList": ["Fields", "Views", "Widgets", "Insights"],
       "allowCreatingGroup": true
     }
   ]
