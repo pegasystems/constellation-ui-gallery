@@ -4,7 +4,7 @@ import * as DemoStories from './demo.stories';
 
 const { Default } = composeStories(DemoStories);
 
-test('renders RatingLayout component with default args', async () => {
+test('renders IFrame Wrapper component with default args', async () => {
   render(<Default />);
-  expect(await screen.findByText('Ratings')).toBeVisible();
+  expect(screen.getByTitle('iFrame title')).toBeInTheDocument();
 });
