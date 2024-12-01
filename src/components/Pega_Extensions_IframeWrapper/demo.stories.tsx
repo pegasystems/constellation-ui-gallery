@@ -2,7 +2,10 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsIframeWrapper } from './index';
 
 export default {
-  title: 'Fields/IFrame Wrapper',
+  title: 'Fields/Iframe Wrapper',
+  argTypes: {
+    height: { control: 'number', if: { arg: 'heightMode', eq: 'fixed' } }
+  },
   component: PegaExtensionsIframeWrapper
 };
 
