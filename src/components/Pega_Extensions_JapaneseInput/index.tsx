@@ -1,34 +1,29 @@
 import { useEffect, useState, useRef } from 'react';
-import {
-  Input,
-  FieldValueList,
-  Text,
-  EmailDisplay,
-  PhoneDisplay,
-  URLDisplay,
-  withConfiguration
-} from '@pega/cosmos-react-core';
-import type { PConnFieldProps } from './PConnProps';
-import './create-nonce';
-
-// include in bundle
-import handleEvent from './event-utils';
-import StatusWorkRenderer from './StatusWork';
-import { suggestionsHandler } from './suggestions-handler';
-
-import StyledPegaExtensionsJapaneseInputWrapper from './styles';
+import { Input, FieldValueList, Text, withConfiguration } from '@pega/cosmos-react-core';
+import '../create-nonce';
 
 // interface for props
-interface PegaExtensionsJapaneseInputProps extends PConnFieldProps {
+interface PegaExtensionsJapaneseInputProps {
   // If any, enter additional props that only exist on TextInput here
-  displayAsStatus?: boolean;
-  isTableFormatter?: boolean;
   hasSuggestions?: boolean;
   variant?: any;
-  formatter: string;
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
+  label: string;
+  required: boolean;
+  disabled: boolean;
+  value: any;
+  readOnly: boolean;
+  getPConnect: any;
+  placeholder?: string;
+  validatemessage: string;
+  hideLabel: boolean;
+  helperText: string;
+  testId: string;
+  fieldMetadata?: any;
+  additionalProps?: any;
+  displayMode?: string;
 }
 
 // interface for StateProps object
@@ -37,54 +32,11 @@ interface StateProps {
   hasSuggestions: boolean;
 }
 
-export const formatExists = (formatterVal: string) => {
-  const formatterValues = [
-    'TextInput',
-    'WorkStatus',
-    'RichText',
-    'Email',
-    'Phone',
-    'URL',
-    'Operator'
-  ];
-  let isformatter = false;
-  if (formatterValues.includes(formatterVal)) {
-    isformatter = true;
-  }
-  return isformatter;
-};
-
-export const textFormatter = (formatter: string, value: string) => {
-  let displayComponent: any = null;
-  switch (formatter) {
-    case 'TextInput': {
-      displayComponent = value;
-      break;
-    }
-    case 'Email': {
-      displayComponent = <EmailDisplay value={value} displayText={value} variant='link' />;
-      break;
-    }
-    case 'Phone': {
-      displayComponent = <PhoneDisplay value={value} variant='link' />;
-      break;
-    }
-    case 'URL': {
-      displayComponent = (
-        <URLDisplay target='_blank' value={value} displayText={value} variant='link' />
-      );
-      break;
-    }
-    // no default
-  }
-  return displayComponent;
-};
-
 // Duplicated runtime code from Constellation Design System Component
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
+export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputProps) => {
   const {
     getPConnect,
     placeholder,
@@ -96,15 +48,13 @@ function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
     fieldMetadata = {},
     additionalProps = {},
     displayMode,
-    displayAsStatus,
+    value,
     variant = 'inline',
     hasSuggestions = false,
-    isTableFormatter = false,
     hiraganaToKatakana = false,
     fullToHalf = false,
     lowerToUpper = false
   } = props;
-  const { formatter } = props;
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const stateProps = pConn.getStateProps() as StateProps;
@@ -112,7 +62,7 @@ function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
   const maxLength = fieldMetadata?.maxLength;
   const hasValueChange = useRef(false);
 
-  let { value, readOnly = false, required = false, disabled = false } = props;
+  let { readOnly = false, required = false, disabled = false } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
     prop => prop === true || (typeof prop === 'string' && prop === 'true')
   );
@@ -138,63 +88,24 @@ function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
     }
   }, [validatemessage, hasSuggestions, myStatus]);
 
-  const onResolveSuggestionHandler = (accepted: boolean) => {
-    suggestionsHandler(accepted, pConn, setStatus);
-  };
-  // Override the value to render as status work when prop passed to display as status
-  if (displayAsStatus) {
-    value = StatusWorkRenderer({ value });
-
-    // Fall into this scenario for case summary, default to stacked status
-    if (!displayMode) {
-      return (
-        <FieldValueList
-          variant='stacked'
-          data-testid={testId}
-          fields={[{ id: 'status', name: label, value }]}
-        />
-      );
-    }
+  const displayComp = value || '';
+  if (displayMode === 'DISPLAY_ONLY') {
+    return <Text>{displayComp}</Text>;
   }
-
-  if (displayMode === 'LABELS_LEFT' || displayMode === 'DISPLAY_ONLY') {
-    let displayComp = value || <span aria-hidden='true'>&ndash;&ndash;</span>;
-    if (isTableFormatter && formatExists(formatter)) {
-      displayComp = textFormatter(formatter, value);
-    }
-    return displayMode === 'DISPLAY_ONLY' ? (
-      <StyledPegaExtensionsJapaneseInputWrapper>
-        {' '}
-        {displayComp}{' '}
-      </StyledPegaExtensionsJapaneseInputWrapper>
-    ) : (
-      <StyledPegaExtensionsJapaneseInputWrapper>
-        <FieldValueList
-          variant={hideLabel ? 'stacked' : variant}
-          data-testid={testId}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-        />
-      </StyledPegaExtensionsJapaneseInputWrapper>
-    );
-  }
-
-  if (displayMode === 'STACKED_LARGE_VAL') {
-    const isValDefined = typeof value !== 'undefined' && value !== '';
-    const val = isValDefined ? (
-      <Text variant='h1' as='span'>
-        {value}
-      </Text>
-    ) : (
-      ''
-    );
+  if (displayMode === 'LABELS_LEFT') {
     return (
-      <StyledPegaExtensionsJapaneseInputWrapper>
-        <FieldValueList
-          variant='stacked'
-          data-testid={testId}
-          fields={[{ id: '2', name: hideLabel ? '' : label, value: val }]}
-        />
-      </StyledPegaExtensionsJapaneseInputWrapper>
+      <FieldValueList
+        variant={hideLabel ? 'stacked' : variant}
+        data-testid={testId}
+        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+      />
+    );
+  }
+  if (displayMode === 'STACKED_LARGE_VAL') {
+    return (
+      <Text variant='h1' as='span'>
+        {displayComp}
+      </Text>
     );
   }
 
@@ -204,14 +115,14 @@ function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
     }
     setInputValue(event.target.value);
     if (value !== event.target.value) {
-      handleEvent(actions, 'change', propName, event.target.value);
+      actions.updateFieldValue(propName, event.target.value);
       hasValueChange.current = true;
     }
   };
 
   const handleBlur = (event: any) => {
     if ((!value || hasValueChange.current) && !readOnly) {
-      handleEvent(actions, 'blur', propName, event.target.value);
+      actions.triggerFieldChange(propName, event.target.value);
       if (hasSuggestions) {
         pConn.ignoreSuggestion('');
       }
@@ -274,27 +185,24 @@ function PegaExtensionsJapaneseInput(props: PegaExtensionsJapaneseInputProps) {
   };
 
   return (
-    <StyledPegaExtensionsJapaneseInputWrapper>
-      <Input
-        {...additionalProps}
-        type='text'
-        label={label}
-        labelHidden={hideLabel}
-        info={validatemessage || helperText}
-        data-testid={testId}
-        value={inputValue}
-        status={myStatus}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        maxLength={maxLength}
-        onChange={!readOnly ? handleChange : undefined}
-        onBlur={!readOnly ? handleBlur : undefined}
-        onResolveSuggestion={onResolveSuggestionHandler}
-      />
-    </StyledPegaExtensionsJapaneseInputWrapper>
+    <Input
+      {...additionalProps}
+      type='text'
+      label={label}
+      labelHidden={hideLabel}
+      info={validatemessage || helperText}
+      data-testid={testId}
+      value={inputValue}
+      status={myStatus}
+      placeholder={placeholder}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      maxLength={maxLength}
+      onChange={!readOnly ? handleChange : undefined}
+      onBlur={!readOnly ? handleBlur : undefined}
+    />
   );
-}
+};
 
 export default withConfiguration(PegaExtensionsJapaneseInput);

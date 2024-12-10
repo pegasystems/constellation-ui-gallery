@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PegaExtensionsJapaneseInput from './index';
-
-import { stateProps, fieldMetadata, configProps } from './mock';
+import { PegaExtensionsJapaneseInput } from './index';
 
 const meta: Meta<typeof PegaExtensionsJapaneseInput> = {
-  title: 'Fields/JapaneseInput',
+  title: 'Fields/Japanese Input',
   component: PegaExtensionsJapaneseInput,
   excludeStories: /.*Data$/
 };
@@ -14,63 +12,74 @@ const meta: Meta<typeof PegaExtensionsJapaneseInput> = {
 export default meta;
 type Story = StoryObj<typeof PegaExtensionsJapaneseInput>;
 
-export const BasePegaExtensionsJapaneseInput: Story = (args: any) => {
-  const props = {
-    value: configProps.value,
-    hasSuggestions: configProps.hasSuggestions,
-    fieldMetadata,
-    getPConnect: () => {
+const setPCore = () => {
+  (window as any).PCore = {
+    getComponentsRegistry: () => {
       return {
-        getStateProps: () => {
-          return stateProps;
-        },
-        getActionsApi: () => {
-          return {
-            updateFieldValue: () => {
-              /* nothing */
-            },
-            triggerFieldChange: () => {
-              /* nothing */
-            }
-          };
-        },
-        ignoreSuggestion: () => {
-          /* nothing */
-        },
-        acceptSuggestion: () => {
-          /* nothing */
-        },
-        setInheritedProps: () => {
-          /* nothing */
-        },
-        resolveConfigProps: () => {
-          /* nothing */
-        }
+        getLazyComponent: (f: string) => f
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getTimeZone: () => 'local'
       };
     }
   };
-
-  return (
-    <>
-      <PegaExtensionsJapaneseInput {...props} {...args} />
-    </>
-  );
 };
 
-BasePegaExtensionsJapaneseInput.args = {
-  label: configProps.label,
-  helperText: configProps.helperText,
-  placeholder: configProps.placeholder,
-  testId: configProps.testId,
-  readOnly: configProps.readOnly,
-  disabled: configProps.disabled,
-  required: configProps.required,
-  status: configProps.status,
-  hideLabel: configProps.hideLabel,
-  displayMode: configProps.displayMode,
-  variant: configProps.variant,
-  validatemessage: configProps.validatemessage,
-  hiraganaToKatakana: configProps.hiraganaToKatakana,
-  fullToHalf: configProps.fullToHalf,
-  lowerToUpper: configProps.lowerToUpper
+export const Default: Story = {
+  render: args => {
+    setPCore();
+    const props = {
+      ...args,
+      getPConnect: () => {
+        return {
+          getStateProps: () => {
+            return {
+              value: '.TextInputSample'
+            };
+          },
+          getActionsApi: () => {
+            return {
+              updateFieldValue: () => {
+                /* nothing */
+              },
+              triggerFieldChange: () => {
+                /* nothing */
+              }
+            };
+          },
+          ignoreSuggestion: () => {
+            /* nothing */
+          },
+          acceptSuggestion: () => {
+            /* nothing */
+          },
+          setInheritedProps: () => {
+            /* nothing */
+          },
+          resolveConfigProps: () => {
+            /* nothing */
+          }
+        };
+      }
+    };
+    return <PegaExtensionsJapaneseInput {...props} />;
+  },
+  args: {
+    label: 'TextInput Sample',
+    helperText: 'TextInput Helper Text',
+    placeholder: 'TextInput Placeholder',
+    testId: 'TextInput-12345678',
+    readOnly: false,
+    disabled: false,
+    required: false,
+    hideLabel: false,
+    displayMode: '',
+    variant: '',
+    validatemessage: '',
+    hiraganaToKatakana: false,
+    fullToHalf: false,
+    lowerToUpper: false
+  }
 };
