@@ -1,9 +1,21 @@
+import { type FC } from 'react';
 import { useEffect, useState, useRef } from 'react';
-import { Input, FieldValueList, Text, withConfiguration } from '@pega/cosmos-react-core';
+import {
+  Input,
+  FieldValueList,
+  Text,
+  withConfiguration,
+  type InputProps,
+  type FormControlProps,
+  type TestIdProp,
+  useTestIds,
+  createTestIds,
+  withTestIds
+} from '@pega/cosmos-react-core';
 import '../create-nonce';
 
 // interface for props
-interface PegaExtensionsJapaneseInputProps {
+export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp {
   // If any, enter additional props that only exist on TextInput here
   hasSuggestions?: boolean;
   variant?: any;
@@ -11,14 +23,8 @@ interface PegaExtensionsJapaneseInputProps {
   fullToHalf: boolean;
   lowerToUpper: boolean;
   label: string;
-  required: boolean;
-  disabled: boolean;
-  value: any;
-  readOnly: boolean;
   getPConnect: any;
-  placeholder?: string;
   validatemessage: string;
-  hideLabel: boolean;
   helperText: string;
   testId: string;
   fieldMetadata?: any;
@@ -27,53 +33,58 @@ interface PegaExtensionsJapaneseInputProps {
 }
 
 // interface for StateProps object
-interface StateProps {
+export interface StateProps {
   value: string;
   hasSuggestions: boolean;
 }
+
+// Test-id configuration
+export const getJapaneseInputTestIds = createTestIds('japanese-input', [] as const);
 
 // Duplicated runtime code from Constellation Design System Component
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
-export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputProps) => {
-  const {
-    getPConnect,
-    placeholder,
-    validatemessage,
-    label,
-    hideLabel = false,
-    helperText,
-    testId,
-    fieldMetadata = {},
-    additionalProps = {},
-    displayMode,
-    value,
-    variant = 'inline',
-    hasSuggestions = false,
-    hiraganaToKatakana = false,
-    fullToHalf = false,
-    lowerToUpper = false
-  } = props;
+export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> = ({
+  getPConnect,
+  placeholder,
+  validatemessage,
+  helperText,
+  testId,
+  fieldMetadata = {},
+  displayMode,
+  value,
+  label,
+  labelHidden,
+  variant = 'inline',
+  hasSuggestions = false,
+  hiraganaToKatakana = false,
+  fullToHalf = false,
+  lowerToUpper = false,
+  ...restProps
+}: PegaExtensionsJapaneseInputProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const stateProps = pConn.getStateProps() as StateProps;
   const propName: string = stateProps.value;
   const maxLength = fieldMetadata?.maxLength;
   const hasValueChange = useRef(false);
+  const testIds = useTestIds(testId, getJapaneseInputTestIds);
 
-  let { readOnly = false, required = false, disabled = false } = props;
-  [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
-  );
+  // let { readOnly = false, required = false, disabled = false } = props;
+  // [readOnly, required, disabled] = [readOnly, required, disabled].map(
+  //   prop => prop === true || (typeof prop === 'string' && prop === 'true')
+  // );
 
   const [inputValue, setInputValue] = useState(value);
-  const [status, setStatus] = useState(hasSuggestions ? 'pending' : undefined);
+  const [status, setStatus] = useState<FormControlProps['status']>(
+    hasSuggestions ? 'pending' : undefined
+  );
 
   // cast status
-  let myStatus: 'success' | 'warning' | 'error' | 'pending';
-  // eslint-disable-next-line prefer-const
-  myStatus = status as 'success' | 'warning' | 'error' | 'pending';
+  // let myStatus: 'success' | 'warning' | 'error' | 'pending';
+
+  // myStatus = status as 'success' | 'warning' | 'error' | 'pending';
 
   useEffect(() => setInputValue(value), [value]);
 
@@ -83,10 +94,10 @@ export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputPr
     }
     if (hasSuggestions) {
       setStatus('pending');
-    } else if (!hasSuggestions && myStatus !== 'success') {
+    } else if (!hasSuggestions && status !== 'success') {
       setStatus(validatemessage !== '' ? 'error' : undefined);
     }
-  }, [validatemessage, hasSuggestions, myStatus]);
+  }, [validatemessage, hasSuggestions, status]);
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
@@ -95,9 +106,9 @@ export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputPr
   if (displayMode === 'LABELS_LEFT') {
     return (
       <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
+        variant={labelHidden ? 'stacked' : variant}
         data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
+        fields={[{ id: '1', name: labelHidden ? '' : label, value: displayComp }]}
       />
     );
   }
@@ -121,7 +132,7 @@ export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputPr
   };
 
   const handleBlur = (event: any) => {
-    if ((!value || hasValueChange.current) && !readOnly) {
+    if (!value || hasValueChange.current) {
       actions.triggerFieldChange(propName, event.target.value);
       if (hasSuggestions) {
         pConn.ignoreSuggestion('');
@@ -134,6 +145,7 @@ export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputPr
         return String.fromCharCode(match.charCodeAt(0) + 0x60);
       });
     };
+
     const fullWidthToHalfWidth = (str: string): string => {
       str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, match => {
         return String.fromCharCode(match.charCodeAt(0) - 0xfee0);
@@ -186,23 +198,20 @@ export const PegaExtensionsJapaneseInput = (props: PegaExtensionsJapaneseInputPr
 
   return (
     <Input
-      {...additionalProps}
+      {...restProps}
+      testId={testIds.root}
       type='text'
       label={label}
-      labelHidden={hideLabel}
+      labelHidden={labelHidden}
       info={validatemessage || helperText}
-      data-testid={testId}
       value={inputValue}
-      status={myStatus}
+      status={status}
       placeholder={placeholder}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
       maxLength={maxLength}
-      onChange={!readOnly ? handleChange : undefined}
-      onBlur={!readOnly ? handleBlur : undefined}
+      onChange={handleChange}
+      onBlur={handleBlur}
     />
   );
 };
 
-export default withConfiguration(PegaExtensionsJapaneseInput);
+export default withTestIds(withConfiguration(PegaExtensionsJapaneseInput), getJapaneseInputTestIds);

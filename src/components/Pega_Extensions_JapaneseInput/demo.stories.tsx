@@ -74,7 +74,7 @@ export const Default: Story = {
     readOnly: false,
     disabled: false,
     required: false,
-    hideLabel: false,
+    labelHidden: false,
     displayMode: '',
     variant: '',
     validatemessage: '',
