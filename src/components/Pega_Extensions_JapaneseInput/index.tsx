@@ -13,23 +13,26 @@ import {
   withTestIds
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
+import type { FieldValueVariant } from '@pega/cosmos-react-core/lib/components/FieldValueList/FieldValueList';
+
+enum DisplayMode {
+  DisplayOnly = 'DISPLAY_ONLY',
+  LabelsLeft = 'LABELS_LEFT',
+  StackedLargeVal = 'STACKED_LARGE_VAL'
+}
 
 // interface for props
 export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp {
   // If any, enter additional props that only exist on TextInput here
   hasSuggestions?: boolean;
-  variant?: any;
+  variant?: FieldValueVariant;
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
   label: string;
   getPConnect: any;
-  validatemessage: string;
-  helperText: string;
-  testId: string;
-  fieldMetadata?: any;
-  additionalProps?: any;
-  displayMode?: string;
+  errorMessage: string;
+  displayMode?: DisplayMode;
 }
 
 // interface for StateProps object
@@ -46,17 +49,15 @@ export const getJapaneseInputTestIds = createTestIds('japanese-input', [] as con
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
 // any default values in config.pros should be set in defaultProps at bottom of this file
 export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> = ({
-  getPConnect,
-  placeholder,
-  validatemessage,
-  helperText,
   testId,
-  fieldMetadata = {},
+  getPConnect,
+  errorMessage,
   displayMode,
   value,
   label,
   labelHidden,
-  variant = 'inline',
+  info,
+  variant,
   hasSuggestions = false,
   hiraganaToKatakana = false,
   fullToHalf = false,
@@ -67,43 +68,33 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   const actions = pConn.getActionsApi();
   const stateProps = pConn.getStateProps() as StateProps;
   const propName: string = stateProps.value;
-  const maxLength = fieldMetadata?.maxLength;
   const hasValueChange = useRef(false);
   const testIds = useTestIds(testId, getJapaneseInputTestIds);
-
-  // let { readOnly = false, required = false, disabled = false } = props;
-  // [readOnly, required, disabled] = [readOnly, required, disabled].map(
-  //   prop => prop === true || (typeof prop === 'string' && prop === 'true')
-  // );
 
   const [inputValue, setInputValue] = useState(value);
   const [status, setStatus] = useState<FormControlProps['status']>(
     hasSuggestions ? 'pending' : undefined
   );
 
-  // cast status
-  // let myStatus: 'success' | 'warning' | 'error' | 'pending';
-
-  // myStatus = status as 'success' | 'warning' | 'error' | 'pending';
-
   useEffect(() => setInputValue(value), [value]);
 
   useEffect(() => {
-    if (validatemessage !== '') {
+    if (errorMessage !== '') {
       setStatus('error');
     }
     if (hasSuggestions) {
       setStatus('pending');
     } else if (!hasSuggestions && status !== 'success') {
-      setStatus(validatemessage !== '' ? 'error' : undefined);
+      setStatus(errorMessage !== '' ? 'error' : undefined);
     }
-  }, [validatemessage, hasSuggestions, status]);
+  }, [errorMessage, hasSuggestions, status]);
 
-  const displayComp = value || '';
-  if (displayMode === 'DISPLAY_ONLY') {
+  const displayComp = inputValue || '';
+  if (displayMode === DisplayMode.DisplayOnly) {
     return <Text>{displayComp}</Text>;
   }
-  if (displayMode === 'LABELS_LEFT') {
+
+  if (displayMode === DisplayMode.LabelsLeft) {
     return (
       <FieldValueList
         variant={labelHidden ? 'stacked' : variant}
@@ -112,7 +103,8 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
       />
     );
   }
-  if (displayMode === 'STACKED_LARGE_VAL') {
+
+  if (displayMode === DisplayMode.StackedLargeVal) {
     return (
       <Text variant='h1' as='span'>
         {displayComp}
@@ -203,11 +195,9 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
       type='text'
       label={label}
       labelHidden={labelHidden}
-      info={validatemessage || helperText}
+      info={errorMessage || info}
       value={inputValue}
       status={status}
-      placeholder={placeholder}
-      maxLength={maxLength}
       onChange={handleChange}
       onBlur={handleBlur}
     />
