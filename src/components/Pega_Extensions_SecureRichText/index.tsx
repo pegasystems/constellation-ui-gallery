@@ -2,8 +2,8 @@ import { useRef, useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
 import type { Editor as TinymceEditor } from 'tinymce/tinymce';
 import { Editor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte';
-import { Details } from '@pega/cosmos-react-work';
-import { FieldValueItem, NoValue, withConfiguration } from '@pega/cosmos-react-core';
+import { Details, DetailsList } from '@pega/cosmos-react-work';
+import { NoValue, withConfiguration } from '@pega/cosmos-react-core';
 
 import { formatExists, textFormatter } from './utils';
 import '../create-nonce';
@@ -143,9 +143,22 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     richTextComponent = hideLabel ? (
       displayComponent
     ) : (
-      <Details>
-        <FieldValueItem name={label} value={displayComponent} variant='stacked' />
-      </Details>
+      <Details
+        name='Details'
+        columns={{
+          a: (
+            <DetailsList
+              items={[
+                {
+                  id: label,
+                  name: label,
+                  value: displayComponent
+                }
+              ]}
+            />
+          )
+        }}
+      />
     );
   } else {
     // Rich Text editable component
