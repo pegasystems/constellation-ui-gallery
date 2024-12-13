@@ -2,9 +2,6 @@
   "name": "pega-constellation-ui-gallery",
   "version": "2.0.0",
   "description": "A UI Gallery of Constellation DX Components",
-  "organization": "Pega",
-  "main": "src/index.js",
-  "type": "module",
   "keywords": [
     "pega"
   ],
@@ -14,6 +11,8 @@
   },
   "license": "Apache-2.0",
   "author": "Pegasystems",
+  "type": "module",
+  "main": "src/index.js",
   "scripts": {
     "start": "storybook dev --port 6006",
     "build-storybook": "storybook build --docs",
@@ -67,10 +66,10 @@
     "@fullcalendar/react": "^6.1.15",
     "@fullcalendar/timegrid": "^6.1.15",
     "@hello-pangea/dnd": "^16.6.0",
-    "@pega/cosmos-react-core": "^7.0.6",
-    "@pega/cosmos-react-rte": "^7.0.6",
-    "@pega/cosmos-react-social": "^7.0.6",
-    "@pega/cosmos-react-work": "^7.0.6",
+    "@pega/cosmos-react-core": "^7.2.0",
+    "@pega/cosmos-react-rte": "^7.2.0",
+    "@pega/cosmos-react-social": "^7.2.0",
+    "@pega/cosmos-react-work": "^7.2.0",
     "gantt-task-react": "^0.3.9",
     "imask": "^7.6.1",
     "jsbarcode": "^3.11.6",
@@ -83,13 +82,13 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
-    "@pega/custom-dx-components": "~0.242.51",
-    "@pega/pcore-pconnect-typedefs": "~3.2.0-alpha.1",
     "@babel/preset-env": "^7.26.0",
-    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@pega/configs": "^0.16.2",
+    "@pega/custom-dx-components": "^24.2.11",
     "@pega/eslint-config": "^0.16.2",
+    "@pega/pcore-pconnect-typedefs": "^3.2.1",
     "@pega/tsconfig": "^0.16.2",
     "@storybook/addon-a11y": "^7.6.19",
     "@storybook/addon-essentials": "^7.6.19",
@@ -122,11 +121,12 @@
     "jest-junit": "^16.0.0",
     "npm-quick-run": "^1.18.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "sort-package-json": "^2.12.0",
     "storybook": "^7.6.19",
     "stylelint": "^16.11.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.2"
-  }
+  },
+  "organization": "Pega"
 }
