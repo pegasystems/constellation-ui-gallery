@@ -41,10 +41,13 @@ const themeMachines = Object.fromEntries(
   ])
 );
 
-window.addEventListener('error', console.error);
-
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['Getting Started', 'Libraries', 'Support and Contributing']
+      }
+    },
     backgrounds: {
       disable: true,
       grid: {
@@ -67,7 +70,7 @@ const preview: Preview = {
 
       return (
         <Configuration
-          theme={themes[context.globals['theme']]}
+          theme={themes[context.globals.theme]}
           direction={direction}
           locale={context.globals.locale}
           disableDefaultFontLoading
@@ -90,13 +93,13 @@ const preview: Preview = {
         const selector =
           context.viewMode === 'docs' ? `#anchor--${context.id} .docs-story` : '.sb-show-main';
 
-        const maxWidth = context.globals['fullscreen'] !== 'On' ? '1000px' : 'none';
+        const maxWidth = context.globals.fullscreen !== 'On' ? '1000px' : 'none';
 
-        const themeMachine = themeMachines[context.globals['theme']];
+        const themeMachine = themeMachines[context.globals.theme];
 
         let background: string;
 
-        switch (context.globals['backgrounds']) {
+        switch (context.globals.backgrounds) {
           case 'Clear':
             background = 'transparent';
             break;
@@ -154,9 +157,9 @@ const preview: Preview = {
         `.styles;
       }, [
         context.viewMode,
-        context.globals['theme'],
-        context.globals['backgrounds'],
-        context.globals['fullscreen']
+        context.globals.theme,
+        context.globals.backgrounds,
+        context.globals.fullscreen
       ]);
 
       useStorybookEffect(() => {

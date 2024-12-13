@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title='Support and Contributing' />
+
+# Support
+
+This project is an open source project based on an [Apache 2 license](https://github.com/pegasystems/constellation-ui-gallery?tab=Apache-2.0-1-ov-file#readme).
+
+Here is an extract of the license: "software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.".
+
+In term of support and maintenance, this project follows the same approach as any other open source libraries - code is delivered as IS and since you are importing the components in your application ruleset, you are responsible for this code inside your application including support for any accessibility issues or issues after upgrade. The source code is provided and you can fork the code and make any change you want.
+
+The project provides released version of the components for Pega Infinity 23.1 and 24.1 but only the latest Pega Platform version will be actively worked on.
+
+# Contributing
+
+If you want to report a bug, an issue or an enhancement request, [submit an issue in the github project](https://github.com/pegasystems/constellation-ui-gallery/issues)
+and review the following documents:
+
+- [CONTRIBUTING.md](https://github.com/pegasystems/constellation-ui-gallery/blob/master/CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](https://github.com/pegasystems/constellation-ui-gallery/blob/master/CODE_OF_CONDUCT.md)
+
+To contribute to this project, submit your idea to the [discussion board](https://github.com/pegasystems/constellation-ui-gallery/discussions/categories/ideas). If you want to submit a branch with some enhancements, [create a fork of this repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)
+
+When adding new components, make sure that:
+
+- The component is written in Typescript.
+- The component follow [best practices](https://pegasystems.github.io/constellation-ui-gallery/?path=/docs/getting-started--docs#implementing-a-constellation-dx-component).
+- The component props are exposed as an interface type object with description and default values so that the table of properties is documented in storybook.
+- Make sure that all files are linted correctly (npm run lint and npm run fix).
+- Make sure that you have a unit test.
+- Make sure that end to end and accessibility test is passing (see [README.md](https://github.com/pegasystems/constellation-ui-gallery/blob/master/README.md#end-to-end-testing) for instructions).
+- If using a 3rd party library, make sure that the library is open source and compatible with the React version and the Constellation component library - see [Library](https://pegasystems.github.io/constellation-ui-gallery/?path=/docs/libraries--docs).
+
+Once your code is ready, create a PR to the main branch using the following [procedure](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).

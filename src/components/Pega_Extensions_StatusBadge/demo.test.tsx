@@ -4,7 +4,7 @@ import * as DemoStories from './demo.stories';
 
 const { Default } = composeStories(DemoStories);
 
-test('renders RatingLayout component with default args', async () => {
+test('renders a Status badge component with default args', async () => {
   render(<Default />);
-  expect(await screen.findByText('Ratings')).toBeVisible();
+  expect(await screen.findAllByText('Open')).toHaveLength(2);
 });
