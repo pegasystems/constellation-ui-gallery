@@ -128,16 +128,41 @@ export const addPoint = (
   const messageConfig = {
     meta: props,
     options: {
+      containerName: 'workarea',
       context: getPConnect().getContextName(),
-      pageReference: `caseInfo.content${embedDataRef}[${index}]`,
+      hasForm: true,
+      pageReference: 'caseInfo.content',
+      referenceList: embedDataRef,
       target: getPConnect().getTarget()
     }
   };
   const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
-  const actionsApi = c11nEnv.getPConnect().getActionsApi();
+  c11nEnv.index = index; // Is this needed?
+  c11nEnv
+    .getPConnect()
+    .getListActions()
+    .insert({ classID: 'OK5NFJ-Computer-Data-Location' }, index, 'caseInfo.content');
+
+  const messageConfig1 = {
+    meta: props,
+    options: {
+      context: getPConnect().getContextName(),
+      hasForm: true,
+      isInsideList: true,
+      pageReference: `caseInfo.content${embedDataRef}[${index}]`,
+      referenceList: embedDataRef
+    }
+  };
+  const c11nEnv1 = (window as any).PCore.createPConnect(messageConfig1);
   const ll = webMercatorUtils.xyToLngLat(x[0], x[1]);
-  actionsApi?.updateFieldValue(longitudePropRef, ll[0]);
-  actionsApi?.updateFieldValue(latitudePropRef, ll[1]);
+  c11nEnv1
+    .getPConnect()
+    .getListActions()
+    .updateProperty(longitudePropRef, ll[0], { isArrayDeepMerge: true });
+  c11nEnv1
+    .getPConnect()
+    .getListActions()
+    .updateProperty(latitudePropRef, ll[1], { isArrayDeepMerge: true });
 };
 
 export const addScreenShot = (getPConnect: any, view: MapView, imageMapRef: string) => {

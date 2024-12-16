@@ -116,6 +116,10 @@ export const PegaExtensionsMap = (props: MapProps) => {
     let view: MapView;
     let ptLayer: GraphicsLayer;
 
+    if (displayMode !== 'DISPLAY_ONLY') {
+      getPConnect().getListActions().initDefaultPageInstructions('.Locations');
+    }
+
     /* Retrieve the name of the embedded object when bFreeFormDrawing is false */
     if (!bFreeFormDrawing && tmpFields.length >= 2) {
       let paths = tmpFields[0].path?.split(' ');
