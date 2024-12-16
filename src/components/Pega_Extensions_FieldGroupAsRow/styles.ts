@@ -7,12 +7,12 @@ export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
       max-width: unset;
     }
 
-    & > div > div > div {
+    & fieldset > div > div > div > div > div > div > div:last-child > div {
       display: flex;
       flex-flow: row wrap;
     }
 
-    & > div > div > div > h3 {
+    & fieldset > div h1 {
       display: none;
     }
 

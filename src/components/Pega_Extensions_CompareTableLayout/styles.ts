@@ -9,6 +9,7 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
           grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
           grid-gap: 0.5rem;
           overflow: hidden;
+          padding: 0.2rem;
         }
         & > fieldset > div > label {
           display: block;

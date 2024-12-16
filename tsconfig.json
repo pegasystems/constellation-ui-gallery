@@ -2,9 +2,13 @@
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
   "compilerOptions": {
-    "skipLibCheck": true,
     "noEmit": true,
     "allowJs": true,
-    "importsNotUsedAsValues": "remove"
+    "importsNotUsedAsValues": "remove",
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pega/pcore-pconnect-typedefs/*": ["node_modules/@pega/pcore-pconnect-typedefs/*"]
+    }
   }
 }

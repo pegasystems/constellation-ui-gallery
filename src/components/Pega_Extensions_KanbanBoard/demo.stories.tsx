@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
-import { FieldValueItem, DateTimeDisplay } from '@pega/cosmos-react-core';
-import { Details } from '@pega/cosmos-react-work';
+import { DateTimeDisplay, FieldValueItem } from '@pega/cosmos-react-core';
+import { Details, DetailsList } from '@pega/cosmos-react-work';
 import { PegaExtensionsKanbanBoard } from './index';
 
 export default {
@@ -128,24 +128,34 @@ const setPCore = () => {
             <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
           ];
           return (
-            <Details name='Details' highlightedData={highlightedData} collapsible={false}>
-              <FieldValueItem
-                key='Description'
-                variant='stacked'
-                name='Description'
-                value={tasks[id].pyDescription}
-              />
-              <FieldValueItem
-                key='Assigned To'
-                name='Assigned To'
-                value={tasks[id].pxCreateOpName}
-              />
-              <FieldValueItem
-                key='Due date'
-                name='Due date'
-                value={<DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />}
-              />
-            </Details>
+            <Details
+              name='Details'
+              highlightedData={highlightedData}
+              collapsible={false}
+              columns={{
+                a: (
+                  <DetailsList
+                    items={[
+                      {
+                        id: 'Description',
+                        name: 'Description',
+                        value: tasks[id].pyDescription
+                      },
+                      {
+                        id: 'Assigned To',
+                        name: 'Assigned To',
+                        value: tasks[id].pxCreateOpName
+                      },
+                      {
+                        id: 'Due date',
+                        name: 'Due date',
+                        value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />
+                      }
+                    ]}
+                  />
+                )
+              }}
+            />
           );
         }
       })
