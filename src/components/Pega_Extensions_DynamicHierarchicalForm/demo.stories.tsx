@@ -73,6 +73,11 @@ const setPCore = (numProducts: number) => {
   }
 
   (window as any).PCore = {
+    getContextTreeManager: () => {
+      return {
+        addPageListNode: () => {}
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {
@@ -237,6 +242,12 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          meta: {
+            name: ''
+          },
+          options: {
+            viewName: ''
+          },
           getListActions: () => {
             return {
               update: () => {}

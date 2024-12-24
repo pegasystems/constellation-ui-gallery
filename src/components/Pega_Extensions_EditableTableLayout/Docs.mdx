@@ -1,0 +1,22 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+Render an embedded data list as an editable table - While the recommendation is to use the OOB component to edit an embedded data list, this example showcase how to implement the same functionality using a Constellation DX component.
+
+The component supports the following functionality:
+
+- add, delete rows, update fields
+- 1st column is frozen
+- cell rendering is delegated to Constellation using createComponent.
+
+<Primary />
+
+# Configuration
+
+To use this component, create a new view - use this layout template and in the region fields, drill down and select all the fields in your embedded data list
+
+![Configuration](EditableTableLayout.jpg)
