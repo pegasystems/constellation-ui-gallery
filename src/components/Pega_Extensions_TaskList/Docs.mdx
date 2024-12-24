@@ -1,73 +1,49 @@
 # PegaExtensionsGrid Component Task List
 
 ## Overview  
-The PegaExtensionsGrid component is a dynamic and configurable grid component designed for integration with Pega Constellation applications. It enables developers to display, edit, and paginate tabular data fetched from Pega Data Views. The component supports features like custom column definitions, sorting, row-level editing, and error handling, ensuring a seamless user experience.
+The **PegaExtensionsGrid Task List** is a simple and configurable component designed for tracking task progress. It integrates seamlessly with Pega applications, allowing developers to manage task lists dynamically by fetching data and updating task statuses as needed.
 
 ---
 
-## Task List  
+## Task List Implementation  
 
-### 1. **Component Setup**  
-   - Configure the PegaExtensionsGrid component for integration with Pega applications.  
-   - Import the component into your project.  
+### 1. **Component Usage**  
+   - Use the `TaskList` component to render a list of tasks with their labels and statuses.  
+   - Tasks can be toggled between completed (`true`) and pending (`false`) statuses.  
 
-### 2. **Props Configuration**  
-   - Set up required props such as `dataViewName`, `uniqueKey`, and `savablePage`.  
-   - Configure optional props like `sorting`, `stripedRows`, and `loadingMessage`.  
-   - Define the `tableColumns` and `fieldsToUpdate` props to display and edit data dynamically.  
+### 2. **Data Structure**  
+   - The task list is represented as an array of objects with the following structure:  
 
-### 3. **Data Fetching**  
-   - Fetch data using the `dataViewName` prop and Pega Data API utilities.  
-   - Ensure dynamic column rendering based on the `tableColumns` prop.  
+     
+     data: [
+       {
+         Id: 1,
+         Label: 'Project configuration has been completed',
+         Status: true
+       },
+       {
+         Id: 2,
+         Label: 'Create the project report',
+         Status: false
+       }
+     ];
+     ```
 
-### 4. **Validation**  
-   - Validate the required props (`dataViewName`, `uniqueKey`, and `savablePage`) during configuration.  
-   - Display detailed error messages for misconfigured or missing props.  
+   - Each task contains:
+     - **Id**: A unique identifier for the task.
+     - **Label**: A descriptive label for the task.
+     - **Status**: A boolean indicating if the task is completed (`true`) or pending (`false`).  
 
-### 5. **Customization**  
-   - Enable sorting and column-wise search functionality using the `sorting` and `columnSearch` props.  
-   - Add striped rows for improved readability using the `stripedRows` prop.  
+### 3. **Component Example Usage**  
 
-### 6. **Error Handling**  
-   - Handle API errors gracefully with detailed or minimal error messages.  
-   - Implement a toggle for error views to enhance debugging capabilities.  
+      <TaskList data={taskListData} />
+   }
 
-### 7. **Editing and Saving**  
-   - Enable inline editing through a popup interface using `EditRowPopup`.  
-   - Save changes to the specified `savablePage`.  
+### Features
+Dynamic Rendering: Tasks are rendered dynamically based on the provided data array.
+Status Updates: Task statuses can be updated, toggling between completed and pending.
+Simple Integration: Easy to integrate with Pega applications or other React-based projects.
+5. Notes
+Ensure the data prop is correctly passed to the TaskList component with the required structure.
 
-### 8. **Pagination**  
-   - Implement server-side pagination with total page calculations.  
-   - Enable page navigation using the `pagination` prop and set the number of rows per page with `pageSize`.  
-
-### 9. **Limitations**  
-   - Highlight current limitations, such as the lack of delete or bulk actions, limited column definition flexibility, and inline editing through a popup interface.  
-
-### 10. **Enhancements (Future Updates)**  
-   - Add row deletion and bulk actions (e.g., batch delete).  
-   - Introduce advanced column customization, such as dropdowns and checkboxes.  
-   - Enable direct row editing within the grid, bypassing the popup interface.  
-   - Improve pagination handling with infinite scrolling or lazy loading.  
-   - Customize error handling with retry mechanisms and enhanced user messaging.  
-
----
-
-## Example Usage  
-
-```javascript
-import PegaExtensionsGrid from './PegaExtensionsGrid';
-
-<PegaExtensionsGrid
-  label="User Records"
-  dataViewName="D_UserRecords"
-  sorting={true}
-  columnSearch={true}
-  loadingMessage="Fetching user data..."
-  stripedRows={true}
-  uniqueKey="UserID"
-  tableColumns="Name,Email,PhoneNumber"
-  fieldsToUpdate="Name,Email,PhoneNumber"
-  savablePage="pyUserPage"
-  pagination={true}
-  pageSize={20}
-/>;
+ 
