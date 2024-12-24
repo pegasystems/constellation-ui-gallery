@@ -172,6 +172,14 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   }, [validatemessage, status]);
 
   useEffect(() => {
+    /* In 24.2, we need to initialize the context tree manager */
+    (window as any).PCore.getContextTreeManager().addPageListNode(
+      getPConnect().getContextName(),
+      'caseInfo.content',
+      getPConnect().meta.name,
+      productRef.current
+    );
+
     const SelectedProducts: any = getAllFields(0, getPConnect);
     const tmpFields: any = getAllFields(1, getPConnect);
     if (

@@ -37,6 +37,11 @@ const genComponent = (config: any) => {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getContextTreeManager: () => {
+      return {
+        addPageListNode: () => {}
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         getActionsApi: () => ({ updateFieldValue: () => {} }),
@@ -109,6 +114,12 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          meta: {
+            name: ''
+          },
+          options: {
+            viewName: ''
+          },
           getListActions: () => {
             return {
               update: () => {},

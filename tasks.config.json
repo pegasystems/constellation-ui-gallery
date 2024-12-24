@@ -1,10 +1,12 @@
 {
     "components-directory-path": "src/components",
+    "import-relative-path": "Downloads",
+    "export-relative-path": "Downloads",
     "server-config": {
-        "rulesetName": "",
-        "rulesetVersion": "",
+        "rulesetName": "ConstellationUIGallery",
+        "rulesetVersion": "01-01-01",
         "sourceOfComponents": "Server",
-        "devBuild": false,
+        "devBuild": true,
         "serverType": "infinity",
         "server": "",
         "clientId": "",
@@ -28,12 +30,14 @@
         "questions_askedOnce": "server,authService"
     },
     "component": {
-        "library": "Extensions",
+        "library": "ConstellationUIGallery",
         "type": "",
-        "version": "1.0.0",
+        "version": "0.0.1",
         "subtype": "",
         "description": "",
         "icon": ""
     },
-    "usePromotedWebPack": false
+    "usePromotedWebPack": false,
+    "libraryMode": false,
+    "showDebug": false
 }

@@ -116,6 +116,16 @@ export const PegaExtensionsMap = (props: MapProps) => {
     let view: MapView;
     let ptLayer: GraphicsLayer;
 
+    /* In 24.2, we need to initialize the context tree manager */
+    if (displayMode !== 'DISPLAY_ONLY') {
+      (window as any).PCore.getContextTreeManager().addPageListNode(
+        getPConnect().getContextName(),
+        'caseInfo.content',
+        getPConnect().meta.name,
+        'Locations'
+      );
+    }
+
     /* Retrieve the name of the embedded object when bFreeFormDrawing is false */
     if (!bFreeFormDrawing && tmpFields.length >= 2) {
       let paths = tmpFields[0].path?.split(' ');
