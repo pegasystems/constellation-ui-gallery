@@ -134,6 +134,8 @@ export const Default: Story = {
                 if (f.type === 'Currency') {
                   return (
                     <CurrencyInput
+                      label={context.meta.config.label}
+                      labelHidden={true}
                       currencyISOCode='USD'
                       value={`${context.meta.config.value[index]}.0`}
                       onChange={() => {}}
@@ -143,12 +145,20 @@ export const Default: Story = {
                 if (f.type === 'Date') {
                   return (
                     <DateInput
+                      label={context.meta.config.label}
+                      labelHidden={true}
                       value={`${context.meta.config.value[index]}.0`}
                       onChange={() => {}}
                     />
                   );
                 }
-                return <Input value={context.meta.config.value[index]} />;
+                return (
+                  <Input
+                    label={context.meta.config.label}
+                    labelHidden={true}
+                    value={context.meta.config.value[index]}
+                  />
+                );
               },
               getListActions: () => {
                 return {

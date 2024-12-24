@@ -191,7 +191,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
                       })}
                       <td>
                         <Button
-                          arial-label='Delete this record'
+                          label='Delete this record'
                           variant='simple'
                           onClick={() => deleteRow(i)}
                         >

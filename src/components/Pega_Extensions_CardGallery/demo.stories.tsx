@@ -204,7 +204,7 @@ const setPCore = (args: any) => {
           ];
           return (
             <Details
-              name='Details'
+              name={''}
               highlightedData={highlightedData}
               collapsible={false}
               columns={{
