@@ -66,7 +66,14 @@ const TaskList: React.FC<TaskListProps> = ({ data }) => {
               checked={task.Status} // Use the boolean Status directly for the checkbox
               onChange={() => toggleStatus(task.Id, task.Status)} // Pass the Id and current Status to toggle
             />
-            <h3 style={{ margin: '0' }}>{task.Label}</h3>
+            <h3
+              style={{
+                margin: '0',
+                textDecoration: task.Status ? 'line-through' : 'none', // Add line-through for completed tasks
+              }}
+            >
+              {task.Label}
+            </h3>
             <StatusText status={task.Status ? 'completed' : 'pending'}>
               {task.Status ? 'Completed' : 'Pending'} {/* Show 'Completed' or 'Pending' */}
             </StatusText>
