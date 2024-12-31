@@ -1,0 +1,366 @@
+import {
+  withConfiguration,
+  Flex,
+  cap,
+  useDirection,
+  CurrencyDisplay,
+  FieldGroup
+} from '@pega/cosmos-react-core';
+import '../create-nonce';
+import {
+  StyledMinValue,
+  StyledBar,
+  StyledSlider,
+  StyledThumb,
+  StyledMinTrack,
+  StyledMaxTrack,
+  StyledMaxValue,
+  StyledRangeSliderWrapper
+} from './styles';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
+
+type RangeSliderProps = {
+  /** Label for the range slider
+   */
+  heading: string;
+  /** The minimum value of the range
+   * @default 0
+   */
+  min: number;
+  /** The maximum value of the range
+   * @default 100
+   */
+  max: number;
+  /** The increment value
+   * @default 1
+   */
+  step: number;
+  /** IF the values are currencies, set the currency code - otherwise set to empty
+   * @default USD
+   */
+  currencyCode: string;
+  getPConnect: any;
+  children: any;
+};
+
+export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
+  const {
+    heading = '',
+    min = 0,
+    max = 100,
+    step = 1,
+    currencyCode = 'USD',
+    getPConnect,
+    children
+  } = props;
+  const [minValue, setMinValue] = useState(40);
+  const [maxValue, setMaxValue] = useState(200);
+  const minTrackRef = useRef<HTMLDivElement>(null);
+  const maxTrackRef = useRef<HTMLDivElement>(null);
+  const [inMinDrag, setInMinDrag] = useState(false);
+  const [inMaxDrag, setInMaxDrag] = useState(false);
+  const { start, end } = useDirection();
+
+  const refreshForm = useCallback(() => {
+    const caseKey = getPConnect().getCaseInfo().getKey();
+    const refreshOptions = { autoDetectRefresh: true, propertyName: '' };
+    const viewName = getPConnect().getCaseInfo().getCurrentAssignmentViewName();
+    getPConnect().getActionsApi().refreshCaseView(caseKey, viewName, '', refreshOptions);
+  }, [getPConnect]);
+
+  const getNearestValue = (input: number, increment: number): number => {
+    const output = Math.round(input / increment) * increment;
+
+    const decimals = increment.toString().split('.')[1]?.length;
+    return Number(output.toFixed(decimals || 0));
+  };
+
+  const minMoveThumb = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      setMinValue(prevValue => {
+        let newValue = prevValue;
+        if (minTrackRef.current) {
+          const track = minTrackRef.current.getBoundingClientRect();
+          const { clientX } = 'touches' in e ? e.touches[0] : e;
+          const newPosition = (clientX - track[start]) / (track[end] - track[start]);
+
+          const normalizedValue = Math.min(Math.max(min + (max - min) * newPosition, min), max);
+          newValue = getNearestValue(normalizedValue, step);
+          if (newValue > maxValue) {
+            newValue = maxValue;
+          }
+          if (newValue !== prevValue) {
+            refreshForm();
+          }
+        }
+        return newValue;
+      });
+    },
+    [start, end, min, max, step, maxValue, refreshForm]
+  );
+
+  const maxMoveThumb = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      setMaxValue(prevValue => {
+        let newValue = prevValue;
+        if (maxTrackRef.current) {
+          const track = maxTrackRef.current.getBoundingClientRect();
+          const { clientX } = 'touches' in e ? e.touches[0] : e;
+          const newPosition = (clientX - track[start]) / (track[end] - track[start]);
+
+          const normalizedValue = Math.min(Math.max(min + (max - min) * newPosition, min), max);
+          newValue = getNearestValue(normalizedValue, step);
+          if (newValue < minValue) {
+            newValue = minValue;
+          }
+          if (newValue !== prevValue) {
+            refreshForm();
+          }
+        }
+        return newValue;
+      });
+    },
+    [start, end, min, max, step, minValue, refreshForm]
+  );
+
+  const onMinThumbKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (
+        [
+          'ArrowDown',
+          'ArrowUp',
+          'ArrowLeft',
+          'ArrowRight',
+          'PageUp',
+          'PageDown',
+          'Home',
+          'End'
+        ].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
+      setMinValue(prevValue => {
+        let newValue = prevValue;
+        switch (e.key) {
+          case 'ArrowDown':
+          case `Arrow${cap(start)}`:
+            newValue = minValue - step;
+            break;
+          case 'ArrowUp':
+          case `Arrow${cap(end)}`:
+            newValue = minValue + step;
+            break;
+          case 'PageUp':
+            newValue = minValue + 10 * step;
+            break;
+          case 'PageDown':
+            newValue = minValue - 10 * step;
+            break;
+          case 'Home':
+            newValue = min;
+            break;
+          case 'End':
+            newValue = max;
+            break;
+          default:
+        }
+        if (newValue > maxValue) {
+          newValue = maxValue;
+        }
+        if (newValue !== prevValue) {
+          refreshForm();
+        }
+        return newValue;
+      });
+    },
+    [minValue, maxValue, start, step, end, min, max, refreshForm]
+  );
+
+  const onMaxThumbKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (
+        [
+          'ArrowDown',
+          'ArrowUp',
+          'ArrowLeft',
+          'ArrowRight',
+          'PageUp',
+          'PageDown',
+          'Home',
+          'End'
+        ].includes(e.key)
+      ) {
+        e.preventDefault();
+      }
+      setMaxValue(prevValue => {
+        let newValue = prevValue;
+        switch (e.key) {
+          case 'ArrowDown':
+          case `Arrow${cap(start)}`:
+            newValue = maxValue - step;
+            break;
+          case 'ArrowUp':
+          case `Arrow${cap(end)}`:
+            newValue = maxValue + step;
+            break;
+          case 'PageUp':
+            newValue = maxValue + 10 * step;
+            break;
+          case 'PageDown':
+            newValue = maxValue - 10 * step;
+            break;
+          case 'Home':
+            newValue = min;
+            break;
+          case 'End':
+            newValue = max;
+            break;
+          default:
+        }
+        if (newValue < minValue) {
+          newValue = minValue;
+        }
+        if (newValue !== prevValue) {
+          refreshForm();
+        }
+        return newValue;
+      });
+    },
+    [maxValue, minValue, start, step, end, min, max, refreshForm]
+  );
+
+  useEffect(() => {
+    const onDragEnd = () => {
+      setInMinDrag(false);
+    };
+
+    document.addEventListener('mouseup', onDragEnd);
+    document.addEventListener('touchend', onDragEnd);
+    document.addEventListener('touchcancel', onDragEnd);
+    if (inMinDrag) {
+      document.addEventListener('mousemove', minMoveThumb);
+      document.addEventListener('touchmove', minMoveThumb);
+    }
+
+    return () => {
+      document.removeEventListener('mouseup', onDragEnd);
+      document.removeEventListener('touchend', onDragEnd);
+      document.removeEventListener('touchcancel', onDragEnd);
+      document.removeEventListener('mousemove', minMoveThumb);
+      document.removeEventListener('touchmove', minMoveThumb);
+    };
+  }, [inMinDrag, minMoveThumb]);
+
+  useEffect(() => {
+    const onDragEnd = () => {
+      setInMaxDrag(false);
+    };
+
+    document.addEventListener('mouseup', onDragEnd);
+    document.addEventListener('touchend', onDragEnd);
+    document.addEventListener('touchcancel', onDragEnd);
+    if (inMaxDrag) {
+      document.addEventListener('mousemove', maxMoveThumb);
+      document.addEventListener('touchmove', maxMoveThumb);
+    }
+
+    return () => {
+      document.removeEventListener('mouseup', onDragEnd);
+      document.removeEventListener('touchend', onDragEnd);
+      document.removeEventListener('touchcancel', onDragEnd);
+      document.removeEventListener('mousemove', maxMoveThumb);
+      document.removeEventListener('touchmove', maxMoveThumb);
+    };
+  }, [inMaxDrag, maxMoveThumb]);
+
+  const minPercentage = ((Number(minValue) - min) / (max - min)) * 100;
+  const maxPercentage = ((Number(maxValue) - min) / (max - min)) * 100;
+
+  return (
+    <FieldGroup name={heading} as={StyledRangeSliderWrapper}>
+      <Flex
+        as={StyledSlider}
+        container={{
+          alignItems: 'start',
+          direction: 'row'
+        }}
+        style={
+          {
+            '--min-slider-value': `${minPercentage}%`,
+            '--max-slider-value': `${maxPercentage}%`
+          } as CSSProperties
+        }
+      >
+        <StyledBar />
+        <Flex
+          as={StyledMinTrack}
+          ref={minTrackRef}
+          onMouseDown={minMoveThumb}
+          container={{ alignItems: 'center', justify: 'center' }}
+        >
+          <StyledThumb
+            role='slider'
+            tabIndex={0}
+            onKeyDown={onMinThumbKeyDown}
+            onMouseDown={() => {
+              setInMinDrag(true);
+            }}
+            onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => {
+              setInMinDrag(true);
+              e.preventDefault(); // Prevent dispatching mouse events as some browser may do that
+            }}
+            aria-valuemin={min}
+            aria-valuemax={max}
+            aria-valuenow={minValue}
+            aria-orientation='horizontal'
+            aria-label='Minimum Value'
+          />
+        </Flex>
+        <Flex
+          as={StyledMaxTrack}
+          ref={maxTrackRef}
+          onMouseDown={maxMoveThumb}
+          container={{ alignItems: 'center', justify: 'center' }}
+        >
+          <StyledThumb
+            role='slider'
+            tabIndex={0}
+            onKeyDown={onMaxThumbKeyDown}
+            onMouseDown={() => {
+              setInMaxDrag(true);
+            }}
+            onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => {
+              setInMaxDrag(true);
+              e.preventDefault(); // Prevent dispatching mouse events as some browser may do that
+            }}
+            aria-valuemin={min}
+            aria-valuemax={max}
+            aria-valuenow={maxValue}
+            aria-orientation='horizontal'
+            aria-label='Maximum Value'
+          />
+        </Flex>
+        <StyledMinValue>
+          <CurrencyDisplay
+            value={minValue}
+            currencyISOCode={currencyCode}
+            formattingOptions={{ fractionDigits: 0 }}
+          />
+        </StyledMinValue>
+        <StyledMaxValue>
+          <CurrencyDisplay
+            value={maxValue}
+            currencyISOCode={currencyCode}
+            formattingOptions={{ fractionDigits: 0 }}
+          />
+        </StyledMaxValue>
+      </Flex>
+      {children.map((child: any, i: number) => (
+        <Flex container={{ direction: 'column' }} key={`r-${i + 1}`}>
+          {child}
+        </Flex>
+      ))}
+    </FieldGroup>
+  );
+};
+export default withConfiguration(PegaExtensionsRangeSlider);

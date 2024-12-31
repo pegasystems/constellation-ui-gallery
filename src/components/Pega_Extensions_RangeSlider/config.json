@@ -1,0 +1,57 @@
+{
+  "name": "Pega_Extensions_RangeSlider",
+  "label": "Range Slider",
+  "description": "Range Slider",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_RangeSlider",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "properties": [
+    {
+      "key": "minValueProperty",
+      "format": "PROPERTY",
+      "name": "minValueProperty",
+      "required": true,
+      "label": "Minimum Value Property"
+    },
+    {
+      "key": "maxValueProperty",
+      "format": "PROPERTY",
+      "name": "maxValueProperty",
+      "required": true,
+      "label": "Maximum Value Property"
+    },
+    {
+      "name": "min",
+      "label": "Min Value",
+      "format": "NUMBER",
+      "required": true
+    },
+    {
+      "name": "max",
+      "label": "Max Value",
+      "format": "NUMBER",
+      "required": true
+    },
+    {
+      "name": "step",
+      "label": "Increment",
+      "format": "NUMBER",
+      "required": true
+    },
+    {
+      "name": "currencyCode",
+      "label": "CurrencyCode. Set to empty string for no currency",
+      "format": "TEXT"
+    },
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views"]
+    }
+  ]
+}

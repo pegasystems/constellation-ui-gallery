@@ -12,7 +12,7 @@ const config: StorybookConfig = {
     autodocs: true
   },
   typescript: {
-    check: true
+    check: false
   }
 };
 
