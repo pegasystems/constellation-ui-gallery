@@ -8,6 +8,11 @@ export default {
       table: {
         disable: true
       }
+    },
+    children: {
+      table: {
+        disable: true
+      }
     }
   },
   component: PegaExtensionsRangeSlider
@@ -50,6 +55,7 @@ export const Default: Story = {
         return {
           getActionsApi: () => {
             return {
+              updateFieldValue: () => {},
               refreshCaseView: () => {
                 // console.log('updating views');
               }
@@ -89,7 +95,10 @@ export const Default: Story = {
     return <PegaExtensionsRangeSlider {...props}>{regionAChildren}</PegaExtensionsRangeSlider>;
   },
   args: {
-    heading: 'Range Slider',
+    label: 'Range Slider',
+    showLabel: true,
+    maxValueProperty: 240,
+    minValueProperty: 120,
     min: 0,
     max: 500,
     step: 1,

@@ -22,7 +22,11 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 type RangeSliderProps = {
   /** Label for the range slider
    */
-  heading: string;
+  label: string;
+  /** show label
+   * @default true
+   */
+  showLabel: boolean;
   /** The minimum value of the range
    * @default 0
    */
@@ -39,27 +43,41 @@ type RangeSliderProps = {
    * @default USD
    */
   currencyCode: string;
+  /** Function to get the PConnect object for interacting with the Pega API */
   getPConnect: any;
+  /** The children elements to be rendered inside the range slider component */
   children: any;
+  maxValueProperty: number;
+  minValueProperty: number;
 };
 
 export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
   const {
-    heading = '',
+    label = '',
+    showLabel = true,
     min = 0,
     max = 100,
     step = 1,
     currencyCode = 'USD',
+    maxValueProperty,
+    minValueProperty,
     getPConnect,
     children
   } = props;
-  const [minValue, setMinValue] = useState(40);
-  const [maxValue, setMaxValue] = useState(200);
+  const [minValue, setMinValue] = useState(minValueProperty);
+  const [maxValue, setMaxValue] = useState(maxValueProperty);
   const minTrackRef = useRef<HTMLDivElement>(null);
   const maxTrackRef = useRef<HTMLDivElement>(null);
   const [inMinDrag, setInMinDrag] = useState(false);
   const [inMaxDrag, setInMaxDrag] = useState(false);
   const { start, end } = useDirection();
+
+  // Get the inherited props from the parent to determine label settings
+  const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
+  const maxValuePropName =
+    getPConnect().getRawMetadata().config?.maxValueProperty?.replace('@P ', '') || '';
+  const minValuePropName =
+    getPConnect().getRawMetadata().config?.minValueProperty?.replace('@P ', '') || '';
 
   const refreshForm = useCallback(() => {
     const caseKey = getPConnect().getCaseInfo().getKey();
@@ -90,13 +108,14 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
             newValue = maxValue;
           }
           if (newValue !== prevValue) {
+            getPConnect().getActionsApi().updateFieldValue(minValuePropName, newValue);
             refreshForm();
           }
         }
         return newValue;
       });
     },
-    [start, end, min, max, step, maxValue, refreshForm]
+    [start, end, min, max, step, maxValue, getPConnect, minValuePropName, refreshForm]
   );
 
   const maxMoveThumb = useCallback(
@@ -114,13 +133,14 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
             newValue = minValue;
           }
           if (newValue !== prevValue) {
+            getPConnect().getActionsApi().updateFieldValue(maxValuePropName, newValue);
             refreshForm();
           }
         }
         return newValue;
       });
     },
-    [start, end, min, max, step, minValue, refreshForm]
+    [start, end, min, max, step, minValue, getPConnect, maxValuePropName, refreshForm]
   );
 
   const onMinThumbKeyDown = useCallback(
@@ -168,12 +188,13 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
           newValue = maxValue;
         }
         if (newValue !== prevValue) {
+          getPConnect().getActionsApi().updateFieldValue(minValuePropName, newValue);
           refreshForm();
         }
         return newValue;
       });
     },
-    [minValue, maxValue, start, step, end, min, max, refreshForm]
+    [maxValue, start, minValue, step, end, min, max, getPConnect, minValuePropName, refreshForm]
   );
 
   const onMaxThumbKeyDown = useCallback(
@@ -197,17 +218,17 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
         switch (e.key) {
           case 'ArrowDown':
           case `Arrow${cap(start)}`:
-            newValue = maxValue - step;
+            newValue = prevValue - step;
             break;
           case 'ArrowUp':
           case `Arrow${cap(end)}`:
-            newValue = maxValue + step;
+            newValue = prevValue + step;
             break;
           case 'PageUp':
-            newValue = maxValue + 10 * step;
+            newValue = prevValue + 10 * step;
             break;
           case 'PageDown':
-            newValue = maxValue - 10 * step;
+            newValue = prevValue - 10 * step;
             break;
           case 'Home':
             newValue = min;
@@ -221,17 +242,23 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
           newValue = minValue;
         }
         if (newValue !== prevValue) {
+          getPConnect().getActionsApi().updateFieldValue(maxValuePropName, newValue);
           refreshForm();
         }
         return newValue;
       });
     },
-    [maxValue, minValue, start, step, end, min, max, refreshForm]
+    [minValue, start, step, end, min, max, getPConnect, maxValuePropName, refreshForm]
   );
 
   useEffect(() => {
     const onDragEnd = () => {
-      setInMinDrag(false);
+      if (inMinDrag) {
+        setInMinDrag(false);
+      }
+      if (inMaxDrag) {
+        setInMaxDrag(false);
+      }
     };
 
     document.addEventListener('mouseup', onDragEnd);
@@ -241,24 +268,6 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
       document.addEventListener('mousemove', minMoveThumb);
       document.addEventListener('touchmove', minMoveThumb);
     }
-
-    return () => {
-      document.removeEventListener('mouseup', onDragEnd);
-      document.removeEventListener('touchend', onDragEnd);
-      document.removeEventListener('touchcancel', onDragEnd);
-      document.removeEventListener('mousemove', minMoveThumb);
-      document.removeEventListener('touchmove', minMoveThumb);
-    };
-  }, [inMinDrag, minMoveThumb]);
-
-  useEffect(() => {
-    const onDragEnd = () => {
-      setInMaxDrag(false);
-    };
-
-    document.addEventListener('mouseup', onDragEnd);
-    document.addEventListener('touchend', onDragEnd);
-    document.addEventListener('touchcancel', onDragEnd);
     if (inMaxDrag) {
       document.addEventListener('mousemove', maxMoveThumb);
       document.addEventListener('touchmove', maxMoveThumb);
@@ -268,16 +277,21 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
       document.removeEventListener('mouseup', onDragEnd);
       document.removeEventListener('touchend', onDragEnd);
       document.removeEventListener('touchcancel', onDragEnd);
+      document.removeEventListener('mousemove', minMoveThumb);
+      document.removeEventListener('touchmove', minMoveThumb);
       document.removeEventListener('mousemove', maxMoveThumb);
       document.removeEventListener('touchmove', maxMoveThumb);
     };
-  }, [inMaxDrag, maxMoveThumb]);
+  }, [inMinDrag, inMaxDrag, minMoveThumb, maxMoveThumb]);
 
   const minPercentage = ((Number(minValue) - min) / (max - min)) * 100;
   const maxPercentage = ((Number(maxValue) - min) / (max - min)) * 100;
 
   return (
-    <FieldGroup name={heading} as={StyledRangeSliderWrapper}>
+    <FieldGroup
+      name={propsToUse.showLabel ? propsToUse?.label : null}
+      as={StyledRangeSliderWrapper}
+    >
       <Flex
         as={StyledSlider}
         container={{
@@ -355,11 +369,15 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
           />
         </StyledMaxValue>
       </Flex>
-      {children.map((child: any, i: number) => (
-        <Flex container={{ direction: 'column' }} key={`r-${i + 1}`}>
-          {child}
-        </Flex>
-      ))}
+      {Array.isArray(children) ? (
+        children.map((child: any, i: number) => (
+          <Flex container={{ direction: 'column' }} key={`r-${i + 1}`}>
+            {child}
+          </Flex>
+        ))
+      ) : (
+        <Flex container={{ direction: 'column' }}>{children}</Flex>
+      )}
     </FieldGroup>
   );
 };
