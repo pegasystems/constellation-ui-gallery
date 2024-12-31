@@ -51,7 +51,7 @@ export const ButtonNext = styled.button`
 export const DotsContainer = styled.div`
   display: flex;
   justify-content: center;
-  z-index: 9999;
+  z-index: 2;
   position: relative;
   top: -1.5rem;
 `;

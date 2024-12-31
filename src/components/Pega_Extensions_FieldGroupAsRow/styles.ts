@@ -3,33 +3,29 @@ import styled, { css } from 'styled-components';
 
 export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
   return css`
-    & > div > div {
-      max-width: unset;
-    }
-
-    & fieldset > div > div > div > div > div > div > div:last-child > div {
+    & > div > div > div > div:last-child > div {
       display: flex;
       flex-flow: row wrap;
     }
 
-    & fieldset > div h1 {
+    & h1 {
       display: none;
     }
 
-    & fieldset {
-      min-width: 40ch;
+    & > div > div > div > div:last-child > div > div {
+      min-width: 38ch;
       flex: 1;
       border-right: 0.0625rem solid ${theme.base.palette['border-line']};
-      margin-right: 1rem;
-      padding-right: 1rem;
+      margin-right: 0.5rem;
+      padding-right: 0.5rem;
     }
 
-    & fieldset dd {
-      text-align: right;
+    & div > div:last-child {
+      padding-inline-start: 0;
     }
 
-    & fieldset > legend > div {
-      flex-direction: column;
+    & div > div:last-child::before {
+      content: none;
     }
 
     & img {
