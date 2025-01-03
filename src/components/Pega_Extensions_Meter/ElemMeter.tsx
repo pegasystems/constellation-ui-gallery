@@ -29,6 +29,7 @@ const ElemMeter = (props: ElemMeterProps) => {
         event={event}
         ref={setEl}
         role='meter'
+        aria-label={event.label}
         aria-valuenow={event.value}
         aria-valuemin={0}
         aria-valuemax={100}
