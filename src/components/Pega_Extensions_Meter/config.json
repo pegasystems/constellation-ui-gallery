@@ -1,0 +1,60 @@
+{
+  "name": "Pega_Extensions_Meter",
+  "label": "Meter",
+  "description": "Meter",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_Meter",
+  "type": "Field",
+  "subtype": "Decimal-Percentage",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "additionalInfo",
+      "label": "Additional information",
+      "format": "TEXT"
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name used to source the data",
+      "format": "TEXT"
+    },
+    {
+      "name": "showMetaData",
+      "label": "Show the meta data on the screen",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "totalTasks",
+      "label": "Total tasks",
+      "format": "NUMBER"
+    },
+    {
+      "name": "color",
+      "label": "Color or JSON string",
+      "format": "TEXT"
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "detailFVLItem": true
+  }
+}

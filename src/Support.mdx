@@ -28,8 +28,14 @@ When adding new components, make sure that:
 - The component follow [best practices](https://pegasystems.github.io/constellation-ui-gallery/?path=/docs/getting-started--docs#implementing-a-constellation-dx-component).
 - The component props are exposed as an interface type object with description and default values so that the table of properties is documented in storybook.
 - Make sure that all files are linted correctly (npm run lint and npm run fix).
+- Make sure that all styles follow best practices (no use for px, no hardcoded colors...)
 - Make sure that you have a unit test.
 - Make sure that end to end and accessibility test is passing (see [README.md](https://github.com/pegasystems/constellation-ui-gallery/blob/master/README.md#end-to-end-testing) for instructions).
 - If using a 3rd party library, make sure that the library is open source and compatible with the React version and the Constellation component library - see [Library](https://pegasystems.github.io/constellation-ui-gallery/?path=/docs/libraries--docs).
+- You are not using a 3rd party presentational component library like Material UI - All the components should use the Constellation presentational components.
+- Do not include 3rd party icon library - there should be enough OOB icons in the Constellation presentational component library.
+- Test your component with different themes using the Storybook toolbar - the theme branding color and other tokens should be correctly handled by your components
+- The for right to left (rtl) using the Storybook toolbar.
 
 Once your code is ready, create a PR to the main branch using the following [procedure](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+Send an email to DXComponents@pega.com with a link to the github issue.
