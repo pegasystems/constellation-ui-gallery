@@ -22,7 +22,7 @@
       "label": "Maximum rating",
       "required": true,
       "format": "SELECT",
-      "defaultValue": "bezier",
+      "defaultValue": "5",
       "source": [
         {
           "key": "3",

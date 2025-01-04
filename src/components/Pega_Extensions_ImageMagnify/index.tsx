@@ -7,8 +7,9 @@ import {
   MagnifierZoom
 } from 'react-image-magnifiers';
 import '../create-nonce';
+import LightboxImage from './LightboxImage';
 
-type PegaExtensionsImageMagnifyProps = {
+export type PegaExtensionsImageMagnifyProps = {
   value: string;
 
   /**
@@ -21,6 +22,11 @@ type PegaExtensionsImageMagnifyProps = {
    * @default 100
    */
   customWidth?: number;
+  /**
+   * maxHeight - only used if  widthSel = widthpx and magnifyMode='lightbox'
+   * @default 100px
+   */
+  customHeight?: string;
 
   /**
    * Configuration for the image alt text
@@ -46,7 +52,7 @@ type PegaExtensionsImageMagnifyProps = {
    * Magnifier mode
    * @default magSideBySide
    */
-  magnifyMode?: 'magSideBySide' | 'magAdvanced';
+  magnifyMode?: 'magSideBySide' | 'magAdvanced' | 'lightbox';
 
   /**
    * Always magnify in place
@@ -149,6 +155,10 @@ export const PegaExtensionsImageMagnify = (props: PegaExtensionsImageMagnifyProp
   } = props;
 
   if (!value) return null;
+  if (magnifyMode === 'lightbox') {
+    return <LightboxImage {...props} />;
+  }
+
   // @ts-ignore
   let magTrigger = MOUSE_ACTIVATION.HOVER;
   if (magnifyTrigger === 'magTriggerClick') {
