@@ -12,6 +12,9 @@ export default {
     customWidth: {
       if: { arg: 'widthSel', eq: 'widthpx' }
     },
+    customHeight: {
+      if: { arg: 'widthSel', eq: 'widthpx' }
+    },
     altTextOfImage: {
       if: { arg: 'altText', eq: 'constant' }
     },
@@ -99,7 +102,7 @@ export const Default: Story = {
     value: 'Overview.png',
     widthSel: 'defaultWidth',
     customWidth: 100,
-
+    customHeight: '100px',
     altText: 'constant',
     altTextOfImage: '',
     propaltTextOfImage: '',

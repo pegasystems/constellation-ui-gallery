@@ -183,7 +183,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
         return item.value;
       });
       const colorArraySorted = colorValueArray.sort((a: number, b: number) => a - b);
-      const colorValueArrayIndex = colorArraySorted.findIndex((item: number) => item > value);
+      const colorValueArrayIndex = colorArraySorted.findIndex((item: number) => item >= value);
       colorValue = colorArray[colorValueArrayIndex].color;
     } catch {
       /* nothing */

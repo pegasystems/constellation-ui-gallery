@@ -74,6 +74,12 @@
               "format": "NUMBER"
             },
             {
+              "name": "customHeight",
+              "label": "Max Height as a string",
+              "visibility": "(widthSel = widthpx)",
+              "format": "TEXT"
+            },
+            {
               "format": "CASCADE",
               "source": {
                 "format": "SELECT",
@@ -130,6 +136,10 @@
             {
               "key": "magAdvanced",
               "value": "Advanced"
+            },
+            {
+              "key": "lightbox",
+              "value": "Lightbox"
             }
           ]
         },
@@ -271,6 +281,7 @@
     "label": "@L $this.label",
     "widthSel": "defaultWidth",
     "customWidth": 100,
+    "customHeight": 100,
     "altText": "constant",
     "altTextOfImage": "",
     "propaltTextOfImage": "",
