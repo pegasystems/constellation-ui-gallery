@@ -8,13 +8,23 @@ import {
   Progress,
   RadioButton,
   Text,
-  createUID
+  createUID,
+  Icon,
+  registerIcon,
+  useTheme,
+  Checkbox
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 import '../create-nonce';
 
 // includes in bundle
 import getAllFields from './utils';
+
+import * as checkIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/check.icon';
+import * as timesIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/times.icon';
+import '../create-nonce';
+
+registerIcon(checkIcon, timesIcon);
 
 export type TableLayoutProps = {
   heading: string;
@@ -46,6 +56,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
   const [selection, setSelection] = useState<Array<boolean>>([]);
 
   const metadata = getPConnect().getRawMetadata();
+  const theme = useTheme();
 
   const selectObject = (ID: any, index: number) => {
     if (metadata.config.selectionProperty) {
@@ -69,6 +80,17 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
         displayMode: 'DISPLAY_ONLY'
       }
     };
+    if (componentType === 'Checkbox') {
+      return (
+        <td key={key}>
+          {val === 'true' || val ? (
+            <Icon name='check' style={{ color: 'green' }} />
+          ) : (
+            <Icon name='times' style={{ color: 'red' }} />
+          )}
+        </td>
+      );
+    }
     if (componentType === 'URL') {
       field.config.displayAs = 'Image';
     }
@@ -127,7 +149,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
 
   if (displayFormat === 'radio-button-card') {
     return (
-      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
+      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat} theme={theme}>
         <RadioButtonGroup variant='card' label={heading} inline>
           {fields[0].value.map((val: any, i: number) => {
             const fvl: Array<{ id: string; name: string; value: JSX.Element | string }> = [];
@@ -169,7 +191,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
 
   const tableId = createUID();
   return (
-    <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
+    <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat} theme={theme}>
       <table>
         <caption>
           <Text variant='h3'>{heading}</Text>
@@ -216,7 +238,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                       child.value.map((val: any, j: number) => {
                         return (
                           <td key={`${tableId}-cell-${i}-${j}`}>
-                            <RadioButton
+                            <Checkbox
                               id={`${tableId}-radio-${j}`}
                               aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
                               variant='card'

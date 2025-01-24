@@ -1,59 +1,43 @@
-// individual style, comment out above, and uncomment here and add styles
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-
-
-export default styled.div(() => {
-  return css`
-    margin: 0px 0;
-  `;
-});
+export const StyledAddTask = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  & > div {
+    flex: 1;
+  }
+  & input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0%;
+    border-right: none;
+  }
+  & button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0%;
+  }
+`;
 
 export const Container = styled.div`
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 1rem;
+  border: 0.125rem solid #cccccc;
+  border-radius: 0.5rem;
   background-color: #f9f9f9;
 `;
 
 export const TaskCard = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 15px 16px;
-  margin-bottom: 10px;
-  background-color: #fff;
-`;
-
-export const TaskHeader = styled.div`
+  border: 0.125rem solid #dddddd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #ffffff;
   display: flex;
+  flex-flow: row nowrap;
   align-items: center;
-`;
-
-export const Checkbox = styled.input`
-  margin-right: 10px;
-`;
-
-export const StatusText = styled.span<{ status: 'pending' | 'completed' }>`
-  font-weight: bold;
-  color: ${(props) => (props.status === 'completed' ? 'green' : 'orange')};
-  margin-left: auto; /* Aligns to the right */
-`;
-
-export const Input = styled.input`
-  padding: 5px;
-  width: 80%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-`;
-
-export const AddTaskButton = styled.button`
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
+  & > div {
+    flex: 1;
+  }
+  & input:checked + label {
+    text-decoration: line-through;
+  }
 `;

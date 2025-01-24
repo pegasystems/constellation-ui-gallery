@@ -120,6 +120,30 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       },
       {
         config: {
+          value: ['true', 'true', 'false'],
+          componentType: 'Checkbox',
+          label: 'Windows 10'
+        },
+        type: 'ScalarList'
+      },
+      {
+        config: {
+          value: ['true', 'true', 'true'],
+          componentType: 'Checkbox',
+          label: 'HDMI Port'
+        },
+        type: 'ScalarList'
+      },
+      {
+        config: {
+          value: ['false', 'true', 'false'],
+          componentType: 'Checkbox',
+          label: 'USB Port'
+        },
+        type: 'ScalarList'
+      },
+      {
+        config: {
           value: [1200, 1345, 1499],
           componentType: 'Currency',
           label: 'Price'
