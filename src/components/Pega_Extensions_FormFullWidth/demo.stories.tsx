@@ -142,6 +142,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    NumCols: '1'
+    NumCols: '1',
+    gridTemplateColumns: ''
   }
 };

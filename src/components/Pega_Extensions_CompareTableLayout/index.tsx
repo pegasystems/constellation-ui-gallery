@@ -14,7 +14,11 @@ import {
   useTheme,
   Checkbox
 } from '@pega/cosmos-react-core';
-import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
+import StyledPegaExtensionsCompareTableLayoutWrapper, {
+  SelectedBgCell,
+  SelectedBgTh,
+  SelectedCell
+} from './styles';
 import '../create-nonce';
 
 // includes in bundle
@@ -61,7 +65,8 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
   const selectObject = (ID: any, index: number) => {
     if (metadata.config.selectionProperty) {
       const prop = metadata.config.selectionProperty.replace('@P ', '');
-      getPConnect().setValue(prop, ID);
+      getPConnect().getActionsApi().updateFieldValue(prop, ID);
+      getPConnect().getActionsApi().triggerFieldChange(prop, ID);
     }
     const sel: Array<boolean> = [];
     for (let i = 0; i < numCols; i += 1) {
@@ -70,7 +75,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
     setSelection(sel);
   };
 
-  const genField = (componentType: string, val: any, key: string) => {
+  const genField = (componentType: string, val: any) => {
     const field: FieldObj = {
       type: componentType,
       config: {
@@ -82,13 +87,13 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
     };
     if (componentType === 'Checkbox') {
       return (
-        <td key={key}>
+        <span aria-label={val}>
           {val === 'true' || val ? (
             <Icon name='check' style={{ color: 'green' }} />
           ) : (
             <Icon name='times' style={{ color: 'red' }} />
           )}
-        </td>
+        </span>
       );
     }
     if (componentType === 'URL') {
@@ -101,7 +106,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
         field.config.notation = currencyFormat;
       }
     }
-    return <td key={key}>{getPConnect().createComponent(field)}</td>;
+    return getPConnect().createComponent(field);
   };
 
   useEffect(() => {
@@ -149,7 +154,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
 
   if (displayFormat === 'radio-button-card') {
     return (
-      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat} theme={theme}>
+      <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
         <RadioButtonGroup variant='card' label={heading} inline>
           {fields[0].value.map((val: any, i: number) => {
             const fvl: Array<{ id: string; name: string; value: JSX.Element | string }> = [];
@@ -164,7 +169,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                     name: child.label,
                     value:
                       child.value && child.value.length >= i
-                        ? genField(child.componentType, child.value[i], `card-${i}-${j}`)
+                        ? genField(child.componentType, child.value[i])
                         : ''
                   });
                 }
@@ -191,7 +196,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
 
   const tableId = createUID();
   return (
-    <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat} theme={theme}>
+    <StyledPegaExtensionsCompareTableLayoutWrapper displayFormat={displayFormat}>
       <table>
         <caption>
           <Text variant='h3'>{heading}</Text>
@@ -200,6 +205,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
           <tr>
             <th>Name</th>
             {fields[0].value.map((val: string, idx: number) => {
+              const isSelected = selection.length >= idx ? selection[idx] : false;
               const field = {
                 type: 'Text',
                 config: {
@@ -208,9 +214,15 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                 }
               };
               return (
-                <th scope='col' key={`${tableId}-col-${idx}`} id={`${tableId}-col-${idx}`}>
+                <SelectedBgTh
+                  scope='col'
+                  key={`${tableId}-col-${idx}`}
+                  id={`${tableId}-col-${idx}`}
+                  theme={theme}
+                  isSelected={isSelected}
+                >
                   {getPConnect().createComponent(field)}
-                </th>
+                </SelectedBgTh>
               );
             })}
           </tr>
@@ -221,7 +233,11 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
               if (child.heading) {
                 return (
                   <tr key={`total-cat-${i}`} className={`total cat-${child.category}`}>
-                    <th colSpan={numCols + 1}>{child.heading}</th>
+                    <th>{child.heading}</th>
+                    {fields[0].value.map((val: string, idx: number) => {
+                      const isSelected = selection.length >= idx ? selection[idx] : false;
+                      return <SelectedBgCell theme={theme} isSelected={isSelected} />;
+                    })}
                   </tr>
                 );
               }
@@ -232,21 +248,27 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                 metadata.config.selectionProperty
               )
                 return (
-                  <tr key={`reg-row-${i}`} className='selection'>
+                  <tr key={`reg-row-${i}`}>
                     <th>Selection</th>
                     {child.value &&
                       child.value.map((val: any, j: number) => {
+                        const isSelected = selection.length >= j ? selection[j] : false;
                         return (
-                          <td key={`${tableId}-cell-${i}-${j}`}>
+                          <SelectedCell
+                            key={`${tableId}-cell-${i}-${j}`}
+                            isSelected={isSelected}
+                            theme={theme}
+                            className='selection'
+                          >
                             <Checkbox
                               id={`${tableId}-radio-${j}`}
                               aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
                               variant='card'
                               label='Select'
-                              checked={selection.length >= j ? selection[j] : false}
+                              checked={isSelected}
                               onChange={() => selectObject(val, j)}
                             />
-                          </td>
+                          </SelectedCell>
                         );
                       })}
                   </tr>
@@ -256,7 +278,16 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                   <th scope='row'>{child.label}</th>
                   {child.value &&
                     child.value.map((val: any, j: number) => {
-                      return genField(child.componentType, val, `${tableId}-row-${i}-${j}`);
+                      const isSelected = selection.length >= j ? selection[j] : false;
+                      return (
+                        <SelectedBgCell
+                          theme={theme}
+                          isSelected={isSelected}
+                          key={`${tableId}-row-${i}-${j}`}
+                        >
+                          {genField(child.componentType, val)}
+                        </SelectedBgCell>
+                      );
                     })}
                 </tr>
               );
