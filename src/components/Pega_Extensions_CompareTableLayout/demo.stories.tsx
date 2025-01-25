@@ -120,7 +120,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       },
       {
         config: {
-          value: ['true', 'true', 'false'],
+          value: [true, true, false],
           componentType: 'Checkbox',
           label: 'Windows 10'
         },
@@ -128,7 +128,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       },
       {
         config: {
-          value: ['true', 'true', 'true'],
+          value: [true, true, true],
           componentType: 'Checkbox',
           label: 'HDMI Port'
         },
@@ -136,7 +136,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       },
       {
         config: {
-          value: ['false', 'true', 'false'],
+          value: [false, true, false],
           componentType: 'Checkbox',
           label: 'USB Port'
         },
@@ -418,6 +418,12 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
             },
             resolveConfigProps: (f: string) => {
               return f;
+            },
+            getActionsApi: () => {
+              return {
+                updateFieldValue: (prop: string, value: string) => {},
+                triggerFieldChange: (prop: string, value: string) => {}
+              };
             }
           };
         }
