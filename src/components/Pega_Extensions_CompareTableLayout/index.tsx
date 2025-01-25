@@ -86,15 +86,10 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
       }
     };
     if (componentType === 'Checkbox') {
-      return (
-        <span aria-label={val}>
-          {val === 'true' || val ? (
-            <Icon name='check' style={{ color: 'green' }} />
-          ) : (
-            <Icon name='times' style={{ color: 'red' }} />
-          )}
-        </span>
-      );
+      if (val === 'true' || val) {
+        return <Icon name='check' style={{ color: 'green' }} />;
+      }
+      return <Icon name='times' style={{ color: 'red' }} />;
     }
     if (componentType === 'URL') {
       field.config.displayAs = 'Image';
