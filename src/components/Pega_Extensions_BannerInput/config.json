@@ -1,0 +1,81 @@
+{
+  "name": "Pega_Extensions_BannerInput",
+  "label": "Banner Input",
+  "description": "Banner Input",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_BannerInput",
+  "type": "Field",
+  "subtype": "Text-Paragraph",
+  "properties": [
+    {
+      "name": "icon",
+      "label": "Icon",
+      "format": "SELECT",
+      "defaultValue": "warn-solid",
+      "source": [
+        {
+          "key": "warn-solid",
+          "value": "warn-solid"
+        },
+        {
+          "key": "flag-wave-solid",
+          "value": "flag-wave-solid"
+        },
+        {
+          "key": "check",
+          "value": "check"
+        },
+        {
+          "key": "information-solid",
+          "value": "information-solid"
+        }
+      ]
+    },
+    {
+      "name": "variant",
+      "label": "variant",
+      "format": "SELECT",
+      "defaultValue": "success",
+      "source": [
+        {
+          "key": "success",
+          "value": "success"
+        },
+        {
+          "key": "info",
+          "value": "info"
+        },
+        {
+          "key": "warn",
+          "value": "warn"
+        },
+        {
+          "key": "pending",
+          "value": "pending"
+        },
+        {
+          "key": "urgent",
+          "value": "urgent"
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "inputProperty": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "detailFVLItem": true
+  }
+}
