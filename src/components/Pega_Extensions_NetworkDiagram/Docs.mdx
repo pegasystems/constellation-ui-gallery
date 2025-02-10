@@ -9,6 +9,7 @@ The Network Diagram component allows to represent a complex tree diagram of rela
 The relation between each object can be represented by a label and a type.
 
 To configure this component, you need to a provide a page Data Page of type Embed-Graph that contains nodes (as pyNodes) and edges (as pyEdges). You can look at the storybook code for an example of the expected response from this data page.
+By default the DP is not parametrized. If you set the field selectionProperty to a certain value, then the DP will be called using the parameter pyGUID set to this property.
 
 This component supports the following features:
 

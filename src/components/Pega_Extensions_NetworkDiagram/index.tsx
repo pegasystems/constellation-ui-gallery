@@ -40,8 +40,13 @@ interface StringHashMap {
 export interface NetworkDiagramProps {
   /** Heading of the widget */
   heading: string;
+
   /** Name of the data page that will be called to get the Nodes and Edges */
   dataPage: string;
+
+  /** If the DP is parameterized, this property will be passed as pyGUID parameter */
+  selectionProperty?: string;
+
   /** Height of the diagram
    * @default 40rem
    */
@@ -105,6 +110,7 @@ const edgeTypes: any = {
 function Flow(props: any) {
   const {
     dataPage = 'D_DemoGraph',
+    selectionProperty = '',
     height = '40rem',
     showMinimap = true,
     showControls = true,
@@ -125,7 +131,19 @@ function Flow(props: any) {
       const initialNodes: Array<Node> = [];
       const initialEdges: Array<Edge> = [];
       const tmpNodesHash: StringHashMap = {};
-      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, '');
+      let parameters;
+      if (selectionProperty) {
+        parameters = { pyGUID: selectionProperty };
+      }
+      const context = getPConnect().getContextName();
+      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(
+        dataPage,
+        context,
+        parameters,
+        {
+          invalidateCache: true
+        }
+      );
       data.pyNodes.forEach((element: any) => {
         tmpNodesHash[element.pyID] = element.pyLabel;
         initialNodes.push({
@@ -201,7 +219,18 @@ function Flow(props: any) {
       }, 10);
     }
     getNodesDetails();
-  }, [height, edgePath, counter, setNodes, setEdges, getPConnect, theme, fitView, dataPage]);
+  }, [
+    height,
+    edgePath,
+    counter,
+    setNodes,
+    setEdges,
+    getPConnect,
+    theme,
+    fitView,
+    dataPage,
+    selectionProperty
+  ]);
 
   return (
     <ReactFlow
