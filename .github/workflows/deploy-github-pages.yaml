@@ -1,24 +1,38 @@
-# Workflow name
-name: Build and Publish Storybook to GitHub Pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
-  # Event for the workflow to run on
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - master
+    branches: ['master']
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# List of jobs
 jobs:
+  # Single deploy job since we're just deploying
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    # Job steps
     steps:
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.2
+      - name: Checkout
+        uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build-storybook
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: storybook-static
+          path: './storybook-static'
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ github.token }}
