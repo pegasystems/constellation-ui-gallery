@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm run build-storybook
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: './storybook-static'
       - id: deploy
