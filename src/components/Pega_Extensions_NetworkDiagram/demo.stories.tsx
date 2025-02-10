@@ -13,6 +13,11 @@ export default {
         disable: true
       }
     },
+    selectionProperty: {
+      table: {
+        disable: true
+      }
+    },
     getPConnect: {
       table: {
         disable: true
@@ -810,6 +815,7 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getContextName: () => '',
           getActionsApi: () => {
             return {
               openWorkByHandle: () => {

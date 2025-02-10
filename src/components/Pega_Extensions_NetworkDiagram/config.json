@@ -23,6 +23,12 @@
       "required": true
     },
     {
+      "key": "selectionProperty",
+      "format": "PROPERTY",
+      "name": "selectionProperty",
+      "label": "Selection Property"
+    },
+    {
       "name": "height",
       "label": "Height of the diagram",
       "format": "TEXT"
