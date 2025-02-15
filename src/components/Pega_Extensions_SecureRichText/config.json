@@ -23,6 +23,31 @@
       "format": "READONLY"
     },
     {
+      "name": "toolbarMode",
+      "label": "Toolbar mode",
+      "format": "SELECT",
+      "source": [
+        {
+          "key": "basic",
+          "value": "basic"
+        },
+        {
+          "key": "normal",
+          "value": "normal"
+        }
+      ]
+    },
+    {
+      "name": "showWordCounter",
+      "label": "Show Word Counter?",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "maxWords",
+      "label": "Max Words",
+      "format": "NUMBER"
+    },
+    {
       "label": "Column settings",
       "format": "GROUP",
       "visibility": "@VIEWTYPE == 'MultiRecordDisplayAsTable'",
@@ -106,6 +131,9 @@
     }
   ],
   "defaultConfig": {
-    "label": "@L $this.label"
+    "label": "@L $this.label",
+    "toolbarMode": "normal",
+    "showWordCounter": false,
+    "maxWords": 100
   }
 }

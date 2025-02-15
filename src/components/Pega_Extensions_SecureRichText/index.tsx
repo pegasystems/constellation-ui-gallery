@@ -8,13 +8,17 @@ import { NoValue, withConfiguration } from '@pega/cosmos-react-core';
 import { formatExists, textFormatter } from './utils';
 import '../create-nonce';
 
-const toolbar = ['inline-styling', 'headers', 'lists', 'cut-copy-paste', 'indentation'];
-
 export interface RichTextProps {
   /** field label */
   label: string;
   /** Value to be passed to the component */
   value: string;
+  /** Mode for the toolbar */
+  toolbarMode: 'basic' | 'normal';
+  /** Max number of words */
+  maxWords?: number;
+  /** Show word counter */
+  showWordCounter?: boolean;
   /** Helper text */
   helperText?: string;
   /** testId */
@@ -74,6 +78,11 @@ const sanitizeConfig = {
   FORCE_BODY: true // Ensure entire body is sanitized
 };
 
+interface WordCountAnnouncement {
+  message: string;
+  isAlert: boolean;
+}
+
 export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const {
     getPConnect,
@@ -87,13 +96,22 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     displayMode,
     additionalProps = {},
     isTableFormatter = false,
-    fieldMetadata
+    fieldMetadata,
+    toolbarMode = 'normal',
+    maxWords = 100,
+    showWordCounter = true
   } = props;
 
   const { formatter } = props;
   const pConn = getPConnect();
   const editorRef = useRef<EditorState>(null);
   const [sanitizedValue, setSanitizedValue] = useState(value);
+  const [wordCount, setWordCount] = useState(0);
+  const [lastUpdate, setLastUpdate] = useState(wordCount);
+  const [announcement, setAnnouncement] = useState<WordCountAnnouncement>({
+    message: '',
+    isAlert: false
+  });
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
     ? {
@@ -105,15 +123,54 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
     prop => prop === true || (typeof prop === 'string' && prop === 'true')
   );
+  const toolbar =
+    toolbarMode === 'normal'
+      ? ['inline-styling', 'headers', 'lists', 'cut-copy-paste', 'indentation']
+      : ['lists', 'links'];
+
+  // Function to generate word count announcements
+  const getWordCountAnnouncement = (count: number): WordCountAnnouncement => {
+    if (count > maxWords) {
+      return {
+        message: `You are ${count - maxWords} words over the ${maxWords} word limit`,
+        isAlert: true
+      };
+    }
+    if (count <= 20) {
+      return {
+        message: `${maxWords - count} words remaining`,
+        isAlert: false
+      };
+    }
+    return { message: '', isAlert: false };
+  };
 
   const sanitizeContent = (editorContent: string) => {
     const sanitized = DOMPurify.sanitize(editorContent, sanitizeConfig);
     setSanitizedValue(sanitized);
+    if (showWordCounter) {
+      const newWordCount = editorRef.current?.getPlainText().trim()
+        ? editorRef.current?.getPlainText().trim().split(/\s+/).length
+        : 0;
+      setWordCount(newWordCount);
+
+      // Update announcement based on new word count
+      setAnnouncement(getWordCountAnnouncement(newWordCount));
+    }
     editorRef.current?.insertHtml(sanitized, true);
+  };
+
+  // Handle focus to announce max word count
+  const handleFocus = () => {
+    setAnnouncement({
+      message: `Maximum ${maxWords} words allowed`,
+      isAlert: false
+    });
   };
 
   useEffect(() => {
     sanitizeContent(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const onInit = (editor: TinymceEditor) => {
@@ -168,12 +225,29 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     if (validatemessage !== '') {
       status = 'error';
     }
+    const countWords = (text: any) => {
+      if (typeof text !== 'string') {
+        return 0;
+      }
+      return text.trim() ? text.trim().split(/\s+/).length : 0;
+    };
+
     const handleChange = () => {
+      setSanitizedValue(editorRef.current?.getHtml() || '');
+      if (showWordCounter) {
+        const currentWordCount = countWords(editorRef.current?.getPlainText());
+        setWordCount(currentWordCount);
+
+        // Update announcement based on word count
+        setAnnouncement(getWordCountAnnouncement(currentWordCount));
+
+        if (Math.abs(currentWordCount - lastUpdate) >= 5) {
+          setLastUpdate(currentWordCount);
+        }
+      }
       if (status === 'error') {
         const property = pConn.getStateProps().value;
-        pConn.clearErrorMessages({
-          property
-        });
+        pConn.clearErrorMessages({ property });
       }
     };
 
@@ -191,25 +265,44 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     };
 
     richTextComponent = (
-      <Editor
-        {...additionalProps}
-        toolbar={toolbar}
-        label={label}
-        labelHidden={hideLabel}
-        info={validatemessage || helperText}
-        defaultValue={value}
-        status={status}
-        placeholder={placeholder}
-        disabled={disabled}
-        required={required}
-        data-testid={testId}
-        ref={editorRef}
-        additionalInfo={additionalInfo}
-        {...actions}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onInit={onInit}
-      />
+      <div>
+        <Editor
+          {...additionalProps}
+          toolbar={toolbar}
+          label={label}
+          labelHidden={hideLabel}
+          info={validatemessage || helperText}
+          defaultValue={value}
+          status={status}
+          placeholder={placeholder}
+          disabled={disabled}
+          required={required}
+          data-testid={testId}
+          ref={editorRef}
+          additionalInfo={additionalInfo}
+          {...actions}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          onInit={onInit}
+        />
+        {showWordCounter && (
+          <div
+            aria-live='polite'
+            style={{
+              fontSize: '12px',
+              color: wordCount > maxWords ? 'red' : 'gray',
+              marginTop: '5px'
+            }}
+            role={announcement.isAlert ? 'alert' : 'status'}
+          >
+            {announcement.message ||
+              (wordCount > maxWords
+                ? `${wordCount - maxWords} words over limit`
+                : `${Math.max(0, maxWords - wordCount)} words remaining`)}
+          </div>
+        )}
+      </div>
     );
   }
 

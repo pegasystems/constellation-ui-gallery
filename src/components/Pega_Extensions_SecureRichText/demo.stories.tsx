@@ -34,6 +34,7 @@ export default {
         disable: true
       }
     },
+    maxWords: { control: 'number', if: { arg: 'showWordCounter', eq: true } },
     formatter: {
       table: {
         disable: true
@@ -150,6 +151,9 @@ export const Default: Story = {
     testId: 'paragraph-12345678',
     placeholder: 'Paragraph Placeholder',
     validatemessage: '',
+    toolbarMode: 'normal',
+    showWordCounter: true,
+    maxWords: 100,
     disabled: false,
     readOnly: false,
     required: false,
