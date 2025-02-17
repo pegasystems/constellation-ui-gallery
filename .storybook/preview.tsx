@@ -14,7 +14,8 @@ import {
   Aries2023Theme,
   Aries2023DarkTheme,
   ThemeMachine,
-  BaseThemeMachine
+  BaseThemeMachine,
+  LiveLog
 } from '@pega/cosmos-react-core';
 import type { DefaultSettableTheme, DefaultThemeDefinition } from '@pega/cosmos-react-core';
 import * as MantisTheme from './MantisTheme.json';
@@ -76,13 +77,15 @@ const preview: Preview = {
           disableDefaultFontLoading
           id='Preview'
         >
-          <PopoverManager>
-            <Toaster dismissAfter={5000}>
-              <ModalManager>
-                <Story {...context} />
-              </ModalManager>
-            </Toaster>
-          </PopoverManager>
+          <LiveLog maxLength={50}>
+            <PopoverManager>
+              <Toaster dismissAfter={5000}>
+                <ModalManager>
+                  <Story {...context} />
+                </ModalManager>
+              </Toaster>
+            </PopoverManager>
+          </LiveLog>
         </Configuration>
       );
     },

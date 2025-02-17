@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import type { Editor as TinymceEditor } from 'tinymce/tinymce';
 import { Editor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte';
 import { Details, DetailsList } from '@pega/cosmos-react-work';
-import { NoValue, withConfiguration } from '@pega/cosmos-react-core';
+import { NoValue, useLiveLog, withConfiguration } from '@pega/cosmos-react-core';
 
 import { formatExists, textFormatter } from './utils';
 import '../create-nonce';
@@ -107,7 +107,8 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const editorRef = useRef<EditorState>(null);
   const [sanitizedValue, setSanitizedValue] = useState(value);
   const [wordCount, setWordCount] = useState(0);
-  const [lastUpdate, setLastUpdate] = useState(wordCount);
+  /* current timestamp to track last update */
+  const [lastUpdated, setLastUpdate] = useState(Date.now());
   const [announcement, setAnnouncement] = useState<WordCountAnnouncement>({
     message: '',
     isAlert: false
@@ -127,6 +128,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     toolbarMode === 'normal'
       ? ['inline-styling', 'headers', 'lists', 'cut-copy-paste', 'indentation']
       : ['lists', 'links'];
+  const { announceAssertive } = useLiveLog();
 
   // Function to generate word count announcements
   const getWordCountAnnouncement = (count: number): WordCountAnnouncement => {
@@ -155,17 +157,29 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
       setWordCount(newWordCount);
 
       // Update announcement based on new word count
-      setAnnouncement(getWordCountAnnouncement(newWordCount));
+      const msg = getWordCountAnnouncement(newWordCount);
+      setLastUpdate(prev => {
+        if (Date.now() - prev > 5000) {
+          announceAssertive({ message: msg.message });
+          return Date.now();
+        }
+        return prev;
+      });
+      setAnnouncement(msg);
     }
     editorRef.current?.insertHtml(sanitized, true);
   };
 
   // Handle focus to announce max word count
   const handleFocus = () => {
-    setAnnouncement({
+    const msg = {
       message: `Maximum ${maxWords} words allowed`,
       isAlert: false
-    });
+    };
+    setAnnouncement(msg);
+    setTimeout(() => {
+      sanitizeContent(value);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -225,26 +239,9 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     if (validatemessage !== '') {
       status = 'error';
     }
-    const countWords = (text: any) => {
-      if (typeof text !== 'string') {
-        return 0;
-      }
-      return text.trim() ? text.trim().split(/\s+/).length : 0;
-    };
 
     const handleChange = () => {
-      setSanitizedValue(editorRef.current?.getHtml() || '');
-      if (showWordCounter) {
-        const currentWordCount = countWords(editorRef.current?.getPlainText());
-        setWordCount(currentWordCount);
-
-        // Update announcement based on word count
-        setAnnouncement(getWordCountAnnouncement(currentWordCount));
-
-        if (Math.abs(currentWordCount - lastUpdate) >= 5) {
-          setLastUpdate(currentWordCount);
-        }
-      }
+      sanitizeContent(editorRef.current?.getHtml() || '');
       if (status === 'error') {
         const property = pConn.getStateProps().value;
         pConn.clearErrorMessages({ property });
@@ -265,7 +262,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     };
 
     richTextComponent = (
-      <div>
+      <>
         <Editor
           {...additionalProps}
           toolbar={toolbar}
@@ -295,6 +292,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
               marginTop: '5px'
             }}
             role={announcement.isAlert ? 'alert' : 'status'}
+            data-updated={lastUpdated}
           >
             {announcement.message ||
               (wordCount > maxWords
@@ -302,7 +300,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
                 : `${Math.max(0, maxWords - wordCount)} words remaining`)}
           </div>
         )}
-      </div>
+      </>
     );
   }
 
