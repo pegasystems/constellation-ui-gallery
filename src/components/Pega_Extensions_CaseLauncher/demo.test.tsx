@@ -8,7 +8,7 @@ test('renders Case Launcher widget with default args', () => {
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   render(<Default />);
 
-  const headingElement = screen.getByRole('heading');
+  const headingElement = screen.getByRole('heading', { name: /start case/i });
   expect(headingElement).not.toBeNull();
 
   const buttonElement = screen.getByRole('button', { name: 'Start a case' });
