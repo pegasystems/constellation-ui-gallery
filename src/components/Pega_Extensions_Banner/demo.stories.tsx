@@ -8,7 +8,8 @@ export default {
       table: {
         disable: true
       }
-    }
+    },
+    dismissAction: { control: 'string', if: { arg: 'dismissible', eq: true } }
   },
   component: PegaExtensionsBanner
 };
@@ -30,8 +31,55 @@ const setPCore = () => {
         }
       };
     },
+    getContainerUtils: () => {
+      return {
+        getContainerItems: () => {
+          return ['test'];
+        },
+        updateCaseContextEtag: () => {}
+      };
+    },
+    getRestClient: () => {
+      return {
+        invokeRestApi: () => {
+          return Promise.resolve({
+            data: {
+              data: { caseInfo: '2' }
+            }
+          });
+        }
+      };
+    },
+    createPConnect: () => ({
+      getPConnect: () => ({
+        getActionsApi: () => ({
+          finishAssignment: () => {
+            return Promise.resolve({
+              data: {
+                data: {}
+              }
+            });
+          }
+        }),
+        getContextName: () => '',
+        getValue: () => 'C-123',
+        getListActions: () => {
+          return {
+            update: () => {},
+            deleteEntry: () => {}
+          };
+        }
+      })
+    }),
     getDataApiUtils: () => {
       return {
+        getCaseEditLock: () => {
+          return Promise.resolve({
+            headers: {
+              etag: '123'
+            }
+          });
+        },
         getData: () => {
           return Promise.resolve({
             data: {
@@ -71,6 +119,16 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getDataObject: () => {
+            return {};
+          },
+          updateState: () => {},
+          getContainerManager: () => {
+            return {
+              addContainerItem: () => {},
+              removeContainerItem: () => {}
+            };
+          },
           getContextName: () => '',
           getValue: () => 'C-123',
           getActionsApi: () => {
@@ -88,6 +146,8 @@ export const Default: Story = {
   },
   args: {
     variant: 'success',
-    dataPage: 'D_error'
+    dataPage: 'D_error',
+    dismissible: false,
+    dismissAction: ''
   }
 };
