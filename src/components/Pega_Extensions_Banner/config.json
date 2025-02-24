@@ -43,8 +43,14 @@
       "format": "TEXT"
     },
     {
+      "name": "dismissible",
+      "label": "Is the banner dismissible",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
       "name": "dismissAction",
-      "label": "Local Action ID to dismiss the banner",
+      "label": "Case Wide Action ID to dismiss the banner",
       "format": "TEXT"
     },
     {
