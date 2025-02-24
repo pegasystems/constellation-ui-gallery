@@ -75,6 +75,7 @@ export const Default: Story = {
           getValue: () => 'C-123',
           getActionsApi: () => {
             return {
+              submitDataObjectAction: () => {},
               showPage: (name: string, classname: string) => {
                 // eslint-disable-next-line no-alert
                 alert(`show page ${classname}.${name}`);
@@ -88,6 +89,7 @@ export const Default: Story = {
   },
   args: {
     variant: 'success',
-    dataPage: 'D_error'
+    dataPage: 'D_error',
+    dismissAction: ''
   }
 };

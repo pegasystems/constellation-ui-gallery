@@ -8,7 +8,10 @@
   "allowedApplications": [],
   "componentKey": "Pega_Extensions_Banner",
   "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
+  "subtype": [
+    "PAGE",
+    "CASE"
+  ],
   "properties": [
     {
       "name": "variant",
@@ -38,6 +41,22 @@
       "name": "dataPage",
       "label": "Data Page name to get the messages",
       "format": "TEXT"
+    },
+    {
+      "name": "dismissAction",
+      "label": "Local Action ID to dismiss the banner",
+      "format": "TEXT"
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
     }
   ]
 }
