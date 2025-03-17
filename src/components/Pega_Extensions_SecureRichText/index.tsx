@@ -3,10 +3,16 @@ import DOMPurify from 'dompurify';
 import type { Editor as TinymceEditor } from 'tinymce/tinymce';
 import { Editor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte';
 import { Details, DetailsList } from '@pega/cosmos-react-work';
-import { NoValue, useLiveLog, withConfiguration } from '@pega/cosmos-react-core';
+import { NoValue, registerIcon, useLiveLog, withConfiguration } from '@pega/cosmos-react-core';
 
 import { formatExists, textFormatter } from './utils';
+
+import * as listIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list.icon';
+import * as listNumberIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list-number.icon';
+
 import '../create-nonce';
+
+registerIcon(listIcon, listNumberIcon);
 
 export interface RichTextProps {
   /** field label */
