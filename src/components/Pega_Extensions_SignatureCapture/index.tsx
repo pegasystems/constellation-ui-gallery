@@ -64,6 +64,14 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
   );
   useEffect(() => setInputValue(value), [value]);
 
+  /* On load of the component - use the value if set to prefill the signature */
+  useEffect(() => {
+    if (value) {
+      ref.current?.fromDataURL(value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (validatemessage !== '') {
       setStatus('error');
