@@ -80,6 +80,8 @@ export const Default: Story = {
     errorMessage: '',
     hiraganaToKatakana: false,
     fullToHalf: false,
-    lowerToUpper: false
+    lowerToUpper: false,
+    japaneseEraToGregorian: false,
+    gregorianToJapaneseEra: false,
   }
 };
