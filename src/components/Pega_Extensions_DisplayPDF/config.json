@@ -1,0 +1,51 @@
+{
+  "name": "Pega_Extensions_DisplayPDF",
+  "label": "Display PDF",
+  "description": "Display PDF in read-only mode",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_DisplayPDF",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "width",
+      "label": "width of the pdf in px or %",
+      "format": "TEXT"
+    },
+    {
+      "name": "height",
+      "label": "Height of the pdf in px",
+      "format": "NUMBER"
+    },
+    {
+      "name": "showToolbar",
+      "label": "Display PDF toolbar",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name",
+      "format": "TEXT"
+    },
+    {
+      "name": "visibility",
+      "label": "Visibility",
+      "format": "VISIBILITY"
+    }
+  ],
+  "defaultConfig": {
+    "isContainerWidth": true,
+    "height": 400,
+    "width": "100%"
+  }
+}
