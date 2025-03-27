@@ -197,7 +197,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
                   heading: file.pyLabel,
                   width,
                   height,
-                  value: file.pyContent,
+                  value: file.pyContext,
                   showToolbar
                 });
               }}

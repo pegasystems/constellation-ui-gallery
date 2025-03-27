@@ -61,17 +61,17 @@ const setPCore = (url: string) => {
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #1',
-                  pyContent: url
+                  pyContext: url
                 },
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #2',
-                  pyContent: url
+                  pyContext: url
                 },
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #3',
-                  pyContent: url
+                  pyContext: url
                 }
               ]
             }
