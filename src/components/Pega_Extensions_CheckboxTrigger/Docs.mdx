@@ -11,7 +11,7 @@ cannot, for example, run an activity or data transform when a property value is 
 
 If the use case is to have a checkbox that runs some post-processing and copy the value of one field to another field, you can use this Constellation DX component to achieve this behavior.
 The component uses a regular checkbox but onChange, will call a data page (passed as parameter) that will send the current content of the Data object. In the DP, you can transform the values
-of the data object and return the updated fields. These fields will be automatically updated in the UI.
+of the data object and return the updated fields. These fields will be automatically updated in the UI. Note that these fields should be marked as primary fields in the data object.
 
 Note that the DP must be of type 'Savable' but it does not need to save the object per say.
 

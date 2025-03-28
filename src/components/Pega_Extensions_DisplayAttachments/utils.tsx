@@ -141,7 +141,7 @@ export const addAttachment = (props: AddAttachmentProps) => {
 
   const kind = getKindFromMimeType(attachment.mimeType ?? '');
   const visual = <FileVisual type={kind} />;
-  const bCanUseLightBox = useLightBox && kind === 'image';
+  const bCanUseLightBox = useLightBox && canPreviewFile(kind);
   listOfAttachments.push({
     id: attachment.ID,
     visual,

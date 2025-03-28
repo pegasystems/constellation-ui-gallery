@@ -5,8 +5,6 @@ import { Editor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte
 import { Details, DetailsList } from '@pega/cosmos-react-work';
 import { NoValue, registerIcon, useLiveLog, withConfiguration } from '@pega/cosmos-react-core';
 
-import { formatExists, textFormatter } from './utils';
-
 import * as listIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list.icon';
 import * as listNumberIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list-number.icon';
 
@@ -56,34 +54,6 @@ export interface RichTextProps {
   getPConnect: any;
 }
 
-const sanitizeConfig = {
-  FORBID_TAGS: [
-    'img', // Image tag
-    'picture', // Picture container for responsive images
-    'source', // Source tag for picture/video
-    'link', // Link tag, often used for favicon
-    'meta', // Meta tags like og:image or twitter:image
-    'svg', // SVG, as it can contain embedded images
-    'image', // <image> tag within SVG
-    'video', // Video tag with poster attribute
-    'iframe', // Iframe, which could load external content
-    'embed', // Embed, often used for SVG or images
-    'object', // Object, used to embed images or SVG
-    'a' // Anchor tag for links
-  ],
-  FORBID_ATTR: [
-    'src', // Commonly used for image URLs
-    'srcset', // Used in responsive images
-    'data', // Used in object/embed elements
-    'href', // Attribute for links and favicon
-    'poster', // Poster image in video tag
-    'style', // Inline styles, might contain background images
-    'xlink:href' // Used for linking in SVG
-  ],
-  ALLOWED_URI_REGEXP: /^$/, // Disallow all URIs in any tags
-  FORCE_BODY: true // Ensure entire body is sanitized
-};
-
 interface WordCountAnnouncement {
   message: string;
   isAlert: boolean;
@@ -101,14 +71,12 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     testId,
     displayMode,
     additionalProps = {},
-    isTableFormatter = false,
     fieldMetadata,
     toolbarMode = 'normal',
     maxWords = 100,
     showWordCounter = true
   } = props;
 
-  const { formatter } = props;
   const pConn = getPConnect();
   const editorRef = useRef<EditorState>(null);
   const [sanitizedValue, setSanitizedValue] = useState(value);
@@ -154,6 +122,41 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   };
 
   const sanitizeContent = (editorContent: string) => {
+    const sanitizeConfig: {
+      FORBID_TAGS: string[];
+      FORBID_ATTR: string[];
+      FORCE_BODY: boolean;
+      ALLOWED_URI_REGEXP?: RegExp;
+    } = {
+      FORBID_TAGS: [
+        'img', // Image tag
+        'picture', // Picture container for responsive images
+        'source', // Source tag for picture/video
+        'link', // Link tag, often used for favicon
+        'meta', // Meta tags like og:image or twitter:image
+        'svg', // SVG, as it can contain embedded images
+        'image', // <image> tag within SVG
+        'video', // Video tag with poster attribute
+        'iframe', // Iframe, which could load external content
+        'embed', // Embed, often used for SVG or images
+        'object' // Object, used to embed images or SVG
+      ],
+      FORBID_ATTR: [
+        'src', // Commonly used for image URLs
+        'srcset', // Used in responsive images
+        'data', // Used in object/embed elements
+        'poster', // Poster image in video tag
+        'style', // Inline styles, might contain background images
+        'xlink:href' // Used for linking in SVG
+      ],
+      FORCE_BODY: true // Ensure entire body is sanitized
+    };
+    if (toolbarMode === 'normal') {
+      // add anchor tag and href attribute to sanitizedConfig
+      sanitizeConfig.FORBID_TAGS.push('a');
+      sanitizeConfig.FORBID_ATTR.push('href');
+      sanitizeConfig.ALLOWED_URI_REGEXP = /^$/; // Disallow all URIs in any tags
+    }
     const sanitized = DOMPurify.sanitize(editorContent, sanitizeConfig);
     setSanitizedValue(sanitized);
     if (showWordCounter) {
@@ -183,9 +186,6 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
       isAlert: false
     };
     setAnnouncement(msg);
-    setTimeout(() => {
-      sanitizeContent(value);
-    }, 2000);
   };
 
   useEffect(() => {
@@ -205,11 +205,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     <NoValue />
   );
 
-  if (displayMode === 'DISPLAY_ONLY' && formatter) {
-    if (isTableFormatter && formatExists(formatter)) {
-      return textFormatter(formatter, sanitizedValue);
-    }
-
+  if (displayMode === 'DISPLAY_ONLY') {
     return displayComponent;
   }
 

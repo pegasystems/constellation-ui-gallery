@@ -1,4 +1,4 @@
-import { withConfiguration, Icon, registerIcon } from '@pega/cosmos-react-core';
+import { withConfiguration, Icon, HTML, registerIcon } from '@pega/cosmos-react-core';
 import { useTheme } from 'styled-components';
 import * as warnSolidIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/warn-solid.icon';
 import * as flagWaveSolidIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/flag-wave-solid.icon';
@@ -33,7 +33,7 @@ export const PegaExtensionsBannerInput = (props: BannerInputProps) => {
         <Icon name={icon} />
       </StyledBannerStatus>
       <StyledBannerText variant={variant} theme={theme}>
-        {value}
+        <HTML content={value} />
       </StyledBannerText>
     </StyledBanner>
   );
