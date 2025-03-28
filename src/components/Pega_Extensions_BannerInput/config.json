@@ -75,7 +75,8 @@
     }
   ],
   "defaultConfig": {
-    "inputProperty": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "detailFVLItem": true
+    "inputProperty": "Lorem ipsum dolor sit amet, <strong>consectetur</strong> adipiscing elit.",
+    "detailFVLItem": true,
+    "isContainerWidth": true
   }
 }
