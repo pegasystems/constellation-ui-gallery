@@ -79,7 +79,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
   const pConn = getPConnect();
   const editorRef = useRef<EditorState>(null);
-  const [sanitizedValue, setSanitizedValue] = useState(value);
+  const sanitizedValue = useRef(value);
   const [wordCount, setWordCount] = useState(0);
   /* current timestamp to track last update */
   const [lastUpdated, setLastUpdate] = useState(Date.now());
@@ -121,7 +121,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     return { message: '', isAlert: false };
   };
 
-  const sanitizeContent = (editorContent: string) => {
+  const purify = (html: string) => {
     const sanitizeConfig: {
       FORBID_TAGS: string[];
       FORBID_ATTR: string[];
@@ -157,12 +157,17 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
       sanitizeConfig.FORBID_ATTR.push('href');
       sanitizeConfig.ALLOWED_URI_REGEXP = /^$/; // Disallow all URIs in any tags
     }
-    const sanitized = DOMPurify.sanitize(editorContent, sanitizeConfig);
-    setSanitizedValue(sanitized);
-    if (showWordCounter) {
-      const newWordCount = editorRef.current?.getPlainText().trim()
-        ? editorRef.current?.getPlainText().trim().split(/\s+/).length
-        : 0;
+    return DOMPurify.sanitize(html, sanitizeConfig);
+  };
+
+  const sanitizeContent = (editorContent: string) => {
+    sanitizedValue.current = purify(editorContent);
+    editorRef.current?.insertHtml(sanitizedValue.current, true);
+  };
+
+  const updateWordCount = () => {
+    if (showWordCounter && editorRef.current) {
+      const newWordCount = editorRef.current.getPlainText().trim().split(/\s+/).length;
       setWordCount(newWordCount);
 
       // Update announcement based on new word count
@@ -176,7 +181,6 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
       });
       setAnnouncement(msg);
     }
-    editorRef.current?.insertHtml(sanitized, true);
   };
 
   // Handle focus to announce max word count
@@ -190,8 +194,11 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
   useEffect(() => {
     sanitizeContent(value);
+    setTimeout(() => {
+      updateWordCount();
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, []);
 
   const onInit = (editor: TinymceEditor) => {
     editor.on('paste', () => {
@@ -200,7 +207,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   };
 
   const displayComponent = sanitizedValue ? (
-    <RichTextViewer content={sanitizedValue} type='html' />
+    <RichTextViewer content={sanitizedValue.current} type='html' />
   ) : (
     <NoValue />
   );
@@ -243,22 +250,20 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     }
 
     const handleChange = () => {
-      sanitizeContent(editorRef.current?.getHtml() || '');
-      if (status === 'error') {
-        const property = pConn.getStateProps().value;
-        pConn.clearErrorMessages({ property });
-      }
+      updateWordCount();
     };
 
     const handleBlur = () => {
       if (editorRef.current) {
+        const sanitizedContent = purify(editorRef.current?.getHtml() || '');
+        editorRef.current?.insertHtml(sanitizedContent, true);
         const property = pConn.getStateProps().value;
-        if (!sanitizedValue) {
-          pConn.getValidationApi().validate(sanitizedValue);
+        if (!sanitizedContent) {
+          pConn.getValidationApi().validate(sanitizedContent);
         }
-        if (value !== sanitizedValue) {
-          actionsApi.updateFieldValue(property, sanitizedValue);
-          actionsApi.triggerFieldChange(property, sanitizedValue);
+        if (value !== sanitizedContent) {
+          actionsApi.updateFieldValue(property, sanitizedContent);
+          actionsApi.triggerFieldChange(property, sanitizedContent);
         }
       }
     };
