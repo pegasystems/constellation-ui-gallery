@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import {
   withConfiguration,
-  FieldValueList,
-  Text,
   Image,
   Button,
   Flex,
@@ -30,7 +28,6 @@ type SignatureCaptureProps = {
   required?: boolean;
   testId?: string;
   displayMode?: string;
-  variant?: any;
 };
 
 export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
@@ -42,8 +39,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
     hideLabel = false,
     helperText,
     testId,
-    displayMode,
-    variant
+    displayMode
   } = props;
 
   const ref = useRef<SignaturePad>();
@@ -88,22 +84,6 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
   ) : null;
   if (displayMode === 'DISPLAY_ONLY') {
     return displayComp;
-  }
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-  if (displayMode === 'STACKED_LARGE_VAL') {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
   }
 
   const onEndStroke = () => {

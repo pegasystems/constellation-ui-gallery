@@ -5,7 +5,6 @@ import {
   FormControl,
   FormField,
   QRCode,
-  FieldValueList,
   Text
 } from '@pega/cosmos-react-core';
 import StyledWrapper from './styles';
@@ -21,7 +20,6 @@ type QRCodeCompProps = {
   readOnly?: boolean;
   testId?: string;
   displayMode?: string;
-  variant?: any;
   getPConnect: any;
 };
 
@@ -36,7 +34,6 @@ export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {
     helperText,
     testId,
     displayMode,
-    variant,
     getPConnect
   } = props;
   const pConn = getPConnect();
@@ -64,22 +61,6 @@ export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
-  }
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-  if (displayMode === 'STACKED_LARGE_VAL') {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
   }
 
   return (

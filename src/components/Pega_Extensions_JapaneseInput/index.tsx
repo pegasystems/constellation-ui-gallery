@@ -2,7 +2,6 @@ import { type FC } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import {
   Input,
-  FieldValueList,
   Text,
   withConfiguration,
   type InputProps,
@@ -13,7 +12,6 @@ import {
   withTestIds
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
-import type { FieldValueVariant } from '@pega/cosmos-react-core/lib/components/FieldValueList/FieldValueList';
 import {
   convertHiraganaToKatakana,
   fullWidthToHalfWidth,
@@ -22,16 +20,13 @@ import {
 } from './utils';
 
 enum DisplayMode {
-  DisplayOnly = 'DISPLAY_ONLY',
-  LabelsLeft = 'LABELS_LEFT',
-  StackedLargeVal = 'STACKED_LARGE_VAL'
+  DisplayOnly = 'DISPLAY_ONLY'
 }
 
 // interface for props
 export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp {
   // If any, enter additional props that only exist on TextInput here
   hasSuggestions?: boolean;
-  variant?: FieldValueVariant;
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
@@ -65,7 +60,6 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   label,
   labelHidden,
   info,
-  variant,
   hasSuggestions = false,
   hiraganaToKatakana = false,
   fullToHalf = false,
@@ -102,24 +96,6 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   const displayComp = inputValue || '';
   if (displayMode === DisplayMode.DisplayOnly) {
     return <Text>{displayComp}</Text>;
-  }
-
-  if (displayMode === DisplayMode.LabelsLeft) {
-    return (
-      <FieldValueList
-        variant={labelHidden ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: labelHidden ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-
-  if (displayMode === DisplayMode.StackedLargeVal) {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
   }
 
   const handleChange = (event: any) => {
