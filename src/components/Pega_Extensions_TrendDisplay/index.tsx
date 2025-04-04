@@ -1,6 +1,5 @@
 import {
   withConfiguration,
-  FieldValueList,
   FormField,
   createUID,
   CurrencyDisplay,
@@ -78,7 +77,6 @@ export type TrendDisplayProps = {
 
   fieldMetadata?: any;
   displayMode?: string;
-  variant?: any;
 };
 
 export type Event = {
@@ -109,7 +107,6 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
     currencyDecimalPrecision = 'auto',
     currencyDisplay = 'symbol',
     displayMode,
-    variant,
     fieldMetadata
   } = props;
 
@@ -208,14 +205,6 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
     );
   }
 
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
   if (displayMode === 'DISPLAY_ONLY') {
     return displayComp;
   }

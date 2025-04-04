@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { withConfiguration, Checkbox, FieldValueList, Text } from '@pega/cosmos-react-core';
+import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
 import '../create-nonce';
 
 export type CheckboxTriggerProps = {
@@ -30,7 +30,6 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
     label,
     dataPage = '',
     value,
-    hideLabel = false,
     helperText = '',
     testId = '',
     additionalProps,
@@ -64,23 +63,6 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
   if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
   }
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant='stacked'
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-  if (displayMode === 'STACKED_LARGE_VAL') {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
-  }
-
   return (
     <Checkbox
       {...additionalProps}

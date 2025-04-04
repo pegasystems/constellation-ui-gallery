@@ -13,7 +13,7 @@ export default {
       }
     },
     displayMode: {
-      options: ['EDITABLE', 'LABELS_LEFT', 'DISPLAY_ONLY'],
+      options: ['EDITABLE', 'DISPLAY_ONLY'],
       control: { type: 'radio' }
     },
     variant: {

@@ -10,7 +10,7 @@ export default {
       }
     },
     displayMode: {
-      options: ['EDITABLE', 'LABELS_LEFT', 'DISPLAY_ONLY'],
+      options: ['EDITABLE', 'DISPLAY_ONLY'],
       control: { type: 'radio' }
     },
     colorMode: {
@@ -78,14 +78,14 @@ export const Demo2: Story = TrendDisplayDemo({
   label: 'CST',
   trendData: 12.4,
   colorMode: 'trend',
-  displayMode: 'LABELS_LEFT'
+  displayMode: 'DISPLAY_ONLY'
 });
 
 export const Demo3: Story = TrendDisplayDemo({
   label: 'TCS',
   trendData: -3.45,
   colorMode: 'trend',
-  displayMode: 'LABELS_LEFT'
+  displayMode: 'DISPLAY_ONLY'
 });
 
 export const Demo4: Story = TrendDisplayDemo({
@@ -109,7 +109,7 @@ export const Demo2_badge: Story = TrendDisplayDemo({
   label: 'CST',
   trendData: '12.4%',
   colorMode: 'trend',
-  displayMode: 'LABELS_LEFT',
+  displayMode: 'DISPLAY_ONLY',
   renderingMode: 'badge'
 });
 
@@ -117,7 +117,7 @@ export const Demo3_badge: Story = TrendDisplayDemo({
   label: 'TCS',
   trendData: '-3.45%',
   colorMode: 'trend',
-  displayMode: 'LABELS_LEFT',
+  displayMode: 'DISPLAY_ONLY',
   renderingMode: 'badge'
 });
 

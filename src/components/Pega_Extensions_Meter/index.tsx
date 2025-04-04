@@ -1,6 +1,5 @@
 import {
   withConfiguration,
-  FieldValueList,
   useTheme,
   FieldGroup,
   Flex,
@@ -51,7 +50,6 @@ export type MeterProps = {
   /** display mode */
   displayMode?: string;
 
-  variant?: any;
   getPConnect?: any;
 };
 
@@ -74,7 +72,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
     totalTasks = 0,
     additionalInfo = '',
     displayMode,
-    variant,
+
     getPConnect
   } = props;
 
@@ -148,14 +146,6 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
       </StyleGroupMeterWrapper>
     );
 
-    if (displayMode === 'LABELS_LEFT') {
-      return (
-        <FieldValueList
-          variant={hideLabel ? 'stacked' : variant}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayGroupComp }]}
-        />
-      );
-    }
     if (displayMode === 'DISPLAY_ONLY') {
       return displayGroupComp;
     }
@@ -206,14 +196,6 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
     </Flex>
   );
 
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
   if (displayMode === 'DISPLAY_ONLY') {
     return displayComp;
   }

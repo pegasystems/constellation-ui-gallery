@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, type MouseEvent, useCallback } from 'react';
 import {
   withConfiguration,
-  FieldValueList,
   Rating,
   Flex,
   Icon,
@@ -46,7 +45,7 @@ type StarRatingInputProps = {
   testId?: string;
   /** display mode */
   displayMode?: string;
-  variant?: any;
+
   getPConnect?: any;
 };
 
@@ -61,7 +60,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
     hideLabel = false,
     testId,
     displayMode,
-    variant,
+
     getPConnect
   } = props;
   const pConn = getPConnect();
@@ -239,17 +238,8 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
     />
   );
 
-  if (displayMode === 'DISPLAY_ONLY' || displayMode === 'STACKED_LARGE_VAL') {
+  if (displayMode === 'DISPLAY_ONLY') {
     return readonlyComp;
-  }
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: readonlyComp }]}
-      />
-    );
   }
 
   return (

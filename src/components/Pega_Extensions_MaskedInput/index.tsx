@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import { withConfiguration, Input, FieldValueList, Text } from '@pega/cosmos-react-core';
+import { withConfiguration, Input, Text } from '@pega/cosmos-react-core';
 import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
 import '../create-nonce';
 
@@ -19,7 +19,6 @@ export type MaskedInputProps = {
   fieldMetadata?: any;
   additionalProps?: any;
   displayMode?: string;
-  variant?: any;
   hasSuggestions?: boolean;
 };
 
@@ -39,7 +38,6 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
     fieldMetadata,
     additionalProps,
     displayMode,
-    variant,
     hasSuggestions
   } = props;
   const pConn = getPConnect();
@@ -92,22 +90,6 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
-  }
-  if (displayMode === 'LABELS_LEFT') {
-    return (
-      <FieldValueList
-        variant={hideLabel ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-  if (displayMode === 'STACKED_LARGE_VAL') {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
   }
 
   return (

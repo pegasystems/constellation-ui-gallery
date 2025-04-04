@@ -1,6 +1,5 @@
 import {
   Button,
-  FieldValueList,
   FormControl,
   FormField,
   Modal,
@@ -16,9 +15,7 @@ import StyledList from './styles';
 
 export enum DisplayMode {
   Editable = 'EDITABLE',
-  DisplayOnly = 'DISPLAY_ONLY',
-  LabelsLeft = 'LABELS_LEFT',
-  StackedLargeVal = 'STACKED_LARGE_VAL'
+  DisplayOnly = 'DISPLAY_ONLY'
 }
 
 export type DisplayPDFProps = {
@@ -46,7 +43,6 @@ export type DisplayPDFProps = {
    *  @default false
    */
   hideLabel?: boolean;
-  variant?: any;
   displayMode?: DisplayMode;
   getPConnect?: any;
 };
@@ -101,7 +97,6 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     hideLabel = false,
     dataPage = '',
     displayMode = DisplayMode.Editable,
-    variant,
     getPConnect
   } = props;
   const [loading, setLoading] = useState<boolean>(true);
@@ -152,16 +147,8 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
       </Button>
     );
 
-    if (displayMode === DisplayMode.DisplayOnly || displayMode === DisplayMode.StackedLargeVal) {
+    if (displayMode === DisplayMode.DisplayOnly) {
       return displayComp;
-    }
-    if (displayMode === DisplayMode.LabelsLeft) {
-      return (
-        <FieldValueList
-          variant={hideLabel ? 'stacked' : variant}
-          fields={[{ id: '1', name: hideLabel ? '' : label, value: displayComp }]}
-        />
-      );
     }
     const buf = base64ToArrayBuffer(value);
     const blob = new Blob([buf], { type: 'application/pdf' });
