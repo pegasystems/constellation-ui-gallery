@@ -134,6 +134,9 @@
     "label": "@L $this.label",
     "toolbarMode": "normal",
     "showWordCounter": false,
-    "maxWords": 100
+    "maxWords": 100,
+    "detailFVLItem": true,
+    "isContainerWidth": true,
+    "isFormWidth": true
   }
 }
