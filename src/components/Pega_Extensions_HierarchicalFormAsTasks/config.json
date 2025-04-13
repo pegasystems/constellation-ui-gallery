@@ -1,0 +1,27 @@
+{
+  "name": "Pega_Extensions_HierarchicalFormAsTasks",
+  "label": "Hierarchical Form as Tasks",
+  "description": "Hierarchical Form as Tasks",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_HierarchicalFormAsTasks",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "HierarchicalForm.svg",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Label",
+      "format": "TEXT"
+    },
+    {
+      "name": "A",
+      "label": "Region A",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views"],
+      "allowCreatingGroup": true
+    }
+  ]
+}

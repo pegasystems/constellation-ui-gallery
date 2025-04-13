@@ -167,7 +167,16 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
   const updateWordCount = () => {
     if (showWordCounter && editorRef.current) {
-      const newWordCount = editorRef.current.getPlainText().trim().split(/\s+/).length;
+      const content = editorRef.current.getPlainText().trim();
+      if (!content) {
+        setWordCount(0);
+        setAnnouncement({
+          message: `Maximum ${maxWords} words allowed`,
+          isAlert: false
+        });
+        return;
+      }
+      const newWordCount = content.split(/\s+/).length;
       setWordCount(newWordCount);
 
       // Update announcement based on new word count
