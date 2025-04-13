@@ -82,6 +82,6 @@ export const Default: Story = {
     fullToHalf: false,
     lowerToUpper: false,
     japaneseEraToGregorian: false,
-    gregorianToJapaneseEra: false,
+    gregorianToJapaneseEra: false
   }
 };
