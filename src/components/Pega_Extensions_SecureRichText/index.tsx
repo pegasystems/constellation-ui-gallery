@@ -298,6 +298,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
           onBlur={handleBlur}
           onFocus={handleFocus}
           onInit={onInit}
+          initOptions={{ pasteDataImages: false }}
         />
         {showWordCounter && (
           <div
