@@ -1,68 +1,86 @@
 {
-  "name": "Pega_Extensions_UtilityList",
-  "label": "Utility List",
-  "description": "List of objects for the utility column",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_UtilityList",
-  "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
-  "properties": [
-    {
-      "name": "heading",
-      "label": "Heading",
-      "format": "TEXT"
-    },
-    {
-      "name": "dataPage",
-      "label": "Data Page name",
-      "format": "TEXT"
-    },
-    {
-      "name": "setCaseID",
-      "label": "Pass case context to the Data page as parameter",
-      "format": "BOOLEAN"
-    },
-    {
-      "name": "icon",
-      "label": "Icon",
-      "format": "SELECT",
-      "defaultValue": "clipboard",
-      "source": [
+    "name": "Pega_Extensions_UtilityList",
+    "label": "Utility List",
+    "description": "List of objects for the utility column",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_UtilityList",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
         {
-          "key": "information",
-          "value": "information"
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
         },
         {
-          "key": "polaris",
-          "value": "polaris"
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT"
         },
         {
-          "key": "clipboard",
-          "value": "clipboard"
+            "name": "setCaseID",
+            "label": "Pass case context to the Data page as parameter",
+            "format": "BOOLEAN"
+        },
+        {
+            "name": "icon",
+            "label": "Icon",
+            "format": "SELECT",
+            "defaultValue": "clipboard",
+            "source": [
+                {
+                    "key": "information",
+                    "value": "information"
+                },
+                {
+                    "key": "polaris",
+                    "value": "polaris"
+                },
+                {
+                    "key": "clipboard",
+                    "value": "clipboard"
+                }
+            ]
+        },
+        {
+            "name": "primaryField",
+            "label": "Primary field",
+            "format": "TEXT"
+        },
+        {
+            "name": "secondaryFields",
+            "label": "Secondary fields (comma-separated)",
+            "format": "TEXT"
+        },
+        {
+            "name": "secondaryFieldTypes",
+            "label": "Secondary field types (comma-separated)",
+            "format": "TEXT"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
+    ],
+    "defaultConfig": {
+        "heading": "List of objects",
+        "setCaseID": false
     },
-    {
-      "name": "primaryField",
-      "label": "Primary field",
-      "format": "TEXT"
-    },
-    {
-      "name": "secondaryFields",
-      "label": "Secondary fields (comma-separated)",
-      "format": "TEXT"
-    },
-    {
-      "name": "secondaryFieldTypes",
-      "label": "Secondary field types (comma-separated)",
-      "format": "TEXT"
-    }
-  ],
-  "defaultConfig": {
-    "heading": "List of objects",
-    "setCaseID": false
-  }
+    "buildDate": "2025-04-25T15:56:03.705Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

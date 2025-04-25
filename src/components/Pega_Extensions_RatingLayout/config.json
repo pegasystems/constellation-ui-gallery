@@ -1,29 +1,46 @@
 {
-  "name": "Pega_Extensions_RatingLayout",
-  "label": "Rating Layout",
-  "description": "Rating Layout",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_RatingLayout",
-  "type": "Template",
-  "subtype": "DETAILS",
-  "properties": [
-    {
-      "name": "minWidth",
-      "label": "Slider min width",
-      "format": "TEXT",
-      "defaultValue": "40ch"
+    "name": "Pega_Extensions_RatingLayout",
+    "label": "Rating Layout",
+    "description": "Rating Layout",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_RatingLayout",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "properties": [
+        {
+            "name": "minWidth",
+            "label": "Slider min width",
+            "format": "TEXT",
+            "defaultValue": "40ch"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields"
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "minWidth": "40ch"
     },
-    {
-      "name": "A",
-      "label": "Region A",
-      "format": "CONTENTPICKER",
-      "addTypeList": ["Fields"]
-    }
-  ],
-  "defaultConfig": {
-    "minWidth": "40ch"
-  }
+    "buildDate": "2025-04-25T15:56:01.747Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

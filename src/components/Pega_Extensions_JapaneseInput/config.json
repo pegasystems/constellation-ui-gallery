@@ -1,139 +1,154 @@
 {
-  "name": "Pega_Extensions_JapaneseInput",
-  "label": "Japanese Input",
-  "description": "",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_JapaneseInput",
-  "type": "Field",
-  "subtype": "Text",
-  "icon": "images/pz-text-input-active.svg",
-  "properties": [
-    {
-      "name": "label",
-      "label": "Field label",
-      "format": "TEXT",
-      "required": true
-    },
-    {
-      "name": "readOnly",
-      "label": "Edit mode",
-      "format": "READONLY"
-    },
-    {
-      "label": "Column settings",
-      "format": "GROUP",
-      "visibility": "@VIEWTYPE == 'MultiRecordDisplayAsTable'",
-      "properties": [
+    "name": "Pega_Extensions_JapaneseInput",
+    "label": "Japanese Input",
+    "description": "",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_JapaneseInput",
+    "type": "Field",
+    "subtype": "Text",
+    "icon": "images/pz-text-input-active.svg",
+    "properties": [
         {
-          "name": "columnWidth",
-          "label": "Column width",
-          "format": "SELECT",
-          "source": [
-            {
-              "key": "auto",
-              "value": "Auto"
-            },
-            {
-              "key": "custom",
-              "value": "Custom"
-            }
-          ]
+            "name": "label",
+            "label": "Field label",
+            "format": "TEXT",
+            "required": true
         },
         {
-          "name": "width",
-          "label": "Width (px)",
-          "format": "NUMBER",
-          "visibility": "$this.columnWidth == 'custom'"
+            "name": "readOnly",
+            "label": "Edit mode",
+            "format": "READONLY"
+        },
+        {
+            "label": "Column settings",
+            "format": "GROUP",
+            "visibility": "@VIEWTYPE == 'MultiRecordDisplayAsTable'",
+            "properties": [
+                {
+                    "name": "columnWidth",
+                    "label": "Column width",
+                    "format": "SELECT",
+                    "source": [
+                        {
+                            "key": "auto",
+                            "value": "Auto"
+                        },
+                        {
+                            "key": "custom",
+                            "value": "Custom"
+                        }
+                    ]
+                },
+                {
+                    "name": "width",
+                    "label": "Width (px)",
+                    "format": "NUMBER",
+                    "visibility": "$this.columnWidth == 'custom'"
+                }
+            ]
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "visibility": "(!readOnly = true)",
+            "properties": [
+                {
+                    "name": "placeholder",
+                    "label": "Placeholder",
+                    "format": "TEXT"
+                },
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                },
+                {
+                    "name": "hiraganaToKatakana",
+                    "label": "Hiragana to Katakana",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "fullToHalf",
+                    "label": "Full-Width to Half-Width",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "lowerToUpper",
+                    "label": "Lowercase to Uppercase",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "japaneseEraToGregorian",
+                    "label": "Japanese Era to Gregorian",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "gregorianToJapaneseEra",
+                    "label": "Gregorian to Japanese Era",
+                    "format": "BOOLEAN"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "required",
+                    "label": "Required",
+                    "format": "REQUIRED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "disabled",
+                    "label": "Disabled",
+                    "format": "DISABLED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "detailFVLItem": true,
+        "isFormWidth": false,
+        "isContainerWidth": false
     },
-    {
-      "label": "Input settings",
-      "format": "GROUP",
-      "visibility": "(!readOnly = true)",
-      "properties": [
-        {
-          "name": "placeholder",
-          "label": "Placeholder",
-          "format": "TEXT"
-        },
-        {
-          "name": "helperText",
-          "label": "Helper text",
-          "format": "TEXT"
-        },
-        {
-          "name": "hiraganaToKatakana",
-          "label": "Hiragana to Katakana",
-          "format": "BOOLEAN"
-        },
-        {
-          "name": "fullToHalf",
-          "label": "Full-Width to Half-Width",
-          "format": "BOOLEAN"
-        },
-        {
-          "name": "lowerToUpper",
-          "label": "Lowercase to Uppercase",
-          "format": "BOOLEAN"
-        },
-        {
-          "name": "japaneseEraToGregorian",
-          "label": "Japanese Era to Gregorian",
-          "format": "BOOLEAN"
-        },
-        {
-          "name": "gregorianToJapaneseEra",
-          "label": "Gregorian to Japanese Era",
-          "format": "BOOLEAN"
-        }
-      ]
-    },
-    {
-      "label": "Conditions",
-      "format": "GROUP",
-      "properties": [
-        {
-          "name": "required",
-          "label": "Required",
-          "format": "REQUIRED",
-          "visibility": "(!readOnly = true)"
-        },
-        {
-          "name": "disabled",
-          "label": "Disabled",
-          "format": "DISABLED",
-          "visibility": "(!readOnly = true)"
-        },
-        {
-          "name": "visibility",
-          "label": "Visibility",
-          "format": "VISIBILITY"
-        }
-      ]
-    },
-    {
-      "label": "Advanced",
-      "format": "GROUP",
-      "collapsible": true,
-      "properties": [
-        {
-          "name": "testId",
-          "label": "Test ID",
-          "format": "TEXT",
-          "ignorePattern": "[^-_\\p{N}\\p{L}]",
-          "includeAnnotations": false
-        }
-      ]
-    }
-  ],
-  "defaultConfig": {
-    "label": "@L $this.label",
-    "detailFVLItem": true,
-    "isFormWidth": false,
-    "isContainerWidth": false
-  }
+    "buildDate": "2025-04-25T15:55:59.450Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

@@ -1,52 +1,72 @@
 {
-  "name": "Pega_Extensions_FormFullWidth",
-  "label": "Form Full Width",
-  "description": "Form Full Width",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_FormFullWidth",
-  "type": "Template",
-  "subtype": "FORM",
-  "icon": "FieldGroupAsRow.svg",
-  "properties": [
-    {
-      "name": "heading",
-      "label": "Label",
-      "format": "TEXT"
-    },
-    {
-      "format": "SELECT",
-      "name": "NumCols",
-      "label": "Number of columns",
-      "defaultValue": "1",
-      "source": [
+    "name": "Pega_Extensions_FormFullWidth",
+    "label": "Form Full Width",
+    "description": "Form Full Width",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_FormFullWidth",
+    "type": "Template",
+    "subtype": "FORM",
+    "icon": "FieldGroupAsRow.svg",
+    "properties": [
         {
-          "key": "1",
-          "value": "One"
+            "name": "heading",
+            "label": "Label",
+            "format": "TEXT"
         },
         {
-          "key": "2",
-          "value": "Two"
+            "format": "SELECT",
+            "name": "NumCols",
+            "label": "Number of columns",
+            "defaultValue": "1",
+            "source": [
+                {
+                    "key": "1",
+                    "value": "One"
+                },
+                {
+                    "key": "2",
+                    "value": "Two"
+                },
+                {
+                    "key": "3",
+                    "value": "Three"
+                }
+            ]
         },
         {
-          "key": "3",
-          "value": "Three"
+            "name": "gridTemplateColumns",
+            "label": "gridTemplateColumns",
+            "format": "TEXT"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ],
+            "allowCreatingGroup": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
-    },
-    {
-      "name": "gridTemplateColumns",
-      "label": "gridTemplateColumns",
-      "format": "TEXT"
-    },
-    {
-      "name": "A",
-      "label": "Region A",
-      "format": "CONTENTPICKER",
-      "addTypeList": ["Fields", "Views", "Widgets", "Insights"],
-      "allowCreatingGroup": true
-    }
-  ]
+    ],
+    "buildDate": "2025-04-25T15:55:57.924Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

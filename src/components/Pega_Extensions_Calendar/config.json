@@ -1,66 +1,84 @@
 {
-  "name": "Pega_Extensions_Calendar",
-  "label": "Calendar",
-  "description": "Calendar",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_Calendar",
-  "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
-  "properties": [
-    {
-      "name": "heading",
-      "label": "Heading",
-      "format": "TEXT"
-    },
-    {
-      "name": "dataPage",
-      "label": "Data Page name",
-      "format": "TEXT"
-    },
-    {
-      "name": "createClassname",
-      "label": "Create case className",
-      "format": "TEXT"
-    },
-    {
-      "name": "defaultViewMode",
-      "label": "Default view",
-      "format": "SELECT",
-      "defaultValue": "Monthly",
-      "source": [
+    "name": "Pega_Extensions_Calendar",
+    "label": "Calendar",
+    "description": "Calendar",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Calendar",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
         {
-          "key": "Daily",
-          "value": "Daily"
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
         },
         {
-          "key": "Weekly",
-          "value": "Weekly"
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT"
         },
         {
-          "key": "Monthly",
-          "value": "Monthly"
+            "name": "createClassname",
+            "label": "Create case className",
+            "format": "TEXT"
+        },
+        {
+            "name": "defaultViewMode",
+            "label": "Default view",
+            "format": "SELECT",
+            "defaultValue": "Monthly",
+            "source": [
+                {
+                    "key": "Daily",
+                    "value": "Daily"
+                },
+                {
+                    "key": "Weekly",
+                    "value": "Weekly"
+                },
+                {
+                    "key": "Monthly",
+                    "value": "Monthly"
+                }
+            ]
+        },
+        {
+            "name": "nowIndicator",
+            "label": "Show current day",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "weekendIndicator",
+            "label": "Show week-ends",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
+    ],
+    "defaultConfig": {
+        "heading": "Calendar",
+        "dataPage": "",
+        "defaultViewMode": "Monthly"
     },
-    {
-      "name": "nowIndicator",
-      "label": "Show current day",
-      "format": "BOOLEAN",
-      "defaultValue": true
-    },
-    {
-      "name": "weekendIndicator",
-      "label": "Show week-ends",
-      "format": "BOOLEAN",
-      "defaultValue": true
-    }
-  ],
-  "defaultConfig": {
-    "heading": "Calendar",
-    "dataPage": "",
-    "defaultViewMode": "Monthly"
-  }
+    "buildDate": "2025-04-25T15:55:54.939Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

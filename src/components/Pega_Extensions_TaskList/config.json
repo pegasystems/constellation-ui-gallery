@@ -1,38 +1,56 @@
 {
-  "name": "Pega_Extensions_TaskList",
-  "label": "TaskList",
-  "description": "TaskList",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_TaskList",
-  "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
-  "properties": [
-    {
-      "name": "heading",
-      "label": "Heading",
-      "format": "TEXT",
-      "required": true
-    },
-    {
-      "name": "dataPage",
-      "label": "Data Page name",
-      "format": "TEXT",
-      "required": true
-    },
-    {
-      "label": "Conditions",
-      "format": "GROUP",
-      "properties": [
+    "name": "Pega_Extensions_TaskList",
+    "label": "TaskList",
+    "description": "TaskList",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_TaskList",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
         {
-          "name": "visibility",
-          "label": "Visibility",
-          "format": "VISIBILITY"
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
-    }
-  ],
-  "defaultConfig": {}
+    ],
+    "defaultConfig": {},
+    "buildDate": "2025-04-25T15:56:03.073Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

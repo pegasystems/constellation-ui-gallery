@@ -1,33 +1,48 @@
 {
-  "name": "Pega_Extensions_CaseHierarchy",
-  "label": "Case Hierarchy Utility",
-  "description": "Hierarchy of the cases",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_CaseHierarchy",
-  "type": "Widget",
-  "subtype": "CASE",
-  "properties": [
-    {
-      "name": "heading",
-      "label": "Heading",
-      "format": "TEXT"
+    "name": "Pega_Extensions_CaseHierarchy",
+    "label": "Case Hierarchy Utility",
+    "description": "Hierarchy of the cases",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CaseHierarchy",
+    "type": "Widget",
+    "subtype": "CASE",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT"
+        },
+        {
+            "name": "showParent",
+            "label": "Show parent case type",
+            "format": "BOOLEAN"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Case Hierarchy",
+        "showParent": false
     },
-    {
-      "name": "dataPage",
-      "label": "Data Page name",
-      "format": "TEXT"
-    },
-    {
-      "name": "showParent",
-      "label": "Show parent case type",
-      "format": "BOOLEAN"
-    }
-  ],
-  "defaultConfig": {
-    "heading": "Case Hierarchy",
-    "showParent": false
-  }
+    "buildDate": "2025-04-25T15:55:55.400Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }

@@ -1,35 +1,50 @@
 {
-  "name": "Pega_Extensions_CaseReference",
-  "label": "Case reference",
-  "description": "Case reference",
-  "organization": "Pega",
-  "version": "1.0.0",
-  "library": "Extensions",
-  "allowedApplications": [],
-  "componentKey": "Pega_Extensions_CaseReference",
-  "type": "Field",
-  "subtype": "Text",
-  "properties": [
-    {
-      "name": "label",
-      "label": "Label value",
-      "format": "TEXT",
-      "required": true
+    "name": "Pega_Extensions_CaseReference",
+    "label": "Case reference",
+    "description": "Case reference",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CaseReference",
+    "type": "Field",
+    "subtype": "Text",
+    "properties": [
+        {
+            "name": "label",
+            "label": "Label value",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "key": "selectionProperty",
+            "format": "PROPERTY",
+            "name": "selectionProperty",
+            "label": "Selection Property",
+            "required": true
+        },
+        {
+            "name": "visibility",
+            "label": "Visible",
+            "format": "VISIBILITY"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "detailFVLItem": true
     },
-    {
-      "key": "selectionProperty",
-      "format": "PROPERTY",
-      "name": "selectionProperty",
-      "label": "Selection Property",
-      "required": true
-    },
-    {
-      "name": "visibility",
-      "label": "Visible",
-      "format": "VISIBILITY"
-    }
-  ],
-  "defaultConfig": {
-    "detailFVLItem": true
-  }
+    "buildDate": "2025-04-25T15:55:55.889Z",
+    "infinityVersion": "25.1.0-dev-14882",
+    "packageCosmosVersion": "8.0.0-build.38.2"
 }
