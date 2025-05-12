@@ -47,7 +47,6 @@ export const Default: Story = {
               openLocalAction: {
                 bind: () => {
                   return (name: string, options: any) => {
-                    // eslint-disable-next-line no-alert
                     alert(`Launch local action ${name} for ${options.caseID}`);
                   };
                 }

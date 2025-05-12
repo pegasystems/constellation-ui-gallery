@@ -268,11 +268,9 @@ export const Default: Story = {
                 /* nothing */
               },
               openLocalAction: (id: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Opening local action for case:${id}`);
               },
               createWork: (className: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Create case type with className:${className}`);
               },
               updateFieldValue: () => {

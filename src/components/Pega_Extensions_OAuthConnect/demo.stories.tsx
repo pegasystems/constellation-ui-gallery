@@ -63,7 +63,7 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
           context: string,
           parameters: { Event: string; ProfileName: string; gadgetId: string }
         ) => {
-          const { Event, ProfileName, gadgetId } = parameters;
+          const { Event } = parameters;
           switch (Event) {
             case 'AUTHENTICATE':
               if (isConnected) {
@@ -110,7 +110,7 @@ export const Default: Story = {
         return {
           getCaseInfo: () => {
             return {
-              getKey: () => 'OPGO8L-CARINSUR-WORK A-5'
+              getKey: () => 'A-5'
             };
           },
           getActionsApi: () => {
@@ -124,7 +124,7 @@ export const Default: Story = {
             };
           },
           getContextName: () => '',
-          getValue: () => 'OPGO8L-CARINSUR-WORK A-5'
+          getValue: () => 'A-5'
         };
       }
     };

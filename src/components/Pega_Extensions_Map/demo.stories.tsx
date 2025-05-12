@@ -128,7 +128,7 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: (prop: string, value: string) => {}
+              updateFieldValue: () => {}
             };
           },
           getChildren: () => {

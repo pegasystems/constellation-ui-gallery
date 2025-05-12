@@ -252,7 +252,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
 
   const gtrTasks: Array<GTRTask> = useMemo(() => {
     return tasks.map(event => {
-      const { extendedProps, ...taskProps } = event;
+      const { ...taskProps } = event;
       return taskProps;
     });
   }, [tasks]);

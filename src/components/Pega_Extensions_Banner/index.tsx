@@ -131,7 +131,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
 
           refreshForm();
         });
-    } catch (error) {
+    } catch {
       /* Handle error */
     }
   };

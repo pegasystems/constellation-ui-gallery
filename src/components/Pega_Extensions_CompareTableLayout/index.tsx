@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
 import {
   withConfiguration,
@@ -231,7 +230,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                     <th>{child.heading}</th>
                     {fields[0].value.map((val: string, idx: number) => {
                       const isSelected = selection.length >= idx ? selection[idx] : false;
-                      return <SelectedBgCell theme={theme} isSelected={isSelected} />;
+                      return <SelectedBgCell key={idx} theme={theme} isSelected={isSelected} />;
                     })}
                   </tr>
                 );

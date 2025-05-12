@@ -158,7 +158,6 @@ export const Default: Story = {
                 /* nothing */
               },
               createWork: (className: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Create case type with className:${className}`);
               },
               updateFieldValue: () => {

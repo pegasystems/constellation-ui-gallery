@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import { useState, useEffect } from 'react';
 import { withConfiguration, FieldGroup, Flex, TabPanel, Tabs } from '@pega/cosmos-react-core';
 import RatingElem from './RatingElem';

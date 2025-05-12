@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/no-container */
 import { render, screen } from '@testing-library/react';
 import { composeStories } from '@storybook/react';
 import * as DemoStories from './demo.stories';
@@ -9,7 +8,7 @@ test('renders Network Diagram with default args', async () => {
   const { container } = render(<Default />);
   expect(await screen.findByText('Heading')).toBeVisible();
   expect(await screen.findByLabelText('Reload diagram')).toBeVisible();
-  // eslint-disable-next-line testing-library/no-node-access
+
   const svgEl = container.querySelector('.react-flow__container') as SVGSVGElement;
   expect(svgEl).not.toBeNull();
   expect(svgEl.textContent).toContain('New Wave Energy Solutions');
