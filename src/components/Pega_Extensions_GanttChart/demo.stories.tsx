@@ -256,12 +256,7 @@ const setPCore = () => {
             }
           });
         },
-        updateCaseEditFieldsData: (
-          pzInsKey: string,
-          payload: any,
-          etag: string,
-          context: string
-        ) => {
+        updateCaseEditFieldsData: (pzInsKey: string, payload: any) => {
           let tasksFromWebStorage = getDataFromStorage();
           if (tasksFromWebStorage) {
             const taskIndex = tasksFromWebStorage.findIndex((x: any) => x.pzInsKey === pzInsKey);
@@ -321,11 +316,9 @@ export const Default: Story = {
                 /* nothing */
               },
               openLocalAction: (id: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Opening local action for case:${id}`);
               },
               createWork: (className: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Create case type with className:${className}`);
               },
               updateFieldValue: () => {

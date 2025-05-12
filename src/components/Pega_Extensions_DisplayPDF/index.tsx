@@ -176,7 +176,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     <StyledList>
       {pdfFiles.map(file => {
         return (
-          <li>
+          <li key={file.pyLabel}>
             <Button
               variant='link'
               onClick={() => {

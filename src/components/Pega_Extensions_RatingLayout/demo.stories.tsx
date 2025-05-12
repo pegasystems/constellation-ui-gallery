@@ -136,10 +136,7 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: (prop: string, value: string) => {
-                // eslint-disable-next-line no-console
-                //console.log(`Updating property ${prop} with value: ${value}`);
-              }
+              updateFieldValue: () => {}
             };
           },
           getChildren: () => {

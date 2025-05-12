@@ -84,7 +84,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
           }
         })
         .catch(() => {});
-    } catch (e) {
+    } catch {
       setIsLoading(false);
       setError('Failed to fetch data.');
     }
@@ -116,7 +116,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
         </StyledAddTask>
         <Container>
           {taskListData.map(task => (
-            <TaskElement task={task} deleteTask={deleteTask} />
+            <TaskElement key={task.Id} task={task} deleteTask={deleteTask} />
           ))}
         </Container>
       </CardContent>

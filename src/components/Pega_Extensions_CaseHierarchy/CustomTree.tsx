@@ -19,7 +19,7 @@ import {
   Button,
   Link
 } from '@pega/cosmos-react-core';
-import type { ForwardProps, TreeProps } from '@pega/cosmos-react-core';
+import type { ForwardProps } from '@pega/cosmos-react-core';
 
 import {
   StyledCustomTreeParent,
@@ -62,7 +62,14 @@ const CustomTreeContext = createContext<
   changeFocusedNodeId: () => {}
 });
 
-const NodeRenderer: TreeProps<CustomTreeNode>['nodeRenderer'] = ({
+const NodeRenderer: FunctionComponent<
+  CustomTreeNode & {
+    depth: number;
+    hasParentSibling: boolean;
+    subTree?: React.ReactNode;
+    onClick?: (id: string, event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
+  }
+> = ({
   id,
   label,
   depth,
@@ -80,7 +87,6 @@ const NodeRenderer: TreeProps<CustomTreeNode>['nodeRenderer'] = ({
     onNodeToggle,
     focusedNodeId,
     changeFocusedNodeId,
-
     getPConnect
   } = useContext(CustomTreeContext);
   const current = currentNodeId === id;

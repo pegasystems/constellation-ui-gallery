@@ -13,7 +13,7 @@ test('renders ChatGenAI widget with default args', async () => {
   expect(txtEl).not.toBeNull();
   const BtnEl = screen.getByLabelText('Send');
   expect(BtnEl).not.toBeNull();
-  // eslint-disable-next-line testing-library/no-unnecessary-act
+
   act(() => {
     fireEvent.click(BtnEl);
   });
