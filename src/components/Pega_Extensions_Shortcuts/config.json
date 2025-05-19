@@ -61,7 +61,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_UIGallery 0.0.1, Fri Apr 25 2025, 25.1.0-dev-14882",
+            "label": "Pega_UIGallery 0.0.1, Mon May 19 2025, 25.1.0-dev-14961",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -69,7 +69,7 @@
     "defaultConfig": {
         "heading": "Shortcuts"
     },
-    "buildDate": "2025-04-25T15:56:02.253Z",
-    "infinityVersion": "25.1.0-dev-14882",
-    "packageCosmosVersion": "8.0.0-build.38.2"
+    "buildDate": "2025-05-19T23:54:48.647Z",
+    "infinityVersion": "25.1.0-dev-14961",
+    "packageCosmosVersion": "8.0.0-build.43.4"
 }

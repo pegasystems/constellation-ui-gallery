@@ -11,6 +11,7 @@
     "lib/**",
     "!.storybook",
     ".storybook/public",
-    "storybook-static/**"
+    "storybook-static/**",
+    "Pega_UIGallery/**"
   ]
 }

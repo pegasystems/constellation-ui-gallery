@@ -11,7 +11,6 @@ test('renders Signature Capture with default args', async () => {
   expect(await screen.findByText('Accept')).toBeVisible();
   expect(await screen.findByText('Clear')).toBeVisible();
 
-  // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
   const canvasEl = container.querySelector('canvas');
   expect(canvasEl).not.toBeNull();
 });

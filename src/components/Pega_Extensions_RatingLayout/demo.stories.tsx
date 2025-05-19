@@ -1,5 +1,11 @@
 import type { StoryObj } from '@storybook/react';
-import { PegaExtensionsRatingLayout } from './index';
+import { PegaExtensionsRatingLayout, type RatingLayoutProps } from './index';
+
+// Define extended props for the story
+interface StoryRatingLayoutProps extends RatingLayoutProps {
+  numCategories: number;
+  numRatings: number;
+}
 
 type configInfo = {
   values?: Array<any>;
@@ -118,8 +124,8 @@ const genResponse = (numCategories?: number, numRatings?: number) => {
   };
   return demoView;
 };
+type Story = StoryObj<StoryRatingLayoutProps>;
 
-type Story = StoryObj<typeof PegaExtensionsRatingLayout>;
 export const Default: Story = {
   render: args => {
     const response = genResponse(args.numCategories, args.numRatings);
@@ -136,10 +142,7 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: (prop: string, value: string) => {
-                // eslint-disable-next-line no-console
-                //console.log(`Updating property ${prop} with value: ${value}`);
-              }
+              updateFieldValue: () => {}
             };
           },
           getChildren: () => {

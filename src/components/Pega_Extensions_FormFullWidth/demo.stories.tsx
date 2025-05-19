@@ -94,7 +94,6 @@ const regionChildrenResolved = [
 ];
 
 const createComponent = (config: any) => {
-  // eslint-disable-next-line default-case
   switch (config.config.value) {
     case '@P .pySLADeadline':
       return renderField(regionChildrenResolved[0]);

@@ -38,7 +38,6 @@ export const Default: Story = {
           getActionsApi: () => {
             return {
               createWork: (className: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`Create case type with className: ${className}`);
               }
             };

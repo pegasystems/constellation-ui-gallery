@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { PegaExtensionsJapaneseInput } from './index';
@@ -76,7 +75,6 @@ export const Default: Story = {
     required: false,
     labelHidden: false,
     displayMode: undefined,
-    variant: undefined,
     errorMessage: '',
     hiraganaToKatakana: false,
     fullToHalf: false,

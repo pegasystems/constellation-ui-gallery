@@ -9,7 +9,6 @@ import {
   RadioButtonGroup,
   TextArea
 } from '@pega/cosmos-react-core';
-import type { ChangeEvent } from 'react';
 
 type configInfo = {
   values?: Array<any>;
@@ -120,7 +119,7 @@ const setPCore = (numProducts: number) => {
         },
         getActionsApi: () => {
           return {
-            updateFieldValue: (prop: string, value: string) => {}
+            updateFieldValue: () => {}
           };
         }
       })
@@ -261,7 +260,7 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: (prop: string, value: string) => {},
+              updateFieldValue: () => {},
               refreshCaseView: () => {
                 alert('Refresh UI');
               }

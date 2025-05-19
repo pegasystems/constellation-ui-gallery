@@ -50,6 +50,7 @@ type HoverTooltipProps =
   | undefined;
 
 const HoverTooltip: FC<HoverTooltipProps> = props => {
+  if (!props) return null;
   const { task, showBanner = true } = props;
   const fields = [
     { name: 'Progress', value: <Text variant='h4'>{`${task.progress}%`}</Text> },
@@ -252,7 +253,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
 
   const gtrTasks: Array<GTRTask> = useMemo(() => {
     return tasks.map(event => {
-      const { extendedProps, ...taskProps } = event;
+      const { ...taskProps } = event;
       return taskProps;
     });
   }, [tasks]);

@@ -131,9 +131,8 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
 
           refreshForm();
         });
-    } catch (error) {
-      /* Handle error */
-    }
+      /* eslint-disable-next-line no-empty */
+    } catch {}
   };
 
   const loadMessages = useCallback(

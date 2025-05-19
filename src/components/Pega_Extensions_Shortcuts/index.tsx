@@ -108,7 +108,7 @@ export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
         <CardContent>
           <GroupedContent>
             {obj?.map((object: any) => (
-              <Flex container={{ direction: 'column' }}>
+              <Flex key={object.heading} container={{ direction: 'column' }}>
                 <Text variant='h2'>{object.heading}</Text>
                 {object.links?.map((link: any) => {
                   return generateLink(link.name, link.page);
@@ -119,7 +119,7 @@ export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
         </CardContent>
       </Card>
     );
-  } catch (e) {
+  } catch {
     /* empty */
   }
   return null;

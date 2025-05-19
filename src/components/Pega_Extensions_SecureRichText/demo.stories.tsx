@@ -1,15 +1,7 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 // @ts-nocheck
-import type { Meta, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 
 import { PegaExtensionsSecureRichText } from './index';
-
-const fieldMetadata = {
-  classID: 'DIXL-MediaCo-Work-NewService',
-  type: 'Text',
-  displayAs: 'pxTextArea',
-  label: 'Paragraph sample'
-};
 
 const stateProps = {
   value: '.ParagraphSample',

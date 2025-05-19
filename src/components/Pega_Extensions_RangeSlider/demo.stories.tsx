@@ -56,9 +56,7 @@ export const Default: Story = {
           getActionsApi: () => {
             return {
               updateFieldValue: () => {},
-              refreshCaseView: () => {
-                // console.log('updating views');
-              }
+              refreshCaseView: () => {}
             };
           },
           getCaseInfo: () => {
@@ -78,7 +76,7 @@ export const Default: Story = {
           getInheritedProps: () => {
             return mainResponse.config.inheritedProps;
           },
-          createComponent: (config: any) => {},
+          createComponent: () => {},
           setInheritedProp: () => {
             /* nothing */
           },
@@ -88,8 +86,8 @@ export const Default: Story = {
         };
       }
     };
-    const regionAChildren = mainResponse.children[0].children.map((child: any) => {
-      return props.getPConnect().createComponent(child);
+    const regionAChildren = mainResponse.children[0].children.map(() => {
+      return props.getPConnect().createComponent();
     });
 
     return <PegaExtensionsRangeSlider {...props}>{regionAChildren}</PegaExtensionsRangeSlider>;

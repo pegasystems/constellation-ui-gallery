@@ -312,7 +312,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
                 xs={{ container: { cols: 'repeat(1, 1fr)', rows: 'repeat(1, 1fr)' } }}
               >
                 {attachments.map((attachment: any) => (
-                  <StyledCardContent theme={theme}>
+                  <StyledCardContent key={attachment.ID} theme={theme}>
                     <SummaryItem {...attachment} />
                   </StyledCardContent>
                 ))}

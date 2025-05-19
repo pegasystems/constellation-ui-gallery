@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import { useState, useEffect } from 'react';
 import { withConfiguration, FieldGroup, Flex, TabPanel, Tabs } from '@pega/cosmos-react-core';
 import RatingElem from './RatingElem';
@@ -6,13 +5,11 @@ import StyledWrapper from './styles';
 import getAllFields from './utils';
 import '../create-nonce';
 
-type RatingLayoutProps = {
+export type RatingLayoutProps = {
   label?: string;
   showLabel?: boolean;
   getPConnect?: any;
   minWidth?: string;
-  numCategories?: number;
-  numRatings?: number;
 };
 
 interface Rating {

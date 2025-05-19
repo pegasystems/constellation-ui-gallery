@@ -50,7 +50,6 @@ export const Default: Story = {
           getActionsApi: () => {
             return {
               showPage: (name: string, classname: string) => {
-                // eslint-disable-next-line no-alert
                 alert(`show page ${classname}.${name}`);
               }
             };

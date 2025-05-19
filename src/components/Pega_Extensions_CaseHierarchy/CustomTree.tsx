@@ -19,7 +19,6 @@ import {
   Button,
   Link
 } from '@pega/cosmos-react-core';
-import type { ForwardProps, TreeProps } from '@pega/cosmos-react-core';
 
 import {
   StyledCustomTreeParent,
@@ -62,7 +61,14 @@ const CustomTreeContext = createContext<
   changeFocusedNodeId: () => {}
 });
 
-const NodeRenderer: TreeProps<CustomTreeNode>['nodeRenderer'] = ({
+const NodeRenderer: FunctionComponent<
+  CustomTreeNode & {
+    depth: number;
+    hasParentSibling: boolean;
+    subTree?: React.ReactNode;
+    onClick?: (id: string, event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
+  }
+> = ({
   id,
   label,
   depth,
@@ -80,7 +86,6 @@ const NodeRenderer: TreeProps<CustomTreeNode>['nodeRenderer'] = ({
     onNodeToggle,
     focusedNodeId,
     changeFocusedNodeId,
-
     getPConnect
   } = useContext(CustomTreeContext);
   const current = currentNodeId === id;
@@ -218,7 +223,7 @@ const NodeRenderer: TreeProps<CustomTreeNode>['nodeRenderer'] = ({
   );
 };
 
-const CustomTreeWithNodes: FunctionComponent<CustomTreeProps & ForwardProps> = forwardRef(
+const CustomTreeWithNodes = forwardRef<HTMLUListElement, CustomTreeProps>(
   function CustomTreeWithNodes(
     {
       nodes,
@@ -228,7 +233,7 @@ const CustomTreeWithNodes: FunctionComponent<CustomTreeProps & ForwardProps> = f
       onNodeToggle,
       ...restProps
     }: PropsWithoutRef<CustomTreeProps>,
-    ref: CustomTreeProps['ref']
+    ref
   ) {
     const [focusedNodeId, setFocusedNodedId] = useState<string | undefined>();
     const treeRef = useConsolidatedRef(ref);
@@ -307,10 +312,11 @@ const CustomTreeWithNodes: FunctionComponent<CustomTreeProps & ForwardProps> = f
   }
 );
 
-const CustomTree: FunctionComponent<CustomTreeProps & ForwardProps> = forwardRef(
-  function CustomTree(props: PropsWithoutRef<CustomTreeProps>, ref: CustomTreeProps['ref']) {
-    return props.nodes.length > 0 ? <CustomTreeWithNodes {...props} ref={ref} /> : null;
-  }
-);
+const CustomTree = forwardRef<HTMLUListElement, CustomTreeProps>(function CustomTree(
+  props: PropsWithoutRef<CustomTreeProps>,
+  ref
+) {
+  return props.nodes.length > 0 ? <CustomTreeWithNodes {...props} ref={ref} /> : null;
+});
 
 export default CustomTree;

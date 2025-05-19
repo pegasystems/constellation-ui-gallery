@@ -63,7 +63,7 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
           context: string,
           parameters: { Event: string; ProfileName: string; gadgetId: string }
         ) => {
-          const { Event, ProfileName, gadgetId } = parameters;
+          const { Event } = parameters;
           switch (Event) {
             case 'AUTHENTICATE':
               if (isConnected) {

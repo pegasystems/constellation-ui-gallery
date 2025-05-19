@@ -31,7 +31,9 @@
     "**/*.mdx",
     "babel.config.js",
     "jest.config.js",
-    "**/*.html"
+    "**/*.html",
+    "**/*.test.tsx",
+    "Pega_UIGallery"
   ],
   "rules": {
     // Prettier recommends running separately from a linter.
@@ -50,6 +52,8 @@
     "import/no-self-import": "off",
     "import/no-unresolved": "off",
     "import/no-useless-path-segments": "off",
-    "import/order": "off"
+    "import/order": "off",
+    "no-underscore-dangle": "off",
+    "react/no-array-index-key": "off"
   }
 }

@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import { PegaExtensionsDisplayPDF, type DisplayPDFProps, DisplayMode } from './index';
+import { PegaExtensionsDisplayPDF, DisplayMode } from './index';
 import { useState, useEffect } from 'react';
 
 export default {

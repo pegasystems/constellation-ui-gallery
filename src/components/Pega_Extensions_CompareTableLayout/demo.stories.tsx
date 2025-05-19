@@ -421,8 +421,8 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
             },
             getActionsApi: () => {
               return {
-                updateFieldValue: (prop: string, value: string) => {},
-                triggerFieldChange: (prop: string, value: string) => {}
+                updateFieldValue: () => {},
+                triggerFieldChange: () => {}
               };
             }
           };

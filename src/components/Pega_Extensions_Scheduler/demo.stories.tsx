@@ -1,5 +1,12 @@
 import type { StoryObj } from '@storybook/react';
-import { PegaExtensionsScheduler } from './index';
+import { PegaExtensionsScheduler, type PegaExtensionsSchedulerProps } from './index';
+
+// Define extended props for the story
+interface StorySchedulerProps extends PegaExtensionsSchedulerProps {
+  eventDate?: string;
+  startTime?: string;
+  endTime?: string;
+}
 
 export default {
   title: 'Fields/Scheduler',
@@ -89,7 +96,7 @@ const setPCore = () => {
   };
 };
 
-type Story = StoryObj<typeof PegaExtensionsScheduler>;
+type Story = StoryObj<StorySchedulerProps>;
 
 export const Default: Story = {
   render: args => {
