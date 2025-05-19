@@ -5,13 +5,11 @@ import StyledWrapper from './styles';
 import getAllFields from './utils';
 import '../create-nonce';
 
-type RatingLayoutProps = {
+export type RatingLayoutProps = {
   label?: string;
   showLabel?: boolean;
   getPConnect?: any;
   minWidth?: string;
-  numCategories?: number;
-  numRatings?: number;
 };
 
 interface Rating {

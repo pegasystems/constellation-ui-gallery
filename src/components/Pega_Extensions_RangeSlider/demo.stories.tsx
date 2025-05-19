@@ -56,9 +56,7 @@ export const Default: Story = {
           getActionsApi: () => {
             return {
               updateFieldValue: () => {},
-              refreshCaseView: () => {
-                // console.log('updating views');
-              }
+              refreshCaseView: () => {}
             };
           },
           getCaseInfo: () => {

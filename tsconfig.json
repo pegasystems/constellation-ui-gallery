@@ -1,7 +1,7 @@
 {
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
-  "exclude": ["**/*.mjs"],
+  "exclude": ["**/*.mjs", "dist"],
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,

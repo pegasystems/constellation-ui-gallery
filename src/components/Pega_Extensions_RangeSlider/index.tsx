@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import {
   withConfiguration,
   Flex,
@@ -17,7 +18,6 @@ import {
   StyledMaxValue,
   StyledRangeSliderWrapper
 } from './styles';
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 
 type RangeSliderProps = {
   /** Label for the range slider

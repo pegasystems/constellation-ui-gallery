@@ -14,15 +14,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { StyledCardContent, MainCard, GlobalStyle } from './styles';
 import '../create-nonce';
 
-type PegaExtensionsSchedulerProps = {
+export type PegaExtensionsSchedulerProps = {
   getPConnect: any;
   value: string;
   hideLabel: boolean;
   testId?: string;
   label?: string;
-  eventDate?: string;
-  startTime?: string;
-  endTime?: string;
 };
 
 type Event = {
@@ -66,6 +63,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
   const [initialDate, setInitialDate] = useState<string | undefined>();
 
   const renderEventContent = (eventInfo: EventContentArg) => {
+    /* eslint-disable no-underscore-dangle */
     const obj = eventInfo.event._def.extendedProps.item;
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,

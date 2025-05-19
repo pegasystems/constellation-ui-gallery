@@ -57,9 +57,8 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
 
       setViews(parsedViews);
       setCategories(parsedCategories);
-    } catch (error) {
-      console.error('Error initializing hierarchical form tasks:', error);
-    }
+      // eslint-disable-next-line no-empty
+    } catch {}
   }, [children]);
 
   const submitAssignment = () => {

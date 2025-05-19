@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // @ts-ignore
 if (window?.__webpack_nonce__) {
   // @ts-ignore
