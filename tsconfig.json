@@ -8,7 +8,8 @@
     "node_modules",
     "lib",
     "storybook-static",
-    "Pega_UIGallery"
+    "Pega_UIGallery",
+    "store"
   ],
   "compilerOptions": {
     "noEmit": true,

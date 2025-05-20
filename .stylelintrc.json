@@ -1,5 +1,7 @@
 {
-  "extends": ["@pega/stylelint-config"],
+  "extends": [
+    "@pega/stylelint-config"
+  ],
   "rules": {
     "no-descending-specificity": null,
     "selector-max-class": null,
@@ -12,6 +14,7 @@
     "!.storybook",
     ".storybook/public",
     "storybook-static/**",
-    "Pega_UIGallery/**"
+    "Pega_UIGallery/**",
+    "store/**"
   ]
 }
