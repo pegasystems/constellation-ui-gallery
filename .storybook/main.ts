@@ -10,7 +10,6 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-essentials',
-    '@storybook/addon-mdx-gfm',
     '@storybook/addon-webpack5-compiler-babel'
   ],
   docs: {
