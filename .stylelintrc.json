@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "@pega/stylelint-config"
-  ],
+  "extends": ["@pega/stylelint-config"],
   "rules": {
     "no-descending-specificity": null,
     "selector-max-class": null,

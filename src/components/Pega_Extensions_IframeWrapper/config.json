@@ -59,7 +59,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_UIGallery 0.0.1, Mon May 19 2025, 25.1.0-dev-14961",
+            "label": "Pega_UIGallery 0.0.1, Tue May 20 2025, 25.1.0-dev-14961",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -70,7 +70,7 @@
         "height": 500,
         "isFormWidth": true
     },
-    "buildDate": "2025-05-19T23:54:47.449Z",
+    "buildDate": "2025-05-20T20:16:47.356Z",
     "infinityVersion": "25.1.0-dev-14961",
     "packageCosmosVersion": "8.0.0-build.43.4"
 }
