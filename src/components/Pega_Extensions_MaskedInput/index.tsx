@@ -119,17 +119,16 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
         }
       }}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
+        if (e.currentTarget.value !== value) {
+          setInputValue(e.currentTarget.value);
+          actions.updateFieldValue(propName, e.currentTarget.value);
+        }
         if (!value || hasValueChange.current) {
           actions.triggerFieldChange(propName, e.currentTarget.value);
           if (hasSuggestions) {
             pConn.ignoreSuggestion();
           }
           hasValueChange.current = false;
-        }
-
-        if (e.currentTarget.value !== value) {
-          setInputValue(e.currentTarget.value);
-          actions.updateFieldValue(propName, e.currentTarget.value);
         }
       }}
     />

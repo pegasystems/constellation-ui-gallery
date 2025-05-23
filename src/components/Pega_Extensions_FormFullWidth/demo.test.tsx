@@ -7,7 +7,7 @@ const { Default } = composeStories(DemoStories);
 test('renders FormFullWidth component with default args', async () => {
   render(<Default />);
   expect(await screen.findByText('Heading')).toBeVisible();
-  expect(await screen.findByText('SLA Deadline')).toBeVisible();
-  expect(await screen.findByText('SLA Goal')).toBeVisible();
-  expect(await screen.findByText('SLA Start Time')).toBeVisible();
+  expect(screen.getByLabelText('Field1')).toBeInTheDocument();
+  expect(screen.getByLabelText('Field2')).toBeInTheDocument();
+  expect(screen.getByLabelText('Field3')).toBeInTheDocument();
 });
