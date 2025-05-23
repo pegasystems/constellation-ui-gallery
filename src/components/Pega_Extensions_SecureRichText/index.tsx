@@ -40,7 +40,7 @@ export interface RichTextProps {
   /** hide label from the screen */
   hideLabel?: boolean;
   /** display mode */
-  displayMode?: string;
+  displayMode?: 'DISPLAY_ONLY' | '';
   /** additional props */
   additionalProps?: object;
   /** formatter */

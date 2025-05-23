@@ -12,9 +12,13 @@ export const PegaExtensionsFormFullWidth = (props: FormFullWidthProps) => {
   const { heading, NumCols, children } = props;
   let { gridTemplateColumns } = props;
 
-  const nCols = parseInt(NumCols, 10);
+  const nCols = parseInt(NumCols, 10) || 0;
   if (!gridTemplateColumns) {
-    gridTemplateColumns = `repeat(${nCols}, minmax(0, 1fr))`;
+    if (nCols === 0) {
+      gridTemplateColumns = 'repeat(auto-fit, minmax(40ch, 1fr))';
+    } else {
+      gridTemplateColumns = `repeat(${nCols}, minmax(0, 1fr))`;
+    }
   }
   return (
     <FieldGroup name={heading}>

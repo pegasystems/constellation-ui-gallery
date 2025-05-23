@@ -44,7 +44,7 @@ type StarRatingInputProps = {
   /** testId */
   testId?: string;
   /** display mode */
-  displayMode?: string;
+  displayMode?: 'DISPLAY_ONLY' | '';
 
   getPConnect?: any;
 };

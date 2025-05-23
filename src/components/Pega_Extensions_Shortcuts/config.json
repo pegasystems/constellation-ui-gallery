@@ -8,7 +8,10 @@
   "allowedApplications": [],
   "componentKey": "Pega_Extensions_Shortcuts",
   "type": "Widget",
-  "subtype": ["PAGE", "CASE"],
+  "subtype": [
+    "PAGE",
+    "CASE"
+  ],
   "properties": [
     {
       "name": "displayType",
@@ -30,25 +33,25 @@
       "name": "heading",
       "label": "Heading",
       "format": "TEXT",
-      "visibility": "$this.displayType == 'simple'"
+      "visibility": "$this.displayType == simple"
     },
     {
       "name": "names",
       "label": "Label of each page (comma-separated)",
       "format": "TEXT",
-      "visibility": "$this.displayType == 'simple'"
+      "visibility": "$this.displayType == simple"
     },
     {
       "name": "pages",
       "label": "Name of each page with the class (e.g. Data-Portal.SearchPage), comma-separated list",
       "format": "TEXT",
-      "visibility": "$this.displayType == 'simple'"
+      "visibility": "$this.displayType == simple"
     },
     {
       "name": "pageJSON",
       "label": "JSON of the categories and pages",
       "format": "TEXT",
-      "visibility": "$this.displayType == 'grouped'"
+      "visibility": "$this.displayType == grouped"
     }
   ],
   "defaultConfig": {

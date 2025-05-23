@@ -76,7 +76,8 @@ export type TrendDisplayProps = {
   trendData?: string | number;
 
   fieldMetadata?: any;
-  displayMode?: string;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 };
 
 export type Event = {

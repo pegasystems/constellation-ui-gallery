@@ -17,24 +17,9 @@
       "format": "TEXT"
     },
     {
-      "format": "SELECT",
       "name": "NumCols",
       "label": "Number of columns",
-      "defaultValue": "1",
-      "source": [
-        {
-          "key": "1",
-          "value": "One"
-        },
-        {
-          "key": "2",
-          "value": "Two"
-        },
-        {
-          "key": "3",
-          "value": "Three"
-        }
-      ]
+      "format": "TEXT"
     },
     {
       "name": "gridTemplateColumns",
@@ -45,8 +30,18 @@
       "name": "A",
       "label": "Region A",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Fields", "Views", "Widgets", "Insights"],
+      "addTypeList": [
+        "Fields",
+        "Views",
+        "Widgets",
+        "Insights"
+      ],
       "allowCreatingGroup": true
     }
-  ]
+  ],
+  "defaultConfig": {
+    "heading": "Heading",
+    "NumCols": "2",
+    "gridTemplateColumns": ""
+  }
 }

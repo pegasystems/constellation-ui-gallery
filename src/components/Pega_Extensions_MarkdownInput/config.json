@@ -1,12 +1,12 @@
 {
-  "name": "Pega_Extensions_SecureRichText",
-  "label": "Secure rich text editor",
-  "description": "Secure rich text editor",
+  "name": "Pega_Extensions_MarkdownInput",
+  "label": "Markdown editor",
+  "description": "Markdown editor",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",
   "allowedApplications": [],
-  "componentKey": "Pega_Extensions_SecureRichText",
+  "componentKey": "Pega_Extensions_MarkdownInput",
   "type": "Field",
   "subtype": "Text-Paragraph",
   "icon": "images/pz-text-area-active.svg",
@@ -21,31 +21,6 @@
       "name": "readOnly",
       "label": "Edit mode",
       "format": "READONLY"
-    },
-    {
-      "name": "toolbarMode",
-      "label": "Toolbar mode",
-      "format": "SELECT",
-      "source": [
-        {
-          "key": "basic",
-          "value": "basic"
-        },
-        {
-          "key": "normal",
-          "value": "normal"
-        }
-      ]
-    },
-    {
-      "name": "showWordCounter",
-      "label": "Show Word Counter?",
-      "format": "BOOLEAN"
-    },
-    {
-      "name": "maxWords",
-      "label": "Max Words",
-      "format": "NUMBER"
     },
     {
       "label": "Column settings",
@@ -132,9 +107,6 @@
   ],
   "defaultConfig": {
     "label": "@L $this.label",
-    "toolbarMode": "normal",
-    "showWordCounter": false,
-    "maxWords": 100,
     "detailFVLItem": true,
     "isFormWidth": true
   }

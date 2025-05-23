@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import { FieldValueList } from '@pega/cosmos-react-core';
+import { FieldValueList, Input } from '@pega/cosmos-react-core';
 import { PegaExtensionsFormFullWidth } from './index';
 
 export default {
@@ -14,9 +14,15 @@ export default {
   component: PegaExtensionsFormFullWidth
 };
 
-const renderField = (resolvedProps: any) => {
-  const { value = '', label = '', key } = resolvedProps;
-  return <FieldValueList variant='stacked' fields={[{ name: label, value }]} key={key} />;
+const generateChildren = (count: number) => {
+  return Array.from({ length: count }, (_, index) => ({
+    type: 'Text',
+    config: {
+      value: '',
+      label: `@L Field${index + 1}`
+    },
+    key: index.toString()
+  }));
 };
 
 const mainResponse = {
@@ -41,67 +47,14 @@ const mainResponse = {
           }
         };
       },
-      children: [
-        {
-          type: 'DateTime',
-          config: {
-            value: '@P .pySLADeadline',
-            label: '@L SLA Deadline'
-          },
-          key: '1'
-        },
-        {
-          type: 'DateTime',
-          config: {
-            value: '@P .pySLAGoal',
-            label: '@L SLA Goal'
-          },
-          key: '2'
-        },
-        {
-          type: 'DateTime',
-          config: {
-            value: '@P .pySLAStartTime',
-            label: '@L SLA Start Time'
-          },
-          key: '3'
-        }
-      ]
+      children: generateChildren(16)
     }
   ],
   classID: 'Work-MyComponents'
 };
 
-const regionChildrenResolved = [
-  {
-    readOnly: true,
-    value: '30 days',
-    label: 'SLA Deadline',
-    key: 'SLA Deadline'
-  },
-  {
-    readOnly: true,
-    value: '10 days',
-    label: 'SLA Goal',
-    key: 'SLA Goal'
-  },
-  {
-    readOnly: true,
-    value: '2/12/2023',
-    label: 'SLA Start Time',
-    key: 'SLA Start Time'
-  }
-];
-
 const createComponent = (config: any) => {
-  switch (config.config.value) {
-    case '@P .pySLADeadline':
-      return renderField(regionChildrenResolved[0]);
-    case '@P .pySLAGoal':
-      return renderField(regionChildrenResolved[1]);
-    case '@P .pySLAStartTime':
-      return renderField(regionChildrenResolved[2]);
-  }
+  return <Input label={config.label.replace('@L ', '')} />;
 };
 
 type Story = StoryObj<typeof PegaExtensionsFormFullWidth>;
@@ -121,8 +74,9 @@ export const Default: Story = {
           getInheritedProps: () => {
             return mainResponse.config.inheritedProps;
           },
-          createComponent: (config: any) => {
-            return createComponent(config);
+          createComponent: (f: any) => {
+            console.log('createComponent', f);
+            return createComponent(f.config);
           },
           setInheritedProp: () => {
             /* nothing */
@@ -141,7 +95,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    NumCols: '1',
+    NumCols: '2',
     gridTemplateColumns: ''
   }
 };
