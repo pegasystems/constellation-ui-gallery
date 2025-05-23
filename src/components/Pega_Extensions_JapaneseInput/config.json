@@ -46,7 +46,7 @@
           "name": "width",
           "label": "Width (px)",
           "format": "NUMBER",
-          "visibility": "$this.columnWidth == 'custom'"
+          "visibility": "$this.columnWidth == custom"
         }
       ]
     },

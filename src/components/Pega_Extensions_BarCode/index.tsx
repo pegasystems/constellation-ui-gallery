@@ -33,7 +33,8 @@ type BarCodeExtProps = {
   hideLabel: boolean;
   readOnly?: boolean;
   testId?: string;
-  displayMode?: string;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 
   getPConnect: any;
 };

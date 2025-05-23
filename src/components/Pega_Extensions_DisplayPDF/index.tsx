@@ -43,7 +43,8 @@ export type DisplayPDFProps = {
    *  @default false
    */
   hideLabel?: boolean;
-  displayMode?: DisplayMode;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
   getPConnect?: any;
 };
 

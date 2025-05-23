@@ -27,7 +27,8 @@ type SignatureCaptureProps = {
   readOnly?: boolean;
   required?: boolean;
   testId?: string;
-  displayMode?: string;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 };
 
 export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {

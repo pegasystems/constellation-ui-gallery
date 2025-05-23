@@ -17,7 +17,8 @@ export type CheckboxTriggerProps = {
   testId?: string;
   fieldMetadata?: any;
   additionalProps?: any;
-  displayMode?: string;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 };
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation

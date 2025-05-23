@@ -16,7 +16,8 @@ type PasswordInputProps = {
   testId?: string;
   fieldMetadata?: any;
   additionalProps?: any;
-  displayMode?: string;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
   hasSuggestions?: boolean;
 };
 

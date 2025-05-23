@@ -19,10 +19,6 @@ import {
   convertJapaneseEraToGregorian
 } from './utils';
 
-enum DisplayMode {
-  DisplayOnly = 'DISPLAY_ONLY'
-}
-
 // interface for props
 export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp {
   // If any, enter additional props that only exist on TextInput here
@@ -35,7 +31,8 @@ export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp
   label: string;
   getPConnect: any;
   errorMessage: string;
-  displayMode?: DisplayMode;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 }
 
 // interface for StateProps object
@@ -94,7 +91,7 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   }, [errorMessage, hasSuggestions, status]);
 
   const displayComp = inputValue || '';
-  if (displayMode === DisplayMode.DisplayOnly) {
+  if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
   }
 
