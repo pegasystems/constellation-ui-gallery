@@ -14,7 +14,7 @@ import { useRef, useState, useEffect } from 'react';
 import StyledList from './styles';
 
 export enum DisplayMode {
-  Editable = 'EDITABLE',
+  Editable = '',
   DisplayOnly = 'DISPLAY_ONLY'
 }
 

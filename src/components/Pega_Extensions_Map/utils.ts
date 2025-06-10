@@ -1,5 +1,3 @@
-import Graphic from '@arcgis/core/Graphic';
-import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
 import type GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import type MapView from '@arcgis/core/views/MapView';
 import type { DefaultTheme } from 'styled-components';
@@ -47,19 +45,18 @@ export const createGraphic = (
   view: MapView,
   vertices: any,
   useSpacialRef: boolean,
-  theme: DefaultTheme
+  theme: DefaultTheme,
+  Graphic: any
 ) => {
   ptLayer.removeAll();
 
   const graphic = new Graphic({
     geometry: {
-      // @ts-ignore
       type: 'polyline',
       paths: vertices,
       ...(useSpacialRef && { spatialReference: view.spatialReference })
     },
     symbol: {
-      // @ts-ignore
       type: 'simple-line',
       color: theme.base.palette['brand-primary'],
       width: 3,
@@ -93,6 +90,80 @@ export const createGraphic = (
   });
 };
 
+// Render the shapes o the map view
+export const renderShapes = (
+  ptLayer: GraphicsLayer,
+  view: MapView,
+  selectionProperty: string,
+  Graphic: any
+) => {
+  ptLayer.removeAll();
+  let shapes: any[] = [];
+  try {
+    // In case the selectionProperty is not a valid JSON
+    shapes = JSON.parse(selectionProperty || '{}').shapes || [];
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error('Invalid JSON in selectionProperty:', selectionProperty);
+  }
+  if (shapes && shapes.length !== 0) {
+    shapes.forEach((shape: any) => {
+      let graphic;
+      if (shape.type === 'polyline') {
+        graphic = new Graphic({
+          geometry: {
+            type: 'polyline',
+            paths: [shape.coordinates.map((c: any) => [c.x, c.y])],
+            spatialReference: view.spatialReference
+          },
+          symbol: {
+            type: 'simple-line',
+            color: 'rgba(150, 150, 150, 1)',
+            width: 2,
+            miterLimit: 2,
+            join: 'round'
+          }
+        });
+      } else if (shape.type === 'polygon') {
+        graphic = new Graphic({
+          geometry: {
+            type: 'polygon',
+            rings: [shape.coordinates.map((c: any) => [c.x, c.y])],
+            spatialReference: view.spatialReference
+          },
+          symbol: {
+            type: 'simple-fill',
+            color: 'rgba(150, 150, 150, 0.2)'
+          }
+        });
+      } else if (shape.type === 'point') {
+        graphic = new Graphic({
+          geometry: {
+            type: 'point',
+            x: shape.coordinates.x,
+            y: shape.coordinates.y
+          },
+          symbol: {
+            type: 'simple-marker',
+            size: 6,
+            style: 'circle',
+            color: '#FFF',
+            outline: {
+              width: 1,
+              style: 'solid',
+              type: 'simple-line',
+              color: 'rgb(50,50,50)'
+            }
+          }
+        });
+      }
+      if (graphic) {
+        ptLayer.add(graphic);
+      }
+    });
+  }
+};
+
 export const deletePoints = (
   getPConnect: any,
   props: any,
@@ -123,7 +194,8 @@ export const addPoint = (
   longitudePropRef: string,
   latitudePropRef: string,
   index: number,
-  x: any
+  x: any,
+  webMercatorUtils: any
 ) => {
   const messageConfig = {
     meta: props,

@@ -13,8 +13,8 @@ export default {
       }
     },
     displayMode: {
-      options: ['EDITABLE', 'DISPLAY_ONLY'],
-      control: { type: 'radio' }
+      options: ['', 'DISPLAY_ONLY'],
+      control: { type: 'radio', labels: { '': 'EDITABLE' } }
     },
     variant: {
       table: {
@@ -138,7 +138,7 @@ const MeterDemo = (inputs: MeterProps) => {
 };
 
 export const Default: Story = MeterDemo({
-  displayMode: 'EDITABLE',
+  displayMode: '',
   value: 50,
   dataPage: '',
   label: 'Tasks completed',
@@ -153,7 +153,7 @@ export const Grouped: Story = MeterDemo({
   dataPage: 'test',
   label: 'Test coverage',
   showMetaData: true,
-  displayMode: 'EDITABLE'
+  displayMode: ''
 });
 
 export const Grouped1: Story = MeterDemo({
@@ -161,5 +161,5 @@ export const Grouped1: Story = MeterDemo({
   label: 'System storage',
   showMetaData: true,
   totalTasks: 100,
-  displayMode: 'EDITABLE'
+  displayMode: ''
 });

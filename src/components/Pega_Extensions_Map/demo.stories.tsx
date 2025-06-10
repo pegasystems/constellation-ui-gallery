@@ -19,8 +19,8 @@ export default {
   title: 'Templates/Map',
   argTypes: {
     displayMode: {
-      options: ['EDITABLE', 'DISPLAY_ONLY'],
-      control: { type: 'radio' }
+      options: ['', 'DISPLAY_ONLY'],
+      control: { type: 'radio', labels: { '': 'EDITABLE' } }
     },
     getPConnect: {
       table: {
@@ -58,14 +58,15 @@ const setPCore = () => {
   };
 };
 
-const genResponse = () => {
+const genResponse = (args: any) => {
   const demoView = {
     name: 'demoView',
     type: 'View',
     config: {
       template: 'Pega_Extensions_Map',
       ruleClass: 'Work-',
-      inheritedProps: []
+      inheritedProps: [],
+      selectionProperty: args.selectionProperty || ''
     },
     children: [
       {
@@ -107,7 +108,7 @@ const genResponse = () => {
 type Story = StoryObj<typeof PegaExtensionsMap>;
 export const Default: Story = {
   render: args => {
-    const response = genResponse();
+    const response = genResponse(args);
     setPCore();
     const props = {
       template: 'MapLayout',
@@ -128,7 +129,12 @@ export const Default: Story = {
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: () => {}
+              updateFieldValue: (_key: string, value: string) => {
+                console.log('Updating field', value);
+              },
+              triggerFieldChange: () => {
+                /* nothing */
+              }
             };
           },
           getChildren: () => {
@@ -164,13 +170,17 @@ export const Default: Story = {
     return <PegaExtensionsMap {...props}></PegaExtensionsMap>;
   },
   args: {
-    height: '20rem',
     heading: 'Map',
+    height: '20rem',
     Latitude: '35',
     Longitude: '-110',
     Zoom: '4',
-    displayMode: 'EDITABLE',
+    displayMode: '',
     bFreeFormDrawing: false,
-    bShowSearch: false
+    bShowSearch: false,
+    createTools: 'point,polyline,polygon,rectangle,circle',
+    selectionProperty:
+      '{"shapes":[{"type":"polygon","coordinates":[{"x":-11902954.520884523,"y":4538976.751116623},{"x":-11902954.520884523,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4538976.751116623},{"x":-11902954.520884523,"y":4538976.751116623}]}]}',
+    apiKey: ''
   }
 };

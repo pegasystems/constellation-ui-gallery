@@ -18,6 +18,12 @@
       "defaultValue": "Map"
     },
     {
+      "key": "selectionProperty",
+      "format": "PROPERTY",
+      "name": "selectionProperty",
+      "label": "Selection Property"
+    },
+    {
       "name": "Latitude",
       "label": "Latitude",
       "format": "TEXT",
@@ -54,10 +60,23 @@
       "defaultValue": false
     },
     {
+      "name": "createTools",
+      "label": "list of tools for the Sketch component",
+      "format": "TEXT",
+      "defaultValue": "point,polyline,polygon,rectangle,circle"
+    },
+    {
+      "name": "apiKey",
+      "label": "API key for ArcGIS",
+      "format": "TEXT"
+    },
+    {
       "name": "A",
       "label": "Region A",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Fields"]
+      "addTypeList": [
+        "Fields"
+      ]
     }
   ],
   "defaultConfig": {
@@ -65,6 +84,10 @@
     "Latitude": "35",
     "Longitude": "-110",
     "Zoom": "4",
-    "height": "40rem"
+    "height": "40rem",
+    "createTools": "point,polyline,polygon,rectangle,circle",
+    "bFreeFormDrawing": false,
+    "bShowSearch": false,
+    "apiKey": ""
   }
 }

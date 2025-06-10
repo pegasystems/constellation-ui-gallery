@@ -10,8 +10,8 @@ export default {
       }
     },
     displayMode: {
-      options: ['EDITABLE', 'DISPLAY_ONLY'],
-      control: { type: 'radio' }
+      options: ['', 'DISPLAY_ONLY'],
+      control: { type: 'radio', labels: { '': 'EDITABLE' } }
     },
     colorMode: {
       options: ['auto', 'trend', 'orange', 'blue', 'purple'],
@@ -60,7 +60,7 @@ export const Default: Story = TrendDisplayDemo({
   hideLabel: false,
   colorMode: 'auto',
   renderingMode: 'normal',
-  displayMode: 'EDITABLE',
+  displayMode: '',
   currencyISOCode: 'USD',
   currencyDisplay: 'symbol',
   negative: 'minus-sign',
@@ -71,7 +71,7 @@ export const Default: Story = TrendDisplayDemo({
 export const Demo1: Story = TrendDisplayDemo({
   label: '2 weeks history',
   trendData: '0,2,5,9,5,10,3,5,0,0,1,8,2,9,0',
-  displayMode: 'EDITABLE'
+  displayMode: ''
 });
 
 export const Demo2: Story = TrendDisplayDemo({

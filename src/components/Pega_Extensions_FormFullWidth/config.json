@@ -30,12 +30,7 @@
       "name": "A",
       "label": "Region A",
       "format": "CONTENTPICKER",
-      "addTypeList": [
-        "Fields",
-        "Views",
-        "Widgets",
-        "Insights"
-      ],
+      "addTypeList": ["Fields", "Views", "Widgets", "Insights"],
       "allowCreatingGroup": true
     }
   ],
