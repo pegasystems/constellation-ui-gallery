@@ -26,6 +26,16 @@ export default {
       table: {
         disable: true
       }
+    },
+    locationInputType: {
+      table: {
+        disable: true
+      }
+    },
+    ZoomRef: {
+      table: {
+        disable: true
+      }
     }
   },
   component: PegaExtensionsMap
@@ -181,6 +191,8 @@ export const Default: Story = {
     createTools: 'point,polyline,polygon,rectangle,circle',
     selectionProperty:
       '{"shapes":[{"type":"polygon","coordinates":[{"x":-11902954.520884523,"y":4538976.751116623},{"x":-11902954.520884523,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4538976.751116623},{"x":-11902954.520884523,"y":4538976.751116623}]}]}',
-    apiKey: ''
+    apiKey: '',
+    locationInputType: 'constant',
+    ZoomRef: ''
   }
 };

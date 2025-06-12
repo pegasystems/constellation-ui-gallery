@@ -18,57 +18,99 @@
       "defaultValue": "Map"
     },
     {
-      "key": "selectionProperty",
       "format": "PROPERTY",
       "name": "selectionProperty",
       "label": "Selection Property"
     },
     {
-      "name": "Latitude",
-      "label": "Latitude",
-      "format": "TEXT",
-      "defaultValue": "35"
+      "key": "locationInputType",
+      "name": "locationInputType",
+      "label": "Location input type",
+      "format": "SELECT",
+      "defaultValue": "constant",
+      "source": [
+        {
+          "key": "constant",
+          "value": "Constant"
+        },
+        {
+          "key": "propertyRef",
+          "value": "Property Reference"
+        }
+      ]
     },
     {
-      "name": "Longitude",
-      "label": "Longitude",
-      "format": "TEXT",
-      "defaultValue": "-110"
+      "label": "Location input",
+      "format": "GROUP",
+      "visibility": "$this.locationInputType IS_NULL || $this.locationInputType != propertyRef",
+      "properties": [
+        {
+          "name": "Latitude",
+          "label": "Latitude",
+          "format": "TEXT",
+          "defaultValue": "35"
+        },
+        {
+          "name": "Longitude",
+          "label": "Longitude",
+          "format": "TEXT",
+          "defaultValue": "-110"
+        },
+        {
+          "name": "Zoom",
+          "label": "Zoom",
+          "format": "TEXT",
+          "defaultValue": "4"
+        }
+      ]
     },
     {
-      "name": "Zoom",
-      "label": "Zoom",
-      "format": "TEXT",
-      "defaultValue": "4"
+      "label": "Location input",
+      "format": "GROUP",
+      "visibility": "$this.locationInputType == propertyRef",
+      "properties": [
+        {
+          "format": "PROPERTY",
+          "name": "ZoomRef",
+          "label": "Zoom"
+        }
+      ]
     },
     {
-      "name": "height",
-      "label": "Height of the map",
-      "format": "TEXT",
-      "defaultValue": "40rem"
-    },
-    {
-      "name": "bFreeFormDrawing",
-      "label": "Set to true if you want to draw on the map using the sketch tool",
-      "format": "BOOLEAN",
-      "defaultValue": false
-    },
-    {
-      "name": "bShowSearch",
-      "label": "Set to true to display a search bar",
-      "format": "BOOLEAN",
-      "defaultValue": false
-    },
-    {
-      "name": "createTools",
-      "label": "list of tools for the Sketch component",
-      "format": "TEXT",
-      "defaultValue": "point,polyline,polygon,rectangle,circle"
-    },
-    {
-      "name": "apiKey",
-      "label": "API key for ArcGIS",
-      "format": "TEXT"
+      "label": "Settings",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "height",
+          "label": "Height of the map",
+          "format": "TEXT",
+          "defaultValue": "40rem"
+        },
+        {
+          "name": "bFreeFormDrawing",
+          "label": "Set to true if you want to draw on the map using the sketch tool",
+          "format": "BOOLEAN",
+          "defaultValue": false
+        },
+        {
+          "name": "createTools",
+          "label": "list of tools for the Sketch component",
+          "format": "TEXT",
+          "visibility": "$this.bFreeFormDrawing == true",
+          "defaultValue": "point,polyline,polygon,rectangle,circle"
+        },
+        {
+          "name": "bShowSearch",
+          "label": "Set to true to display a search bar",
+          "format": "BOOLEAN",
+          "defaultValue": false
+        },
+        {
+          "name": "apiKey",
+          "label": "API key for ArcGIS",
+          "format": "TEXT"
+        }
+      ]
     },
     {
       "name": "A",
@@ -88,6 +130,7 @@
     "createTools": "point,polyline,polygon,rectangle,circle",
     "bFreeFormDrawing": false,
     "bShowSearch": false,
-    "apiKey": ""
+    "apiKey": "",
+    "locationInputType": "constant"
   }
 }

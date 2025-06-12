@@ -30,9 +30,6 @@ type MapProps = {
   getPConnect?: any;
   heading?: string;
   height?: string;
-  Latitude?: string;
-  Longitude?: string;
-  Zoom?: string;
   displayMode: string;
   /**
    * Display the sketch widget to allow free-form drawing on the map.
@@ -58,11 +55,36 @@ type MapProps = {
    * API key for ArcGIS.
    */
   apiKey?: string;
+  /**
+   * Entry for Location Input - if type='constant' - set Latitude, Longitude and Zoom
+   * if type='propertyRef' - set LocationRef and ZoomRef.
+   */
+  locationInputType?: 'constant' | 'propertyRef';
+  /**
+   * Latitude for rendering the map if locationInputType is set to 'constant'.
+   * @default '34'
+   */
+  Latitude?: string;
+  /**
+   * Longitude for rendering the map if locationInputType is set to 'constant'.
+   * @default '-118'
+   */
+  Longitude?: string;
+  /**
+   * Zoom for rendering the map if locationInputType is set to 'constant'.
+   * @default '4'
+   */
+
+  Zoom?: string;
+  /**
+   * Zoom input property if locationInputType is set to 'propertyRef'.
+   */
+  ZoomRef?: string;
 };
 
 type VerticesProps = {
   ptLayer: GraphicsLayer;
-  view: MapView;
+  view: MapView | undefined;
   draw: Draw;
   event: any;
   embedDataRef: string;
@@ -83,9 +105,11 @@ export const PegaExtensionsMap = (props: MapProps) => {
     getPConnect,
     heading = 'Map',
     height = '40rem',
+    locationInputType = 'constant',
+    ZoomRef = '',
     Latitude = '34',
     Longitude = '-118',
-    Zoom = '8',
+    Zoom = '4',
     createTools = 'point,polyline,polygon,rectangle,circle',
     displayMode = '',
     selectionProperty,
@@ -173,40 +197,42 @@ export const PegaExtensionsMap = (props: MapProps) => {
       Graphic,
       webMercatorUtils
     } = vars;
-    // create a polyline from returned vertices
-    if (event.vertices.length > 1) {
-      createGraphic(ptLayer, view, event.vertices, true, theme, Graphic);
-    }
-    if (event.type === 'draw-complete') {
-      const action = draw.create('polyline');
-      action.on(
-        ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-        newEvent => {
-          updateVertices({ ...vars, event: newEvent });
-        }
-      );
-
-      /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
-      if (!isLastActionClear.current) {
-        deletePoints(getPConnect, props, embedDataRef, numPoints.current);
-      } else {
-        isLastActionClear.current = false;
+    if (view) {
+      // create a polyline from returned vertices
+      if (event.vertices.length > 1) {
+        createGraphic(ptLayer, view, event.vertices, true, theme, Graphic);
       }
-      event.vertices.forEach((x: any, index: number) => {
-        addPoint(
-          getPConnect,
-          props,
-          embedDataRef,
-          longitudePropRef,
-          latitudePropRef,
-          index,
-          x,
-          webMercatorUtils
+      if (event.type === 'draw-complete') {
+        const action = draw.create('polyline');
+        action.on(
+          ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
+          newEvent => {
+            updateVertices({ ...vars, event: newEvent });
+          }
         );
-      });
-      numPoints.current = event.vertices.length;
 
-      addScreenShot(getPConnect, view, imageMapRef);
+        /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
+        if (!isLastActionClear.current) {
+          deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+        } else {
+          isLastActionClear.current = false;
+        }
+        event.vertices.forEach((x: any, index: number) => {
+          addPoint(
+            getPConnect,
+            props,
+            embedDataRef,
+            longitudePropRef,
+            latitudePropRef,
+            index,
+            x,
+            webMercatorUtils
+          );
+        });
+        numPoints.current = event.vertices.length;
+
+        addScreenShot(getPConnect, view, imageMapRef);
+      }
     }
   };
 
@@ -247,7 +273,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
     let imageMapRef = '';
     let locationRef = '';
     let map: Map;
-    let view: MapView;
+    let view: MapView | undefined;
     let ptLayer: GraphicsLayer;
 
     // In 24.2, we need to initialize the context tree manager
@@ -271,24 +297,31 @@ export const PegaExtensionsMap = (props: MapProps) => {
       if (paths && paths.length === 2) {
         longitudePropRef = paths[1].substring(paths[1].indexOf(']') + 1).trim();
       }
-      if (tmpFields.length >= 3) {
-        paths = tmpFields[2].path?.split(' ');
-        if (paths && paths.length === 2) {
-          imageMapRef = paths[1];
+      for (let i = 2; i < tmpFields.length; i += 1) {
+        if (tmpFields[i].type === 'Location') {
+          const locationPropPath = tmpFields[i].path?.replace('@P ', '');
+          const lastSeparator = locationPropPath.lastIndexOf('.');
+          locationRef = locationPropPath.substring(0, lastSeparator);
+        } else {
+          paths = tmpFields[i].path?.split(' ');
+          if (paths && paths.length === 2) {
+            imageMapRef = paths[1];
+          }
         }
       }
     }
     // Retrieve the name of the embedded object when bFreeFormDrawing is true
-    if (bFreeFormDrawing && tmpFields.length > 0) {
-      if (tmpFields[0].type === 'Location') {
-        const locationPropPath = tmpFields[0].path?.replace('@P ', '');
-        const lastSeparator = locationPropPath.lastIndexOf('.');
-        locationRef = locationPropPath.substring(0, lastSeparator);
-      }
-      if (tmpFields.length >= 2) {
-        const paths = tmpFields[1].path?.split(' ');
-        if (paths && paths.length === 2) {
-          imageMapRef = paths[1];
+    if (bFreeFormDrawing) {
+      for (let i = 0; i < tmpFields.length; i += 1) {
+        if (tmpFields[i].type === 'Location') {
+          const locationPropPath = tmpFields[i].path?.replace('@P ', '');
+          const lastSeparator = locationPropPath.lastIndexOf('.');
+          locationRef = locationPropPath.substring(0, lastSeparator);
+        } else {
+          const paths = tmpFields[i].path?.split(' ');
+          if (paths && paths.length === 2) {
+            imageMapRef = paths[1];
+          }
         }
       }
     }
@@ -302,123 +335,141 @@ export const PegaExtensionsMap = (props: MapProps) => {
         layers: [ptLayer]
       });
 
-      view = new MapView({
-        container: mapDiv.current,
-        map,
-        center: [parseFloat(Longitude), parseFloat(Latitude)],
-        zoom: parseFloat(Zoom),
-        spatialReference
-      });
-
-      const draw = new Draw({
-        view
-      });
-
-      if (displayMode !== 'DISPLAY_ONLY') {
-        if (bFreeFormDrawing) {
-          const sketchWidget = new Sketch({
-            view,
-            layer: ptLayer,
-            availableCreateTools: createTools.split(',').map(tool => tool.toLowerCase().trim())
+      // Create the MapView with the specified container and properties
+      if (locationInputType === 'propertyRef') {
+        const inputLocation = getPConnect().getValue(locationRef);
+        const LatLong = inputLocation?.pyLatLon?.split(',');
+        if (LatLong && LatLong.length === 2) {
+          view = new MapView({
+            container: mapDiv.current,
+            map,
+            center: [parseFloat(LatLong[1]), parseFloat(LatLong[0])],
+            zoom: parseFloat(ZoomRef),
+            spatialReference
           });
-          sketchWidget.on(['create', 'delete', 'update'], (event: any) => {
-            updateShapeDefinition(event, ptLayer);
-          });
-          view.ui.add(sketchWidget, 'top-right');
         }
-        if (bShowSearch) {
-          const searchWidget = new Search({
-            view
-          });
-          view.ui.add(searchWidget, 'top-right');
-          if (locationRef) {
-            searchWidget.on('select-result', (event: any) => {
-              const result = event.result;
-              if (result?.feature?.geometry) {
-                const latitude = result.feature.geometry.latitude;
-                const longitude = result.feature.geometry.longitude;
-                const messageConfig = {
-                  meta: props,
-                  options: {
-                    context: getPConnect().getContextName(),
-                    pageReference: `caseInfo.content${locationRef}`,
-                    target: getPConnect().getTarget()
-                  }
-                };
-                const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
-                const actionsApi = c11nEnv.getPConnect().getActionsApi();
-                actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
-                actionsApi.updateFieldValue('.pyAddress', result.name);
-              }
+      }
+      /* If the locationRef is not set, use the constant values */
+      if (!view) {
+        view = new MapView({
+          container: mapDiv.current,
+          map,
+          center: [parseFloat(Longitude), parseFloat(Latitude)],
+          zoom: parseFloat(Zoom),
+          spatialReference
+        });
+      }
+      if (view) {
+        const draw = new Draw({
+          view
+        });
+
+        if (displayMode !== 'DISPLAY_ONLY') {
+          if (bFreeFormDrawing) {
+            const sketchWidget = new Sketch({
+              view,
+              layer: ptLayer,
+              availableCreateTools: createTools.split(',').map(tool => tool.toLowerCase().trim())
             });
+            sketchWidget.on(['create', 'delete', 'update'], (event: any) => {
+              updateShapeDefinition(event, ptLayer);
+            });
+            view.ui.add(sketchWidget, 'top-right');
           }
-          const track = new Track({
-            view
-          });
-          view.ui.add(track, 'top-left');
-        }
-
-        if (!bFreeFormDrawing) {
-          if (btnClearRef?.current) {
-            view.ui.add([
-              {
-                component: btnClearRef.current,
-                position: 'top-right',
-                index: 1
-              }
-            ]);
-          }
-
-          const action = draw.create('polyline');
-          action.on(
-            ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-            (event: any) => {
-              updateVertices({
-                ptLayer,
-                view,
-                draw,
-                event,
-                embedDataRef,
-                latitudePropRef,
-                longitudePropRef,
-                imageMapRef,
-                Graphic,
-                webMercatorUtils
+          if (bShowSearch) {
+            const searchWidget = new Search({
+              view
+            });
+            view.ui.add(searchWidget, 'top-right');
+            if (locationRef) {
+              searchWidget.on('select-result', (event: any) => {
+                const result = event.result;
+                if (result?.feature?.geometry) {
+                  const latitude = result.feature.geometry.latitude;
+                  const longitude = result.feature.geometry.longitude;
+                  const messageConfig = {
+                    meta: props,
+                    options: {
+                      context: getPConnect().getContextName(),
+                      pageReference: `caseInfo.content${locationRef}`,
+                      target: getPConnect().getTarget()
+                    }
+                  };
+                  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+                  const actionsApi = c11nEnv.getPConnect().getActionsApi();
+                  actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
+                  actionsApi.updateFieldValue('.pyAddress', result.name);
+                }
               });
             }
-          );
+            const track = new Track({
+              view
+            });
+            view.ui.add(track, 'top-left');
+          }
 
-          if (btnClearRef?.current) {
-            btnClearRef.current.onclick = () => {
-              ptLayer.removeAll();
-              deletePoints(getPConnect, props, embedDataRef, numPoints.current);
-              isLastActionClear.current = true;
-            };
+          if (!bFreeFormDrawing) {
+            if (btnClearRef?.current) {
+              view.ui.add([
+                {
+                  component: btnClearRef.current,
+                  position: 'top-right',
+                  index: 1
+                }
+              ]);
+            }
+
+            const action = draw.create('polyline');
+            action.on(
+              ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
+              (event: any) => {
+                updateVertices({
+                  ptLayer,
+                  view,
+                  draw,
+                  event,
+                  embedDataRef,
+                  latitudePropRef,
+                  longitudePropRef,
+                  imageMapRef,
+                  Graphic,
+                  webMercatorUtils
+                });
+              }
+            );
+
+            if (btnClearRef?.current) {
+              btnClearRef.current.onclick = () => {
+                ptLayer.removeAll();
+                deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+                isLastActionClear.current = true;
+              };
+            }
           }
         }
-      }
-      view.focus();
+        view.focus();
 
-      // If values are populated, load the polyline
-      if (!bFreeFormDrawing && tmpFields.length > 1 && tmpFields[0].value?.length > 0) {
-        const vertices: any = [];
-        tmpFields[0].value.forEach((val: any, index: any) => {
-          vertices.push([tmpFields[1].value[index], val]);
-        });
-        numPoints.current = vertices.length;
-        createGraphic(ptLayer, view, vertices, false, theme, Graphic);
-      }
+        // If values are populated, load the polyline
+        if (!bFreeFormDrawing && tmpFields.length > 1 && tmpFields[0].value?.length > 0) {
+          const vertices: any = [];
+          tmpFields[0].value.forEach((val: any, index: any) => {
+            vertices.push([tmpFields[1].value[index], val]);
+          });
+          numPoints.current = vertices.length;
+          createGraphic(ptLayer, view, vertices, false, theme, Graphic);
+        }
 
-      // If shapred are populated, in selectionProperty load the shaped
-      if (bFreeFormDrawing && typeof selectionProperty !== 'undefined') {
-        renderShapes(ptLayer, view, selectionProperty, Graphic);
+        // If shaped are populated, in selectionProperty load the shaped
+        if (bFreeFormDrawing && typeof selectionProperty !== 'undefined') {
+          renderShapes(ptLayer, view, selectionProperty, Graphic);
+        }
       }
     }
 
     return () => {
       ptLayer.removeAll();
-      view.graphics.removeAll();
-      view.destroy();
+      view?.graphics.removeAll();
+      view?.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

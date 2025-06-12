@@ -23,6 +23,9 @@ The component supports the following features:
 - If bFreeFormDrawing = false, can pass a URL field type that can be used to store a base64 image of the map
 - createTools is used to filter the list of tools available in the sketch component
 
+The initial can either be passed as a constant values by passing longitude, latitude and zoom as string values.
+You can also set locationInputType to 'propertyRef' to dynamically set the location. In this case, pass the location field as the parameter of the Region A and set the zoom value by passing a field of type text.
+
 <Primary />
 
 ## Props
