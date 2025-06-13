@@ -2,7 +2,6 @@ import { type FC } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import {
   Input,
-  FieldValueList,
   Text,
   withConfiguration,
   type InputProps,
@@ -13,27 +12,27 @@ import {
   withTestIds
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
-import type { FieldValueVariant } from '@pega/cosmos-react-core/lib/components/FieldValueList/FieldValueList';
-import { convertHiraganaToKatakana, fullWidthToHalfWidth } from './utils';
-
-enum DisplayMode {
-  DisplayOnly = 'DISPLAY_ONLY',
-  LabelsLeft = 'LABELS_LEFT',
-  StackedLargeVal = 'STACKED_LARGE_VAL'
-}
+import {
+  convertHiraganaToKatakana,
+  fullWidthToHalfWidth,
+  convertGregorianToJapaneseEra,
+  convertJapaneseEraToGregorian
+} from './utils';
 
 // interface for props
 export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp {
   // If any, enter additional props that only exist on TextInput here
   hasSuggestions?: boolean;
-  variant?: FieldValueVariant;
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
+  japaneseEraToGregorian: boolean;
+  gregorianToJapaneseEra: boolean;
   label: string;
   getPConnect: any;
   errorMessage: string;
-  displayMode?: DisplayMode;
+  /** display mode */
+  displayMode?: 'DISPLAY_ONLY' | '';
 }
 
 // interface for StateProps object
@@ -58,11 +57,12 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   label,
   labelHidden,
   info,
-  variant,
   hasSuggestions = false,
   hiraganaToKatakana = false,
   fullToHalf = false,
   lowerToUpper = false,
+  japaneseEraToGregorian = false,
+  gregorianToJapaneseEra = false,
   ...restProps
 }: PegaExtensionsJapaneseInputProps) => {
   const pConn = getPConnect();
@@ -91,26 +91,8 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   }, [errorMessage, hasSuggestions, status]);
 
   const displayComp = inputValue || '';
-  if (displayMode === DisplayMode.DisplayOnly) {
+  if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
-  }
-
-  if (displayMode === DisplayMode.LabelsLeft) {
-    return (
-      <FieldValueList
-        variant={labelHidden ? 'stacked' : variant}
-        data-testid={testId}
-        fields={[{ id: '1', name: labelHidden ? '' : label, value: displayComp }]}
-      />
-    );
-  }
-
-  if (displayMode === DisplayMode.StackedLargeVal) {
-    return (
-      <Text variant='h1' as='span'>
-        {displayComp}
-      </Text>
-    );
   }
 
   const handleChange = (event: any) => {
@@ -142,6 +124,11 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
     }
     if (lowerToUpper) {
       newValue = newValue.toUpperCase();
+    }
+    if (japaneseEraToGregorian && /^(令和|平成|昭和|大正|明治)/.test(newValue)) {
+      newValue = convertJapaneseEraToGregorian(newValue);
+    } else if (gregorianToJapaneseEra && /^([\d０-９]{3,4})(年)?/.test(newValue)) {
+      newValue = convertGregorianToJapaneseEra(newValue);
     }
     if (event.target.value !== newValue) {
       setInputValue(newValue);
