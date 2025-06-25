@@ -11,10 +11,27 @@
   "subtype": "Text",
   "properties": [
     {
-      "name": "label",
+      "name": "labelOption",
       "label": "Label value",
-      "format": "TEXT",
-      "required": true
+      "format": "SELECT",
+      "defaultValue": "custom",
+      "source": [
+        {
+          "key": "default",
+          "value": "Default"
+        },
+        {
+          "key": "custom",
+          "value": "Custom"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "label": "Custom label value",
+      "format": "VALUEINPUT",
+      "required": true,
+      "ruleType": "Paragraph"
     },
     {
       "key": "selectionProperty",
@@ -30,6 +47,7 @@
     }
   ],
   "defaultConfig": {
+    "label": "@L $this.label",
     "detailFVLItem": true
   }
 }
