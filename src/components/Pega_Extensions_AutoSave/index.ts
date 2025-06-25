@@ -32,16 +32,16 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
           actionID
         },
         body: {
-          content: {
-            /* Property or field name */
-            pyDescription: pConn.getValue(propertyName)
-          }
+          content: {} as Record<string, any>
         },
         headers: {
           /* etag as part of header */
           'if-match': etag
         }
       };
+      const lastSeparator = propertyName.lastIndexOf('.');
+      payload.body.content[propertyName.substring(lastSeparator + 1)] =
+        pConn.getValue(propertyName);
 
       /* Triggers save dx api */
       (window as any).PCore.getRestClient()
