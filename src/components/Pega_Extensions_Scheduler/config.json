@@ -11,10 +11,27 @@
   "subtype": "Text",
   "properties": [
     {
+      "name": "labelOption",
+      "label": "Label value",
+      "format": "SELECT",
+      "defaultValue": "custom",
+      "source": [
+        {
+          "key": "default",
+          "value": "Default"
+        },
+        {
+          "key": "custom",
+          "value": "Custom"
+        }
+      ]
+    },
+    {
       "name": "label",
-      "label": "Field label",
-      "format": "TEXT",
-      "required": true
+      "label": "Custom label value",
+      "format": "VALUEINPUT",
+      "required": true,
+      "ruleType": "Paragraph"
     },
     {
       "label": "Conditions",
@@ -43,6 +60,7 @@
     }
   ],
   "defaultConfig": {
+    "label": "@L $this.label",
     "isContainerWidth": true,
     "detailFVLItem": true
   }
