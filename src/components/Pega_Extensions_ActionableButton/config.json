@@ -11,9 +11,27 @@
   "subtype": "Text",
   "properties": [
     {
-      "name": "label",
+      "name": "labelOption",
       "label": "Label value",
-      "format": "TEXT"
+      "format": "SELECT",
+      "defaultValue": "custom",
+      "source": [
+        {
+          "key": "default",
+          "value": "Default"
+        },
+        {
+          "key": "custom",
+          "value": "Custom"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "label": "Custom label value",
+      "format": "VALUEINPUT",
+      "required": true,
+      "ruleType": "Paragraph"
     },
     {
       "name": "localAction",
@@ -26,5 +44,8 @@
       "format": "VISIBILITY"
     }
   ],
-  "defaultConfig": {}
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "localAction": ""
+  }
 }
