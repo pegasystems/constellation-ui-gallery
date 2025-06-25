@@ -25,7 +25,7 @@ import {
 } from './utils';
 import '../create-nonce';
 
-const ARCGIS_VERSION = '4.32';
+const ARCGIS_VERSION = '4.33';
 type MapProps = {
   getPConnect?: any;
   heading?: string;

@@ -20,6 +20,13 @@ const setPCore = () => {
         getLazyComponent: (f: string) => f
       };
     },
+    getConstants: () => {
+      return {
+        CASE_INFO: {
+          AVAILABLEACTIONS: ''
+        }
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local'
@@ -42,12 +49,15 @@ export const Default: Story = {
               value: 'C-123'
             };
           },
+          getValue: () => [{ ID: 'pyEditDetails', name: 'Edit Details' }],
           getActionsApi: () => {
             return {
               openLocalAction: {
                 bind: () => {
                   return (name: string, options: any) => {
-                    alert(`Launch local action ${name} for ${options.caseID}`);
+                    alert(
+                      `Launch local action ID '${name}' with title '${options.name}' for ${options.caseID}`
+                    );
                   };
                 }
               }
