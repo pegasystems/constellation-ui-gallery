@@ -7,10 +7,11 @@ export type ColumnProps = {
   title: string;
   id: string;
   tasks: any;
+  getPConnect: () => any;
 };
 
 export const Column = (props: ColumnProps) => {
-  const { title, id, tasks } = props;
+  const { title, id, tasks, getPConnect } = props;
   const theme = useTheme();
   return (
     <StyledColumn theme={theme}>
@@ -19,7 +20,7 @@ export const Column = (props: ColumnProps) => {
         {provided => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {tasks?.map((task: any, index: number) => (
-              <Task key={task.id} index={index} {...task} />
+              <Task key={task.id} index={index} {...task} getPConnect={getPConnect} />
             ))}
             {provided.placeholder}
           </div>

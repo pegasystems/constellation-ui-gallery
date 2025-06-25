@@ -398,6 +398,9 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
         selectionProperty: selProp,
         getPConnect: () => {
           return {
+            getLocalizedValue: (val: string) => {
+              return val;
+            },
             getChildren: () => {
               return genResponse(args.displayFormat, selProp).children;
             },

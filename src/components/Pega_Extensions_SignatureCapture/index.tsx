@@ -105,7 +105,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
       actions.updateFieldValue(propName, newValue);
       setHasValueChanged(false);
       setStatus('success');
-      setInfo('Signature captured');
+      setInfo(getPConnect().getLocalizedValue('Signature captured'));
     }
   };
 
@@ -147,7 +147,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
                   container={{ direction: 'row', justify: 'between', pad: [1] }}
                 >
                   <Button compact className='clear' onClick={handleCLear}>
-                    Clear
+                    {getPConnect().getLocalizedValue('Clear')}
                   </Button>
                   <Button
                     compact
@@ -156,7 +156,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
                     onClick={handleAccept}
                     disabled={!hasValueChanged}
                   >
-                    Accept
+                    {getPConnect().getLocalizedValue('Accept')}
                   </Button>
                 </Flex>
               </>

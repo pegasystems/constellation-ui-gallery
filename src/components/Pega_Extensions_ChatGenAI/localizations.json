@@ -1,0 +1,12 @@
+{
+  "fields": {
+    "AI Assistant": "AI Assistant",
+    "GenAI Assistant": "GenAI Assistant",
+    "Unable to process the request. Please try again after sometime.": "Unable to process the request. Please try again after sometime.",
+    "Error": "Error",
+    "Message": "Message",
+    "Enter your question": "Enter your question",
+    "Send": "Send",
+    "Restart conversation": "Restart conversation"
+  }
+}

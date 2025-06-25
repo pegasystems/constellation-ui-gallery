@@ -200,7 +200,7 @@ const NodeRenderer: FunctionComponent<
               <Flex container={{ alignItems: 'center' }} as='span'>
                 {depth === 0 ? null : (
                   <Button
-                    aria-label='click to expand / collapse'
+                    aria-label={getPConnect().getLocalizedValue('Click to expand / collapse')}
                     variant='simple'
                     icon
                     compact

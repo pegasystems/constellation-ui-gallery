@@ -54,12 +54,14 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const editTask = (id: string) => {
-    getPConnect().getActionsApi().openLocalAction('pyUpdateCaseDetails', {
-      caseID: id,
-      containerName: 'modal',
-      actionTitle: 'Edit task',
-      type: 'express'
-    });
+    getPConnect()
+      .getActionsApi()
+      .openLocalAction('pyUpdateCaseDetails', {
+        caseID: id,
+        containerName: 'modal',
+        actionTitle: getPConnect().getLocalizedValue('Edit task'),
+        type: 'express'
+      });
   };
 
   const addNewEvent = () => {
@@ -249,27 +251,35 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
 
   const content = useMemo(() => {
     if (loading) {
-      return genState(<Progress placement='block' message='Loading content...' />);
+      return genState(<Progress placement='block' />);
     }
     if (errorMsg.current) {
       return genState(<ErrorState message={errorMsg.current} />);
     }
     if (isEmpty.current) {
-      return genState(<EmptyState message='No items' />);
+      return genState(<EmptyState />);
     }
     return (
       <MainCard rendering={rendering} minWidth={minWidth}>
-        {tasks?.map((task: any) => (task.isVisible ? <Task key={task.id} {...task} /> : null))}
+        {tasks?.map((task: any) =>
+          task.isVisible ? <Task key={task.id} {...task} getPConnect={getPConnect} /> : null
+        )}
       </MainCard>
     );
-  }, [loading, tasks, rendering, minWidth]);
+  }, [loading, rendering, minWidth, tasks, getPConnect]);
 
   return (
     <Card>
       <CardHeader
         actions={
           createClassname ? (
-            <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
+            <Button
+              variant='simple'
+              label={getPConnect().getLocalizedValue('Create new task')}
+              icon
+              compact
+              onClick={addNewEvent}
+            >
               <Icon name='plus' />
             </Button>
           ) : undefined

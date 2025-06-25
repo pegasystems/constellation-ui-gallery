@@ -170,7 +170,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   }
 
   if (loading) {
-    return <Progress placement='local' message='Loading content...' />;
+    return <Progress placement='local' />;
   }
 
   return (

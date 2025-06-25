@@ -143,7 +143,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
   }, [numFields, fields]);
 
   if (loading) {
-    return <Progress placement='local' message='Loading content...' />;
+    return <Progress placement='local' />;
   }
 
   if (displayFormat === 'radio-button-card') {
@@ -197,7 +197,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
         </caption>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>{getPConnect().getLocalizedValue('Name')}</th>
             {fields[0].value.map((val: string, idx: number) => {
               const isSelected = selection.length >= idx ? selection[idx] : false;
               const field = {
@@ -243,7 +243,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
               )
                 return (
                   <tr key={`reg-row-${i}`}>
-                    <th>Selection</th>
+                    <th>{getPConnect().getLocalizedValue('Selection')}</th>
                     {child.value &&
                       child.value.map((val: any, j: number) => {
                         const isSelected = selection.length >= j ? selection[j] : false;
@@ -258,7 +258,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                               id={`${tableId}-radio-${j}`}
                               aria-labelledby={`${tableId}-radio-${j} ${tableId}-col-${j}`}
                               variant='card'
-                              label='Select'
+                              label={getPConnect().getLocalizedValue('Select')}
                               checked={isSelected}
                               onChange={() => selectObject(val, j)}
                             />

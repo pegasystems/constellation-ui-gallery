@@ -60,7 +60,7 @@ export const loadGanttData = async (
         end: end ? new Date(end) : new Date(start),
         progress,
         dependencies: dependencies?.split(',')?.map((x: string) => x.trim()),
-        type: (type as CategoryType).toLocaleLowerCase() as TaskType,
+        type: ((type as string) || '').toLocaleLowerCase() as TaskType,
         project,
         hideChildren: !!project,
         extendedProps: item

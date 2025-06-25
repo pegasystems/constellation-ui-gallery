@@ -216,7 +216,13 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         <CardHeader
           actions={
             createClassname ? (
-              <Button variant='simple' label='Create new task' icon compact onClick={addNewEvent}>
+              <Button
+                variant='simple'
+                label={getPConnect().getLocalizedValue('Create new task')}
+                icon
+                compact
+                onClick={addNewEvent}
+              >
                 <Icon name='plus' />
               </Button>
             ) : undefined
@@ -226,10 +232,16 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         </CardHeader>
         <MainCard height={height}>
           {loading ? (
-            <Progress placement='local' message='Loading content...' />
+            <Progress placement='local' />
           ) : (
             groupList.map((group: string) => (
-              <Column key={group} id={group} title={group} tasks={columns[group]?.taskList} />
+              <Column
+                key={group}
+                id={group}
+                title={group}
+                tasks={columns[group]?.taskList}
+                getPConnect={getPConnect}
+              />
             ))
           )}
         </MainCard>

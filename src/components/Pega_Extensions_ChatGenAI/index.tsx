@@ -47,7 +47,9 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
   const [chats, setChats] = useState<Array<string>>([]);
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
-  const genAIErrorMessage = 'Unable to process the request. Please try again after sometime.';
+  const genAIErrorMessage = getPConnect().getLocalizedValue(
+    'Unable to process the request. Please try again after sometime.'
+  );
 
   const loadResponse = (response: string) => {
     const id = `A#${history.length}`;
@@ -78,7 +80,9 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
           loadResponse(pyMessage ?? genAIErrorMessage);
         })
         .catch((error: Error) => {
-          loadResponse(`Error ${error.message}. ${genAIErrorMessage}`);
+          loadResponse(
+            `${getPConnect().getLocalizedValue('Error')} ${error.message}. ${genAIErrorMessage}`
+          );
         })
         .finally(() => {
           setLoading(false);
@@ -122,7 +126,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
       {loading && (
         <TypeIndicator
           avatarInfo={{
-            name: 'GenAI Assistant'
+            name: getPConnect().getLocalizedValue('GenAI Assistant')
           }}
           senderType='bot'
           senderId='bot'
@@ -131,18 +135,24 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
       <Flex container={{ direction: 'row', gap: 1 }}>
         <Flex item={{ grow: 1 }}>
           <TextArea
-            label='Message'
+            label={getPConnect().getLocalizedValue('Message')}
             value={value}
             minLength={0}
             maxLength={500}
             autoResize
             onChange={e => setValue(e.target.value)}
-            placeholder='Enter your question'
+            placeholder={getPConnect().getLocalizedValue('Enter your question')}
             onKeyPress={handleEnter}
           />
         </Flex>
         <Flex item={{ alignSelf: 'center' }}>
-          <Button variant='simple' label='Send' icon onClick={submitQuestion} disabled={loading}>
+          <Button
+            variant='simple'
+            label={getPConnect().getLocalizedValue('Send')}
+            icon
+            onClick={submitQuestion}
+            disabled={loading}
+          >
             <Icon name='send' />
           </Button>
         </Flex>
@@ -172,7 +182,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
             sendAllUserContext ? (
               <Button
                 variant='simple'
-                label='Restart conversation'
+                label={getPConnect().getLocalizedValue('Restart conversation')}
                 icon
                 compact
                 onClick={resetContext}

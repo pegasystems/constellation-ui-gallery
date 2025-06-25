@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Progress as ProgressComponent,
+  Progress,
   Flex,
   Switch,
   RadioButtonGroup,
@@ -304,7 +304,13 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
       <CardHeader
         actions={
           createClassname ? (
-            <Button variant='simple' label='Create new task' icon compact onClick={addNewTask}>
+            <Button
+              variant='simple'
+              label={getPConnect().getLocalizedValue('Create new task')}
+              icon
+              compact
+              onClick={addNewTask}
+            >
               <Icon name='plus' />
             </Button>
           ) : undefined
@@ -313,7 +319,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         <Text variant='h2'>{heading}</Text>
       </CardHeader>
       <CardContent>
-        <ProgressComponent visible={loaderTasks} placement='local' message='loading' />
+        <Progress visible={loaderTasks} placement='local' />
         {!loaderTasks && tasks?.length === 0 && <EmptyState />}
         {tasks?.length > 0 && (
           <StyledGanttChartWrapper onMouseUp={handleGanttClick}>
@@ -322,7 +328,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                 id='switch'
                 on={showDetailsColumnsOn}
                 onChange={() => setShowDetailsColumnsOn(curr => !curr)}
-                label='Show task list'
+                label={getPConnect().getLocalizedValue('Show task list')}
               />
               <RadioButtonGroup inline>
                 {viewModeOptions.map(tab => (
@@ -372,7 +378,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                         )}
                         <Button
                           variant='simple'
-                          label='Close'
+                          label={getPConnect().getLocalizedValue('Close')}
                           icon
                           compact
                           onClick={() => closePopover()}
@@ -385,11 +391,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                     <Text variant='h3'>{selectedTask.name}</Text>
                   </CardHeader>
                   <CardContent>
-                    <ProgressComponent
-                      visible={loaderDetails}
-                      placement='local'
-                      message='loading'
-                    />
+                    <Progress visible={loaderDetails} placement='local' />
                     {!details && <EmptyState />}
                     {details}
                   </CardContent>

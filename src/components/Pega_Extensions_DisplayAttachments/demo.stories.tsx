@@ -293,6 +293,9 @@ const DisplayAttachmentsDemo = (inputs: UtilityListProps) => {
         ...args,
         getPConnect: () => {
           return {
+            getLocalizedValue: (val: string) => {
+              return val;
+            },
             getContextName: () => '',
             getValue: () => 'C-123'
           };

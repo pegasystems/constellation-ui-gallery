@@ -131,6 +131,9 @@ export const Default: Story = {
           options: {
             viewName: ''
           },
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getListActions: () => {
             return {
               update: () => {},

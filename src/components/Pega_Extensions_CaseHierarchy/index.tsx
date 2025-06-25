@@ -25,7 +25,8 @@ type CaseHierarchyProps = {
 };
 
 export const PegaExtensionsCaseHierarchy = (props: CaseHierarchyProps) => {
-  const { heading = 'Case Hierarchy', dataPage = '', showParent = false, getPConnect } = props;
+  const { dataPage = '', showParent = false, getPConnect } = props;
+  const heading = props.heading ?? getPConnect().getLocalizedValue('Case Hierarchy');
   const [objects, setObjects] = useState<CustomTreeNode[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentNodeId, setCurrentNodeId] = useState<string | undefined>();

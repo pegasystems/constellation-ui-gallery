@@ -310,6 +310,9 @@ export const Default: Story = {
             addTransientItem: () => {},
             updateTransientData: () => {}
           }),
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getActionsApi: () => {
             return {
               openWorkByHandle: () => {

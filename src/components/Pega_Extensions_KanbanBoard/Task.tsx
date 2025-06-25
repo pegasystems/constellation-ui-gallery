@@ -22,10 +22,22 @@ export type TaskProps = {
   details?: any;
   getDetails: any;
   editTask: any;
+  getPConnect: () => any;
 };
 
 export const Task = (props: TaskProps) => {
-  const { index, insKey, classname, id, title, groupValue, details, getDetails, editTask } = props;
+  const {
+    index,
+    insKey,
+    classname,
+    id,
+    title,
+    groupValue,
+    details,
+    getDetails,
+    editTask,
+    getPConnect
+  } = props;
   const [newdetails, setDetails] = useState<any>(details);
   const theme = useTheme();
   const onEdit = () => {
@@ -49,9 +61,7 @@ export const Task = (props: TaskProps) => {
           <CardHeader>
             <Text variant='h3'>{title}</Text>
           </CardHeader>
-          <CardContent>
-            {newdetails || <Progress placement='inline' message='Loading content...' />}
-          </CardContent>
+          <CardContent>{newdetails || <Progress placement='inline' />}</CardContent>
         </Card>
       </StyledCardContent>
     );
@@ -63,16 +73,20 @@ export const Task = (props: TaskProps) => {
           <Card {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
             <CardHeader
               actions={
-                <Button variant='simple' label='Edit task' icon compact onClick={onEdit}>
+                <Button
+                  variant='simple'
+                  label={getPConnect().getLocalizedValue('Edit task')}
+                  icon
+                  compact
+                  onClick={onEdit}
+                >
                   <Icon name='pencil' />
                 </Button>
               }
             >
               <Text variant='h3'>{title}</Text>
             </CardHeader>
-            <CardContent>
-              {newdetails || <Progress placement='inline' message='Loading content...' />}
-            </CardContent>
+            <CardContent>{newdetails || <Progress placement='inline' />}</CardContent>
           </Card>
         </StyledCardContent>
       )}

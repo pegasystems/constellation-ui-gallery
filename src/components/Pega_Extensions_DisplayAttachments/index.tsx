@@ -268,7 +268,6 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
             count={loading ? undefined : attachments.length}
             items={attachments?.slice(0, 3)}
             loading={loading}
-            noItemsText='No items'
             onViewAll={() => {
               viewAllModalRef.current = create(ViewAllModal, { heading, attachments, loading });
             }}
@@ -293,7 +292,13 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
           <CardHeader
             actions={
               enableDownloadAll ? (
-                <Button variant='simple' label='Download all' icon compact onClick={downloadAll}>
+                <Button
+                  variant='simple'
+                  label={getPConnect().getLocalizedValue('Download all')}
+                  icon
+                  compact
+                  onClick={downloadAll}
+                >
                   <Icon name='download' />
                 </Button>
               ) : undefined
@@ -318,7 +323,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
                 ))}
               </Grid>
             ) : (
-              <EmptyState message='No items' />
+              <EmptyState />
             )}
           </CardContent>
         </Flex>

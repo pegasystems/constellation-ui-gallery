@@ -31,6 +31,13 @@ export const Default: Story = {
     setPCore();
     const props = {
       ...args,
+      getPConnect: () => {
+        return {
+          getLocalizedValue: (val: string) => {
+            return val;
+          }
+        };
+      },
       datasource: {
         source: [
           {

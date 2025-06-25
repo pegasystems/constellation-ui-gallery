@@ -257,7 +257,13 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
       <CardHeader
         actions={
           createClassname ? (
-            <Button variant='simple' label='Create new event' icon compact onClick={addNewEvent}>
+            <Button
+              variant='simple'
+              label={getPConnect().getLocalizedValue('Create new event')}
+              icon
+              compact
+              onClick={addNewEvent}
+            >
               <Icon name='plus' />
             </Button>
           ) : undefined

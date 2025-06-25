@@ -540,7 +540,9 @@ export const PegaExtensionsMap = (props: MapProps) => {
     };
   }, [initComponent]);
 
-  if (!scriptsLoaded) return <Progress placement='local' message='Loading content...' />;
+  if (!scriptsLoaded) {
+    return <Progress placement='local' />;
+  }
 
   return (
     <Card>
@@ -549,7 +551,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       </CardHeader>
       <CardContent>
         <StyledClearBtn hide={displayMode === 'DISPLAY_ONLY' || bFreeFormDrawing}>
-          <Button ref={btnClearRef}>Clear</Button>
+          <Button ref={btnClearRef}>{getPConnect().getLocalizedValue('Clear')}</Button>
         </StyledClearBtn>
         <StyledPegaExtensionsMap height={height} ref={mapDiv} onClick={captureEvent} />
       </CardContent>

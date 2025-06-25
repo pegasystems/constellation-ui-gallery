@@ -178,6 +178,9 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getActionsApi: () => {
             return {
               openWorkByHandle: () => {

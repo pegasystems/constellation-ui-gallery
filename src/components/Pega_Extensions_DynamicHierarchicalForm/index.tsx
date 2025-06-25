@@ -264,7 +264,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     return (
       <Flex container={{ pad: 2 }} height={10}>
         <Flex item={{ grow: 1, alignSelf: 'auto' }}>
-          <Progress placement='block' message='Loading content...' />
+          <Progress placement='block' />
         </Flex>
       </Flex>
     );
@@ -300,7 +300,6 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
               items: itemsToRender,
               onItemClick: toggleItem,
               accent: filterRegex,
-              emptyText: 'No items',
               scrollAt: 6
             }}
           />
@@ -335,7 +334,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         ) : (
           <Flex container={{ pad: 2 }} style={{ height: '10rem' }}>
             <Flex item={{ grow: 1, alignSelf: 'auto' }}>
-              <EmptyState message='No selected items' />
+              <EmptyState />
             </Flex>
           </Flex>
         )}

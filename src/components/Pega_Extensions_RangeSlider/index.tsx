@@ -327,7 +327,7 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
             aria-valuemax={max}
             aria-valuenow={minValue}
             aria-orientation='horizontal'
-            aria-label='Minimum Value'
+            aria-label={getPConnect().getLocalizedValue('Minimum value')}
           />
         </Flex>
         <Flex
@@ -351,7 +351,7 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
             aria-valuemax={max}
             aria-valuenow={maxValue}
             aria-orientation='horizontal'
-            aria-label='Maximum Value'
+            aria-label={getPConnect().getLocalizedValue('Maximum value')}
           />
         </Flex>
         <StyledMinValue>

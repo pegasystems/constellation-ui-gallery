@@ -193,6 +193,9 @@ export const Default: Story = {
           options: {
             viewName: ''
           },
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getContextName: () => 'workarea',
           getTarget: () => 'workarea',
           getChildren: () => {
