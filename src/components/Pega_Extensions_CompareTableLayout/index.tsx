@@ -143,7 +143,16 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
   }, [numFields, fields]);
 
   if (loading) {
-    return <Progress placement='local' />;
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
   }
 
   if (displayFormat === 'radio-button-card') {

@@ -232,7 +232,14 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         </CardHeader>
         <MainCard height={height}>
           {loading ? (
-            <Progress placement='local' />
+            <Progress
+              placement='local'
+              message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                'Loading content...',
+                'Generic',
+                '@BASECLASS!GENERIC!PYGENERICFIELDS'
+              )}
+            />
           ) : (
             groupList.map((group: string) => (
               <Column

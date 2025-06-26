@@ -164,6 +164,13 @@ const tasks: any = {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {

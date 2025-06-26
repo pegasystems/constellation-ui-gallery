@@ -385,6 +385,13 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
   return {
     render: (args: TableLayoutProps) => {
       (window as any).PCore = {
+        getLocaleUtils: () => {
+          return {
+            getLocaleValue: (val: string) => {
+              return val;
+            }
+          };
+        },
         getComponentsRegistry: () => {
           return {
             getLazyComponent: (f: string) => f

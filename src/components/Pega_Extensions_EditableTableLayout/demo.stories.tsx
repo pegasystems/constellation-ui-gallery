@@ -117,6 +117,13 @@ type Story = StoryObj<typeof PegaExtensionsEditableTableLayout>;
 export const Default: Story = {
   render: (args: TableLayoutProps) => {
     (window as any).PCore = {
+      getLocaleUtils: () => {
+        return {
+          getLocaleValue: (val: string) => {
+            return val;
+          }
+        };
+      },
       getContextTreeManager: () => {
         return {
           addPageListNode: () => {}

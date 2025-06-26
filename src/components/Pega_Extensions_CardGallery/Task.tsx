@@ -46,7 +46,18 @@ export const Task = (props: TaskProps) => {
         >
           <Text variant='h3'>{title}</Text>
         </CardHeader>
-        <CardContent>{details || <Progress placement='inline' />}</CardContent>
+        <CardContent>
+          {details || (
+            <Progress
+              placement='inline'
+              message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                'Loading content...',
+                'Generic',
+                '@BASECLASS!GENERIC!PYGENERICFIELDS'
+              )}
+            />
+          )}
+        </CardContent>
       </Card>
     </StyledCardContent>
   );

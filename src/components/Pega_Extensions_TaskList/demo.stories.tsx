@@ -20,6 +20,13 @@ export default {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     getConstants: () => {
       return {
         CASE_INFO: {}

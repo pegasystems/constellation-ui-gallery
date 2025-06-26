@@ -251,7 +251,16 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
 
   const content = useMemo(() => {
     if (loading) {
-      return genState(<Progress placement='block' />);
+      return genState(
+        <Progress
+          placement='block'
+          message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+            'Loading content...',
+            'Generic',
+            '@BASECLASS!GENERIC!PYGENERICFIELDS'
+          )}
+        />
+      );
     }
     if (errorMsg.current) {
       return genState(<ErrorState message={errorMsg.current} />);

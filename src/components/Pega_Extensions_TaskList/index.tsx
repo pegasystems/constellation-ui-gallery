@@ -94,7 +94,16 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
     return <Banner variant='urgent' messages={[error]} />;
   }
   if (isLoading) {
-    return <Progress placement='local' />;
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
   }
   return (
     <Card>

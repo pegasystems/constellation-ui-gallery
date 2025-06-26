@@ -25,7 +25,7 @@ import {
 } from './utils';
 import '../create-nonce';
 
-const ARCGIS_VERSION = '4.33';
+const ARCGIS_VERSION = '4.32';
 type MapProps = {
   getPConnect?: any;
   heading?: string;
@@ -541,7 +541,16 @@ export const PegaExtensionsMap = (props: MapProps) => {
   }, [initComponent]);
 
   if (!scriptsLoaded) {
-    return <Progress placement='local' />;
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
   }
 
   return (

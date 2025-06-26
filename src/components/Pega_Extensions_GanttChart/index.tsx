@@ -319,7 +319,15 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         <Text variant='h2'>{heading}</Text>
       </CardHeader>
       <CardContent>
-        <Progress visible={loaderTasks} placement='local' />
+        <Progress
+          visible={loaderTasks}
+          placement='local'
+          message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+            'Loading content...',
+            'Generic',
+            '@BASECLASS!GENERIC!PYGENERICFIELDS'
+          )}
+        />
         {!loaderTasks && tasks?.length === 0 && <EmptyState />}
         {tasks?.length > 0 && (
           <StyledGanttChartWrapper onMouseUp={handleGanttClick}>
@@ -391,7 +399,15 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                     <Text variant='h3'>{selectedTask.name}</Text>
                   </CardHeader>
                   <CardContent>
-                    <Progress visible={loaderDetails} placement='local' />
+                    <Progress
+                      visible={loaderDetails}
+                      placement='local'
+                      message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                        'Loading content...',
+                        'Generic',
+                        '@BASECLASS!GENERIC!PYGENERICFIELDS'
+                      )}
+                    />
                     {!details && <EmptyState />}
                     {details}
                   </CardContent>

@@ -264,7 +264,14 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     return (
       <Flex container={{ pad: 2 }} height={10}>
         <Flex item={{ grow: 1, alignSelf: 'auto' }}>
-          <Progress placement='block' />
+          <Progress
+            placement='block'
+            message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+              'Loading content...',
+              'Generic',
+              '@BASECLASS!GENERIC!PYGENERICFIELDS'
+            )}
+          />
         </Flex>
       </Flex>
     );
