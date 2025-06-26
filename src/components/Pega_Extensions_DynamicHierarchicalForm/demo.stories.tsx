@@ -72,6 +72,13 @@ const setPCore = (numProducts: number) => {
   }
 
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     getContextTreeManager: () => {
       return {
         addPageListNode: () => {}

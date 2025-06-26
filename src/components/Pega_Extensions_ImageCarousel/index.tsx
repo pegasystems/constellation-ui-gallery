@@ -66,6 +66,8 @@ export interface ImageCarouselProps {
     | 'BottomLeft'
     | 'BottomCenter'
     | 'BottomRight';
+
+  getPConnect: () => any;
 }
 
 export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
@@ -77,7 +79,8 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
     autoplayDuration = 3000,
     objectFit = 'cover',
     textPosition = 'TopLeft',
-    animationType = 'fade-in'
+    animationType = 'fade-in',
+    getPConnect
   } = props;
   const imageSliderData = datasource?.source || [];
 
@@ -136,7 +139,7 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
       </SliderWrapper>
 
       {(controlType === 'Buttons' || controlType === 'Both') && (
-        <SliderControls prevSlide={prevSlide} nextSlide={nextSlide} />
+        <SliderControls prevSlide={prevSlide} nextSlide={nextSlide} getPConnect={getPConnect} />
       )}
 
       {(controlType === 'Dots' || controlType === 'Both') && (

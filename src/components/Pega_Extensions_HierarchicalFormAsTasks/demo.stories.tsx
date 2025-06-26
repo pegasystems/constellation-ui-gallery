@@ -31,7 +31,11 @@ export const Default: Story = {
       template: 'HierarchicalFormAsTasks',
       heading: args.heading,
       getPConnect: () => {
-        return {};
+        return {
+          getLocalizedValue: (val: string) => {
+            return val;
+          }
+        };
       }
     };
 

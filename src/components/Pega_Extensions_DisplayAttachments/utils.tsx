@@ -147,7 +147,6 @@ export const addAttachment = (props: AddAttachmentProps) => {
     visual,
     primary: (
       <Button
-        aria-label={`Download ${attachment.name}`}
         variant='link'
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();

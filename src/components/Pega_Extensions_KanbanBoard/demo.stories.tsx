@@ -120,6 +120,13 @@ const tasks: any = {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {
@@ -256,6 +263,9 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getRawMetadata: () => {},
           getContextName: () => 'primary',
           getContainerManager: () => ({

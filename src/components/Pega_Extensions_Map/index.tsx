@@ -25,7 +25,7 @@ import {
 } from './utils';
 import '../create-nonce';
 
-const ARCGIS_VERSION = '4.33';
+const ARCGIS_VERSION = '4.32';
 type MapProps = {
   getPConnect?: any;
   heading?: string;
@@ -540,7 +540,18 @@ export const PegaExtensionsMap = (props: MapProps) => {
     };
   }, [initComponent]);
 
-  if (!scriptsLoaded) return <Progress placement='local' message='Loading content...' />;
+  if (!scriptsLoaded) {
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
+  }
 
   return (
     <Card>
@@ -549,7 +560,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       </CardHeader>
       <CardContent>
         <StyledClearBtn hide={displayMode === 'DISPLAY_ONLY' || bFreeFormDrawing}>
-          <Button ref={btnClearRef}>Clear</Button>
+          <Button ref={btnClearRef}>{getPConnect().getLocalizedValue('Clear')}</Button>
         </StyledClearBtn>
         <StyledPegaExtensionsMap height={height} ref={mapDiv} onClick={captureEvent} />
       </CardContent>

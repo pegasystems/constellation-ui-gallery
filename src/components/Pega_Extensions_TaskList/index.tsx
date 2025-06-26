@@ -94,7 +94,16 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
     return <Banner variant='urgent' messages={[error]} />;
   }
   if (isLoading) {
-    return <Progress placement='local' message='Loading content...' />;
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
   }
   return (
     <Card>
@@ -104,19 +113,24 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
       <CardContent>
         <StyledAddTask>
           <Input
-            label='Task name'
+            label={getPConnect().getLocalizedValue('Task name')}
             labelHidden
-            placeholder='Add task'
+            placeholder={getPConnect().getLocalizedValue('Add task')}
             ref={inputRef}
             onKeyDown={onKeyDown}
           />
           <Button variant='primary' onClick={addTask}>
-            Add
+            {getPConnect().getLocalizedValue('Add task')}
           </Button>
         </StyledAddTask>
         <Container>
           {taskListData.map(task => (
-            <TaskElement key={task.Id} task={task} deleteTask={deleteTask} />
+            <TaskElement
+              key={task.Id}
+              task={task}
+              deleteTask={deleteTask}
+              getPConnect={getPConnect}
+            />
           ))}
         </Container>
       </CardContent>

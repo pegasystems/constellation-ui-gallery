@@ -16,10 +16,11 @@ export type TaskProps = {
   status: string;
   details?: any;
   editTask: any;
+  getPConnect: () => any;
 };
 
 export const Task = (props: TaskProps) => {
-  const { insKey, status, title, details, editTask } = props;
+  const { insKey, status, title, details, editTask, getPConnect } = props;
   const theme = useTheme();
   const onEdit = () => {
     editTask(insKey);
@@ -31,7 +32,13 @@ export const Task = (props: TaskProps) => {
         <CardHeader
           actions={
             !status.startsWith('Resolved-') ? (
-              <Button variant='simple' label='Edit task' icon compact onClick={onEdit}>
+              <Button
+                variant='simple'
+                label={getPConnect().getLocalizedValue('Edit task')}
+                icon
+                compact
+                onClick={onEdit}
+              >
                 <Icon name='pencil' />
               </Button>
             ) : null
@@ -40,7 +47,16 @@ export const Task = (props: TaskProps) => {
           <Text variant='h3'>{title}</Text>
         </CardHeader>
         <CardContent>
-          {details || <Progress placement='inline' message='Loading content...' />}
+          {details || (
+            <Progress
+              placement='inline'
+              message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                'Loading content...',
+                'Generic',
+                '@BASECLASS!GENERIC!PYGENERICFIELDS'
+              )}
+            />
+          )}
         </CardContent>
       </Card>
     </StyledCardContent>

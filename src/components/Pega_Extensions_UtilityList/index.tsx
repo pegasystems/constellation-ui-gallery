@@ -132,7 +132,6 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         count={loading ? undefined : objects.length}
         items={objects?.slice(0, 3)}
         loading={loading}
-        noItemsText='No items'
         onViewAll={() => {
           viewAllModalRef.current = create(ViewAllModal, { heading, objects, loading });
         }}

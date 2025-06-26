@@ -195,6 +195,13 @@ const tasks: any = {
 
 const setPCore = (args: any) => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {
@@ -348,6 +355,9 @@ export const Default: Story = {
             addTransientItem: () => {},
             updateTransientData: () => {}
           }),
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getActionsApi: () => {
             return {
               openWorkByHandle: () => {

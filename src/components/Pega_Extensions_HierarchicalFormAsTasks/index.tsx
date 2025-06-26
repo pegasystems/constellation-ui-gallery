@@ -131,7 +131,7 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
               {allTasksCompleted && (
                 <Flex container={{ direction: 'row', justify: 'end' }}>
                   <Button onClick={submitAssignment} variant='primary'>
-                    Submit
+                    {getPConnect().getLocalizedValue('Submit')}
                   </Button>
                 </Flex>
               )}
@@ -143,7 +143,13 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
         {views.map(
           view =>
             view.visible && (
-              <TaskDetail key={view.id} task={view} onSubmit={submitView} onClose={closeView} />
+              <TaskDetail
+                key={view.id}
+                task={view}
+                onSubmit={submitView}
+                onClose={closeView}
+                getPConnect={getPConnect}
+              />
             )
         )}
       </FieldGroup>

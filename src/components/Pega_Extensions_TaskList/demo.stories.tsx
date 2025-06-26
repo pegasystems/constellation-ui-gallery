@@ -20,6 +20,13 @@ export default {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     getConstants: () => {
       return {
         CASE_INFO: {}
@@ -77,6 +84,9 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          getLocalizedValue: (val: string) => {
+            return val;
+          },
           getContextName: () => '',
           getValue: () => 'C-123'
         };

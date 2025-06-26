@@ -6,9 +6,10 @@ import type { Task } from './index';
 interface TaskElementProps {
   task: Task;
   deleteTask: (id: string) => void;
+  getPConnect: () => any;
 }
 const TaskElement = (props: TaskElementProps) => {
-  const { task, deleteTask } = props;
+  const { task, deleteTask, getPConnect } = props;
   const [status, setStatus] = useState(task.IsCompleted);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -54,8 +55,12 @@ const TaskElement = (props: TaskElementProps) => {
     <TaskCard key={task.Id}>
       {isEditing ? (
         <>
-          <Input label='Task label' labelHidden ref={inputRef} />
-          <Button variant='text' label='submit task' onClick={submitTask}>
+          <Input label={getPConnect().getLocalizedValue('Task name')} labelHidden ref={inputRef} />
+          <Button
+            variant='text'
+            label={getPConnect().getLocalizedValue('Submit task')}
+            onClick={submitTask}
+          >
             <Icon name='check' />
           </Button>
         </>
@@ -66,10 +71,18 @@ const TaskElement = (props: TaskElementProps) => {
             onChange={toggleStatus} // Pass the Id and current Status to toggle
             label={titleRef.current}
           />
-          <Button variant='text' label='Edit task' onClick={editTask}>
+          <Button
+            variant='text'
+            label={getPConnect().getLocalizedValue('Edit task')}
+            onClick={editTask}
+          >
             <Icon name='pencil' />
           </Button>
-          <Button variant='text' label='Delete task' onClick={() => deleteTask(task.Id)}>
+          <Button
+            variant='text'
+            label={getPConnect().getLocalizedValue('Delete task')}
+            onClick={() => deleteTask(task.Id)}
+          >
             <Icon name='trash' />
           </Button>
         </>

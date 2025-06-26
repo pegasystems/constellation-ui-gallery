@@ -52,6 +52,13 @@ const getBinary = async () => {
 
 const setPCore = (url: string) => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     getDataApiUtils: () => {
       return {
         getData: () => {

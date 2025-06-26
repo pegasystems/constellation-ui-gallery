@@ -19,7 +19,7 @@ const RatingElem = (props: RatingElemProps) => {
     .fill(0)
     .map((_, index) => index)
     .forEach(tick => {
-      ticksObject![tick + 1] = tickValues[tick];
+      ticksObject![tick + 1] = getPConnect().getLocalizedValue(tickValues[tick]);
     });
 
   /* When calling updateFieldValue, we need to be in the context of the object in the array

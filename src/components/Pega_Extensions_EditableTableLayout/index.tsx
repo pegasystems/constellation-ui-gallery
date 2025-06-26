@@ -157,7 +157,16 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
   }, [numFields, fields]);
 
   if (loading) {
-    return <Progress placement='local' message='Loading content...' />;
+    return (
+      <Progress
+        placement='local'
+        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          'Loading content...',
+          'Generic',
+          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+        )}
+      />
+    );
   }
 
   return (
@@ -178,7 +187,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
                       </th>
                     );
                   })}
-                  <th style={{ width: '80px' }}>Action</th>
+                  <th style={{ width: '80px' }}>{getPConnect().getLocalizedValue('Action')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -190,7 +199,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
                       })}
                       <td>
                         <Button
-                          label='Delete this record'
+                          label={getPConnect().getLocalizedValue('Delete this record')}
                           variant='simple'
                           onClick={() => deleteRow(i)}
                         >
@@ -206,7 +215,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
           <Flex container={{ direction: 'row' }}>
             <Button variant='simple' onClick={addRow}>
               <Icon name='plus' />
-              Add a new record
+              {getPConnect().getLocalizedValue('Add new record')}
             </Button>
           </Flex>
         </Flex>

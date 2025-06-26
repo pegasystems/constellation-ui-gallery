@@ -162,9 +162,9 @@ function Flow(props: any) {
         });
       });
       data.pyEdges.forEach((element: any, i: number) => {
-        const ariaLabel = `Relation from ${tmpNodesHash[element.pyFrom]} to ${
-          tmpNodesHash[element.pyTo]
-        } with label: ${element.pyLabel}`;
+        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element.pyFrom]} ${getPConnect().getLocalizedValue(
+          'to'
+        )} ${tmpNodesHash[element.pyTo]} ${getPConnect().getLocalizedValue('with label:')} ${element.pyLabel}`;
         const edge: any = {
           id: element.pyID || `edge-${i}`,
           source: element.pyFrom,
@@ -262,7 +262,13 @@ export const PegaExtensionsNetworkDiagram = (props: NetworkDiagramProps) => {
       <CardHeader
         actions={
           showRefresh ? (
-            <Button variant='simple' label='Reload diagram' icon compact onClick={refreshDiagram}>
+            <Button
+              variant='simple'
+              label={props.getPConnect().getLocalizedValue('Reload diagram')}
+              icon
+              compact
+              onClick={refreshDiagram}
+            >
               <Icon name='reset' />
             </Button>
           ) : undefined

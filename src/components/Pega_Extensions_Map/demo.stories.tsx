@@ -47,6 +47,13 @@ const genComponent = (config: any) => {
 
 const setPCore = () => {
   (window as any).PCore = {
+    getLocaleUtils: () => {
+      return {
+        getLocaleValue: (val: string) => {
+          return val;
+        }
+      };
+    },
     getContextTreeManager: () => {
       return {
         addPageListNode: () => {}
@@ -130,6 +137,9 @@ export const Default: Story = {
           },
           options: {
             viewName: ''
+          },
+          getLocalizedValue: (val: string) => {
+            return val;
           },
           getListActions: () => {
             return {
