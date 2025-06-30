@@ -17,10 +17,10 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
       (action: { ID: string }) => action.ID === localAction
     );
     const actionName = targetAction?.name || label;
-    const LaunchLocalAction = () => {
+    const LaunchLocalAction = async () => {
       const actionsAPI = getPConnect().getActionsApi();
-      const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
-      openLocalAction(localAction, {
+      await actionsAPI.saveAssignment(getPConnect().getContextName());
+      actionsAPI.openLocalAction(localAction, {
         caseID: value,
         containerName: 'modal',
         type: 'express',
