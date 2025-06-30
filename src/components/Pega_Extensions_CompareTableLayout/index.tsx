@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key */
+ 
 import { useState, useEffect } from 'react';
 import {
   withConfiguration,

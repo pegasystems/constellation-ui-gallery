@@ -4844,8 +4844,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-building-disciplines-tree-node__collapse-toggle:not(
-        .esri-building-disciplines-tree-node__collapse-toggle--collapsed
-      ) {
+      .esri-building-disciplines-tree-node__collapse-toggle--collapsed
+    ) {
       transform: rotate(90deg);
     }
 
@@ -7845,8 +7845,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-elevation-profile-legend-item__label:not(
-        .esri-elevation-profile-legend-item__label--disabled
-      ) {
+      .esri-elevation-profile-legend-item__label--disabled
+    ) {
       cursor: pointer;
     }
 

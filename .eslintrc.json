@@ -50,6 +50,7 @@
     "import/no-self-import": "off",
     "import/no-unresolved": "off",
     "import/no-useless-path-segments": "off",
-    "import/order": "off"
+    "import/order": "off",
+    "react/no-array-index-key": "off"
   }
 }
