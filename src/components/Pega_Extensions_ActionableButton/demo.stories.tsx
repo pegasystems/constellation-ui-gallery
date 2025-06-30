@@ -24,6 +24,13 @@ const setPCore = () => {
       return {
         getTimeZone: () => 'local'
       };
+    },
+    getConstants: () => {
+      return {
+        CASE_INFO: {
+          AVAILABLEACTIONS: 'AVAILABLEACTIONS'
+        }
+      };
     }
   };
 };
@@ -42,15 +49,17 @@ export const Default: Story = {
               value: 'C-123'
             };
           },
+          getContextName: () => {
+            return 'context';
+          },
+          getValue: () => {
+            return [];
+          },
           getActionsApi: () => {
             return {
-              openLocalAction: {
-                bind: () => {
-                  return (name: string, options: any) => {
-                    // eslint-disable-next-line no-alert
-                    alert(`Launch local action ${name} for ${options.caseID}`);
-                  };
-                }
+              saveAssignment: () => Promise.resolve(),
+              openLocalAction: (name: string, options: any) => {
+                alert(`Launch local action ${name} for ${options.caseID}`);
               }
             };
           }
