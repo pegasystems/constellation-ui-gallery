@@ -51,7 +51,7 @@ export const getJapaneseInputTestIds = createTestIds('japanese-input', [] as con
 export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> = ({
   testId,
   getPConnect,
-  errorMessage,
+  errorMessage = '',
   displayMode,
   value,
   label,
