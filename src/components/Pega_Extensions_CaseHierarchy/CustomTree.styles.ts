@@ -1,14 +1,7 @@
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 
-import {
-  Tree,
-  StyledTreeListItem,
-  Icon,
-  StyledIcon,
-  defaultThemeProp,
-  useDirection
-} from '@pega/cosmos-react-core';
+import { Tree, StyledTreeListItem, Icon, StyledIcon, defaultThemeProp, useDirection } from '@pega/cosmos-react-core';
 
 export const StyledToggleIcon = styled(Icon)``;
 
@@ -96,8 +89,7 @@ export const StyledCustomTreeParent: any = styled(StyledNodeInteraction)(({ them
     }
 
     ${StyledToggleIcon} {
-      transition: transform calc(${theme.base.animation.speed} / 2)
-        ${theme.base.animation.timing.ease};
+      transition: transform calc(${theme.base.animation.speed} / 2) ${theme.base.animation.timing.ease};
     }
   `;
 });
@@ -117,7 +109,7 @@ export const StyledCustomTreeNode = styled.div(
       width: var(--parent-caret-width);
       height: var(--parent-caret-width);
     }
-  `
+  `,
 );
 
 StyledCustomTreeNode.defaultProps = defaultThemeProp;

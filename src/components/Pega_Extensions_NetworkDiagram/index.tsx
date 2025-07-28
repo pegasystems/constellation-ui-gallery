@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  useTheme
+  useTheme,
 } from '@pega/cosmos-react-core';
 import ReactFlow, {
   useNodesState,
@@ -20,7 +20,7 @@ import ReactFlow, {
   MarkerType,
   ConnectionMode,
   type Node,
-  type Edge
+  type Edge,
 } from 'reactflow';
 import dagre from '@dagrejs/dagre';
 
@@ -95,7 +95,7 @@ const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>) => {
     node.sourcePosition = 'bottom';
     node.position = {
       x: nodeWithPosition.x,
-      y: nodeWithPosition.y
+      y: nodeWithPosition.y,
     };
 
     return node;
@@ -105,7 +105,7 @@ const getLayoutedElements = (nodes: Array<Node>, edges: Array<Edge>) => {
 };
 const edgeTypes: any = {
   custom: CustomEdge,
-  floating: FloatingEdge
+  floating: FloatingEdge,
 };
 function Flow(props: any) {
   const {
@@ -116,7 +116,7 @@ function Flow(props: any) {
     showControls = true,
     edgePath = 'bezier',
     counter,
-    getPConnect
+    getPConnect,
   } = props;
 
   const { fitView } = useReactFlow();
@@ -136,14 +136,9 @@ function Flow(props: any) {
         parameters = { pyGUID: selectionProperty };
       }
       const context = getPConnect().getContextName();
-      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(
-        dataPage,
-        context,
-        parameters,
-        {
-          invalidateCache: true
-        }
-      );
+      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
+        invalidateCache: true,
+      });
       data.pyNodes.forEach((element: any) => {
         tmpNodesHash[element.pyID] = element.pyLabel;
         initialNodes.push({
@@ -155,15 +150,15 @@ function Flow(props: any) {
             key: element.pzInsKey,
             objClass: element.pyClassName,
             getPConnect,
-            theme
+            theme,
           },
           position,
-          type: 'custom'
+          type: 'custom',
         });
       });
       data.pyEdges.forEach((element: any, i: number) => {
         const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element.pyFrom]} ${getPConnect().getLocalizedValue(
-          'to'
+          'to',
         )} ${tmpNodesHash[element.pyTo]} ${getPConnect().getLocalizedValue('with label:')} ${element.pyLabel}`;
         const edge: any = {
           id: element.pyID || `edge-${i}`,
@@ -174,14 +169,14 @@ function Flow(props: any) {
             type: MarkerType.ArrowClosed,
             width: 20,
             height: 20,
-            color: theme.base.palette['foreground-color']
+            color: theme.base.palette['foreground-color'],
           },
           style: {
             strokeWidth: 2,
-            stroke: theme.base.palette['foreground-color']
+            stroke: theme.base.palette['foreground-color'],
           },
           type: 'floating',
-          ariaLabel
+          ariaLabel,
         };
         if (edgePath !== 'floating') {
           edge.type = 'custom';
@@ -190,10 +185,7 @@ function Flow(props: any) {
         }
         initialEdges.push(edge);
       });
-      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-        initialNodes,
-        initialEdges
-      );
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(initialNodes, initialEdges);
       if (edgePath !== 'floating') {
         /* If fixed (top -> bottom - need to see if we need to reverse from bottom -> top ) */
         const layoutedNodesHash: any = {};
@@ -219,18 +211,7 @@ function Flow(props: any) {
       }, 10);
     }
     getNodesDetails();
-  }, [
-    height,
-    edgePath,
-    counter,
-    setNodes,
-    setEdges,
-    getPConnect,
-    theme,
-    fitView,
-    dataPage,
-    selectionProperty
-  ]);
+  }, [height, edgePath, counter, setNodes, setEdges, getPConnect, theme, fitView, dataPage, selectionProperty]);
 
   return (
     <ReactFlow
@@ -255,7 +236,7 @@ export const PegaExtensionsNetworkDiagram = (props: NetworkDiagramProps) => {
   const theme = useTheme();
   const [counter, setCounter] = useState<number>(1);
   const refreshDiagram = () => {
-    setCounter(prev => prev + 1);
+    setCounter((prev) => prev + 1);
   };
   return (
     <Card>

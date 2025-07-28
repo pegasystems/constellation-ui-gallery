@@ -3,15 +3,15 @@ import { PegaExtensionsStatusBadge } from './index';
 
 export default {
   title: 'Fields/Status Badge',
-  component: PegaExtensionsStatusBadge
+  component: PegaExtensionsStatusBadge,
 };
 
 type Story = StoryObj<typeof PegaExtensionsStatusBadge>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
-      ...args
+      ...args,
     };
     return <PegaExtensionsStatusBadge {...props} />;
   },
@@ -21,6 +21,6 @@ export const Default: Story = {
     warnStatus: 'fail|cancel|reject|withdraw|revoke|stopped|warn',
     successStatus: 'resolved|completed|success',
     pendingStatus: 'pending',
-    urgentStatus: 'blocked'
-  }
+    urgentStatus: 'blocked',
+  },
 };

@@ -50,7 +50,7 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
             status: 'Not yet started',
             getPConnect: viewPConnect,
             content: viewPConnect().getComponent(),
-            visible: false
+            visible: false,
           });
         });
       });
@@ -64,46 +64,46 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
   const submitAssignment = () => {
     getPConnect().getActionsApi().finishAssignment(getPConnect().getContextName(), {
       outcomeID: '',
-      jsActionQueryParams: {}
+      jsActionQueryParams: {},
     });
   };
 
   const closeView = (targetView: Task) => {
-    setViews(prevViews => {
-      return prevViews.map(view => ({
+    setViews((prevViews) => {
+      return prevViews.map((view) => ({
         ...view,
-        visible: view.id === targetView.id ? !view.visible : false
+        visible: view.id === targetView.id ? !view.visible : false,
       }));
     });
   };
 
   const openView = (targetView: Task) => {
-    setViews(prevViews => {
-      const currentIndex = prevViews.findIndex(a => a.id === targetView.id);
+    setViews((prevViews) => {
+      const currentIndex = prevViews.findIndex((a) => a.id === targetView.id);
       return prevViews.map((view, index) => ({
         ...view,
-        visible: index === currentIndex
+        visible: index === currentIndex,
       }));
     });
   };
 
   const submitView = (targetView: Task) => {
-    setViews(prevViews => {
-      const currentIndex = prevViews.findIndex(a => a.id === targetView.id);
+    setViews((prevViews) => {
+      const currentIndex = prevViews.findIndex((a) => a.id === targetView.id);
       const nextIndex = currentIndex + 1;
       return prevViews.map((view, index) => ({
         ...view,
         status: index === currentIndex ? 'Completed' : view.status,
-        visible: index === nextIndex && nextIndex < prevViews.length
+        visible: index === nextIndex && nextIndex < prevViews.length,
       }));
     });
   };
 
   // Check if any task is currently visible
-  const isAnyTaskVisible = views.some(view => view.visible);
+  const isAnyTaskVisible = views.some((view) => view.visible);
 
   // Check if all tasks are completed
-  const allTasksCompleted = views.every(view => view.status === 'Completed');
+  const allTasksCompleted = views.every((view) => view.status === 'Completed');
 
   return (
     <>
@@ -114,15 +114,11 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
           <StyledTaskList>
             <Flex container={{ direction: 'column', gap: 1 }}>
               {categories.map((category, index) => (
-                <FieldGroup
-                  name={`${index + 1}. ${category.title}`}
-                  headingTag='h3'
-                  key={category.title}
-                >
+                <FieldGroup name={`${index + 1}. ${category.title}`} headingTag='h3' key={category.title}>
                   <ol>
                     {views
-                      .filter(view => view.category === category.title)
-                      .map(view => (
+                      .filter((view) => view.category === category.title)
+                      .map((view) => (
                         <TaskListItem key={view.id} task={view} onOpen={openView} />
                       ))}
                   </ol>
@@ -141,7 +137,7 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
 
         {/* Task Detail View */}
         {views.map(
-          view =>
+          (view) =>
             view.visible && (
               <TaskDetail
                 key={view.id}
@@ -150,7 +146,7 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
                 onClose={closeView}
                 getPConnect={getPConnect}
               />
-            )
+            ),
         )}
       </FieldGroup>
     </>

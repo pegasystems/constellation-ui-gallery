@@ -16,12 +16,8 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
       /* Get the current case etag */
       const etag = pConn.getValue('caseInfo.headers.etag');
 
-      const assignmentID = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.ASSIGNMENT_ID
-      );
-      const actionID = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID
-      )
+      const assignmentID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ASSIGNMENT_ID);
+      const actionID = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID)
         ? pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ACTIVE_ACTION_ID)
         : pConn.getValue((window as any).PCore.getConstants().CASE_INFO.ASSIGNMENTACTION_ID);
 
@@ -29,19 +25,18 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
       const payload = {
         queryPayload: {
           assignmentID,
-          actionID
+          actionID,
         },
         body: {
-          content: {} as Record<string, any>
+          content: {} as Record<string, any>,
         },
         headers: {
           /* etag as part of header */
-          'if-match': etag
-        }
+          'if-match': etag,
+        },
       };
       const lastSeparator = propertyName.lastIndexOf('.');
-      payload.body.content[propertyName.substring(lastSeparator + 1)] =
-        pConn.getValue(propertyName);
+      payload.body.content[propertyName.substring(lastSeparator + 1)] = pConn.getValue(propertyName);
 
       /* Triggers save dx api */
       (window as any).PCore.getRestClient()
@@ -49,10 +44,7 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
         .then((response: any) => {
           /* Upon successful, update the latest etag. */
           const updatedEtag = response.headers.etag;
-          (window as any).PCore.getContainerUtils().updateCaseContextEtag(
-            pConn.getContextName(),
-            updatedEtag
-          );
+          (window as any).PCore.getContainerUtils().updateCaseContextEtag(pConn.getContextName(), updatedEtag);
         });
     };
     const subId = Date.now();
@@ -62,7 +54,7 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
       pConn.getPageReference(),
       [propertyName],
       saveAssignment,
-      subId
+      subId,
     );
 
     /* Unregister fields */
@@ -72,7 +64,7 @@ export const PegaExtensionsAutoSave = (props: AutoSaveProps) => {
         pConn.getPageReference(),
         [propertyName],
         saveAssignment,
-        subId
+        subId,
       );
     };
   }, [pConn, propertyName]);

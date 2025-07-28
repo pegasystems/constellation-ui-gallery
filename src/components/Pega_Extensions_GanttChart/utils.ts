@@ -37,7 +37,7 @@ export const loadGanttData = async (
   dependenciesFieldName: string,
   startDateFieldName: string,
   endDateFieldName: string,
-  progressFieldName: string
+  progressFieldName: string,
 ) => {
   const response = await (window as any).PCore.getDataApiUtils().getData(dataPage, {});
   const mappedTasks: Array<Task> = [];
@@ -51,7 +51,7 @@ export const loadGanttData = async (
         [dependenciesFieldName]: dependencies,
         [startDateFieldName]: start,
         [endDateFieldName]: end,
-        [progressFieldName]: progress
+        [progressFieldName]: progress,
       } = item;
       mappedTasks.push({
         id,
@@ -63,7 +63,7 @@ export const loadGanttData = async (
         type: ((type as string) || '').toLocaleLowerCase() as TaskType,
         project,
         hideChildren: !!project,
-        extendedProps: item
+        extendedProps: item,
       });
     });
   }
@@ -72,10 +72,10 @@ export const loadGanttData = async (
   const sortedData = mappedTasks.sort((a, b) => a.start.getTime() - b.start.getTime());
   const groupedByProjects: Array<Task> = [];
   sortedData
-    .filter(x => x.type === 'project')
-    .forEach(proj => {
+    .filter((x) => x.type === 'project')
+    .forEach((proj) => {
       groupedByProjects.push(proj);
-      groupedByProjects.push(...sortedData.filter(x => x.project === proj.id));
+      groupedByProjects.push(...sortedData.filter((x) => x.project === proj.id));
     });
   return groupedByProjects;
 };
@@ -98,7 +98,7 @@ export const getCustomStyleOptions = (theme: DefaultTheme, TooltipContent?: any)
     milestoneBackgroundColor: colorInGradientByName('faded-red', 1 / 3),
     milestoneBackgroundSelectedColor: colorInGradientByName('faded-red', 1 / 2),
 
-    TooltipContent
+    TooltipContent,
   };
 
   return styleOptions;
@@ -110,7 +110,7 @@ export const ViewModeMap: Record<ViewModeType, GTRViewModeType> = {
   Daily: GTRViewMode.Day,
   Weekly: GTRViewMode.Week,
   Monthly: GTRViewMode.Month,
-  Yearly: GTRViewMode.Year
+  Yearly: GTRViewMode.Year,
 };
 
 /** Adjust column width based on viewMode */
@@ -126,9 +126,9 @@ export const getColumnWidth = (viewMode: ViewModeType) => {
   return columnWidth;
 };
 
-export const viewModeOptions = Object.keys(ViewModeMap).map(key => ({
+export const viewModeOptions = Object.keys(ViewModeMap).map((key) => ({
   id: key,
-  name: key
+  name: key,
 }));
 
 // TODO: move this to a common util outside all components and reuse in Kanban and Gantt
@@ -159,19 +159,19 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         .getContainerManager()
         .addTransientItem({
           id: `${detailsViewName}${id}`,
-          data: {}
+          data: {},
         });
       getPConnect().getContainerManager().updateTransientData({
         transientItemID,
-        data: res.data.data.dataInfo
+        data: res.data.data.dataInfo,
       });
       const messageConfig = {
         meta: fetchViewResources(detailsViewName, getPConnect(), classname),
         options: {
           contextName: transientItemID,
           context: transientItemID,
-          pageReference: 'content'
-        }
+          pageReference: 'content',
+        },
       };
       messageConfig.meta.config.showLabel = false;
       messageConfig.meta.config.pyID = id;
@@ -204,6 +204,6 @@ export const updateItemDetails = async (props: UpdateItemDetails) => {
     pzInsKey,
     payload,
     response.headers.etag,
-    context
+    context,
   );
 };

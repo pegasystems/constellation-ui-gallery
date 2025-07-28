@@ -6,16 +6,16 @@ export default {
   argTypes: {
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsTaskList
+  component: PegaExtensionsTaskList,
 };
 
 const setPCore = () => {
@@ -24,19 +24,19 @@ const setPCore = () => {
       return {
         getLocaleValue: (val: string) => {
           return val;
-        }
+        },
       };
     },
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getRestClient: () => {
       return {
         invokeRestApi: () => {
           return Promise.resolve({ status: 200 });
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -46,9 +46,9 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -60,19 +60,19 @@ const setPCore = () => {
                 {
                   Id: '1',
                   Label: 'Project configuration has been completed',
-                  IsCompleted: true
+                  IsCompleted: true,
                 },
                 {
                   Id: '2',
                   Label: 'Create the project report',
-                  IsCompleted: false
-                }
-              ]
-            }
+                  IsCompleted: false,
+                },
+              ],
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
@@ -88,14 +88,14 @@ export const Default: Story = {
             return val;
           },
           getContextName: () => '',
-          getValue: () => 'C-123'
+          getValue: () => 'C-123',
         };
-      }
+      },
     };
     return <PegaExtensionsTaskList {...props} />;
   },
   args: {
     heading: 'Tasks',
-    dataPage: 'D_TaskListList'
-  }
+    dataPage: 'D_TaskListList',
+  },
 };

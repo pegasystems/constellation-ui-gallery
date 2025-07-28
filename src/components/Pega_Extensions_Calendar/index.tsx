@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  useTheme
+  useTheme,
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
@@ -26,7 +26,7 @@ registerIcon(plusIcon);
 const VIEW_TYPE = {
   DAY: 'timeGridDay',
   WEEK: 'timeGridWeek',
-  MONTH: 'dayGridMonth'
+  MONTH: 'dayGridMonth',
 };
 
 type CalendarProps = {
@@ -73,7 +73,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
     defaultViewMode = 'Monthly',
     nowIndicator = true,
     weekendIndicator = true,
-    getPConnect
+    getPConnect,
   } = props;
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
@@ -116,7 +116,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   const addNewEvent = () => {
     if (createClassname) {
       getPConnect().getActionsApi().createWork(createClassname, {
-        openCaseViewAfterCreate: false
+        openCaseViewAfterCreate: false,
       });
     }
   };
@@ -132,7 +132,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj.pxObjClass },
-      { workID: obj.pyID }
+      { workID: obj.pyID },
     );
     const linkEl = (
       <Link
@@ -141,16 +141,16 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         style={
           isdayGrid
             ? {
-                wordBreak: 'break-all'
+                wordBreak: 'break-all',
               }
             : {
                 color: '#FFF',
-                wordBreak: 'break-all'
+                wordBreak: 'break-all',
               }
         }
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(eventInfo.event.id), {
-            caseClassName: obj.pxObjClass
+            caseClassName: obj.pxObjClass,
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
@@ -173,24 +173,24 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         <FieldValueList
           variant='inline'
           style={{
-            gap: 'normal'
+            gap: 'normal',
           }}
           fields={[
             {
               id: 'id',
               name: 'Case ID',
-              value: linkEl
+              value: linkEl,
             },
             {
               id: 'time',
               name: 'time',
-              value: eventDateStr
+              value: eventDateStr,
             },
             {
               id: 'status',
               name: 'Status',
-              value: <Status variant='success'>{obj.pyStatusWork}</Status>
-            }
+              value: <Status variant='success'>{obj.pyStatusWork}</Status>,
+            },
           ]}
         />
       </StyledEventWrapper>
@@ -209,7 +209,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
               title: item.pyLabel,
               start: new Date(`${item.SessionDate}T${item.StartTime}`),
               end: new Date(`${item.SessionDate}T${item.EndTime}`),
-              item
+              item,
             });
           });
           setEvents(tmpevents);
@@ -219,9 +219,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
 
   const handleEventClick = (eventClickInfo: EventClickArg) => {
     const eventDetails = eventClickInfo.event.extendedProps;
-    getPConnect()
-      .getActionsApi()
-      .openWorkByHandle(eventDetails.item.pzInsKey, eventDetails.item.pxObjClass);
+    getPConnect().getActionsApi().openWorkByHandle(eventDetails.item.pzInsKey, eventDetails.item.pxObjClass);
   };
 
   const handleDateChange = (objInfo: any) => {
@@ -236,12 +234,12 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         /* If an assignment is updated - force a reload of the events */
         loadEvents();
       },
-      'ASSIGNMENT_SUBMISSION'
+      'ASSIGNMENT_SUBMISSION',
     );
     return () => {
       (window as any).PCore.getPubSubUtils().unsubscribe(
         (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
-        'ASSIGNMENT_SUBMISSION'
+        'ASSIGNMENT_SUBMISSION',
       );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -283,7 +281,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
                   const calendarAPI = cal.getApi();
                   calendarAPI?.prev();
                 }
-              }
+              },
             },
             nextButton: {
               text: 'Next',
@@ -293,13 +291,13 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
                   const calendarAPI = cal.getApi();
                   calendarAPI?.next();
                 }
-              }
-            }
+              },
+            },
           }}
           headerToolbar={{
             left: 'prevButton,nextButton',
             center: 'title',
-            right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`
+            right: `${VIEW_TYPE.MONTH},${VIEW_TYPE.WEEK},${VIEW_TYPE.DAY}`,
           }}
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView={getDefaultView()}
@@ -315,9 +313,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           datesSet={handleDateChange}
-          initialDate={
-            dateInfo !== null && dateInfo.startStr ? dateInfo.startStr.substring(0, 10) : undefined
-          }
+          initialDate={dateInfo !== null && dateInfo.startStr ? dateInfo.startStr.substring(0, 10) : undefined}
           slotLabelFormat={{ hour: '2-digit', minute: '2-digit', hour12: false }}
         />
       </CardContent>

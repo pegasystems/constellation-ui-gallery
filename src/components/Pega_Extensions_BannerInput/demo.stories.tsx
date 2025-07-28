@@ -3,15 +3,15 @@ import { PegaExtensionsBannerInput } from './index';
 
 export default {
   title: 'Fields/Banner Input',
-  component: PegaExtensionsBannerInput
+  component: PegaExtensionsBannerInput,
 };
 
 type Story = StoryObj<typeof PegaExtensionsBannerInput>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
-      ...args
+      ...args,
     };
     return <PegaExtensionsBannerInput {...props} />;
   },
@@ -19,6 +19,6 @@ export const Default: Story = {
     value:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     variant: 'success',
-    icon: 'warn-solid'
-  }
+    icon: 'warn-solid',
+  },
 };

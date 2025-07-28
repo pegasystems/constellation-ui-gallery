@@ -11,7 +11,7 @@ import {
   ComboBox,
   menuHelpers,
   type MenuItemProps,
-  type ComboBoxProps
+  type ComboBoxProps,
 } from '@pega/cosmos-react-core';
 import getAllFields from './utils';
 import { MainContent, FixPopover } from './styles';
@@ -50,7 +50,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     showRefreshAction = true,
     enableItemSelection = true,
     label = '',
-    showLabel = true
+    showLabel = true,
   } = props;
   const [tabs, setTabs] = useState<Array<any>>([]);
   const products = useRef<Array<any>>([]);
@@ -64,7 +64,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   const [items, setItems] = useState<Array<any>>([]);
   const [filterValue, setFilterValue] = useState('');
   const selected = useMemo(() => {
-    return menuHelpers.getSelected(items).map(item => ({ text: item.primary, id: item.id }));
+    return menuHelpers.getSelected(items).map((item) => ({ text: item.primary, id: item.id }));
   }, [items]);
 
   const filterRegex = useMemo(() => getFilterRegex(filterValue), [filterValue]);
@@ -75,9 +75,9 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
           return filterRegex.test(primary);
         })
       : items;
-    return menuHelpers.mapTree(newItems, item => ({
+    return menuHelpers.mapTree(newItems, (item) => ({
       ...item,
-      selected: item.items ? undefined : !!item.selected
+      selected: item.items ? undefined : !!item.selected,
     }));
   }, [filterRegex, filterValue, items]);
 
@@ -101,8 +101,8 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
       options: {
         context: getPConnect().getContextName(),
         pageReference: `caseInfo.content.${productRef.current}[${index}]`,
-        target: getPConnect().getTarget()
-      }
+        target: getPConnect().getTarget(),
+      },
     };
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
     const actionsApi = c11nEnv.getPConnect().getActionsApi();
@@ -141,7 +141,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
       return products.current[index].pyGUID;
     });
 
-    setTabs(prevTabs => {
+    setTabs((prevTabs) => {
       return prevTabs.map((tab: any, j: number) => {
         if (index === j) {
           return { ...tab, visible: IsSelected };
@@ -177,24 +177,19 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
       getPConnect().getContextName(),
       'caseInfo.content',
       getPConnect().meta.name,
-      productRef.current
+      productRef.current,
     );
 
     const SelectedProducts: any = getAllFields(0, getPConnect);
     const tmpFields: any = getAllFields(1, getPConnect);
-    if (
-      SelectedProducts.length !== 1 ||
-      !SelectedProducts[0]?.authorContext ||
-      tmpFields.length === 0
-    ) {
+    if (SelectedProducts.length !== 1 || !SelectedProducts[0]?.authorContext || tmpFields.length === 0) {
       return;
     }
 
     const tmpTabs: Array<any> = [];
     const tmpItems: Array<MenuItemProps> = [];
     const context = getPConnect().getContextName();
-    const content: any = (window as any).PCore.getStore().getState().data?.[context]?.caseInfo
-      ?.content;
+    const content: any = (window as any).PCore.getStore().getState().data?.[context]?.caseInfo?.content;
     productRef.current = SelectedProducts[0].authorContext.substring(1);
     productSelectionRequiredRef.current = false;
     if (SelectedProducts[0]?.inheritedProps?.length > 0) {
@@ -223,7 +218,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         const metadata = (window as any).PCore.getViewResources().fetchViewResources(
           tmpFields[fieldId].name,
           getPConnect(),
-          tmpFields[fieldId].ruleClass
+          tmpFields[fieldId].ruleClass,
         );
         const messageConfig = {
           meta: metadata,
@@ -231,8 +226,8 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
             contextName: getPConnect().getContextName(),
             context: getPConnect().getContextName(),
             pageReference: `caseInfo.content${tmpFields[fieldId].context}`,
-            target: getPConnect().getTarget()
-          }
+            target: getPConnect().getTarget(),
+          },
         };
         const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
         const myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
@@ -240,7 +235,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
           name: pyLabel,
           id,
           visible: Products[i].IsSelected,
-          content: myElem
+          content: myElem,
         });
       }
     }
@@ -269,7 +264,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
             message={(window as any).PCore.getLocaleUtils().getLocaleValue(
               'Loading content...',
               'Generic',
-              '@BASECLASS!GENERIC!PYGENERICFIELDS'
+              '@BASECLASS!GENERIC!PYGENERICFIELDS',
             )}
           />
         </Flex>
@@ -288,11 +283,11 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
             required={productSelectionRequiredRef.current}
             selected={{
               items: selected,
-              onRemove: toggleItem
+              onRemove: toggleItem,
             }}
             info={validatemessage}
             status={status}
-            onChange={e => {
+            onChange={(e) => {
               setFilterValue(e.target.value);
             }}
             onBlur={(val: any) => {
@@ -307,7 +302,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
               items: itemsToRender,
               onItemClick: toggleItem,
               accent: filterRegex,
-              scrollAt: 6
+              scrollAt: 6,
             }}
           />
         ) : null}
@@ -323,17 +318,12 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
                 />
               </Flex>
               <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
-                {tabs.map(tab =>
+                {tabs.map((tab) =>
                   tab.visible ? (
-                    <TabPanel
-                      tabId={tab.id}
-                      currentTabId={panelShown}
-                      key={tab.id}
-                      style={{ width: '100%' }}
-                    >
+                    <TabPanel tabId={tab.id} currentTabId={panelShown} key={tab.id} style={{ width: '100%' }}>
                       {tab.content}
                     </TabPanel>
-                  ) : null
+                  ) : null,
                 )}
               </Flex>
             </Flex>

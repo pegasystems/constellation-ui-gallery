@@ -8,7 +8,7 @@ test('renders a Banner Input component with default args', async () => {
   render(<Default />);
   expect(
     await screen.findAllByText(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    )
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    ),
   ).toHaveLength(1);
 });

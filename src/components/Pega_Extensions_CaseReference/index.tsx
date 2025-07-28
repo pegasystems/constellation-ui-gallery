@@ -17,7 +17,7 @@ export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: objClass },
-      { workID: value }
+      { workID: value },
     );
 
     return (
@@ -26,7 +26,7 @@ export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
         previewable
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(key), {
-            caseClassName: objClass
+            caseClassName: objClass,
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {

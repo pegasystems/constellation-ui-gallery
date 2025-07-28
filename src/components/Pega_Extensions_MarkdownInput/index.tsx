@@ -52,7 +52,7 @@ export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
     testId,
     displayMode,
     additionalProps = {},
-    fieldMetadata
+    fieldMetadata,
   } = props;
 
   const [id] = useState(createUID());
@@ -63,20 +63,16 @@ export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
     ? {
-        content: fieldAdditionalInfo
+        content: fieldAdditionalInfo,
       }
     : undefined;
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
 
-  const displayComponent = newValue ? (
-    <RichTextViewer id={id} content={newValue} type='markdown' />
-  ) : (
-    <NoValue />
-  );
+  const displayComponent = newValue ? <RichTextViewer id={id} content={newValue} type='markdown' /> : <NoValue />;
 
   if (displayMode === 'DISPLAY_ONLY') {
     return displayComponent;

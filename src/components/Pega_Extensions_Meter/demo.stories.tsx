@@ -5,29 +5,29 @@ export default {
   title: 'Fields/Meter',
   argTypes: {
     value: {
-      control: { type: 'number', min: 0, max: 100, step: 1 }
+      control: { type: 'number', min: 0, max: 100, step: 1 },
     },
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       options: ['', 'DISPLAY_ONLY'],
-      control: { type: 'radio', labels: { '': 'EDITABLE' } }
+      control: { type: 'radio', labels: { '': 'EDITABLE' } },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsMeter
+  component: PegaExtensionsMeter,
 };
 
 const setPCore = () => {
@@ -35,18 +35,18 @@ const setPCore = () => {
     getConstants: () => {
       return {
         CASE_INFO: {
-          CASE_INFO_ID: 'ID'
-        }
+          CASE_INFO_ID: 'ID',
+        },
       };
     },
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getDataApiUtils: () => {
@@ -59,9 +59,9 @@ const setPCore = () => {
                   { label: 'Pass', color: '#34a35d', value: 16 },
                   { label: 'Failed', color: '#fb243d', value: 3 },
                   { label: 'Blocked', color: '#f5fa60', value: 6 },
-                  { label: 'Not Executed', color: '#c084fc', value: 10 }
-                ]
-              }
+                  { label: 'Not Executed', color: '#c084fc', value: 10 },
+                ],
+              },
             });
           }
           return Promise.resolve({
@@ -70,13 +70,13 @@ const setPCore = () => {
                 { label: 'Apps', color: '#34d399', value: 16 },
                 { label: 'Messages', color: '#fbbf24', value: 8 },
                 { label: 'Media', color: '#60a5fa', value: 24 },
-                { label: 'System', color: '#c084fc', value: 10 }
-              ]
-            }
+                { label: 'System', color: '#c084fc', value: 10 },
+              ],
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
@@ -94,7 +94,7 @@ const MeterDemo = (inputs: MeterProps) => {
             getContextName: () => '',
             getStateProps: () => {
               return {
-                value: 'C-123'
+                value: 'C-123',
               };
             },
             getActionsApi: () => {
@@ -113,7 +113,7 @@ const MeterDemo = (inputs: MeterProps) => {
                 },
                 showCasePreview: () => {
                   /* nothing */
-                }
+                },
               };
             },
             ignoreSuggestion: () => {
@@ -127,13 +127,13 @@ const MeterDemo = (inputs: MeterProps) => {
             },
             resolveConfigProps: () => {
               /* nothing */
-            }
+            },
           };
-        }
+        },
       };
       return <PegaExtensionsMeter {...props} />;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -146,14 +146,14 @@ export const Default: Story = MeterDemo({
   color: '#34d399',
   additionalInfo: 'Number of tasks completed out of total tasks',
   showMetaData: false,
-  totalTasks: 10
+  totalTasks: 10,
 });
 
 export const Grouped: Story = MeterDemo({
   dataPage: 'test',
   label: 'Test coverage',
   showMetaData: true,
-  displayMode: ''
+  displayMode: '',
 });
 
 export const Grouped1: Story = MeterDemo({
@@ -161,5 +161,5 @@ export const Grouped1: Story = MeterDemo({
   label: 'System storage',
   showMetaData: true,
   totalTasks: 100,
-  displayMode: ''
+  displayMode: '',
 });

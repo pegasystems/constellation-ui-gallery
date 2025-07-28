@@ -20,25 +20,25 @@ export default {
   argTypes: {
     displayMode: {
       options: ['', 'DISPLAY_ONLY'],
-      control: { type: 'radio', labels: { '': 'EDITABLE' } }
+      control: { type: 'radio', labels: { '': 'EDITABLE' } },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     locationInputType: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     ZoomRef: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsMap
+  component: PegaExtensionsMap,
 };
 
 const genComponent = (config: any) => {
@@ -51,12 +51,12 @@ const setPCore = () => {
       return {
         getLocaleValue: (val: string) => {
           return val;
-        }
+        },
       };
     },
     getContextTreeManager: () => {
       return {
-        addPageListNode: () => {}
+        addPageListNode: () => {},
       };
     },
     createPConnect: () => ({
@@ -67,11 +67,11 @@ const setPCore = () => {
         getListActions: () => {
           return {
             update: () => {},
-            deleteEntry: () => {}
+            deleteEntry: () => {},
           };
-        }
-      })
-    })
+        },
+      }),
+    }),
   };
 };
 
@@ -83,40 +83,40 @@ const genResponse = (args: any) => {
       template: 'Pega_Extensions_Map',
       ruleClass: 'Work-',
       inheritedProps: [],
-      selectionProperty: args.selectionProperty || ''
+      selectionProperty: args.selectionProperty || '',
     },
     children: [
       {
         name: 'A',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
   demoView.children[0].children = [
     {
       config: {
         values: [34, 30, 35],
-        value: '@FILTERED_LIST .Positions[].pxPositionLatitude'
+        value: '@FILTERED_LIST .Positions[].pxPositionLatitude',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         values: [-118, -110, -114],
-        value: '@FILTERED_LIST .Positions[].pxPositionLongitude'
+        value: '@FILTERED_LIST .Positions[].pxPositionLongitude',
       },
-      type: 'ScalarList'
-    }
+      type: 'ScalarList',
+    },
   ];
 
   demoView.children[0].getPConnect = () => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   return demoView;
@@ -124,7 +124,7 @@ const genResponse = (args: any) => {
 
 type Story = StoryObj<typeof PegaExtensionsMap>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const response = genResponse(args);
     setPCore();
     const props = {
@@ -133,10 +133,10 @@ export const Default: Story = {
       getPConnect: () => {
         return {
           meta: {
-            name: ''
+            name: '',
           },
           options: {
-            viewName: ''
+            viewName: '',
           },
           getLocalizedValue: (val: string) => {
             return val;
@@ -144,7 +144,7 @@ export const Default: Story = {
           getListActions: () => {
             return {
               update: () => {},
-              deleteEntry: () => {}
+              deleteEntry: () => {},
             };
           },
           getActionsApi: () => {
@@ -154,7 +154,7 @@ export const Default: Story = {
               },
               triggerFieldChange: () => {
                 /* nothing */
-              }
+              },
             };
           },
           getChildren: () => {
@@ -183,9 +183,9 @@ export const Default: Story = {
           },
           resolveConfigProps: (f: any) => {
             return { value: f.values };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsMap {...props}></PegaExtensionsMap>;
   },
@@ -203,6 +203,6 @@ export const Default: Story = {
       '{"shapes":[{"type":"polygon","coordinates":[{"x":-11902954.520884523,"y":4538976.751116623},{"x":-11902954.520884523,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4069347.6493326253},{"x":-12372583.622668521,"y":4538976.751116623},{"x":-11902954.520884523,"y":4538976.751116623}]}]}',
     apiKey: '',
     locationInputType: 'constant',
-    ZoomRef: ''
-  }
+    ZoomRef: '',
+  },
 };

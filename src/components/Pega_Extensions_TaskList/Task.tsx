@@ -22,7 +22,7 @@ const TaskElement = (props: TaskElementProps) => {
   };
 
   const editTask = () => {
-    setIsEditing(prevValue => {
+    setIsEditing((prevValue) => {
       inputRef.current?.focus();
       if (inputRef.current) {
         inputRef.current.value = titleRef.current;
@@ -32,19 +32,19 @@ const TaskElement = (props: TaskElementProps) => {
   };
 
   const toggleStatus = () => {
-    setStatus(prevStatus => {
+    setStatus((prevStatus) => {
       // API call to update the backend
       (window as any).PCore.getRestClient()
         .invokeRestApi('updateDataObject', {
           queryPayload: {
-            data_view_ID: 'D_TaskListSavable'
+            data_view_ID: 'D_TaskListSavable',
           },
           body: {
             data: {
               Id: task.Id, // Send the task Id as pyGUID
-              IsCompleted: !prevStatus // Send the updated Status
-            }
-          }
+              IsCompleted: !prevStatus, // Send the updated Status
+            },
+          },
         })
         .catch(() => {});
       return !prevStatus;
@@ -56,11 +56,7 @@ const TaskElement = (props: TaskElementProps) => {
       {isEditing ? (
         <>
           <Input label={getPConnect().getLocalizedValue('Task name')} labelHidden ref={inputRef} />
-          <Button
-            variant='text'
-            label={getPConnect().getLocalizedValue('Submit task')}
-            onClick={submitTask}
-          >
+          <Button variant='text' label={getPConnect().getLocalizedValue('Submit task')} onClick={submitTask}>
             <Icon name='check' />
           </Button>
         </>
@@ -71,11 +67,7 @@ const TaskElement = (props: TaskElementProps) => {
             onChange={toggleStatus} // Pass the Id and current Status to toggle
             label={titleRef.current}
           />
-          <Button
-            variant='text'
-            label={getPConnect().getLocalizedValue('Edit task')}
-            onClick={editTask}
-          >
+          <Button variant='text' label={getPConnect().getLocalizedValue('Edit task')} onClick={editTask}>
             <Icon name='pencil' />
           </Button>
           <Button

@@ -12,16 +12,12 @@ export const StyledThumb = styled.div(
   ({
     theme: {
       base: {
-        palette: {
-          'primary-background': bgColor,
-          'border-line': borderColor,
-          interactive: fgColor
-        },
+        palette: { 'primary-background': bgColor, 'border-line': borderColor, interactive: fgColor },
         spacing,
-        'border-radius': borderRadius
+        'border-radius': borderRadius,
       },
-      components: { button }
-    }
+      components: { button },
+    },
   }) => {
     const hoverBgColor = tryCatch(() => mix(0.2, fgColor, bgColor));
 
@@ -44,7 +40,7 @@ export const StyledThumb = styled.div(
         border-color: ${fgColor};
       }
     `;
-  }
+  },
 );
 
 StyledThumb.defaultProps = defaultThemeProp;
@@ -55,8 +51,8 @@ export const StyledBar = styled.div(({ theme }) => {
       spacing,
       colors,
       'border-radius': borderRadius,
-      palette: { interactive: interactiveColor }
-    }
+      palette: { interactive: interactiveColor },
+    },
   } = theme;
 
   const { ltr } = useDirection();
@@ -94,8 +90,8 @@ StyledBar.defaultProps = defaultThemeProp;
 export const StyledMinTrack = styled.div(
   ({
     theme: {
-      base: { spacing }
-    }
+      base: { spacing },
+    },
   }) => {
     const { ltr } = useDirection();
     return css`
@@ -122,7 +118,7 @@ export const StyledMinTrack = styled.div(
             `}
       }
     `;
-  }
+  },
 );
 
 StyledMinTrack.defaultProps = defaultThemeProp;
@@ -130,8 +126,8 @@ StyledMinTrack.defaultProps = defaultThemeProp;
 export const StyledMaxTrack = styled.div(
   ({
     theme: {
-      base: { spacing }
-    }
+      base: { spacing },
+    },
   }) => {
     const { ltr } = useDirection();
     return css`
@@ -158,16 +154,16 @@ export const StyledMaxTrack = styled.div(
             `}
       }
     `;
-  }
+  },
 );
 
 StyledMaxTrack.defaultProps = defaultThemeProp;
 
-export const StyledSlider = styled.div(props => {
+export const StyledSlider = styled.div((props) => {
   const {
     theme: {
-      base: { spacing }
-    }
+      base: { spacing },
+    },
   } = props;
 
   return css`
@@ -187,8 +183,8 @@ StyledSlider.defaultProps = defaultThemeProp;
 export const StyledMinValue = styled.div(({ theme }) => {
   const {
     base: {
-      palette: { interactive: interactiveColor }
-    }
+      palette: { interactive: interactiveColor },
+    },
   } = theme;
   const { ltr } = useDirection();
   return css`
@@ -257,8 +253,8 @@ StyledMinValue.defaultProps = defaultThemeProp;
 export const StyledMaxValue = styled.div(({ theme }) => {
   const {
     base: {
-      palette: { interactive: interactiveColor }
-    }
+      palette: { interactive: interactiveColor },
+    },
   } = theme;
   const { ltr } = useDirection();
   return css`

@@ -6,16 +6,16 @@ export default {
   argTypes: {
     value: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsQRCode
+  component: PegaExtensionsQRCode,
 };
 
 const setPCore = () => {
@@ -26,7 +26,7 @@ const setPCore = () => {
 
 type Story = StoryObj<typeof PegaExtensionsQRCode>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -34,16 +34,16 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'QRCodeImg'
+              value: 'QRCodeImg',
             };
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: () => {}
+              updateFieldValue: () => {},
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsQRCode {...props} />;
   },
@@ -55,6 +55,6 @@ export const Default: Story = {
     testId: '',
     validatemessage: '',
     readOnly: false,
-    hideLabel: false
-  }
+    hideLabel: false,
+  },
 };

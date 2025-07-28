@@ -1,19 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
-import {
-  withConfiguration,
-  Image,
-  Button,
-  Flex,
-  FormField,
-  FormControl
-} from '@pega/cosmos-react-core';
+import { withConfiguration, Image, Button, Flex, FormField, FormControl } from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
-import {
-  StyledButtonsWrapper,
-  StyledSignatureContent,
-  StyledSignatureReadOnlyContent
-} from './styles';
+import { StyledButtonsWrapper, StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
 import '../create-nonce';
 
 type SignatureCaptureProps = {
@@ -32,16 +21,7 @@ type SignatureCaptureProps = {
 };
 
 export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => {
-  const {
-    value,
-    getPConnect,
-    validatemessage,
-    label,
-    hideLabel = false,
-    helperText,
-    testId,
-    displayMode
-  } = props;
+  const { value, getPConnect, validatemessage, label, hideLabel = false, helperText, testId, displayMode } = props;
 
   const ref = useRef<SignaturePad>();
   const pConn = getPConnect();
@@ -52,13 +32,11 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
 
   const [inputValue, setInputValue] = useState(value);
-  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(undefined);
   useEffect(() => setInputValue(value), [value]);
 
   /* On load of the component - use the value if set to prefill the signature */
@@ -122,12 +100,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
           readOnly={readOnly}
           testId={testId}
         >
-          <FormControl
-            ariaLabel={label}
-            required={required}
-            disabled={disabled}
-            readOnly={readOnly}
-          >
+          <FormControl ariaLabel={label} required={required} disabled={disabled} readOnly={readOnly}>
             {readOnly || disabled ? (
               <img alt='Signature' src={inputValue} />
             ) : (
@@ -137,15 +110,12 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
                   canvasProps={{
                     style: {
                       width: '100%',
-                      height: 200
-                    }
+                      height: 200,
+                    },
                   }}
                   onEndStroke={onEndStroke}
                 />
-                <Flex
-                  as={StyledButtonsWrapper}
-                  container={{ direction: 'row', justify: 'between', pad: [1] }}
-                >
+                <Flex as={StyledButtonsWrapper} container={{ direction: 'row', justify: 'between', pad: [1] }}>
                   <Button compact className='clear' onClick={handleCLear}>
                     {getPConnect().getLocalizedValue('Clear')}
                   </Button>

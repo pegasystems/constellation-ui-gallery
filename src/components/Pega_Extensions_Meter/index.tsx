@@ -1,11 +1,4 @@
-import {
-  withConfiguration,
-  useTheme,
-  FieldGroup,
-  Flex,
-  FormField,
-  createUID
-} from '@pega/cosmos-react-core';
+import { withConfiguration, useTheme, FieldGroup, Flex, FormField, createUID } from '@pega/cosmos-react-core';
 import '../create-nonce';
 import { StyledFieldGroupElementMeter, StyleGroupMeterWrapper } from './styles';
 
@@ -73,7 +66,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
     additionalInfo = '',
     displayMode,
 
-    getPConnect
+    getPConnect,
   } = props;
 
   const [id] = useState(createUID());
@@ -83,11 +76,9 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }]
+        dataViewParameters: [{ pyID: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())
@@ -133,12 +124,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
           <ol>
             {events.map((event: Event) => {
               return (
-                <ElemDisplay
-                  key={`MeterDisplay-${event.label}`}
-                  type='li'
-                  event={event}
-                  totalValue={totalValue}
-                />
+                <ElemDisplay key={`MeterDisplay-${event.label}`} type='li' event={event} totalValue={totalValue} />
               );
             })}
           </ol>
@@ -153,9 +139,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
     return (
       <FieldGroup
         name={hideLabel ? '' : label}
-        {...(additionalInfo
-          ? { additionalInfo: { heading: label, content: additionalInfo } }
-          : undefined)}
+        {...(additionalInfo ? { additionalInfo: { heading: label, content: additionalInfo } } : undefined)}
       >
         {displayGroupComp}
       </FieldGroup>
@@ -181,18 +165,13 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
   }
 
   const displayComp = (
-    <Flex
-      container={{ direction: 'column', gap: 0, alignItems: 'center' }}
-      style={{ width: '100%' }}
-    >
+    <Flex container={{ direction: 'column', gap: 0, alignItems: 'center' }} style={{ width: '100%' }}>
       <StyleGroupMeterWrapper>
         <div>
           <ElemMeter id={id} event={{ color: colorValue, label, value }} totalValue={totalValue} />
         </div>
       </StyleGroupMeterWrapper>
-      {showMetaData && (
-        <ElemDisplay event={{ color: colorValue, label, value }} totalValue={totalValue} />
-      )}
+      {showMetaData && <ElemDisplay event={{ color: colorValue, label, value }} totalValue={totalValue} />}
     </Flex>
   );
 
@@ -205,9 +184,7 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
       as={StyledFieldGroupElementMeter}
       label={label}
       labelHidden={hideLabel}
-      {...(additionalInfo
-        ? { additionalInfo: { heading: label, content: additionalInfo } }
-        : undefined)}
+      {...(additionalInfo ? { additionalInfo: { heading: label, content: additionalInfo } } : undefined)}
     >
       {displayComp}
     </FormField>

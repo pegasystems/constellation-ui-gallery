@@ -17,7 +17,7 @@ export const Column = (props: ColumnProps) => {
     <StyledColumn theme={theme}>
       <h2>{title}</h2>
       <Droppable droppableId={id}>
-        {provided => (
+        {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {tasks?.map((task: any, index: number) => (
               <Task key={task.id} index={index} {...task} getPConnect={getPConnect} />

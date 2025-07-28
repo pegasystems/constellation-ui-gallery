@@ -74,7 +74,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     fieldMetadata,
     toolbarMode = 'normal',
     maxWords = 100,
-    showWordCounter = true
+    showWordCounter = true,
   } = props;
 
   const pConn = getPConnect();
@@ -85,18 +85,18 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const [lastUpdated, setLastUpdate] = useState(Date.now());
   const [announcement, setAnnouncement] = useState<WordCountAnnouncement>({
     message: '',
-    isAlert: false
+    isAlert: false,
   });
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
     ? {
-        content: fieldAdditionalInfo
+        content: fieldAdditionalInfo,
       }
     : undefined;
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
   const toolbar =
     toolbarMode === 'normal'
@@ -109,13 +109,13 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     if (count > maxWords) {
       return {
         message: `You are ${count - maxWords} words over the ${maxWords} word limit`,
-        isAlert: true
+        isAlert: true,
       };
     }
     if (count <= 20) {
       return {
         message: `${maxWords - count} words remaining`,
-        isAlert: false
+        isAlert: false,
       };
     }
     return { message: '', isAlert: false };
@@ -139,7 +139,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
         'video', // Video tag with poster attribute
         'iframe', // Iframe, which could load external content
         'embed', // Embed, often used for SVG or images
-        'object' // Object, used to embed images or SVG
+        'object', // Object, used to embed images or SVG
       ],
       FORBID_ATTR: [
         'src', // Commonly used for image URLs
@@ -147,9 +147,9 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
         'data', // Used in object/embed elements
         'poster', // Poster image in video tag
         'style', // Inline styles, might contain background images
-        'xlink:href' // Used for linking in SVG
+        'xlink:href', // Used for linking in SVG
       ],
-      FORCE_BODY: true // Ensure entire body is sanitized
+      FORCE_BODY: true, // Ensure entire body is sanitized
     };
     if (toolbarMode === 'normal') {
       // add anchor tag and href attribute to sanitizedConfig
@@ -172,7 +172,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
         setWordCount(0);
         setAnnouncement({
           message: `Maximum ${maxWords} words allowed`,
-          isAlert: false
+          isAlert: false,
         });
         return;
       }
@@ -181,7 +181,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
 
       // Update announcement based on new word count
       const msg = getWordCountAnnouncement(newWordCount);
-      setLastUpdate(prev => {
+      setLastUpdate((prev) => {
         if (Date.now() - prev > 5000) {
           announceAssertive({ message: msg.message });
           return Date.now();
@@ -196,7 +196,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
   const handleFocus = () => {
     const msg = {
       message: `Maximum ${maxWords} words allowed`,
-      isAlert: false
+      isAlert: false,
     };
     setAnnouncement(msg);
   };
@@ -241,11 +241,11 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
                 {
                   id: label,
                   name: label,
-                  value: displayComponent
-                }
+                  value: displayComponent,
+                },
               ]}
             />
-          )
+          ),
         }}
       />
     );
@@ -306,7 +306,7 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
             style={{
               fontSize: '12px',
               color: wordCount > maxWords ? 'red' : 'gray',
-              marginTop: '5px'
+              marginTop: '5px',
             }}
             role={announcement.isAlert ? 'alert' : 'status'}
             data-updated={lastUpdated}

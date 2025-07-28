@@ -19,7 +19,7 @@ export const getAllFields = (pConnect: any) => {
       ...pConnect().resolveConfigProps(f.config),
       type: f.type,
       path: f.config.value,
-      category
+      category,
     };
   };
 
@@ -31,7 +31,7 @@ export const getAllFields = (pConnect: any) => {
         if (field.type === 'Group' && field.children) {
           field.children.forEach((gf: any) => allFields.push(makeField(gf)));
         }
-      })
+      }),
     );
   } else {
     allFields = metadata.children.map(makeField);
@@ -46,7 +46,7 @@ export const createGraphic = (
   vertices: any,
   useSpacialRef: boolean,
   theme: DefaultTheme,
-  Graphic: any
+  Graphic: any,
 ) => {
   ptLayer.removeAll();
 
@@ -54,15 +54,15 @@ export const createGraphic = (
     geometry: {
       type: 'polyline',
       paths: vertices,
-      ...(useSpacialRef && { spatialReference: view.spatialReference })
+      ...(useSpacialRef && { spatialReference: view.spatialReference }),
     },
     symbol: {
       type: 'simple-line',
       color: theme.base.palette['brand-primary'],
       width: 3,
       cap: 'round',
-      join: 'round'
-    }
+      join: 'round',
+    },
   });
   ptLayer.add(graphic);
   vertices.forEach((x: any) => {
@@ -74,29 +74,24 @@ export const createGraphic = (
         y: x[1],
         hasZ: true,
         hasM: true,
-        ...(useSpacialRef && { spatialReference: view.spatialReference })
+        ...(useSpacialRef && { spatialReference: view.spatialReference }),
       },
       symbol: {
         // @ts-ignore
         type: 'simple-marker',
         outline: {
           width: 1,
-          color: '#000'
+          color: '#000',
         },
-        color: theme.base.palette['brand-primary']
-      }
+        color: theme.base.palette['brand-primary'],
+      },
     });
     ptLayer.add(marker);
   });
 };
 
 // Render the shapes o the map view
-export const renderShapes = (
-  ptLayer: GraphicsLayer,
-  view: MapView,
-  selectionProperty: string,
-  Graphic: any
-) => {
+export const renderShapes = (ptLayer: GraphicsLayer, view: MapView, selectionProperty: string, Graphic: any) => {
   ptLayer.removeAll();
   let shapes: any[] = [];
   try {
@@ -114,34 +109,34 @@ export const renderShapes = (
           geometry: {
             type: 'polyline',
             paths: [shape.coordinates.map((c: any) => [c.x, c.y])],
-            spatialReference: view.spatialReference
+            spatialReference: view.spatialReference,
           },
           symbol: {
             type: 'simple-line',
             color: 'rgba(150, 150, 150, 1)',
             width: 2,
             miterLimit: 2,
-            join: 'round'
-          }
+            join: 'round',
+          },
         });
       } else if (shape.type === 'polygon') {
         graphic = new Graphic({
           geometry: {
             type: 'polygon',
             rings: [shape.coordinates.map((c: any) => [c.x, c.y])],
-            spatialReference: view.spatialReference
+            spatialReference: view.spatialReference,
           },
           symbol: {
             type: 'simple-fill',
-            color: 'rgba(150, 150, 150, 0.2)'
-          }
+            color: 'rgba(150, 150, 150, 0.2)',
+          },
         });
       } else if (shape.type === 'point') {
         graphic = new Graphic({
           geometry: {
             type: 'point',
             x: shape.coordinates.x,
-            y: shape.coordinates.y
+            y: shape.coordinates.y,
           },
           symbol: {
             type: 'simple-marker',
@@ -152,9 +147,9 @@ export const renderShapes = (
               width: 1,
               style: 'solid',
               type: 'simple-line',
-              color: 'rgb(50,50,50)'
-            }
-          }
+              color: 'rgb(50,50,50)',
+            },
+          },
         });
       }
       if (graphic) {
@@ -164,19 +159,14 @@ export const renderShapes = (
   }
 };
 
-export const deletePoints = (
-  getPConnect: any,
-  props: any,
-  embedDataRef: string,
-  numPoints: number
-) => {
+export const deletePoints = (getPConnect: any, props: any, embedDataRef: string, numPoints: number) => {
   const messageConfig = {
     meta: props,
     options: {
       context: getPConnect().getContextName(),
       pageReference: `caseInfo.content${embedDataRef}`,
-      target: getPConnect().getTarget()
-    }
+      target: getPConnect().getTarget(),
+    },
   };
   const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
   for (let index = numPoints; index > 0; index -= 1) {
@@ -195,15 +185,15 @@ export const addPoint = (
   latitudePropRef: string,
   index: number,
   x: any,
-  webMercatorUtils: any
+  webMercatorUtils: any,
 ) => {
   const messageConfig = {
     meta: props,
     options: {
       context: getPConnect().getContextName(),
       pageReference: `caseInfo.content${embedDataRef}[${index}]`,
-      target: getPConnect().getTarget()
-    }
+      target: getPConnect().getTarget(),
+    },
   };
   const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
   const actionsApi = c11nEnv.getPConnect().getActionsApi();
@@ -219,7 +209,7 @@ export const addScreenShot = (getPConnect: any, view: MapView, imageMapRef: stri
         format: 'jpg',
         quality: 70,
         width: 500,
-        height: (view.height * 500) / view.width
+        height: (view.height * 500) / view.width,
       })
       .then((screenshot: any) => {
         const actionsApi = getPConnect().getActionsApi();

@@ -7,7 +7,7 @@ import {
   CardHeader,
   Progress,
   Button,
-  Icon
+  Icon,
 } from '@pega/cosmos-react-core';
 import { DragDropContext, type DropResult } from '@hello-pangea/dnd';
 import { loadDetails, updateGroupValue } from './utils';
@@ -42,7 +42,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
     groupProperty = '',
     detailsDataPage = '',
     detailsViewName = '',
-    getPConnect
+    getPConnect,
   } = props;
   const [columns, setColumns] = useState<any>({});
   const [tasks, setTasks] = useState<any>();
@@ -55,14 +55,14 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
       caseID: id,
       containerName: 'modal',
       actionTitle: 'Edit task',
-      type: 'express'
+      type: 'express',
     });
   };
 
   const addNewEvent = () => {
     if (createClassname) {
       getPConnect().getActionsApi().createWork(createClassname, {
-        openCaseViewAfterCreate: false
+        openCaseViewAfterCreate: false,
       });
     }
   };
@@ -73,7 +73,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
       classname,
       detailsDataPage,
       detailsViewName,
-      getPConnect
+      getPConnect,
     });
   };
 
@@ -93,8 +93,8 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         ...columns,
         [source.droppableId]: {
           ...columns[source.droppableId],
-          taskList: newSourceTaskList
-        }
+          taskList: newSourceTaskList,
+        },
       };
       setColumns(tmpColumns);
     } else {
@@ -107,12 +107,12 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         ...columns,
         [source.droppableId]: {
           ...columns[source.droppableId],
-          taskList: newSourceTaskList
+          taskList: newSourceTaskList,
         },
         [destination.droppableId]: {
           ...columns[destination.droppableId],
-          taskList: newDestinationTaskList
-        }
+          taskList: newDestinationTaskList,
+        },
       };
       updateGroupValue({
         groupValue: destination.droppableId,
@@ -120,7 +120,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         columns: tmpColumns,
         setColumns,
         task: tasks[draggableId],
-        getPConnect
+        getPConnect,
       });
       setColumns(tmpColumns);
     }
@@ -154,7 +154,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
                 insKey: item.pzInsKey,
                 groupValue: item[groupProperty],
                 getDetails,
-                editTask
+                editTask,
               };
               myColumn.taskList.push(tmpTasks[item.pyID]);
             }
@@ -192,12 +192,12 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks();
       },
-      'ASSIGNMENT_SUBMISSION'
+      'ASSIGNMENT_SUBMISSION',
     );
     return () => {
       (window as any).PCore.getPubSubUtils().unsubscribe(
         (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
-        'ASSIGNMENT_SUBMISSION'
+        'ASSIGNMENT_SUBMISSION',
       );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -237,18 +237,12 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
               message={(window as any).PCore.getLocaleUtils().getLocaleValue(
                 'Loading content...',
                 'Generic',
-                '@BASECLASS!GENERIC!PYGENERICFIELDS'
+                '@BASECLASS!GENERIC!PYGENERICFIELDS',
               )}
             />
           ) : (
             groupList.map((group: string) => (
-              <Column
-                key={group}
-                id={group}
-                title={group}
-                tasks={columns[group]?.taskList}
-                getPConnect={getPConnect}
-              />
+              <Column key={group} id={group} title={group} tasks={columns[group]?.taskList} getPConnect={getPConnect} />
             ))
           )}
         </MainCard>

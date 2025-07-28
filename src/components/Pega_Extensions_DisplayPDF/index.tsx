@@ -6,7 +6,7 @@ import {
   Progress,
   useModalManager,
   withConfiguration,
-  type ModalMethods
+  type ModalMethods,
 } from '@pega/cosmos-react-core';
 
 import '../create-nonce';
@@ -15,7 +15,7 @@ import StyledList from './styles';
 
 export enum DisplayMode {
   Editable = '',
-  DisplayOnly = 'DISPLAY_ONLY'
+  DisplayOnly = 'DISPLAY_ONLY',
 }
 
 export type DisplayPDFProps = {
@@ -65,7 +65,7 @@ const ViewPDFModal = ({
   height,
   width,
   value,
-  showToolbar
+  showToolbar,
 }: {
   heading: string;
   width: string;
@@ -78,12 +78,7 @@ const ViewPDFModal = ({
   const url = URL.createObjectURL(blob);
   return (
     <Modal heading={heading}>
-      <iframe
-        src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
-        width={width}
-        height={`${height}px`}
-        title={heading}
-      />
+      <iframe src={`${url}${showToolbar ? '' : '#toolbar=0'}`} width={width} height={`${height}px`} title={heading} />
     </Modal>
   );
 };
@@ -98,7 +93,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     hideLabel = false,
     dataPage = '',
     displayMode = DisplayMode.Editable,
-    getPConnect
+    getPConnect,
   } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [pdfFiles, setPdfFiles] = useState<any[]>([]);
@@ -110,11 +105,9 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     if (dataPage && getPConnect) {
       const pConn = getPConnect();
 
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ caseInstanceKey: CaseInstanceKey }]
+        dataViewParameters: [{ caseInstanceKey: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())
@@ -140,7 +133,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
             height,
             width,
             value,
-            showToolbar
+            showToolbar,
           });
         }}
       >
@@ -176,7 +169,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
         message={(window as any).PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
-          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+          '@BASECLASS!GENERIC!PYGENERICFIELDS',
         )}
       />
     );
@@ -184,7 +177,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
 
   return (
     <StyledList>
-      {pdfFiles.map(file => {
+      {pdfFiles.map((file) => {
         return (
           <li key={file.pyLabel}>
             <Button
@@ -195,7 +188,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
                   width,
                   height,
                   value: file.pyContext,
-                  showToolbar
+                  showToolbar,
                 });
               }}
             >

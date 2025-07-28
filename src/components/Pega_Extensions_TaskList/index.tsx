@@ -8,7 +8,7 @@ import {
   createUID,
   Input,
   Progress,
-  withConfiguration
+  withConfiguration,
 } from '@pega/cosmos-react-core';
 import { Container, StyledAddTask } from './styles';
 import TaskElement from './Task';
@@ -39,7 +39,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
       const newTaskData = {
         Id: createUID(),
         Label: newTask,
-        IsCompleted: false
+        IsCompleted: false,
       };
       setTaskListData([...taskListData, newTaskData]);
       if (inputRef.current) {
@@ -56,8 +56,8 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
   };
 
   const deleteTask = (id: string) => {
-    setTaskListData(prevData => {
-      return prevData.filter(task => task.Id !== id);
+    setTaskListData((prevData) => {
+      return prevData.filter((task) => task.Id !== id);
     });
   };
 
@@ -65,11 +65,9 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
     setIsLoading(true);
     try {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }]
+        dataViewParameters: [{ pyID: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())
@@ -100,7 +98,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
         message={(window as any).PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
-          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+          '@BASECLASS!GENERIC!PYGENERICFIELDS',
         )}
       />
     );
@@ -124,13 +122,8 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
           </Button>
         </StyledAddTask>
         <Container>
-          {taskListData.map(task => (
-            <TaskElement
-              key={task.Id}
-              task={task}
-              deleteTask={deleteTask}
-              getPConnect={getPConnect}
-            />
+          {taskListData.map((task) => (
+            <TaskElement key={task.Id} task={task} deleteTask={deleteTask} getPConnect={getPConnect} />
           ))}
         </Container>
       </CardContent>

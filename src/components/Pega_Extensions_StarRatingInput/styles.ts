@@ -26,7 +26,7 @@ export const StyledStarWrapper = styled.div(({ theme }) => {
     }
   `;
 });
-export const StyledStarRatingMetaInfo = styled.div(props => {
+export const StyledStarRatingMetaInfo = styled.div((props) => {
   const { theme } = props;
   return css`
     padding-block: ${theme.base.spacing};

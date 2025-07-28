@@ -7,11 +7,11 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsFormFullWidth
+  component: PegaExtensionsFormFullWidth,
 };
 
 const generateChildren = (count: number) => {
@@ -19,9 +19,9 @@ const generateChildren = (count: number) => {
     type: 'Text',
     config: {
       value: '',
-      label: `@L Field${index + 1}`
+      label: `@L Field${index + 1}`,
     },
-    key: index.toString()
+    key: index.toString(),
   }));
 };
 
@@ -34,7 +34,7 @@ const mainResponse = {
     showLabel: true,
     label: '@L Details',
     localeReference: '@LR Details',
-    inheritedProps: []
+    inheritedProps: [],
   },
   children: [
     {
@@ -44,13 +44,13 @@ const mainResponse = {
         return {
           getRawMetadata: () => {
             return mainResponse.children[0];
-          }
+          },
         };
       },
-      children: generateChildren(16)
-    }
+      children: generateChildren(16),
+    },
   ],
-  classID: 'Work-MyComponents'
+  classID: 'Work-MyComponents',
 };
 
 const createComponent = (config: any) => {
@@ -59,7 +59,7 @@ const createComponent = (config: any) => {
 
 type Story = StoryObj<typeof PegaExtensionsFormFullWidth>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       template: 'FieldGroupAsRow',
       ...args,
@@ -83,9 +83,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     const regionAChildren = mainResponse.children[0].children.map((child: any) => {
       return props.getPConnect().createComponent(child);
@@ -96,6 +96,6 @@ export const Default: Story = {
   args: {
     heading: 'Heading',
     NumCols: '2',
-    gridTemplateColumns: ''
-  }
+    gridTemplateColumns: '',
+  },
 };

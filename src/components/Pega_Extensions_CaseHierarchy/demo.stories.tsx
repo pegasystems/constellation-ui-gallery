@@ -6,14 +6,14 @@ export default {
   argTypes: {
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -22,17 +22,17 @@ export default {
         rules: [
           {
             id: 'aria-required-children',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'listitem',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsCaseHierarchy
+  component: PegaExtensionsCaseHierarchy,
 };
 
 const setPCore = () => {
@@ -40,8 +40,8 @@ const setPCore = () => {
     getConstants: () => {
       return {
         CASE_INFO: {
-          CASE_INFO_ID: 'ID'
-        }
+          CASE_INFO_ID: 'ID',
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -51,9 +51,9 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataPageUtils: () => {
@@ -80,16 +80,16 @@ const setPCore = () => {
                       pxObjClass: 'Work',
                       pyClassName: 'OPGO8L-CarInsur-Work',
                       pyID: '3',
-                      pyLabel: 'Child Child Case 1'
+                      pyLabel: 'Child Child Case 1',
                     },
                     {
                       pzInsKey: 'OPGO8L-TY-WORK A-4',
                       pxObjClass: 'Work',
                       pyClassName: 'OPGO8L-CarInsur-Work',
                       pyID: '4',
-                      pyLabel: 'Child Child Case 2'
-                    }
-                  ]
+                      pyLabel: 'Child Child Case 2',
+                    },
+                  ],
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-5',
@@ -103,23 +103,23 @@ const setPCore = () => {
                       pxObjClass: 'Work',
                       pyClassName: 'OPGO8L-CarInsur-Work',
                       pyID: '6',
-                      pyLabel: 'Scheduling'
+                      pyLabel: 'Scheduling',
                     },
                     {
                       pzInsKey: 'OPGO8L-TY-WORK A-7',
                       pxObjClass: 'Work',
                       pyClassName: 'OPGO8L-CarInsur-Work',
                       pyID: '7',
-                      pyLabel: 'Provisioning'
-                    }
-                  ]
+                      pyLabel: 'Provisioning',
+                    },
+                  ],
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-18',
                   pxObjClass: 'Work',
                   pyClassName: 'OPGO8L-CarInsur-Work',
                   pyID: '18',
-                  pyLabel: 'Request Approval'
+                  pyLabel: 'Request Approval',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-8',
@@ -133,11 +133,11 @@ const setPCore = () => {
                       pxObjClass: 'Work',
                       pyClassName: 'OPGO8L-CarInsur-Work',
                       pyID: '9',
-                      pyLabel: 'Scheduling Child'
-                    }
-                  ]
-                }
-              ]
+                      pyLabel: 'Scheduling Child',
+                    },
+                  ],
+                },
+              ],
             });
           } else {
             return Promise.resolve({
@@ -152,27 +152,27 @@ const setPCore = () => {
                   pxObjClass: 'Work',
                   pyClassName: 'OPGO8L-CarInsur-Work',
                   pyID: '6',
-                  pyLabel: 'Scheduling case type with a very long description'
+                  pyLabel: 'Scheduling case type with a very long description',
                 },
                 {
                   pzInsKey: 'OPGO8L-TY-WORK A-7',
                   pxObjClass: 'Work',
                   pyClassName: 'OPGO8L-CarInsur-Work',
                   pyID: '7',
-                  pyLabel: 'Provisioning'
-                }
-              ]
+                  pyLabel: 'Provisioning',
+                },
+              ],
             });
           }
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsCaseHierarchy>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -188,19 +188,19 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           getContextName: () => '',
-          getValue: () => 'OPGO8L-CARINSUR-WORK A-5'
+          getValue: () => 'OPGO8L-CARINSUR-WORK A-5',
         };
-      }
+      },
     };
     return <PegaExtensionsCaseHierarchy {...props} />;
   },
   args: {
     heading: 'Case Hierarchy',
     dataPage: 'D_myCases',
-    showParent: false
-  }
+    showParent: false,
+  },
 };

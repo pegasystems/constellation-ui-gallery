@@ -18,7 +18,7 @@ const SlideItem: React.FC<SlideItemProps> = ({
   animationClass,
   isActive,
   objectFit,
-  textPosition = 'Center'
+  textPosition = 'Center',
 }) => {
   return (
     <Slide animationClass={animationClass} style={{ display: isActive ? 'block' : '' }}>

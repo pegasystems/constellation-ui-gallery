@@ -5,7 +5,7 @@ import { PegaExtensionsJapaneseInput } from './index';
 const meta: Meta<typeof PegaExtensionsJapaneseInput> = {
   title: 'Fields/Japanese Input',
   component: PegaExtensionsJapaneseInput,
-  excludeStories: /.*Data$/
+  excludeStories: /.*Data$/,
 };
 
 export default meta;
@@ -15,19 +15,19 @@ const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
-    }
+    },
   };
 };
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -35,7 +35,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: '.TextInputSample'
+              value: '.TextInputSample',
             };
           },
           getActionsApi: () => {
@@ -45,7 +45,7 @@ export const Default: Story = {
               },
               triggerFieldChange: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -59,9 +59,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsJapaneseInput {...props} />;
   },
@@ -80,6 +80,6 @@ export const Default: Story = {
     fullToHalf: false,
     lowerToUpper: false,
     japaneseEraToGregorian: false,
-    gregorianToJapaneseEra: false
-  }
+    gregorianToJapaneseEra: false,
+  },
 };

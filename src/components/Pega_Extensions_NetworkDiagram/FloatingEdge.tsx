@@ -13,8 +13,8 @@ interface FloatingEdgeProps {
 
 const FloatingEdge = (props: FloatingEdgeProps) => {
   const { id, source, target, markerEnd, data } = props;
-  const sourceNode = useStore(useCallback(store => store.nodeInternals.get(source), [source]));
-  const targetNode = useStore(useCallback(store => store.nodeInternals.get(target), [target]));
+  const sourceNode = useStore(useCallback((store) => store.nodeInternals.get(source), [source]));
+  const targetNode = useStore(useCallback((store) => store.nodeInternals.get(target), [target]));
 
   if (!sourceNode || !targetNode) {
     return null;
@@ -28,7 +28,7 @@ const FloatingEdge = (props: FloatingEdgeProps) => {
     sourcePosition: sourcePos,
     targetPosition: targetPos,
     targetX: tx,
-    targetY: ty
+    targetY: ty,
   });
   let className = 'custom-edge nodrag nopan';
   if (data.type) {
@@ -40,7 +40,7 @@ const FloatingEdge = (props: FloatingEdgeProps) => {
       <EdgeLabelRenderer>
         <div
           style={{
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
+            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           }}
           className={className}
         >

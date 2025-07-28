@@ -6,39 +6,39 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsActionableButton
+  component: PegaExtensionsActionableButton,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getConstants: () => {
       return {
         CASE_INFO: {
-          AVAILABLEACTIONS: ''
-        }
+          AVAILABLEACTIONS: '',
+        },
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsActionableButton>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -46,7 +46,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
           },
           getValue: () => [{ ID: 'pyEditDetails', name: 'Edit Details' }],
@@ -55,22 +55,20 @@ export const Default: Story = {
               openLocalAction: {
                 bind: () => {
                   return (name: string, options: any) => {
-                    alert(
-                      `Launch local action ID '${name}' with title '${options.name}' for ${options.caseID}`
-                    );
+                    alert(`Launch local action ID '${name}' with title '${options.name}' for ${options.caseID}`);
                   };
-                }
-              }
+                },
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsActionableButton {...props} />;
   },
   args: {
     label: 'Launch',
     localAction: 'pyEditDetails',
-    value: 'Work-Case C-123'
-  }
+    value: 'Work-Case C-123',
+  },
 };

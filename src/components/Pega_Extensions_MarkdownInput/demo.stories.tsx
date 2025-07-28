@@ -8,37 +8,37 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     additionalProps: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     formatter: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     isTableFormatter: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     fieldMetadata: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsMarkdownInput
+  component: PegaExtensionsMarkdownInput,
 };
 
 type Story = StoryObj<typeof PegaExtensionsMarkdownInput>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       ...args,
 
@@ -46,7 +46,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: '.MardownInput'
+              value: '.MardownInput',
             };
           },
           getActionsApi: () => {
@@ -56,11 +56,11 @@ export const Default: Story = {
               },
               triggerFieldChange: () => {
                 /* nothing */
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsMarkdownInput {...props} />;
   },
@@ -103,6 +103,6 @@ This is a horizontal rule.`,
     testId: 'markdown-12345678',
     placeholder: 'Markdown Placeholder',
     validatemessage: '',
-    disabled: false
-  }
+    disabled: false,
+  },
 };

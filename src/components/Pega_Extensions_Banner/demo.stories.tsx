@@ -6,19 +6,19 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
-    dismissAction: { control: 'string', if: { arg: 'dismissible', eq: true } }
+    dismissAction: { control: 'string', if: { arg: 'dismissible', eq: true } },
   },
-  component: PegaExtensionsBanner
+  component: PegaExtensionsBanner,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getMessagingServiceManager: () => {
@@ -28,7 +28,7 @@ const setPCore = () => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getContainerUtils: () => {
@@ -36,7 +36,7 @@ const setPCore = () => {
         getContainerItems: () => {
           return ['test'];
         },
-        updateCaseContextEtag: () => {}
+        updateCaseContextEtag: () => {},
       };
     },
     getRestClient: () => {
@@ -44,10 +44,10 @@ const setPCore = () => {
         invokeRestApi: () => {
           return Promise.resolve({
             data: {
-              data: { caseInfo: '2' }
-            }
+              data: { caseInfo: '2' },
+            },
           });
-        }
+        },
       };
     },
     createPConnect: () => ({
@@ -56,28 +56,28 @@ const setPCore = () => {
           finishAssignment: () => {
             return Promise.resolve({
               data: {
-                data: {}
-              }
+                data: {},
+              },
             });
-          }
+          },
         }),
         getContextName: () => '',
         getValue: () => 'C-123',
         getListActions: () => {
           return {
             update: () => {},
-            deleteEntry: () => {}
+            deleteEntry: () => {},
           };
-        }
-      })
+        },
+      }),
     }),
     getDataApiUtils: () => {
       return {
         getCaseEditLock: () => {
           return Promise.resolve({
             headers: {
-              etag: '123'
-            }
+              etag: '123',
+            },
           });
         },
         getData: () => {
@@ -86,16 +86,16 @@ const setPCore = () => {
               data: [
                 {
                   pxObjClass: 'Data-',
-                  pyDescription: 'Message1'
+                  pyDescription: 'Message1',
                 },
                 {
                   pxObjClass: 'Data-',
-                  pyDescription: 'Message2'
-                }
-              ]
-            }
+                  pyDescription: 'Message2',
+                },
+              ],
+            },
           });
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -105,15 +105,15 @@ const setPCore = () => {
         },
         getActions: () => {
           return { ACTION_SHOWVIEW: 'ACTION_SHOWVIEW' };
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsBanner>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -126,7 +126,7 @@ export const Default: Story = {
           getContainerManager: () => {
             return {
               addContainerItem: () => {},
-              removeContainerItem: () => {}
+              removeContainerItem: () => {},
             };
           },
           getContextName: () => '',
@@ -135,11 +135,11 @@ export const Default: Story = {
             return {
               showPage: (name: string, classname: string) => {
                 alert(`show page ${classname}.${name}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsBanner {...props} />;
   },
@@ -147,6 +147,6 @@ export const Default: Story = {
     variant: 'success',
     dataPage: 'D_error',
     dismissible: false,
-    dismissAction: ''
-  }
+    dismissAction: '',
+  },
 };

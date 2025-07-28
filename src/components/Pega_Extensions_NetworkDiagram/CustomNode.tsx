@@ -59,7 +59,7 @@ const renderNode = (props: RenderNodeProps) => {
   const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
     (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
     { caseClassName: objClass },
-    { workID: id }
+    { workID: id },
   );
   const linkEl =
     objClass && key && linkURL ? (
@@ -68,7 +68,7 @@ const renderNode = (props: RenderNodeProps) => {
         previewable
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(key), {
-            caseClassName: objClass
+            caseClassName: objClass,
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
