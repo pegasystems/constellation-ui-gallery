@@ -39,5 +39,5 @@ export default create({
 
   brandTitle: 'Constellation UI Gallery',
   brandUrl: 'https://github.com/pegasystems/constellation-ui-gallery',
-  brandImage: './pega-logo.svg'
+  brandImage: './pega-logo.svg',
 });

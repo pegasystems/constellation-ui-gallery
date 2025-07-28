@@ -17,16 +17,16 @@ const config: TestRunnerConfig = {
 
     // Apply story-level a11y rules
     await configureAxe(page, {
-      rules: storyContext.parameters?.a11y?.config?.rules
+      rules: storyContext.parameters?.a11y?.config?.rules,
     });
 
     await checkA11y(page, '#storybook-root', {
       detailedReport: true,
       detailedReportOptions: {
-        html: true
-      }
+        html: true,
+      },
     });
-  }
+  },
 };
 
 export default config;
