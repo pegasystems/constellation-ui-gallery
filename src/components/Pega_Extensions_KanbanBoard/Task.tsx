@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Progress,
-  Button,
-  Icon,
-  Card,
-  CardHeader,
-  CardContent,
-  Text,
-  useTheme
-} from '@pega/cosmos-react-core';
+import { Progress, Button, Icon, Card, CardHeader, CardContent, Text, useTheme } from '@pega/cosmos-react-core';
 import { Draggable } from '@hello-pangea/dnd';
 import { StyledCardContent } from './styles';
 
@@ -26,18 +17,7 @@ export type TaskProps = {
 };
 
 export const Task = (props: TaskProps) => {
-  const {
-    index,
-    insKey,
-    classname,
-    id,
-    title,
-    groupValue,
-    details,
-    getDetails,
-    editTask,
-    getPConnect
-  } = props;
+  const { index, insKey, classname, id, title, groupValue, details, getDetails, editTask, getPConnect } = props;
   const [newdetails, setDetails] = useState<any>(details);
   const theme = useTheme();
   const onEdit = () => {
@@ -68,7 +48,7 @@ export const Task = (props: TaskProps) => {
                 message={(window as any).PCore.getLocaleUtils().getLocaleValue(
                   'Loading content...',
                   'Generic',
-                  '@BASECLASS!GENERIC!PYGENERICFIELDS'
+                  '@BASECLASS!GENERIC!PYGENERICFIELDS',
                 )}
               />
             )}
@@ -79,7 +59,7 @@ export const Task = (props: TaskProps) => {
   }
   return (
     <Draggable draggableId={id} index={index}>
-      {provided => (
+      {(provided) => (
         <StyledCardContent theme={theme}>
           <Card {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
             <CardHeader
@@ -104,7 +84,7 @@ export const Task = (props: TaskProps) => {
                   message={(window as any).PCore.getLocaleUtils().getLocaleValue(
                     'Loading content...',
                     'Generic',
-                    '@BASECLASS!GENERIC!PYGENERICFIELDS'
+                    '@BASECLASS!GENERIC!PYGENERICFIELDS',
                   )}
                 />
               )}

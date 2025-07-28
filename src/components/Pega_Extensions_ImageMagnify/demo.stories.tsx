@@ -6,75 +6,75 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     customWidth: {
-      if: { arg: 'widthSel', eq: 'widthpx' }
+      if: { arg: 'widthSel', eq: 'widthpx' },
     },
     customHeight: {
-      if: { arg: 'widthSel', eq: 'widthpx' }
+      if: { arg: 'widthSel', eq: 'widthpx' },
     },
     altTextOfImage: {
-      if: { arg: 'altText', eq: 'constant' }
+      if: { arg: 'altText', eq: 'constant' },
     },
     propaltTextOfImage: {
-      if: { arg: 'altText', eq: 'propertyRef' }
+      if: { arg: 'altText', eq: 'propertyRef' },
     },
     alwaysInPlace: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     switchSides: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     fillAvailableSpace: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     fillAlignTop: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     fillGapLeft: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     fillGapRight: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     fillGapTop: {
-      if: { arg: 'magnifyMode', eq: 'magSideBySide' }
+      if: { arg: 'magnifyMode', eq: 'magSideBySide' },
     },
     zoomTop: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
     },
     zoomLeft: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
     },
     zoomHeight: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
     },
     zoomWidth: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
     },
     zoomZIndex: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
     },
     previewRightOffset: {
-      if: { arg: 'magnifyMode', eq: 'magAdvanced' }
-    }
+      if: { arg: 'magnifyMode', eq: 'magAdvanced' },
+    },
   },
-  component: PegaExtensionsImageMagnify
+  component: PegaExtensionsImageMagnify,
 };
 
 type Story = StoryObj<typeof PegaExtensionsImageMagnify>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       ...args,
       getPConnect: () => {
         return {
           getStateProps: () => {
             return {
-              value: args.value
+              value: args.value,
             };
           },
           ignoreSuggestion: () => {
@@ -88,9 +88,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return (
       <div style={{ maxWidth: '400px', margin: '0 auto' }}>
@@ -124,6 +124,6 @@ export const Default: Story = {
     zoomHeight: 100,
     zoomWidth: 300,
     previewRightOffset: 0,
-    zoomZIndex: 999
-  }
+    zoomZIndex: 999,
+  },
 };

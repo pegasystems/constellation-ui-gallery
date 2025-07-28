@@ -15,14 +15,7 @@ const styledButton = styled.button`
 `;
 
 const LightboxImage = (props: PegaExtensionsImageMagnifyProps) => {
-  const {
-    value,
-    customHeight = '100px',
-    customWidth = 40,
-    altText,
-    altTextOfImage,
-    propaltTextOfImage
-  } = props;
+  const { value, customHeight = '100px', customWidth = 40, altText, altTextOfImage, propaltTextOfImage } = props;
   const demoButtonRef = useRef<HTMLButtonElement>(null);
   let imageDisplayComp = null;
   const [images, setImages] = useState<Array<LightboxItem>>([]);
@@ -30,7 +23,7 @@ const LightboxImage = (props: PegaExtensionsImageMagnifyProps) => {
 
   useEffect(() => {
     fetch(value)
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
           const contentType = response?.headers?.get('content-type') || '';
           setSubType(contentType?.split('/')[1]);
@@ -48,7 +41,7 @@ const LightboxImage = (props: PegaExtensionsImageMagnifyProps) => {
       description: '',
       src: value,
       format: subType,
-      error: subType === undefined
+      error: subType === undefined,
     };
     setImages([imgDescription]);
   };
@@ -57,35 +50,28 @@ const LightboxImage = (props: PegaExtensionsImageMagnifyProps) => {
     const a = document.createElement('a');
     if (images[0].src) {
       a.href = await fetch(images[0].src)
-        .then(response => {
+        .then((response) => {
           return response.blob();
         })
-        .then(blob => {
+        .then((blob) => {
           return URL.createObjectURL(blob);
         });
     }
-    a.download = images?.find(image => image.id === id)?.name ?? id;
+    a.download = images?.find((image) => image.id === id)?.name ?? id;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   };
 
   const onItemError = (id: string) => {
-    setImages(item => {
-      return item?.map(obj => (obj.id === id ? { ...obj, error: true } : obj));
+    setImages((item) => {
+      return item?.map((obj) => (obj.id === id ? { ...obj, error: true } : obj));
     });
   };
 
   imageDisplayComp = (
     <>
-      <Button
-        ref={demoButtonRef}
-        variant='link'
-        compact={false}
-        onClick={onClick}
-        autoFocus
-        as={styledButton}
-      >
+      <Button ref={demoButtonRef} variant='link' compact={false} onClick={onClick} autoFocus as={styledButton}>
         <img
           src={value}
           alt={altText === 'constant' ? altTextOfImage : propaltTextOfImage}

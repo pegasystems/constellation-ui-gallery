@@ -15,7 +15,7 @@ const normalize = ({
   min,
   max,
   scaleMin = 0,
-  scaleMax = 1
+  scaleMax = 1,
 }: {
   value: number;
   min: number;
@@ -36,12 +36,11 @@ export const moveTo = (to: Point, from: Point, radius: number) => {
 
   return {
     x: from.x + unitVector.x * radius,
-    y: from.y + unitVector.y * radius
+    y: from.y + unitVector.y * radius,
   };
 };
 
-export const getDistanceBetween = (p1: Point, p2: Point) =>
-  Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
+export const getDistanceBetween = (p1: Point, p2: Point) => Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 
 export const checkForCollinearPoints = (p1: Point, p2: Point, p3: Point) =>
   (p1.y - p2.y) * (p1.x - p3.x) === (p1.y - p3.y) * (p1.x - p2.x);
@@ -56,15 +55,15 @@ export const normalizeDataset = (data: number[], { minX, maxX, minY, maxY }: Dat
       min: boundariesX.min,
       max: boundariesX.max,
       scaleMin: minX,
-      scaleMax: maxX
+      scaleMax: maxX,
     }),
     y: normalize({
       value,
       min: boundariesY.min,
       max: boundariesY.max,
       scaleMin: minY,
-      scaleMax: maxY
-    })
+      scaleMax: maxY,
+    }),
   }));
 };
 
@@ -90,10 +89,6 @@ export const buildSmoothPath = (data: Point[], radius: number) => {
     const before = moveTo(prev, point, radiusForPoint);
     const after = moveTo(next, point, radiusForPoint);
 
-    return [
-      path,
-      `L ${before.x},${before.y}`,
-      `S ${point.x},${point.y} ${after.x},${after.y}`
-    ].join('\n');
+    return [path, `L ${before.x},${before.y}`, `S ${point.x},${point.y} ${after.x},${after.y}`].join('\n');
   }, `M ${firstPoint.x},${firstPoint.y}`);
 };

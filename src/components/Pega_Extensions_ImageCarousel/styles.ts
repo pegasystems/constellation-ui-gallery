@@ -10,7 +10,7 @@ export const SliderContainer = styled.div`
 export const SliderWrapper = styled.div<{ totalSlides: number; currentSlide: number }>`
   display: flex;
   transition: transform 0.5s ease-in-out;
-  transform: translateX(-${props => props.currentSlide * 100}%);
+  transform: translateX(-${(props) => props.currentSlide * 100}%);
   width: 100%;
   height: 100%;
 `;
@@ -18,7 +18,7 @@ export const SliderWrapper = styled.div<{ totalSlides: number; currentSlide: num
 export const SlideImage = styled.img<{ objectFit?: string }>`
   width: 100%;
   height: 100%;
-  object-fit: ${props => props.objectFit || 'cover'};
+  object-fit: ${(props) => props.objectFit || 'cover'};
   object-position: center;
 `;
 
@@ -57,7 +57,7 @@ export const DotsContainer = styled.div`
 `;
 
 export const Dot = styled.a<{ active: boolean }>`
-  background-color: ${props => (props.active ? '#285aa8' : '#b1b1b1')};
+  background-color: ${(props) => (props.active ? '#285aa8' : '#b1b1b1')};
   border: none;
   border-radius: 50%;
   height: 1rem;

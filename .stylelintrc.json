@@ -6,11 +6,5 @@
     "selector-max-combinators": null,
     "selector-max-compound-selectors": null
   },
-  "ignoreFiles": [
-    "node_modules/**",
-    "lib/**",
-    "!.storybook",
-    ".storybook/public",
-    "storybook-static/**"
-  ]
+  "ignoreFiles": ["node_modules/**", "lib/**", "!.storybook", ".storybook/public", "storybook-static/**"]
 }

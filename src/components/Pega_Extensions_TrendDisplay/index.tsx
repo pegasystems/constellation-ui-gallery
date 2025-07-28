@@ -6,7 +6,7 @@ import {
   NoValue,
   Icon,
   Text,
-  registerIcon
+  registerIcon,
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
 import TrendDisplayWrapper from './styles';
@@ -108,20 +108,19 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
     currencyDecimalPrecision = 'auto',
     currencyDisplay = 'symbol',
     displayMode,
-    fieldMetadata
+    fieldMetadata,
   } = props;
 
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
     ? {
-        content: fieldAdditionalInfo
+        content: fieldAdditionalInfo,
       }
     : undefined;
   const [id] = useState(createUID());
   const theme = useTheme();
 
-  const noOfFractionDigits =
-    currencyDecimalPrecision === 'auto' ? undefined : parseInt(currencyDecimalPrecision, 10);
+  const noOfFractionDigits = currencyDecimalPrecision === 'auto' ? undefined : parseInt(currencyDecimalPrecision, 10);
 
   const currencyValue = formatValue(value);
   const displayValue = !value && value !== 0 ? undefined : Number(currencyValue);
@@ -143,11 +142,7 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
       displayComp = (
         <TrendGraph
           data={trendDataArray}
-          colorValue={
-            colorMode === 'auto' || colorMode === 'trend'
-              ? theme.base.palette.interactive
-              : colorMode
-          }
+          colorValue={colorMode === 'auto' || colorMode === 'trend' ? theme.base.palette.interactive : colorMode}
           width={120}
           height={30}
         />
@@ -199,7 +194,7 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
             fractionDigits: noOfFractionDigits,
             currency: currencyDisplay,
             negative,
-            notation: negative === 'parentheses' ? 'standard' : notation
+            notation: negative === 'parentheses' ? 'standard' : notation,
           }}
         />
       </TrendDisplayWrapper>

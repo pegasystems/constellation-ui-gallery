@@ -1,11 +1,11 @@
 export const convertHiraganaToKatakana = (str: string) => {
-  return str.replace(/[\u3041-\u3096]/g, match => {
+  return str.replace(/[\u3041-\u3096]/g, (match) => {
     return String.fromCharCode(match.charCodeAt(0) + 0x60);
   });
 };
 
 export const fullWidthToHalfWidth = (str: string): string => {
-  str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, match => {
+  str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (match) => {
     return String.fromCharCode(match.charCodeAt(0) - 0xfee0);
   });
   // prettier-ignore
@@ -32,7 +32,7 @@ export const fullWidthToHalfWidth = (str: string): string => {
   };
   const reg = new RegExp(`(${Object.keys(kanaMap).join('|')})`, 'g');
   return str
-    .replace(reg, match => {
+    .replace(reg, (match) => {
       return kanaMap[match];
     })
     .replace(/゛/g, 'ﾞ')
@@ -40,10 +40,10 @@ export const fullWidthToHalfWidth = (str: string): string => {
 };
 
 const toHalfDigits = (s: string): string =>
-  s.replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0) - 0xff10 + 0x30));
+  s.replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xff10 + 0x30));
 
 const toFullDigits = (s: string): string =>
-  s.replace(/\d/g, d => String.fromCharCode(d.charCodeAt(0) - 0x30 + 0xff10));
+  s.replace(/\d/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0x30 + 0xff10));
 
 export const convertGregorianToJapaneseEra = (str: string): string => {
   const regex = /([\d０-９]+)年(?:\s*([\d０-９]+)月(?:\s*([\d０-９]+)日)?)?/;
@@ -76,10 +76,10 @@ export const convertGregorianToJapaneseEra = (str: string): string => {
       { era: '平成', start: new Date(1989, 0, 8) },
       { era: '昭和', start: new Date(1926, 11, 25) },
       { era: '大正', start: new Date(1912, 6, 30) },
-      { era: '明治', start: new Date(1868, 0, 25) }
+      { era: '明治', start: new Date(1868, 0, 25) },
     ];
 
-    const selectedEra = eras.find(eraData => inputDate >= eraData.start);
+    const selectedEra = eras.find((eraData) => inputDate >= eraData.start);
     if (!selectedEra) return match;
 
     const eraYear = gregYear - selectedEra.start.getFullYear() + 1;
@@ -105,7 +105,7 @@ export const convertJapaneseEraToGregorian = (str: string): string => {
       平成: 1989,
       昭和: 1926,
       大正: 1912,
-      明治: 1868
+      明治: 1868,
     };
     const startYear = eraStartYears[era];
     if (!startYear) return match;

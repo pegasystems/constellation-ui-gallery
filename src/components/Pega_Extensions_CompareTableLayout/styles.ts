@@ -118,56 +118,50 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
   }
 });
 
-export const SelectedCell = styled.td<{ isSelected: boolean; theme: DefaultTheme }>(
-  ({ isSelected, theme }) => {
-    return css`
-      ${isSelected
-        ? `border: 0.125rem solid ${theme.components.button.color};
+export const SelectedCell = styled.td<{ isSelected: boolean; theme: DefaultTheme }>(({ isSelected, theme }) => {
+  return css`
+    ${isSelected
+      ? `border: 0.125rem solid ${theme.components.button.color};
         border-top: none;`
-        : ''}
-      &.selection > label {
-        border: 0.125rem solid ${theme.components.button.color};
-        border-radius: ${`${theme.components.button['border-radius']}rem`};
-        display: block;
-        background-color: ${isSelected ? theme.components.button.color : 'transparent'};
-      }
-      &.selection > label > div {
-        font-size: 1rem;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        min-width: unset;
-        max-width: unset;
-        color: ${isSelected ? '#FFF' : theme.components.button.color};
-      }
-      & :not(input:checked) + div > div {
-        display: none;
-      }
+      : ''}
+    &.selection > label {
+      border: 0.125rem solid ${theme.components.button.color};
+      border-radius: ${`${theme.components.button['border-radius']}rem`};
+      display: block;
+      background-color: ${isSelected ? theme.components.button.color : 'transparent'};
+    }
+    &.selection > label > div {
+      font-size: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      min-width: unset;
+      max-width: unset;
+      color: ${isSelected ? '#FFF' : theme.components.button.color};
+    }
+    & :not(input:checked) + div > div {
+      display: none;
+    }
+  `;
+});
+
+export const SelectedBgCell = styled.td<{ isSelected: boolean; theme: DefaultTheme }>(({ isSelected, theme }) => {
+  if (isSelected) {
+    return css`
+      background-color: ${isSelected ? 'rgba(207, 207, 207, 0.2)' : 'transparent'};
+      border-left: 0.125rem solid ${theme.components.button.color};
+      border-right: 0.125rem solid ${theme.components.button.color};
     `;
   }
-);
+});
 
-export const SelectedBgCell = styled.td<{ isSelected: boolean; theme: DefaultTheme }>(
-  ({ isSelected, theme }) => {
-    if (isSelected) {
-      return css`
-        background-color: ${isSelected ? 'rgba(207, 207, 207, 0.2)' : 'transparent'};
-        border-left: 0.125rem solid ${theme.components.button.color};
-        border-right: 0.125rem solid ${theme.components.button.color};
-      `;
-    }
+export const SelectedBgTh = styled.th<{ isSelected: boolean; theme: DefaultTheme }>(({ isSelected, theme }) => {
+  if (isSelected) {
+    return css`
+      background-color: ${isSelected ? 'rgba(207, 207, 207, 0.2)' : 'transparent'};
+      border: 0.125rem solid ${theme.components.button.color};
+      border-bottom: none;
+    `;
   }
-);
-
-export const SelectedBgTh = styled.th<{ isSelected: boolean; theme: DefaultTheme }>(
-  ({ isSelected, theme }) => {
-    if (isSelected) {
-      return css`
-        background-color: ${isSelected ? 'rgba(207, 207, 207, 0.2)' : 'transparent'};
-        border: 0.125rem solid ${theme.components.button.color};
-        border-bottom: none;
-      `;
-    }
-  }
-);
+});

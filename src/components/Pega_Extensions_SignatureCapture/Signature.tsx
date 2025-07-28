@@ -44,7 +44,7 @@ const Signature = (props: SignatureProps) => {
     if (!canvas) return;
 
     const signaturePad = new SignaturePad(canvas, {
-      penColor: theme.base.palette['foreground-color']
+      penColor: theme.base.palette['foreground-color'],
     });
     refSignaturePad.current = signaturePad;
     if (signaturePadRef) {

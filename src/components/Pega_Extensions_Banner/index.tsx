@@ -21,20 +21,12 @@ type BannerProps = {
 };
 
 export const PegaExtensionsBanner = (props: BannerProps) => {
-  const {
-    variant = 'success',
-    dataPage = '',
-    dismissible = false,
-    dismissAction = '',
-    getPConnect
-  } = props;
+  const { variant = 'success', dataPage = '', dismissible = false, dismissAction = '', getPConnect } = props;
   const [messages, setMessages] = useState<Array<string>>([]);
   const [isDismissed, setIsDismissed] = useState(false);
 
   const updateItemDetails = () => {
-    const caseInstanceKey = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const context = getPConnect().getContextName();
 
     (window as any).PCore.getDataApiUtils()
@@ -42,28 +34,21 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
       .then((response: any) => {
         /* Upon successful, update the latest etag. */
         const updatedEtag = response.headers.etag;
-        (window as any).PCore.getContainerUtils().updateCaseContextEtag(
-          getPConnect().getContextName(),
-          updatedEtag
-        );
+        (window as any).PCore.getContainerUtils().updateCaseContextEtag(getPConnect().getContextName(), updatedEtag);
       });
   };
 
   const refreshForm = useCallback(() => {
-    const caseInstanceKey = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
-    const className = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_CLASSID
-    );
+    const className = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_CLASSID);
     (window as any).PCore.getRestClient()
       .invokeRestApi('loadView', {
         queryPayload: {
           caseClassName: className,
           caseID: caseInstanceKey,
-          viewID: 'pyCaseSummary'
-        }
+          viewID: 'pyCaseSummary',
+        },
       })
       .then((response: any) => {
         getPConnect().updateState({ caseInfo: response.data.data.caseInfo });
@@ -73,9 +58,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   const dismissCaseWideAction = () => {
     const dataObj = getPConnect().getDataObject(getPConnect().getContextName());
 
-    const caseInstanceKey = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
     getPConnect()
       .getContainerManager()
@@ -88,28 +71,26 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
             ...dataObj.caseInfo,
             activeActionID: dismissAction,
             isModalAction: false,
-            viewType: 'form'
-          }
-        }
+            viewType: 'form',
+          },
+        },
       });
 
-    const items = Object.keys(
-      (window as any).PCore.getContainerUtils().getContainerItems('app/primary')
-    );
+    const items = Object.keys((window as any).PCore.getContainerUtils().getContainerItems('app/primary'));
     const tmpContainerName = items[items.length - 1];
 
     const messageConfig = {
       meta: {
         config: {
           context: 'caseInfo.content',
-          name: dismissAction
-        }
+          name: dismissAction,
+        },
       },
       options: {
         contextName: tmpContainerName,
         context: tmpContainerName,
-        pageReference: 'caseInfo.content'
-      }
+        pageReference: 'caseInfo.content',
+      },
     };
 
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
@@ -120,7 +101,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
         .getActionsApi()
         .finishAssignment(c11nEnv.getPConnect().getContextName(), {
           outcomeID: '',
-          jsActionQueryParams: {}
+          jsActionQueryParams: {},
         })
         .then(() => {
           getPConnect()
@@ -140,13 +121,9 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
     (dismissed?: boolean) => {
       if (dataPage) {
         const pConn = getPConnect();
-        const CaseInstanceKey = pConn.getValue(
-          (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-        );
+        const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
         const payload = {
-          dataViewParameters: [
-            { pyID: CaseInstanceKey, ...(dismissed ? { dismissed: true } : null) }
-          ]
+          dataViewParameters: [{ pyID: CaseInstanceKey, ...(dismissed ? { dismissed: true } : null) }],
         };
         (window as any).PCore.getDataApiUtils()
           .getData(dataPage, payload, pConn.getContextName())
@@ -161,26 +138,24 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
           .catch(() => {});
       }
     },
-    [dataPage, getPConnect, refreshForm]
+    [dataPage, getPConnect, refreshForm],
   );
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    const caseID = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const filter = {
       matcher: 'TASKLIST',
       criteria: {
-        ID: caseID
-      }
+        ID: caseID,
+      },
     };
     const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         loadMessages();
       },
-      getPConnect().getContextName()
+      getPConnect().getContextName(),
     );
     return () => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
@@ -204,11 +179,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   if (messages?.length === 0 || isDismissed) return null;
   return (
     <MainContent>
-      <Banner
-        variant={variant}
-        messages={messages}
-        onDismiss={dismissible ? onDismiss : undefined}
-      />
+      <Banner variant={variant} messages={messages} onDismiss={dismissible ? onDismiss : undefined} />
     </MainContent>
   );
 };

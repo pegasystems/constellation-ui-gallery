@@ -6,16 +6,16 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     children: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsRangeSlider
+  component: PegaExtensionsRangeSlider,
 };
 
 const mainResponse = {
@@ -27,7 +27,7 @@ const mainResponse = {
     showLabel: true,
     label: '@L Details',
     localeReference: '@LR Details',
-    inheritedProps: []
+    inheritedProps: [],
   },
   children: [
     {
@@ -37,18 +37,18 @@ const mainResponse = {
         return {
           getRawMetadata: () => {
             return mainResponse.children[0];
-          }
+          },
         };
       },
-      children: []
-    }
+      children: [],
+    },
   ],
-  classID: 'Work-MyComponents'
+  classID: 'Work-MyComponents',
 };
 
 type Story = StoryObj<typeof PegaExtensionsRangeSlider>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       ...args,
       getPConnect: () => {
@@ -59,7 +59,7 @@ export const Default: Story = {
           getActionsApi: () => {
             return {
               updateFieldValue: () => {},
-              refreshCaseView: () => {}
+              refreshCaseView: () => {},
             };
           },
           getCaseInfo: () => {
@@ -67,7 +67,7 @@ export const Default: Story = {
               getCurrentAssignmentViewName: () => '',
               getKey: () => {
                 return 'WORK-123';
-              }
+              },
             };
           },
           getChildren: () => {
@@ -85,9 +85,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     const regionAChildren = mainResponse.children[0].children.map(() => {
       return props.getPConnect().createComponent();
@@ -103,6 +103,6 @@ export const Default: Story = {
     min: 0,
     max: 500,
     step: 1,
-    currencyCode: 'USD'
-  }
+    currencyCode: 'USD',
+  },
 };

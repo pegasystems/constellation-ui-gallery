@@ -7,7 +7,7 @@ import {
   cap,
   useDirection,
   FormField,
-  FormControl
+  FormControl,
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
 import { StyledFlexWrapper, StyledStarRatingMetaInfo, StyledStarWrapper } from './styles';
@@ -61,7 +61,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
     testId,
     displayMode,
 
-    getPConnect
+    getPConnect,
   } = props;
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
@@ -71,14 +71,12 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
   let { readOnly = false, required = false, disabled = false } = props;
   const { value } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
   const StarRatingRef = useRef<any>(null);
   const [currentValueDesc, setCurrentValueDesc] = useState('');
   const [info, setInfo] = useState(validatemessage || helperText);
-  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(undefined);
 
   useEffect(() => {
     if (!readOnly) {
@@ -108,7 +106,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
       setCurrentValueDesc(`${normalizedValue} star${normalizedValue > 1 ? 's' : ''}`);
       setMetaInfoUpdated(`${normalizedValue} of ${maxRatingValue}`);
     },
-    [actions, disabled, maxRatingValue, propName, readOnly]
+    [actions, disabled, maxRatingValue, propName, readOnly],
   );
 
   const { start, end, rtl } = useDirection();
@@ -116,18 +114,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (readOnly || disabled) return;
-      if (
-        [
-          'ArrowDown',
-          'ArrowUp',
-          'ArrowLeft',
-          'ArrowRight',
-          'PageUp',
-          'PageDown',
-          'Home',
-          'End'
-        ].includes(e.key)
-      )
+      if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.key))
         e.preventDefault();
 
       switch (e.key) {
@@ -148,7 +135,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
         default:
       }
     },
-    [currentValue, disabled, end, readOnly, setValue, start]
+    [currentValue, disabled, end, readOnly, setValue, start],
   );
 
   useEffect(() => {
@@ -230,12 +217,7 @@ export const PegaExtensionsStarRatingInput = (props: StarRatingInputProps) => {
   };
 
   const readonlyComp = (
-    <Rating
-      maxRating={maxRatingValue}
-      aria-label={label}
-      metaInfo={metaInfoUpdated}
-      value={value}
-    />
+    <Rating maxRating={maxRatingValue} aria-label={label} metaInfo={metaInfoUpdated} value={value} />
   );
 
   if (displayMode === 'DISPLAY_ONLY') {

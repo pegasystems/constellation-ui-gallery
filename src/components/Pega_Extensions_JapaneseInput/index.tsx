@@ -9,14 +9,14 @@ import {
   type TestIdProp,
   useTestIds,
   createTestIds,
-  withTestIds
+  withTestIds,
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
 import {
   convertHiraganaToKatakana,
   fullWidthToHalfWidth,
   convertGregorianToJapaneseEra,
-  convertJapaneseEraToGregorian
+  convertJapaneseEraToGregorian,
 } from './utils';
 
 // interface for props
@@ -73,9 +73,7 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   const testIds = useTestIds(testId, getJapaneseInputTestIds);
 
   const [inputValue, setInputValue] = useState(value);
-  const [status, setStatus] = useState<FormControlProps['status']>(
-    hasSuggestions ? 'pending' : undefined
-  );
+  const [status, setStatus] = useState<FormControlProps['status']>(hasSuggestions ? 'pending' : undefined);
 
   useEffect(() => setInputValue(value), [value]);
 

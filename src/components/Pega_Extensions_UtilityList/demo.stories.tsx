@@ -6,19 +6,19 @@ export default {
   argTypes: {
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     setCaseID: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -27,20 +27,20 @@ export default {
         rules: [
           {
             id: 'list',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsUtilityList
+  component: PegaExtensionsUtilityList,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getSemanticUrlUtils: () => {
@@ -50,9 +50,9 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -68,7 +68,7 @@ const setPCore = () => {
                   pyID: 'A-1004',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for John smith',
-                  pxCreateOpName: 'Marc Doe'
+                  pxCreateOpName: 'Marc Doe',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
@@ -77,7 +77,7 @@ const setPCore = () => {
                   pyID: 'A-1005',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for Sue Lee',
-                  pxCreateOpName: 'John Louis'
+                  pxCreateOpName: 'John Louis',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
@@ -86,7 +86,7 @@ const setPCore = () => {
                   pyID: 'C-1005',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for John Louis',
-                  pxCreateOpName: 'John Louis'
+                  pxCreateOpName: 'John Louis',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
@@ -95,7 +95,7 @@ const setPCore = () => {
                   pyID: 'D-4045',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for Mark Smith',
-                  pxCreateOpName: 'John Louis'
+                  pxCreateOpName: 'John Louis',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
@@ -104,7 +104,7 @@ const setPCore = () => {
                   pyID: 'AB-305',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for John Louis',
-                  pxCreateOpName: 'John Louis'
+                  pxCreateOpName: 'John Louis',
                 },
                 {
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
@@ -113,29 +113,29 @@ const setPCore = () => {
                   pyID: 'BD-85',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyLabel: 'Appointment for John Doe',
-                  pxCreateOpName: 'John Louis'
-                }
-              ]
-            }
+                  pxCreateOpName: 'John Louis',
+                },
+              ],
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsUtilityList>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
       getPConnect: () => {
         return {
           getContextName: () => '',
-          getValue: () => 'C-123'
+          getValue: () => 'C-123',
         };
-      }
+      },
     };
     return <PegaExtensionsUtilityList {...props} />;
   },
@@ -146,6 +146,6 @@ export const Default: Story = {
     secondaryFields: 'pyID,pxCreateDateTime,pxCreateOpName',
     secondaryFieldTypes: 'string,date,string',
     dataPage: 'D_myCases',
-    setCaseID: false
-  }
+    setCaseID: false,
+  },
 };

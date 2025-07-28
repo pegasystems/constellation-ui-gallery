@@ -24,19 +24,19 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         .getContainerManager()
         .addTransientItem({
           id: `${detailsViewName}${id}`,
-          data: {}
+          data: {},
         });
       getPConnect().getContainerManager().updateTransientData({
         transientItemID,
-        data: res.data.data.dataInfo
+        data: res.data.data.dataInfo,
       });
       const messageConfig = {
         meta: fetchViewResources(detailsViewName, getPConnect(), classname),
         options: {
           contextName: transientItemID,
           context: transientItemID,
-          pageReference: 'content'
-        }
+          pageReference: 'content',
+        },
       };
       messageConfig.meta.config.showLabel = false;
       messageConfig.meta.config.pyID = id;
@@ -83,8 +83,8 @@ export const updateGroupValue = (props: UpdateGroupValueProps) => {
             ...columns,
             [groupValue]: {
               ...columns[groupValue],
-              taskList: newSourceTaskList
-            }
+              taskList: newSourceTaskList,
+            },
           };
           setColumns(newtmpColumns);
         });

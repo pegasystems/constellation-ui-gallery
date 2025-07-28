@@ -10,17 +10,9 @@ type ElemDisplayProps = {
 };
 
 export const StyledElementDisplay = styled.div(
-  ({
-    textColor,
-    valueColor,
-    theme
-  }: {
-    textColor: string;
-    valueColor: string;
-    theme: typeof themeDefinition;
-  }) => {
+  ({ textColor, valueColor, theme }: { textColor: string; valueColor: string; theme: typeof themeDefinition }) => {
     const {
-      base: { spacing }
+      base: { spacing },
     } = theme;
     return css`
       display: inline-flex;
@@ -37,7 +29,7 @@ export const StyledElementDisplay = styled.div(
         font-size: 0.75rem;
       }
     `;
-  }
+  },
 );
 
 const ElemDisplay = (props: ElemDisplayProps) => {
@@ -47,7 +39,7 @@ const ElemDisplay = (props: ElemDisplayProps) => {
 
   const textColor = rgba(
     readableColor(theme.base.palette['primary-background']),
-    theme.base.transparency['transparent-3']
+    theme.base.transparency['transparent-3'],
   );
 
   const labelMsg = `${event.label} (${

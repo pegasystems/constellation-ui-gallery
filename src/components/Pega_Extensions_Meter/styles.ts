@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 export const StyleGroupMeterWrapper = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
   const {
-    base: { spacing, colors, 'border-radius': borderRadius }
+    base: { spacing, colors, 'border-radius': borderRadius },
   } = theme;
   return css`
     display: flex;
@@ -41,20 +41,18 @@ export const StyleGroupMeterWrapper = styled.div(({ theme }: { theme: typeof the
 });
 StyleGroupMeterWrapper.defaultProps = defaultThemeProp;
 
-export const StyledFieldGroupElementMeter = styled.div(
-  ({ theme }: { theme: typeof themeDefinition }) => {
-    const {
-      base: { spacing }
-    } = theme;
-    return css`
-      & > div > div {
-        min-height: calc(${spacing}*2);
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-      }
-    `;
-  }
-);
+export const StyledFieldGroupElementMeter = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+  const {
+    base: { spacing },
+  } = theme;
+  return css`
+    & > div > div {
+      min-height: calc(${spacing}*2);
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+    }
+  `;
+});
 
 StyledFieldGroupElementMeter.defaultProps = defaultThemeProp;

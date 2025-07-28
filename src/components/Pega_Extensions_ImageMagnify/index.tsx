@@ -4,7 +4,7 @@ import {
   SideBySideMagnifier,
   MagnifierContainer,
   MagnifierPreview,
-  MagnifierZoom
+  MagnifierZoom,
 } from 'react-image-magnifiers';
 import '../create-nonce';
 import LightboxImage from './LightboxImage';
@@ -151,7 +151,7 @@ export const PegaExtensionsImageMagnify = (props: PegaExtensionsImageMagnifyProp
     zoomHeight = 100,
     zoomWidth = 300,
     previewRightOffset = 0,
-    zoomZIndex = 999
+    zoomZIndex = 999,
   } = props;
 
   if (!value) return null;
@@ -177,7 +177,7 @@ export const PegaExtensionsImageMagnify = (props: PegaExtensionsImageMagnifyProp
             style={{
               ...(widthSel === 'widthpx' && { width: customWidth }),
               position: 'relative',
-              right: previewRightOffset
+              right: previewRightOffset,
             }}
           />
           <MagnifierZoom
@@ -187,7 +187,7 @@ export const PegaExtensionsImageMagnify = (props: PegaExtensionsImageMagnifyProp
               position: 'absolute',
               left: zoomLeft,
               top: zoomTop,
-              zIndex: zoomZIndex
+              zIndex: zoomZIndex,
             }}
             imageSrc={value}
           />

@@ -4,17 +4,17 @@ import { PegaExtensionsIframeWrapper } from './index';
 export default {
   title: 'Fields/Iframe Wrapper',
   argTypes: {
-    height: { control: 'number', if: { arg: 'heightMode', eq: 'fixed' } }
+    height: { control: 'number', if: { arg: 'heightMode', eq: 'fixed' } },
   },
-  component: PegaExtensionsIframeWrapper
+  component: PegaExtensionsIframeWrapper,
 };
 
 type Story = StoryObj<typeof PegaExtensionsIframeWrapper>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
-      ...args
+      ...args,
     };
     return <PegaExtensionsIframeWrapper {...props} />;
   },
@@ -22,6 +22,6 @@ export const Default: Story = {
     title: 'iFrame title',
     value: 'https://pegasystems.github.io/uplus-wss/retail_bank/index.html',
     height: 500,
-    heightMode: 'fixed'
-  }
+    heightMode: 'fixed',
+  },
 };

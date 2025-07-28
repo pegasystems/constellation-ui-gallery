@@ -20,19 +20,13 @@ const TrendGraph = (props: TrendGraphProps) => {
     minX: padding,
     maxX: width - padding,
     minY: height - padding,
-    maxY: padding
+    maxY: padding,
   });
 
   const path = buildSmoothPath(normalizedValues, radius);
 
   return (
-    <svg
-      width='120px'
-      strokeWidth='1'
-      strokeLinecap='butt'
-      stroke={colorValue}
-      viewBox={`0 0 ${width} ${height}`}
-    >
+    <svg width='120px' strokeWidth='1' strokeLinecap='butt' stroke={colorValue} viewBox={`0 0 ${width} ${height}`}>
       <path d={path} fill='none' />
     </svg>
   );

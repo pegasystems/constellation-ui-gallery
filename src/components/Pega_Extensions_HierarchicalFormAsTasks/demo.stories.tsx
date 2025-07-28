@@ -1,14 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import {
-  Text,
-  Grid,
-  Card,
-  CardContent,
-  CardHeader,
-  Input,
-  FormControl,
-  FormField
-} from '@pega/cosmos-react-core';
+import { Text, Grid, Card, CardContent, CardHeader, Input, FormControl, FormField } from '@pega/cosmos-react-core';
 import { PegaExtensionsHierarchicalFormAsTasks } from './index';
 import React from 'react';
 
@@ -17,16 +8,16 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsHierarchicalFormAsTasks
+  component: PegaExtensionsHierarchicalFormAsTasks,
 };
 
 type Story = StoryObj<typeof PegaExtensionsHierarchicalFormAsTasks>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       template: 'HierarchicalFormAsTasks',
       heading: args.heading,
@@ -34,9 +25,9 @@ export const Default: Story = {
         return {
           getLocalizedValue: (val: string) => {
             return val;
-          }
+          },
         };
-      }
+      },
     };
 
     // Create a wrapper component that has the necessary structure
@@ -60,11 +51,8 @@ export const Default: Story = {
               <Text variant='h2'>{viewName}</Text>
             </CardHeader>
             <CardContent>
-              <Grid
-                container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }}
-                style={{ maxWidth: '80ch' }}
-              >
-                {[1, 2, 3].map(index => (
+              <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
+                {[1, 2, 3].map((index) => (
                   <FormField key={index} label={`${viewName}-Field${index}`}>
                     <FormControl ariaLabel={`${viewName}-Field${index}`}>
                       <Input />
@@ -76,21 +64,21 @@ export const Default: Story = {
           </Card>
         ),
         getConfigProps: () => ({
-          name: viewName
-        })
-      })
+          name: viewName,
+        }),
+      }),
     });
 
     const generateGroup = (groupNumber: number, viewCount: number) => ({
       getPConnect: () => ({
         getConfigProps: () => ({
-          heading: `Group${groupNumber}`
+          heading: `Group${groupNumber}`,
         }),
         getChildren: () =>
           Array(viewCount)
             .fill(null)
-            .map((_, i) => generateView(`View${groupNumber}-${i + 1}`))
-      })
+            .map((_, i) => generateView(`View${groupNumber}-${i + 1}`)),
+      }),
     });
 
     const generateChildren = (groupCount: number, viewsPerGroup: number) => [
@@ -100,9 +88,9 @@ export const Default: Story = {
           getChildren: () =>
             Array(groupCount)
               .fill(null)
-              .map((_, i) => generateGroup(i + 1, viewsPerGroup))
+              .map((_, i) => generateGroup(i + 1, viewsPerGroup)),
         })}
-      />
+      />,
     ];
 
     const children = generateChildren(args.numberOfGroups || 2, args.viewsPerGroup || 2);
@@ -110,9 +98,7 @@ export const Default: Story = {
     return (
       <Card>
         <CardContent>
-          <PegaExtensionsHierarchicalFormAsTasks {...props}>
-            {children}
-          </PegaExtensionsHierarchicalFormAsTasks>
+          <PegaExtensionsHierarchicalFormAsTasks {...props}>{children}</PegaExtensionsHierarchicalFormAsTasks>
         </CardContent>
       </Card>
     );
@@ -120,6 +106,6 @@ export const Default: Story = {
   args: {
     heading: 'Heading',
     numberOfGroups: 2,
-    viewsPerGroup: 2
-  }
+    viewsPerGroup: 2,
+  },
 };

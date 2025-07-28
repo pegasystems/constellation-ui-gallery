@@ -7,21 +7,21 @@ export default {
   argTypes: {
     value: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsDisplayPDF
+  component: PegaExtensionsDisplayPDF,
 };
 
 const blob2base64 = (blob: Blob, mimeType: string) => {
@@ -31,9 +31,7 @@ const blob2base64 = (blob: Blob, mimeType: string) => {
       const dataUrlPrefix = `data:${mimeType};base64,`;
       const base64WithDataUrlPrefix = reader.result;
       const base64 =
-        typeof base64WithDataUrlPrefix === 'string'
-          ? base64WithDataUrlPrefix.replace(dataUrlPrefix, '')
-          : '';
+        typeof base64WithDataUrlPrefix === 'string' ? base64WithDataUrlPrefix.replace(dataUrlPrefix, '') : '';
       resolve(base64);
     };
     reader.onerror = reject;
@@ -56,7 +54,7 @@ const setPCore = (url: string) => {
       return {
         getLocaleValue: (val: string) => {
           return val;
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -68,36 +66,36 @@ const setPCore = (url: string) => {
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #1',
-                  pyContext: url
+                  pyContext: url,
                 },
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #2',
-                  pyContext: url
+                  pyContext: url,
                 },
                 {
                   pxObjClass: 'Link-Attachment',
                   pyLabel: 'File #3',
-                  pyContext: url
-                }
-              ]
-            }
+                  pyContext: url,
+                },
+              ],
+            },
           });
-        }
+        },
       };
     },
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsDisplayPDF>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const Wrapper = () => {
       const [value, setValue] = useState<string | null>(null);
 
@@ -116,9 +114,9 @@ export const Default: Story = {
         getPConnect: () => {
           return {
             getContextName: () => '',
-            getValue: () => 'C-123'
+            getValue: () => 'C-123',
           };
-        }
+        },
       };
 
       return <PegaExtensionsDisplayPDF {...{ ...props, value: value || '' }} />;
@@ -133,6 +131,6 @@ export const Default: Story = {
     showToolbar: true,
     dataPage: '',
     hideLabel: false,
-    displayMode: DisplayMode.Editable
-  }
+    displayMode: DisplayMode.Editable,
+  },
 };

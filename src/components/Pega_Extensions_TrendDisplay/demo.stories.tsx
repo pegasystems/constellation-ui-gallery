@@ -6,22 +6,22 @@ export default {
   argTypes: {
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       options: ['', 'DISPLAY_ONLY'],
-      control: { type: 'radio', labels: { '': 'EDITABLE' } }
+      control: { type: 'radio', labels: { '': 'EDITABLE' } },
     },
     colorMode: {
       options: ['auto', 'trend', 'orange', 'blue', 'purple'],
-      control: { type: 'radio' }
+      control: { type: 'radio' },
     },
     variant: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -30,13 +30,13 @@ export default {
         rules: [
           {
             id: 'color-contrast',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsTrendDisplay
+  component: PegaExtensionsTrendDisplay,
 };
 
 type Story = StoryObj<typeof PegaExtensionsTrendDisplay>;
@@ -45,11 +45,11 @@ const TrendDisplayDemo = (inputs: TrendDisplayProps) => {
   return {
     render: (args: TrendDisplayProps) => {
       const props = {
-        ...args
+        ...args,
       };
       return <PegaExtensionsTrendDisplay {...props} />;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -65,27 +65,27 @@ export const Default: Story = TrendDisplayDemo({
   currencyDisplay: 'symbol',
   negative: 'minus-sign',
   notation: 'standard',
-  currencyDecimalPrecision: 'auto'
+  currencyDecimalPrecision: 'auto',
 });
 
 export const Demo1: Story = TrendDisplayDemo({
   label: '2 weeks history',
   trendData: '0,2,5,9,5,10,3,5,0,0,1,8,2,9,0',
-  displayMode: ''
+  displayMode: '',
 });
 
 export const Demo2: Story = TrendDisplayDemo({
   label: 'CST',
   trendData: 12.4,
   colorMode: 'trend',
-  displayMode: 'DISPLAY_ONLY'
+  displayMode: 'DISPLAY_ONLY',
 });
 
 export const Demo3: Story = TrendDisplayDemo({
   label: 'TCS',
   trendData: -3.45,
   colorMode: 'trend',
-  displayMode: 'DISPLAY_ONLY'
+  displayMode: 'DISPLAY_ONLY',
 });
 
 export const Demo4: Story = TrendDisplayDemo({
@@ -94,7 +94,7 @@ export const Demo4: Story = TrendDisplayDemo({
   currencyISOCode: 'EUR',
   negative: 'parentheses',
   currencyDecimalPrecision: '0',
-  colorMode: 'trend'
+  colorMode: 'trend',
 });
 
 export const Demo5: Story = TrendDisplayDemo({
@@ -102,7 +102,7 @@ export const Demo5: Story = TrendDisplayDemo({
   label: 'Balance',
   currencyISOCode: 'EUR',
   notation: 'compact',
-  colorMode: 'trend'
+  colorMode: 'trend',
 });
 
 export const Demo2_badge: Story = TrendDisplayDemo({
@@ -110,7 +110,7 @@ export const Demo2_badge: Story = TrendDisplayDemo({
   trendData: '12.4%',
   colorMode: 'trend',
   displayMode: 'DISPLAY_ONLY',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });
 
 export const Demo3_badge: Story = TrendDisplayDemo({
@@ -118,7 +118,7 @@ export const Demo3_badge: Story = TrendDisplayDemo({
   trendData: '-3.45%',
   colorMode: 'trend',
   displayMode: 'DISPLAY_ONLY',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });
 
 export const Demo4_badge: Story = TrendDisplayDemo({
@@ -128,7 +128,7 @@ export const Demo4_badge: Story = TrendDisplayDemo({
   negative: 'parentheses',
   currencyDecimalPrecision: '0',
   colorMode: 'trend',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });
 
 export const Demo5_badge: Story = TrendDisplayDemo({
@@ -137,7 +137,7 @@ export const Demo5_badge: Story = TrendDisplayDemo({
   currencyISOCode: 'EUR',
   notation: 'compact',
   colorMode: 'trend',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });
 
 export const Demo6_1: Story = TrendDisplayDemo({
@@ -145,7 +145,7 @@ export const Demo6_1: Story = TrendDisplayDemo({
   label: 'Balance',
   displayMode: 'DISPLAY_ONLY',
   colorMode: 'purple',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });
 
 export const Demo6_2: Story = TrendDisplayDemo({
@@ -153,5 +153,5 @@ export const Demo6_2: Story = TrendDisplayDemo({
   label: 'Balance',
   displayMode: 'DISPLAY_ONLY',
   colorMode: 'blue',
-  renderingMode: 'badge'
+  renderingMode: 'badge',
 });

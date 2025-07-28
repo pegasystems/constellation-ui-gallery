@@ -10,18 +10,18 @@ export default {
     pageJSON: { control: 'text', if: { arg: 'displayType', neq: 'simple' } },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsShortcuts
+  component: PegaExtensionsShortcuts,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getSemanticUrlUtils: () => {
@@ -31,15 +31,15 @@ const setPCore = () => {
         },
         getActions: () => {
           return { ACTION_SHOWVIEW: 'ACTION_SHOWVIEW' };
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsShortcuts>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -51,11 +51,11 @@ export const Default: Story = {
             return {
               showPage: (name: string, classname: string) => {
                 alert(`show page ${classname}.${name}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsShortcuts {...props} />;
   },
@@ -65,6 +65,6 @@ export const Default: Story = {
     names: 'Welcome,Information,Help,My Search',
     pages: 'Data-Portal.Page1,Data-Portal.Page2,Work-.Page3,https://www.pega.com',
     pageJSON:
-      '{"categories": [{ "heading": "Category1", "links" : [{ "name": "Page1" , "page": "Data-Portal.Page1"}, { "name": "Page2" , "page": "Data-Portal.Page2"},{ "name": "Page3" , "page": "Data-Portal.Page3"}]},{ "heading": "Category2", "links" : [{ "name": "Page4" , "page": "Data-Portal.Page4"}, { "name": "Page5" , "page": "Data-Portal.Page5"},{ "name": "Page6" , "page": "Data-Portal.Page6"}]},{ "heading": "Category3", "links" : [{ "name": "Welcome" , "page": "Data-Portal.Page1"}, { "name": "Information" , "page": "Data-Portal.Page2"},{ "name": "Help" , "page": "Data-Portal.Page3"}]}]}'
-  }
+      '{"categories": [{ "heading": "Category1", "links" : [{ "name": "Page1" , "page": "Data-Portal.Page1"}, { "name": "Page2" , "page": "Data-Portal.Page2"},{ "name": "Page3" , "page": "Data-Portal.Page3"}]},{ "heading": "Category2", "links" : [{ "name": "Page4" , "page": "Data-Portal.Page4"}, { "name": "Page5" , "page": "Data-Portal.Page5"},{ "name": "Page6" , "page": "Data-Portal.Page6"}]},{ "heading": "Category3", "links" : [{ "name": "Welcome" , "page": "Data-Portal.Page1"}, { "name": "Information" , "page": "Data-Portal.Page2"},{ "name": "Help" , "page": "Data-Portal.Page3"}]}]}',
+  },
 };

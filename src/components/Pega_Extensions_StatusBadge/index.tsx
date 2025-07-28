@@ -42,7 +42,7 @@ export const PegaExtensionsStatusBadge = (props: StatusBadgeProps) => {
     warnStatus = '',
     successStatus = '',
     pendingStatus = '',
-    urgentStatus = ''
+    urgentStatus = '',
   } = props;
   const statusesRegex = [infoStatus, warnStatus, successStatus, pendingStatus, urgentStatus];
 

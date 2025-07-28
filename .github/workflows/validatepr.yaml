@@ -25,10 +25,12 @@ jobs:
         run: npm ci
       - name: Install Playwright
         run: npx playwright install --with-deps
+        timeout-minutes: 10
       - name: Build Storybook
         run: npm run build-storybook
       - name: Run unit test
         run: npm run test
+        timeout-minutes: 10
       - uses: Eun/http-server-action@v1
         with:
           directory: ${{ github.workspace }}/storybook-static

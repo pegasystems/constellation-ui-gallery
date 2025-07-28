@@ -1,12 +1,5 @@
 import { useEffect, useState, type SyntheticEvent } from 'react';
-import {
-  withConfiguration,
-  Flex,
-  FormControl,
-  FormField,
-  QRCode,
-  Text
-} from '@pega/cosmos-react-core';
+import { withConfiguration, Flex, FormControl, FormField, QRCode, Text } from '@pega/cosmos-react-core';
 import StyledWrapper from './styles';
 import '../create-nonce';
 
@@ -35,14 +28,12 @@ export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {
     helperText,
     testId,
     displayMode,
-    getPConnect
+    getPConnect,
   } = props;
   const pConn = getPConnect();
   const [outputValue, setOutputValue] = useState(value);
   const [info, setInfo] = useState(validatemessage || helperText);
-  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(undefined);
 
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
@@ -67,13 +58,7 @@ export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {
   return (
     <StyledWrapper>
       <Flex container={{ direction: 'column', justify: 'center', alignItems: 'center' }}>
-        <FormField
-          label={label}
-          labelHidden={hideLabel}
-          info={info}
-          status={status}
-          testId={testId}
-        >
+        <FormField label={label} labelHidden={hideLabel} info={info} status={status} testId={testId}>
           <FormControl ariaLabel={label}>
             {readOnly ? (
               <img alt='QR Code' src={outputValue} />

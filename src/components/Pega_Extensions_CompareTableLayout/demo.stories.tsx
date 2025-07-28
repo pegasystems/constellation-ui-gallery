@@ -21,15 +21,15 @@ export default {
     selectionProperty: {
       options: ['Select an object', 'Read-only'],
       control: { type: 'radio' },
-      if: { arg: 'displayFormat', neq: 'radio-button-card' }
+      if: { arg: 'displayFormat', neq: 'radio-button-card' },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsCompareTableLayout
+  component: PegaExtensionsCompareTableLayout,
 };
 
 const genComponent = (config: any, format: any) => {
@@ -41,7 +41,7 @@ const genComponent = (config: any, format: any) => {
           value={config.config.value}
           formattingOptions={{
             negative: 'parentheses',
-            notation: 'standard'
+            notation: 'standard',
           }}
         />
       );
@@ -51,7 +51,7 @@ const genComponent = (config: any, format: any) => {
         currencyISOCode='USD'
         value={config.config.value}
         formattingOptions={{
-          notation: format
+          notation: format,
         }}
       />
     );
@@ -67,17 +67,17 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
       template: 'Pega_Extensions_CompareTableLayout',
       ruleClass: 'Work-',
       ...(selectionProperty ? { selectionProperty } : ''),
-      inheritedProps: []
+      inheritedProps: [],
     },
     children: [
       {
         name: 'A',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
 
   if (displayFormat !== 'financialreport') {
@@ -86,78 +86,78 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
         config: {
           value: ['HP 14-inch HD Thin & Light Laptop', 'Lenovo IdeaCentre 5i', 'MacBook Air'],
           componentType: 'TextInput',
-          label: 'Model'
+          label: 'Model',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: ['HP', 'Lenovo', 'Apple'],
           componentType: 'TextInput',
-          label: 'Brand'
+          label: 'Brand',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
             'Another description',
-            'simple description'
+            'simple description',
           ],
           componentType: 'TextInput',
-          label: 'Description'
+          label: 'Description',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: ['16Gb', '8Gb', '8Gb'],
           componentType: 'TextInput',
-          label: 'Memory'
+          label: 'Memory',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [true, true, false],
           componentType: 'Checkbox',
-          label: 'Windows 10'
+          label: 'Windows 10',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [true, true, true],
           componentType: 'Checkbox',
-          label: 'HDMI Port'
+          label: 'HDMI Port',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [false, true, false],
           componentType: 'Checkbox',
-          label: 'USB Port'
+          label: 'USB Port',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [1200, 1345, 1499],
           componentType: 'Currency',
-          label: 'Price'
+          label: 'Price',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: ['S-1', 'S-2', 'S-3'],
           componentType: 'TextInput',
-          label: 'ID'
+          label: 'ID',
         },
-        type: 'ScalarList'
-      }
+        type: 'ScalarList',
+      },
     ];
   } else {
     demoView.children[0].children = [
@@ -165,19 +165,19 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
         config: {
           value: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
           componentType: 'TextInput',
-          label: 'ID'
+          label: 'ID',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
-          heading: 'ASSETS'
+          heading: 'ASSETS',
         },
-        type: 'Group'
+        type: 'Group',
       },
       {
         config: {
-          heading: 'Current Assets'
+          heading: 'Current Assets',
         },
         type: 'Group',
         children: [
@@ -185,39 +185,39 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
             config: {
               value: [12000, 15000, 1600, -18000],
               componentType: 'Currency',
-              label: 'Cash and cash equivalents'
+              label: 'Cash and cash equivalents',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [32000, 45000, 67600, 68000],
               componentType: 'Currency',
-              label: 'Trade and other receivables'
+              label: 'Trade and other receivables',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [-52000, 34000, -1600, 28000],
               componentType: 'Currency',
-              label: 'Other current financial assets'
+              label: 'Other current financial assets',
             },
-            type: 'ScalarList'
-          }
-        ]
+            type: 'ScalarList',
+          },
+        ],
       },
       {
         config: {
           value: [122000, 134000, 23600, 128000],
           componentType: 'Currency',
-          label: 'Total current assets'
+          label: 'Total current assets',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
-          heading: 'Non-current Assets'
+          heading: 'Non-current Assets',
         },
         type: 'Group',
         children: [
@@ -225,53 +225,53 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
             config: {
               value: [12000, 15000, 1600, -18000],
               componentType: 'Currency',
-              label: 'Property, plant and equipment'
+              label: 'Property, plant and equipment',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [32000, 45000, 67600, 68000],
               componentType: 'Currency',
-              label: 'Goodwill'
+              label: 'Goodwill',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [-52000, 34000, -1600, 28000],
               componentType: 'Currency',
-              label: 'Deferred tax assets'
+              label: 'Deferred tax assets',
             },
-            type: 'ScalarList'
-          }
-        ]
+            type: 'ScalarList',
+          },
+        ],
       },
       {
         config: {
           value: [122000, 134000, 23600, 128000],
           componentType: 'Currency',
-          label: 'Total non-current assets'
+          label: 'Total non-current assets',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
           value: [4122000, 4134000, 233600, 1238000],
           componentType: 'Currency',
-          label: 'Total assets'
+          label: 'Total assets',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
-          heading: 'LIABILITIES'
+          heading: 'LIABILITIES',
         },
-        type: 'Group'
+        type: 'Group',
       },
       {
         config: {
-          heading: 'Current liabilities'
+          heading: 'Current liabilities',
         },
         type: 'Group',
         children: [
@@ -279,39 +279,39 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
             config: {
               value: [12000, 15000, 1600, -18000],
               componentType: 'Currency',
-              label: 'Trade and other payables'
+              label: 'Trade and other payables',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [32000, 45000, 67600, 68000],
               componentType: 'Currency',
-              label: 'Lease liabilities'
+              label: 'Lease liabilities',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [-52000, 34000, -1600, 28000],
               componentType: 'Currency',
-              label: 'Provisions'
+              label: 'Provisions',
             },
-            type: 'ScalarList'
-          }
-        ]
+            type: 'ScalarList',
+          },
+        ],
       },
       {
         config: {
           value: [122000, 134000, 23600, 128000],
           componentType: 'Currency',
-          label: 'Total current liabilities'
+          label: 'Total current liabilities',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       },
       {
         config: {
-          heading: 'Non-current Liabilities'
+          heading: 'Non-current Liabilities',
         },
         type: 'Group',
         children: [
@@ -319,53 +319,53 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
             config: {
               value: [12000, 15000, 1600, -18000],
               componentType: 'Currency',
-              label: 'Lease liabilities'
+              label: 'Lease liabilities',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [32000, 45000, 67600, 68000],
               componentType: 'Currency',
-              label: 'Deferred tax liabilities'
+              label: 'Deferred tax liabilities',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [-52000, 34000, -1600, 28000],
               componentType: 'Currency',
-              label: 'Derivative financial liabilities'
+              label: 'Derivative financial liabilities',
             },
-            type: 'ScalarList'
+            type: 'ScalarList',
           },
           {
             config: {
               value: [122000, 134000, 23600, 128000],
               componentType: 'Currency',
-              label: 'Total non-current liabilities'
+              label: 'Total non-current liabilities',
             },
-            type: 'ScalarList'
-          }
-        ]
+            type: 'ScalarList',
+          },
+        ],
       },
       {
         config: {
           value: [4122000, 4134000, 233600, 1238000],
           componentType: 'Currency',
-          label: 'Total Liabilities'
+          label: 'Total Liabilities',
         },
-        type: 'ScalarList'
-      }
+        type: 'ScalarList',
+      },
     ];
     if (selectionProperty) {
       demoView.children[0].children.push({
         config: {
           value: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023'],
           componentType: 'TextInput',
-          label: 'ID'
+          label: 'ID',
         },
-        type: 'ScalarList'
+        type: 'ScalarList',
       });
     }
   }
@@ -373,7 +373,7 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   return demoView;
@@ -389,14 +389,14 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
           return {
             getLocaleValue: (val: string) => {
               return val;
-            }
+            },
           };
         },
         getComponentsRegistry: () => {
           return {
-            getLazyComponent: (f: string) => f
+            getLazyComponent: (f: string) => f,
           };
-        }
+        },
       };
       const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
       const props = {
@@ -432,15 +432,15 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
             getActionsApi: () => {
               return {
                 updateFieldValue: () => {},
-                triggerFieldChange: () => {}
+                triggerFieldChange: () => {},
               };
-            }
+            },
           };
-        }
+        },
       };
       return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -448,19 +448,19 @@ export const Default: Story = CompareTableDemo({
   heading: 'Heading',
   displayFormat: 'spreadsheet',
   currencyFormat: 'standard',
-  selectionProperty: 'Select an object'
+  selectionProperty: 'Select an object',
 });
 
 export const RadioButton: Story = CompareTableDemo({
   heading: 'Radio-button',
   displayFormat: 'radio-button-card',
   currencyFormat: 'standard',
-  selectionProperty: 'Select an object'
+  selectionProperty: 'Select an object',
 });
 
 export const FinancialReport: Story = CompareTableDemo({
   heading: 'Financial report',
   displayFormat: 'financialreport',
   currencyFormat: 'standard',
-  selectionProperty: 'Select an object'
+  selectionProperty: 'Select an object',
 });

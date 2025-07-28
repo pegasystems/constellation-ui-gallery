@@ -17,8 +17,6 @@ test('renders the value in read only mode', async () => {
 });
 
 test('Should render the value if there is content in display only mode', async () => {
-  render(
-    <Default displayMode='DISPLAY_ONLY' formatter='TextInput' value='test value' isTableFormatter />
-  );
+  render(<Default displayMode='DISPLAY_ONLY' formatter='TextInput' value='test value' isTableFormatter />);
   expect(screen.getByText('test value')).toBeInTheDocument();
 });

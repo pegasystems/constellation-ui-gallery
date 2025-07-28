@@ -5,7 +5,7 @@ import { PegaExtensionsSecureRichText } from './index';
 
 const stateProps = {
   value: '.ParagraphSample',
-  hasSuggestions: false
+  hasSuggestions: false,
 };
 
 export default {
@@ -13,78 +13,78 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     additionalProps: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     maxWords: { control: 'number', if: { arg: 'showWordCounter', eq: true } },
     formatter: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     isTableFormatter: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     fieldMetadata: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsSecureRichText
+  component: PegaExtensionsSecureRichText,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getActionsSequencer: () => {
       return {
         registerBlockingAction: () => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve();
           });
-        }
+        },
       };
     },
     getAttachmentUtils: () => {
       return {
         uploadAttachment: () => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve({
-              ID: 'sample'
+              ID: 'sample',
             });
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsSecureRichText>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -111,12 +111,12 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           getActions: () => {
             return {
-              ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+              ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
             };
           },
           clearErrorMessages: () => {
@@ -126,13 +126,13 @@ export const Default: Story = {
             return {
               validate: () => {
                 /* nothing */
-              }
+              },
             };
           },
           getContextName: () => 'primary',
-          getLocalizedValue: () => 'local value'
+          getLocalizedValue: () => 'local value',
         };
-      }
+      },
     };
     return <PegaExtensionsSecureRichText {...props} />;
   },
@@ -149,6 +149,6 @@ export const Default: Story = {
     disabled: false,
     readOnly: false,
     required: false,
-    hideLabel: false
-  }
+    hideLabel: false,
+  },
 };

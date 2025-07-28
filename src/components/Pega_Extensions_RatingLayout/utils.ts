@@ -20,7 +20,7 @@ export default function getAllFields(pConnect: any) {
       ...pConnect().resolveConfigProps(f.config),
       type: f.type,
       path: f.config.value,
-      category
+      category,
     };
   };
 
@@ -32,7 +32,7 @@ export default function getAllFields(pConnect: any) {
         if (field.type === 'Group' && field.children) {
           field.children.forEach((gf: any) => allFields.push(makeField(gf)));
         }
-      })
+      }),
     );
   } else {
     allFields = metadata.children.map(makeField);

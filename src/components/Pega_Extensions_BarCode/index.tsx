@@ -1,12 +1,5 @@
 import JsBarcode from 'jsbarcode';
-import {
-  withConfiguration,
-  Flex,
-  FormControl,
-  FormField,
-  ErrorState,
-  Text
-} from '@pega/cosmos-react-core';
+import { withConfiguration, Flex, FormControl, FormField, ErrorState, Text } from '@pega/cosmos-react-core';
 import { useEffect, useRef, useState } from 'react';
 import StyledWrapper from './styles';
 import '../create-nonce';
@@ -19,7 +12,7 @@ export enum BarcodeType {
   CODE39 = 'CODE39',
   ITF14 = 'ITF14',
   MSI = 'MSI',
-  PHARMACODE = 'pharmacode'
+  PHARMACODE = 'pharmacode',
 }
 
 type BarCodeExtProps = {
@@ -52,7 +45,7 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
     helperText,
     testId,
     displayMode,
-    getPConnect
+    getPConnect,
   } = props;
   const BarcodeRef = useRef<any>(null);
   const pConn = getPConnect();
@@ -60,9 +53,7 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
   const [info, setInfo] = useState(validatemessage || helperText);
-  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(undefined);
 
   useEffect(() => {
     if (!readOnly) {
@@ -89,7 +80,7 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
           fontSize: 20,
           background: '#ffffff',
           lineColor: '#000000',
-          margin: 10
+          margin: 10,
         });
       } catch (msg: any) {
         setInfo(msg);
@@ -104,17 +95,7 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
         setOutputValue(blob);
       }
     }
-  }, [
-    inputProperty,
-    displayValue,
-    format,
-    validatemessage,
-    helperText,
-    readOnly,
-    status,
-    propName,
-    actions
-  ]);
+  }, [inputProperty, displayValue, format, validatemessage, helperText, readOnly, status, propName, actions]);
 
   const displayComp = value || '';
   if (displayMode === 'DISPLAY_ONLY') {

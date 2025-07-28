@@ -16,15 +16,7 @@ export interface ImageCarouselProps {
   /** Type of animation for transitions between Carousel items
    * @default fade-in
    */
-  animationType:
-    | 'fade-in'
-    | 'fade-out'
-    | 'slide-in'
-    | 'slide-out'
-    | 'zoom-in'
-    | 'zoom-out'
-    | 'bounce'
-    | 'shake';
+  animationType: 'fade-in' | 'fade-out' | 'slide-in' | 'slide-out' | 'zoom-in' | 'zoom-out' | 'bounce' | 'shake';
   /** Type of navigation controls for the Carousel
     - None: No navigation controls displayed.
     - Button: Includes next/previous buttons for manual navigation.
@@ -80,7 +72,7 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
     objectFit = 'cover',
     textPosition = 'TopLeft',
     animationType = 'fade-in',
-    getPConnect
+    getPConnect,
   } = props;
   const imageSliderData = datasource?.source || [];
 
@@ -97,7 +89,7 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
         setAnimationClass(animationType); // Reset to fade-in animation
       }, 500); // Match this duration with your CSS animation duration
     },
-    [animationType, totalSlides]
+    [animationType, totalSlides],
   );
 
   const prevSlide = () => showSlide(currentSlide - 1);
@@ -134,7 +126,7 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
               objectFit={objectFit}
               textPosition={textPosition}
             />
-          )
+          ),
         )}
       </SliderWrapper>
 

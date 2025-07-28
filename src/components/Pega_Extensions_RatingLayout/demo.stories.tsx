@@ -26,9 +26,9 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -37,13 +37,13 @@ export default {
         rules: [
           {
             id: 'aria-valid-attr-value',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsRatingLayout
+  component: PegaExtensionsRatingLayout,
 };
 
 const genComponent = (config: any) => {
@@ -54,9 +54,9 @@ const setPCore = () => {
   (window as any).PCore = {
     createPConnect: () => ({
       getPConnect: () => ({
-        getActionsApi: () => ({ updateFieldValue: () => {} })
-      })
-    })
+        getActionsApi: () => ({ updateFieldValue: () => {} }),
+      }),
+    }),
   };
 };
 
@@ -67,17 +67,17 @@ const genResponse = (numCategories?: number, numRatings?: number) => {
     config: {
       template: 'Pega_Extensions_RatingLayout',
       ruleClass: 'Work-',
-      inheritedProps: []
+      inheritedProps: [],
     },
     children: [
       {
         name: 'A',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
   const objects_categories = [];
   const objects_labels = [];
@@ -95,31 +95,31 @@ const genResponse = (numCategories?: number, numRatings?: number) => {
     {
       config: {
         values: objects_categories,
-        value: '@FILTERED_LIST .Ratings[].Category'
+        value: '@FILTERED_LIST .Ratings[].Category',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         values: objects_labels,
-        value: '@FILTERED_LIST .Ratings[].Label'
+        value: '@FILTERED_LIST .Ratings[].Label',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         values: objects_values,
-        value: '@FILTERED_LIST .Ratings[].Value'
+        value: '@FILTERED_LIST .Ratings[].Value',
       },
-      type: 'ScalarList'
-    }
+      type: 'ScalarList',
+    },
   ];
 
   demoView.children[0].getPConnect = () => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   return demoView;
@@ -127,7 +127,7 @@ const genResponse = (numCategories?: number, numRatings?: number) => {
 type Story = StoryObj<StoryRatingLayoutProps>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const response = genResponse(args.numCategories, args.numRatings);
     setPCore();
     const props = {
@@ -140,12 +140,12 @@ export const Default: Story = {
           },
           getListActions: () => {
             return {
-              update: () => {}
+              update: () => {},
             };
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: () => {}
+              updateFieldValue: () => {},
             };
           },
           getChildren: () => {
@@ -174,9 +174,9 @@ export const Default: Story = {
           },
           resolveConfigProps: (f: any) => {
             return { value: f.values };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsRatingLayout {...props}></PegaExtensionsRatingLayout>;
   },
@@ -185,6 +185,6 @@ export const Default: Story = {
     numCategories: 3,
     numRatings: 3,
     label: 'Ratings',
-    showLabel: true
-  }
+    showLabel: true,
+  },
 };

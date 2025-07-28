@@ -22,7 +22,7 @@ import {
   EmptyState,
   useOuterEvent,
   FieldValueList,
-  DateTimeDisplay
+  DateTimeDisplay,
 } from '@pega/cosmos-react-core';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
@@ -40,24 +40,22 @@ import {
   getColumnWidth,
   loadGanttData,
   loadDetails,
-  updateItemDetails
+  updateItemDetails,
 } from './utils';
 
 registerIcon(plusIcon, pencilIcon, timesIcon);
 
-type HoverTooltipProps =
-  | { task: GTRTask; fontSize: string; fontFamily: string; showBanner: boolean }
-  | undefined;
+type HoverTooltipProps = { task: GTRTask; fontSize: string; fontFamily: string; showBanner: boolean } | undefined;
 
-const HoverTooltip: FC<HoverTooltipProps> = props => {
+const HoverTooltip: FC<HoverTooltipProps> = (props) => {
   const { task, showBanner = true } = props;
   const fields = [
     { name: 'Progress', value: <Text variant='h4'>{`${task.progress}%`}</Text> },
     { name: 'Start', value: <DateTimeDisplay variant='datetime' value={task.start} /> },
     {
       name: 'End',
-      value: <DateTimeDisplay variant='datetime' value={task.end} />
-    }
+      value: <DateTimeDisplay variant='datetime' value={task.end} />,
+    },
   ];
 
   return (
@@ -105,7 +103,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
     defaultViewMode,
     detailsDataPage,
     detailsViewName,
-    getPConnect
+    getPConnect,
   } = props;
   const [tasks, setTasks] = useState<Array<Task>>([]);
   const [activeViewMode, changeViewMode] = useState(defaultViewMode);
@@ -131,7 +129,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
     if (createClassname) {
       setLoaderTasks(true);
       await getPConnect().getActionsApi().createWork(createClassname, {
-        openCaseViewAfterCreate: false
+        openCaseViewAfterCreate: false,
       });
       setLoaderTasks(false);
     }
@@ -146,7 +144,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
       dependenciesFieldName,
       startDateFieldName,
       endDateFieldName,
-      progressFieldName
+      progressFieldName,
     );
     setTasks(data);
     setLoaderTasks(false);
@@ -158,31 +156,31 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
     dependenciesFieldName,
     startDateFieldName,
     endDateFieldName,
-    progressFieldName
+    progressFieldName,
   ]);
 
   const refreshDetailsCard = useCallback(
     async (task?: GTRTask) => {
       if (task) {
         setLoaderDetails(true);
-        const extendedTaskProps = tasks.find(t => t.id === task.id)?.extendedProps;
+        const extendedTaskProps = tasks.find((t) => t.id === task.id)?.extendedProps;
         const newDetails = await loadDetails({
           id: task.id,
           classname: extendedTaskProps.pxObjClass,
           detailsDataPage,
           detailsViewName,
-          getPConnect
+          getPConnect,
         });
 
         setDetails(newDetails);
         setLoaderDetails(false);
       } else setDetails(undefined);
     },
-    [detailsDataPage, detailsViewName, getPConnect, tasks]
+    [detailsDataPage, detailsViewName, getPConnect, tasks],
   );
 
   const handleTaskSelect = async (task: GTRTask, isSelected: boolean) => {
-    setSelectedTask(prev => {
+    setSelectedTask((prev) => {
       if (isSelected && prev?.id !== task.id) {
         return task;
       }
@@ -192,18 +190,18 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
 
   const handleDragEvent = async (gtrTask: GTRTask, eventType: 'progressChange' | 'dateChange') => {
     if (dragMode) {
-      const task = tasks.find(t => t.id === gtrTask.id);
+      const task = tasks.find((t) => t.id === gtrTask.id);
       if (task) {
         closePopover();
-        setTasks(tasks.map(t => (t.id === gtrTask.id ? { ...t, ...gtrTask } : t)));
+        setTasks(tasks.map((t) => (t.id === gtrTask.id ? { ...t, ...gtrTask } : t)));
         await updateItemDetails({
           getPConnect,
           item: task,
           updatedFieldValueList: {
             [progressFieldName]: gtrTask.progress,
             [startDateFieldName]: gtrTask.start,
-            [endDateFieldName]: gtrTask.end
-          }
+            [endDateFieldName]: gtrTask.end,
+          },
         });
         if (eventType === 'dateChange') {
           await initializeGanttData();
@@ -221,10 +219,10 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
   };
 
   const handleExpandChange = async (gtrTask: GTRTask) => {
-    setTasks(tasks.map(t => (t.id === gtrTask.id ? { ...t, ...gtrTask } : t)));
+    setTasks(tasks.map((t) => (t.id === gtrTask.id ? { ...t, ...gtrTask } : t)));
   };
 
-  const handleGanttClick: MouseEventHandler<HTMLDivElement> = event => {
+  const handleGanttClick: MouseEventHandler<HTMLDivElement> = (event) => {
     // HACK: fetching all the interactive bars (svg <g> tags with tabindex attribute);
     if ((event.target as HTMLElement).closest('g[tabindex]')) {
       const newTarget: HTMLElement = (event.target as HTMLElement).closest('g[tabindex]')!;
@@ -233,7 +231,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
   };
 
   const onEditItemFromDetails = async (id: string) => {
-    const task = tasks.find(x => x.id === id);
+    const task = tasks.find((x) => x.id === id);
     if (task) {
       setLoaderTasks(true);
 
@@ -243,7 +241,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
           caseID: task.extendedProps.pzInsKey,
           containerName: 'modal',
           actionTitle: `Edit ${task.type}`,
-          type: 'express'
+          type: 'express',
         });
       setLoaderTasks(false);
       closePopover();
@@ -251,7 +249,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
   };
 
   const gtrTasks: Array<GTRTask> = useMemo(() => {
-    return tasks.map(event => {
+    return tasks.map((event) => {
       const { ...taskProps } = event;
       return taskProps;
     });
@@ -284,12 +282,12 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         setTasks(await initializeGanttData());
         setLoaderTasks(false);
       },
-      'ASSIGNMENT_SUBMISSION'
+      'ASSIGNMENT_SUBMISSION',
     );
     return () => {
       (window as any).PCore.getPubSubUtils().unsubscribe(
         (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
-        'ASSIGNMENT_SUBMISSION'
+        'ASSIGNMENT_SUBMISSION',
       );
     };
   }, [initializeGanttData]);
@@ -325,7 +323,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
           message={(window as any).PCore.getLocaleUtils().getLocaleValue(
             'Loading content...',
             'Generic',
-            '@BASECLASS!GENERIC!PYGENERICFIELDS'
+            '@BASECLASS!GENERIC!PYGENERICFIELDS',
           )}
         />
         {!loaderTasks && tasks?.length === 0 && <EmptyState />}
@@ -335,11 +333,11 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
               <Switch
                 id='switch'
                 on={showDetailsColumnsOn}
-                onChange={() => setShowDetailsColumnsOn(curr => !curr)}
+                onChange={() => setShowDetailsColumnsOn((curr) => !curr)}
                 label={getPConnect().getLocalizedValue('Show task list')}
               />
               <RadioButtonGroup inline>
-                {viewModeOptions.map(tab => (
+                {viewModeOptions.map((tab) => (
                   <RadioButton
                     key={tab.id}
                     label={tab.name}
@@ -356,10 +354,8 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
               tasks={gtrTasks}
               viewMode={ViewModeMap[activeViewMode]}
               onDoubleClick={handleDoubleClick}
-              onDateChange={dragMode ? task => handleDragEvent(task, 'dateChange') : undefined}
-              onProgressChange={
-                dragMode ? task => handleDragEvent(task, 'progressChange') : undefined
-              }
+              onDateChange={dragMode ? (task) => handleDragEvent(task, 'dateChange') : undefined}
+              onProgressChange={dragMode ? (task) => handleDragEvent(task, 'progressChange') : undefined}
               onSelect={handleTaskSelect}
               onExpanderClick={handleExpandChange}
               {...getCustomStyleOptions(theme, !popoverTarget ? HoverTooltip : () => null)}
@@ -405,7 +401,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                       message={(window as any).PCore.getLocaleUtils().getLocaleValue(
                         'Loading content...',
                         'Generic',
-                        '@BASECLASS!GENERIC!PYGENERICFIELDS'
+                        '@BASECLASS!GENERIC!PYGENERICFIELDS',
                       )}
                     />
                     {!details && <EmptyState />}

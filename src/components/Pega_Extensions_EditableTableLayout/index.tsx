@@ -9,7 +9,7 @@ import {
   registerIcon,
   CardContent,
   Card,
-  Flex
+  Flex,
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsEditableTableLayoutWrapper from './styles';
 import * as trashIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/trash.icon';
@@ -36,15 +36,15 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
   const inheritedProps = { ...getPConnect().getInheritedProps() };
 
   const addRow = () => {
-    setNumRows(prevCount => {
+    setNumRows((prevCount) => {
       const messageConfig = {
         meta: props,
         options: {
           context: getPConnect().getContextName(),
           pageReference: 'caseInfo.content',
           referenceList: `.${embedDataRef}`,
-          viewName: getPConnect().options.viewName
-        }
+          viewName: getPConnect().options.viewName,
+        },
       };
       const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
       c11nEnv.index = prevCount;
@@ -52,7 +52,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
 
       return prevCount + 1;
     });
-    setFields(prevFields => {
+    setFields((prevFields) => {
       return prevFields.map((field: any) => {
         const newField = { ...field };
         // Add a new empty value
@@ -63,15 +63,15 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
   };
 
   const deleteRow = (index: number) => {
-    setNumRows(prevCount => {
+    setNumRows((prevCount) => {
       const messageConfig = {
         meta: props,
         options: {
           context: getPConnect().getContextName(),
           pageReference: 'caseInfo.content',
           referenceList: `.${embedDataRef}`,
-          viewName: getPConnect().options.viewName
-        }
+          viewName: getPConnect().options.viewName,
+        },
       };
       const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
 
@@ -79,7 +79,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
 
       return prevCount - 1;
     });
-    setFields(prevFields => {
+    setFields((prevFields) => {
       return prevFields.map((field: any) => {
         const newField = { ...field };
         // Delete the value in index position
@@ -97,8 +97,8 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
         label: field.label,
         hideLabel: true,
         classID: field.contextClass,
-        displayMode: ''
-      }
+        displayMode: '',
+      },
     };
     const messageConfig = {
       meta: fieldInput,
@@ -107,8 +107,8 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
         hasForm: true,
         pageReference: `caseInfo.content.${embedDataRef}[${index}]`,
         referenceList: `.${embedDataRef}`,
-        viewName: getPConnect().options.viewName
-      }
+        viewName: getPConnect().options.viewName,
+      },
     };
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
 
@@ -125,7 +125,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
         getPConnect().getContextName(),
         'caseInfo.content',
         getPConnect().meta.name,
-        tmpFields[0].pageref
+        tmpFields[0].pageref,
       );
 
       setNumRows(tmpFields[0].value.length);
@@ -138,10 +138,10 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
           (window as any).PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
-              setNumFields(prevCount => prevCount + 1);
+              setNumFields((prevCount) => prevCount + 1);
             });
         } else {
-          setNumFields(prevCount => prevCount + 1);
+          setNumFields((prevCount) => prevCount + 1);
         }
       });
       setFields(tmpFields);
@@ -163,7 +163,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
         message={(window as any).PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
-          '@BASECLASS!GENERIC!PYGENERICFIELDS'
+          '@BASECLASS!GENERIC!PYGENERICFIELDS',
         )}
       />
     );

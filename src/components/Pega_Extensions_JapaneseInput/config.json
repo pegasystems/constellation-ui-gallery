@@ -1,7 +1,7 @@
 {
   "name": "Pega_Extensions_JapaneseInput",
   "label": "Japanese Input",
-  "description": "",
+  "description": "Japanese input component that supports Hiragana to Katakana, Full-Width to Half-Width, Lowercase to Uppercase, and Japanese Era to Gregorian conversions.",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",

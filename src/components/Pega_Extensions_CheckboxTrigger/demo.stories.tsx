@@ -6,43 +6,43 @@ export default {
   argTypes: {
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     additionalProps: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsCheckboxTrigger
+  component: PegaExtensionsCheckboxTrigger,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getRestClient: () => {
@@ -50,19 +50,19 @@ const setPCore = () => {
         invokeRestApi: () => {
           return Promise.resolve({
             data: {
-              responseData: { test: '2' }
-            }
+              responseData: { test: '2' },
+            },
           });
-        }
+        },
       };
     },
     getContainerUtils: () => {
       return {
         getContainerItemData: () => {
           return {
-            test: '1'
+            test: '1',
           };
-        }
+        },
       };
     },
     getStore: () => {
@@ -73,16 +73,16 @@ const setPCore = () => {
               context: {
                 dataInfo: {
                   content: {
-                    test: '1'
-                  }
-                }
-              }
-            }
+                    test: '1',
+                  },
+                },
+              },
+            },
           };
         },
-        dispatch: () => {}
+        dispatch: () => {},
       };
-    }
+    },
   };
 };
 
@@ -90,7 +90,7 @@ const setPConnect = () => {
   return {
     getStateProps: () => {
       return {
-        value: 'C-123'
+        value: 'C-123',
       };
     },
     getContextName: () => {
@@ -115,7 +115,7 @@ const setPConnect = () => {
         },
         showCasePreview: () => {
           /* nothing */
-        }
+        },
       };
     },
     ignoreSuggestion: () => {
@@ -129,7 +129,7 @@ const setPConnect = () => {
     },
     resolveConfigProps: () => {
       /* nothing */
-    }
+    },
   };
 };
 
@@ -141,11 +141,11 @@ const CheckboxTriggerDemo = (inputs: CheckboxTriggerProps) => {
       setPCore();
       const props = {
         ...args,
-        getPConnect: setPConnect
+        getPConnect: setPConnect,
       };
       return <PegaExtensionsCheckboxTrigger {...props} />;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -160,5 +160,5 @@ export const Default: Story = CheckboxTriggerDemo({
   disabled: false,
   readOnly: false,
   required: false,
-  hideLabel: false
+  hideLabel: false,
 });
