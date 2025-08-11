@@ -5,7 +5,7 @@ import '../create-nonce';
 export type CheckboxRowProps = {
   getPConnect?: any;
   label: string;
-  labelProperty: string;
+  labelProperty?: string;
   value?: boolean;
   helperText?: string;
   validatemessage?: string;
