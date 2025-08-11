@@ -4,7 +4,7 @@ import { Details, DetailsList } from '@pega/cosmos-react-work';
 import { PegaExtensionsKanbanBoard } from './index';
 
 export default {
-  title: 'Widgets/Kanban board',
+  title: 'Widgets/Kanban Board',
   argTypes: {
     detailsDataPage: {
       table: {

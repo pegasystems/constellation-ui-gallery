@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsCaseReference } from './index';
 
 export default {
-  title: 'Fields/Case reference',
+  title: 'Fields/Case Reference',
   argTypes: {
     fieldMetadata: {
       table: {
