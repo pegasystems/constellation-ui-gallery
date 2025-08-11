@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsStarRatingInput } from './index';
 
 export default {
-  title: 'Fields/Star rating Input',
+  title: 'Fields/Star Rating Input',
   argTypes: {
     fieldMetadata: {
       table: {

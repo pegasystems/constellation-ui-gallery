@@ -3,7 +3,7 @@ import { FieldValueList, Input } from '@pega/cosmos-react-core';
 import { PegaExtensionsFormFullWidth } from './index';
 
 export default {
-  title: 'Templates/Form full width',
+  title: 'Templates/Form Full Width',
   argTypes: {
     getPConnect: {
       table: {

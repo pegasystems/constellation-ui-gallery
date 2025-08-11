@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsImageMagnify } from './index';
 
 export default {
-  title: 'Fields/ImageMagnify',
+  title: 'Fields/Image Magnify',
   argTypes: {
     getPConnect: {
       table: {

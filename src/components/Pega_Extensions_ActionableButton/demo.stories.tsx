@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsActionableButton } from './index';
 
 export default {
-  title: 'Fields/Actionable button',
+  title: 'Fields/Actionable Button',
   argTypes: {
     getPConnect: {
       table: {

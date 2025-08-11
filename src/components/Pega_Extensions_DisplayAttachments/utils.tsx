@@ -59,7 +59,7 @@ export const downloadFile = (attachment: any, getPConnect: any, setImages: any, 
         let arrayBuf: Uint8Array | BlobPart;
         if (isContentBinary(content.headers)) arrayBuf = content.data;
         else arrayBuf = base64ToArrayBuffer(content.data);
-        const blob = new Blob([arrayBuf], { type: attachment.mimeType });
+        const blob = new Blob([arrayBuf as any], { type: attachment.mimeType });
         const fileURL = URL.createObjectURL(blob);
         if (setImages) {
           const name = attachment.extension ? `${attachment.name}.${attachment.extension}` : attachment.fileName;

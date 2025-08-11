@@ -9,7 +9,7 @@ const stateProps = {
 };
 
 export default {
-  title: 'Fields/Secure rich text editor',
+  title: 'Fields/Secure Rich Text Editor',
   argTypes: {
     getPConnect: {
       table: {
