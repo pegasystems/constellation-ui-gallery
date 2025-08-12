@@ -24,7 +24,7 @@ To build and compile the application - use the following commands:
 
 Install npm from [nodejs.org](https://nodejs.org/en/download/)
 
-You should have the following versions installed: System node version 18.x and npm version 8.x.
+You should have the following versions installed: System node version 20.x and npm version 10.x.
 
 If you already have [VS Code](https://code.visualstudio.com/) and [Docker](https://docs.docker.com/get-docker/) installed, you can click [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/pegasystems/constellation-ui-gallery) to get started. Clicking these links will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
 
