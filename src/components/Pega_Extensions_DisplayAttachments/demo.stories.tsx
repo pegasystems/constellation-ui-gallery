@@ -279,6 +279,13 @@ const setPCore = () => {
         },
       };
     },
+    getPubSubUtils: () => {
+      return {
+        publish: () => {
+          /* nothing */
+        },
+      };
+    },
   };
 };
 
@@ -314,7 +321,7 @@ export const Default: Story = DisplayAttachmentsDemo({
   enableDownloadAll: false,
   dataPage: 'D_AttachmentListRO',
   displayFormat: 'list',
-  icon: 'clipboard',
+  iconName: 'clipboard',
 });
 
 export const Tiles: Story = DisplayAttachmentsDemo({
@@ -325,5 +332,5 @@ export const Tiles: Story = DisplayAttachmentsDemo({
   enableDownloadAll: true,
   dataPage: 'D_AttachmentListRO',
   displayFormat: 'tiles',
-  icon: 'clipboard',
+  iconName: 'clipboard',
 });

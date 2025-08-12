@@ -38,7 +38,7 @@
       "visibility": "($this.useAttachmentEndpoint = false)"
     },
     {
-      "name": "icon",
+      "name": "iconName",
       "label": "Icon",
       "format": "SELECT",
       "defaultValue": "clipboard",
@@ -83,6 +83,7 @@
     "heading": "List of attachments",
     "categories": "",
     "dataPage": "",
+    "iconName": "clipboard",
     "useAttachmentEndpoint": true,
     "enableDownloadAll": false
   }
