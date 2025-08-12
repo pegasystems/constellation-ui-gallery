@@ -121,6 +121,13 @@ const setPCore = () => {
         },
       };
     },
+    getPubSubUtils: () => {
+      return {
+        publish: () => {
+          /* nothing */
+        },
+      };
+    },
   };
 };
 
@@ -141,7 +148,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'List of objects',
-    icon: 'clipboard',
+    iconName: 'clipboard',
     primaryField: 'pyLabel',
     secondaryFields: 'pyID,pxCreateDateTime,pxCreateOpName',
     secondaryFieldTypes: 'string,date,string',

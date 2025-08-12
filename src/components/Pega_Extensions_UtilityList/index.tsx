@@ -19,7 +19,7 @@ import '../create-nonce';
 
 type UtilityListProps = {
   heading?: string;
-  icon: 'information' | 'polaris' | 'clipboard';
+  iconName: 'information' | 'polaris' | 'clipboard';
   dataPage: string;
   setCaseID: boolean;
   primaryField: string;
@@ -50,7 +50,7 @@ const ViewAllModal = ({
 export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   const {
     heading = 'List of objects',
-    icon = 'clipboard',
+    iconName = 'clipboard',
     primaryField,
     secondaryFields = '',
     secondaryFieldTypes = '',
@@ -62,6 +62,15 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   const [objects, setObjects] = useState<Array<SummaryListItem>>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const viewAllModalRef = useRef<ModalMethods<any>>();
+  const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+
+  const publishUtilityUpdated = (count: any) => {
+    (window as any).PCore.getPubSubUtils().publish('WidgetUpdated', {
+      widget: 'PEGA_EXTENSIONS_UTILITYLIST',
+      count,
+      caseID,
+    });
+  };
 
   const loadObjects = (data: Array<any>) => {
     const tmpObjects: Array<SummaryListItem> = [];
@@ -94,6 +103,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
       });
     });
     setObjects(tmpObjects);
+    publishUtilityUpdated(tmpObjects?.length ?? 0);
     setLoading(false);
   };
 
@@ -126,7 +136,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
       <SummaryList
         name={heading}
         headingTag='h3'
-        icon={icon}
+        icon={iconName}
         count={loading ? undefined : objects.length}
         items={objects?.slice(0, 3)}
         loading={loading}
