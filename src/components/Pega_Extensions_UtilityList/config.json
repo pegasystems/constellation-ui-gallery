@@ -26,7 +26,7 @@
       "format": "BOOLEAN"
     },
     {
-      "name": "icon",
+      "name": "iconName",
       "label": "Icon",
       "format": "SELECT",
       "defaultValue": "clipboard",
@@ -63,6 +63,7 @@
   ],
   "defaultConfig": {
     "heading": "List of objects",
-    "setCaseID": false
+    "setCaseID": false,
+    "iconName": "clipboard"
   }
 }

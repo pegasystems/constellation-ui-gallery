@@ -16,6 +16,22 @@
       "format": "TEXT"
     },
     {
+      "name": "iconName",
+      "label": "Icon",
+      "format": "SELECT",
+      "defaultValue": "folder-nested",
+      "source": [
+        {
+          "key": "folder-nested",
+          "value": "folder-nested"
+        },
+        {
+          "key": "folders",
+          "value": "folders"
+        }
+      ]
+    },
+    {
       "name": "dataPage",
       "label": "Data Page name",
       "format": "TEXT"
@@ -28,6 +44,7 @@
   ],
   "defaultConfig": {
     "heading": "Case Hierarchy",
-    "showParent": false
+    "showParent": false,
+    "iconName": "folder-nested"
   }
 }

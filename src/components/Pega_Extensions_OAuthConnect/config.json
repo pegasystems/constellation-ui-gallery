@@ -43,6 +43,22 @@
       "visibility": "showDisconnect = true"
     },
     {
+      "name": "iconName",
+      "label": "Icon",
+      "format": "SELECT",
+      "defaultValue": "node",
+      "source": [
+        {
+          "key": "node",
+          "value": "node"
+        },
+        {
+          "key": "chain",
+          "value": "chain"
+        }
+      ]
+    },
+    {
       "label": "Conditions",
       "format": "GROUP",
       "properties": [

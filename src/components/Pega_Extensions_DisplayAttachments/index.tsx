@@ -193,9 +193,10 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       });
       setFiles(listOfFiles);
       setAttachments(listOfAttachments);
+      publishAttachmentsUpdated(listOfAttachments?.length ?? 0);
       setLoading(false);
     },
-    [categories, getPConnect, useAttachmentEndpoint, useLightBox],
+    [categories, getPConnect, useAttachmentEndpoint, useLightBox, publishAttachmentsUpdated],
   );
 
   const initialLoad = useCallback(() => {
@@ -241,7 +242,6 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       () => {
         /* If an attachment is added- force a reload of the events */
         initialLoad();
-        publishAttachmentsUpdated(attachments?.length ?? 0);
       },
       getPConnect().getContextName(),
     );
@@ -249,21 +249,11 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    categories,
-    useLightBox,
-    useAttachmentEndpoint,
-    enableDownloadAll,
-    getPConnect,
-    initialLoad,
-    publishAttachmentsUpdated,
-  ]);
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 
   useEffect(() => {
     initialLoad();
-    publishAttachmentsUpdated(attachments?.length ?? 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, initialLoad, publishAttachmentsUpdated]);
+  }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, initialLoad]);
 
   return (
     <>

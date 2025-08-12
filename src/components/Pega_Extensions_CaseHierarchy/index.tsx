@@ -7,8 +7,9 @@ import '../create-nonce';
 
 import * as caretRightIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/caret-right.icon';
 import * as FolderNestedIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/folder-nested.icon';
+import * as FoldersIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/folders.icon';
 
-registerIcon(caretRightIcon, FolderNestedIcon);
+registerIcon(caretRightIcon, FolderNestedIcon, FoldersIcon);
 type CaseHierarchyProps = {
   heading?: string;
   dataPage: string;
