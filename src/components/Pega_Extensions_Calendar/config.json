@@ -21,6 +21,21 @@
       "format": "TEXT"
     },
     {
+      "name": "dateProperty",
+      "label": "Date Property",
+      "format": "TEXT"
+    },
+    {
+      "name": "startTimeProperty",
+      "label": "Start time property",
+      "format": "TEXT"
+    },
+    {
+      "name": "endTimeProperty",
+      "label": "End time property",
+      "format": "TEXT"
+    },
+    {
       "name": "createClassname",
       "label": "Create case className",
       "format": "TEXT"
