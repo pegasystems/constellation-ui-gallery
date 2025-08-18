@@ -1,13 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  withConfiguration,
-  Flex,
-  treeHelpers,
-  registerIcon,
-  Card,
-  Icon,
-  Text
-} from '@pega/cosmos-react-core';
+import { withConfiguration, Flex, treeHelpers, registerIcon, Card, Icon, Text } from '@pega/cosmos-react-core';
 import CustomTree from './CustomTree';
 import { type CustomTreeNode } from './CustomTree.types';
 import { StyledSummaryListHeader, StyledSummaryListContent } from './styles';
@@ -30,38 +22,33 @@ export const PegaExtensionsCaseHierarchy = (props: CaseHierarchyProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentNodeId, setCurrentNodeId] = useState<string | undefined>();
 
-  const loadTree = useCallback(
-    (item: any, cases: Array<CustomTreeNode>, caseInstanceKey: string) => {
-      const childcases: Array<CustomTreeNode> = [];
-      if (item.pxResults) {
-        item.pxResults.forEach((childcase: any) => {
-          loadTree(childcase, childcases, caseInstanceKey);
-        });
-      }
-      const linkURL =
-        caseInstanceKey === item.pzInsKey
-          ? ''
-          : (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-              (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
-              { caseClassName: item.pyClassName },
-              { workID: item.pyID }
-            );
-      cases.push({
-        id: item.pzInsKey,
-        label: item.pyLabel,
-        objclass: item.pyClassName,
-        expanded: true,
-        href: linkURL,
-        ...(childcases.length > 0 ? { nodes: childcases } : null)
+  const loadTree = useCallback((item: any, cases: Array<CustomTreeNode>, caseInstanceKey: string) => {
+    const childcases: Array<CustomTreeNode> = [];
+    if (item.pxResults) {
+      item.pxResults.forEach((childcase: any) => {
+        loadTree(childcase, childcases, caseInstanceKey);
       });
-    },
-    []
-  );
+    }
+    const linkURL =
+      caseInstanceKey === item.pzInsKey
+        ? ''
+        : (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+            (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+            { caseClassName: item.pyClassName },
+            { workID: item.pyID },
+          );
+    cases.push({
+      id: item.pzInsKey,
+      label: item.pyLabel,
+      objclass: item.pyClassName,
+      expanded: true,
+      href: linkURL,
+      ...(childcases.length > 0 ? { nodes: childcases } : null),
+    });
+  }, []);
 
   useEffect(() => {
-    const caseInstanceKey = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const loadObjects = (response: any) => {
       const cases: Array<CustomTreeNode> = [];
       loadTree(response, cases, caseInstanceKey);
@@ -72,12 +59,7 @@ export const PegaExtensionsCaseHierarchy = (props: CaseHierarchyProps) => {
     if (dataPage) {
       const context = getPConnect().getContextName();
       (window as any).PCore.getDataPageUtils()
-        .getPageDataAsync(
-          dataPage,
-          context,
-          { caseInstanceKey, showParent },
-          { invalidateCache: true }
-        )
+        .getPageDataAsync(dataPage, context, { caseInstanceKey, showParent }, { invalidateCache: true })
         .then((response: any) => {
           if (response !== null) {
             loadObjects(response);
@@ -111,19 +93,19 @@ export const PegaExtensionsCaseHierarchy = (props: CaseHierarchyProps) => {
             e.preventDefault();
             setCurrentNodeId(id);
           }}
-          onNodeToggle={id => {
+          onNodeToggle={(id) => {
             const clickedNode = treeHelpers.getNode(objects, id);
             // If a leaf node, just set to current
             if (!clickedNode?.nodes) return;
 
-            setObjects(tree =>
-              treeHelpers.mapNode(tree, id, node => {
+            setObjects((tree) =>
+              treeHelpers.mapNode(tree, id, (node) => {
                 return {
                   ...node,
                   expanded: !node.expanded,
-                  loading: node.nodes?.length === 0
+                  loading: node.nodes?.length === 0,
                 };
-              })
+              }),
             );
           }}
         />

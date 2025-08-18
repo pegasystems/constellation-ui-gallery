@@ -386,10 +386,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     @font-face {
       font-family: 'CalciteWebCoreIcons';
       src:
-        url('https://js.arcgis.com/4.19/esri/themes/base/icons/fonts/CalciteWebCoreIcons.ttf?qt9ftt')
-          format('truetype'),
-        url('https://js.arcgis.com/4.19/esri/themes/base/icons/fonts/CalciteWebCoreIcons.woff?qt9ftt')
-          format('woff'),
+        url('https://js.arcgis.com/4.19/esri/themes/base/icons/fonts/CalciteWebCoreIcons.ttf?qt9ftt') format('truetype'),
+        url('https://js.arcgis.com/4.19/esri/themes/base/icons/fonts/CalciteWebCoreIcons.woff?qt9ftt') format('woff'),
         url('https://js.arcgis.com/4.19/esri/themes/base/icons/fonts/CalciteWebCoreIcons.svg?qt9ftt#CalciteWebCoreIcons')
           format('svg');
       font-weight: normal;
@@ -2226,9 +2224,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-view-height-greater-than-medium .esri-expand .esri-widget--panel,
     .esri-view-height-greater-than-medium .esri-expand .esri-widget--panel-height-only,
     .esri-view-height-greater-than-medium .esri-ui-corner .esri-component.esri-widget--panel,
-    .esri-view-height-greater-than-medium
-      .esri-ui-corner
-      .esri-component.esri-widget--panel-height-only {
+    .esri-view-height-greater-than-medium .esri-ui-corner .esri-component.esri-widget--panel-height-only {
       max-height: 680px;
     }
 
@@ -2655,8 +2651,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-attachments__loader {
       height: 64px;
       width: 100%;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center center;
     }
 
     .esri-attachments__actions {
@@ -3089,10 +3084,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-basemap-gallery__item--selected .esri-basemap-gallery__item-title,
-    .esri-basemap-gallery__item.esri-basemap-gallery__item--selected:hover
-      .esri-basemap-gallery__item-title,
-    .esri-basemap-gallery__item.esri-basemap-gallery__item--selected:focus
-      .esri-basemap-gallery__item-title {
+    .esri-basemap-gallery__item.esri-basemap-gallery__item--selected:hover .esri-basemap-gallery__item-title,
+    .esri-basemap-gallery__item.esri-basemap-gallery__item--selected:focus .esri-basemap-gallery__item-title {
       color: #323232;
     }
 
@@ -3303,19 +3296,15 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       border-left-color: rgba(110, 110, 110, 0.3);
     }
 
-    .esri-basemap-layer-list__item[aria-selected='true']
-      > .esri-basemap-layer-list__item-container {
+    .esri-basemap-layer-list__item[aria-selected='true'] > .esri-basemap-layer-list__item-container {
       border-left-color: #0079c1;
     }
 
-    .esri-basemap-layer-list__item[aria-selected='true']
-      > .esri-basemap-layer-list__item-container:hover {
+    .esri-basemap-layer-list__item[aria-selected='true'] > .esri-basemap-layer-list__item-container:hover {
       border-left-color: #0079c1;
     }
 
-    .esri-basemap-layer-list__item-container
-      ~ .esri-basemap-layer-list__list
-      .esri-basemap-layer-list__item {
+    .esri-basemap-layer-list__item-container ~ .esri-basemap-layer-list__list .esri-basemap-layer-list__item {
       border-bottom-width: 0;
     }
 
@@ -3368,13 +3357,11 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
 
     .esri-basemap-layer-list__child-toggle .esri-basemap-layer-list__child-toggle-icon--opened,
     .esri-basemap-layer-list__child-toggle .esri-basemap-layer-list__child-toggle-icon--closed-rtl,
-    .esri-basemap-layer-list__child-toggle--open
-      .esri-basemap-layer-list__child-toggle-icon--closed {
+    .esri-basemap-layer-list__child-toggle--open .esri-basemap-layer-list__child-toggle-icon--closed {
       display: none;
     }
 
-    .esri-basemap-layer-list__child-toggle--open
-      .esri-basemap-layer-list__child-toggle-icon--opened {
+    .esri-basemap-layer-list__child-toggle--open .esri-basemap-layer-list__child-toggle-icon--opened {
       display: block;
     }
 
@@ -3740,10 +3727,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       animation: looping-progresss-bar-ani 1500ms linear infinite reverse;
     }
 
-    html[dir='rtl']
-      .esri-basemap-layer-list
-      .esri-basemap-layer-list__item-error-message
-      [class^='esri-icon-'],
+    html[dir='rtl'] .esri-basemap-layer-list .esri-basemap-layer-list__item-error-message [class^='esri-icon-'],
     html[dir='rtl']
       .esri-basemap-layer-list
       .esri-basemap-layer-list__item-error-message
@@ -3760,10 +3744,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       .esri-basemap-layer-list
       .esri-basemap-layer-list__item-error-message
       .esri-building-level-picker__arrow-down,
-    html[dir='rtl']
-      .esri-basemap-layer-list
-      .esri-basemap-layer-list__item-error-message
-      [class*='esri-icon-'] {
+    html[dir='rtl'] .esri-basemap-layer-list .esri-basemap-layer-list__item-error-message [class*='esri-icon-'] {
       margin-right: 0;
       margin-left: 0.3rem;
     }
@@ -3922,8 +3903,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-bookmarks__loader {
       height: 64px;
       width: 100%;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center center;
     }
 
     .esri-bookmarks__list {
@@ -4136,9 +4116,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       background-image: url('https://js.arcgis.com/4.19/esri/themes/base/images/transparent-bg.png');
     }
 
-    .esri-bookmarks__authoring-card
-      .esri-bookmarks__bookmark-image-container
-      .esri-bookmarks__image {
+    .esri-bookmarks__authoring-card .esri-bookmarks__bookmark-image-container .esri-bookmarks__image {
       margin-bottom: 0;
       margin-top: 0;
     }
@@ -4221,18 +4199,12 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-left: 7px;
     }
 
-    html[dir='rtl']
-      .esri-bookmarks
-      .esri-bookmarks__authoring-actions
-      .esri-bookmarks__authoring-delete-button {
+    html[dir='rtl'] .esri-bookmarks .esri-bookmarks__authoring-actions .esri-bookmarks__authoring-delete-button {
       margin-right: 0;
       margin-left: auto;
     }
 
-    html[dir='rtl']
-      .esri-bookmarks
-      .esri-bookmarks__list--sortable
-      .esri-bookmarks__bookmark-image-container {
+    html[dir='rtl'] .esri-bookmarks .esri-bookmarks__list--sortable .esri-bookmarks__bookmark-image-container {
       margin-right: 0;
       margin-left: 7px;
     }
@@ -4293,25 +4265,13 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       transform: none;
     }
 
-    .esri-binary-color-size-slider
-      .esri-slider
-      .esri-slider__anchor:hover
-      .esri-slider__thumb::after,
-    .esri-binary-color-size-slider
-      .esri-slider
-      .esri-slider__anchor:focus
-      .esri-slider__thumb::after {
+    .esri-binary-color-size-slider .esri-slider .esri-slider__anchor:hover .esri-slider__thumb::after,
+    .esri-binary-color-size-slider .esri-slider .esri-slider__anchor:focus .esri-slider__thumb::after {
       border-left-color: #2e2e2e;
     }
 
-    .esri-binary-color-size-slider
-      .esri-slider
-      .esri-slider__anchor:hover
-      .esri-slider__thumb::before,
-    .esri-binary-color-size-slider
-      .esri-slider
-      .esri-slider__anchor:focus
-      .esri-slider__thumb::before {
+    .esri-binary-color-size-slider .esri-slider .esri-slider__anchor:hover .esri-slider__thumb::before,
+    .esri-binary-color-size-slider .esri-slider .esri-slider__anchor:focus .esri-slider__thumb::before {
       background-color: #49b0f2;
       transform: translate3d(-1.5px, 0, 0);
     }
@@ -4600,9 +4560,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-building-level-picker--animate-level .esri-building-level-picker-item,
-    .esri-building-level-picker--animate-level
-      .esri-building-level-picker-item
-      .esri-building-level-picker-item__base,
+    .esri-building-level-picker--animate-level .esri-building-level-picker-item .esri-building-level-picker-item__base,
     .esri-building-level-picker--animate-level .esri-building-level-picker-item .rect {
       transition:
         height 0.3s cubic-bezier(0.63, -0.265, 0.48, 1.64),
@@ -4905,8 +4863,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-right: 0;
     }
 
-    html[dir='rtl']
-      .esri-building-disciplines-tree-node--level-1.esri-building-disciplines-tree-node--leaf {
+    html[dir='rtl'] .esri-building-disciplines-tree-node--level-1.esri-building-disciplines-tree-node--leaf {
       padding-left: 0;
       padding-right: 18px;
     }
@@ -4916,8 +4873,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-right: 11px;
     }
 
-    html[dir='rtl']
-      .esri-building-disciplines-tree-node--level-2.esri-building-disciplines-tree-node--leaf {
+    html[dir='rtl'] .esri-building-disciplines-tree-node--level-2.esri-building-disciplines-tree-node--leaf {
       padding-left: 0;
       padding-right: 29px;
     }
@@ -4927,8 +4883,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-right: 22px;
     }
 
-    html[dir='rtl']
-      .esri-building-disciplines-tree-node--level-3.esri-building-disciplines-tree-node--leaf {
+    html[dir='rtl'] .esri-building-disciplines-tree-node--level-3.esri-building-disciplines-tree-node--leaf {
       padding-left: 0;
       padding-right: 40px;
     }
@@ -4938,8 +4893,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-right: 33px;
     }
 
-    html[dir='rtl']
-      .esri-building-disciplines-tree-node--level-4.esri-building-disciplines-tree-node--leaf {
+    html[dir='rtl'] .esri-building-disciplines-tree-node--level-4.esri-building-disciplines-tree-node--leaf {
       padding-left: 0;
       padding-right: 51px;
     }
@@ -4949,8 +4903,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-right: 44px;
     }
 
-    html[dir='rtl']
-      .esri-building-disciplines-tree-node--level-5.esri-building-disciplines-tree-node--leaf {
+    html[dir='rtl'] .esri-building-disciplines-tree-node--level-5.esri-building-disciplines-tree-node--leaf {
       padding-left: 0;
       padding-right: 62px;
     }
@@ -5085,9 +5038,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       opacity: 0;
     }
 
-    .esri-button-menu__item
-      .esri-button-menu__checkbox:checked
-      ~ .esri-button-menu__embedded-content-wrapper {
+    .esri-button-menu__item .esri-button-menu__checkbox:checked ~ .esri-button-menu__embedded-content-wrapper {
       display: block;
     }
 
@@ -6111,12 +6062,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       flex-direction: column;
     }
 
-    .esri-ui-top-right
-      .esri-coordinate-conversion__conversions-view
-      .esri-coordinate-conversion__conversion-list,
-    .esri-ui-top-left
-      .esri-coordinate-conversion__conversions-view
-      .esri-coordinate-conversion__conversion-list,
+    .esri-ui-top-right .esri-coordinate-conversion__conversions-view .esri-coordinate-conversion__conversion-list,
+    .esri-ui-top-left .esri-coordinate-conversion__conversions-view .esri-coordinate-conversion__conversion-list,
     .esri-coordinate-conversion
       div.esri-coordinate-conversion__conversions-view--expand-down
       .esri-coordinate-conversion__conversion-list {
@@ -6130,34 +6077,18 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       flex-direction: column-reverse;
     }
 
-    .esri-ui-bottom-right
-      .esri-coordinate-conversion__conversions-view
-      .esri-coordinate-conversion__conversion-list,
-    .esri-ui-bottom-left
-      .esri-coordinate-conversion__conversions-view
-      .esri-coordinate-conversion__conversion-list,
+    .esri-ui-bottom-right .esri-coordinate-conversion__conversions-view .esri-coordinate-conversion__conversion-list,
+    .esri-ui-bottom-left .esri-coordinate-conversion__conversions-view .esri-coordinate-conversion__conversion-list,
     .esri-coordinate-conversion
       div.esri-coordinate-conversion__conversions-view--expand-up
       .esri-coordinate-conversion__conversion-list {
       flex-direction: column-reverse;
     }
 
-    .esri-ui-bottom-right
-      .esri-coordinate-conversion__conversions-view
-      .esri-widget--button
-      .esri-icon-up,
-    .esri-ui-bottom-right
-      .esri-coordinate-conversion__conversions-view
-      .esri-widget--button
-      .esri-icon-down,
-    .esri-ui-bottom-left
-      .esri-coordinate-conversion__conversions-view
-      .esri-widget--button
-      .esri-icon-up,
-    .esri-ui-bottom-left
-      .esri-coordinate-conversion__conversions-view
-      .esri-widget--button
-      .esri-icon-down,
+    .esri-ui-bottom-right .esri-coordinate-conversion__conversions-view .esri-widget--button .esri-icon-up,
+    .esri-ui-bottom-right .esri-coordinate-conversion__conversions-view .esri-widget--button .esri-icon-down,
+    .esri-ui-bottom-left .esri-coordinate-conversion__conversions-view .esri-widget--button .esri-icon-up,
+    .esri-ui-bottom-left .esri-coordinate-conversion__conversions-view .esri-widget--button .esri-icon-down,
     .esri-coordinate-conversion
       div.esri-coordinate-conversion__conversions-view--expand-up
       .esri-widget--button
@@ -6411,11 +6342,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       text-align: center;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-slider
-      .esri-slider__tick-label
-      .esri-label__ampm {
+    .esri-daylight .esri-daylight__container .esri-slider .esri-slider__tick-label .esri-label__ampm {
       font-size: 7px;
     }
 
@@ -6457,9 +6384,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       flex-shrink: 0;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-daylight__play-pause-button.esri-icon-play::before {
+    .esri-daylight .esri-daylight__container .esri-daylight__play-pause-button.esri-icon-play::before {
       content: none;
     }
 
@@ -6472,17 +6397,11 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       display: none;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-slider--horizontal
-      ~ .esri-daylight__play-pause-button {
+    .esri-daylight .esri-daylight__container .esri-slider--horizontal ~ .esri-daylight__play-pause-button {
       margin-bottom: 17px;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-slider--horizontal
-      .esri-slider-with-dropdown__box {
+    .esri-daylight .esri-daylight__container .esri-slider--horizontal .esri-slider-with-dropdown__box {
       font-size: 10px;
       min-width: inherit;
       white-space: nowrap;
@@ -6500,18 +6419,12 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       outline: none;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-slider--horizontal
-      .esri-slider-with-dropdown__box--drop-down-on {
+    .esri-daylight .esri-daylight__container .esri-slider--horizontal .esri-slider-with-dropdown__box--drop-down-on {
       width: 100px;
       left: -46px;
     }
 
-    .esri-daylight
-      .esri-daylight__container
-      .esri-slider--horizontal
-      .esri-slider-with-dropdown__box--drop-down-off {
+    .esri-daylight .esri-daylight__container .esri-slider--horizontal .esri-slider-with-dropdown__box--drop-down-off {
       width: 60px;
       left: -30px;
     }
@@ -6660,18 +6573,12 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-right: 0;
     }
 
-    html[dir='rtl']
-      .esri-daylight
-      .esri-slider--horizontal
-      .esri-slider-with-dropdown__box--drop-down-on {
+    html[dir='rtl'] .esri-daylight .esri-slider--horizontal .esri-slider-with-dropdown__box--drop-down-on {
       right: -46px;
       left: auto;
     }
 
-    html[dir='rtl']
-      .esri-daylight
-      .esri-slider--horizontal
-      .esri-slider-with-dropdown__box--drop-down-off {
+    html[dir='rtl'] .esri-daylight .esri-slider--horizontal .esri-slider-with-dropdown__box--drop-down-off {
       right: -30px;
       left: auto;
     }
@@ -6721,8 +6628,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-directions__loader {
       height: 40px;
       width: 32px;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center;
     }
 
     .esri-directions__warning-card {
@@ -7040,8 +6946,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding: 12px 7px;
     }
 
-    .esri-directions__maneuver-section-header-toggle-button
-      .esri-directions__maneuver-section-title {
+    .esri-directions__maneuver-section-header-toggle-button .esri-directions__maneuver-section-title {
       padding: 0;
     }
 
@@ -7829,8 +7734,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       transition: transform 0.1s ease-in-out;
     }
 
-    .esri-elevation-profile-legend-item--expanded
-      .esri-elevation-profile-legend-item__collapse-toggle__icon {
+    .esri-elevation-profile-legend-item--expanded .esri-elevation-profile-legend-item__collapse-toggle__icon {
       transform: rotate(180deg);
     }
 
@@ -7844,9 +7748,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-inline-start: 15px;
     }
 
-    .esri-elevation-profile-legend-item__label:not(
-      .esri-elevation-profile-legend-item__label--disabled
-    ) {
+    .esri-elevation-profile-legend-item__label:not(.esri-elevation-profile-legend-item__label--disabled) {
       cursor: pointer;
     }
 
@@ -8093,10 +7995,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       align-items: center;
     }
 
-    .esri-expand--drawer
-      .esri-expand__container--expanded
-      .esri-expand__panel
-      .esri-expand__icon-number--expanded {
+    .esri-expand--drawer .esri-expand__container--expanded .esri-expand__panel .esri-expand__icon-number--expanded {
       display: block;
     }
 
@@ -8153,10 +8052,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       overflow: auto;
     }
 
-    .esri-view-width-xsmall
-      .esri-expand--auto
-      .esri-expand__container--expanded
-      .esri-expand__panel {
+    .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded .esri-expand__panel {
       display: flex;
       justify-content: space-between;
       padding: 1.023rem;
@@ -8190,10 +8086,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-view-width-xsmall .esri-ui-top-right .esri-expand--auto .esri-expand__container--expanded,
-    .esri-view-width-xsmall
-      .esri-ui-bottom-right
-      .esri-expand--auto
-      .esri-expand__container--expanded {
+    .esri-view-width-xsmall .esri-ui-bottom-right .esri-expand--auto .esri-expand__container--expanded {
       width: 75%;
       max-width: 300px;
       animation: expand-slide-rtl-ani 300ms forwards;
@@ -8205,10 +8098,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     .esri-view-width-xsmall .esri-ui-top-left esri-expand--auto .esri-expand__container--expanded,
-    .esri-view-width-xsmall
-      .esri-ui-bottom-left
-      esri-expand--auto
-      .esri-expand__container--expanded {
+    .esri-view-width-xsmall .esri-ui-bottom-left esri-expand--auto .esri-expand__container--expanded {
       width: 75%;
       max-width: 300px;
       animation: expand-slide-ltr-ani 300ms forwards;
@@ -8339,8 +8229,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-feature-content__loader {
       height: 64px;
       width: 100%;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center center;
     }
 
     .esri-feature-content h1,
@@ -8677,8 +8566,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding-top: 0;
     }
 
-    .esri-feature-form__group--sequential:not(.esri-feature-form__group--collapsed)
-      .esri-feature-form__group-header {
+    .esri-feature-form__group--sequential:not(.esri-feature-form__group--collapsed) .esri-feature-form__group-header {
       cursor: auto;
     }
 
@@ -8740,10 +8628,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       position: inherit;
     }
 
-    .esri-feature-table
-      .esri-grid__grid
-      .esri-column__menu-container.esri-button-menu
-      .esri-button-menu__button {
+    .esri-feature-table .esri-grid__grid .esri-column__menu-container.esri-button-menu .esri-button-menu__button {
       height: 26px;
       width: 16px;
     }
@@ -8785,8 +8670,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-feature-table__loader {
       height: 40px;
       width: 32px;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center;
     }
 
     .esri-field-column__header-content {
@@ -8818,15 +8702,11 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       flex: 1 1 0;
     }
 
-    .esri-field-column__cell__date-input-container
-      .esri-date-picker
-      .esri-date-picker__text-input.esri-input {
+    .esri-field-column__cell__date-input-container .esri-date-picker .esri-date-picker__text-input.esri-input {
       width: 100%;
     }
 
-    .esri-field-column__cell__date-input-container
-      .esri-date-picker
-      .esri-date-picker__calendar-toggle {
+    .esri-field-column__cell__date-input-container .esri-date-picker .esri-date-picker__calendar-toggle {
       height: 26px;
     }
 
@@ -8930,18 +8810,14 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       top: 2px;
     }
 
-    .esri-floor-filter__layout--collapsed
-      .esri-floor-filter__button-container
-      .esri-floor-filter__browse-button {
+    .esri-floor-filter__layout--collapsed .esri-floor-filter__button-container .esri-floor-filter__browse-button {
       width: 48px;
       height: 48px;
       padding: 12px;
       border: none;
     }
 
-    .esri-floor-filter__layout--collapsed
-      .esri-floor-filter__button-container
-      .esri-floor-filter__zoom-button {
+    .esri-floor-filter__layout--collapsed .esri-floor-filter__button-container .esri-floor-filter__zoom-button {
       width: 48px;
       height: 48px;
       padding: 12px;
@@ -8949,9 +8825,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       border-color: rgba(110, 110, 110, 0.3);
     }
 
-    .esri-floor-filter__layout--collapsed
-      .esri-floor-filter__button-container
-      .esri-floor-filter__zoom-button--levels {
+    .esri-floor-filter__layout--collapsed .esri-floor-filter__button-container .esri-floor-filter__zoom-button--levels {
       width: 48px;
       height: 32px;
       padding: 8px 12px;
@@ -8980,32 +8854,24 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       top: 2px;
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__button-info {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__button-info {
       margin-right: auto;
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__browse-button {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__browse-button {
       width: auto;
       height: 48px;
       padding: 12px;
       border: none;
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__level-button {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__level-button {
       text-align: left;
       justify-content: flex-start;
       padding: 16px;
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__zoom-button {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__zoom-button {
       width: auto;
       height: 48px;
       padding: 12px;
@@ -9013,9 +8879,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       border-color: rgba(110, 110, 110, 0.3);
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__zoom-button--levels {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__zoom-button--levels {
       width: auto;
       height: 32px;
       padding: 8px 12px;
@@ -9033,9 +8897,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       border-color: rgba(110, 110, 110, 0.3);
     }
 
-    .esri-floor-filter__layout--expanded
-      .esri-floor-filter__button-container
-      .esri-floor-filter__button-label {
+    .esri-floor-filter__layout--expanded .esri-floor-filter__button-container .esri-floor-filter__button-label {
       margin-left: 8px;
     }
 
@@ -9117,16 +8979,12 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: unset;
     }
 
-    .esri-floor-filter
-      .esri-floor-filter__filter-menu
-      .esri-floor-filter__filter-menu-header-back:hover {
+    .esri-floor-filter .esri-floor-filter__filter-menu .esri-floor-filter__filter-menu-header-back:hover {
       background: #f3f3f3;
       cursor: pointer;
     }
 
-    .esri-floor-filter
-      .esri-floor-filter__filter-menu
-      .esri-floor-filter__filter-menu-header-text-group {
+    .esri-floor-filter .esri-floor-filter__filter-menu .esri-floor-filter__filter-menu-header-text-group {
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -9146,9 +9004,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       -webkit-box-orient: vertical;
     }
 
-    .esri-floor-filter
-      .esri-floor-filter__filter-menu
-      .esri-floor-filter__filter-menu-header-subtext {
+    .esri-floor-filter .esri-floor-filter__filter-menu .esri-floor-filter__filter-menu-header-subtext {
       font-style: normal;
       font-weight: 400;
       margin: 4px 0 0;
@@ -9341,12 +9197,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       display: none;
     }
 
-    .esri-view-height-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__minimize-toggle-button,
-    .esri-view-width-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__minimize-toggle-button {
+    .esri-view-height-less-than-medium .esri-floor-filter .esri-floor-filter__minimize-toggle-button,
+    .esri-view-width-less-than-medium .esri-floor-filter .esri-floor-filter__minimize-toggle-button {
       display: none;
     }
 
@@ -9365,23 +9217,15 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       background: #e7e7e7;
     }
 
-    .esri-view-height-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-header-text-group,
-    .esri-view-width-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-header-text-group {
+    .esri-view-height-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-header-text-group,
+    .esri-view-width-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-header-text-group {
       max-width: calc(225px - 28px - 40px);
     }
 
     .esri-view-height-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-item-name,
-    .esri-view-height-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-item-name--selected,
+    .esri-view-height-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-item-name--selected,
     .esri-view-width-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-item-name,
-    .esri-view-width-less-than-medium
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-item-name--selected {
+    .esri-view-width-less-than-medium .esri-floor-filter .esri-floor-filter__filter-menu-item-name--selected {
       max-width: 165px !important;
     }
 
@@ -9415,10 +9259,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: 0 auto 0 0;
     }
 
-    html[dir='rtl']
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu
-      .esri-floor-filter__filter-menu-header-back {
+    html[dir='rtl'] .esri-floor-filter .esri-floor-filter__filter-menu .esri-floor-filter__filter-menu-header-back {
       border-left: 1px solid rgba(110, 110, 110, 0.3);
       border-right: none;
     }
@@ -9484,10 +9325,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-right: auto;
     }
 
-    html[dir='rtl']
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-items
-      .esri-floor-filter__filter-menu-item-name,
+    html[dir='rtl'] .esri-floor-filter .esri-floor-filter__filter-menu-items .esri-floor-filter__filter-menu-item-name,
     html[dir='rtl']
       .esri-floor-filter
       .esri-floor-filter__filter-menu-items
@@ -9497,10 +9335,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-left: 10px !important;
     }
 
-    html[dir='rtl']
-      .esri-floor-filter
-      .esri-floor-filter__filter-menu-items
-      .esri-floor-filter__selected-item-circle {
+    html[dir='rtl'] .esri-floor-filter .esri-floor-filter__filter-menu-items .esri-floor-filter__selected-item-circle {
       margin-right: -10px;
       margin-left: 6px;
     }
@@ -10276,9 +10111,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
 
     .esri-layer-list--new-ui .esri-layer-list__item-toggle:focus .esri-layer-list__item-toggle-icon,
     .esri-layer-list--new-ui .esri-layer-list__item-label:focus .esri-layer-list__item-toggle-icon,
-    .esri-layer-list--new-ui
-      .esri-layer-list__item-container:hover
-      .esri-layer-list__item-toggle-icon,
+    .esri-layer-list--new-ui .esri-layer-list__item-container:hover .esri-layer-list__item-toggle-icon,
     .esri-layer-list--new-ui
       .esri-layer-list__item--invisible
       > .esri-layer-list__item-container
@@ -10545,10 +10378,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       padding: 0 0 12px;
     }
 
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item--has-children
-      > .esri-layer-list__item-container {
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item--has-children > .esri-layer-list__item-container {
       padding-left: 20px;
       padding-right: 5px;
     }
@@ -10561,17 +10391,11 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: 0;
     }
 
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__child-toggle
-      .esri-layer-list__child-toggle-icon--closed {
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__child-toggle .esri-layer-list__child-toggle-icon--closed {
       display: none;
     }
 
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__child-toggle
-      .esri-layer-list__child-toggle-icon--closed-rtl {
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__child-toggle .esri-layer-list__child-toggle-icon--closed-rtl {
       display: block;
     }
 
@@ -10587,10 +10411,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-right: 5px;
     }
 
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__action-toggle
-      .esri-layer-list__action-toggle {
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__action-toggle .esri-layer-list__action-toggle {
       margin-right: 0;
     }
 
@@ -10599,22 +10420,10 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message [class^='esri-icon-'],
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item-error-message
-      .esri-building-level-picker__arrow-up,
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item-error-message
-      .esri-building-level-picker__arrow-down,
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item-error-message
-      .esri-building-phase-picker__arrow-left,
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item-error-message
-      .esri-building-phase-picker__arrow-right,
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message .esri-building-level-picker__arrow-up,
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message .esri-building-level-picker__arrow-down,
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message .esri-building-phase-picker__arrow-left,
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message .esri-building-phase-picker__arrow-right,
     html[dir='rtl'] .esri-layer-list .esri-layer-list__item-error-message [class*='esri-icon-'] {
       margin-right: 0;
       margin-left: 0.3rem;
@@ -10625,10 +10434,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       border-right: 3px solid transparent;
     }
 
-    html[dir='rtl']
-      .esri-layer-list
-      .esri-layer-list__item[aria-selected='true']
-      > .esri-layer-list__item-container {
+    html[dir='rtl'] .esri-layer-list .esri-layer-list__item[aria-selected='true'] > .esri-layer-list__item-container {
       border-right-color: #0079c1;
     }
 
@@ -12228,8 +12034,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       max-height: 300px;
     }
 
-    .esri-view-height-less-than-medium.esri-popup--feature-menu-open
-      .esri-popup__feature-menu-viewport {
+    .esri-view-height-less-than-medium.esri-popup--feature-menu-open .esri-popup__feature-menu-viewport {
       max-height: 250px;
     }
 
@@ -12312,9 +12117,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       left: 0;
     }
 
-    html[dir='rtl']
-      .esri-popup__inline-actions-container:only-child
-      .esri-popup__actions-menu-button {
+    html[dir='rtl'] .esri-popup__inline-actions-container:only-child .esri-popup__actions-menu-button {
       margin-left: 7px;
       margin-right: auto;
     }
@@ -12470,18 +12273,14 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       background-color: transparent;
     }
 
-    .esri-print__advanced-options-button[aria-expanded='true']
-      .esri-print__advanced-options-button-icon--closed,
-    .esri-print__advanced-options-button[aria-expanded='false']
-      .esri-print__advanced-options-button-icon--opened,
+    .esri-print__advanced-options-button[aria-expanded='true'] .esri-print__advanced-options-button-icon--closed,
+    .esri-print__advanced-options-button[aria-expanded='false'] .esri-print__advanced-options-button-icon--opened,
     .esri-print__advanced-options-button .esri-print__advanced-options-button-icon--closed-rtl {
       display: none;
     }
 
-    .esri-print__advanced-options-button[aria-expanded='false']
-      .esri-print__advanced-options-button-icon--closed,
-    .esri-print__advanced-options-button[aria-expanded='true']
-      .esri-print__advanced-options-button-icon--opened {
+    .esri-print__advanced-options-button[aria-expanded='false'] .esri-print__advanced-options-button-icon--closed,
+    .esri-print__advanced-options-button[aria-expanded='true'] .esri-print__advanced-options-button-icon--opened {
       display: block;
     }
 
@@ -12579,8 +12378,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     .esri-print__loader {
       height: 40px;
       width: 32px;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center;
       margin: 0 auto;
     }
 
@@ -12883,13 +12681,11 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: 0 7px;
     }
 
-    .esri-scale-range-slider__scale-menu-item--current-scale
-      .esri-scale-range-slider__scale-item-label::before {
+    .esri-scale-range-slider__scale-menu-item--current-scale .esri-scale-range-slider__scale-item-label::before {
       color: #0079c1;
     }
 
-    .esri-scale-range-slider__scale-menu-item:hover
-      .esri-scale-range-slider__scale-item-label::before {
+    .esri-scale-range-slider__scale-menu-item:hover .esri-scale-range-slider__scale-item-label::before {
       color: rgba(110, 110, 110, 0.4);
     }
 
@@ -14095,8 +13891,8 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: -50% 0 0 -50%;
       width: 100%;
       height: 100%;
-      background: url('https://js.arcgis.com/4.19/esri/themes/base/images/Loading_Indicator_double_32.svg')
-        no-repeat center;
+      background: url('https://js.arcgis.com/4.19/esri/themes/base/images/Loading_Indicator_double_32.svg') no-repeat
+        center;
       display: block;
       content: '';
       animation: esri-spinner--rotate-animation 750ms linear infinite;
@@ -14234,8 +14030,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin: 0 auto;
       height: 48px;
       width: 32px;
-      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif)
-        no-repeat center;
+      background: url(https://js.arcgis.com/4.19/esri/themes/base/images/loading-throb.gif) no-repeat center;
     }
 
     .esri-ui .esri-feature-templates {
@@ -14554,10 +14349,7 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
       margin-right: 5px;
     }
 
-    html[dir='rtl']
-      .esri-table-list
-      .esri-table-list__action-toggle
-      .esri-table-list__action-toggle {
+    html[dir='rtl'] .esri-table-list .esri-table-list__action-toggle .esri-table-list__action-toggle {
       margin-right: 0;
     }
 
@@ -14566,22 +14358,10 @@ export const StyledPegaExtensionsMap = styled.div(({ height }: { height: string 
     }
 
     html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message [class^='esri-icon-'],
-    html[dir='rtl']
-      .esri-table-list
-      .esri-table-list__item-error-message
-      .esri-building-level-picker__arrow-up,
-    html[dir='rtl']
-      .esri-table-list
-      .esri-table-list__item-error-message
-      .esri-building-level-picker__arrow-down,
-    html[dir='rtl']
-      .esri-table-list
-      .esri-table-list__item-error-message
-      .esri-building-phase-picker__arrow-left,
-    html[dir='rtl']
-      .esri-table-list
-      .esri-table-list__item-error-message
-      .esri-building-phase-picker__arrow-right,
+    html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message .esri-building-level-picker__arrow-up,
+    html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message .esri-building-level-picker__arrow-down,
+    html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message .esri-building-phase-picker__arrow-left,
+    html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message .esri-building-phase-picker__arrow-right,
     html[dir='rtl'] .esri-table-list .esri-table-list__item-error-message [class*='esri-icon-'] {
       margin-right: 0;
       margin-left: 0.3rem;

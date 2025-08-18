@@ -6,11 +6,11 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsAutoSave
+  component: PegaExtensionsAutoSave,
 };
 
 const setPCore = () => {
@@ -19,16 +19,16 @@ const setPCore = () => {
     getCascadeManager: () => {
       return {
         registerFields: (f: string) => f,
-        unRegisterFields: (f: string) => f
+        unRegisterFields: (f: string) => f,
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsAutoSave>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -36,13 +36,13 @@ export const Default: Story = {
         return {
           getContextName: () => '',
           getPageReference: () => '',
-          getValue: () => 'C-123'
+          getValue: () => 'C-123',
         };
-      }
+      },
     };
     return <PegaExtensionsAutoSave {...props} />;
   },
   args: {
-    propertyName: '.pyDescription'
-  }
+    propertyName: '.pyDescription',
+  },
 };

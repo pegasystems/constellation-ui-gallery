@@ -1,14 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsDynamicHierarchicalForm, type DynamicHierarchicalFormProps } from './index';
-import {
-  Checkbox,
-  CheckboxGroup,
-  Grid,
-  Input,
-  RadioButton,
-  RadioButtonGroup,
-  TextArea
-} from '@pega/cosmos-react-core';
+import { Checkbox, CheckboxGroup, Grid, Input, RadioButton, RadioButtonGroup, TextArea } from '@pega/cosmos-react-core';
 import type { ChangeEvent } from 'react';
 
 type configInfo = {
@@ -37,9 +29,9 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -48,13 +40,13 @@ export default {
         rules: [
           {
             id: 'nested-interactive',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsDynamicHierarchicalForm
+  component: PegaExtensionsDynamicHierarchicalForm,
 };
 
 const genComponent = (config: any) => {
@@ -68,7 +60,7 @@ const setPCore = (numProducts: number) => {
       pyLabel: `Product #${i}`,
       pyGUID: `product${i}`,
       IsSelected: true,
-      RuleClass: `Class-Product-${i}` /* The classID must match the ruleClass from the embedded obj */
+      RuleClass: `Class-Product-${i}` /* The classID must match the ruleClass from the embedded obj */,
     });
   }
 
@@ -77,35 +69,22 @@ const setPCore = (numProducts: number) => {
       getPConnect: () => ({
         createComponent: (meta: any) => {
           return (
-            <Grid
-              container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }}
-              style={{ maxWidth: '80ch' }}
-            >
-              {Math.random() < 0.8 ? (
-                <Input name={`${meta.config.name}field1`} label='Field1' />
-              ) : null}
-              {Math.random() < 0.8 ? (
-                <Input name={`${meta.config.name}field2`} label='Field2' />
-              ) : null}
-              {Math.random() < 0.8 ? (
-                <TextArea name={`${meta.config.name}field3`} label='Field3' />
-              ) : null}
-              {Math.random() < 0.8 ? (
-                <Input name={`${meta.config.name}field4`} label='Field4' />
-              ) : null}
-              {Math.random() < 0.8 ? (
-                <Input name={`${meta.config.name}field5`} label='Field5' />
-              ) : null}
+            <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
+              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field1`} label='Field1' /> : null}
+              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field2`} label='Field2' /> : null}
+              {Math.random() < 0.8 ? <TextArea name={`${meta.config.name}field3`} label='Field3' /> : null}
+              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field4`} label='Field4' /> : null}
+              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field5`} label='Field5' /> : null}
               {Math.random() < 0.8 ? (
                 <CheckboxGroup name={`${meta.config.name}options`} label='Options'>
-                  {['Option1', 'Option2', 'Option3'].map(option => (
+                  {['Option1', 'Option2', 'Option3'].map((option) => (
                     <Checkbox key={option} label={option} value={option} />
                   ))}
                 </CheckboxGroup>
               ) : null}
               {Math.random() < 0.8 ? (
                 <RadioButtonGroup name={`${meta.config.name}choice`} label='Choice'>
-                  {['Yes', 'No'].map(option => (
+                  {['Yes', 'No'].map((option) => (
                     <RadioButton key={option} label={option} value={option} />
                   ))}
                 </RadioButtonGroup>
@@ -115,14 +94,14 @@ const setPCore = (numProducts: number) => {
         },
         getActionsApi: () => {
           return {
-            updateFieldValue: (prop: string, value: string) => {}
+            updateFieldValue: (prop: string, value: string) => {},
           };
-        }
-      })
+        },
+      }),
     }),
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getViewResources: () => {
@@ -130,11 +109,11 @@ const setPCore = (numProducts: number) => {
         fetchViewResources: (name: string) => {
           return {
             config: {
-              name
-            }
+              name,
+            },
           };
         },
-        updateViewResources: () => {}
+        updateViewResources: () => {},
       };
     },
     getStore: () => {
@@ -145,16 +124,16 @@ const setPCore = (numProducts: number) => {
               primary: {
                 caseInfo: {
                   content: {
-                    Products: productsConfig
-                  }
-                }
-              }
-            }
+                    Products: productsConfig,
+                  },
+                },
+              },
+            },
           };
         },
-        dispatch: () => {}
+        dispatch: () => {},
       };
-    }
+    },
   };
 };
 
@@ -165,33 +144,33 @@ const genResponse = (numProducts: number) => {
     config: {
       template: 'Pega_Extensions_DynamicHierarchicalForm',
       ruleClass: 'Work-',
-      inheritedProps: []
+      inheritedProps: [],
     },
     children: [
       {
         name: 'Selection',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
+        getPConnect: () => {},
       },
       {
         name: 'Tabs',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
 
   demoView.children[0].children = [
     {
       config: {
         authorContext: '.Products',
-        inheritedProps: [{ prop: 'label', value: 'Products' }]
+        inheritedProps: [{ prop: 'label', value: 'Products' }],
       },
-      type: 'reference'
-    }
+      type: 'reference',
+    },
   ];
 
   const productsConfig = [];
@@ -200,9 +179,9 @@ const genResponse = (numProducts: number) => {
       config: {
         name: `Product #${i}`,
         ruleClass: `Class-Product-${i}`,
-        inheritedProps: [{ value: `Product #${i}` }]
+        inheritedProps: [{ value: `Product #${i}` }],
       },
-      type: 'reference'
+      type: 'reference',
     });
   }
 
@@ -211,14 +190,14 @@ const genResponse = (numProducts: number) => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   demoView.children[1].getPConnect = () => {
     return {
       getRawMetadata: () => {
         return demoView.children[1];
-      }
+      },
     };
   };
   return demoView;
@@ -239,13 +218,13 @@ export const Default: Story = {
         return {
           getListActions: () => {
             return {
-              update: () => {}
+              update: () => {},
             };
           },
           getCaseInfo: () => {
             return {
               getKey: () => 'S-123',
-              getCurrentAssignmentViewName: () => 'Enter info'
+              getCurrentAssignmentViewName: () => 'Enter info',
             };
           },
           getActionsApi: () => {
@@ -253,7 +232,7 @@ export const Default: Story = {
               updateFieldValue: (prop: string, value: string) => {},
               refreshCaseView: () => {
                 alert('Refresh UI');
-              }
+              },
             };
           },
           getChildren: () => {
@@ -282,13 +261,11 @@ export const Default: Story = {
           },
           resolveConfigProps: (f: any) => {
             return f;
-          }
+          },
         };
-      }
+      },
     };
-    return (
-      <PegaExtensionsDynamicHierarchicalForm {...props}></PegaExtensionsDynamicHierarchicalForm>
-    );
+    return <PegaExtensionsDynamicHierarchicalForm {...props}></PegaExtensionsDynamicHierarchicalForm>;
   },
   args: {
     label: 'Select your products',
@@ -296,6 +273,6 @@ export const Default: Story = {
     refreshActionLabel: 'Refresh product',
     showRefreshAction: true,
     enableItemSelection: true,
-    numProducts: 3
-  }
+    numProducts: 3,
+  },
 };

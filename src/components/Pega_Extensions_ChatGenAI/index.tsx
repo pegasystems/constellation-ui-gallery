@@ -8,7 +8,7 @@ import {
   Text,
   TextArea,
   Icon,
-  registerIcon
+  registerIcon,
 } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useRef, useState, type ReactElement } from 'react';
 import { Message, TypeIndicator, type MessageProps } from '@pega/cosmos-react-social';
@@ -40,7 +40,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
     dataPage = '',
     maxHeight = '20rem',
     sendAllUserContext = false,
-    getPConnect
+    getPConnect,
   } = props;
   const cardRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<Array<HistoryItem>>([]);
@@ -53,9 +53,9 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
     const id = `A#${history.length}`;
     const item = {
       id,
-      value: <Message message={response} direction='in' senderType='agent' senderId={id} />
+      value: <Message message={response} direction='in' senderType='agent' senderId={id} />,
     };
-    setHistory(prev => [...prev, item]);
+    setHistory((prev) => [...prev, item]);
   };
 
   const postQuestion = useCallback(
@@ -64,7 +64,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
       const dataViewName = dataPage;
       const message = sendAllUserContext ? [...chats, userPrompt] : [userPrompt];
       const parameters = {
-        prompt: JSON.stringify(message)
+        prompt: JSON.stringify(message),
       };
       setLoading(true);
       setChats((previous: Array<string>) => {
@@ -85,7 +85,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
         });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dataPage, getPConnect, loadResponse]
+    [dataPage, getPConnect, loadResponse],
   );
 
   const submitQuestion = useCallback(() => {
@@ -93,9 +93,9 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
       const id = `Q#${history.length}`;
       const item = {
         id,
-        value: <Message message={value} direction='out' senderType='customer' senderId={id} />
+        value: <Message message={value} direction='out' senderType='customer' senderId={id} />,
       };
-      setHistory(prev => [...prev, item]);
+      setHistory((prev) => [...prev, item]);
       postQuestion(value);
       setValue('');
     }
@@ -108,7 +108,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
         submitQuestion();
       }
     },
-    [submitQuestion]
+    [submitQuestion],
   );
 
   const resetContext = () => {
@@ -122,7 +122,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
       {loading && (
         <TypeIndicator
           avatarInfo={{
-            name: 'GenAI Assistant'
+            name: 'GenAI Assistant',
           }}
           senderType='bot'
           senderId='bot'
@@ -136,7 +136,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
             minLength={0}
             maxLength={500}
             autoResize
-            onChange={e => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
             placeholder='Enter your question'
             onKeyPress={handleEnter}
           />
@@ -170,13 +170,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
         <CardHeader
           actions={
             sendAllUserContext ? (
-              <Button
-                variant='simple'
-                label='Restart conversation'
-                icon
-                compact
-                onClick={resetContext}
-              >
+              <Button variant='simple' label='Restart conversation' icon compact onClick={resetContext}>
                 <Icon name='reset' />
               </Button>
             ) : undefined
@@ -187,7 +181,7 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
         <StyledCardContent ref={cardRef} maxHeight={maxHeight}>
           {history.length ? (
             <Flex container={{ direction: 'column', pad: 1 }}>
-              {history.map(e => (
+              {history.map((e) => (
                 <div key={e.id}>{e.value}</div>
               ))}
             </Flex>

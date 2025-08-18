@@ -6,47 +6,47 @@ export default {
   argTypes: {
     value: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsSignatureCapture
+  component: PegaExtensionsSignatureCapture,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsSignatureCapture>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -54,7 +54,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
           },
           getActionsApi: () => {
@@ -73,7 +73,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -87,9 +87,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsSignatureCapture {...props} />;
   },
@@ -102,6 +102,6 @@ export const Default: Story = {
     disabled: false,
     readOnly: false,
     required: false,
-    hideLabel: false
-  }
+    hideLabel: false,
+  },
 };

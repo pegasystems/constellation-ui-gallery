@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Progress,
-  Button,
-  Icon,
-  Card,
-  CardHeader,
-  CardContent,
-  Text,
-  useTheme
-} from '@pega/cosmos-react-core';
+import { Progress, Button, Icon, Card, CardHeader, CardContent, Text, useTheme } from '@pega/cosmos-react-core';
 import { Draggable } from '@hello-pangea/dnd';
 import { StyledCardContent } from './styles';
 
@@ -49,16 +40,14 @@ export const Task = (props: TaskProps) => {
           <CardHeader>
             <Text variant='h3'>{title}</Text>
           </CardHeader>
-          <CardContent>
-            {newdetails || <Progress placement='inline' message='Loading content...' />}
-          </CardContent>
+          <CardContent>{newdetails || <Progress placement='inline' message='Loading content...' />}</CardContent>
         </Card>
       </StyledCardContent>
     );
   }
   return (
     <Draggable draggableId={id} index={index}>
-      {provided => (
+      {(provided) => (
         <StyledCardContent theme={theme}>
           <Card {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
             <CardHeader
@@ -70,9 +59,7 @@ export const Task = (props: TaskProps) => {
             >
               <Text variant='h3'>{title}</Text>
             </CardHeader>
-            <CardContent>
-              {newdetails || <Progress placement='inline' message='Loading content...' />}
-            </CardContent>
+            <CardContent>{newdetails || <Progress placement='inline' message='Loading content...' />}</CardContent>
           </Card>
         </StyledCardContent>
       )}

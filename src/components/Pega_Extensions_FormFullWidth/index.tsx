@@ -17,7 +17,7 @@ export const PegaExtensionsFormFullWidth = (props: FormFullWidthProps) => {
       <Grid
         container={{
           cols: `repeat(${nCols}, minmax(0, 1fr))`,
-          gap: 2
+          gap: 2,
         }}
       >
         {children}

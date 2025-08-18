@@ -8,30 +8,30 @@ export default {
   argTypes: {
     detailsDataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     detailsViewName: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     contextProperty: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
 
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -40,25 +40,25 @@ export default {
         rules: [
           {
             id: 'aria-allowed-role',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'landmark-no-duplicate-banner',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'nested-interactive',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'landmark-unique',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsKanbanBoard
+  component: PegaExtensionsKanbanBoard,
 };
 
 const tasks: any = {
@@ -70,7 +70,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1001',
-    pzInsKey: 'Task A-1001'
+    pzInsKey: 'Task A-1001',
   },
   'A-1002': {
     pyStatusWork: 'Open',
@@ -80,7 +80,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1002',
-    pzInsKey: 'Task A-1002'
+    pzInsKey: 'Task A-1002',
   },
   'A-1003': {
     pyStatusWork: 'Open',
@@ -90,7 +90,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Joe Smith',
     pyID: 'A-1003',
-    pzInsKey: 'Task A-1003'
+    pzInsKey: 'Task A-1003',
   },
   'A-1004': {
     pyStatusWork: 'Pending-Review',
@@ -100,7 +100,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1004',
-    pzInsKey: 'Task A-1004'
+    pzInsKey: 'Task A-1004',
   },
   'A-1005': {
     pyStatusWork: 'Open',
@@ -110,8 +110,8 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1005',
-    pzInsKey: 'Task A-1005'
-  }
+    pzInsKey: 'Task A-1005',
+  },
 };
 
 const setPCore = () => {
@@ -120,22 +120,11 @@ const setPCore = () => {
       getPConnect: () => ({
         createComponent: (meta: any) => {
           const id = meta.config.pyID;
-          const highlightedData = [
-            <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
-          ];
+          const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
           return (
             <Details highlightedData={highlightedData} collapsible={false}>
-              <FieldValueItem
-                key='Description'
-                variant='stacked'
-                name='Description'
-                value={tasks[id].pyDescription}
-              />
-              <FieldValueItem
-                key='Assigned To'
-                name='Assigned To'
-                value={tasks[id].pxCreateOpName}
-              />
+              <FieldValueItem key='Description' variant='stacked' name='Description' value={tasks[id].pyDescription} />
+              <FieldValueItem key='Assigned To' name='Assigned To' value={tasks[id].pxCreateOpName} />
               <FieldValueItem
                 key='Due date'
                 name='Due date'
@@ -143,12 +132,12 @@ const setPCore = () => {
               />
             </Details>
           );
-        }
-      })
+        },
+      }),
     }),
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getViewResources: () => {
@@ -156,25 +145,25 @@ const setPCore = () => {
         fetchViewResources: () => {
           return {
             config: {
-              showLabel: true
-            }
+              showLabel: true,
+            },
           };
         },
-        updateViewResources: () => {}
+        updateViewResources: () => {},
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getEvents: () => {
       return {
         getCaseEvent: () => {
           return {
-            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION'
+            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION',
           };
-        }
+        },
       };
     },
     getPubSubUtils: () => {
@@ -184,7 +173,7 @@ const setPCore = () => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -194,9 +183,9 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -204,8 +193,8 @@ const setPCore = () => {
         getCaseEditLock: () => {
           return Promise.resolve({
             headers: {
-              etag: 'xxx'
-            }
+              etag: 'xxx',
+            },
           });
         },
         updateCaseEditFieldsData: () => {
@@ -216,27 +205,27 @@ const setPCore = () => {
             data: {
               data: {
                 content: {
-                  pyStatusWork: 'New'
-                }
-              }
-            }
+                  pyStatusWork: 'New',
+                },
+              },
+            },
           });
         },
         getData: () => {
           return Promise.resolve({
             data: {
-              data: Array.from(Object.entries(tasks).map((val: any) => val[1]))
-            }
+              data: Array.from(Object.entries(tasks).map((val: any) => val[1])),
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsKanbanBoard>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -246,7 +235,7 @@ export const Default: Story = {
           getContextName: () => 'primary',
           getContainerManager: () => ({
             addTransientItem: () => {},
-            updateTransientData: () => {}
+            updateTransientData: () => {},
           }),
           getActionsApi: () => {
             return {
@@ -269,7 +258,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -283,9 +272,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsKanbanBoard {...props} />;
   },
@@ -298,6 +287,6 @@ export const Default: Story = {
     groups: 'New,Open,Pending-Review,Resolved-Completed',
     groupProperty: 'pyStatusWork',
     detailsDataPage: '',
-    detailsViewName: ''
-  }
+    detailsViewName: '',
+  },
 };

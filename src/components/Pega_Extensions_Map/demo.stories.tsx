@@ -20,15 +20,15 @@ export default {
   argTypes: {
     displayMode: {
       options: ['EDITABLE', 'DISPLAY_ONLY'],
-      control: { type: 'radio' }
+      control: { type: 'radio' },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsMap
+  component: PegaExtensionsMap,
 };
 
 const genComponent = (config: any) => {
@@ -45,11 +45,11 @@ const setPCore = () => {
         getListActions: () => {
           return {
             update: () => {},
-            deleteEntry: () => {}
+            deleteEntry: () => {},
           };
-        }
-      })
-    })
+        },
+      }),
+    }),
   };
 };
 
@@ -60,40 +60,40 @@ const genResponse = () => {
     config: {
       template: 'Pega_Extensions_Map',
       ruleClass: 'Work-',
-      inheritedProps: []
+      inheritedProps: [],
     },
     children: [
       {
         name: 'A',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
   demoView.children[0].children = [
     {
       config: {
         values: [34, 30, 35],
-        value: '@FILTERED_LIST .Positions[].pxPositionLatitude'
+        value: '@FILTERED_LIST .Positions[].pxPositionLatitude',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         values: [-118, -110, -114],
-        value: '@FILTERED_LIST .Positions[].pxPositionLongitude'
+        value: '@FILTERED_LIST .Positions[].pxPositionLongitude',
       },
-      type: 'ScalarList'
-    }
+      type: 'ScalarList',
+    },
   ];
 
   demoView.children[0].getPConnect = () => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   return demoView;
@@ -101,7 +101,7 @@ const genResponse = () => {
 
 type Story = StoryObj<typeof PegaExtensionsMap>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const response = genResponse();
     setPCore();
     const props = {
@@ -112,12 +112,12 @@ export const Default: Story = {
           getListActions: () => {
             return {
               update: () => {},
-              deleteEntry: () => {}
+              deleteEntry: () => {},
             };
           },
           getActionsApi: () => {
             return {
-              updateFieldValue: (prop: string, value: string) => {}
+              updateFieldValue: (prop: string, value: string) => {},
             };
           },
           getChildren: () => {
@@ -146,9 +146,9 @@ export const Default: Story = {
           },
           resolveConfigProps: (f: any) => {
             return { value: f.values };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsMap {...props}></PegaExtensionsMap>;
   },
@@ -160,6 +160,6 @@ export const Default: Story = {
     Zoom: '4',
     displayMode: 'EDITABLE',
     bFreeFormDrawing: false,
-    bShowSearch: false
-  }
+    bShowSearch: false,
+  },
 };

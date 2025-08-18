@@ -6,52 +6,52 @@ export default {
   argTypes: {
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     additionalProps: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsPasswordInput
+  component: PegaExtensionsPasswordInput,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsPasswordInput>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -59,7 +59,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
           },
           getActionsApi: () => {
@@ -78,7 +78,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -92,9 +92,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsPasswordInput {...props} />;
   },
@@ -109,6 +109,6 @@ export const Default: Story = {
     readOnly: false,
     required: false,
     hideLabel: false,
-    hasSuggestions: false
-  }
+    hasSuggestions: false,
+  },
 };

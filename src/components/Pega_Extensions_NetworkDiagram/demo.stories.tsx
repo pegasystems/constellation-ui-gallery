@@ -6,18 +6,18 @@ export default {
   argTypes: {
     Example: {
       options: ['basic', 'example1', 'example2', 'example3', 'example4'],
-      control: { type: 'radio' }
+      control: { type: 'radio' },
     },
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -26,13 +26,13 @@ export default {
         rules: [
           {
             id: 'nested-interactive',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsNetworkDiagram
+  component: PegaExtensionsNetworkDiagram,
 };
 
 const setPCore = (Example: string) => {
@@ -45,102 +45,102 @@ const setPCore = (Example: string) => {
           pyLabel: 'New Wave Energy Demo Solutions',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '2',
           pyLabel: 'Info Inc',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '3',
           pyLabel: 'New Wave Asia Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '4',
           pyLabel: 'New Wave Equity Demonstration',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '5',
           pyLabel: 'New Wave Wind',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '6',
           pyLabel: 'New Wave Hydro Information',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '7',
           pyLabel: 'New Wave Solar',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '8',
           pyLabel: 'Amce',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
-        }
+          pyClassName: 'Work-Case',
+        },
       ],
       pyEdges: [
         {
           pyFrom: '1',
           pyTo: '2',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '1',
           pyTo: '3',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '2',
           pyTo: '4',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '3',
           pyTo: '4',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '4',
           pyTo: '1',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '5',
           pyTo: '6',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
-        }
-      ]
+          pyCategory: 'subsidiary',
+        },
+      ],
     };
   } else if (Example === 'example1') {
     data = {
@@ -150,178 +150,178 @@ const setPCore = (Example: string) => {
           pyLabel: 'New Wave Energy Solutions',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '2',
           pyLabel: 'New Wave Americas Inc',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '3',
           pyLabel: 'New Wave Asia Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '4',
           pyLabel: 'New Wave Equity',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '6',
           pyLabel: 'New Wave Wind',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '7',
           pyLabel: 'New Wave Hydro',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '8',
           pyLabel: 'New Wave Solar',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '9',
           pyLabel: 'European Road Tours',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '10',
           pyLabel: 'ABC Entertainment',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '11',
           pyLabel: 'New Wave Europe Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '20',
           pyLabel: 'Talia Green',
-          pyCategory: 'Individual'
+          pyCategory: 'Individual',
         },
         {
           pyID: '21',
           pyLabel: 'Karina Dalton',
-          pyCategory: 'Individual'
+          pyCategory: 'Individual',
         },
         {
           pyID: '22',
           pyLabel: 'Sally Jones',
-          pyCategory: 'Individual'
+          pyCategory: 'Individual',
         },
         {
           pyID: '23',
           pyLabel: 'Magdalena Leanez',
-          pyCategory: 'Individual'
-        }
+          pyCategory: 'Individual',
+        },
       ],
       pyEdges: [
         {
           pyFrom: '2',
           pyTo: '1',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '3',
           pyTo: '1',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '9',
           pyTo: '1',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '11',
           pyTo: '1',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '2',
           pyTo: '4',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '2',
           pyTo: '6',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '11',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '8',
           pyTo: '11',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '23',
           pyTo: '2',
           pyLabel: 'Majority shareholder',
-          pyCategory: 'ownership'
+          pyCategory: 'ownership',
         },
         {
           pyFrom: '20',
           pyTo: '1',
           pyLabel: 'Majority shareholder',
-          pyCategory: 'ownership'
+          pyCategory: 'ownership',
         },
         {
           pyFrom: '20',
           pyTo: '10',
           pyLabel: 'UBO 20%',
-          pyCategory: 'ownership'
+          pyCategory: 'ownership',
         },
         {
           pyFrom: '22',
           pyTo: '11',
           pyLabel: 'UBO 17%',
-          pyCategory: 'ownership'
+          pyCategory: 'ownership',
         },
         {
           pyFrom: '22',
           pyTo: '8',
           pyLabel: 'UBO 23%',
-          pyCategory: 'ownership'
+          pyCategory: 'ownership',
         },
         {
           pyFrom: '21',
           pyTo: '7',
           pyLabel: 'UBO 24%',
-          pyCategory: 'ownership'
-        }
-      ]
+          pyCategory: 'ownership',
+        },
+      ],
     };
   } else if (Example === 'example2') {
     data = {
@@ -331,108 +331,108 @@ const setPCore = (Example: string) => {
           pyLabel: 'New Wave Energy Demo Solutions',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '2',
           pyLabel: 'Info Inc',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '3',
           pyLabel: 'New Wave Asia Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '4',
           pyLabel: 'New Wave Equity Demonstration',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '5',
           pyLabel: 'New Wave Wind',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '6',
           pyLabel: 'New Wave Hydro Information',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '7',
           pyLabel: 'New Wave Solar',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '8',
           pyLabel: 'Amce',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
-        }
+          pyClassName: 'Work-Case',
+        },
       ],
       pyEdges: [
         {
           pyFrom: '1',
           pyTo: '2',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '1',
           pyTo: '5',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '2',
           pyTo: '3',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '3',
           pyTo: '4',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '5',
           pyTo: '6',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '6',
           pyTo: '7',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '4',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
-        }
-      ]
+          pyCategory: 'subsidiary',
+        },
+      ],
     };
   } else if (Example === 'example3') {
     data = {
@@ -442,135 +442,135 @@ const setPCore = (Example: string) => {
           pyLabel: 'New Wave Energy Demo Solutions',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '2',
           pyLabel: 'Info Inc',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '3',
           pyLabel: 'New Wave Asia Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '4',
           pyLabel: 'New Wave Equity Demonstration',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '5',
           pyLabel: 'New Wave Wind',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '6',
           pyLabel: 'New Wave Hydro Information',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '7',
           pyLabel: 'New Wave Solar',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '8',
           pyLabel: 'Amce',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '9',
           pyLabel: 'Demo Test',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '10',
           pyLabel: 'Amce Uplus demo',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '11',
           pyLabel: 'Amce Corporation',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
-        }
+          pyClassName: 'Work-Case',
+        },
       ],
       pyEdges: [
         {
           pyFrom: '7',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '9',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '10',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '10',
           pyTo: '11',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '1',
           pyTo: '2',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '2',
           pyTo: '3',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '2',
           pyTo: '4',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '5',
           pyTo: '6',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '5',
           pyTo: '7',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
-        }
-      ]
+          pyCategory: 'subsidiary',
+        },
+      ],
     };
   } else if (Example === 'example4') {
     data = {
@@ -580,190 +580,190 @@ const setPCore = (Example: string) => {
           pyLabel: 'New Wave Energy Demo Solutions',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '2',
           pyLabel: 'Info Inc',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '3',
           pyLabel: 'New Wave Asia Ltd.',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '4',
           pyLabel: 'New Wave Equity Demonstration',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '5',
           pyLabel: 'New Wave Wind',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '6',
           pyLabel: 'New Wave Hydro Information',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '7',
           pyLabel: 'New Wave Solar',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '8',
           pyLabel: 'Amce',
           pyCategory: 'Corporation',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '9',
           pyLabel: 'John Doe',
           pyCategory: 'Ownership',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
+          pyClassName: 'Work-Case',
         },
         {
           pyID: '10',
           pyLabel: 'Jane Doe',
           pyCategory: 'Ownership',
           pzInsKey: 'XXX',
-          pyClassName: 'Work-Case'
-        }
+          pyClassName: 'Work-Case',
+        },
       ],
       pyEdges: [
         {
           pyFrom: '1',
           pyTo: '4',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '2',
           pyTo: '5',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '3',
           pyTo: '7',
           pyLabel: 'Division',
-          pyCategory: 'division'
+          pyCategory: 'division',
         },
         {
           pyFrom: '4',
           pyTo: '7',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '5',
           pyTo: '7',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '6',
           pyTo: '7',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '3',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '4',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '5',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '6',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '8',
           pyTo: '9',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '8',
           pyTo: '10',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '3',
           pyTo: '9',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '3',
           pyTo: '10',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '4',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
+          pyCategory: 'subsidiary',
         },
         {
           pyFrom: '7',
           pyTo: '8',
           pyLabel: 'Subsidiary',
-          pyCategory: 'subsidiary'
-        }
-      ]
+          pyCategory: 'subsidiary',
+        },
+      ],
     };
   }
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getEvents: () => {
       return {
         getCaseEvent: () => {
           return {
-            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION'
+            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION',
           };
-        }
+        },
       };
     },
     getPubSubUtils: () => {
@@ -773,7 +773,7 @@ const setPCore = (Example: string) => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -783,18 +783,18 @@ const setPCore = (Example: string) => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataPageUtils: () => {
       return {
         getPageDataAsync: () => {
           return Promise.resolve(data);
-        }
+        },
       };
-    }
+    },
   };
 };
 
@@ -823,7 +823,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -837,9 +837,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsNetworkDiagram {...props} />;
   },
@@ -851,6 +851,6 @@ export const Default: Story = {
     showMinimap: true,
     showControls: true,
     showRefresh: true,
-    edgePath: 'bezier'
-  }
+    edgePath: 'bezier',
+  },
 };

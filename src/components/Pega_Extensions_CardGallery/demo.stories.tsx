@@ -8,24 +8,24 @@ export default {
   argTypes: {
     detailsDataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     detailsViewName: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -34,17 +34,17 @@ export default {
         rules: [
           {
             id: 'landmark-no-duplicate-banner',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'landmark-unique',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsCardGallery
+  component: PegaExtensionsCardGallery,
 };
 
 const tasks: any = {
@@ -56,7 +56,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1001',
-    pzInsKey: 'Task A-1001'
+    pzInsKey: 'Task A-1001',
   },
   'A-1002': {
     pyStatusWork: 'Open',
@@ -66,7 +66,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1002',
-    pzInsKey: 'Task A-1002'
+    pzInsKey: 'Task A-1002',
   },
   'A-1003': {
     pyStatusWork: 'Open',
@@ -76,7 +76,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Joe Smith',
     pyID: 'A-1003',
-    pzInsKey: 'Task A-1003'
+    pzInsKey: 'Task A-1003',
   },
   'A-1004': {
     pyStatusWork: 'Pending-Review',
@@ -86,7 +86,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1004',
-    pzInsKey: 'Task A-1004'
+    pzInsKey: 'Task A-1004',
   },
   'A-1005': {
     pyStatusWork: 'Open',
@@ -96,7 +96,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1005',
-    pzInsKey: 'Task A-1005'
+    pzInsKey: 'Task A-1005',
   },
   'A-1006': {
     pyStatusWork: 'New',
@@ -107,7 +107,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1006',
-    pzInsKey: 'Task A-1006'
+    pzInsKey: 'Task A-1006',
   },
   'A-1007': {
     pyStatusWork: 'Open',
@@ -117,7 +117,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1007',
-    pzInsKey: 'Task A-1007'
+    pzInsKey: 'Task A-1007',
   },
   'A-1008': {
     pyStatusWork: 'Open',
@@ -127,7 +127,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Joe Smith',
     pyID: 'A-1008',
-    pzInsKey: 'Task A-1008'
+    pzInsKey: 'Task A-1008',
   },
   'A-1009': {
     pyStatusWork: 'New',
@@ -138,7 +138,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1009',
-    pzInsKey: 'Task A-1009'
+    pzInsKey: 'Task A-1009',
   },
   'A-1010': {
     pyStatusWork: 'Open',
@@ -149,7 +149,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1010',
-    pzInsKey: 'Task A-1010'
+    pzInsKey: 'Task A-1010',
   },
   'A-1011': {
     pyStatusWork: 'Open',
@@ -159,7 +159,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Joe Smith',
     pyID: 'A-1011',
-    pzInsKey: 'Task A-1011'
+    pzInsKey: 'Task A-1011',
   },
   'A-1012': {
     pyStatusWork: 'New',
@@ -169,7 +169,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Marc Doe',
     pyID: 'A-1012',
-    pzInsKey: 'Task A-1012'
+    pzInsKey: 'Task A-1012',
   },
   'A-1013': {
     pyStatusWork: 'Open',
@@ -179,7 +179,7 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Sue Lee',
     pyID: 'A-1013',
-    pzInsKey: 'Task A-1013'
+    pzInsKey: 'Task A-1013',
   },
   'A-1014': {
     pyStatusWork: 'Open',
@@ -189,8 +189,8 @@ const tasks: any = {
     pxObjClass: 'Work-UserStory',
     pxCreateOpName: 'Joe Smith',
     pyID: 'A-1014',
-    pzInsKey: 'Task A-1014'
-  }
+    pzInsKey: 'Task A-1014',
+  },
 };
 
 const setPCore = (args: any) => {
@@ -199,21 +199,11 @@ const setPCore = (args: any) => {
       getPConnect: () => ({
         createComponent: (meta: any) => {
           const id = meta.config.pyID;
-          const highlightedData = [
-            <FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />
-          ];
+          const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
           return (
             <Details highlightedData={highlightedData}>
-              <FieldValueItem
-                key='Description'
-                name='Description'
-                value={tasks[id].pyDescription}
-              />
-              <FieldValueItem
-                key='Assigned To'
-                name='Assigned To'
-                value={tasks[id].pxCreateOpName}
-              />
+              <FieldValueItem key='Description' name='Description' value={tasks[id].pyDescription} />
+              <FieldValueItem key='Assigned To' name='Assigned To' value={tasks[id].pxCreateOpName} />
               <FieldValueItem
                 key='Due date'
                 name='Due date'
@@ -221,12 +211,12 @@ const setPCore = (args: any) => {
               />
             </Details>
           );
-        }
-      })
+        },
+      }),
     }),
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getViewResources: () => {
@@ -234,25 +224,25 @@ const setPCore = (args: any) => {
         fetchViewResources: () => {
           return {
             config: {
-              showLabel: true
-            }
+              showLabel: true,
+            },
           };
         },
-        updateViewResources: () => {}
+        updateViewResources: () => {},
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getEvents: () => {
       return {
         getCaseEvent: () => {
           return {
-            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION'
+            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION',
           };
-        }
+        },
       };
     },
     getPubSubUtils: () => {
@@ -262,7 +252,7 @@ const setPCore = (args: any) => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -272,17 +262,17 @@ const setPCore = (args: any) => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getConstants: () => {
       return {
         PUB_SUB_EVENTS: {
           EVENT_DASHBOARD_FILTER_CHANGE: 'EVENT_DASHBOARD_FILTER_CHANGE',
-          EVENT_DASHBOARD_FILTER_CLEAR_ALL: 'EVENT_DASHBOARD_FILTER_CLEAR_ALL'
-        }
+          EVENT_DASHBOARD_FILTER_CLEAR_ALL: 'EVENT_DASHBOARD_FILTER_CLEAR_ALL',
+        },
       };
     },
     getDataApiUtils: () => {
@@ -290,8 +280,8 @@ const setPCore = (args: any) => {
         getCaseEditLock: () => {
           return Promise.resolve({
             headers: {
-              etag: 'xxx'
-            }
+              etag: 'xxx',
+            },
           });
         },
         updateCaseEditFieldsData: () => {
@@ -302,10 +292,10 @@ const setPCore = (args: any) => {
             data: {
               data: {
                 content: {
-                  pyStatusWork: 'New'
-                }
-              }
-            }
+                  pyStatusWork: 'New',
+                },
+              },
+            },
           });
         },
         getData: () => {
@@ -314,19 +304,19 @@ const setPCore = (args: any) => {
               data: Array.from(
                 Object.entries(tasks)
                   .splice(0, args.numCards)
-                  .map((val: any) => val[1])
-              )
-            }
+                  .map((val: any) => val[1]),
+              ),
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsCardGallery>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore(args);
     const props = {
       ...args,
@@ -335,7 +325,7 @@ export const Default: Story = {
           getContextName: () => 'primary',
           getContainerManager: () => ({
             addTransientItem: () => {},
-            updateTransientData: () => {}
+            updateTransientData: () => {},
           }),
           getActionsApi: () => {
             return {
@@ -358,7 +348,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -372,9 +362,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsCardGallery {...props} />;
   },
@@ -387,6 +377,6 @@ export const Default: Story = {
     rendering: 'horizontal',
     detailsDataPage: '',
     detailsViewName: '',
-    numCards: 10
-  }
+    numCards: 10,
+  },
 };

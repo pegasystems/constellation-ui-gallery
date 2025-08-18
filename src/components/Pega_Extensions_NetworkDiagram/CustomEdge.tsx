@@ -4,7 +4,7 @@ import {
   getStraightPath,
   getSmoothStepPath,
   EdgeLabelRenderer,
-  BaseEdge
+  BaseEdge,
 } from 'reactflow';
 
 const CustomEdge = (props: EdgeProps) => {
@@ -29,7 +29,7 @@ const CustomEdge = (props: EdgeProps) => {
       sourceX,
       sourceY,
       targetX,
-      targetY
+      targetY,
     });
   } else if (data.path === 'step') {
     [edgePath, labelX, labelY] = getSmoothStepPath({
@@ -38,7 +38,7 @@ const CustomEdge = (props: EdgeProps) => {
       sourcePosition,
       targetX,
       targetY,
-      targetPosition
+      targetPosition,
     });
   } else {
     [edgePath, labelX, labelY] = getBezierPath({
@@ -47,7 +47,7 @@ const CustomEdge = (props: EdgeProps) => {
       sourcePosition,
       targetX,
       targetY,
-      targetPosition
+      targetPosition,
     });
   }
 
@@ -57,17 +57,11 @@ const CustomEdge = (props: EdgeProps) => {
   }
   return (
     <>
-      <BaseEdge
-        {...restProps}
-        id={id}
-        path={edgePath}
-        markerStart={markerStart}
-        markerEnd={markerEnd}
-      />
+      <BaseEdge {...restProps} id={id} path={edgePath} markerStart={markerStart} markerEnd={markerEnd} />
       <EdgeLabelRenderer>
         <div
           style={{
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`
+            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           }}
           className={className}
         >

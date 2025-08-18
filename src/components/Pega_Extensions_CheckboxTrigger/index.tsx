@@ -34,7 +34,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
     helperText = '',
     testId = '',
     additionalProps,
-    displayMode
+    displayMode,
   } = props;
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
@@ -43,7 +43,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
 
   const [inputValue, setInputValue] = useState(value);
@@ -99,13 +99,12 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
           actions.updateFieldValue(propName, e.currentTarget.checked);
           hasValueChange.current = true;
           const context = getPConnect().getContextName();
-          const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo
-            ?.content;
+          const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo?.content;
 
           /* To force the refresh, we will call a savable DP that will contain the current value and return the update content */
           const itemData = (window as any).PCore.getContainerUtils().getContainerItemData(
             getPConnect().getTarget(),
-            getPConnect().getContextName()
+            getPConnect().getContextName(),
           );
           const key = itemData?.key ? JSON.parse(itemData.key) : {};
           const newObj = { ...data };
@@ -114,7 +113,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
           (window as any).PCore.getRestClient()
             .invokeRestApi('createDataObject', {
               body: { data: bodyData },
-              queryPayload: { data_view_ID: dataPage }
+              queryPayload: { data_view_ID: dataPage },
             })
             .then((resp: any) => {
               const respData = resp?.data?.responseData;
@@ -125,8 +124,8 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
                 payload: {
                   context: getPConnect().getContextName(),
                   reference: 'dataInfo.content',
-                  value: updateObj
-                }
+                  value: updateObj,
+                },
               });
             });
         }

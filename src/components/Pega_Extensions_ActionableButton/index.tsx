@@ -13,9 +13,7 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
   if (value && localAction) {
     const availableActions =
       getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
-    const targetAction = availableActions.find(
-      (action: { ID: string }) => action.ID === localAction
-    );
+    const targetAction = availableActions.find((action: { ID: string }) => action.ID === localAction);
     const actionName = targetAction?.name || label;
     const LaunchLocalAction = async () => {
       const actionsAPI = getPConnect().getActionsApi();
@@ -26,7 +24,7 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
         caseID: value,
         containerName: 'modal',
         type: 'express',
-        name: actionName
+        name: actionName,
       });
     };
     return (

@@ -25,15 +25,9 @@ export interface CustomTreeProps extends TreeProps<CustomTreeNode> {
   currentNodeId?: TreeNode['id'];
   getPConnect: any;
   /** Callback function for click events on tree nodes. This will only be called on parent nodes if selectableParents is true. It will always be called on leaf nodes. */
-  onNodeClick?: (
-    id: TreeNode['id'],
-    e: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
-  ) => void;
+  onNodeClick?: (id: TreeNode['id'], e: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
   /** Callback function for toggling tree nodes between expanded/collapsed states. This is only ever called on parent nodes. */
-  onNodeToggle?: (
-    id: TreeNode['id'],
-    e?: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
-  ) => void;
+  onNodeToggle?: (id: TreeNode['id'], e?: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
 }
 
 export interface CustomTreeContextProps extends CustomTreeProps {

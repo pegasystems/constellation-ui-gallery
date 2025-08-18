@@ -6,15 +6,15 @@ export default {
   argTypes: {
     value: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     format: {
       options: Object.values(BarcodeType),
-      control: 'select'
-    }
+      control: 'select',
+    },
   },
-  component: PegaExtensionsBarCode
+  component: PegaExtensionsBarCode,
 };
 
 const setPCore = () => {
@@ -26,7 +26,7 @@ const setPCore = () => {
 type Story = StoryObj<typeof PegaExtensionsBarCode>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -34,7 +34,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'BarCodeImg'
+              value: 'BarCodeImg',
             };
           },
           getActionsApi: () => {
@@ -42,11 +42,11 @@ export const Default: Story = {
               updateFieldValue: (prop: string, value: string) => {
                 // eslint-disable-next-line no-console
                 //console.log(`Updating property ${prop} with value: ${value}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsBarCode {...props} />;
   },
@@ -60,6 +60,6 @@ export const Default: Story = {
     testId: '',
     validatemessage: '',
     readOnly: false,
-    hideLabel: false
-  }
+    hideLabel: false,
+  },
 };

@@ -6,14 +6,14 @@ export default {
   argTypes: {
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
   parameters: {
     a11y: {
@@ -22,17 +22,17 @@ export default {
         rules: [
           {
             id: 'list',
-            enabled: false
+            enabled: false,
           },
           {
             id: 'nested-interactive',
-            enabled: false
-          }
-        ]
-      }
-    }
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
-  component: PegaExtensionsDisplayAttachments
+  component: PegaExtensionsDisplayAttachments,
 };
 
 /* Simulate download of attachment - The files need to be in the static  storybook folder */
@@ -51,7 +51,7 @@ const setPCore = () => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -68,7 +68,7 @@ const setPCore = () => {
                   pzInsKey: 'LINK-ATTACHMENT DEMOURL',
                   pyTopic: 'application/octet-stream',
                   pyCategory: 'URL',
-                  pyLabel: 'URL'
+                  pyLabel: 'URL',
                 },
                 {
                   pxObjClass: 'Link-Attachment',
@@ -80,7 +80,7 @@ const setPCore = () => {
                   pxCreateDateTime: '2024-01-28T13:18:43.193Z',
                   pyMemo: 'demoPDF',
                   pzInsKey: 'LINK-ATTACHMENT DEMOPDF',
-                  pyCategory: 'File'
+                  pyCategory: 'File',
                 },
                 {
                   pxObjClass: 'Link-Attachment',
@@ -89,18 +89,17 @@ const setPCore = () => {
                   pyTopic: 'application/octet-stream',
                   pxCreateDateTime: '2024-01-28T14:54:50.323Z',
                   pxCreateOpName: 'John Smith',
-                  pzInsKey: 'LINK-ATTACHMENT OK5NF|-COMPUTER-WORK F-11015!20240206T121808.330 GMT'
+                  pzInsKey: 'LINK-ATTACHMENT OK5NF|-COMPUTER-WORK F-11015!20240206T121808.330 GMT',
                 },
                 {
                   pxObjClass: 'Link-Attachment',
                   pyCategory: 'File',
                   pyMemo: 'Demo Word',
-                  pyTopic:
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                  pyTopic: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                   pxCreateDateTime: '2024-01-28T14:54:50.323Z',
                   pxCreateOpName: 'John Smith',
                   pyFileName: 'Test.docx',
-                  pzInsKey: 'LINK-ATTACHMENT DEMODOCX'
+                  pzInsKey: 'LINK-ATTACHMENT DEMODOCX',
                 },
                 {
                   pxObjClass: 'Link-Attachment',
@@ -110,12 +109,12 @@ const setPCore = () => {
                   pyFileName: 'demoImage.png',
                   pxCreateDateTime: '2024-01-28T14:54:50.323Z',
                   pxCreateOpName: 'Sue Lee',
-                  pzInsKey: 'LINK-ATTACHMENT DEMOPNG'
-                }
-              ]
-            }
+                  pzInsKey: 'LINK-ATTACHMENT DEMOPNG',
+                },
+              ],
+            },
           });
-        }
+        },
       };
     },
     getAttachmentUtils: () => {
@@ -145,14 +144,14 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T145450.323 GMT',
                   title: 'Retrieve the link',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT DEMOURL',
               mimeType: 'application/octet-stream',
               category: 'URL',
               type: 'URL',
-              categoryName: 'URL'
+              categoryName: 'URL',
             },
             {
               createdByName: 'Marc Doe',
@@ -169,11 +168,11 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.205 GMT',
                   title: 'Download the attachment',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT DEMOPNG',
-              category: 'Evidence'
+              category: 'Evidence',
             },
             {
               createdByName: 'Joe SMith',
@@ -190,11 +189,11 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.193 GMT',
                   title: 'Download the attachment',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT DEMODOCX',
-              category: 'File'
+              category: 'File',
             },
             {
               createdByName: 'Marc Doe',
@@ -211,11 +210,11 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.193 GMT',
                   title: 'Download the attachment',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT DEMOPDF',
-              category: 'File'
+              category: 'File',
             },
             {
               createdByName: 'Marc Doe',
@@ -232,11 +231,11 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.178 GMT',
                   title: 'Download the attachment',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.178 GMT',
-              category: 'File'
+              category: 'File',
             },
             {
               createdByName: 'Sue Lee',
@@ -253,19 +252,19 @@ const setPCore = () => {
                   rel: 'self',
                   href: '/attachments/LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.153 GMT',
                   title: 'Download the attachment',
-                  type: 'GET'
-                }
+                  type: 'GET',
+                },
               },
               ID: 'LINK-ATTACHMENT OK5NFJ-COMPUTER-WORK F-11012!20240128T131843.153 GMT',
-              category: 'Shipping Label'
-            }
+              category: 'Shipping Label',
+            },
           ]);
-        }
+        },
       };
     },
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getSemanticUrlUtils: () => {
@@ -275,11 +274,11 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
-    }
+    },
   };
 };
 
@@ -294,13 +293,13 @@ const DisplayAttachmentsDemo = (inputs: UtilityListProps) => {
         getPConnect: () => {
           return {
             getContextName: () => '',
-            getValue: () => 'C-123'
+            getValue: () => 'C-123',
           };
-        }
+        },
       };
       return <PegaExtensionsDisplayAttachments {...props} />;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -312,7 +311,7 @@ export const Default: Story = DisplayAttachmentsDemo({
   enableDownloadAll: false,
   dataPage: 'D_AttachmentListRO',
   displayFormat: 'list',
-  icon: 'clipboard'
+  icon: 'clipboard',
 });
 
 export const Tiles: Story = DisplayAttachmentsDemo({
@@ -323,5 +322,5 @@ export const Tiles: Story = DisplayAttachmentsDemo({
   enableDownloadAll: true,
   dataPage: 'D_AttachmentListRO',
   displayFormat: 'tiles',
-  icon: 'clipboard'
+  icon: 'clipboard',
 });

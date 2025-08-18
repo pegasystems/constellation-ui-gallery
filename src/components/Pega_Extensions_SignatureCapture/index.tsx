@@ -7,15 +7,11 @@ import {
   Button,
   Flex,
   FormField,
-  FormControl
+  FormControl,
 } from '@pega/cosmos-react-core';
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
-import {
-  StyledButtonsWrapper,
-  StyledSignatureContent,
-  StyledSignatureReadOnlyContent
-} from './styles';
+import { StyledButtonsWrapper, StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
 import '../create-nonce';
 
 type SignatureCaptureProps = {
@@ -43,7 +39,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
     helperText,
     testId,
     displayMode,
-    variant
+    variant,
   } = props;
 
   const ref = useRef<SignaturePad>();
@@ -55,13 +51,11 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
 
   const [inputValue, setInputValue] = useState(value);
-  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'success' | 'warning' | 'error' | 'pending' | undefined>(undefined);
   useEffect(() => setInputValue(value), [value]);
 
   useEffect(() => {
@@ -133,12 +127,7 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
           readOnly={readOnly}
           testId={testId}
         >
-          <FormControl
-            ariaLabel={label}
-            required={required}
-            disabled={disabled}
-            readOnly={readOnly}
-          >
+          <FormControl ariaLabel={label} required={required} disabled={disabled} readOnly={readOnly}>
             {readOnly || disabled ? (
               <img alt='Signature' src={inputValue} />
             ) : (
@@ -148,15 +137,12 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
                   canvasProps={{
                     style: {
                       width: '100%',
-                      height: 200
-                    }
+                      height: 200,
+                    },
                   }}
                   onEndStroke={onEndStroke}
                 />
-                <Flex
-                  as={StyledButtonsWrapper}
-                  container={{ direction: 'row', justify: 'between', pad: [1] }}
-                >
+                <Flex as={StyledButtonsWrapper} container={{ direction: 'row', justify: 'between', pad: [1] }}>
                   <Button compact className='clear' onClick={handleCLear}>
                     Clear
                   </Button>

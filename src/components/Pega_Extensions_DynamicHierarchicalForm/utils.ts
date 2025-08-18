@@ -14,7 +14,7 @@ export default function getAllFields(regionID: number, pConnect: any) {
     metadata.children[regionID].children.forEach((field: any) => {
       allFields.push({
         ...pConnect().resolveConfigProps(field.config),
-        type: field.type
+        type: field.type,
       });
     });
   }

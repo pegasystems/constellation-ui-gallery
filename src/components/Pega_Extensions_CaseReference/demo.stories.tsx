@@ -6,33 +6,33 @@ export default {
   argTypes: {
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     selectionProperty: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsCaseReference
+  component: PegaExtensionsCaseReference,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getSemanticUrlUtils: () => {
@@ -42,18 +42,18 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsCaseReference>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -61,15 +61,15 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsCaseReference {...props} />;
   },
   args: {
-    value: 'C-123'
-  }
+    value: 'C-123',
+  },
 };

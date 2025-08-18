@@ -7,7 +7,7 @@ import {
   Icon,
   registerIcon,
   Text,
-  withConfiguration
+  withConfiguration,
 } from '@pega/cosmos-react-core';
 import { StyledSummaryListHeader, StyledSummaryListContent } from './styles';
 import '../create-nonce';
@@ -32,7 +32,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
     profileName,
     connectLabel = 'Connect',
     showDisconnect = true,
-    disconnectLabel = 'Disconnect'
+    disconnectLabel = 'Disconnect',
   } = props;
   const [loginStatus, setLoginStatus] = useState(false);
   const [expDate, setExpDate] = useState<any>();
@@ -40,18 +40,17 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
   const getMashupDetails = useCallback(
     async (authProfileName: any, Event: any) => {
       const gadgetId =
-        getPConnect().getCaseInfo().getKey() +
-        (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier();
-      const mashupDetails = new Promise(resolve => {
+        getPConnect().getCaseInfo().getKey() + (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier();
+      const mashupDetails = new Promise((resolve) => {
         const parameters = {
           Event,
           ProfileName: authProfileName,
-          gadgetId
+          gadgetId,
         };
         const context = getPConnect().getContextName();
         (window as any).PCore.getDataPageUtils()
           .getPageDataAsync('D_OAuthConnect', context, parameters, {
-            invalidateCache: true
+            invalidateCache: true,
           })
           .then((response: any) => {
             resolve(response);
@@ -69,7 +68,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
             if (mashup.pyIsAuthenticated && mashup.pyExpiresAt) {
               const v = mashup.pyExpiresAt;
               const expirationDate = new Date(
-                `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 19)}Z`
+                `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 19)}Z`,
               );
               const info = (
                 <Text>
@@ -94,7 +93,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
         }
       }
     },
-    [getPConnect]
+    [getPConnect],
   );
 
   useEffect(() => {
@@ -105,15 +104,13 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
     const mashupSubfilter = {
       matcher: 'OAUTH2',
       criteria: {
-        ID:
-          getPConnect().getCaseInfo().getKey() +
-          (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier()
-      }
+        ID: getPConnect().getCaseInfo().getKey() + (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier(),
+      },
     };
     const mashupSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
       mashupSubfilter,
       loadMashup,
-      getPConnect().getContextName()
+      getPConnect().getContextName(),
     );
 
     loadMashup();

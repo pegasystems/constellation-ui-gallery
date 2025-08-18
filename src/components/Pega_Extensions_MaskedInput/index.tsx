@@ -40,7 +40,7 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
     additionalProps,
     displayMode,
     variant,
-    hasSuggestions
+    hasSuggestions,
   } = props;
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
@@ -52,7 +52,7 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
-    prop => prop === true || (typeof prop === 'string' && prop === 'true')
+    (prop) => prop === true || (typeof prop === 'string' && prop === 'true'),
   );
 
   const [inputValue, setInputValue] = useState(value);
@@ -67,8 +67,8 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
         definitions: {
           // defaults are '0', 'a', '*'
           // You can extend by adding other characters
-          A: /[A-Z]/
-        }
+          A: /[A-Z]/,
+        },
       };
       if (maskObj) {
         maskObj.updateOptions(maskOptions);

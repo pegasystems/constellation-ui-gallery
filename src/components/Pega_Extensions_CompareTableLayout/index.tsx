@@ -1,4 +1,3 @@
- 
 import { useState, useEffect } from 'react';
 import {
   withConfiguration,
@@ -9,7 +8,7 @@ import {
   Progress,
   RadioButton,
   Text,
-  createUID
+  createUID,
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper from './styles';
 import '../create-nonce';
@@ -67,8 +66,8 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
         text: `${val}`,
         value: `${val}`,
         label: '',
-        displayMode: 'DISPLAY_ONLY'
-      }
+        displayMode: 'DISPLAY_ONLY',
+      },
     };
     if (componentType === 'URL') {
       field.config.displayAs = 'Image';
@@ -95,10 +94,10 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
           (window as any).PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
-              setNumFields(prevCount => prevCount + 1);
+              setNumFields((prevCount) => prevCount + 1);
             });
         } else {
-          setNumFields(prevCount => prevCount + 1);
+          setNumFields((prevCount) => prevCount + 1);
         }
         if (typeof selectionProperty !== 'undefined' && child.label === 'ID') {
           child.value.forEach((val: any, index: number) => {
@@ -144,7 +143,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                     value:
                       child.value && child.value.length >= i
                         ? genField(child.componentType, child.value[i], `card-${i}-${j}`)
-                        : ''
+                        : '',
                   });
                 }
               }
@@ -183,8 +182,8 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                 type: 'Text',
                 config: {
                   text: val,
-                  displayMode: 'DISPLAY_ONLY'
-                }
+                  displayMode: 'DISPLAY_ONLY',
+                },
               };
               return (
                 <th scope='col' key={`${tableId}-col-${idx}`} id={`${tableId}-col-${idx}`}>
@@ -205,11 +204,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                 );
               }
               /* Show a selection with radioButton if the label is called ID and the selectionProperty is provided */
-              if (
-                child.label === 'ID' &&
-                typeof selectionProperty !== 'undefined' &&
-                metadata.config.selectionProperty
-              )
+              if (child.label === 'ID' && typeof selectionProperty !== 'undefined' && metadata.config.selectionProperty)
                 return (
                   <tr key={`reg-row-${i}`} className='selection'>
                     <th>Selection</th>
