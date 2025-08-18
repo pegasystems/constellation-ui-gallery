@@ -49,15 +49,18 @@ export const Default: Story = {
               value: 'C-123',
             };
           },
+          getContextName: () => {
+            return 'context';
+          },
+          getContainerName: () => {
+            return 'workarea';
+          },
           getValue: () => [{ ID: 'pyEditDetails', name: 'Edit Details' }],
           getActionsApi: () => {
             return {
-              openLocalAction: {
-                bind: () => {
-                  return (name: string, options: any) => {
-                    alert(`Launch local action ID '${name}' with title '${options.name}' for ${options.caseID}`);
-                  };
-                },
+              saveAssignment: () => Promise.resolve(),
+              openLocalAction: (name: string, options: any) => {
+                alert(`Launch local action ${name} for ${options.caseID}`);
               },
             };
           },

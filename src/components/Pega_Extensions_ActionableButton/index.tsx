@@ -15,8 +15,11 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
       getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
     const targetAction = availableActions.find((action: { ID: string }) => action.ID === localAction);
     const actionName = targetAction?.name || label;
-    const LaunchLocalAction = () => {
+    const LaunchLocalAction = async () => {
       const actionsAPI = getPConnect().getActionsApi();
+      if (getPConnect().getContainerName() === 'workarea') {
+        await actionsAPI.saveAssignment(getPConnect().getContextName());
+      }
       const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
       openLocalAction(localAction, {
         caseID: value,
