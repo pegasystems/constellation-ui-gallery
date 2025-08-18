@@ -52,6 +52,9 @@ export const Default: Story = {
           getContextName: () => {
             return 'context';
           },
+          getContainerName: () => {
+            return 'workarea';
+          },
           getValue: () => {
             return [];
           },
