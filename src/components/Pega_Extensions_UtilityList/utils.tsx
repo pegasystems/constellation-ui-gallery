@@ -15,7 +15,7 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: item.pxObjClass },
-      { workID: item.pyID }
+      { workID: item.pyID },
     );
     return linkURL ? (
       <Link
@@ -23,7 +23,7 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
         previewable
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(item.pzInsKey), {
-            caseClassName: item.pxObjClass
+            caseClassName: item.pxObjClass,
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {

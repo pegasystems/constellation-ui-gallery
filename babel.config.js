@@ -6,17 +6,17 @@ module.exports = function (api) {
       {
         targets: {
           esmodules: true,
-          node: true
-        }
-      }
+          node: true,
+        },
+      },
     ],
     '@babel/preset-typescript',
-    ['@babel/preset-react', { runtime: 'automatic' }]
+    ['@babel/preset-react', { runtime: 'automatic' }],
   ];
   const plugins = [];
 
   return {
     presets,
-    plugins
+    plugins,
   };
 };

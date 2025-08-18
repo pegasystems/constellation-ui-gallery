@@ -10,11 +10,11 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsOAuthConnect
+  component: PegaExtensionsOAuthConnect,
 };
 
 const setPCore = (args: { isConnected: boolean; profileName: string }) => {
@@ -23,8 +23,8 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
     getConstants: () => {
       return {
         CASE_INFO: {
-          CASE_INFO_ID: 'ID'
-        }
+          CASE_INFO_ID: 'ID',
+        },
       };
     },
     getMessagingServiceManager: () => {
@@ -34,14 +34,14 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getEnvironmentInfo: () => {
       return {
         getOperatorIdentifier: () => {
           return 'operator';
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -51,9 +51,9 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataPageUtils: () => {
@@ -61,7 +61,7 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         getPageDataAsync: (
           data: string,
           context: string,
-          parameters: { Event: string; ProfileName: string; gadgetId: string }
+          parameters: { Event: string; ProfileName: string; gadgetId: string },
         ) => {
           const { Event, ProfileName, gadgetId } = parameters;
           switch (Event) {
@@ -73,30 +73,30 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
                   pyIsAuthenticated: true,
                   pyAccessToken: 'xxxx',
                   pyLabel: profileName,
-                  pyExpiresAt: '20270828T181056.516 GMT'
+                  pyExpiresAt: '20270828T181056.516 GMT',
                 });
               } else {
                 return Promise.resolve({
                   pyServiceType: 'AUTHENTICATE',
                   pyTaskStatus: true,
-                  pyIsAuthenticated: false
+                  pyIsAuthenticated: false,
                 });
               }
             case 'AUTHORIZE':
               return Promise.resolve({
                 pyServiceType: 'AUTHORIZE',
                 pyOauthURLRedirect: 'login-demo.html',
-                pyTaskStatus: true
+                pyTaskStatus: true,
               });
             case 'REVOKE':
               return Promise.resolve({
                 pyServiceType: 'REVOKE',
-                pyTaskStatus: true
+                pyTaskStatus: true,
               });
           }
-        }
+        },
       };
-    }
+    },
   };
 };
 
@@ -110,7 +110,7 @@ export const Default: Story = {
         return {
           getCaseInfo: () => {
             return {
-              getKey: () => 'OPGO8L-CARINSUR-WORK A-5'
+              getKey: () => 'OPGO8L-CARINSUR-WORK A-5',
             };
           },
           getActionsApi: () => {
@@ -120,13 +120,13 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           getContextName: () => '',
-          getValue: () => 'OPGO8L-CARINSUR-WORK A-5'
+          getValue: () => 'OPGO8L-CARINSUR-WORK A-5',
         };
-      }
+      },
     };
     return <PegaExtensionsOAuthConnect {...props} />;
   },
@@ -136,6 +136,6 @@ export const Default: Story = {
     connectLabel: 'Connect',
     showDisconnect: true,
     isConnected: false,
-    disconnectLabel: 'Disconnect'
-  }
+    disconnectLabel: 'Disconnect',
+  },
 };

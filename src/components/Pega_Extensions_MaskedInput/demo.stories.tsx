@@ -6,45 +6,45 @@ export default {
   argTypes: {
     fieldMetadata: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     additionalProps: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     displayMode: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     variant: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsMaskedInput
+  component: PegaExtensionsMaskedInput,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
-    }
+    },
   };
 };
 
@@ -52,7 +52,7 @@ const setPConnect = () => {
   return {
     getStateProps: () => {
       return {
-        value: 'C-123'
+        value: 'C-123',
       };
     },
     getActionsApi: () => {
@@ -71,7 +71,7 @@ const setPConnect = () => {
         },
         showCasePreview: () => {
           /* nothing */
-        }
+        },
       };
     },
     ignoreSuggestion: () => {
@@ -85,7 +85,7 @@ const setPConnect = () => {
     },
     resolveConfigProps: () => {
       /* nothing */
-    }
+    },
   };
 };
 
@@ -98,11 +98,11 @@ const MaskedInputDemo = (inputs: MaskedInputProps) => {
       const props = {
         ...args,
         additionalProps: { style: { maxWidth: '80ch' } },
-        getPConnect: setPConnect
+        getPConnect: setPConnect,
       };
       return <PegaExtensionsMaskedInput {...props} />;
     },
-    args: inputs
+    args: inputs,
   };
 };
 
@@ -118,34 +118,34 @@ export const Default: Story = MaskedInputDemo({
   readOnly: false,
   required: false,
   hideLabel: false,
-  hasSuggestions: false
+  hasSuggestions: false,
 });
 
 export const IBAN: Story = MaskedInputDemo({
   label: 'IBAN (International Bank Account Number)',
   mask: 'AA00 0000 0000 0000 0000 0000 A00',
-  helperText: '#### #### #### #### #### #### ###'
+  helperText: '#### #### #### #### #### #### ###',
 });
 
 export const CreditCard: Story = MaskedInputDemo({
   label: 'Credit Card number',
-  mask: '0000 0000 0000 0000'
+  mask: '0000 0000 0000 0000',
 });
 
 export const IPAddress: Story = MaskedInputDemo({
   label: 'IP Address',
   mask: '0[00].0[00].0[00].0[00]',
-  helperText: '(0-255).(0-255).(0-255).(0-255)'
+  helperText: '(0-255).(0-255).(0-255).(0-255)',
 });
 
 export const ZipCode: Story = MaskedInputDemo({
   label: 'Zip Code (extended code optional)',
   mask: '00000[-0000]',
-  helperText: '#####-####'
+  helperText: '#####-####',
 });
 
 export const SSN: Story = MaskedInputDemo({
   label: 'SSN',
   mask: '000 00 0000',
-  helperText: '### ## ####'
+  helperText: '### ## ####',
 });

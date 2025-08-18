@@ -6,18 +6,18 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsBanner
+  component: PegaExtensionsBanner,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getConstants: () => {
       return {
-        CASE_INFO: {}
+        CASE_INFO: {},
       };
     },
     getMessagingServiceManager: () => {
@@ -27,7 +27,7 @@ const setPCore = () => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -38,16 +38,16 @@ const setPCore = () => {
               data: [
                 {
                   pxObjClass: 'Data-',
-                  pyDescription: 'Message1'
+                  pyDescription: 'Message1',
                 },
                 {
                   pxObjClass: 'Data-',
-                  pyDescription: 'Message2'
-                }
-              ]
-            }
+                  pyDescription: 'Message2',
+                },
+              ],
+            },
           });
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -57,15 +57,15 @@ const setPCore = () => {
         },
         getActions: () => {
           return { ACTION_SHOWVIEW: 'ACTION_SHOWVIEW' };
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsBanner>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -78,16 +78,16 @@ export const Default: Story = {
               showPage: (name: string, classname: string) => {
                 // eslint-disable-next-line no-alert
                 alert(`show page ${classname}.${name}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsBanner {...props} />;
   },
   args: {
     variant: 'success',
-    dataPage: 'D_error'
-  }
+    dataPage: 'D_error',
+  },
 };

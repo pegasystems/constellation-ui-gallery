@@ -18,7 +18,7 @@ const RatingElem = (props: RatingElemProps) => {
   Array(numTicks)
     .fill(0)
     .map((_, index) => index)
-    .forEach(tick => {
+    .forEach((tick) => {
       ticksObject![tick + 1] = tickValues[tick];
     });
 
@@ -31,8 +31,8 @@ const RatingElem = (props: RatingElemProps) => {
       options: {
         context: getPConnect().getContextName(),
         pageReference: `caseInfo.content${path}[${propIndex}]`,
-        target: getPConnect().getTarget()
-      }
+        target: getPConnect().getTarget(),
+      },
     };
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
     return c11nEnv.getPConnect().getActionsApi();

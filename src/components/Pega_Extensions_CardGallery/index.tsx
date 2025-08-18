@@ -10,7 +10,7 @@ import {
   Icon,
   EmptyState,
   ErrorState,
-  Flex
+  Flex,
 } from '@pega/cosmos-react-core';
 import { Task } from './Task';
 import { loadDetails, getFilters } from './utils';
@@ -45,7 +45,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
     rendering = 'vertical',
     detailsDataPage = '',
     detailsViewName = '',
-    getPConnect
+    getPConnect,
   } = props;
   const [tasks, setTasks] = useState<any>();
   const filters = useRef<any>({});
@@ -58,14 +58,14 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       caseID: id,
       containerName: 'modal',
       actionTitle: 'Edit task',
-      type: 'express'
+      type: 'express',
     });
   };
 
   const addNewEvent = () => {
     if (createClassname) {
       getPConnect().getActionsApi().createWork(createClassname, {
-        openCaseViewAfterCreate: false
+        openCaseViewAfterCreate: false,
       });
     }
   };
@@ -76,7 +76,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       classname,
       detailsDataPage,
       detailsViewName,
-      getPConnect
+      getPConnect,
     });
   };
 
@@ -94,9 +94,9 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             { field: 'pyLabel' },
             { field: 'pyStatusWork' },
             { field: 'pzInsKey' },
-            { field: 'pxObjClass' }
-          ]
-        }
+            { field: 'pxObjClass' },
+          ],
+        },
       };
     }
     (window as any).PCore.getDataApiUtils()
@@ -115,7 +115,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
                 insKey: item.pzInsKey,
                 isVisible: true,
                 getDetails,
-                editTask
+                editTask,
               });
             });
             let numTasks = tmpTasks.length;
@@ -160,10 +160,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         }
       })
       .catch((error: any) => {
-        if (
-          error?.response?.data?.errorDetails?.length > 0 &&
-          error.response.data.errorDetails[0].localizedValue
-        ) {
+        if (error?.response?.data?.errorDetails?.length > 0 && error.response.data.errorDetails[0].localizedValue) {
           errorMsg.current = error.response.data.errorDetails[0].localizedValue;
         } else {
           errorMsg.current = error.message;
@@ -180,12 +177,12 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks(false);
       },
-      'ASSIGNMENT_SUBMISSION'
+      'ASSIGNMENT_SUBMISSION',
     );
     return () => {
       (window as any).PCore.getPubSubUtils().unsubscribe(
         (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
-        'ASSIGNMENT_SUBMISSION'
+        'ASSIGNMENT_SUBMISSION',
       );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,7 +204,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         },
         'dashboard-component-cardgallery',
         false,
-        getPConnect().getContextName()
+        getPConnect().getContextName(),
       );
       (window as any).PCore.getPubSubUtils().subscribe(
         (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
@@ -217,18 +214,18 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         },
         'dashboard-component-cardgallery',
         false,
-        getPConnect().getContextName()
+        getPConnect().getContextName(),
       );
       return () => {
         (window as any).PCore.getPubSubUtils().unsubscribe(
           (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
           'dashboard-component-cardgallery',
-          getPConnect().getContextName()
+          getPConnect().getContextName(),
         );
         (window as any).PCore.getPubSubUtils().unsubscribe(
           (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
           'dashboard-component-cardgallery',
-          getPConnect().getContextName()
+          getPConnect().getContextName(),
         );
       };
     }

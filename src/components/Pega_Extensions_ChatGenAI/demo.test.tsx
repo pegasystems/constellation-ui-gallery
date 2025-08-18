@@ -18,7 +18,7 @@ test('renders ChatGenAI widget with default args', async () => {
     fireEvent.click(BtnEl);
   });
   expect(await screen.findByLabelText('GenAI Assistant is typing')).toBeVisible();
-  await new Promise(r => {
+  await new Promise((r) => {
     setTimeout(r, 2000);
   });
   expect(await screen.findByText(/Thanks for asking/i)).toBeVisible();

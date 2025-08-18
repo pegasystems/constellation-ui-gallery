@@ -9,7 +9,7 @@ import {
   MetaList,
   type SummaryListItem,
   type ModalMethods,
-  type ModalProps
+  type ModalProps,
 } from '@pega/cosmos-react-core';
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -34,7 +34,7 @@ registerIcon(polarisIcon, informationIcon, clipboardIcon);
 const ViewAllModal = ({
   heading,
   objects,
-  loading
+  loading,
 }: {
   heading: ModalProps['heading'];
   objects: SummaryListItem[];
@@ -56,7 +56,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
     secondaryFieldTypes = '',
     dataPage = '',
     setCaseID = false,
-    getPConnect
+    getPConnect,
   } = props;
   const { create } = useModalManager();
   const [objects, setObjects] = useState<Array<SummaryListItem>>([]);
@@ -71,7 +71,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         propName: primaryField,
         type: 'string',
         item,
-        getPConnect
+        getPConnect,
       });
       const secondaryItems: Array<ReactNode> = [];
       secondaryFields.split(',').forEach((field, index) => {
@@ -80,7 +80,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
             propName: field,
             type: secondaryFieldTypesArray[index]?.trim().toLocaleLowerCase() || '',
             item,
-            getPConnect
+            getPConnect,
           });
           if (val) {
             secondaryItems.push(val);
@@ -90,7 +90,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
       tmpObjects.push({
         id: item.pyID || item.pyLabel,
         primary,
-        secondary: <MetaList items={secondaryItems} />
+        secondary: <MetaList items={secondaryItems} />,
       });
     });
     setObjects(tmpObjects);
@@ -100,11 +100,9 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ CaseInstanceKey }]
+        dataViewParameters: [{ CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, setCaseID ? payload : {}, pConn.getContextName())

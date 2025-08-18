@@ -1,14 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
-import {
-  withConfiguration,
-  FormControl,
-  Flex,
-  FormField,
-  Link,
-  useTheme,
-  ErrorState
-} from '@pega/cosmos-react-core';
+import { withConfiguration, FormControl, Flex, FormField, Link, useTheme, ErrorState } from '@pega/cosmos-react-core';
 import { type EventContentArg } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -43,7 +35,7 @@ export const convertDate = (v: string) => {
   }
   if (v?.length === 15) {
     return new Date(
-      `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 15)}`
+      `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 15)}`,
     );
   }
   return undefined;
@@ -72,7 +64,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj.ObjClass },
-      { workID: obj.ID }
+      { workID: obj.ID },
     );
     if (obj.Name) {
       const description = `Event ${eventInfo.event.title} for ${obj.Name} from ${convertTime(obj.StartTime)} to from ${convertTime(obj.EndTime)}`;
@@ -84,11 +76,11 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
           style={{
             wordBreak: 'break-all',
             color: '#FFFFFF',
-            fontSize: '1rem'
+            fontSize: '1rem',
           }}
           onPreview={() => {
             getPConnect().getActionsApi().showCasePreview(encodeURI(obj.InsKey), {
-              caseClassName: obj.ObjClass
+              caseClassName: obj.ObjClass,
             });
           }}
           onClick={(e: MouseEvent<HTMLButtonElement>) => {
@@ -116,14 +108,14 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
         ID: CaseInstanceKey,
         Label: pConn.getValue('caseInfo.name'),
         StartTime: data.StartTime,
-        EndTime: data.EndTime
+        EndTime: data.EndTime,
       };
       tmpEvents.push({
         id: newEvent.ID,
         title: newEvent.Label,
         start: convertDate(`${data.EventDate}T${newEvent.StartTime}`),
         end: convertDate(`${data.EventDate}T${newEvent.EndTime}`),
-        item: newEvent
+        item: newEvent,
       });
       tmpEvents.push();
       if (data.Events) {
@@ -133,7 +125,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
             title: item.Label,
             start: convertDate(`${data.EventDate}T${item.StartTime}`),
             end: convertDate(`${data.EventDate}T${item.EndTime}`),
-            item
+            item,
           });
         });
       }
@@ -171,7 +163,7 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
                   headerToolbar={{
                     left: '',
                     center: 'title',
-                    right: ''
+                    right: '',
                   }}
                   plugins={[timeGridPlugin]}
                   initialView='timeGridDay'

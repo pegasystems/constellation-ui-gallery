@@ -1,13 +1,4 @@
-import {
-  Progress,
-  Button,
-  Icon,
-  Card,
-  CardHeader,
-  CardContent,
-  Text,
-  useTheme
-} from '@pega/cosmos-react-core';
+import { Progress, Button, Icon, Card, CardHeader, CardContent, Text, useTheme } from '@pega/cosmos-react-core';
 import { StyledCardContent } from './styles';
 
 export type TaskProps = {
@@ -39,9 +30,7 @@ export const Task = (props: TaskProps) => {
         >
           <Text variant='h3'>{title}</Text>
         </CardHeader>
-        <CardContent>
-          {details || <Progress placement='inline' message='Loading content...' />}
-        </CardContent>
+        <CardContent>{details || <Progress placement='inline' message='Loading content...' />}</CardContent>
       </Card>
     </StyledCardContent>
   );

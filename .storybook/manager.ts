@@ -6,6 +6,6 @@ addons.setConfig({
   enableShortcuts: false,
   showToolbar: true,
   sidebar: {
-    showRoots: false
-  }
+    showRoots: false,
+  },
 });

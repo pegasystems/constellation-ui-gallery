@@ -50,7 +50,7 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
           label: tmpFields[1].value[i],
           value: tmpFields[2].value[i],
           path,
-          propIndex: i
+          propIndex: i,
         };
         content.push(item);
         categories[category] = content;
@@ -61,7 +61,7 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
       tmpTabs.push({
         name: key,
         id: `${tabId}`,
-        content: item
+        content: item,
       });
       tabId += 1;
     }
@@ -75,13 +75,8 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
           <Tabs tabs={tabs} onTabClick={handleTabChange} currentTabId={panelShown} />
         </Flex>
         <Flex container={{ pad: 1 }} item={{ grow: 1 }}>
-          {tabs.map(tab => (
-            <TabPanel
-              tabId={tab.id}
-              currentTabId={panelShown}
-              key={tab.id}
-              style={{ width: '100%' }}
-            >
+          {tabs.map((tab) => (
+            <TabPanel tabId={tab.id} currentTabId={panelShown} key={tab.id} style={{ width: '100%' }}>
               <StyledWrapper minWidth={minWidth}>
                 {tab.content.map((content: Rating) => {
                   return (

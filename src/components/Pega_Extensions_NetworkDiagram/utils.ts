@@ -7,7 +7,7 @@ const getNodeIntersection = (intersectionNode: any, targetNode: any) => {
   const {
     width: intersectionNodeWidth,
     height: intersectionNodeHeight,
-    positionAbsolute: intersectionNodePosition
+    positionAbsolute: intersectionNodePosition,
   } = intersectionNode;
   const targetPosition = targetNode.positionAbsolute;
 
@@ -68,7 +68,7 @@ const getEdgeParams = (source: any, target: any) => {
     tx: targetIntersectionPoint.x,
     ty: targetIntersectionPoint.y,
     sourcePos,
-    targetPos
+    targetPos,
   };
 };
 

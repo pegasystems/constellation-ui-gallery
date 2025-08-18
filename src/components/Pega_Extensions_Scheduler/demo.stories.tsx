@@ -6,28 +6,28 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     value: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     eventDate: {
       control: 'text',
-      description: 'Start time'
+      description: 'Start time',
     },
     startTime: {
       control: 'text',
-      description: 'Start time'
+      description: 'Start time',
     },
     endTime: {
       control: 'text',
-      description: 'End time'
-    }
+      description: 'End time',
+    },
   },
-  component: PegaExtensionsScheduler
+  component: PegaExtensionsScheduler,
 };
 
 const genValue = (args: any) => {
@@ -43,7 +43,7 @@ const genValue = (args: any) => {
         StartTime: '080000',
         EndTime: '100000',
         InsKey: 'OPGO8L-CARINSUR-WORK A-3004',
-        ObjClass: 'OPGO8L-CarInsur-Work-Appointment'
+        ObjClass: 'OPGO8L-CarInsur-Work-Appointment',
       },
       {
         ID: 'A-3005',
@@ -52,7 +52,7 @@ const genValue = (args: any) => {
         StartTime: '130000',
         EndTime: '150000',
         InsKey: 'OPGO8L-CARINSUR-WORK A-3005',
-        ObjClass: 'OPGO8L-CarInsur-Work-Appointment'
+        ObjClass: 'OPGO8L-CarInsur-Work-Appointment',
       },
       {
         ID: 'A-3006',
@@ -61,9 +61,9 @@ const genValue = (args: any) => {
         StartTime: '140000',
         EndTime: '180000',
         InsKey: 'OPGO8L-CARINSUR-WORK A-3006',
-        ObjClass: 'OPGO8L-CarInsur-Work-Appointment'
-      }
-    ]
+        ObjClass: 'OPGO8L-CarInsur-Work-Appointment',
+      },
+    ],
   };
   return JSON.stringify(obj);
 };
@@ -71,7 +71,7 @@ const setPCore = () => {
   (window as any).PCore = {
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getSemanticUrlUtils: () => {
@@ -81,18 +81,18 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsScheduler>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -101,7 +101,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
           },
           getValue: () => 'My new event',
@@ -121,7 +121,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -135,9 +135,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsScheduler {...props} />;
   },
@@ -147,6 +147,6 @@ export const Default: Story = {
     endTime: '120000',
     label: 'Scheduler',
     testId: '',
-    hideLabel: false
-  }
+    hideLabel: false,
+  },
 };

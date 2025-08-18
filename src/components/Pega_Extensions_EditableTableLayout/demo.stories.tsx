@@ -20,11 +20,11 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsEditableTableLayout
+  component: PegaExtensionsEditableTableLayout,
 };
 
 const genResponse = () => {
@@ -34,17 +34,17 @@ const genResponse = () => {
     config: {
       template: 'Pega_Extensions_EditableTableLayout',
       ruleClass: 'Work-',
-      inheritedProps: { label: 'Edit computers' }
+      inheritedProps: { label: 'Edit computers' },
     },
     children: [
       {
         name: 'A',
         type: 'Region',
         children: [] as Array<info>,
-        getPConnect: () => {}
-      }
+        getPConnect: () => {},
+      },
     ],
-    classID: 'Work-MyComponents'
+    classID: 'Work-MyComponents',
   };
 
   demoView.children[0].children = [
@@ -52,61 +52,61 @@ const genResponse = () => {
       config: {
         value: ['HP', 'Lenovo', 'Apple'],
         componentType: 'TextInput',
-        label: 'Brand'
+        label: 'Brand',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         value: [
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
           'Another description',
-          'simple description'
+          'simple description',
         ],
         componentType: 'TextInput',
-        label: 'Description'
+        label: 'Description',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         value: ['16Gb', '8Gb', '8Gb'],
         componentType: 'TextInput',
-        label: 'Memory'
+        label: 'Memory',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         value: ['2024-12-24', '2024-10-01', '2024-05-26'],
         componentType: 'Date',
-        label: 'Release Date'
+        label: 'Release Date',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         value: [1200.0, 1345.0, 1499.0],
         componentType: 'Currency',
-        label: 'Price'
+        label: 'Price',
       },
-      type: 'ScalarList'
+      type: 'ScalarList',
     },
     {
       config: {
         value: ['S-1', 'S-2', 'S-3'],
         componentType: 'TextInput',
-        label: 'ID'
+        label: 'ID',
       },
-      type: 'ScalarList'
-    }
+      type: 'ScalarList',
+    },
   ];
 
   demoView.children[0].getPConnect = () => {
     return {
       getRawMetadata: () => {
         return demoView.children[0];
-      }
+      },
     };
   };
   return demoView;
@@ -119,7 +119,7 @@ export const Default: Story = {
     (window as any).PCore = {
       getContextTreeManager: () => {
         return {
-          addPageListNode: () => {}
+          addPageListNode: () => {},
         };
       },
       createPConnect: (context: any) => {
@@ -129,7 +129,7 @@ export const Default: Story = {
               createComponent: (f: any) => {
                 const index = context.options.pageReference.substring(
                   context.options.pageReference.indexOf('[') + 1,
-                  context.options.pageReference.indexOf(']')
+                  context.options.pageReference.indexOf(']'),
                 );
                 if (f.type === 'Currency') {
                   return (
@@ -167,18 +167,18 @@ export const Default: Story = {
                   },
                   deleteEntry: () => {
                     /* nothing */
-                  }
+                  },
                 };
-              }
+              },
             };
-          }
+          },
         };
       },
       getComponentsRegistry: () => {
         return {
-          getLazyComponent: (f: string) => f
+          getLazyComponent: (f: string) => f,
         };
-      }
+      },
     };
 
     const props = {
@@ -188,10 +188,10 @@ export const Default: Story = {
       getPConnect: () => {
         return {
           meta: {
-            name: ''
+            name: '',
           },
           options: {
-            viewName: ''
+            viewName: '',
           },
           getContextName: () => 'workarea',
           getTarget: () => 'workarea',
@@ -212,11 +212,11 @@ export const Default: Story = {
           },
           resolveConfigProps: (f: any) => {
             return { ...f, propref: f.value, pageref: 'tasks' };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsEditableTableLayout {...props} />;
   },
-  args: {}
+  args: {},
 };

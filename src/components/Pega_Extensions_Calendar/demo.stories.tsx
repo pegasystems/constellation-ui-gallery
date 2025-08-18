@@ -6,37 +6,37 @@ export default {
   argTypes: {
     dataPage: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsCalendar
+  component: PegaExtensionsCalendar,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getEvents: () => {
       return {
         getCaseEvent: () => {
           return {
-            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION'
+            ASSIGNMENT_SUBMISSION: 'ASSIGNMENT_SUBMISSION',
           };
-        }
+        },
       };
     },
     getPubSubUtils: () => {
@@ -46,7 +46,7 @@ const setPCore = () => {
         },
         unsubscribe: () => {
           /* nothing */
-        }
+        },
       };
     },
     getSemanticUrlUtils: () => {
@@ -56,9 +56,9 @@ const setPCore = () => {
         },
         getActions: () => {
           return {
-            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle'
+            ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
-        }
+        },
       };
     },
     getDataApiUtils: () => {
@@ -82,7 +82,7 @@ const setPCore = () => {
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
                   pyDescription: null,
                   pyLabel: 'Appointment',
-                  pxCreateOpName: 'Marc Doe'
+                  pxCreateOpName: 'Marc Doe',
                 },
                 {
                   pyStatusWork: 'New',
@@ -99,7 +99,7 @@ const setPCore = () => {
                   pxCreateDateTime: '2023-07-21T18:43:07.895Z',
                   pyDescription: null,
                   pyLabel: 'Demo Acme',
-                  pxCreateOpName: 'Marc Doe'
+                  pxCreateOpName: 'Marc Doe',
                 },
                 {
                   pyStatusWork: 'New',
@@ -116,7 +116,7 @@ const setPCore = () => {
                   pxCreateDateTime: '2023-07-21T18:42:11.140Z',
                   pyDescription: '1-1 meeting',
                   pyLabel: 'Meeting with Joe Smith',
-                  pxCreateOpName: 'Marc Doe'
+                  pxCreateOpName: 'Marc Doe',
                 },
                 {
                   pyStatusWork: 'New',
@@ -133,20 +133,20 @@ const setPCore = () => {
                   pxCreateDateTime: '2023-07-21T18:41:09.060Z',
                   pyDescription: 'Install a boiler\n',
                   pyLabel: 'Install boiler',
-                  pxCreateOpName: 'Marc Doe'
-                }
-              ]
-            }
+                  pxCreateOpName: 'Marc Doe',
+                },
+              ],
+            },
           });
-        }
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsCalendar>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -169,7 +169,7 @@ export const Default: Story = {
               },
               showCasePreview: () => {
                 /* nothing */
-              }
+              },
             };
           },
           ignoreSuggestion: () => {
@@ -183,9 +183,9 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsCalendar {...props} />;
   },
@@ -195,6 +195,6 @@ export const Default: Story = {
     defaultViewMode: 'Monthly',
     nowIndicator: true,
     weekendIndicator: true,
-    dataPage: ''
-  }
+    dataPage: '',
+  },
 };

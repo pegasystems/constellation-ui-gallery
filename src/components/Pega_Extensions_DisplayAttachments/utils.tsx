@@ -1,12 +1,5 @@
 import { type MouseEvent } from 'react';
-import {
-  getKindFromMimeType,
-  DateTimeDisplay,
-  MetaList,
-  FileVisual,
-  Icon,
-  Button
-} from '@pega/cosmos-react-core';
+import { getKindFromMimeType, DateTimeDisplay, MetaList, FileVisual, Icon, Button } from '@pega/cosmos-react-core';
 
 export const canPreviewFile = (type: string) => {
   return type === 'image' || type === 'pdf';
@@ -41,21 +34,15 @@ export const downloadBlob = (arrayBuf: any, name: string, mimeType: string) => {
     new MouseEvent('click', {
       bubbles: true,
       cancelable: true,
-      view: window
-    })
+      view: window,
+    }),
   );
   document.body.removeChild(link);
 };
 
 const fileDownload = (data: string, attachment: any, headers: any) => {
-  const name = attachment.extension
-    ? `${attachment.name}.${attachment.extension}`
-    : attachment.fileName;
-  downloadBlob(
-    isContentBase64(headers) ? base64ToArrayBuffer(data) : data,
-    name,
-    attachment.mimeType
-  );
+  const name = attachment.extension ? `${attachment.name}.${attachment.extension}` : attachment.fileName;
+  downloadBlob(isContentBase64(headers) ? base64ToArrayBuffer(data) : data, name, attachment.mimeType);
 };
 
 /* Main utility function do handle what to do when clicking on an attachment
@@ -63,12 +50,7 @@ const fileDownload = (data: string, attachment: any, headers: any) => {
     - if URL, will open the link in a new tab
     - Otherwise, will download the file
  */
-export const downloadFile = (
-  attachment: any,
-  getPConnect: any,
-  setImages: any,
-  bForceDownload: boolean
-) => {
+export const downloadFile = (attachment: any, getPConnect: any, setImages: any, bForceDownload: boolean) => {
   const kind = getKindFromMimeType(attachment.mimeType);
   (window as any).PCore.getAttachmentUtils()
     .downloadAttachment(attachment.ID, getPConnect().getContextName(), attachment.responseType)
@@ -77,12 +59,10 @@ export const downloadFile = (
         let arrayBuf: Uint8Array | BlobPart;
         if (isContentBinary(content.headers)) arrayBuf = content.data;
         else arrayBuf = base64ToArrayBuffer(content.data);
-        const blob = new Blob([arrayBuf], { type: attachment.mimeType });
+        const blob = new Blob([arrayBuf as any], { type: attachment.mimeType });
         const fileURL = URL.createObjectURL(blob);
         if (setImages) {
-          const name = attachment.extension
-            ? `${attachment.name}.${attachment.extension}`
-            : attachment.fileName;
+          const name = attachment.extension ? `${attachment.name}.${attachment.extension}` : attachment.fileName;
           const metadata: Array<any> = [];
           metadata.push(attachment.createdByName);
           metadata.push(<DateTimeDisplay value={new Date(attachment.createTime)} variant='date' />);
@@ -94,8 +74,8 @@ export const downloadFile = (
               mimeType: attachment.mimeType,
               blob,
               src: fileURL,
-              metadata
-            }
+              metadata,
+            },
           ]);
         } else {
           window.open(fileURL, '_blank');
@@ -123,20 +103,12 @@ type AddAttachmentProps = {
 };
 
 export const addAttachment = (props: AddAttachmentProps) => {
-  const {
-    currentCategory,
-    attachment,
-    listOfAttachments,
-    getPConnect,
-    setImages,
-    useLightBox,
-    setElemRef
-  } = props;
+  const { currentCategory, attachment, listOfAttachments, getPConnect, setImages, useLightBox, setElemRef } = props;
   const dateTime = <DateTimeDisplay value={new Date(attachment.createTime)} variant='relative' />;
   const secondaryItems = [
     currentCategory === 'pxDocument' ? 'Document' : currentCategory,
     dateTime,
-    attachment.createdByName ?? attachment.createdBy
+    attachment.createdByName ?? attachment.createdBy,
   ];
 
   const kind = getKindFromMimeType(attachment.mimeType ?? '');
@@ -156,11 +128,9 @@ export const addAttachment = (props: AddAttachmentProps) => {
         }}
       >
         {attachment.name}{' '}
-        {(attachment.type === 'URL' || (canPreviewFile(kind) && !bCanUseLightBox)) && (
-          <Icon name='open' />
-        )}
+        {(attachment.type === 'URL' || (canPreviewFile(kind) && !bCanUseLightBox)) && <Icon name='open' />}
       </Button>
     ),
-    secondary: <MetaList items={secondaryItems} />
+    secondary: <MetaList items={secondaryItems} />,
   });
 };

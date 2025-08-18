@@ -1,12 +1,4 @@
-import {
-  withConfiguration,
-  useTheme,
-  Card,
-  Text,
-  CardContent,
-  CardHeader,
-  Button
-} from '@pega/cosmos-react-core';
+import { withConfiguration, useTheme, Card, Text, CardContent, CardHeader, Button } from '@pega/cosmos-react-core';
 import MapView from '@arcgis/core/views/MapView';
 import Draw from '@arcgis/core/views/draw/Draw';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
@@ -52,7 +44,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
     Zoom = '8',
     displayMode = '',
     bFreeFormDrawing = false,
-    bShowSearch = false
+    bShowSearch = false,
   } = props;
   const theme = useTheme();
 
@@ -63,28 +55,16 @@ export const PegaExtensionsMap = (props: MapProps) => {
 
   // Checks if the last vertex is making the line intersect itself.
   const updateVertices = (vars: VerticesProps) => {
-    const {
-      ptLayer,
-      view,
-      draw,
-      event,
-      embedDataRef,
-      latitudePropRef,
-      longitudePropRef,
-      imageMapRef
-    } = vars;
+    const { ptLayer, view, draw, event, embedDataRef, latitudePropRef, longitudePropRef, imageMapRef } = vars;
     // create a polyline from returned vertices
     if (event.vertices.length > 1) {
       createGraphic(ptLayer, view, event.vertices, true, theme);
     }
     if (event.type === 'draw-complete') {
       const action = draw.create('polyline');
-      action.on(
-        ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-        newEvent => {
-          updateVertices({ ...vars, event: newEvent });
-        }
-      );
+      action.on(['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'], (newEvent) => {
+        updateVertices({ ...vars, event: newEvent });
+      });
 
       /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
       if (!isLastActionClear.current) {
@@ -153,31 +133,31 @@ export const PegaExtensionsMap = (props: MapProps) => {
       ptLayer = new GraphicsLayer();
       map = new Map({
         basemap: 'gray-vector',
-        layers: [ptLayer]
+        layers: [ptLayer],
       });
 
       view = new MapView({
         container: mapDiv.current,
         map,
         center: [parseFloat(Longitude), parseFloat(Latitude)],
-        zoom: parseFloat(Zoom)
+        zoom: parseFloat(Zoom),
       });
 
       const draw = new Draw({
-        view
+        view,
       });
 
       if (displayMode !== 'DISPLAY_ONLY') {
         if (bFreeFormDrawing) {
           const sketchWidget = new Sketch({
             view,
-            layer: ptLayer
+            layer: ptLayer,
           });
           view.ui.add(sketchWidget, 'top-right');
         }
         if (bShowSearch) {
           const searchWidget = new Search({
-            view
+            view,
           });
           view.ui.add(searchWidget, 'top-right');
           if (locationRef) {
@@ -191,8 +171,8 @@ export const PegaExtensionsMap = (props: MapProps) => {
                   options: {
                     context: getPConnect().getContextName(),
                     pageReference: `caseInfo.content${locationRef}`,
-                    target: getPConnect().getTarget()
-                  }
+                    target: getPConnect().getTarget(),
+                  },
                 };
                 const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
                 const actionsApi = c11nEnv.getPConnect().getActionsApi();
@@ -202,7 +182,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
             });
           }
           const track = new Track({
-            view
+            view,
           });
           view.ui.add(track, 'top-left');
         }
@@ -213,27 +193,24 @@ export const PegaExtensionsMap = (props: MapProps) => {
               {
                 component: btnClearRef.current,
                 position: 'top-right',
-                index: 1
-              }
+                index: 1,
+              },
             ]);
           }
 
           const action = draw.create('polyline');
-          action.on(
-            ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-            event => {
-              updateVertices({
-                ptLayer,
-                view,
-                draw,
-                event,
-                embedDataRef,
-                latitudePropRef,
-                longitudePropRef,
-                imageMapRef
-              });
-            }
-          );
+          action.on(['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'], (event) => {
+            updateVertices({
+              ptLayer,
+              view,
+              draw,
+              event,
+              embedDataRef,
+              latitudePropRef,
+              longitudePropRef,
+              imageMapRef,
+            });
+          });
 
           if (btnClearRef?.current) {
             btnClearRef.current.onclick = () => {

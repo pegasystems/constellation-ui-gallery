@@ -7,11 +7,11 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsFieldGroupAsRow
+  component: PegaExtensionsFieldGroupAsRow,
 };
 
 const renderField = (resolvedProps: any) => {
@@ -28,7 +28,7 @@ const mainResponse = {
     showLabel: true,
     label: '@L Details',
     localeReference: '@LR Details',
-    inheritedProps: []
+    inheritedProps: [],
   },
   children: [
     {
@@ -38,7 +38,7 @@ const mainResponse = {
         return {
           getRawMetadata: () => {
             return mainResponse.children[0];
-          }
+          },
         };
       },
       children: [
@@ -46,30 +46,30 @@ const mainResponse = {
           type: 'DateTime',
           config: {
             value: '@P .pySLADeadline',
-            label: '@L SLA Deadline'
+            label: '@L SLA Deadline',
           },
-          key: '1'
+          key: '1',
         },
         {
           type: 'DateTime',
           config: {
             value: '@P .pySLAGoal',
-            label: '@L SLA Goal'
+            label: '@L SLA Goal',
           },
-          key: '2'
+          key: '2',
         },
         {
           type: 'DateTime',
           config: {
             value: '@P .pySLAStartTime',
-            label: '@L SLA Start Time'
+            label: '@L SLA Start Time',
           },
-          key: '3'
-        }
-      ]
-    }
+          key: '3',
+        },
+      ],
+    },
   ],
-  classID: 'Work-MyComponents'
+  classID: 'Work-MyComponents',
 };
 
 const regionChildrenResolved = [
@@ -77,20 +77,20 @@ const regionChildrenResolved = [
     readOnly: true,
     value: '30 days',
     label: 'SLA Deadline',
-    key: 'SLA Deadline'
+    key: 'SLA Deadline',
   },
   {
     readOnly: true,
     value: '10 days',
     label: 'SLA Goal',
-    key: 'SLA Goal'
+    key: 'SLA Goal',
   },
   {
     readOnly: true,
     value: '2/12/2023',
     label: 'SLA Start Time',
-    key: 'SLA Start Time'
-  }
+    key: 'SLA Start Time',
+  },
 ];
 
 const createComponent = (config: any) => {
@@ -107,7 +107,7 @@ const createComponent = (config: any) => {
 
 type Story = StoryObj<typeof PegaExtensionsFieldGroupAsRow>;
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     const props = {
       template: 'FieldGroupAsRow',
       ...args,
@@ -130,19 +130,17 @@ export const Default: Story = {
           },
           resolveConfigProps: () => {
             /* nothing */
-          }
+          },
         };
-      }
+      },
     };
     const regionAChildren = mainResponse.children[0].children.map((child: any) => {
       return props.getPConnect().createComponent(child);
     });
 
-    return (
-      <PegaExtensionsFieldGroupAsRow {...props}>{regionAChildren}</PegaExtensionsFieldGroupAsRow>
-    );
+    return <PegaExtensionsFieldGroupAsRow {...props}>{regionAChildren}</PegaExtensionsFieldGroupAsRow>;
   },
   args: {
-    heading: 'Heading'
-  }
+    heading: 'Heading',
+  },
 };

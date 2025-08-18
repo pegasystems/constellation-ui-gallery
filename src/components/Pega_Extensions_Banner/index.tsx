@@ -20,11 +20,9 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   const loadMessages = useCallback(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue(
-        (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-      );
+      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }]
+        dataViewParameters: [{ pyID: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())
@@ -39,21 +37,19 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    const caseID = getPConnect().getValue(
-      (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID
-    );
+    const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const filter = {
       matcher: 'TASKLIST',
       criteria: {
-        ID: caseID
-      }
+        ID: caseID,
+      },
     };
     const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         loadMessages();
       },
-      getPConnect().getContextName()
+      getPConnect().getContextName(),
     );
     return () => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);

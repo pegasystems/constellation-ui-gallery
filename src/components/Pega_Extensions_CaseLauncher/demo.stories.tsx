@@ -8,28 +8,28 @@ export default {
   argTypes: {
     classFilter: {
       options: ['Work-'],
-      control: { control: 'select' }
+      control: { control: 'select' },
     },
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
-  }
+        disable: true,
+      },
+    },
+  },
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getEnvironmentInfo: () => {
       return {};
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsCaseLauncher>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -40,11 +40,11 @@ export const Default: Story = {
               createWork: (className: string) => {
                 // eslint-disable-next-line no-alert
                 alert(`Create case type with className: ${className}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsCaseLauncher {...props} />;
   },
@@ -52,6 +52,6 @@ export const Default: Story = {
     heading: 'Start Case',
     description: 'Short description about the case that you will be able to start',
     classFilter: 'Work-',
-    labelPrimaryButton: 'Start a case'
-  }
+    labelPrimaryButton: 'Start a case',
+  },
 };

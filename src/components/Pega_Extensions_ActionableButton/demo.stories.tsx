@@ -6,39 +6,39 @@ export default {
   argTypes: {
     getPConnect: {
       table: {
-        disable: true
-      }
-    }
+        disable: true,
+      },
+    },
   },
-  component: PegaExtensionsActionableButton
+  component: PegaExtensionsActionableButton,
 };
 
 const setPCore = () => {
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
-        getLazyComponent: (f: string) => f
+        getLazyComponent: (f: string) => f,
       };
     },
     getEnvironmentInfo: () => {
       return {
-        getTimeZone: () => 'local'
+        getTimeZone: () => 'local',
       };
     },
     getConstants: () => {
       return {
         CASE_INFO: {
-          AVAILABLEACTIONS: 'AVAILABLEACTIONS'
-        }
+          AVAILABLEACTIONS: 'AVAILABLEACTIONS',
+        },
       };
-    }
+    },
   };
 };
 
 type Story = StoryObj<typeof PegaExtensionsActionableButton>;
 
 export const Default: Story = {
-  render: args => {
+  render: (args) => {
     setPCore();
     const props = {
       ...args,
@@ -46,7 +46,7 @@ export const Default: Story = {
         return {
           getStateProps: () => {
             return {
-              value: 'C-123'
+              value: 'C-123',
             };
           },
           getContextName: () => {
@@ -63,17 +63,17 @@ export const Default: Story = {
               saveAssignment: () => Promise.resolve(),
               openLocalAction: (name: string, options: any) => {
                 alert(`Launch local action ${name} for ${options.caseID}`);
-              }
+              },
             };
-          }
+          },
         };
-      }
+      },
     };
     return <PegaExtensionsActionableButton {...props} />;
   },
   args: {
     label: 'Launch',
     localAction: 'pyEditDetails',
-    value: 'Work-Case C-123'
-  }
+    value: 'Work-Case C-123',
+  },
 };
