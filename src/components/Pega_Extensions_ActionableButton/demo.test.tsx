@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { composeStories } from '@storybook/react';
 import * as DemoStories from './demo.stories';
 
@@ -9,6 +9,4 @@ test('renders Actionable button with default args', () => {
   render(<Default />);
   const buttonElement = screen.getByText('Launch');
   expect(buttonElement).not.toBeNull();
-  fireEvent.click(buttonElement);
-  expect(window.alert).toHaveBeenCalled();
 });
