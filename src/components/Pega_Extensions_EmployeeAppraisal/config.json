@@ -1,0 +1,36 @@
+{
+  "name": "Pega_Extensions_EmployeeAppraisal",
+  "label": "Employee Appraisal",
+  "description": "Employee Appraisal",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_EmployeeAppraisal",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "dataPage",
+        "label": "List Data Page",
+        "format": "TEXT",
+        "required": true,
+        "defaultValue": ""
+      },
+      {
+        "name": "detailsDataPage",
+        "label": "Details Data Page",
+        "format": "TEXT",
+        "required": true,
+        "defaultValue": ""
+      },
+      {
+        "name": "loadingMessage",
+        "label": "Loading message",
+        "format": "TEXT",
+        "defaultValue": ""
+      }
+  ],
+  "defaultConfig": {}
+}
