@@ -1,0 +1,21 @@
+{
+  "name": "Pega_Extensions_EmployeeProfile",
+  "label": "Employee Profile",
+  "description": "Employee Profile",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_EmployeeProfile",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "dataPageName",
+        "label": "Data Page Name",
+        "format": "TEXT"
+      }
+  ],
+  "defaultConfig": {}
+}
