@@ -30,10 +30,15 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
     const fetchData = async () => {
       try {
         const payload = {
-          dataViewParameters : { EmployeeID : '' }
+          pyGUID : '1a5b9422-ffaf-4f94-b89b-eed62bce4f6f'
         };
-        const res = await fetchDataPage(dataPageName, context, payload);
-        const employeeData = res?.data ?? null;
+
+        const options = {
+          invalidateCache: true,
+        };
+
+        const res = await fetchDataPage(dataPageName, context, payload, options);
+        const employeeData = res ?? null;
         setEmployee(employeeData);
         setIsLoading(false);
       } catch (error) {
@@ -51,11 +56,57 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
       <p>Profile</p>
 
       {!isLoading && employee?.EmployeeName ? (
-        <p>{employee.EmployeeName}</p>
+        <div className="profile-container">
+          <div className="profile-header">
+            <img
+              src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg"
+              alt="Employee Profile Pic"
+              className="profile-pic"
+            />
+            <div>
+              <h2>{ employee.EmployeeName }</h2>
+              <p>{ employee.JobTitle } | { employee.Department }</p>
+              <p>
+                <a
+                  href="mailto:sonysuvarchala.masani@bitsinglass.com"
+                  className="email-link"
+                >
+                { employee.EmailAddress }
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div className="profile-details">
+            <div className="detail-card">
+              <h4>Employee ID</h4>
+              <p>{ employee.EmployeeID }</p>
+            </div>
+            <div className="detail-card">
+              <h4>Department</h4>
+              <p>{ employee.Department }</p>
+            </div>
+            <div className="detail-card">
+              <h4>Job Title</h4>
+              <p>{ employee.JobTitle }</p>
+            </div>
+            <div className="detail-card">
+              <h4>Joining Date</h4>
+              <p>{ employee.JoiningDate }</p>
+            </div>
+            <div className="detail-card">
+              <h4>Reporting Manager</h4>
+              <p>{ employee.EmployeeName }</p>
+            </div>
+            <div className="detail-card">
+              <h4>Practice</h4>
+              <p>{ employee.Department }</p>
+            </div>
+          </div>
+        </div>
       ) : (
         !isLoading && <p>No employee data available.</p>
       )}
-
     </StyledPegaExtensionsEmployeeProfileWrapper>
   );
 
