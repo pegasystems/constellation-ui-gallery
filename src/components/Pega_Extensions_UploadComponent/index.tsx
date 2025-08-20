@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { withConfiguration, Table } from '@pega/cosmos-react-core';
 import { AppAnnouncement as PegaAppAnnouncement } from '@pega/cosmos-react-work';
 import type { PConnFieldProps } from './PConnProps';
-import './create-nonce';
+import FileUpload from './FileUpload';
 
 import StyledPegaExtensionsUploadComponentWrapper from './styles';
 
@@ -81,6 +81,7 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
       .catch((error: any) => {
         setWorklist([]);
         setIsLoading(false);
+        // eslint-disable-next-line no-console
         console.log(error);
       });
   }, [context]);
@@ -102,6 +103,7 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
       loading={isLoading}
       loadingMessage={PConnect.getLocalizedValue('Loading Work list', '', '')}
     />
+    <FileUpload />
     </StyledPegaExtensionsUploadComponentWrapper>
   );
 
