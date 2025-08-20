@@ -3,7 +3,7 @@ import { withConfiguration } from '@pega/cosmos-react-core';
 import type { PConnFieldProps } from './PConnProps';
 import fetchDataPage from './apiUtils';
 
-import StyledPegaExtensionsEmployeeProfileWrapper from './styles';
+import GlobalStyle from './styles';
 
 interface EmployeeData {
   EmployeeName?: string;
@@ -52,9 +52,8 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
   }, [context, dataPageName]);
 
   return (
-    <StyledPegaExtensionsEmployeeProfileWrapper>
-      <p>Profile</p>
-
+    <>
+      <GlobalStyle />
       {!isLoading && employee?.EmployeeName ? (
         <div className="profile-container">
           <div className="profile-header">
@@ -96,20 +95,19 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
             </div>
             <div className="detail-card">
               <h4>Reporting Manager</h4>
-              <p>{ employee.EmployeeName }</p>
+              <p>{ employee.RM }</p>
             </div>
             <div className="detail-card">
               <h4>Practice</h4>
-              <p>{ employee.Department }</p>
+              <p>{ employee.Practice }</p>
             </div>
           </div>
         </div>
       ) : (
         !isLoading && <p>No employee data available.</p>
       )}
-    </StyledPegaExtensionsEmployeeProfileWrapper>
+    </>
   );
-
 }
 
 export default withConfiguration(PegaExtensionsEmployeeProfile);

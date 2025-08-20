@@ -10,8 +10,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .profile-container {
-    max-width: 800px;
-    margin: 40px auto;
+    max-width: 1200px;
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
