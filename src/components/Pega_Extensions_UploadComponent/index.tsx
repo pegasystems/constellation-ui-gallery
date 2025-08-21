@@ -23,6 +23,7 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
   const { header, description, datasource = [], whatsnewlink, image, getPConnect } = props;
   const [worklist, setWorklist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [img, setImg] = useState('');
   const PConnect = getPConnect();
   const dataViewName = 'D_pyMyWorkList';
   const context = PConnect.getContextName();
@@ -49,6 +50,13 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
   // get data from a data page and a PConnect function
   // to get getContextName
   useEffect(() => {
+
+    const imagePath = getPConnect().getImagePath('b8d31e98-8549-453f-9d14-ea7279e298f0');
+    // eslint-disable-next-line no-console
+    console.log('imagePath', imagePath);
+    setImg(imagePath);
+    // eslint-disable-next-line no-console
+    console.log('img', img);
 
     PCore.getDataApiUtils()
       .getData(dataViewName, {}, context)
@@ -84,7 +92,7 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
         // eslint-disable-next-line no-console
         console.log(error);
       });
-  }, [context]);
+  }, [context, getPConnect, img]);
 
   return (
     <StyledPegaExtensionsUploadComponentWrapper>
@@ -103,7 +111,8 @@ function PegaExtensionsUploadComponent(props: PegaExtensionsUploadComponentProps
       loading={isLoading}
       loadingMessage={PConnect.getLocalizedValue('Loading Work list', '', '')}
     />
-    <FileUpload />
+    <img src={`blob:${img}`} alt='ii' />
+    <FileUpload context={context} />
     </StyledPegaExtensionsUploadComponentWrapper>
   );
 

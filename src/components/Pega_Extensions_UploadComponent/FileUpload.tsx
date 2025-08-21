@@ -10,7 +10,11 @@ type FileUploadResponse = {
   type: string;
 };
 
-const FileUpload: React.FC = () => {
+interface FileUploadProps {
+  context: any;
+}
+
+const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
   console.log(PCore);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState<string>('');
@@ -18,18 +22,25 @@ const FileUpload: React.FC = () => {
 
   const generateUniqueID = () => '_' + Math.random().toString(36).substr(2, 9);
 
-  // useEffect(() => {
-  //   const path = `DATA-CONTENT-IMAGE a4de2bce-fcd5-4918-80eb-64d2742c8bb8`;
-  //   AssetLoader.getSvcImageUrl('394b3649-5306-4db8-b28d-516c28d5b58a')
-  //     .then((url) => {
-  //       console.log(url);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // });
+  useEffect(async () => {
+    const path = `DATA-CONTENT-IMAGE a4de2bce-fcd5-4918-80eb-64d2742c8bb8`;
+    PCore.getAssetLoader().getSvcImageUrl('DATA-CONTENT-IMAGE 1220250821T102532.582 GMT!JPG!/WEBWB/')
+      .then((url) => {
+        console.log(url);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+      const constellationServiceUrl = await PCore.getAssetLoader().getConstellationServiceUrl();
+      console.log(constellationServiceUrl);
+
+  });
+
 
   const onUploadProgress = (id: string, progressInfo: any) => {
+    console.log(id);
+    console.log(progressInfo);
     const { loaded, total } = progressInfo;
     const percent = ((loaded / total) * 100).toFixed(2);
     setUploadProgress(`Progress: ${percent}%`);
@@ -49,8 +60,7 @@ const FileUpload: React.FC = () => {
   async function handleFileChange(event) {
     const file = event.target.files[0]; // This is a real File object
 
-    file.ID = generateUniqueID(); // Safe to extend if your API expects it
-    file.category = 'Resume';
+    file.ID = generateUniqueID();
     console.log(file);
     const res = await PCore.getAttachmentUtils().uploadAttachment(
       file,
@@ -59,6 +69,40 @@ const FileUpload: React.FC = () => {
       'app/primary_1'
     );
     console.log(res);
+
+    const { invokeCustomRestApi } = PCore.getRestClient();
+
+    // /api/dev/v1/insights
+    // https://8fhf5heb.pegace.net/prweb/PRAuth/app/dpms/api/application/v2/attachments/upload
+
+    console.log(file.ID);
+
+    invokeCustomRestApi(`/api/application/v2/attachments/${res.clientFileID}`, {
+       method: 'GET',
+       body: {},
+       headers: {},
+       withoutDefaultHeaders : false
+    }, context)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    invokeCustomRestApi(`/api/application/v2/attachments/${res.ID}`, {
+       method: 'GET',
+       body: {},
+       headers: {},
+       withoutDefaultHeaders : false
+    }, context)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
     // {"ID":"394b3649-5306-4db8-b28d-516c28d5b58a"}
   }
 
@@ -112,6 +156,7 @@ const FileUpload: React.FC = () => {
   return (
     <div>
       <h2>Upload Resume</h2>
+      <img src='blob:https://8fhf5heb.pegace.net/b8d31e98-8549-453f-9d14-ea7279e298f0' />
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>
         Upload
