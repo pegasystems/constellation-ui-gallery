@@ -19,13 +19,41 @@ const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState<string>('');
   const [uploadStatus, setUploadStatus] = useState<string>('');
+  const [newImg, setnewImg] = useState('');
 
   const generateUniqueID = () => '_' + Math.random().toString(36).substr(2, 9);
 
   useEffect(async () => {
     const path = `DATA-CONTENT-IMAGE a4de2bce-fcd5-4918-80eb-64d2742c8bb8`;
-    PCore.getAssetLoader().getSvcImageUrl('DATA-CONTENT-IMAGE 1220250821T102532.582 GMT!JPG!/WEBWB/')
+
+    PCore.getAttachmentUtils().downloadAttachment('DATA-WORKATTACH-FILE-TEMP BA7AB28F-FDDF-43E8-8947-54EAED0229A4!1', context)
+    .then((res) => {
+      console.log('file downloadAttachment');
+      console.log(res);
+
+      // setnewImg(res.data);
+
+      const base64Data = res.data;
+      const contentType = res.headers['content-type'] || 'image/png'; // Default to PNG if not provided
+
+      // Create the image element
+      const img = document.createElement('img');
+      img.src = `data:${contentType};base64,${base64Data}`;
+
+      // Optionally style the image
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+
+      // Append the image to the DOM
+      document.body.appendChild(img);
+
+    }).catch(err => {
+      console.log(e);
+    });
+
+    PCore.getAssetLoader().getSvcImageUrl('DATA-WORKATTACH-FILE-TEMP BA7AB28F-FDDF-43E8-8947-54EAED0229A4!1')
       .then((url) => {
+        console.log('file Upload getSvcImageUrl');
         console.log(url);
       })
       .catch((e) => {
@@ -76,6 +104,19 @@ const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
     // https://8fhf5heb.pegace.net/prweb/PRAuth/app/dpms/api/application/v2/attachments/upload
 
     console.log(file.ID);
+
+    invokeCustomRestApi('/api/application/v2/attachments/', {
+       method: 'GET',
+       body: {},
+       headers: {},
+       withoutDefaultHeaders : false
+    }, context)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
     invokeCustomRestApi(`/api/application/v2/attachments/${res.clientFileID}`, {
        method: 'GET',
@@ -157,6 +198,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
     <div>
       <h2>Upload Resume</h2>
       <img src='blob:https://8fhf5heb.pegace.net/b8d31e98-8549-453f-9d14-ea7279e298f0' />
+      <img src={ newImg } />
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>
         Upload
