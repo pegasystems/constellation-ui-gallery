@@ -9,6 +9,8 @@ const fetchDataPage = async(
   context: string,
   payload: Record<string, any> = {}
 ): Promise<FetchDataPageResult> => {
+  // eslint-disable-next-line no-console
+  console.log(payload);  
   try {
     const response = await PCore.getDataApiUtils().getData(dataPageName, payload, context);
     return response.data || {};

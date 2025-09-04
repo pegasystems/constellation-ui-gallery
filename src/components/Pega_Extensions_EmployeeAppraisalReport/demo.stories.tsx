@@ -2,19 +2,19 @@
 // @ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PegaExtensionsEmployeeAppraisal from './index';
+import PegaExtensionsEmployeeAppraisalReport from './index';
 
 
 import configProps from './mock';
 
-const meta: Meta<typeof PegaExtensionsEmployeeAppraisal> = {
-  title: 'PegaExtensionsEmployeeAppraisal',
-  component: PegaExtensionsEmployeeAppraisal,
+const meta: Meta<typeof PegaExtensionsEmployeeAppraisalReport> = {
+  title: 'PegaExtensionsEmployeeAppraisalReport',
+  component: PegaExtensionsEmployeeAppraisalReport,
   excludeStories: /.*Data$/
 };
 
 export default meta;
-type Story = StoryObj<typeof PegaExtensionsEmployeeAppraisal>;
+type Story = StoryObj<typeof PegaExtensionsEmployeeAppraisalReport>;
 
 if (!window.PCore) {
   window.PCore = {};
@@ -146,56 +146,11 @@ const employeesData = {
 
 const appraisalData = {
   data: {
-    data: [
-      {
-          "Emp_ID": "EMP014",
-          "ManagerComments": "Test",
-          "Year": 2024,
-          "EmployeeComments": "Test",
-          "HRFinalComments": "Test"
-      },
-      {
-          "Emp_ID": "EMP015",
-          "ManagerComments": "Test",
-          "Year": 2024,
-          "EmployeeComments": "Test",
-          "HRFinalComments": "Test",
-          "KRA": null
-      },
-      {
-          "Emp_ID": "EMP016",
-          "ManagerComments": "Test",
-          "Year": 2025,
-          "EmployeeComments": "Test",
-          "HRFinalComments": "Test",
-          "KRA": [
-              {
-                  "Learning": "5",
-                  "Leadership": "5",
-                  "JobKnowledge": "5",
-                  "ID": "3",
-                  "CommunicationSkills": "5",
-                  "Flexibility": "5",
-                  "Initiative": "5",
-                  "PolicyAdherence": "5"
-              },
-              {
-                  "Learning": "4",
-                  "Leadership": "4",
-                  "JobKnowledge": "2",
-                  "ID": "2",
-                  "CommunicationSkills": "4",
-                  "Flexibility": "2",
-                  "Initiative": "4",
-                  "PolicyAdherence": "4"
-              }
-          ]
-      }
-    ]
+    data: [{"pyID":"PAR-30002","KRACompRO":[{"HRCompFinalRatingValue":0E-9,"CompetencyName":"Flexibility","pxUpdateSystemID":"pega","CompetencyReviewerComments":"yuyio","CompetencyID":"C007","pxUpdateDateTime":"2025-04-24T05:14:36.593Z","pxUpdateOpName":"Venkat Tama","pxUpdateOperator":"VenkatTama","Reviewer":"PL","PLReviewerComments_Comp":"yuyio","CompReviewerRating":5,"JobTitle":"5B","pxObjClass":"BIG-PAR-Data-CompetencyKRAsNew","CompetencyDescription":"Modifies behavior and points of view in response to changing conditions. Adapts to change and integrates changes into existing strategies and processes. Seeks out different approaches to improve performance, streamline work and/or achieve high standards or","pxCreateOperator":"VenkatTama","pxCreateDateTime":"2025-04-24T05:13:53.930Z","pxCreateSystemID":"pega","pxCreateOpName":"Venkat Tama","Weightage":15.000000000},{"HRCompFinalRatingValue":0E-9,"CompetencyName":"Job knowledge","pxUpdateSystemID":"pega","CompetencyReviewerComments":"ytfgyut","CompetencyID":"C020","pxUpdateDateTime":"2025-04-24T05:22:06.332Z","pxUpdateOpName":"Venkat Tama","pxUpdateOperator":"VenkatTama","JobTitle":"5B","Reviewer":"PL","CompReviewerRating":5,"PLReviewerComments_Comp":"ytfgyut","pxObjClass":"BIG-PAR-Data-CompetencyKRAsNew","CompetencyDescription":"Demonstrates proficiency, expertise and understanding of information necessary to perform job well. Is able to acquire and integrate knowledge to accomplish goals. Applies techniques, equipment and experience to perform job well. Takes personal responsibil","pxCreateOperator":"VenkatTama","pxCreateDateTime":"2025-04-24T05:21:31.503Z","pxCreateSystemID":"pega","pxCreateOpName":"Venkat Tama","Weightage":15.000000000}],"pxObjClass":"BIG-PAR-Work-AnnualPerformanceCycle","TotalPerformanceKRARating":4.500000000,"SearchByEmployee":"CTPL0380","HRReviewComments":" Test by an HR","SystemCalculatedFinalRating":4.5900000000,"TotalCompetencyKRARating":4.80,"PLInitialComments":"test by a PL","PerformanceKRAs":[{"Goal1":"85%","Description":"Contribution within the projects (Internal/External)","pxUpdateSystemID":"pega","Goal2":"90%","pxUpdateDateTime":"2025-07-21T05:41:38.517Z","EmpReviewComments_perf":"pop[","HRRating":5,"FinalReviewer":"HR","pxUpdateOpName":"Pavan A","PLRating":5,"pxUpdateOperator":"pavan.avula@bitsinglass.com","Emp_InitialComments_Perf":"Test","Department":"Quality Analyst","RMGRating":5,"RM_Ratings_Perf":5,"FinalHRComments_Perf":"ilio","RMInitialComments_Perf":"yuiyo","Weightage":10,"Designation":"Associate Technical Architect","RMGreviewerComments_Perf":"kh","PLReviewerComments_Perf":"uiouip","HRFinalRatingValue":0.50,"PerformanceName":"Utilization","pxObjClass":"BIG-PAR-Data-PerformanceKRA","Skill":"QA","PerformanceID":"P122","pzIndexOwnerKey":"BIG-PAR-WORK PAR-30002","Reviewer2":"RM","Reviewer1":"Employee","Emp_SelfRating_Perf":5,"Reviewer4":"RMG","PLinitialComments_perf":"futhytu","Reviewer3":"PL","Goal3":"100%"},{"Goal1":"� Productivity meets the set standards\n","Description":"Technical Trainings and Certifications","pxUpdateSystemID":"pega","Goal2":"� Productivity is above the set standards\n","pxUpdateDateTime":"2025-07-21T05:41:38.517Z","EmpReviewComments_perf":"khjlo","HRRating":4,"pxUpdateOpName":"Pavan A","FinalReviewer":"HR","PLRating":4,"pxUpdateOperator":"pavan.avula@bitsinglass.com","Emp_InitialComments_Perf":"wrwea","RMGRating":4,"Department":"Quality Analyst","RM_Ratings_Perf":4,"FinalHRComments_Perf":"yuio9","RMInitialComments_Perf":"fgjgh","Weightage":20.000000000,"Designation":"Associate Technical Architect","RMGreviewerComments_Perf":"jkghk","PLReviewerComments_Perf":"ujghikgh","HRFinalRatingValue":0.800000000,"TestGoal1":"41beca99-a5c9-45d7-8275-89b1d2baf494","PerformanceName":"Capability - Training","pxObjClass":"BIG-PAR-Data-PerformanceKRA","Skill":"QA","pzIndexOwnerKey":"BIG-PAR-WORK PAR-30002","PerformanceID":"P123","Reviewer2":"RM","Reviewer1":"Employee","Reviewer4":"RMG","Emp_SelfRating_Perf":4,"Reviewer3":"PL","PLinitialComments_perf":"iyuio","Goal3":"� Always produces more than the acceptable standards within defined timeframe"}],"AppraisalDate":"2025-09-03"}]
   }
 };
 
-export const BasePegaExtensionsEmployeeAppraisal: Story = args => {
+export const BasePegaExtensionsEmployeeAppraisalReport: Story = args => {
   window.PCore.getDataApiUtils = () => {
     return {
       getData: (dataPageName: string) => {
@@ -260,12 +215,12 @@ export const BasePegaExtensionsEmployeeAppraisal: Story = args => {
 
   return (
       <>
-        <PegaExtensionsEmployeeAppraisal {...props} {...args} />
+        <PegaExtensionsEmployeeAppraisalReport {...props} {...args} />
       </>
     );
 };
 
-BasePegaExtensionsEmployeeAppraisal.args = {
+BasePegaExtensionsEmployeeAppraisalReport.args = {
   dataPage: configProps.dataPage,
   title: configProps.title,
   loadingMessage: configProps.loadingMessage,

@@ -10,19 +10,23 @@ import type { Employee } from './interfaces';
 import fetchDataPage from './apiUtils';
 import { debounce } from 'lodash';
 
-interface PegaExtensionsEmployeeAppraisalProps extends PConnFieldProps {
+interface PegaExtensionsEmployeeAppraisalReportProps extends PConnFieldProps {
   dataPage: string;
   loadingMessage: string;
   detailsDataPage: string;
 }
 
-function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalProps) {
+function PegaExtensionsEmployeeAppraisalReport(props: PegaExtensionsEmployeeAppraisalReportProps) {
 
   const { getPConnect, dataPage, loadingMessage, detailsDataPage } = props;
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [searchText, setSearchText] = useState('');
+  const [sortByField, setSortByField] = useState('EmployeeName');
+  const [sortByType, setSortByType] = useState<'ASC' | 'DESC'>('ASC');
   const [pageNumber, setpageNumber] = useState(1);
-  const [hasMoreResults, setHasMoreResults] = useState(true);
+  // const [hasMoreResults, setHasMoreResults] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
@@ -36,32 +40,98 @@ function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalP
   const employeeListColumnsConfig = useMemo(
     () => ([
       { key: 'EmployeeID', label: 'Employee ID' },
-      { key: 'EmployeeName', label: 'Employee Name' },
-      { key: 'AppraisalId', label: 'Appraisal ID' },
       { key: 'EmailAddress', label: 'Email' },
-      { key: 'Department', label: 'Department' },
+      { key: 'EmployeeName', label: 'Employee Name' },
       { key: 'JobTitle', label: 'Job Title' },
+      { key: 'Department', label: 'Department' },
+      { key: 'JoiningDate', label: 'Joining Date' },
+      { key: 'RM', label: 'RM' },
       { key: 'Practice', label: 'Practice' },
-      { key: 'Ratings', label: 'Ratings' },
-      { key: 'AppraisalDate', label: 'Appraisal Date' },
       { key: 'Action', label: 'Action' }
     ]),
     []
   );
 
+  // const tableColumns = useMemo(
+  //   () => employeeListColumnsConfig.map(col => ({ key: col.key, label: PConnect.getLocalizedValue(col.label, '', '') })),
+  //   [employeeListColumnsConfig, PConnect]
+  // );
+  //
+
   const tableColumns = useMemo(
-    () => employeeListColumnsConfig.map(col => ({ key: col.key, label: PConnect.getLocalizedValue(col.label, '', '') })),
-    [employeeListColumnsConfig, PConnect]
+    () =>
+      employeeListColumnsConfig.map(col => ({
+        key: col.key,
+        label: PConnect.getLocalizedValue(col.label, '', ''),
+        sortable: col.key !== 'Action',
+        onSort: () => {
+          if (sortByField === col.key) {
+            setSortByType(prev => (prev === 'ASC' ? 'DESC' : 'ASC'));
+          } else {
+            setSortByField(col.key);
+            setSortByType('ASC');
+          }
+        }
+      })),
+    [employeeListColumnsConfig, PConnect, sortByField]
   );
 
   const loadEmployees = useCallback(async () => {
     // eslint-disable-next-line no-console
     console.log('in loadEmployees');
     setIsLoading(true);
+
     const payload = {
-      ...(searchText.trim() && { dataViewParameters: { Query: searchText.trim() } }),
-      paging: { pageNumber, pageSize }
+      query: {
+        select: [
+          { field: 'EmployeeID' },
+          { field: 'EmployeeName' },
+          { field: 'EmailAddress' },
+          { field: 'ContactNumber' },
+          { field: 'JobTitle' },
+          { field: 'Department' },
+          { field: 'JoiningDate' },
+          { field: 'FirstName' },
+          { field: 'MiddleName' },
+          { field: 'LastName' },
+          { field: 'RM' },
+          { field: 'Practice' },
+          { field: 'JobLevel' },
+          { field: 'LastAppraisalDate' },
+          { field: 'NextApparaisalDate' },
+          { field: 'ExitDate' },
+          { field: 'Active' },
+          { field: 'RMEmailID' },
+          { field: 'PLEmpID' },
+          { field: 'PLEmailID' },
+          { field: 'RMEmpID' },
+          { field: 'PLName' }
+        ],
+        ...(searchText.trim() && {
+          filter: {
+            filterConditions: {
+              F1: {
+                comparator: 'CONTAINS',
+                ignoreCase: true,
+                lhs: { field: 'EmployeeID' },
+                rhs: { value: searchText.trim()}
+              },
+              F2: {
+                comparator: 'CONTAINS',
+                ignoreCase: true,
+                lhs: { field: 'EmployeeName' },
+                rhs: { value: searchText.trim()}
+              }
+            },
+            logic: 'F1 OR F2'
+          }
+        }),
+        sortBy: [{ field: sortByField, type: sortByType }]
+      },
+      paging: { pageNumber, pageSize },
+      includeTotalCount: true
     };
+
     const keys = employeeListColumnsConfig.map(c => c.key);
     const res = await fetchDataPage(dataPage, context, payload);
     const formatted = (res.data || []).map((entry: any, index: number) => {
@@ -71,10 +141,12 @@ function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalP
       });
       return row;
     });
-    setHasMoreResults(res.hasMoreResults || false);
+    // setHasMoreResults(res.hasMoreResults || false);
+    setTotalCount(res.totalCount || 0);
+    setTotalPages(Math.ceil((res.totalCount || 0) / pageSize));
     setEmployees(formatted);
     setIsLoading(false);
-  }, [searchText, employeeListColumnsConfig, dataPage, context, pageNumber]);
+  }, [searchText, employeeListColumnsConfig, dataPage, context, pageNumber, sortByField, sortByType]);
 
   // const debouncedSearch = useMemo(
   //   () => debounce(() => {
@@ -123,6 +195,8 @@ function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalP
       dataViewParameters : { EmployeeID }
     };
     const res = await fetchDataPage(detailsDataPage, context, payload);
+    // eslint-disable-next-line no-console
+    console.log(res);
     setAppraisalData(res.data || []);
     setIsAppraisalLoading(false);
   };
@@ -144,18 +218,25 @@ function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalP
         <GlobalStyle />
         <Card className="card">
           <Search placeholder='Search by Employee ID or Name...' onChange={(value) => handleSearch(value)} />
+
           <Table
             columns={tableColumns}
             data={employees}
             loading={isLoading}
             loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
             onClick={handleViewDetails}
+            sortByField={sortByField}
+            sortByType={sortByType}
           />
-          {
-            hasMoreResults && (
-              <Pagination pageNumber={pageNumber} hasMoreResults={hasMoreResults} onPageChange={onPageChange} />
-            )
-          }
+
+          { totalCount > pageSize && (
+            <Pagination
+              pageNumber={pageNumber}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+          )}
+
           {isAppraisalModalOpen && (
             <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="appraisalModalTitle">
               <div className="modal-content">
@@ -183,4 +264,4 @@ function PegaExtensionsEmployeeAppraisal(props: PegaExtensionsEmployeeAppraisalP
   );
 }
 
-export default withConfiguration(PegaExtensionsEmployeeAppraisal);
+export default withConfiguration(PegaExtensionsEmployeeAppraisalReport);

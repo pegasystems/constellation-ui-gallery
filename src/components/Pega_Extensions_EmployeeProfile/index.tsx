@@ -10,13 +10,10 @@ interface EmployeeData {
   [key: string]: any;
 }
 
-// interface for props
 interface PegaExtensionsEmployeeProfileProps extends PConnFieldProps {
     dataPageName: string;
 }
 
-// props passed in combination of props from property panel (config.json) and run time props from Constellation
-// any default values in config.pros should be set in defaultProps at bottom of this file
 function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps) {
 
   const { dataPageName,  getPConnect } = props;
@@ -27,19 +24,14 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
   const context = PConnect.getContextName();
 
   useEffect(() => {
+
+
     const fetchData = async () => {
       try {
-        const payload = {
-          pyGUID : '1a5b9422-ffaf-4f94-b89b-eed62bce4f6f'
-        };
-
-        const options = {
-          invalidateCache: true,
-        };
-
-        const res = await fetchDataPage(dataPageName, context, payload, options);
-        const employeeData = res ?? null;
-        setEmployee(employeeData);
+        const res = await fetchDataPage(dataPageName, context, {});
+        // eslint-disable-next-line no-console
+        console.log(res);
+        setEmployee(res?.data?.[0] || {});
         setIsLoading(false);
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -47,7 +39,6 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, [context, dataPageName]);
 
@@ -57,21 +48,17 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
       {!isLoading && employee?.EmployeeName ? (
         <div className="profile-container">
           <div className="profile-header">
-            <img
-              src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg"
-              alt="Employee Profile Pic"
-              className="profile-pic"
-            />
             <div>
               <h2>{ employee.EmployeeName }</h2>
               <p>{ employee.JobTitle } | { employee.Department }</p>
               <p>
                 <a
-                  href="mailto:sonysuvarchala.masani@bitsinglass.com"
+                  href={`mailto:${employee.EmailAddress}`}
                   className="email-link"
                 >
-                { employee.EmailAddress }
+                  {employee.EmailAddress}
                 </a>
+
               </p>
             </div>
           </div>

@@ -6,8 +6,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fff;
     margin: 0;
-    padding: 20px;
     color: #333;
+  }
+
+  .d-none {
+    display: none
   }
 
   .card {

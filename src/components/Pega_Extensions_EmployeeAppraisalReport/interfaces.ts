@@ -14,15 +14,24 @@ export interface InputProps {
 }
 
 export interface KRA {
-  ID: number;
-  Learning: string;
-  Leadership: string;
-  JobKnowledge: string;
-  CommunicationSkills: string;
-  Flexibility: string;
-  Initiative: number;
-  PolicyAdherence: number;
+  PerformanceID: string;
+  PerformanceName: string;
+  Weightage: number;
+  Emp_SelfRating_Perf?: number | null;
+  RM_Ratings_Perf?: number | null;
+  HRFinalRatingValue?: number | null;
+  pxUpdateDateTime?: string;
 }
+
+export interface ComKra {
+  CompetencyID: string;
+  CompetencyName: string;
+  pxUpdateDateTime?: string;
+  CompReviewerRating: number | null;
+  Weightage: number | null;
+  HRCompFinalRatingValue?: number | null;
+}
+
 
 export interface Appraisal {
   Year: string;
@@ -51,7 +60,7 @@ export interface ListComponentProps {
 
 export interface PaginationProps {
   pageNumber: number;
-  hasMoreResults: boolean;
+  totalPages: number;
   onPageChange: (page: number) => void;
 }
 
