@@ -3,6 +3,10 @@ import { withConfiguration } from '@pega/cosmos-react-core';
 import type { PConnFieldProps } from './PConnProps';
 import fetchDataPage from './apiUtils';
 
+import { Icon, registerIcon  } from '@pega/cosmos-react-core';
+import * as userSolid from '@pega/cosmos-react-core/lib/components/Icon/icons/user-solid.icon';
+
+
 import GlobalStyle from './styles';
 
 interface EmployeeData {
@@ -13,6 +17,9 @@ interface EmployeeData {
 interface PegaExtensionsEmployeeProfileProps extends PConnFieldProps {
     dataPageName: string;
 }
+
+
+registerIcon(userSolid);
 
 function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps) {
 
@@ -45,20 +52,29 @@ function PegaExtensionsEmployeeProfile(props: PegaExtensionsEmployeeProfileProps
   return (
     <>
       <GlobalStyle />
+
       {!isLoading && employee?.EmployeeName ? (
         <div className="profile-container">
           <div className="profile-header">
+            {employee.ProfileImageContent ? (
+              <img
+                src={`data:image/${employee.ProfileImageType};base64,${employee.ProfileImageContent}`}
+                alt="Employee Profile Pic"
+                className="profile-pic"
+              />
+            ) : (
+              <Icon
+                className="profile-pic"
+                name="user-solid"
+              />
+            )}
             <div>
               <h2>{ employee.EmployeeName }</h2>
               <p>{ employee.JobTitle } | { employee.Department }</p>
               <p>
-                <a
-                  href={`mailto:${employee.EmailAddress}`}
-                  className="email-link"
-                >
+                <a href={`mailto:${employee.EmailAddress}`} className="email-link">
                   {employee.EmailAddress}
                 </a>
-
               </p>
             </div>
           </div>

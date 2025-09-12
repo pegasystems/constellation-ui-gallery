@@ -106,8 +106,8 @@ const Appraisals: React.FC<AppraisalsProps> = ({ appraisals }) => {
                     <tr>
                       <th style={{ textAlign: 'left' }}>KRA</th>
                       <th>Weightage</th>
+                      <th>Reviewer</th>
                       <th>Reviewer Rating</th>
-                      <th>HR Final Rating</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,8 +116,8 @@ const Appraisals: React.FC<AppraisalsProps> = ({ appraisals }) => {
                         <tr key={`${kraItem.CompetencyID}-${kraItem.pxUpdateDateTime}`}>
                           <td style={{ textAlign: 'left' }}>{kraItem.CompetencyName}</td>
                           <td>{kraItem.Weightage}%</td>
+                          <td>{kraItem.Reviewer}</td>
                           <td>{kraItem.CompReviewerRating}</td>
-                          <td>{kraItem.HRCompFinalRatingValue}</td>
                         </tr>
                       ))
                     ) : (

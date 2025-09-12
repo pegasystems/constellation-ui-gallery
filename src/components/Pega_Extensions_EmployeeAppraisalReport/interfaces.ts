@@ -24,6 +24,7 @@ export interface KRA {
 }
 
 export interface ComKra {
+  Reviewer: string;
   CompetencyID: string;
   CompetencyName: string;
   pxUpdateDateTime?: string;

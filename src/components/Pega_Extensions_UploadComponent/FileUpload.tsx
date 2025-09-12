@@ -51,7 +51,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
       console.log(e);
     });
 
-    PCore.getAssetLoader().getSvcImageUrl('DATA-WORKATTACH-FILE-TEMP BA7AB28F-FDDF-43E8-8947-54EAED0229A4!1')
+    PCore.getAssetLoader().getSvcImageUrl('DATA-CONTENT-IMAGE GURBINDER.SINGH@BITSINGLASS.COM!JPG!/OPERATORIMAGES/')
       .then((url) => {
         console.log('file Upload getSvcImageUrl');
         console.log(url);
@@ -63,7 +63,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ context }) => {
       const constellationServiceUrl = await PCore.getAssetLoader().getConstellationServiceUrl();
       console.log(constellationServiceUrl);
 
-  });
+  },[]);
 
 
   const onUploadProgress = (id: string, progressInfo: any) => {
