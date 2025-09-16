@@ -213,13 +213,15 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
             const sessionDate = item[dateProperty];
             const startTime = item[startTimeProperty];
             const endTime = item[endTimeProperty];
-            tmpevents.push({
-              id: item.pzInsKey,
-              title: item.pyLabel,
-              start: new Date(`${sessionDate}T${startTime}`),
-              end: new Date(`${sessionDate}T${endTime}`),
-              item,
-            });
+            if (sessionDate && startTime && endTime) {
+              tmpevents.push({
+                id: item.pzInsKey,
+                title: item.pyLabel,
+                start: new Date(`${sessionDate}T${startTime}`),
+                end: new Date(`${sessionDate}T${endTime}`),
+                item,
+              });
+            }
           });
           setEvents(tmpevents);
         }
