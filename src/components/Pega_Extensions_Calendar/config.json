@@ -82,6 +82,9 @@
   "defaultConfig": {
     "heading": "Calendar",
     "dataPage": "",
-    "defaultViewMode": "Monthly"
+    "defaultViewMode": "Monthly",
+    "dateProperty": "SessionDate",
+    "startTimeProperty": "StartTime",
+    "endTimeProperty": "EndTime"
   }
 }

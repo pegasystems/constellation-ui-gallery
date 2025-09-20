@@ -72,15 +72,21 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   const {
     heading = '',
     dataPage = '',
-    dateProperty = 'SessionDate',
-    startTimeProperty = 'StartTime',
-    endTimeProperty = 'EndTime',
+    dateProperty: rawDateProperty,
+    startTimeProperty: rawStartTimeProperty,
+    endTimeProperty: rawEndTimeProperty,
     createClassname = '',
     defaultViewMode = 'Monthly',
     nowIndicator = true,
     weekendIndicator = true,
     getPConnect,
   } = props;
+
+  // Use the given property names, or default to 'SessionDate', 'StartTime', and 'EndTime'
+  const dateProperty = rawDateProperty?.trim() || 'SessionDate';
+  const startTimeProperty = rawStartTimeProperty?.trim() || 'StartTime';
+  const endTimeProperty = rawEndTimeProperty?.trim() || 'EndTime';
+
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
   const theme = useTheme();

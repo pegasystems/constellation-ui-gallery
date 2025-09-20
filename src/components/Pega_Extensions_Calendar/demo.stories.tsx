@@ -19,6 +19,12 @@ export default {
 };
 
 const setPCore = () => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const toDateString = (date: Date) => date.toISOString().split('T')[0];
+
   (window as any).PCore = {
     getComponentsRegistry: () => {
       return {
@@ -70,13 +76,13 @@ const setPCore = () => {
                 {
                   pyStatusWork: 'New',
                   Category: 'in person',
-                  endTime: '10:00:00',
+                  EndTime: '10:00:00',
                   pxUpdateDateTime: '2025-07-21T18:45:53.817Z',
-                  startTime: '08:00:00',
+                  StartTime: '08:00:00',
                   ConferenceAccessLink: null,
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1004',
                   pxUpdateOpName: 'Marc Doe',
-                  date: '2025-08-20',
+                  SessionDate: toDateString(today),
                   pxObjClass: 'OPGO8L-CarInsur-Work-Appointment',
                   pyID: 'A-1004',
                   pxCreateDateTime: '2023-07-21T18:45:38.411Z',
@@ -87,13 +93,13 @@ const setPCore = () => {
                 {
                   pyStatusWork: 'New',
                   Category: 'in person',
-                  endTime: '14:00:00',
+                  EndTime: '14:00:00',
                   pxUpdateDateTime: '2023-07-21T18:43:40.100Z',
-                  startTime: '09:00:00',
+                  StartTime: '09:00:00',
                   ConferenceAccessLink: null,
                   pzInsKey: 'OPGO8L-CARINSUR-WORK A-1003',
                   pxUpdateOpName: 'Marc Doe',
-                  date: '2025-08-20',
+                  SessionDate: toDateString(tomorrow),
                   pxObjClass: 'OPGO8L-CarInsur-Work-Appointment',
                   pyID: 'A-1003',
                   pxCreateDateTime: '2023-07-21T18:43:07.895Z',
@@ -164,8 +170,8 @@ export const Default: Story = {
     nowIndicator: true,
     weekendIndicator: true,
     dataPage: '',
-    dateProperty : 'date',
-    startTimeProperty : 'startTime',
-    endTimeProperty : 'endTime'
+    dateProperty : 'SessionDate',
+    startTimeProperty : 'StartTime',
+    endTimeProperty : 'EndTime'
   },
 };
