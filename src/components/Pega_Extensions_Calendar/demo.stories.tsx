@@ -14,6 +14,21 @@ export default {
         disable: true,
       },
     },
+    dateProperty: {
+      table: {
+        disable: true,
+      },
+    },
+    startTimeProperty: {
+      table: {
+        disable: true,
+      },
+    },
+    endTimeProperty: {
+      table: {
+        disable: true,
+      },
+    },
   },
   component: PegaExtensionsCalendar,
 };
@@ -106,7 +121,7 @@ const setPCore = () => {
                   pyDescription: null,
                   pyLabel: 'Demo Acme',
                   pxCreateOpName: 'Marc Doe',
-                }
+                },
               ],
             },
           });
@@ -170,8 +185,8 @@ export const Default: Story = {
     nowIndicator: true,
     weekendIndicator: true,
     dataPage: '',
-    dateProperty : 'SessionDate',
-    startTimeProperty : 'StartTime',
-    endTimeProperty : 'EndTime'
+    dateProperty: 'SessionDate',
+    startTimeProperty: 'StartTime',
+    endTimeProperty: 'EndTime',
   },
 };
