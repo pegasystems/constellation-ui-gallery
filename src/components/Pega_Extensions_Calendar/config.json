@@ -26,6 +26,27 @@
       "format": "TEXT"
     },
     {
+      "label": "Date Fields Configuration",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "dateProperty",
+          "label": "Date Property",
+          "format": "TEXT"
+        },
+        {
+          "name": "startTimeProperty",
+          "label": "Start time property",
+          "format": "TEXT"
+        },
+        {
+          "name": "endTimeProperty",
+          "label": "End time property",
+          "format": "TEXT"
+        }
+      ]
+    },
+    {
       "name": "defaultViewMode",
       "label": "Default view",
       "format": "SELECT",
@@ -61,6 +82,9 @@
   "defaultConfig": {
     "heading": "Calendar",
     "dataPage": "",
-    "defaultViewMode": "Monthly"
+    "defaultViewMode": "Monthly",
+    "dateProperty": "SessionDate",
+    "startTimeProperty": "StartTime",
+    "endTimeProperty": "EndTime"
   }
 }

@@ -13,9 +13,15 @@ The Calendar widget allows to view a list of cases in a calendar view. The compo
 - The widget will listen to filter change on the UI (change month, view...) - it will persist the context in localstorage and on load of the UI, it will use the context from the localstorage if present - this allows to navigate between pages but maintain the selected view
 - The widget will listen to ASSIGNMENT_SUBMISSION event from the Constellation runtime - if the case is edited using the preview panel, the calendar data will be refreshed automatically
 
-Each case must expose the properties: SessionDate, StartTime and EndTime.
-The widget is configured by passing a list Data page that provides all the instances of this case type.
-Another parameter called 'Create case className' will show the 'create' button if this parameter is set and let you create new case directly from the calendar.
+#### Widget configuration
+
+- The widget is configured by passing a **list Data page** that provides all the instances of this case type.
+- Another parameter called **Create case className** will show the **Create** button if this parameter is set and let you create new case directly from the calendar.
+- The component provides a **configuration option** to map date and time field names to different properties from the data page.
+  This configuration is **optional** — if you don’t provide custom values, the widget will use the following default property names:
+  - **SessionDate**
+  - **StartTime**
+  - **EndTime**
 
 For more details: [How to implement a calendar widget for Constellation UI as a DX Component](https://support.pega.com/discussion/how-implement-calendar-widget-constellation-ui-dx-component)
 

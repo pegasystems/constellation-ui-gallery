@@ -32,6 +32,9 @@ const VIEW_TYPE = {
 type CalendarProps = {
   heading: string;
   dataPage: string;
+  dateProperty: string;
+  startTimeProperty: string;
+  endTimeProperty: string;
   createClassname?: string;
   defaultViewMode: 'Monthly' | 'Weekly' | 'Daily';
   nowIndicator: boolean;
@@ -69,12 +72,21 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   const {
     heading = '',
     dataPage = '',
+    dateProperty: rawDateProperty,
+    startTimeProperty: rawStartTimeProperty,
+    endTimeProperty: rawEndTimeProperty,
     createClassname = '',
     defaultViewMode = 'Monthly',
     nowIndicator = true,
     weekendIndicator = true,
     getPConnect,
   } = props;
+
+  // Use the given property names, or default to 'SessionDate', 'StartTime', and 'EndTime'
+  const dateProperty = rawDateProperty?.trim() || 'SessionDate';
+  const startTimeProperty = rawStartTimeProperty?.trim() || 'StartTime';
+  const endTimeProperty = rawEndTimeProperty?.trim() || 'EndTime';
+
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
   const theme = useTheme();
@@ -128,7 +140,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
     if (eventInfo.view.type === VIEW_TYPE.DAY || eventInfo.view.type === VIEW_TYPE.WEEK) {
       isdayGrid = false;
     }
-    const eventDateStr = `${obj.StartTime.substring(0, 5)} - ${obj.EndTime.substring(0, 5)}`;
+    const eventDateStr = `${obj[startTimeProperty].substring(0, 5)} - ${obj[endTimeProperty].substring(0, 5)}`;
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj.pxObjClass },
@@ -204,13 +216,18 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         if (response.data.data !== null) {
           const tmpevents: Array<Event> = [];
           response.data.data.forEach((item: any) => {
-            tmpevents.push({
-              id: item.pzInsKey,
-              title: item.pyLabel,
-              start: new Date(`${item.SessionDate}T${item.StartTime}`),
-              end: new Date(`${item.SessionDate}T${item.EndTime}`),
-              item,
-            });
+            const sessionDate = item[dateProperty];
+            const startTime = item[startTimeProperty];
+            const endTime = item[endTimeProperty];
+            if (sessionDate && startTime && endTime) {
+              tmpevents.push({
+                id: item.pzInsKey,
+                title: item.pyLabel,
+                start: new Date(`${sessionDate}T${startTime}`),
+                end: new Date(`${sessionDate}T${endTime}`),
+                item,
+              });
+            }
           });
           setEvents(tmpevents);
         }
