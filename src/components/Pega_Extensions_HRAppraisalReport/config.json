@@ -1,0 +1,22 @@
+{
+  "name": "Pega_Extensions_HRAppraisalReport",
+  "label": "HR Appraisal Report",
+  "description": "HR Appraisal Report",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_HRAppraisalReport",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "dPage",
+        "label": "What's new link",
+        "format": "TEXT",
+        "defaultValue": "https://design.pega.com"
+      }
+  ],
+  "defaultConfig": {}
+}
