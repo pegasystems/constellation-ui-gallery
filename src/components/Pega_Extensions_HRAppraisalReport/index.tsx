@@ -5,16 +5,29 @@ import Table from './Table';
 import GlobalStyle from './styles';
 import fetchDataPage from './apiUtils';
 import styled from 'styled-components';
-import { Chart as ChartJS, ArcElement } from 'chart.js';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Legend,
+} from 'chart.js';
 import type { ChartData } from 'chart.js';
+import { Doughnut, Bar } from 'react-chartjs-2';
 
-import { Doughnut } from 'react-chartjs-2';
-
-ChartJS.register(ArcElement);
-
+ChartJS.register(
+  CategoryScale,
+  ArcElement,
+  LinearScale,
+  BarElement,
+  Title,
+  Legend
+);
 
 const DashboardWrapper = styled.div`
-  background: var(--bg);
+  background: #ffffff;
   min-height: 100%;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system,
                "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -48,29 +61,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
 
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
-
-  // Demo data
-  // const demoUpcoming = [
-  //   { EmployeeName: "Asha Sharma", Department: "Appian", Date: "2025-09-12" },
-  //   { EmployeeName: "Rahul Verma", Department: "Quality Analyst", Date: "2025-09-18" },
-  //   { EmployeeName: "Meera Nair", Department: "Pega", Date: "2025-10-05" },
-  //   { EmployeeName: "Sumant Thakur", Department: "Pega", Date: "2025-10-05" },
-  //   { EmployeeName: "Kiran Rao", Department: "Finance", Date: "2025-10-10" },
-  //   { EmployeeName: "Vijay Kumar", Department: "Support", Date: "2025-10-10" },
-  // ];
-  //
-  // const demoRecent = [
-  //   { Employee: "Asha Sharma", Department: "Appian", Stage: "Completed", TargetCompletion: "2025-09-10", DaysOverdue: 0 },
-  //   { Employee: "Rahul Verma", Department: "QA", Stage: "In Progress", TargetCompletion: "2025-09-20", DaysOverdue: 2 },
-  //   { Employee: "Meera Nair", Department: "Pega", Stage: "Overdue", TargetCompletion: "2025-09-01", DaysOverdue: 5 },
-  // ];
-  //
-  // const demoKraRejections = [
-  //   { Employee: "Sumant Thakur", PracticeLead: "Anil Kumar", Timestamp: "2025-08-30", Reason: "Incomplete KRA", Comments: "Needs review" },
-  //   { Employee: "Kiran Rao", PracticeLead: "Neha Singh", Timestamp: "2025-09-05", Reason: "Incorrect data", Comments: "Please correct" },
-  // ];
-
-  // Data states
   const [upcoming, setUpcoming] = useState<any[]>([]);
   const [recent, setRecent] = useState<any[]>([]);
   const [overdueProposals, setOverdueProposals] = useState<number>(0);
@@ -80,39 +70,55 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
     labels: [],
     datasets: []
   });
-  // const data = {
-  //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  //   datasets: [
-  //     {
-  //       label: '# of Votes',
-  //       data: [12, 19, 3, 5, 2, 3],
-  //       backgroundColor: [
-  //         'rgba(255, 99, 132, 1)',
-  //         'rgba(54, 162, 235, 1)',
-  //         'rgba(255, 206, 86, 1)',
-  //         'rgba(75, 192, 192, 1)',
-  //         'rgba(153, 102, 255, 1)',
-  //         'rgba(255, 159, 64, 1)',
-  //       ],
-  //       borderColor: [
-  //         'rgba(255, 99, 132, 1)',
-  //         'rgba(54, 162, 235, 1)',
-  //         'rgba(255, 206, 86, 1)',
-  //         'rgba(75, 192, 192, 1)',
-  //         'rgba(153, 102, 255, 1)',
-  //         'rgba(255, 159, 64, 1)',
-  //       ],
-  //       borderWidth: 1,
-  //     },
-  //   ],
-  // };
+  const [barData, setBarData] = useState<ChartData<'bar'>>({
+    labels: [],
+    datasets: []
+  });
+
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '67%',
-    radius: '100%'
+    cutout: '70%',
+    radius: '100%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom' as const,
+        align: 'start' as const,
+        labels: {
+          padding: 5,
+          usePointStyle: false
+        }
+      },
+      title: {
+        display: false
+      }
+    }
   };
+
+  const barOptions = {
+    responsive: true
+  };
+
+  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  // const barData = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       data: [400, 250, 600, 300, 500, 700, 450],
+  //       backgroundColor: 'linear-gradient(180deg,#2563eb, #000)',
+  //     }
+  //   ],
+  // };
+
+  const [kraFrom, setKraFrom] = useState('');
+  const [kraTo, setKraTo] = useState('');
+  const [groupBy, setGroupBy] = useState('--Rejection Reason--');
+
+  const handleLoad = () => {
+  };
+
 
   useEffect(() => {
     async function load() {
@@ -126,7 +132,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
         fetchDataPage(stageDistributionDataPage, context, {}),
       ]);
       setUpcoming(u.data || []);
-      // setRecent(r.data || []);
       setRecent(
         (r.data || []).map(item => ({
           ...item,
@@ -135,11 +140,9 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
             : item.pyIntegerValue
         }))
       );
-
       setKraRejections(k.data || []);
       setOverdueProposals(o.data?.[0]?.pySummaryCount?.[0] || 0);
       setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
-
 
       const chartData: ChartData<'doughnut'> = {
         labels: s?.data?.map((item: any) => item?.pyStatusWork) ?? [],
@@ -167,25 +170,58 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
           }
         ]
       };
+      setDonutData(chartData);
 
-      // eslint-disable-next-line no-console
-      console.log(chartData);
-
-      // eslint-disable-next-line no-console
-      console.log(ip);
-
+      const barChartData: ChartData<'bar'> = {
+        labels: dp?.data?.map(item => item.pyOrg) ?? [],
+        datasets: [
+          {
+            label: 'Summary Count',
+            data: dp?.data?.map(item => item.pySummaryCount?.[0] ?? 0) ?? [],
+            backgroundColor: [
+              'rgba(37, 99, 235, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(201, 203, 207, 0.6)',
+              'rgba(100, 149, 237, 0.6)',
+            ],
+            borderColor: [
+              'rgba(37, 99, 235, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(201, 203, 207, 1)',
+              'rgba(100, 149, 237, 1)',
+            ],
+            borderWidth: 1,
+          }
+        ]
+      };
       // eslint-disable-next-line no-console
       console.log(dp);
-
-      setDonutData(chartData);
+      setBarData(barChartData);
     }
     load();
-  }, [departmentalWorkloadChartDataPage, inProgressAppraisalsDataPage, upcomingAppraisalsDataPage, recentAppraisalsDataPage, kraRejectionDataPage, context, overdueProposalsDataPage, stageDistributionDataPage]);
-
-  // eslint-disable-next-line no-console
-  console.log(donutData);
+  }, [
+    departmentalWorkloadChartDataPage,
+    inProgressAppraisalsDataPage,
+    upcomingAppraisalsDataPage,
+    recentAppraisalsDataPage,
+    kraRejectionDataPage,
+    context,
+    overdueProposalsDataPage,
+    stageDistributionDataPage
+  ]);
 
   const openProfile = () => {
+    // Placeholder for profile navigation logic
   };
 
   return (
@@ -194,7 +230,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
       <div className="wrap">
         {/* Header */}
         <header>
-          <div>
+          <div style={{ visibility: 'hidden'}}>
             <h1>HR Appraisal Monitoring Dashboard</h1>
             <div className="sub">Live appraisal monitoring — anniversary-based, rolling model</div>
           </div>
@@ -206,12 +242,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                 <option value="90" selected>Upcoming: 90 days</option>
               </select>
             </div>
-            <div className="control">
-              <input id="search" placeholder="Search employee or dept" />
-            </div>
-            <div className="control">
-              <Button compact>Refresh</Button>
-            </div>
           </div>
         </header>
 
@@ -219,97 +249,117 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
         <main className="main card">
           {/* KPI Row */}
           <div className="kpi-row">
-            <div className="kpi card"><div className="value">12</div><div className="label">Appraisals In Progress</div><div className="small">Updated today</div></div>
+            <div className="kpi card"><div className="value">{appraisalsInProgress || 0}</div><div className="label">Appraisals In Progress</div><div className="small">Updated today</div></div>
             <div className="kpi card"><div className="value">{upcoming?.length || 0}</div><div className="label">Upcoming</div><div className="small">Next 90 days</div></div>
-            <div className="kpi card"><div className="value">{ overdueProposals || 0}</div><div className="label">Overdue</div><div className="small">High priority</div></div>
+            <div className="kpi card"><div className="value">{overdueProposals || 0}</div><div className="label">Overdue</div><div className="small">High priority</div></div>
           </div>
 
           {/* Charts */}
           <div className="charts">
             <section className="donut-wrap card">
               <h3>Stage Distribution</h3>
-              <div><Doughnut data={donutData} options={options} /></div>
-              <div className="donut-legend">
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#3B82F6' }}/>New (1)
-                </div>
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#F59E0B' }}/>Pending- KRA Progress (3)
-                </div>
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#EF4444' }}/>Pending-Final Review (2)
-                </div>
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#10B981' }}/>Pending-In Review (3)
-                </div>
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#8B5CF6' }}/>Pending-KRA Assignment (101)
-                </div>
-                <div className="legend-item">
-                  <div className="legend-color" style={{background: '#F97316' }}/>Resolved-Completed (38)
-                </div>
-              </div>
-
+              <div style={{ width: '100%' }}><Doughnut data={donutData} options={options} width={310} height={270} /></div>
             </section>
             <section className="bar-wrap card">
               <h3>Departmental Workload</h3>
-              <div className="bar-chart">
-                <div className="bar"><div style={{height:'80%'}}>8</div></div>
-                <div className="bar"><div style={{height:'60%'}}>6</div></div>
-                <div className="bar"><div style={{height:'40%'}}>4</div></div>
+              <div style={{ width: '100%' }}>
+                <Bar options={barOptions} data={barData} width={420} height={350} />
               </div>
-              <div className="dept-labels"><span>HR</span><span>IT</span><span>Finance</span></div>
             </section>
           </div>
 
           {/* Overdue */}
           <div className="overdue card">
-            <div className="count">2</div>
+            <div className="count">{overdueProposals || 0}</div>
             <div><Button>View Overdue Details</Button><Button compact>Export CSV</Button></div>
           </div>
 
           {/* Recent Appraisals */}
           <div className="card">
             <h3>Recent Appraisals</h3>
-            <Table columns={[
-              { key: 'EmployeeName', label: 'Employee Name' },
-              { key: 'pyOrg', label: 'Department' },
-              { key: 'pxCurrentStageLabel', label: 'Stage' },
-              { key: 'AppraisalTargetDate', label: 'Target Completion' },
-              { key: 'pyIntegerValue', label: 'Days Overdue' }
-            ]}
-            data={recent}
-            loading={false}
-            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+            <Table
+              columns={[
+                { key: 'EmployeeName', label: 'Employee Name' },
+                { key: 'pyOrg', label: 'Department' },
+                { key: 'pxCurrentStageLabel', label: 'Stage' },
+                { key: 'AppraisalTargetDate', label: 'Target Completion' },
+                { key: 'pyIntegerValue', label: 'Days Overdue' }
+              ]}
+              data={recent}
+              loading={false}
+              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
             />
           </div>
 
           {/* KRA Rejections */}
           <div className="card">
             <h3>HR KRA Rejection Analysis</h3>
-            <div className="control">
-              <p>Date Range</p>
-              <input type="date" id="start-date"/>
-              <Button compact>Load</Button>
-            </div>
-            <div className="control">
-              <p>Group by</p>
-              <select id="group-by">
-                <option value="reason">Rejection Reason</option>
-                <option value="pl">Practice Lead</option>
-                <option value="department">Department</option>
-              </select>
-            </div>
-            <Table columns={[
-              { key: 'Employee', label: 'Employee' },
-              { key: 'PracticeLead', label: 'Practice Lead' },
-              { key: 'Timestamp', label: 'Timestamp' },
-              { key: 'Reason', label: 'Reason' },
-              { key: 'Comments', label: 'Comments' }
-            ]}
-            data={kraRejections}
-            loading={false}
-            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <label className="sub" htmlFor="startDate">
+                      Date Range (mandatory)
+                    </label>
+                    <input
+                      id="startDate"
+                      type="date"
+                      value={kraFrom}
+                      onChange={(e) => setKraFrom(e.target.value)}
+                      style={{ border: '1px solid #ccc', height: 30, borderRadius: 5 }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <label className="sub" htmlFor="endDate">
+                      End Date
+                    </label>
+                    <input
+                      id="endDate"
+                      type="date"
+                      value={kraTo}
+                      onChange={(e) => setKraTo(e.target.value)}
+                      style={{ border: '1px solid #ccc', height: 30, borderRadius: 5 }}
+                    />
+                  </div>
+
+                    <button type='button' className="btn" onClick={handleLoad}>
+                      Load
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <div className="sub">Group by</div>
+                    <select
+                      value={groupBy}
+                      onChange={(e) => setGroupBy(e.target.value)}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid rgba(255,255,255,0.04)',
+                        padding: 8,
+                        borderRadius: 8,
+                        color: 'var(--accent)',
+                      }}
+                    >
+                      <option>--Rejection Reason--</option>
+                      <option value="pl">Practice Lead</option>
+                      <option value="department">Department</option>
+                    </select>
+                  </div>
+                </div>
+
+            <Table
+              columns={[
+                { key: 'Employee', label: 'Employee' },
+                { key: 'PracticeLead', label: 'Practice Lead' },
+                { key: 'Timestamp', label: 'Timestamp' },
+                { key: 'Reason', label: 'Reason' },
+                { key: 'Comments', label: 'Comments' }
+              ]}
+              data={kraRejections}
+              loading={false}
+              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
             />
           </div>
         </main>
@@ -326,20 +376,10 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                     <div className="meta">{u.Department} • starts {u.Date}</div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-end' }}>
-                    <button type='button' className="small-btn" onClick={() => openProfile()}>View</button>
+                    <button type="button" className="small-btn" onClick={() => openProfile()}>View</button>
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-          <div className="card">
-            <h4>Quick Filters</h4>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <Button className='small-btn' compact>KRA Setting</Button>
-              <Button className='small-btn' compact>Self Assessment</Button>
-              <Button className='small-btn' compact>RM Review</Button>
-              <Button className='small-btn' compact>PL Review</Button>
-              <Button className='small-btn' compact>HR Finalization</Button>
             </div>
           </div>
         </aside>

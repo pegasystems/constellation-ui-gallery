@@ -1,4 +1,3 @@
-// style.ts
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -8,7 +7,9 @@ const GlobalStyle = createGlobalStyle`
     display:grid;
     grid-template-columns:1fr 360px;
     gap:20px;
-    background-color: #fff;
+    background-color:#ffffff;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color-scheme: light;
 
     header {
       grid-column:1/-1;
@@ -26,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .sub {
-      color:var(--muted);
+      color:#6b7280;
       font-size:14px;
     }
 
@@ -46,9 +47,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .card {
-      background:var(--card);
+      background:#ffffff;
       padding:16px;
-      border-radius:var(--radius);
+      border-radius:12px;
       box-shadow:0 2px 6px rgba(0,0,0,0.08);
       border:1px solid #e5e7eb;
     }
@@ -75,17 +76,12 @@ const GlobalStyle = createGlobalStyle`
 
     .kpi .value { font-weight:700; font-size:22px; color:#111827 }
     .kpi .label { color:#374151; font-size:14px }
-    .kpi .small { color:var(--muted); font-size:12px }
+    .kpi .small { color:#6b7280; font-size:12px }
 
     .charts {
       display:flex;
       gap:12px;
       align-items:stretch;
-    }
-
-    .donut-wrap {
-      width:320px;
-      min-width:260px;
     }
 
     .donut-legend {
@@ -134,7 +130,7 @@ const GlobalStyle = createGlobalStyle`
     .bar > div {
       width:36px;
       border-radius:8px 8px 0 0;
-      background:linear-gradient(180deg,var(--accent-2), var(--accent));
+      background:linear-gradient(180deg,#2563eb,#000000);
       min-height:12px;
       display:flex;
       align-items:flex-end;
@@ -167,7 +163,7 @@ const GlobalStyle = createGlobalStyle`
     .overdue .count {
       font-size:20px;
       font-weight:800;
-      color:var(--danger);
+      color:#dc2626;
     }
 
     .overdue button {
@@ -206,7 +202,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .list-item .meta {
-      color:var(--muted);
+      color:#6b7280;
       font-size:14px;
     }
 
@@ -233,7 +229,7 @@ const GlobalStyle = createGlobalStyle`
       padding:8px 10px;
       border-radius:8px;
       border:0;
-      background:var(--accent-2);
+      background:#2563eb;
       color:#fff;
       font-weight:700;
       cursor:pointer;
@@ -249,13 +245,13 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .muted {
-      color:var(--muted);
+      color:#6b7280;
     }
 
     footer {
       grid-column:1/-1;
       margin-top:8px;
-      color:var(--muted);
+      color:#6b7280;
       font-size:14px;
       text-align:center;
     }
