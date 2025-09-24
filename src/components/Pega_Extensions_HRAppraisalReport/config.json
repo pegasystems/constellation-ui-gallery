@@ -12,10 +12,39 @@
   "icon": "OneColumnPage.svg",
   "properties": [
       {
-        "name": "dPage",
-        "label": "What's new link",
-        "format": "TEXT",
-        "defaultValue": "https://design.pega.com"
+        "name": "inProgressAppraisalsDataPage",
+        "label": "In Progress Proposals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "departmentalWorkloadChartDataPage",
+        "label": "Departmental Workload Chart Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "overdueProposalsDataPage",
+        "label": "Overdue Proposals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "stageDistributionDataPage",
+        "label": "Stage Distribution Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "upcomingAppraisalsDataPage",
+        "label": "Upcoming Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "recentAppraisalsDataPage",
+        "label": "Recent Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "kraRejectionDataPage",
+        "label": "KRA Rejection Data Page",
+        "format": "TEXT"
       }
   ],
   "defaultConfig": {}
