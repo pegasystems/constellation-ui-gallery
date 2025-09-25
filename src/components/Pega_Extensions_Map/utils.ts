@@ -98,7 +98,6 @@ export const renderShapes = (ptLayer: GraphicsLayer, view: MapView, selectionPro
     // In case the selectionProperty is not a valid JSON
     shapes = JSON.parse(selectionProperty || '{}').shapes || [];
   } catch {
-    // eslint-disable-next-line no-console
     console.error('Invalid JSON in selectionProperty:', selectionProperty);
   }
   if (shapes && shapes.length !== 0) {

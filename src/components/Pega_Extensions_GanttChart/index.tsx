@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Progress,
+  Progress as ProgressComponent,
   Flex,
   Switch,
   RadioButtonGroup,
@@ -48,6 +48,7 @@ registerIcon(plusIcon, pencilIcon, timesIcon);
 type HoverTooltipProps = { task: GTRTask; fontSize: string; fontFamily: string; showBanner: boolean } | undefined;
 
 const HoverTooltip: FC<HoverTooltipProps> = (props) => {
+  if (!props) return null;
   const { task, showBanner = true } = props;
   const fields = [
     { name: 'Progress', value: <Text variant='h4'>{`${task.progress}%`}</Text> },
@@ -317,7 +318,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         <Text variant='h2'>{heading}</Text>
       </CardHeader>
       <CardContent>
-        <Progress
+        <ProgressComponent
           visible={loaderTasks}
           placement='local'
           message={(window as any).PCore.getLocaleUtils().getLocaleValue(
@@ -395,7 +396,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                     <Text variant='h3'>{selectedTask.name}</Text>
                   </CardHeader>
                   <CardContent>
-                    <Progress
+                    <ProgressComponent
                       visible={loaderDetails}
                       placement='local'
                       message={(window as any).PCore.getLocaleUtils().getLocaleValue(

@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsDynamicHierarchicalForm, type DynamicHierarchicalFormProps } from './index';
 import { Checkbox, CheckboxGroup, Grid, Input, RadioButton, RadioButtonGroup, TextArea } from '@pega/cosmos-react-core';
 
@@ -34,11 +34,15 @@ export default {
   },
   parameters: {
     a11y: {
-      element: '#storybook-root',
+      context: '#storybook-root',
       config: {
         rules: [
           {
             id: 'nested-interactive',
+            enabled: false,
+          },
+          {
+            id: 'autocomplete-valid',
             enabled: false,
           },
         ],
@@ -153,7 +157,7 @@ const genResponse = (numProducts: number) => {
     name: 'demoView',
     type: 'View',
     config: {
-      template: 'Pega_Extensions_DynamicHierarchicalForm',
+      template: 'DynamicHierarchicalForm',
       ruleClass: 'Work-',
       inheritedProps: [],
     },

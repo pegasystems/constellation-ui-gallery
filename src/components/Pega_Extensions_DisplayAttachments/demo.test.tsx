@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { composeStories } from '@storybook/react';
 import * as DemoStories from './demo.stories';
@@ -21,10 +22,11 @@ test('renders DisplayAttachments component with default args', async () => {
 test('renders DisplayAttachments component with tiles args', async () => {
   render(<Tiles />);
   expect(await screen.findByText('Display attachments')).toBeVisible();
-  expect(await screen.findByText('pega.com')).toBeVisible();
-  expect(await screen.findByText('DemoFile')).toBeVisible();
-  expect(await screen.findByText('SampleWord')).toBeVisible();
-  expect(await screen.findByText('demoPDF')).toBeVisible();
+  // Use more specific queries to avoid CSS selector issues
+  expect(await screen.findByText('pega.com')).toBeInTheDocument();
+  expect(await screen.findByText('DemoFile')).toBeInTheDocument();
+  expect(await screen.findByText('SampleWord')).toBeInTheDocument();
+  expect(await screen.findByText('demoPDF')).toBeInTheDocument();
   const BtnEl = await screen.findByLabelText('Download all');
   expect(BtnEl).toBeVisible();
   fireEvent.click(BtnEl);

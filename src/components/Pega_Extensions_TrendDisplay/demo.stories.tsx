@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsTrendDisplay, type TrendDisplayProps } from './index';
 
 export default {
@@ -25,7 +25,7 @@ export default {
   },
   parameters: {
     a11y: {
-      element: '#storybook-root',
+      context: '#storybook-root',
       config: {
         rules: [
           {

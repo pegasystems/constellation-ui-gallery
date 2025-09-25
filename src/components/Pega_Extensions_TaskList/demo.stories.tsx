@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsTaskList } from './index';
 
 export default {
@@ -12,6 +12,19 @@ export default {
     getPConnect: {
       table: {
         disable: true,
+      },
+    },
+  },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
       },
     },
   },

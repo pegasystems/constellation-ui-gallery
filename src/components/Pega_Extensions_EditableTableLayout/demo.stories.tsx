@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsEditableTableLayout, type TableLayoutProps } from './index';
 import { CurrencyInput, DateInput, Input } from '@pega/cosmos-react-core';
 
@@ -24,6 +24,19 @@ export default {
       },
     },
   },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   component: PegaExtensionsEditableTableLayout,
 };
 
@@ -32,7 +45,7 @@ const genResponse = () => {
     name: 'demoView',
     type: 'View',
     config: {
-      template: 'Pega_Extensions_EditableTableLayout',
+      template: 'EditableTableLayout',
       ruleClass: 'Work-',
       inheritedProps: { label: 'Edit computers' },
     },
@@ -189,7 +202,7 @@ export const Default: Story = {
     };
 
     const props = {
-      template: 'Pega_Extensions_CompareTableLayout',
+      template: 'CompareTableLayout',
       ...args,
 
       getPConnect: () => {

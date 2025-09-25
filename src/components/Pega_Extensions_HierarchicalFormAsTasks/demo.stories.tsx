@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { Text, Grid, Card, CardContent, CardHeader, Input, FormControl, FormField } from '@pega/cosmos-react-core';
 import { PegaExtensionsHierarchicalFormAsTasks } from './index';
 import React from 'react';

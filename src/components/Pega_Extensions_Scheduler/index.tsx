@@ -55,7 +55,6 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
   const [initialDate, setInitialDate] = useState<string | undefined>();
 
   const renderEventContent = (eventInfo: EventContentArg) => {
-    /* eslint-disable no-underscore-dangle */
     const obj = eventInfo.event._def.extendedProps.item;
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,

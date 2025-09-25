@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsMap } from './index';
 
 type configInfo = {
@@ -80,7 +80,7 @@ const genResponse = (args: any) => {
     name: 'demoView',
     type: 'View',
     config: {
-      template: 'Pega_Extensions_Map',
+      template: 'Map',
       ruleClass: 'Work-',
       inheritedProps: [],
       selectionProperty: args.selectionProperty || '',

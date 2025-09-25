@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsRatingLayout, type RatingLayoutProps } from './index';
 
 // Define extended props for the story
@@ -32,7 +32,7 @@ export default {
   },
   parameters: {
     a11y: {
-      element: '#storybook-root',
+      context: '#storybook-root',
       config: {
         rules: [
           {
@@ -65,7 +65,7 @@ const genResponse = (numCategories?: number, numRatings?: number) => {
     name: 'demoView',
     type: 'View',
     config: {
-      template: 'Pega_Extensions_RatingLayout',
+      template: 'RatingLayout',
       ruleClass: 'Work-',
       inheritedProps: [],
     },

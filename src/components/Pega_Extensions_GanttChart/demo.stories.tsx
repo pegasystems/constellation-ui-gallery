@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsGanttChart } from './index';
 import { DateTimeDisplay, FieldValueList, Link } from '@pega/cosmos-react-core';
 

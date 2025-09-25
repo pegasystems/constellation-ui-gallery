@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsCheckboxTrigger, type CheckboxTriggerProps } from './index';
 
 export default {

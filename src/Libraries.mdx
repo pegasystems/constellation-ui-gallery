@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title='Libraries' />
 
@@ -6,22 +6,22 @@ The following libraries are used in the Constellation DX Components UI Gallery:
 
 # Core Constellation libraries
 
-- **@pega/cosmos-xx** version 7.x for Pega 24.2
+- **@pega/cosmos-xx** version 8.x for Pega 25.1
 
 The following libraries must be in sync with the Constellation DX Components UI Gallery to avoid dependency and side effect issues.
 
-- **React** 17.x
-- **Styled Components** 5.3.6 (exact version)
+- **React** 18.x
+- **Styled Components** 5.3.11 (exact version)
 
 There has been issues with the Styled Components library using different versions within the same document (especially different major versions) as well as incompatibilities with libraries using React 17 and React 18.
 
 # 3rd party libraries used at runtime
 
-When selecting a 3rd party lib, it is critical to select one that is compatible with React 17 and the Constellation DX Components UI Gallery.
+When selecting a 3rd party lib, it is critical to select one that is compatible with React 18 and the Constellation DX Components UI Gallery.
 
 The **fullcalendar** library is used for the Calendar component - [MIT License](https://github.com/fullcalendar/fullcalendar). Some components in this library require a commercial license but these components are not used in this project.
 
-The **hello-pangea/dnd** library is used to deliver the drag and drop functionality in the Kanban board - the version 16.x is compatible with React 17 but 17.x is not compatible - [Apache License](https://github.com/hello-pangea/dnd)
+The **hello-pangea/dnd** library is used to deliver the drag and drop functionality in the Kanban board - [Apache License](https://github.com/hello-pangea/dnd)
 
 The **ArcGIS Maps SDK** for JavaScript is used for the Map control - [Commercial License required](https://developers.arcgis.com/javascript/latest/licensing/)
 
@@ -45,12 +45,11 @@ The signature component uses the **signature_pad** JavaScript library - [MIT Lic
 
 For standard configurations (CSS, JS...), the **@pega/configs** library is used to provide standardized configuration for eslint, stylelint, prettier and cspell.
 
-For the documentation and developer experience, the **Storybook** library version 7.x is used.
-Each component provides a story that is used to run unit tests and accessibility tests. While Storybook 8 is available, this version has a strong dependency on React 18 and cannot be used with the Constellation component library.
-Same applies to @storybook/test-runner: the version 0.16.0 must be used with Storybook 7.x.
+For the documentation and developer experience, the **Storybook** library version 9.x is used.
+Each component provides a story that is used to run unit tests and accessibility tests.
 
-**ESlint** is used for linting and needs to be in sync with **@pega/configs** - As such version 8.x is used even if ESLint 9.x is available.
+**ESlint** is used for linting and needs to be in sync with **@pega/configs**.
 
-For unit testing, the **@testing-library/react** is used and due to React 17 compatibility, the version 12.x is used.
+For unit testing, the **@testing-library/react** is used.
 
 For accessibility testing, the libraries **axe-playwright** and **@storybook/addon-a11y** are used.

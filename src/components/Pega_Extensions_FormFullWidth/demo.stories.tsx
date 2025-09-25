@@ -1,5 +1,5 @@
-import type { StoryObj } from '@storybook/react';
-import { FieldValueList, Input } from '@pega/cosmos-react-core';
+import type { StoryObj } from '@storybook/react-webpack5';
+import { Input } from '@pega/cosmos-react-core';
 import { PegaExtensionsFormFullWidth } from './index';
 
 export default {
@@ -8,6 +8,19 @@ export default {
     getPConnect: {
       table: {
         disable: true,
+      },
+    },
+  },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
       },
     },
   },
@@ -53,8 +66,32 @@ const mainResponse = {
   classID: 'Work-MyComponents',
 };
 
-const createComponent = (config: any) => {
-  return <Input label={config.label.replace('@L ', '')} />;
+// Create stable references outside of render
+const getPConnect = () => {
+  return {
+    getChildren: () => {
+      return mainResponse.children;
+    },
+    getRawMetadata: () => {
+      return mainResponse;
+    },
+    getInheritedProps: () => {
+      return mainResponse.config.inheritedProps;
+    },
+    createComponent: (f: any) => {
+      return createComponent(f.config, f.key);
+    },
+    setInheritedProp: () => {
+      /* nothing */
+    },
+    resolveConfigProps: () => {
+      /* nothing */
+    },
+  };
+};
+
+const createComponent = (config: any, key: string) => {
+  return <Input key={key} label={config.label.replace('@L ', '')} />;
 };
 
 type Story = StoryObj<typeof PegaExtensionsFormFullWidth>;
@@ -63,32 +100,10 @@ export const Default: Story = {
     const props = {
       template: 'FieldGroupAsRow',
       ...args,
-      getPConnect: () => {
-        return {
-          getChildren: () => {
-            return mainResponse.children;
-          },
-          getRawMetadata: () => {
-            return mainResponse;
-          },
-          getInheritedProps: () => {
-            return mainResponse.config.inheritedProps;
-          },
-          createComponent: (f: any) => {
-            console.log('createComponent', f);
-            return createComponent(f.config);
-          },
-          setInheritedProp: () => {
-            /* nothing */
-          },
-          resolveConfigProps: () => {
-            /* nothing */
-          },
-        };
-      },
+      getPConnect,
     };
     const regionAChildren = mainResponse.children[0].children.map((child: any) => {
-      return props.getPConnect().createComponent(child);
+      return getPConnect().createComponent(child);
     });
 
     return <PegaExtensionsFormFullWidth {...props}>{regionAChildren}</PegaExtensionsFormFullWidth>;

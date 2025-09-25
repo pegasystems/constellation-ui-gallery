@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { DateTimeDisplay, FieldValueItem } from '@pega/cosmos-react-core';
 import { Details, DetailsList } from '@pega/cosmos-react-work';
 import { PegaExtensionsKanbanBoard } from './index';
@@ -35,7 +35,7 @@ export default {
   },
   parameters: {
     a11y: {
-      element: '#storybook-root',
+      context: '#storybook-root',
       config: {
         rules: [
           {

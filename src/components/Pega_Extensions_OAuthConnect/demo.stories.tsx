@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsOAuthConnect, type OAuthConnectProps } from './index';
 
 interface OAuthConnectStoryProps extends OAuthConnectProps {

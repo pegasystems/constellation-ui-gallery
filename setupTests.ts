@@ -78,8 +78,19 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-jest.setTimeout(TIMEOUT);
+// Mock Web Animations API
+Object.defineProperty(Element.prototype, 'animate', {
+  writable: true,
+  value: jest.fn().mockImplementation(() => ({
+    play: jest.fn(),
+    pause: jest.fn(),
+    finish: jest.fn(),
+    cancel: jest.fn(),
+    reverse: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
 
-// speeds up *ByRole queries a bit
-// https://github.com/testing-library/dom-testing-library/issues/552
-configure({ defaultHidden: true });
+jest.setTimeout(TIMEOUT);

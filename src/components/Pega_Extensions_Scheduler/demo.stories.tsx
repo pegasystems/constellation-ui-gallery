@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsScheduler, type PegaExtensionsSchedulerProps } from './index';
 
 // Define extended props for the story

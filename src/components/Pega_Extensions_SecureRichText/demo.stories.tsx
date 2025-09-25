@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type { StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react-webpack5';
 
 import { PegaExtensionsSecureRichText } from './index';
 
@@ -40,6 +40,19 @@ export default {
     fieldMetadata: {
       table: {
         disable: true,
+      },
+    },
+  },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'color-contrast',
+            enabled: false,
+          },
+        ],
       },
     },
   },

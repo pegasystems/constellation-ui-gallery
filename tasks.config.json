@@ -6,7 +6,7 @@
         "rulesetName": "ConstellationUIGallery",
         "rulesetVersion": "01-01-01",
         "sourceOfComponents": "Server",
-        "devBuild": true,
+        "devBuild": false,
         "serverType": "infinity",
         "server": "",
         "clientId": "",
@@ -27,17 +27,19 @@
         "questions_askAlways": "",
         "questions_askNever": "",
         "questions_askOnce": "server,authService",
-        "questions_askedOnce": "server,authService"
+        "questions_askedOnce": "server,authService",
+        "archiveRulesetName": "CustomDXArch",
+        "archiveRulesetVersion": "01-01-01"
     },
     "component": {
-        "library": "ConstellationUIGallery",
+        "library": "UIGallery",
         "type": "",
-        "version": "0.0.1",
+        "version": "4.0.0",
         "subtype": "",
         "description": "",
         "icon": ""
     },
     "usePromotedWebPack": false,
-    "libraryMode": false,
+    "libraryModeCL": false,
     "showDebug": false
 }
