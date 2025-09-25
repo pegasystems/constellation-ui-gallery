@@ -62,8 +62,9 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
   const [upcoming, setUpcoming] = useState<any[]>([]);
+  const [days, setDays] = useState(90);
   const [recent, setRecent] = useState<any[]>([]);
-  const [overdueProposals, setOverdueProposals] = useState<number>(0);
+  const [overdueProposals, setOverdueProposals] = useState<any[]>([]);
   const [appraisalsInProgress, setappraisalsInProgress] = useState<number>(0);
   const [kraRejections, setKraRejections] = useState<any[]>([]);
   const [donutData, setDonutData] = useState<ChartData<'doughnut'>>({
@@ -119,18 +120,25 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const handleLoad = () => {
   };
 
+  const handleChange = (e) => {
+    setDays(e.target.value);
+  };
+
 
   useEffect(() => {
     async function load() {
       const [ip, dp, u, r, k, o, s] = await Promise.all([
         fetchDataPage(inProgressAppraisalsDataPage, context, {}),
         fetchDataPage(departmentalWorkloadChartDataPage, context, {}),
-        fetchDataPage(upcomingAppraisalsDataPage, context, {}),
+        fetchDataPage(upcomingAppraisalsDataPage, context, { NoOfDays: days }),
         fetchDataPage(recentAppraisalsDataPage, context, {}),
         fetchDataPage(kraRejectionDataPage, context, {}),
         fetchDataPage(overdueProposalsDataPage, context, {}),
         fetchDataPage(stageDistributionDataPage, context, {}),
       ]);
+      // eslint-disable-next-line no-console
+      console.log(ip);
+
       setUpcoming(u.data || []);
       setRecent(
         (r.data || []).map(item => ({
@@ -141,7 +149,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
         }))
       );
       setKraRejections(k.data || []);
-      setOverdueProposals(o.data?.[0]?.pySummaryCount?.[0] || 0);
+      setOverdueProposals(o.data || []);
       setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
 
       const chartData: ChartData<'doughnut'> = {
@@ -217,7 +225,8 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
     kraRejectionDataPage,
     context,
     overdueProposalsDataPage,
-    stageDistributionDataPage
+    stageDistributionDataPage,
+    days
   ]);
 
   const openProfile = () => {
@@ -236,7 +245,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
           </div>
           <div className="controls">
             <div className="control">
-              <select id="rangeSelect">
+              <select onChange={handleChange} value={days}>
                 <option value="30">Upcoming: 30 days</option>
                 <option value="60">Upcoming: 60 days</option>
                 <option value="90" selected>Upcoming: 90 days</option>
@@ -251,7 +260,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
           <div className="kpi-row">
             <div className="kpi card"><div className="value">{appraisalsInProgress || 0}</div><div className="label">Appraisals In Progress</div><div className="small">Updated today</div></div>
             <div className="kpi card"><div className="value">{upcoming?.length || 0}</div><div className="label">Upcoming</div><div className="small">Next 90 days</div></div>
-            <div className="kpi card"><div className="value">{overdueProposals || 0}</div><div className="label">Overdue</div><div className="small">High priority</div></div>
+            <div className="kpi card"><div className="value">{overdueProposals?.length || 0}</div><div className="label">Overdue</div><div className="small">High priority</div></div>
           </div>
 
           {/* Charts */}
@@ -270,7 +279,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
 
           {/* Overdue */}
           <div className="overdue card">
-            <div className="count">{overdueProposals || 0}</div>
+            <div className="count">{overdueProposals?.length || 0}</div>
             <div><Button>View Overdue Details</Button><Button compact>Export CSV</Button></div>
           </div>
 
@@ -327,25 +336,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                     <button type='button' className="btn" onClick={handleLoad}>
                       Load
                     </button>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                    <div className="sub">Group by</div>
-                    <select
-                      value={groupBy}
-                      onChange={(e) => setGroupBy(e.target.value)}
-                      style={{
-                        background: 'transparent',
-                        border: '1px solid rgba(255,255,255,0.04)',
-                        padding: 8,
-                        borderRadius: 8,
-                        color: 'var(--accent)',
-                      }}
-                    >
-                      <option>--Rejection Reason--</option>
-                      <option value="pl">Practice Lead</option>
-                      <option value="department">Department</option>
-                    </select>
                   </div>
                 </div>
 
