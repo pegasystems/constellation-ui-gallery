@@ -27,7 +27,7 @@ const fetchDataPage = async (
 };
 
 export const PegaExtensionsActionButton = (props: ActionableButtonProps) => {
-  const { label, dataPageName } = props;
+  const { label = 'Button', dataPageName } = props;
   const [data, setData] = useState<FetchDataPageResult | null>(null);
 
   const context = 'app/primary_1';
