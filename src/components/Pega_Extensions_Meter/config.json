@@ -1,0 +1,92 @@
+{
+    "name": "Pega_Extensions_Meter",
+    "label": "Meter",
+    "description": "Meter",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Meter",
+    "type": "Field",
+    "subtype": "Decimal-Percentage",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "name": "additionalInfo",
+            "label": "Additional information",
+            "format": "TEXT"
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name used to source the data",
+            "format": "TEXT"
+        },
+        {
+            "name": "showMetaData",
+            "label": "Show the meta data on the screen",
+            "format": "BOOLEAN"
+        },
+        {
+            "name": "totalTasks",
+            "label": "Total tasks",
+            "format": "NUMBER"
+        },
+        {
+            "name": "color",
+            "label": "Color or JSON string",
+            "format": "TEXT"
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "detailFVLItem": true
+    },
+    "buildDate": "2025-09-25T18:19:53.773Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

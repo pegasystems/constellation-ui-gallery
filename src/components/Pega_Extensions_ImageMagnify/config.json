@@ -1,0 +1,340 @@
+{
+    "name": "Pega_Extensions_ImageMagnify",
+    "label": "Image Magnify",
+    "description": "Image Magnify",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_ImageMagnify",
+    "type": "Field",
+    "subtype": "Text-URL",
+    "icon": "images/pz-url-active.svg",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "label": "Column settings",
+            "format": "GROUP",
+            "visibility": "@VIEWTYPE == 'MultiRecordDisplayAsTable'",
+            "properties": [
+                {
+                    "name": "columnWidth",
+                    "label": "Column width",
+                    "format": "SELECT",
+                    "source": [
+                        {
+                            "key": "auto",
+                            "value": "Auto"
+                        },
+                        {
+                            "key": "custom",
+                            "value": "Custom"
+                        }
+                    ]
+                },
+                {
+                    "name": "width",
+                    "label": "Width (px)",
+                    "format": "NUMBER",
+                    "visibility": "$this.columnWidth == custom"
+                }
+            ]
+        },
+        {
+            "label": "Preview Image settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "format": "GROUP",
+                    "properties": [
+                        {
+                            "format": "SELECT",
+                            "name": "widthSel",
+                            "label": "Width",
+                            "defaultValue": "defaultWidth",
+                            "source": [
+                                {
+                                    "key": "defaultWidth",
+                                    "value": "Default Width"
+                                },
+                                {
+                                    "key": "widthpx",
+                                    "value": "Custom Width"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "customWidth",
+                            "label": "Width (px)",
+                            "visibility": "(widthSel = widthpx)",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "customHeight",
+                            "label": "Max Height as a string",
+                            "visibility": "(widthSel = widthpx)",
+                            "format": "TEXT"
+                        },
+                        {
+                            "format": "CASCADE",
+                            "source": {
+                                "format": "SELECT",
+                                "label": "Image Alt Text",
+                                "name": "altText",
+                                "defaultValue": "constant",
+                                "source": [
+                                    {
+                                        "key": "constant",
+                                        "value": "Constant"
+                                    },
+                                    {
+                                        "key": "propertyRef",
+                                        "value": "Property Reference"
+                                    }
+                                ]
+                            },
+                            "cascadeElements": [
+                                {
+                                    "key": "altTextOfImage",
+                                    "format": "TEXT",
+                                    "name": "altTextOfImage",
+                                    "label": "Alt Text Value",
+                                    "defaultValue": "",
+                                    "match": "constant"
+                                },
+                                {
+                                    "key": "altTextOfImage",
+                                    "format": "PROPERTY",
+                                    "name": "propaltTextOfImage",
+                                    "label": "Alt Text Value",
+                                    "match": "propertyRef"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Magnification settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "magnifyMode",
+                    "label": "Magnifier mode",
+                    "format": "SELECT",
+                    "defaultValue": "magSideBySide",
+                    "source": [
+                        {
+                            "key": "magSideBySide",
+                            "value": "Side by side"
+                        },
+                        {
+                            "key": "magAdvanced",
+                            "value": "Advanced"
+                        },
+                        {
+                            "key": "lightbox",
+                            "value": "Lightbox"
+                        }
+                    ]
+                },
+                {
+                    "name": "magnifyTrigger",
+                    "label": "Magnifier activation trigger",
+                    "format": "SELECT",
+                    "defaultValue": "magTriggerHover",
+                    "source": [
+                        {
+                            "key": "magTriggerHover",
+                            "value": "Hover"
+                        },
+                        {
+                            "key": "magTriggerClick",
+                            "value": "Click"
+                        },
+                        {
+                            "key": "magTriggerDoubleClick",
+                            "value": "Double click"
+                        }
+                    ]
+                },
+                {
+                    "label": "Side by Side",
+                    "format": "GROUP",
+                    "visibility": "$this.magnifyMode == magSideBySide",
+                    "properties": [
+                        {
+                            "name": "alwaysInPlace",
+                            "label": "Always magnify in place",
+                            "format": "BOOLEAN"
+                        },
+                        {
+                            "name": "switchSides",
+                            "label": "Show on left",
+                            "format": "BOOLEAN"
+                        },
+                        {
+                            "name": "fillAvailableSpace",
+                            "label": "Fill available Space",
+                            "format": "BOOLEAN"
+                        },
+                        {
+                            "name": "fillAlignTop",
+                            "label": "Align to top",
+                            "format": "BOOLEAN"
+                        },
+                        {
+                            "name": "fillGapTop",
+                            "label": "Gap top",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "fillGapBottom",
+                            "label": "Gap bottom",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "fillGapLeft",
+                            "label": "Gap left",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "fillGapRight",
+                            "label": "Gap right",
+                            "format": "NUMBER"
+                        }
+                    ]
+                },
+                {
+                    "label": "Advanced",
+                    "format": "GROUP",
+                    "visibility": "$this.magnifyMode == magAdvanced",
+                    "properties": [
+                        {
+                            "name": "zoomTop",
+                            "label": "Zoom top position (px)",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "zoomLeft",
+                            "label": "Zoom left position (px)",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "zoomHeight",
+                            "label": "Zoom display height (%)",
+                            "format": "NUMBER"
+                        },
+                        {
+                            "name": "zoomWidth",
+                            "label": "Zoom display width (px)",
+                            "format": "NUMBER"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                },
+                {
+                    "name": "zoomZIndex",
+                    "label": "Zoom display z-index value",
+                    "format": "NUMBER",
+                    "visibility": "$this.magnifyMode == magAdvanced"
+                },
+                {
+                    "name": "previewRightOffset",
+                    "label": "Preview image right offset (px)",
+                    "format": "NUMBER",
+                    "visibility": "$this.magnifyMode == magAdvanced"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "widthSel": "defaultWidth",
+        "customWidth": 100,
+        "customHeight": 100,
+        "altText": "constant",
+        "altTextOfImage": "",
+        "propaltTextOfImage": "",
+        "magnifyTrigger": "magTriggerHover",
+        "magnifyMode": "magSideBySide",
+        "fillAvailableSpace": false,
+        "fillAlignTop": false,
+        "fillGapLeft": 0,
+        "fillGapRight": 0,
+        "fillGapTop": 0,
+        "fillGapBottom": 0,
+        "switchSides": false,
+        "alwaysInPlace": false,
+        "zoomTop": 0,
+        "zoomLeft": 0,
+        "zoomHeight": 100,
+        "zoomWidth": 300,
+        "previewRightOffset": 0,
+        "zoomZIndex": 999,
+        "detailFVLItem": true,
+        "isFormWidth": true
+    },
+    "buildDate": "2025-09-25T18:19:53.545Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

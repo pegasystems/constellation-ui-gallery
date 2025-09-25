@@ -1,0 +1,75 @@
+{
+    "name": "Pega_Extensions_Shortcuts",
+    "label": "Shortcuts",
+    "description": "Render a list of shortcuts in a widget",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Shortcuts",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "displayType",
+            "label": "displayType",
+            "format": "SELECT",
+            "defaultValue": "simple",
+            "source": [
+                {
+                    "key": "simple",
+                    "value": "simple"
+                },
+                {
+                    "key": "grouped",
+                    "value": "grouped"
+                }
+            ]
+        },
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "visibility": "$this.displayType == simple"
+        },
+        {
+            "name": "names",
+            "label": "Label of each page (comma-separated)",
+            "format": "TEXT",
+            "visibility": "$this.displayType == simple"
+        },
+        {
+            "name": "pages",
+            "label": "Name of each page with the class (e.g. Data-Portal.SearchPage), comma-separated list",
+            "format": "TEXT",
+            "visibility": "$this.displayType == simple"
+        },
+        {
+            "name": "pageJSON",
+            "label": "JSON of the categories and pages",
+            "format": "TEXT",
+            "visibility": "$this.displayType == grouped"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Shortcuts"
+    },
+    "buildDate": "2025-09-25T18:19:54.117Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

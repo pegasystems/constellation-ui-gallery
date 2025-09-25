@@ -1,0 +1,38 @@
+{
+    "name": "Pega_Extensions_EditableTableLayout",
+    "label": "Editable Table Layout",
+    "description": "Editable Table Layout",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_EditableTableLayout",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "properties": [
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields"
+            ],
+            "allowCreatingGroup": false
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2025-09-25T18:19:53.257Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

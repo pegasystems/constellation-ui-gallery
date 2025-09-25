@@ -1,0 +1,91 @@
+{
+    "name": "Pega_Extensions_OAuthConnect",
+    "label": "OAuth Connect",
+    "description": "Allows to integrate external applications into Constellation UI using OAuth 2.0 authorization code grant flow",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_OAuthConnect",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "defaultValue": "Demo Application"
+        },
+        {
+            "name": "profileName",
+            "label": "Authentication profile",
+            "format": "TEXT",
+            "required": "true"
+        },
+        {
+            "name": "connectLabel",
+            "label": "Connect button text",
+            "format": "TEXT",
+            "defaultValue": "Connect",
+            "visibility": "(!customAuth = true)"
+        },
+        {
+            "name": "showDisconnect",
+            "label": "Show disconnect",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "disconnectLabel",
+            "label": "Disconnect button text",
+            "format": "TEXT",
+            "defaultValue": "Disconnect",
+            "visibility": "showDisconnect = true"
+        },
+        {
+            "name": "iconName",
+            "label": "Icon",
+            "format": "SELECT",
+            "defaultValue": "node",
+            "source": [
+                {
+                    "key": "node",
+                    "value": "node"
+                },
+                {
+                    "key": "chain",
+                    "value": "chain"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2025-09-25T18:19:53.870Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

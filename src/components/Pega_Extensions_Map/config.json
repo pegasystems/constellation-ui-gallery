@@ -1,0 +1,151 @@
+{
+    "name": "Pega_Extensions_Map",
+    "label": "ESRI Map Component",
+    "description": "ESRI Map Component",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Map",
+    "type": "Template",
+    "subtype": "FORM",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "required": true,
+            "defaultValue": "Map"
+        },
+        {
+            "format": "PROPERTY",
+            "name": "selectionProperty",
+            "label": "Selection Property"
+        },
+        {
+            "key": "locationInputType",
+            "name": "locationInputType",
+            "label": "Location input type",
+            "format": "SELECT",
+            "defaultValue": "constant",
+            "source": [
+                {
+                    "key": "constant",
+                    "value": "Constant"
+                },
+                {
+                    "key": "propertyRef",
+                    "value": "Property Reference"
+                }
+            ]
+        },
+        {
+            "label": "Location input",
+            "format": "GROUP",
+            "visibility": "$this.locationInputType IS_NULL || $this.locationInputType != propertyRef",
+            "properties": [
+                {
+                    "name": "Latitude",
+                    "label": "Latitude",
+                    "format": "TEXT",
+                    "defaultValue": "35"
+                },
+                {
+                    "name": "Longitude",
+                    "label": "Longitude",
+                    "format": "TEXT",
+                    "defaultValue": "-110"
+                },
+                {
+                    "name": "Zoom",
+                    "label": "Zoom",
+                    "format": "TEXT",
+                    "defaultValue": "4"
+                }
+            ]
+        },
+        {
+            "label": "Location input",
+            "format": "GROUP",
+            "visibility": "$this.locationInputType == propertyRef",
+            "properties": [
+                {
+                    "format": "PROPERTY",
+                    "name": "ZoomRef",
+                    "label": "Zoom"
+                }
+            ]
+        },
+        {
+            "label": "Settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "height",
+                    "label": "Height of the map",
+                    "format": "TEXT",
+                    "defaultValue": "40rem"
+                },
+                {
+                    "name": "bFreeFormDrawing",
+                    "label": "Set to true if you want to draw on the map using the sketch tool",
+                    "format": "BOOLEAN",
+                    "defaultValue": false
+                },
+                {
+                    "name": "createTools",
+                    "label": "list of tools for the Sketch component",
+                    "format": "TEXT",
+                    "visibility": "$this.bFreeFormDrawing == true",
+                    "defaultValue": "point,polyline,polygon,rectangle,circle"
+                },
+                {
+                    "name": "bShowSearch",
+                    "label": "Set to true to display a search bar",
+                    "format": "BOOLEAN",
+                    "defaultValue": false
+                },
+                {
+                    "name": "apiKey",
+                    "label": "API key for ArcGIS",
+                    "format": "TEXT"
+                }
+            ]
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields"
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Map",
+        "Latitude": "35",
+        "Longitude": "-110",
+        "Zoom": "4",
+        "height": "40rem",
+        "createTools": "point,polyline,polygon,rectangle,circle",
+        "bFreeFormDrawing": false,
+        "bShowSearch": false,
+        "apiKey": "",
+        "locationInputType": "constant"
+    },
+    "buildDate": "2025-09-25T18:19:53.668Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

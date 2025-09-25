@@ -3,7 +3,7 @@
     "import-relative-path": "Downloads",
     "export-relative-path": "Downloads",
     "server-config": {
-        "rulesetName": "ConstellationUIGalleryLib",
+        "rulesetName": "ConstellationUIGallery",
         "rulesetVersion": "01-01-01",
         "sourceOfComponents": "Server",
         "devBuild": false,
@@ -40,6 +40,6 @@
         "icon": ""
     },
     "usePromotedWebPack": false,
-    "libraryModeCL": true,
+    "libraryModeCL": false,
     "showDebug": false
 }

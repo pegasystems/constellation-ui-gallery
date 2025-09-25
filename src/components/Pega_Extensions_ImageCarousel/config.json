@@ -1,0 +1,235 @@
+{
+    "name": "Pega_Extensions_ImageCarousel",
+    "label": "Image carousel",
+    "description": "Image carousel",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_ImageCarousel",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "datasource",
+            "label": "Data source for Carousel",
+            "defaultValue": "@DATASOURCE D_pyAnnouncements.pxResults",
+            "format": "DATASOURCE",
+            "required": true,
+            "properties": [
+                {
+                    "name": "imageURL",
+                    "label": "Image URL",
+                    "required": true,
+                    "defaultValue": "@P .pyImageURL"
+                },
+                {
+                    "name": "title",
+                    "label": "Image Title",
+                    "required": false,
+                    "defaultValue": "@P .pyTitle"
+                },
+                {
+                    "name": "description",
+                    "label": "Image Description",
+                    "required": false,
+                    "defaultValue": "@P .pyDescription"
+                }
+            ]
+        },
+        {
+            "name": "height",
+            "label": "Minimum height of the Carousel",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "format": "SELECT",
+            "label": "Text Position",
+            "name": "textPosition",
+            "defaultValue": "TopLeft",
+            "required": true,
+            "source": [
+                {
+                    "key": "TopLeft",
+                    "value": "Top Left"
+                },
+                {
+                    "key": "TopCenter",
+                    "value": "Top Center"
+                },
+                {
+                    "key": "TopRight",
+                    "value": "Top Right"
+                },
+                {
+                    "key": "CenterLeft",
+                    "value": "Center Left"
+                },
+                {
+                    "key": "Center",
+                    "value": "Center"
+                },
+                {
+                    "key": "CenterRight",
+                    "value": "Center Right"
+                },
+                {
+                    "key": "BottomLeft",
+                    "value": "Bottom Left"
+                },
+                {
+                    "key": "BottomCenter",
+                    "value": "Bottom Center"
+                },
+                {
+                    "key": "BottomRight",
+                    "value": "Bottom Right"
+                }
+            ]
+        },
+        {
+            "format": "SELECT",
+            "label": "Object Fit",
+            "name": "objectFit",
+            "defaultValue": "cover",
+            "required": true,
+            "source": [
+                {
+                    "key": "fill",
+                    "value": "Fill"
+                },
+                {
+                    "key": "contain",
+                    "value": "Contain"
+                },
+                {
+                    "key": "cover",
+                    "value": "Cover"
+                },
+                {
+                    "key": "none",
+                    "value": "None"
+                },
+                {
+                    "key": "scale-down",
+                    "value": "Scale Down"
+                }
+            ]
+        },
+        {
+            "format": "BOOLEAN",
+            "label": "Autoplay",
+            "name": "autoplay",
+            "defaultValue": false
+        },
+        {
+            "name": "autoplayDuration",
+            "label": "Autoplay Duration (ms)",
+            "format": "NUMBER",
+            "defaultValue": 3000
+        },
+        {
+            "format": "SELECT",
+            "label": "Control Type",
+            "name": "controlType",
+            "defaultValue": "Dots",
+            "required": true,
+            "source": [
+                {
+                    "key": "None",
+                    "value": "None"
+                },
+                {
+                    "key": "Dots",
+                    "value": "Dots"
+                },
+                {
+                    "key": "Buttons",
+                    "value": "Buttons"
+                },
+                {
+                    "key": "Both",
+                    "value": "Both"
+                }
+            ]
+        },
+        {
+            "format": "SELECT",
+            "label": "Animation Type",
+            "name": "animationType",
+            "defaultValue": "fade-in",
+            "required": true,
+            "source": [
+                {
+                    "key": "fade-in",
+                    "value": "Fade In"
+                },
+                {
+                    "key": "fade-out",
+                    "value": "Fade Out"
+                },
+                {
+                    "key": "slide-in",
+                    "value": "Slide In"
+                },
+                {
+                    "key": "slide-out",
+                    "value": "Slide Out"
+                },
+                {
+                    "key": "zoom-in",
+                    "value": "Zoom In"
+                },
+                {
+                    "key": "zoom-out",
+                    "value": "Zoom Out"
+                },
+                {
+                    "key": "bounce",
+                    "value": "Bounce"
+                },
+                {
+                    "key": "shake",
+                    "value": "Shake"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "height": "40rem",
+        "controlType": "dots",
+        "Autoplay": "yes",
+        "autoplayDuration": "3000",
+        "label": "Image Carousel"
+    },
+    "buildDate": "2025-09-25T18:19:53.483Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

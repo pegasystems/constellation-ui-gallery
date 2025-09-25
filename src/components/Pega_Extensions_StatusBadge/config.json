@@ -1,0 +1,105 @@
+{
+    "name": "Pega_Extensions_StatusBadge",
+    "label": "Status Badge",
+    "description": "Status Badge",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_StatusBadge",
+    "type": "Field",
+    "subtype": "Text",
+    "icon": "images/pz-text-input-active.svg",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "key": "inputProperty",
+            "format": "PROPERTY",
+            "name": "inputProperty",
+            "required": true,
+            "label": "Input Property"
+        },
+        {
+            "name": "infoStatus",
+            "label": "List of statuses for Info",
+            "format": "TEXT"
+        },
+        {
+            "name": "warnStatus",
+            "label": "List of statuses for Warning",
+            "format": "TEXT"
+        },
+        {
+            "name": "successStatus",
+            "label": "List of statuses for Success",
+            "format": "TEXT"
+        },
+        {
+            "name": "pendingStatus",
+            "label": "List of statuses for Pending",
+            "format": "TEXT"
+        },
+        {
+            "name": "urgentStatus",
+            "label": "List of statuses for Urgent",
+            "format": "TEXT"
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "infoStatus": "@L open|hold|info|new",
+        "warnStatus": "@L fail|cancel|reject|withdraw|revoke|stopped|warn",
+        "successStatus": "@L resolved|completed|success",
+        "pendingStatus": "@L pending",
+        "urgentStatus": "@L blocked",
+        "detailFVLItem": true
+    },
+    "buildDate": "2025-09-25T18:19:54.216Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

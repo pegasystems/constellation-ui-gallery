@@ -1,0 +1,76 @@
+{
+    "name": "Pega_Extensions_IframeWrapper",
+    "label": "IFrame Wrapper",
+    "description": "IFrame Wrapper",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_IframeWrapper",
+    "type": "Field",
+    "subtype": "Text-URL",
+    "icon": "images/pz-url-active.svg",
+    "properties": [
+        {
+            "name": "title",
+            "label": "Title of the iframe",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "heightMode",
+            "label": "Height Mode",
+            "format": "SELECT",
+            "defaultValue": "fixed",
+            "required": true,
+            "source": [
+                {
+                    "key": "fixed",
+                    "value": "Fixed"
+                },
+                {
+                    "key": "auto",
+                    "value": "Auto"
+                }
+            ]
+        },
+        {
+            "name": "height",
+            "label": "Height",
+            "format": "NUMBER",
+            "visibility": "(heightMode = 'fixed')"
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "title": "iFrame title",
+        "heightMode": "fixed",
+        "height": 500,
+        "isFormWidth": true
+    },
+    "buildDate": "2025-09-25T18:19:53.456Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

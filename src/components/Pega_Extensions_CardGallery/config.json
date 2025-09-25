@@ -1,0 +1,91 @@
+{
+    "name": "Pega_Extensions_CardGallery",
+    "label": "Card Gallery",
+    "description": "Card Gallery",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CardGallery",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "useInDashboard",
+            "label": "Set to true if you are using in a dashboard - use a queryable data page",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "dataPage",
+            "label": "List Data Page name to get all objects",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "createClassname",
+            "label": "Create case className (empty to disable create)",
+            "format": "TEXT"
+        },
+        {
+            "name": "rendering",
+            "label": "Rendering",
+            "format": "SELECT",
+            "source": [
+                {
+                    "key": "vertical",
+                    "value": "Vertical"
+                },
+                {
+                    "key": "horizontal",
+                    "value": "Horizontal"
+                }
+            ]
+        },
+        {
+            "name": "minWidth",
+            "label": "Minimum width of each card",
+            "format": "TEXT"
+        },
+        {
+            "name": "detailsDataPage",
+            "label": "Data Page used to show the card (pyID as param)",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "detailsViewName",
+            "label": "Name of the view used to retrieve case details",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Card Gallery",
+        "minWidth": "400px",
+        "rendering": "horizontal"
+    },
+    "buildDate": "2025-09-25T18:19:52.827Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

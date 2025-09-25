@@ -1,0 +1,252 @@
+{
+    "name": "Pega_Extensions_TrendDisplay",
+    "label": "Trend Display",
+    "description": "Trend Display",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_TrendDisplay",
+    "type": "Field",
+    "subtype": "Decimal-Currency",
+    "properties": [
+        {
+            "key": "trendData",
+            "format": "PROPERTY",
+            "name": "trendData",
+            "label": "Trend data if showing a percentage or trend of values"
+        },
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "format": "CASCADE",
+            "source": {
+                "format": "SELECT",
+                "label": "ISO Code Selection",
+                "name": "isoCodeSelection",
+                "defaultValue": "constant",
+                "source": [
+                    {
+                        "key": "constant",
+                        "value": "Constant"
+                    },
+                    {
+                        "key": "propertyRef",
+                        "value": "Property Reference"
+                    }
+                ]
+            },
+            "cascadeElements": [
+                {
+                    "key": "currencyISOCode",
+                    "format": "TEXT",
+                    "name": "currencyISOCode",
+                    "label": "Currency ISO Code",
+                    "defaultValue": "USD",
+                    "match": "constant"
+                },
+                {
+                    "key": "currencyISOCode",
+                    "format": "PROPERTY",
+                    "name": "currencyISOCode",
+                    "label": "Currency ISO Code",
+                    "match": "propertyRef"
+                }
+            ]
+        },
+        {
+            "format": "CASCADE",
+            "source": {
+                "format": "SELECT",
+                "label": "Color selection",
+                "name": "ColorSelection",
+                "defaultValue": "constant",
+                "source": [
+                    {
+                        "key": "constant",
+                        "value": "Constant"
+                    },
+                    {
+                        "key": "propertyRef",
+                        "value": "Property Reference"
+                    }
+                ]
+            },
+            "cascadeElements": [
+                {
+                    "key": "colorMode",
+                    "format": "TEXT",
+                    "name": "colorMode",
+                    "label": "Color Mode",
+                    "defaultValue": "auto",
+                    "match": "constant"
+                },
+                {
+                    "key": "colorMode",
+                    "format": "PROPERTY",
+                    "name": "colorMode",
+                    "label": "Color Mode",
+                    "match": "propertyRef"
+                }
+            ]
+        },
+        {
+            "format": "SELECT",
+            "name": "renderingMode",
+            "label": "renderingMode",
+            "defaultValue": "normal",
+            "source": [
+                {
+                    "key": "normal",
+                    "value": "normal"
+                },
+                {
+                    "key": "badge",
+                    "value": "badge"
+                }
+            ]
+        },
+        {
+            "label": "Formatting",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "format": "SELECT",
+                    "name": "currencyDisplay",
+                    "label": "Currency display",
+                    "defaultValue": "symbol",
+                    "source": [
+                        {
+                            "key": "symbol",
+                            "value": "Auto"
+                        },
+                        {
+                            "key": "code",
+                            "value": "Code"
+                        },
+                        {
+                            "key": "name",
+                            "value": "Name"
+                        }
+                    ]
+                },
+                {
+                    "format": "SELECT",
+                    "name": "negative",
+                    "label": "Negative number display",
+                    "defaultValue": "minus-sign",
+                    "source": [
+                        {
+                            "key": "minus-sign",
+                            "value": "Standard"
+                        },
+                        {
+                            "key": "parentheses",
+                            "value": "Accounting"
+                        }
+                    ]
+                },
+                {
+                    "format": "SELECT",
+                    "name": "notation",
+                    "label": "Notation",
+                    "visibility": "(!negative = parentheses)",
+                    "defaultValue": "standard",
+                    "source": [
+                        {
+                            "key": "standard",
+                            "value": "Standard"
+                        },
+                        {
+                            "key": "compact",
+                            "value": "Compact"
+                        }
+                    ]
+                },
+                {
+                    "format": "SELECT",
+                    "name": "currencyDecimalPrecision",
+                    "label": "Decimal places shown",
+                    "defaultValue": "auto",
+                    "source": [
+                        {
+                            "key": "auto",
+                            "value": "Auto"
+                        },
+                        {
+                            "key": "0",
+                            "value": "None"
+                        },
+                        {
+                            "key": "1",
+                            "value": "1"
+                        },
+                        {
+                            "key": "2",
+                            "value": "2"
+                        },
+                        {
+                            "key": "3",
+                            "value": "3"
+                        },
+                        {
+                            "key": "4",
+                            "value": "4"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "detailFVLItem": true
+    },
+    "buildDate": "2025-09-25T18:19:54.276Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

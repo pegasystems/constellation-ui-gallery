@@ -1,0 +1,62 @@
+{
+    "name": "Pega_Extensions_FormFullWidth",
+    "label": "Form Full Width",
+    "description": "Form Full Width",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_FormFullWidth",
+    "type": "Template",
+    "subtype": "FORM",
+    "icon": "FieldGroupAsRow.svg",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Label",
+            "format": "TEXT"
+        },
+        {
+            "name": "NumCols",
+            "label": "Number of columns",
+            "format": "TEXT"
+        },
+        {
+            "name": "gridTemplateColumns",
+            "label": "gridTemplateColumns",
+            "format": "TEXT"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ],
+            "allowCreatingGroup": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Heading",
+        "NumCols": "2",
+        "gridTemplateColumns": ""
+    },
+    "buildDate": "2025-09-25T18:19:53.327Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

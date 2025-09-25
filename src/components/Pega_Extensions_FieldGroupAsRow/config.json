@@ -1,0 +1,44 @@
+{
+    "name": "Pega_Extensions_FieldGroupAsRow",
+    "label": "Field Group As Row",
+    "description": "Field Group As Row",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_FieldGroupAsRow",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "icon": "FieldGroupAsRow.svg",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Label",
+            "format": "TEXT"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views"
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2025-09-25T18:19:53.298Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

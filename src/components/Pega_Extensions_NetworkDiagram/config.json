@@ -1,0 +1,103 @@
+{
+    "name": "Pega_Extensions_NetworkDiagram",
+    "label": "Network Diagram",
+    "description": "Network Diagram",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_NetworkDiagram",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "key": "selectionProperty",
+            "format": "PROPERTY",
+            "name": "selectionProperty",
+            "label": "Selection Property"
+        },
+        {
+            "name": "height",
+            "label": "Height of the diagram",
+            "format": "TEXT"
+        },
+        {
+            "name": "showMinimap",
+            "label": "Show mini map",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "showControls",
+            "label": "Show controls",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "showRefresh",
+            "label": "Show refresh action",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "edgePath",
+            "label": "Edge path",
+            "format": "SELECT",
+            "defaultValue": "bezier",
+            "source": [
+                {
+                    "key": "bezier",
+                    "value": "bezier"
+                },
+                {
+                    "key": "straight",
+                    "value": "straight"
+                },
+                {
+                    "key": "step",
+                    "value": "step"
+                },
+                {
+                    "key": "floating",
+                    "value": "floating"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Network Diagram",
+        "dataPage": "",
+        "height": "40rem",
+        "edgePath": "bezier"
+    },
+    "buildDate": "2025-09-25T18:19:53.813Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

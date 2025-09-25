@@ -1,0 +1,95 @@
+{
+    "name": "Pega_Extensions_KanbanBoard",
+    "label": "Kanban Board",
+    "description": "Kanban board",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_KanbanBoard",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "label": "Data source",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "dataPage",
+                    "label": "List Data Page name to get all cases",
+                    "format": "TEXT",
+                    "required": true
+                },
+                {
+                    "key": "contextProperty",
+                    "format": "PROPERTY",
+                    "name": "contextProperty",
+                    "label": "Context for filtering the data page"
+                }
+            ]
+        },
+        {
+            "name": "createClassname",
+            "label": "Create case className (empty to disable create)",
+            "format": "TEXT"
+        },
+        {
+            "name": "height",
+            "label": "Minimum height of the diagram",
+            "format": "TEXT"
+        },
+        {
+            "name": "groups",
+            "label": "Names of the groups (comma separated)",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "groupProperty",
+            "label": "Property used for grouping",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "detailsDataPage",
+            "label": "Data Page used to retrieve case details (pyID as param)",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "detailsViewName",
+            "label": "Name of the view used to retrieve case details",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Task board",
+        "height": "30rem",
+        "groups": "New,Open,Pending-Review,Resolved-Completed",
+        "groupProperty": "pyStatusWork"
+    },
+    "buildDate": "2025-09-25T18:19:53.619Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

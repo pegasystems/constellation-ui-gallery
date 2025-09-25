@@ -1,0 +1,105 @@
+{
+    "name": "Pega_Extensions_DisplayAttachments",
+    "label": "Display Attachments",
+    "description": "Display the attachments for a specific category",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_DisplayAttachments",
+    "type": "Widget",
+    "subtype": "CASE",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "useAttachmentEndpoint",
+            "label": "Use the attachment endpoint",
+            "format": "BOOLEAN"
+        },
+        {
+            "name": "enableDownloadAll",
+            "label": "Enable download all action",
+            "format": "BOOLEAN"
+        },
+        {
+            "name": "categories",
+            "label": "Categories (comma-separated)",
+            "format": "TEXT",
+            "visibility": "($this.useAttachmentEndpoint = true)"
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT",
+            "visibility": "($this.useAttachmentEndpoint = false)"
+        },
+        {
+            "name": "iconName",
+            "label": "Icon",
+            "format": "SELECT",
+            "defaultValue": "clipboard",
+            "source": [
+                {
+                    "key": "information",
+                    "value": "information"
+                },
+                {
+                    "key": "polaris",
+                    "value": "polaris"
+                },
+                {
+                    "key": "clipboard",
+                    "value": "clipboard"
+                }
+            ]
+        },
+        {
+            "name": "displayFormat",
+            "label": "Display format",
+            "format": "SELECT",
+            "defaultValue": "list",
+            "source": [
+                {
+                    "key": "list",
+                    "value": "List"
+                },
+                {
+                    "key": "tiles",
+                    "value": "Tiles"
+                }
+            ]
+        },
+        {
+            "name": "useLightBox",
+            "label": "Show images using LightBox",
+            "format": "BOOLEAN"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "List of attachments",
+        "categories": "",
+        "dataPage": "",
+        "iconName": "clipboard",
+        "useAttachmentEndpoint": true,
+        "enableDownloadAll": false
+    },
+    "buildDate": "2025-09-25T18:19:53.106Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

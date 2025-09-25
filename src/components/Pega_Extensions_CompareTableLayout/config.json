@@ -1,0 +1,89 @@
+{
+    "name": "Pega_Extensions_CompareTableLayout",
+    "label": "Comparison Table Layout",
+    "description": "Comparison Table Layout",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CompareTableLayout",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "icon": "CompareTableLayout.svg",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Label",
+            "format": "TEXT"
+        },
+        {
+            "name": "displayFormat",
+            "label": "Display format",
+            "format": "SELECT",
+            "source": [
+                {
+                    "key": "spreadsheet",
+                    "value": "Simple table"
+                },
+                {
+                    "key": "financialreport",
+                    "value": "Financial report"
+                },
+                {
+                    "key": "radio-button-card",
+                    "value": "Radio button cards"
+                }
+            ]
+        },
+        {
+            "name": "currencyFormat",
+            "label": "Currency format",
+            "format": "SELECT",
+            "source": [
+                {
+                    "key": "standard",
+                    "value": "standard"
+                },
+                {
+                    "key": "compact",
+                    "value": "compact"
+                },
+                {
+                    "key": "parentheses",
+                    "value": "parentheses"
+                }
+            ]
+        },
+        {
+            "key": "selectionProperty",
+            "format": "PROPERTY",
+            "name": "selectionProperty",
+            "label": "Selection Property"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views"
+            ],
+            "allowCreatingGroup": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2025-09-25T18:19:53.055Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

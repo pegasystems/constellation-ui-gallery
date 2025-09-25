@@ -1,0 +1,167 @@
+{
+    "name": "Pega_Extensions_GanttChart",
+    "label": "Gantt Chart",
+    "description": "Gantt Chart",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_GanttChart",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "icon": "OneColumnPage.svg",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "createClassname",
+            "label": "Create case className",
+            "format": "TEXT"
+        },
+        {
+            "label": "Data page configuration",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "dataPage",
+                    "label": "Data Page name",
+                    "format": "TEXT",
+                    "required": true
+                },
+                {
+                    "name": "categoryFieldName",
+                    "label": "Category field name",
+                    "format": "TEXT",
+                    "helperText": "Possible categories: 'PROJECT', 'TASK', 'MILESTONE'. 'PROJECT' can be parent of 'TASK' and/or 'MILESTONE'"
+                },
+                {
+                    "name": "parentFieldName",
+                    "label": "Parent field name",
+                    "format": "TEXT",
+                    "helperText": "Field type: Text (ID)"
+                },
+                {
+                    "name": "dependenciesFieldName",
+                    "label": "Dependencies field name",
+                    "format": "TEXT",
+                    "helperText": "Field type: Text (Comma-separated IDs)"
+                },
+                {
+                    "name": "startDateFieldName",
+                    "label": "Start date field name",
+                    "format": "TEXT",
+                    "helperText": "Field type: DateTime",
+                    "required": true
+                },
+                {
+                    "name": "endDateFieldName",
+                    "label": "End date field name",
+                    "format": "TEXT",
+                    "helperText": "Field type: DateTime"
+                },
+                {
+                    "name": "progressFieldName",
+                    "label": "Progress field name",
+                    "format": "TEXT",
+                    "helperText": "Field type: Percentage",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "label": "Timeline table configuration",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "showDetailsColumns",
+                    "label": "Show item details columns",
+                    "format": "BOOLEAN",
+                    "defaultValue": true
+                },
+                {
+                    "name": "defaultViewMode",
+                    "label": "Default view",
+                    "format": "SELECT",
+                    "defaultValue": "Daily",
+                    "source": [
+                        {
+                            "key": "Hourly",
+                            "value": "Hourly"
+                        },
+                        {
+                            "key": "Daily",
+                            "value": "Daily"
+                        },
+                        {
+                            "key": "Weekly",
+                            "value": "Weekly"
+                        },
+                        {
+                            "key": "Monthly",
+                            "value": "Monthly"
+                        },
+                        {
+                            "key": "Yearly",
+                            "value": "Yearly"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Details view configuration",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "detailsDataPage",
+                    "label": "Data Page used to retrieve case details (pyID as param)",
+                    "format": "TEXT",
+                    "required": true,
+                    "helperText": "Data page used to fetch DetailsView for each item"
+                },
+                {
+                    "name": "detailsViewName",
+                    "label": "Name of the view used to retrieve case details",
+                    "format": "TEXT",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Gantt Chart",
+        "createClassname": "",
+        "dataPage": "",
+        "categoryFieldName": "",
+        "parentFieldName": "",
+        "dependenciesFieldName": "",
+        "startDateFieldName": "",
+        "endDateFieldName": "",
+        "progressFieldName": "",
+        "showDetailsColumns": "true",
+        "defaultViewMode": "Daily",
+        "detailsDataPage": "",
+        "detailsViewName": ""
+    },
+    "buildDate": "2025-09-25T18:19:53.356Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}

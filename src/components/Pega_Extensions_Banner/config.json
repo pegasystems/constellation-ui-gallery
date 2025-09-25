@@ -1,0 +1,83 @@
+{
+    "name": "Pega_Extensions_Banner",
+    "label": "Banner",
+    "description": "Display a banner with messages about the case",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Lib",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Banner",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "variant",
+            "label": "variant",
+            "format": "SELECT",
+            "defaultValue": "success",
+            "source": [
+                {
+                    "key": "success",
+                    "value": "success"
+                },
+                {
+                    "key": "info",
+                    "value": "info"
+                },
+                {
+                    "key": "warning",
+                    "value": "warning"
+                },
+                {
+                    "key": "urgent",
+                    "value": "urgent"
+                }
+            ]
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name to get the messages",
+            "format": "TEXT"
+        },
+        {
+            "name": "dismissible",
+            "label": "Is the banner dismissible",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "dismissAction",
+            "label": "Case Wide Action ID to dismiss the banner",
+            "format": "TEXT"
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2025-09-25T18:19:52.621Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.4.1"
+}
