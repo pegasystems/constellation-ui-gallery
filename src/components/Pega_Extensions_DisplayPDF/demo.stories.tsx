@@ -40,7 +40,7 @@ const blob2base64 = (blob: Blob, mimeType: string) => {
 };
 
 const getBinary = async () => {
-  const response = await fetch('./SamplePDF.pdf');
+  const response = await fetch('./static/SamplePDF.pdf');
   if (response.blob) {
     const blob = await response.blob();
     return blob2base64(blob, 'application/pdf');
