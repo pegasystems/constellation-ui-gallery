@@ -9,7 +9,7 @@ These components have been tested on Pega '23.1, '24.1, '24.2 and '25.1 and migh
 - Version 1.x and branch release/1.x.x should be used for Pega '23
 - Version 2.x and branch release/2.0 should be used for Pega '24.1
 - Version 3.x and branch release/3.0 should be used for Pega '24.2
-- Version 4.x and branch master should be used for Pega '24.2
+- Version 4.x and branch master should be used for Pega '25.1
 
 Older versions of the Pega Platform have not been tested and are not supported.
 
