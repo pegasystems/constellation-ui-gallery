@@ -11,6 +11,7 @@ const config: TestRunnerConfig = {
   async preVisit(page) {
     await injectAxe(page);
   },
+
   async postVisit(page, context) {
     try {
       // Get the entire context of a story, including parameters, args, argTypes, etc.
@@ -22,7 +23,7 @@ const config: TestRunnerConfig = {
       });
 
       // Wait a bit to ensure any previous Axe runs have completed
-      await page.waitForTimeout(100);
+      await page.waitForTimeout(200);
 
       await checkA11y(page, '#storybook-root', {
         detailedReport: true,
@@ -34,7 +35,7 @@ const config: TestRunnerConfig = {
       // If Axe is already running, wait and retry once
       if (error instanceof Error && error.message.includes('Axe is already running')) {
         console.warn('Axe was already running, waiting and retrying...');
-        await page.waitForTimeout(500);
+        await page.waitForTimeout(1000); // Increased wait time
         await checkA11y(page, '#storybook-root', {
           detailedReport: true,
           detailedReportOptions: {

@@ -50,4 +50,4 @@ jobs:
           curl -vvvv http://localhost:6006/index.html
           cat log.txt
       - name: Run tests
-        run: npm run test-storybook
+        run: npm run test-storybook -- --maxWorkers=1 --verbose
