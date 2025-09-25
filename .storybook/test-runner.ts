@@ -11,21 +11,41 @@ const config: TestRunnerConfig = {
   async preVisit(page) {
     await injectAxe(page);
   },
+
   async postVisit(page, context) {
-    // Get the entire context of a story, including parameters, args, argTypes, etc.
-    const storyContext = await getStoryContext(page, context);
+    try {
+      // Get the entire context of a story, including parameters, args, argTypes, etc.
+      const storyContext = await getStoryContext(page, context);
 
-    // Apply story-level a11y rules
-    await configureAxe(page, {
-      rules: storyContext.parameters?.a11y?.config?.rules,
-    });
+      // Apply story-level a11y rules
+      await configureAxe(page, {
+        rules: storyContext.parameters?.a11y?.config?.rules,
+      });
 
-    await checkA11y(page, '#storybook-root', {
-      detailedReport: true,
-      detailedReportOptions: {
-        html: true,
-      },
-    });
+      // Wait a bit to ensure any previous Axe runs have completed
+      await page.waitForTimeout(200);
+
+      await checkA11y(page, '#storybook-root', {
+        detailedReport: true,
+        detailedReportOptions: {
+          html: true,
+        },
+      });
+    } catch (error) {
+      // If Axe is already running, wait and retry once
+      if (error instanceof Error && error.message.includes('Axe is already running')) {
+        console.warn('Axe was already running, waiting and retrying...');
+        await page.waitForTimeout(1000); // Increased wait time
+        await checkA11y(page, '#storybook-root', {
+          detailedReport: true,
+          detailedReportOptions: {
+            html: true,
+          },
+        });
+      } else {
+        throw error;
+      }
+    }
   },
 };
 
