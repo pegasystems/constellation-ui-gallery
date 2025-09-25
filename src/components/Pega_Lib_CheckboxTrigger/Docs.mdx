@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Checkbox Trigger is a special case component that is aimed to address a limitation in Constellation UI with data objects. While Constellation UI supports the CRUD operations on data objects,
+there is no flow action available for the data object to handle dynamic behavior on change of a property. As such the views can only use visible condition (expression only - not when rules), but you
+cannot, for example, run an activity or data transform when a property value is changing within the view.
+
+If the use case is to have a checkbox that runs some post-processing and copy the value of one field to another field, you can use this Constellation DX component to achieve this behavior.
+The component uses a regular checkbox but onChange, will call a data page (passed as parameter) that will send the current content of the Data object. In the DP, you can transform the values
+of the data object and return the updated fields. These fields will be automatically updated in the UI. Note that these fields should be marked as primary fields in the data object.
+
+Note that the DP must be of type 'Savable' but it does not need to save the object per say.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Assuming that we want to achieve this use case inside the view of a data object:
+
+![Use case](CheckboxTrigger_Usecase.jpg)
+
+The savable DP called D_RefreshRating is used to return the updated value of the data object through an activity - note that even if this is a savable DP, the activity does not save the object. The changes are only temporary and will only persist once you click create or update in the modal.
+
+![Data page](CheckboxTrigger_Configuration_Datapage.jpg)
+
+![Activity](CheckboxTrigger_Configuration_Activity.jpg)

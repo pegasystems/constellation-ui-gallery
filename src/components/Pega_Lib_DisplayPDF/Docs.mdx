@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The DisplayPDF component renders a PDF document inside a form or partial view in read-only mode.
+
+A PDF binary file or attachment can be provided inside a text property to render the PDF inline inside the form or if a DP is provided, the PDF will be shown in a modal dialog.
+
+The Data page should be of type list, must be marked as API, receive the parameter 'caseInstanceKey' and should populate the 2 properties: pyContext and pyLabel for each row.
+
+You can turn on / off the toolbar in the PDF viewer and set the width and height of the PDF document. To see the pdf in full width inside the form, use the Form full width template.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+Example of flow action that would populate the binary PDF on pre-processing of the flow action
+
+![Configuration](DisplayPDF_Configuration1.png)
+
+The activity would store the binary content in a text property pdfDisplay of length 20,000 and marked as transient data:
+
+![Configuration](DisplayPDF_Configuration2.png)
+
+Example of activity that can be used to load the DP by populating pyContext and pyLabel.
+
+![Configuration](DisplayPDF_Configuration3.png)

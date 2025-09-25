@@ -1,0 +1,28 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Card Gallery is similar to the Kanban board component except that instead of rendering a list of tasks grouped into different columns, it displays a gallery of cards in a responsive grid.
+Each card will represent a case or data object. The list of cards to render is passed using a page list Data Page. The component supports the following features:
+
+- Ability to create a new card through an action in the header by setting the 'createClassname' property
+- Tasks are rendered using a details view and not hardcoded inside the component, which allows to use visible when and other features to personalize the content of the card
+- Cards can be rendered horizontally (from left to right) or vertically (up / down). The vertically rendering is similar to a masonry layout and will optimize the available space.
+- The Card Gallery component is also compatible with dashboard and will listen to filter changes if the property 'useInDashboard' is set
+
+Note: if 'useInDashboard' is true, the data page must be of type list - it must be 'queryable' and sourced from a Report Definition. Also the DP must return the following fields: 'pyID','pyLabel', 'pyStatusWork', 'pzInsKey', 'pxObjClass'. If you need other properties, you will need to update the code.
+
+<Story of={DemoStories.Default} />
+
+## Props
+
+<Controls />
+
+# Example
+
+Here is a screenshot of how the card gallery can look like at runtime using the vertical rendering
+
+![Demo](CardGallery_Demo.jpg)

@@ -1,0 +1,56 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Map component showcases how to run the ArcGIS Map component inside Constellation UI - The [ArcGIS Maps SDK for JavaScript](https://developers.arcgis.com/javascript/latest/) helps build interactive user experiences and 2D and 3D visualizations.
+A license and key is required to use this component - Before using this component is your application, review the [licensing requirements](https://developers.arcgis.com/javascript/latest/licensing/).
+
+The component has 2 different modes of operations depending of the value of the bFreeFormDrawing parameter:
+
+- If bFreeFormDrawing is true, it is intended to use a location field in the region to render a map component - You can search a location and use the sketch tool. The shapes drawn with the sketch tool can be persisted in the case using the selectionProperty property of type text.
+- If bFreeFormDrawing is false, it is intended to draw a list of positions on the map in order to map a route.
+
+The component supports the following features:
+
+- Center on a global map by providing latitude, longitude and zoom
+- If bFreeFormDrawing = true, will display the sketch tool to allow for freeform drawing on the map - The drawings are persisted in the selectionProperty as a JSON string.
+- If bFreeFormDrawing = false, will provide the ability to draw a set of positions by clicking on the map - double click to terminate the polyline. The list of positions is stored in the case as an embedded data list object on form submit. A 'Clear' action allows to delete the trajectory
+- Read only mode support when put in the display template - no freeform drawing or draw some positions
+- If bShowSearch = true, will display a search input on the map to search for a specific address or use your current location
+- If bFreeFormDrawing = false, can pass a URL field type that can be used to store a base64 image of the map
+- createTools is used to filter the list of tools available in the sketch component
+
+The initial can either be passed as a constant values by passing longitude, latitude and zoom as string values.
+You can also set locationInputType to 'propertyRef' to dynamically set the location. In this case, pass the location field as the parameter of the Region A and set the zoom value by passing a field of type text.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+To use this component for mapping a route, set bFreeFormDrawing to false. You will need an embedded data list with 2 fields: Latitude and Longitude. In a form template, add a new view based on this template and select the 2 properties
+from the embedded list data object - make sure to put the Latitude field first. If needed, you can specify a 3rd field on the case type formatted as URL that can hold
+an image of the map - the Image field must be large enough to hold the base64 content (see length to 50000) and should not have any validation enabled on the field for URL.
+
+Here is an example of how to configure this component in App Studio when bFreeFormDrawing is false. For this example, we have created a 'Map' case type and we will render Map component.
+The case type is composed of an embedded data list called 'Positions'
+
+![Embedded data model configuration](Map_Configuration_1.png)
+
+To use the template, add the fields to the region in this order
+
+![Template configuration](Map_Configuration_2.png)
+
+To use this component as a location field, add a location field to the region of the template and set bFreeFormDrawing to true. You can enable search and get your current location.
+
+![Template configuration](Map_Configuration_3.png)
+
+To use this component to draw some free form shapes and store the shapes in the case, pass a valid field as Selection Property - Make sure that the field is of type text and large enough to store all the shape coordinates as a json object.
+
+![Template configuration](Map_Configuration_4.png)

@@ -1,0 +1,18 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The scheduler is a field-level component that can be used inside an assignment to display the events of a current date for a list of participants. The view
+can help determine if these participants will be available before schedule a meeting.
+
+The component will parse the value of the field as a JSON object.
+It will derive the date, start and end time of the event and the list of other events attended by the participants.
+
+<Primary />
+
+## Props
+
+<Controls />

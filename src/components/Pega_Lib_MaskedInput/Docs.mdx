@@ -1,0 +1,51 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The masked input component should be used to enter a text field that follows a specific format like Social a Security Number or a ZIP code.
+The input mask allows to constrain the information being entered into that format, without impairing the user’s ability to copy/paste or correct mistyping.
+
+This masking is based on the open source library [imaskJS](https://imask.js.org/). While this library supports other types of masks like Number or Date, this component should only be used for text fields.
+For other field types like number, currency or date, it is recommended to use the correct field type in your data model and use the associated presentational component.
+
+A pattern string is passed to the component as the 'mask' parameter to indicate how the text string should be formatted.
+
+The supported values for the mask are:
+
+- 0: Numeric (0–9)
+- a: Alphabetical (a–z or A–Z)
+- A: Uppercase alphabetical (A–Z)
+- \*: Alphanumeric (0–9, a–z, or A–Z)
+- [] - make input optional
+- {} - include fixed part in unmasked value
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+Enter an IBAN (International Bank Account Number) using the pattern 'AA00 0000 0000 0000 0000 0000 A00':
+
+<Story of={DemoStories.IBAN} />
+
+Enter a credit card number using the pattern '0000 0000 0000 0000'':
+
+<Story of={DemoStories.CreditCard} />
+
+Enter an IP Address number using the pattern '0[00].0[00].0[00].0[00]':
+
+<Story of={DemoStories.IPAddress} />
+
+Enter a Zip Code (extended code optional) using the pattern '00000[-0000]':
+
+<Story of={DemoStories.ZipCode} />
+
+Enter a SSN (Social Security Number) using the pattern '000 00 0000':
+
+<Story of={DemoStories.SSN} />

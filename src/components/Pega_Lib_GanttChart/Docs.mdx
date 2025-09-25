@@ -1,0 +1,51 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+A **Gantt Chart** is a type of bar chart that represents a project schedule. It displays the start and finish dates of various elements of a project, typically tasks and milestones, along a horizontal timeline. Each task is represented by a horizontal bar, with its length indicating the duration of the task, and its position on the timeline showing when it starts and ends.
+Additionally, tasks/milestones can also have dependencies on other tasks or projects.
+
+The component support the following features:
+
+- Supports 3 item types, `PROJECT`, `TASK` and `MILESTONE`. Where tasks and milestones belong to a project and can have dependencies to other tasks/milestones.
+- A toggle to hide basic details columns (Name, From and To) in table to allow full timeline taking 100% of container width. This can be controlled via a prop `showDetailsColumns`.
+- 5 types of timeline viewmodes are supported: `Hourly, Daily, Weekly, Monthly and Yearly`. You can also configure the default mode by setting `defaultViewMode` property on the component.
+- Components uses the design system's prescribed combination of colors for each item type (Project, Task and Milestone)
+- **Today or Current day** is highlighted in blue to give a visual reference on the timeline.
+- A tooltip on hover showing Start, End and Progress precision data.
+- Click on any item to see a DetailsCard view. This view can be configured via a combination of props `detailsDataPage` and `detailsViewName`.
+- Ability to edit an item from timeline, just click the item and open the details card popup. It has a Edit button in header (pencil icon).
+- Double click on any item enables the drag mode editing. Items can be dragged with multiple drag behaviors, each for distinct purpose
+  - Drag complete item. This changes the Start and End date for the items without changing the relative duration. All three types of items implements this behavior
+  - Two Drag handles are available on item edges, each for modifying the Start or End date respectively. This changes the duration of the task. Only Tasks has this behavior. Project and Milestones doesn't support this.
+  - An arrow like handle appears on the item to drag and update the completion progress of the item. Only Task item type supports this.
+
+The implementation of this component relies on the library [gantt-task-react](https://github.com/MaTeMaTuK/gantt-task-react). However there are some overrides in CSS to make it compatible with constellation design system.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Limitations
+
+The limitations of the components are:
+
+- Tasklist (first three columns of table) are not configurable, they cannot be reordered, formatted or individually hidden.
+- The timeline is not keyboard accessible.
+
+## Example
+
+![Demo](Gantt_Demo.png)
+In this example a project is shown with multiple tasks, milestones and dependencies. This also demonstrate the Details Card for milestone on click. You need to create a new details view that will be used to render the card. The view can use conditions on pyStatusWork to hide / show certain fields.
+We also leverage the 'Case reference' Constellation DX component to show the case ID using a previewable link.
+
+Here is the details card configuration.
+![DetailsCardView](Gantt_DetailsCard.png)
+
+Given below is a demo configuration for this widget in AppStudio.
+![WidgetConfig](Gantt_Configuration.png)

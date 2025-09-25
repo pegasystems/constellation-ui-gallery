@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming';
+import { create } from 'storybook/theming';
 
 const primaryColor = '#005EA7';
 const secondaryColor = '#0076D1';

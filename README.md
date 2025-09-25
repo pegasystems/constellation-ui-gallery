@@ -4,11 +4,12 @@ Constellation's flexible architecture empowers advanced users (professional fron
 
 This gallery provides a collection of ready-to-use and customizable component. Explore them directly or [delve into the source code](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components) for deeper understanding. Use this resource to gain inspiration, best practices, and a solid foundation for implementing custom components.
 
-These components have been tested on Pega '23.1, '24.1, '24.2 and might not run older other versions of the Pega Platform
+These components have been tested on Pega '23.1, '24.1, '24.2 and '25.1 and might not run older other versions of the Pega Platform
 
 - Version 1.x and branch release/1.x.x should be used for Pega '23
 - Version 2.x and branch release/2.0 should be used for Pega '24.1
-- Version 3.x and branch master should be used for Pega '24.2
+- Version 3.x and branch release/3.0 should be used for Pega '24.2
+- Version 4.x and branch master should be used for Pega '24.2
 
 Older versions of the Pega Platform have not been tested and are not supported.
 

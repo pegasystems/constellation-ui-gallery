@@ -1,0 +1,17 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This field-level component allows to write a signature and store it in a 'text' field as an svg base64 file. You need to make sure that the field property is of type text and is long enough to store a complete base64 image (set the length to 50000).
+The same content can be rendered as read-only and will display the svg as an image.
+
+If you can want display the signature inside a createPDF shape, you can pass the text field as an image inside the section rule configured to generate the PDF.
+
+<Primary />
+
+## Props
+
+<Controls />

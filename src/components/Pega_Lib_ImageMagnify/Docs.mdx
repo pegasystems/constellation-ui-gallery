@@ -1,0 +1,19 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Image Magnify component provides image magnification features. Users can zoom in on images either by hovering over them or by clicking/double-clicking, based on the specified trigger mode.
+This component offers two magnification modes: the default "Side by side" mode displays the original image on one side and the magnified version on the other. Users can customize this arrangement to display the zoomed image on the left or within the same space as the preview. Additionally, the zoomed image can be set to fill the available screen space if desired.
+
+In Advanced mode, users can access configuration options to adjust the size and position of the zoomed image, along with additional settings like z-index and preview image horizontal offset position for finer control.
+
+This component operates with a single image provided via the mapped URL field. Users can adjust the size of the smaller image by setting the width value smaller than the actual width of the full referenced image.
+
+<Primary />
+
+## Props
+
+<Controls />

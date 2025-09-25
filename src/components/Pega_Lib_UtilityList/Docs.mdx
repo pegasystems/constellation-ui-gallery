@@ -1,0 +1,34 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Utility List component allows to show a list of objects related to the case in the utility column of the caseView similar to the attachment or the followers widget.
+
+The widget is configured to receive a Data Page as parameter that will point to a list of cases or data objects. If the objects returned by the data page contains the properties 'pyID', 'pzInsKey' and the 'pxObjClass', then the component will show the pyID as a previewable link.
+
+You can configure the icon to use for the utility widget, and the list of properties to show a primary and secondary fields. The list of secondary fields can be a comma-delimited string of several properties.
+In the current implementation, all the properties are handled as string except if the type is set to 'date'. You can set the type of each secondary field using the property secondaryFieldTypes.
+
+This component follows the design of the other utility widgets and will only shows the first 3 items in the list. If the data page returns more than 3 items, it will shows a 'view all' button to render all the items in a modal dialog.
+
+If you want to pass the context of the case to the data page, set the property 'Pass case context to the Data page as parameter' to true. When this setting is enabled, the parameter 'CaseInstanceKey' is passed to the Data Page as parameter. Since the widget does not support embedded data fields, you can
+pass the case context to a list data page and load the embedded data list. You can use for example the 'D_pyWorkHistory' data page that will return the history of the case.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Using the UI Gallery application, here is an example of a case view that has 4 different instances of the same Utility List component each with different data pages and fields.
+
+![Example of using the Utility List in a Case View](UtilityList_Example.png)
+
+And the configuration of one of the instance using the D_pyWorkHistory data page.
+
+![Example of configuration of the Utility List](UtilityList_Example_Config.png)

@@ -1,0 +1,56 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Kanban board components renders a list of tasks grouped into different columns. The tasks are displayed as cards and can be moved to different columns using drag and drop.
+This UI is typical for Scrum board where user stories or tasks are grouped by status.
+
+This component will use a case type to represent the tasks. The list of tasks is passed using a page list Data Page. If you need to pass a context to the data page, you can set the 'contextProperty' to pass this content - the data page will then be called with the parameter 'key' and the value of this property.
+
+The component supports the following features:
+
+- The list of columns is passed as a comma-separated list to the components using the 'groups' property
+- Ability to create a new task through an action in the header by setting the 'createClassname' property
+- Tasks are rendered using a details view and not hardcoded inside the component, which allows to use visible when and other features to personalize the content of the card
+- If the cards are moved to a 'Resolved-' status, the card becomes read-only and can no longer be moved or edited
+- The component is fully [accessible](https://github.com/hello-pangea/dnd/blob/main/docs/about/accessibility.md). After selecting a card, use 'space' to initiate the drag and arrow keys to move the card inside the board.
+
+The implementation of this component relies on the library [@hello-pangea/dnd](https://github.com/hello-pangea/dnd). This library is a fork of the [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) library which is no longer maintained.
+The library delivers the best drag and drop experience, is written in Typescript and is full accessible.
+
+<Story of={DemoStories.Default} />
+
+## Props
+
+<Controls />
+
+## Limitations
+
+The limitations of the components are:
+
+- Only one case type support - no support for multiple case types in the same board
+- Does not use a property to set the position in the column - the cards are ordered by how they are listed in the displayed
+- Does not set the position in the column when dragging / dropping the card
+- Does not support data types
+- Tasks are always editable and draggable (except if in Resolved- column)
+- List of groups does not support a property reference and is a static list
+
+## Example
+
+Here is a demo of how to configure this component in App Studio. For this example, we have created a 'User Story' case type and we will render the case based on the value of pyStatusWork.
+When creating a case type, the platform will automatically create a list DP and a single look up DP created and we will use these OOB Data pages.
+Before configuring the widget, we just need to create a new details view that will be used to render the card. The view can use conditions on pyStatusWork to hide / show certain fields.
+We also leverage the 'Case reference' Constellation DX component to show the case ID using a previewable link.
+
+![Card details configuration](KanbanBoard_CardDetails.png)
+
+Here is an example of configuration of this component in App Studio
+
+![Demo](KanbanBoard_Configuration.png)
+
+Here is a screenshot of the board at runtime
+
+![Demo](KanbanBoard_Demo.png)

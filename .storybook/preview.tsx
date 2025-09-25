@@ -1,8 +1,8 @@
 import { useEffect as useReactEffect } from 'react';
-import { configureActions } from '@storybook/addon-actions';
-import { css } from '@storybook/theming';
-import { useEffect as useStorybookEffect, useMemo as useStorybookMemo } from '@storybook/preview-api';
-import type { Preview } from '@storybook/react';
+import { configureActions } from 'storybook/actions';
+import { css } from 'storybook/theming';
+import { useEffect as useStorybookEffect, useMemo as useStorybookMemo } from 'storybook/preview-api';
+import type { Preview } from '@storybook/react-webpack5';
 import {
   Configuration,
   ModalManager,
@@ -225,6 +225,8 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ['autodocs'],
 };
 
 export default preview;

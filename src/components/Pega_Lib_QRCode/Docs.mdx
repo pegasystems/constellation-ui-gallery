@@ -1,0 +1,19 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The QRCode field will let you generate a QRCode. The field property associated with the component will store a base64 svg image of the QRcode.
+If the component is inside a form and editable, it is possible to enter an input property that will be used to generate the QRCode on the client.
+If the component is marked as readonly, the field property will render the barcode image directly.
+You need to make sure that the field property is of type text and is long enough to store a complete base64 image (set the length to 50000).
+
+If you can want display the QRCode inside a createPDF shape, you can pass the text field as an image inside the section rule configured to generate the PDF.
+
+<Primary />
+
+## Props
+
+<Controls />

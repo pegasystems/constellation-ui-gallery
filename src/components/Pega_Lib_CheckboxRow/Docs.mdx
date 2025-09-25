@@ -1,0 +1,28 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Checkbox Row component is a specialized component used in the context of an embedded data list field. It's designed to act as a "select row" checkbox that automatically sets other boolean fields in the same row when checked or unchecked. It's important to note that this component is not a replacement for the standard checkbox component and provides a very specific functionality. It addresses a limitation where it's difficult to update other fields within an embedded data list using standard methods like pyRefreshData. This component is particularly useful for an unusual scenario where the fields you want to update are editable by the user. For read-only fields, a Declare Expression is a more suitable option.
+
+This component shares the same configuration as the standard checkbox, but it includes an optional property called labelProperty. If you set a field for this property, the checkbox's caption will automatically use that field's value.
+
+<Primary />
+
+# Props
+
+<Controls />
+
+# Configuration
+
+To use this component, use an embedded data list field configure as an editable inline table. Add a boolean field in the first field of the table and change it to this component. Set labelProperty if needed. Include other boolean fields in the table as editable.
+
+![Configuration](CheckboxRow_Configuration.png)
+
+![Configuration](CheckboxRow_Configuration1.png)
+
+Here is an example of screenshot at runtime: HasDependents and HasSiblings will be automatically checked if the isActive checkbox in the 1st column is checked.
+
+![Configuration](CheckboxRow_Runtime.png)

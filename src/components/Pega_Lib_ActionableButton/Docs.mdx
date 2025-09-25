@@ -1,0 +1,35 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The actionable button component is a field level component that can only be used in a details view. It allows to drop inside any view a button that can be used to trigger a local action.
+
+This is similar to the 'Edit' button inside the Case View Summary. Using visible when condition, the action can be shown to a user only if a specific condition is met.
+The button can also be used in a Details tab or other read-only tab to provide a quick access to the local action.
+
+This component should NOT be put inside a form view since it will update the case in the database on submit and won't refresh the form data.
+
+The local action will always run in a modal dialog - the content of the modal could be a form or could be used to display read only information. This component will also only work on Case type.
+
+To use this component, select the key of the object. For a case type, the field name would be 'Instance Key Handle', for a data object it would be 'pyGUID'. Enter the name of the local action ID to execute (for example pyUpdateCaseDetails).
+
+Note: The button will not be visible if the value of the property containing the key is empty or if the local ID is empty.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+Example of selecting the 'Instance Key Handle' fields in the CaseView
+
+![Configuration](ActionButton_Configuration.png)
+
+Example of configuration in a Details view in a data object reference
+
+![Configuration](ActionButton_Data_Configuration.png)

@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Range slider allows to filter a set of objects by a range value - the fields could be integer, decimal or currencies. If the value is a currency, set the currencyCode value.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Configuration
+
+Here is an example of filtering in the end user portal to select a case reference.
+
+![Configuration](RangeSlider_Configuration_1.png)
+
+The new template is used to configure 2 currency types fields for start and end values. The view to refresh is passed to the region of the template.
+
+![Configuration](RangeSlider_Configuration_2.png)
+
+The case reference data page is a parametrized data page that uses the min and max values to filter the list
+
+![Configuration](RangeSlider_Configuration_3.png)
+
+# Contributors
+
+This component was suggested by Sowjanya Thutupalli working with [Areteans | areteanstech.com/](https://areteanstech.com/). See the [Component proposal](https://github.com/pegasystems/constellation-ui-gallery/issues/90).

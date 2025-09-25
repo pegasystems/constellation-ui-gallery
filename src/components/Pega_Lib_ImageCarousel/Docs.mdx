@@ -1,0 +1,85 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Image Carousel Component is a dynamic and flexible Carousel designed for Pega Constellation applications. It fetches images from a Data Page as a source, allowing developers to display a collection of images in a rotating slideshow format. This component supports configurable height, transition effects, and dynamic image handling. Its responsive design ensures that it adjusts automatically to different screen sizes, making it an ideal solution for creating engaging, dynamic visual content in your Pega applications.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Deployment and Integration Instructions:-
+
+**1. Create a Data Type for the Carousel**
+
+      To manage and display the images in the Carousel component, create a Data Type in Pega **(Example: Carousel)** with the following columns:
+
+         - **Id:** Unique identifier for the image.
+
+         - **Title:** Optional title or caption of the image.
+
+         - **Description:** Optional description or metadata for the image.
+
+         - **Image URL:** URL of the image to be displayed in the Carousel.
+
+         - **Visible:** Boolean field to indicate if the image should be shown in the Carousel.
+
+Each entry in the Data Type corresponds to an image, allowing for easy updates and management of the content.
+
+Users will create a custom list Data Page **(D_CarouselsList)** that retrieves records filtered by visibility, using a report definition **(RD_VisibleCarousels)**. This ensures that only Carousels with **Visible = true** are displayed, and it can be seamlessly integrated into components like the Image Carousel for a dynamic user experience.
+
+**2. Component Configuration**
+
+      Add the Carousel component to your **Landing Page** and **Summary panel** using the following configuration:
+
+         - **Data Page:** Specify the Data Page **(Example:- D_CarouselList.pxResults)**
+
+         - **Image Source:** Specify the image property.
+
+         - **Title:** Specify the Title property.
+
+         - **Description:** Specify the Description property.
+
+# Limitations and Enhancements
+
+The limitations of the component are:
+
+- **Keyboard navigation:**
+  No support for keyboard navigation and screen reader compatibility to ensure the Carousel is usable by individuals with disabilities.
+
+- **Font Size:** There is no option to change the font size for the title and description.
+
+- **Font Type:** The components do not support changing the font family for the title and description.
+
+- **Font Color:** There is no capability to modify the font color for the title and description.
+
+Ideas for enhancements are:
+
+- **Video Support:**
+  Extend the Carousel to support video content alongside images, offering a richer multimedia experience.
+
+- **Customizable Transitions:**
+  Developers can create and apply their transition effects beyond the built-in options.
+
+- **Thumbnail Navigation:**
+  Provide a thumbnail view of all Carousel items, allowing users to quickly jump to a specific slide.
+
+- **Interactive Elements:**
+  Incorporate interactive features like hotspots or clickable areas within Carousel images to enhance engagement.
+
+# Example Use Cases
+
+- **Product Gallery:** Display a Carousel of product images that update based on user selections or current promotions.
+
+- **User Profile Carousel:** Show a collection of user-uploaded photos or media.
+
+- **Dynamic Advertisements:** Rotating Carousel for dynamic ad Carousels or promotions fetched from a backend system.
+
+# Contributors
+
+This component was contributed by Khozema Nagdi working with [Bits In Glass | www.bitsinglass.com](https://www.bitsinglass.com)

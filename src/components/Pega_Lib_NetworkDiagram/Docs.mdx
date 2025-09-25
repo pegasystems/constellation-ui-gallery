@@ -1,0 +1,30 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Network Diagram component allows to represent a complex tree diagram of relationship between different object types. The objects are represented as node and can be stored as data or case types.
+The relation between each object can be represented by a label and a type.
+
+To configure this component, you need to a provide a page Data Page of type Embed-Graph that contains nodes (as pyNodes) and edges (as pyEdges). You can look at the storybook code for an example of the expected response from this data page.
+By default the DP is not parametrized. If you set the field selectionProperty to a certain value, then the DP will be called using the parameter pyGUID set to this property.
+
+This component supports the following features:
+
+- Render specific node type with svg image based on type.
+- Edges with label
+- Auto-layout of the diagram using the Dagre library
+- Ability to zoom, refresh the diagram.
+- Support for preview for nodes that are cases or data objects if the pzInsKey is passed.
+- Drag / drop nodes to re-order the diagram.
+- Nodes and edges are focusable, and the UI is keyboard accessible (need further testing and validation).
+- Ability to change edge path to Bezier, straight or steps.
+- This code leverage the React Flow and Dagre library - These 2 libraries are under the MIT license and open source.
+
+<Primary />
+
+## Props
+
+<Controls />

@@ -1,0 +1,23 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Banner widget can render messages for a case view - edit the pyStage view and insert this widget. Pass a Data page name that will be called
+everytime the assignment is submitted. Your DP is a list DP that will support the pyID parameter. You can return a list of messages in the pxResults embedded object
+using the pyDescription property.
+
+The banner can be dismissed if 'dismissible' is set to true. There are 2 ways to configure the dismiss action:
+
+- through a case wide action - in this case, set the dismissAction with the ID of the flow action - Your flow action can perform some post-processing and update the case data
+- through an extra parameter called on the data page - in this case do not set any value to dismissAction - in this case, the DP needs to update the case and perform the update directly
+
+After the action is perform, the component will automatically refresh the case view to show the updated values.
+
+<Primary />
+
+## Props
+
+<Controls />

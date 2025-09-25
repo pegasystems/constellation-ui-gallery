@@ -1,0 +1,43 @@
+{
+  "name": "Pega_Lib_ChatGenAI",
+  "label": "Chat Gen AI",
+  "description": "Chat Gen AI",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Lib",
+  "allowedApplications": [],
+  "componentKey": "Pega_Lib_ChatGenAI",
+  "type": "Widget",
+  "subtype": [
+    "PAGE",
+    "CASE"
+  ],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "dataPage",
+      "label": "Data Page name",
+      "format": "TEXT"
+    },
+    {
+      "name": "maxHeight",
+      "label": "Maximum height",
+      "format": "TEXT"
+    },
+    {
+      "name": "sendAllUserContext",
+      "label": "Send all user context",
+      "format": "BOOLEAN"
+    }
+  ],
+  "defaultConfig": {
+    "heading": "AI Assistant",
+    "dataPage": "",
+    "maxHeight": "auto",
+    "sendAllUserContext": "true"
+  }
+}

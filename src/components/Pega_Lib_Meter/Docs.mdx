@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+Meters are visual representations of a quantity or an achievement. Their progress is determined by user actions, rather than system actions. This component will use a percentage field type to render the value between 0 and 100. If the value that you want to render is an integer, create a declare expression to generate a percentage value.
+
+The meter should not be used to indicate progress, such as loading or percent completion of a task. To communicate progress, use the Loading component in the presentational library.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+Example of using a multiple meter to display test coverage
+
+<Story of={DemoStories.Grouped} />
+
+Example of using a multiple meter to display the storage capacity
+
+<Story of={DemoStories.Grouped1} />
+
+## Demo
+
+Here is an example of using the meter in different views (Case Summary, Details and form view)
+
+![Configuration](Meter_Configuration.jpg)

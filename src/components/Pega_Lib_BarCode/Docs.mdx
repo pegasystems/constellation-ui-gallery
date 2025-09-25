@@ -1,0 +1,40 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Barcode field will let you generate different formats of barcode. The field property associated with the component will store a base64 svg image of the barcode.
+If the component is inside a form and editable, it is possible to enter an input property that will be used to generate the barcode on the client.
+If the component is marked as readonly, the field property will render the barcode image directly.
+You need to make sure that the field property is of type text and is long enough to store a complete base64 image (set the length to 50000).
+
+If you can want display the barcode inside a createPDF shape, you can pass the text field as an image inside the section rule configured to generate the PDF.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Example
+
+Here is a demo of how to configure this component in App Studio. For this example, we have created a 'Service' case type and we will render Barcode based on `inputProperty`.
+When changing the value of the input property in the form, the barcode is automatically re-generated.
+
+![Card details configuration](Barcode_Configuration.jpg)
+
+Here is a view of runtime preview
+
+![Demo](Barcode_Demo.jpg)
+
+# Generating a Printable QR Code PDF
+
+You can insert the field property created by the component into a PDF by including it as an image. Before configuring the createPDF shape, revert to traditional UI to open the section rule that will be used to generate the PDF document.
+
+![Add PDF Section](Barcode_PDF_Configuration.jpg)
+
+And that's it! We now have a QR code that can be generated in the view and printed as a PDF.
+
+![Demo](Barcode_PDF_Demo.jpg)

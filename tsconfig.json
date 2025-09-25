@@ -1,7 +1,16 @@
 {
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
-  "exclude": ["**/*.mjs", "dist", "lib"],
+  "exclude": [
+    "**/*.mjs",
+    "dist",
+    "**/*.test.tsx",
+    "node_modules",
+    "lib",
+    "storybook-static",
+    "Pega_UIGallery",
+    "store"
+  ],
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,

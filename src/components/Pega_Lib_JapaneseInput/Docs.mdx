@@ -1,0 +1,25 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+Japanese input component has the following features.
+
+- Lowercase to Uppercase  
+  Converts Lowercase to Uppercase, for when the client inputs lowercase and the internal character handles it as uppercase.
+- Hiragana to Katakana  
+  Japanese has two types of characters, Hiragana and Katakana, which correspond one-to-one. Hiragana input is converted to Katakana.
+- Full-width to Half-width  
+  In Japanese, characters are generally handled as multi-byte full-width characters rather than single-byte half-width characters, and for this reason Japanese keyboards have a function to input characters in full-width. Some full-width characters have the same meaning in half-width, and these are converted from full-width to half-width.
+- Japanese Era to Gregorian  
+  Converts "Wareki" (Japanese calendar dates) to "Seireki" (Gregorian calendar dates). For example, "平成元年1月" will be converted to "1989年1月".
+- Gregorian to Japanese Era  
+  Converts "Seireki" (Gregorian calendar dates) to "Wareki" (Japanese calendar dates). For example, "1989年1月" will be converted to "平成元年1月".
+
+<Primary />
+
+## Props
+
+<Controls />

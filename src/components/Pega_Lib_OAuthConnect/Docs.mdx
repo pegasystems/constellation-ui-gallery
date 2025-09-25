@@ -1,0 +1,47 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The OAuth Connect component facilitates seamless third-party authentication using the OAuth 2.0 authorization code grant flow.
+When a user is not yet authenticated, a 'Connect' button will appear in the widget. Clicking this button initiates a popup window, redirecting the user to the external identity provider for authorization.
+Upon successful authorization, the widget displays a 'Disconnect' button, allowing users to revoke their access token.
+
+While the 'Disconnect' button is visible by default, it can be hidden from the user interface if necessary.
+
+Reference: [Article on Pega Community](https://support.pega.com/discussion/how-connect-external-application-using-oauthconnect-component-constellation)
+
+Some of the limitations of this component are:
+
+- Authentication is handled through external URL and does not support a custom authorization View
+- There is no UI into the widget from your 3rd party application. The JWT token will be available to the component and can be used to call other APIs or to load a URL inside an iframe.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Here is how to configure this component in authoring UI:
+
+![Data Page Configuration](OAuthConnect_Configuration_5.png)
+
+To use the component, you will need to have the data page D_OAuthConnect available - This DP is provided as part of the Computerland demo application.
+
+![Data Page Configuration](OAuthConnect_Configuration_1.png)
+
+![Data Page Configuration](OAuthConnect_Configuration_2.png)
+
+The DP will react to the following events to the server (AUTHENTICATE, AUTHORIZE, REVOKE). These events will be used to perform the connect / disconnect functionality.
+
+When create the authentication profile, make sure that the redirect url is point to YOURHOST/prweb/PRRestService/oauth2/v1/redirect so that the redirect endpoint and the activity 'pzGetAccessToken' is called.
+
+![Data Page Configuration](OAuthConnect_Configuration_3.png)
+
+In 23.1, this activity does not call the Constellation Messaging server to notify that the widget should refresh. To workaround this issue, the pyCloseWindow has been extended in the Computerland application to call the activity on load of the HTML fragment.
+
+![Data Page Configuration](OAuthConnect_Configuration_4.png)

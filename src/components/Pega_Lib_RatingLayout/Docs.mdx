@@ -1,0 +1,30 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The RatingLayout component is a template component that let you enter a set of numeric values between 1 and 5 - Each set of fields is grouped by tabs representing different categories.
+
+This template can be used inside an form view by adding the values of the embedded page that will contain all the ratings
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Assuming that you have an embedded object called 'Ratings'. This object contains 3 fields: Category, Label and Value. To use this component, create a new subview inside your step, select the RatingLayout template,
+add the following 3 fields in the picker in this order: [Ratings.Category, Ratings.Label, Ratings.Value] - These 3 values must be passed in this exact order to be correctly used at runtime.
+
+![View configuration](RatingInput_Example_Config_View.png)
+
+![Fields selection](RatingInput_Example_Config_Fields.png)
+
+![Fields configuration](RatingInput_Example_Config_Fields1.png)
+
+Here is how the component looks at runtime:
+![Runtime example](RatingInput_Example_Runtime.png)

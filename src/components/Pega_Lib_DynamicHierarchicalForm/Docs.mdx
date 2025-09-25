@@ -1,0 +1,47 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The DynamicHierarchicalForm template is designed for utilization within a form template. Its core function is to allow users to choose from a multitude of items available in a multi-select combobox. Each selected item correlates to a data object embedded within the case, exposing a series of input fields.
+
+This component displays the form of every embedded object within a unique tab component. The tabs dynamically adjust their displays based on the items selected from the combobox.
+
+The component is divided into two distinct regions:
+
+- The 'Selection' region: This area should house a singular embedded data list of available items. This field serves to hold your chosen items list. Every selected item will be recognizable through a unique pyGUID, pyLabel, RuleClass and an IsSelected property.
+- The 'Tabs' region: This is where all the embedded data fields should be placed, leading to the view that will be rendered for object. The RuleClass field from the item should match the class of the embedded data object.
+
+The component also exposes an action that will trigger a refresh on the assignment - This action can be used to update parts of the assignment, for example provide a detailed quotation. It is also possible to hide this refresh action as well as the multi-select picklist.
+
+Note: This component only supports objects of different classes and will not work if the objects are of the same class.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Example
+
+Assuming that you have a set of data objects that represent different types of insurance products and you want users to pick and configure them. Create a Products data object that exposes a pyLabel, IsSelected and RuleClass fields
+
+![Product list](DynamicHierarchicalForm_Configuration_1.png)
+
+Include in your case type each product as an embedded data object as well as create a embedded list object of products.
+
+![Case type model](DynamicHierarchicalForm_Configuration_2.png)
+
+Before rendering the widget, make sure to populate the products field with the pyLabel, pyGUID, RuleClass and IsSelected
+
+![Products initialization](DynamicHierarchicalForm_Configuration_3.png)
+
+In your assignment, use the component as a template and configure the different regions
+
+![Template usage](DynamicHierarchicalForm_Configuration_4.png)
+
+Here is how the component will render at runtime.
+
+![Demo](DynamicHierarchicalForm_Configuration_Demo.png)

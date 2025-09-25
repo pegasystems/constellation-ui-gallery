@@ -1,0 +1,20 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Secure Rich Text editor is using the same presentational RTE component used in the Constellation application but the ability to insert URLs and images from the toolbar has been removed.
+This component can be used if you want to prevent users to insert any url or images into the HTML and prevent XSS attacks.
+
+Other features include:
+
+- Set the toolbarMode to 'normal' to show headers, indentation and to 'basic' to only show lists and links
+- Set showWordCounter to true and maxWords to enforce a maximum number of words in the RTE.
+
+<Primary />
+
+## Props
+
+<Controls />

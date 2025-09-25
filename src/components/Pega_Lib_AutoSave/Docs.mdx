@@ -1,0 +1,17 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This component will auto-save a specific input field on blur without having to click on the 'Save for later' button. This component does not render any UI.
+You can enhance this component and instead of auto-saving the value on blur, you can save the value regularly if it has changed (for example every 2 seconds).
+
+To use this component, select a Text field in the form and enter the name of the property to monitor.
+
+Reference: [Article on Pega Community](https://support.pega.com/discussion/auto-save-assignment-change-field-constellation-application)
+
+## Props
+
+<Controls />

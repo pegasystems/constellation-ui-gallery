@@ -79,7 +79,3 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 jest.setTimeout(TIMEOUT);
-
-// speeds up *ByRole queries a bit
-// https://github.com/testing-library/dom-testing-library/issues/552
-configure({ defaultHidden: true });

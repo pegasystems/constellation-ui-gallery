@@ -1,0 +1,16 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This component allows to display subviews or fields over several columns and will utilize the full width of the assignment. If NumCols is empty, it will make the form responsive with each input taking a max width of 40ch.
+
+gridTemplateColumns can be set to override the default grid-template-columns CSS attribute on the layout - For example to do a 66%, 33% 2 column, you can enter "2fr 1fr"
+
+<Primary />
+
+## Props
+
+<Controls />

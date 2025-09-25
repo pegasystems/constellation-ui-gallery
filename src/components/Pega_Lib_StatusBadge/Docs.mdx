@@ -1,0 +1,35 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This field-level component allows to render a text field as a 'Status badge'. See [Status badge](https://design.pega.com/extend/badge/#Status) documentation.
+
+The value of field will be matched again each variant of the regular expression. The match is case insensitive. If no match is found, the badge will be displayed as the 'info' variant.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Configuration
+
+Constellation has a special handling for the field ID 'pyStatusWork' - to use this component, select a different field (like pyLabel) and set the input property to 'pyStatusWork' instead.
+
+![Example of using the Status Badget component](StatusBadge_Configuration.png)
+
+If you are using this component in the table, you will need to manually author the view [using the following procedure](https://support.pega.com/discussion/how-add-custom-dx-component-listview-table-constellation-application). This should be done with caution since manually editing the view could introduce upgrade issues.
+Make sure that the property correctly renders as text first in your table and then edit the Json - Do not use @L for the statuses and do not forget to set the input property.
+
+Here is an example of the JSON snippet
+
+![Example of using the Status Badget component](StatusBadge_Configuration_1.jpg)
+
+![Example of using the Status Badget component](StatusBadge_Configuration_2.PNG)
+
+in order to render the following table:
+
+![Example of using the Status Badget component](StatusBadge_Configuration_3.png)

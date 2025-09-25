@@ -1,0 +1,46 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This field-level component allows to render an iframe - the url of the iframe is set to the value of the input field
+
+The height can be set to a fixed height or auto - if auto is selected, the iframe is resized automatically to align with the iframe content.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Configuration
+
+When the mode is set to 'auto', the browser will block any access to the content of the iframe if the url is on a different domain due to cross-Origin resource sharing (CORS).
+
+Make sure that the embedded site sets "access-control-allow-origin" in the response header to the domain of the main document. If this is not set, you will see the following error in the console
+
+```
+Refused to display 'https://xxxx' in a frame because it set 'X-Frame-Options' to 'sameorigin'.
+```
+
+For the iframe resize logic to work, the inner iframe needs to set its height on content change through the postMessage API. Here is a sample of code
+to add once the application is loaded:
+
+```
+// Resize observer for sending the height of the iframe to the parent
+if(window.parent) {
+  const onResize = () => {
+    // Obviously you can format your data object however you want
+    window.parent.postMessage({
+      type: 'resize',
+      height: document.body.scrollHeight,
+    }, '*');
+  }
+
+  (new ResizeObserver( () =>
+    onResize()
+  )).observe(document.body);
+}
+```
