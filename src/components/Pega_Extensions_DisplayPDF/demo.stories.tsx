@@ -40,12 +40,24 @@ const blob2base64 = (blob: Blob, mimeType: string) => {
 };
 
 const getBinary = async () => {
-  const response = await fetch('./static/SamplePDF.pdf');
-  if (response.blob) {
-    const blob = await response.blob();
-    return blob2base64(blob, 'application/pdf');
+  try {
+    const response = await fetch('/SamplePDF.pdf');
+    console.log('PDF fetch response status:', response.status);
+    console.log('PDF fetch response ok:', response.ok);
+
+    if (response.ok && response.blob) {
+      const blob = await response.blob();
+      console.log('PDF blob size:', blob.size);
+      return blob2base64(blob, 'application/pdf');
+    }
+    console.warn('PDF fetch failed or no blob available');
+    // Fallback to a minimal valid PDF for testing
+    return 'JVBERi0xLjQKJcOkw7zDtsO8CjIgMCBvYmoKPDwKL0xlbmd0aCAzIDAgUgovVHlwZSAvUGFnZQo+PgpzdHJlYW0KZW5kb2JqCjMgMCBvYmoKMTEKZW5kb2JqCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsyIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KPj4KZW5kb2JqCjQgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDEgMCBSCj4+CmVuZG9iagp4cmVmCjAgNQowMDAwMDAwMDAwIDY1NTM1IGYKMDAwMDAwMDAwOSAwMDAwMCBuCjAwMDAwMDAwNTggMDAwMDAgbgowMDAwMDAwMTE1IDAwMDAwIG4KMDAwMDAwMDM3OCAwMDAwMCBuCnRyYWlsZXIKPDwKL1NpemUgNQovUm9vdCA0IDAgUgo+PgpzdGFydHhyZWYKNDk3CiUlRU9G';
+  } catch (error) {
+    console.error('PDF fetch error:', error);
+    // Fallback to a minimal valid PDF for testing
+    return 'JVBERi0xLjQKJcOkw7zDtsO8CjIgMCBvYmoKPDwKL0xlbmd0aCAzIDAgUgovVHlwZSAvUGFnZQo+PgpzdHJlYW0KZW5kb2JqCjMgMCBvYmoKMTEKZW5kb2JqCjEgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFsyIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNTk1IDg0Ml0KPj4KZW5kb2JqCjQgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDEgMCBSCj4+CmVuZG9iagp4cmVmCjAgNQowMDAwMDAwMDAwIDY1NTM1IGYKMDAwMDAwMDAwOSAwMDAwMCBuCjAwMDAwMDAwNTggMDAwMDAgbgowMDAwMDAwMTE1IDAwMDAwIG4KMDAwMDAwMDM3OCAwMDAwMCBuCnRyYWlsZXIKPDwKL1NpemUgNQovUm9vdCA0IDAgUgo+PgpzdGFydHhyZWYKNDk3CiUlRU9G';
   }
-  return '';
 };
 
 const setPCore = (url: string) => {
