@@ -24,15 +24,19 @@ export default {
   component: PegaExtensionsDisplayPDF,
 };
 
-const blob2base64 = (blob: Blob, mimeType: string) => {
+const blob2base64 = (blob: Blob) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const dataUrlPrefix = `data:${mimeType};base64,`;
-      const base64WithDataUrlPrefix = reader.result;
-      const base64 =
-        typeof base64WithDataUrlPrefix === 'string' ? base64WithDataUrlPrefix.replace(dataUrlPrefix, '') : '';
-      resolve(base64);
+      const result = reader.result;
+      if (typeof result === 'string') {
+        // Remove the data URL prefix to get just the base64 string
+        const base64 = result.split(',')[1];
+        console.log('Base64 length:', base64?.length);
+        resolve(base64 || '');
+      } else {
+        reject(new Error('Failed to read blob as data URL'));
+      }
     };
     reader.onerror = reject;
     reader.readAsDataURL(blob);
@@ -48,7 +52,7 @@ const getBinary = async () => {
     if (response.ok && response.blob) {
       const blob = await response.blob();
       console.log('PDF blob size:', blob.size);
-      return blob2base64(blob, 'application/pdf');
+      return blob2base64(blob);
     }
     console.warn('PDF fetch failed or no blob available');
     // Fallback to a minimal valid PDF for testing
