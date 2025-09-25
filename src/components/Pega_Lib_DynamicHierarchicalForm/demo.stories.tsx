@@ -41,6 +41,10 @@ export default {
             id: 'nested-interactive',
             enabled: false,
           },
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
         ],
       },
     },

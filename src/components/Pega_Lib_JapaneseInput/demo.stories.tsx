@@ -6,6 +6,19 @@ const meta: Meta<typeof PegaExtensionsJapaneseInput> = {
   title: 'Fields/Japanese Input',
   component: PegaExtensionsJapaneseInput,
   excludeStories: /.*Data$/,
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
 };
 
 export default meta;

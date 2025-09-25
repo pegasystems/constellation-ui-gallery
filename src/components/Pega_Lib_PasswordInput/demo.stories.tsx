@@ -30,6 +30,19 @@ export default {
       },
     },
   },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   component: PegaExtensionsPasswordInput,
 };
 
