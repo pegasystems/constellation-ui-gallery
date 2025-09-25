@@ -78,4 +78,19 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+// Mock Web Animations API
+Object.defineProperty(Element.prototype, 'animate', {
+  writable: true,
+  value: jest.fn().mockImplementation(() => ({
+    play: jest.fn(),
+    pause: jest.fn(),
+    finish: jest.fn(),
+    cancel: jest.fn(),
+    reverse: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 jest.setTimeout(TIMEOUT);

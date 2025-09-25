@@ -27,7 +27,9 @@
         "questions_askAlways": "",
         "questions_askNever": "",
         "questions_askOnce": "server,authService",
-        "questions_askedOnce": "server,authService"
+        "questions_askedOnce": "server,authService",
+        "archiveRulesetName": "CustomDXArch",
+        "archiveRulesetVersion": "01-01-01"
     },
     "component": {
         "library": "UIGallery",
@@ -38,6 +40,6 @@
         "icon": ""
     },
     "usePromotedWebPack": false,
-    "libraryMode": true,
+    "libraryModeCL": true,
     "showDebug": false
 }

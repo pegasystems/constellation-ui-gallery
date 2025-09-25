@@ -6,5 +6,5 @@ const { Default } = composeStories(DemoStories);
 
 test('renders a Status badge component with default args', async () => {
   render(<Default />);
-  expect(await screen.findAllByText('Open')).toHaveLength(2);
+  expect(await screen.findByText('Open')).toBeVisible();
 });
