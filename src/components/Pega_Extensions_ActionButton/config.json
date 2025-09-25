@@ -1,0 +1,25 @@
+{
+  "name": "Pega_Extensions_ActionButton",
+  "label": "Actionable button",
+  "description": "Actionable button",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ActionButton",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "dataPageName",
+      "label": "Data page name",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "label",
+      "label": "Label",
+      "format": "TEXT"
+    }
+  ]
+}
