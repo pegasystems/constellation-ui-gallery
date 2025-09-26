@@ -59,7 +59,7 @@ function Table<T extends Record<string, any>>({
             </tr>
           ) : (
             data.map((row : any) => (
-              <tr key={row.EmployeeID}>
+              <tr key={row.pzInsKey}>
                 {columns.map((col) => {
                   const isAction = String(col.key) === 'Action';
                   let cellContent: React.ReactNode;

@@ -27,8 +27,13 @@ const mockData = {
   departmentalWorkloadChartData: {
     data: {
       data: [
-        { pyOrg: 'HR', pySummaryCount: [100] },
+        { pyOrg: 'HR', pySummaryCount: [150] },
+        { pyOrg: 'Finance', pySummaryCount: [10] },
         { pyOrg: 'Finance', pySummaryCount: [80] },
+        { pyOrg: 'Finance', pySummaryCount: [80] },
+        { pyOrg: 'Finance', pySummaryCount: [80] },
+        { pyOrg: 'Finance', pySummaryCount: [80] },
+        { pyOrg: 'Finance', pySummaryCount: [80] }
       ],
     },
   },
@@ -51,8 +56,26 @@ const mockData = {
   kraRejectionData: {
     data: {
       data: [
-        { Employee: 'Charlie Green', PracticeLead: 'John Doe', Timestamp: '2025-09-20', Reason: 'Reason 1', Comments: 'No comments' },
-        { Employee: 'David Black', PracticeLead: 'Jane Smith', Timestamp: '2025-09-21', Reason: 'Reason 2', Comments: 'No comments' },
+        {
+            "SearchByEmployee": "CTPL0213",
+            "RejectionDateTime": null,
+            "pzInsKey": "BIG-PAR-WORK PAR-31090",
+            "EmployeeDetails": {
+                "PLName": "Ravi",
+                "EmployeeName": "ROHIT SINGH GUSAIN"
+            },
+            "PLInitialComments": "Tested"
+        },
+        {
+            "SearchByEmployee": "CTPL0047",
+            "RejectionDateTime": null,
+            "pzInsKey": "BIG-PAR-WORK PAR-31091",
+            "EmployeeDetails": {
+                "PLName": "Ravi",
+                "EmployeeName": "VANDHARANI DURGA PRASAD"
+            },
+            "PLInitialComments": "Not Filled"
+        }
       ],
     },
   },
@@ -67,6 +90,8 @@ const mockData = {
         { pyStatusWork: 'Stage 1', pySummaryCount: [30] },
         { pyStatusWork: 'Stage 2', pySummaryCount: [20] },
         { pyStatusWork: 'Stage 3', pySummaryCount: [50] },
+        { pyStatusWork: 'Stage 3', pySummaryCount: [50] },
+        { pyStatusWork: 'Stage 3', pySummaryCount: [50] }
       ],
     },
   },

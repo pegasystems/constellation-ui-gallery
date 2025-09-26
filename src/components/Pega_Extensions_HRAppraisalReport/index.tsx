@@ -16,6 +16,7 @@ import {
 } from 'chart.js';
 import type { ChartData } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
+import { CSVLink } from 'react-csv';
 
 ChartJS.register(
   CategoryScale,
@@ -63,6 +64,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const context = PConnect.getContextName();
   const [upcoming, setUpcoming] = useState<any[]>([]);
   const [days, setDays] = useState(90);
+  const [isOpen, setIsOpen] = useState(false);
   const [recent, setRecent] = useState<any[]>([]);
   const [overdueProposals, setOverdueProposals] = useState<any[]>([]);
   const [appraisalsInProgress, setappraisalsInProgress] = useState<number>(0);
@@ -115,40 +117,55 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
 
   const [kraFrom, setKraFrom] = useState('');
   const [kraTo, setKraTo] = useState('');
-  const [groupBy, setGroupBy] = useState('--Rejection Reason--');
 
   const handleLoad = () => {
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     setDays(e.target.value);
   };
 
 
   useEffect(() => {
+    async function loadUpcoming() {
+      const u = await fetchDataPage(upcomingAppraisalsDataPage, context, { NoOfDays: days });
+      setUpcoming(u.data || []);
+    }
+    loadUpcoming();
+  }, [upcomingAppraisalsDataPage, context, days]);
+
+
+  useEffect(() => {
     async function load() {
-      const [ip, dp, u, r, k, o, s] = await Promise.all([
+      const [ip, dp, r, k, o, s] = await Promise.all([
         fetchDataPage(inProgressAppraisalsDataPage, context, {}),
         fetchDataPage(departmentalWorkloadChartDataPage, context, {}),
-        fetchDataPage(upcomingAppraisalsDataPage, context, { NoOfDays: days }),
         fetchDataPage(recentAppraisalsDataPage, context, {}),
         fetchDataPage(kraRejectionDataPage, context, {}),
         fetchDataPage(overdueProposalsDataPage, context, {}),
-        fetchDataPage(stageDistributionDataPage, context, {}),
+        fetchDataPage(stageDistributionDataPage, context, {})
       ]);
       // eslint-disable-next-line no-console
       console.log(ip);
+      // eslint-disable-next-line no-console
+      console.log(k);
 
-      setUpcoming(u.data || []);
       setRecent(
         (r.data || []).map(item => ({
           ...item,
-          pyIntegerValue: Array.isArray(item.pyIntegerValue)
+          daysOverdue: Array.isArray(item.pyIntegerValue)
             ? item.pyIntegerValue[0]
             : item.pyIntegerValue
         }))
       );
-      setKraRejections(k.data || []);
+      setKraRejections((k.data || []).map( item => ({
+        ...item,
+        EmployeeID : item.SearchByEmployee,
+        RejectionDateTime : item.RejectionDateTime,
+        PLName : item.EmployeeDetails.PLName,
+        EmployeeName : item.EmployeeDetails.EmployeeName
+      }))
+      );
       setOverdueProposals(o.data || []);
       setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
 
@@ -223,21 +240,27 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
     upcomingAppraisalsDataPage,
     recentAppraisalsDataPage,
     kraRejectionDataPage,
-    context,
     overdueProposalsDataPage,
     stageDistributionDataPage,
-    days
+    context
   ]);
 
   const openProfile = () => {
     // Placeholder for profile navigation logic
   };
 
+  const overdueCsvData = [
+    ['firstname', 'lastname', 'email'],
+    ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+    ['Raed', 'Labes', 'rl@smthing.co.com'],
+    ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
+  ];
+
+
   return (
     <DashboardWrapper>
       <GlobalStyle />
       <div className="wrap">
-        {/* Header */}
         <header>
           <div style={{ visibility: 'hidden'}}>
             <h1>HR Appraisal Monitoring Dashboard</h1>
@@ -248,51 +271,51 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
               <select onChange={handleChange} value={days}>
                 <option value="30">Upcoming: 30 days</option>
                 <option value="60">Upcoming: 60 days</option>
-                <option value="90" selected>Upcoming: 90 days</option>
+                <option value="90">Upcoming: 90 days</option>
               </select>
             </div>
           </div>
         </header>
 
-        {/* Main */}
         <main className="main card">
-          {/* KPI Row */}
           <div className="kpi-row">
             <div className="kpi card"><div className="value">{appraisalsInProgress || 0}</div><div className="label">Appraisals In Progress</div><div className="small">Updated today</div></div>
-            <div className="kpi card"><div className="value">{upcoming?.length || 0}</div><div className="label">Upcoming</div><div className="small">Next 90 days</div></div>
+            <div className="kpi card"><div className="value">{upcoming?.length || 0}</div><div className="label">Upcoming</div><div className="small">Next { days } days</div></div>
             <div className="kpi card"><div className="value">{overdueProposals?.length || 0}</div><div className="label">Overdue</div><div className="small">High priority</div></div>
           </div>
 
-          {/* Charts */}
           <div className="charts">
             <section className="donut-wrap card">
               <h3>Stage Distribution</h3>
-              <div style={{ width: '100%' }}><Doughnut data={donutData} options={options} width={310} height={270} /></div>
+              <div style={{ width: '100%' }}>
+                <Doughnut data={donutData} options={options} height={250} />
+              </div>
             </section>
             <section className="bar-wrap card">
               <h3>Departmental Workload</h3>
               <div style={{ width: '100%' }}>
-                <Bar options={barOptions} data={barData} width={420} height={350} />
+                <Bar options={barOptions} data={barData} height={200} />
               </div>
             </section>
           </div>
 
-          {/* Overdue */}
           <div className="overdue card">
             <div className="count">{overdueProposals?.length || 0}</div>
-            <div><Button>View Overdue Details</Button><Button compact>Export CSV</Button></div>
+            <div>
+              <Button onClick={() => setIsOpen(true)}>View Overdue Details</Button> &nbsp;
+              <CSVLink data={overdueCsvData} filename='overdueProposals.csv'>Export CSV</CSVLink>
+            </div>
           </div>
 
-          {/* Recent Appraisals */}
           <div className="card">
-            <h3>Recent Appraisals</h3>
+            <h3 style={{ marginBottom: '10px'}}>Recent Appraisals</h3>
             <Table
               columns={[
                 { key: 'EmployeeName', label: 'Employee Name' },
                 { key: 'pyOrg', label: 'Department' },
                 { key: 'pxCurrentStageLabel', label: 'Stage' },
                 { key: 'AppraisalTargetDate', label: 'Target Completion' },
-                { key: 'pyIntegerValue', label: 'Days Overdue' }
+                { key: 'daysOverdue', label: 'Days Overdue' }
               ]}
               data={recent}
               loading={false}
@@ -302,50 +325,39 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
 
           {/* KRA Rejections */}
           <div className="card">
-            <h3>HR KRA Rejection Analysis</h3>
+            <h3 style={{ marginBottom: '10px'}}>HR KRA Rejection Analysis</h3>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <label className="sub" htmlFor="startDate">
+                Date Range
+                <input
+                  id="startDate"
+                  type="date"
+                  value={kraFrom}
+                  onChange={(e) => setKraFrom(e.target.value)}
+                  style={{ border: '1px solid #ccc', height: 35, borderRadius: 5, padding: '0px 5px' }}
+                />
+              </label>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <label className="sub" htmlFor="startDate">
-                      Date Range (mandatory)
-                    </label>
-                    <input
-                      id="startDate"
-                      type="date"
-                      value={kraFrom}
-                      onChange={(e) => setKraFrom(e.target.value)}
-                      style={{ border: '1px solid #ccc', height: 30, borderRadius: 5 }}
-                    />
-                  </div>
+              <input
+                id="endDate"
+                type="date"
+                value={kraTo}
+                onChange={(e) => setKraTo(e.target.value)}
+                style={{ border: '1px solid #ccc', height: 35, borderRadius: 5, padding: '0px 5px' }}
+              />
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <label className="sub" htmlFor="endDate">
-                      End Date
-                    </label>
-                    <input
-                      id="endDate"
-                      type="date"
-                      value={kraTo}
-                      onChange={(e) => setKraTo(e.target.value)}
-                      style={{ border: '1px solid #ccc', height: 30, borderRadius: 5 }}
-                    />
-                  </div>
-
-                    <button type='button' className="btn" onClick={handleLoad}>
-                      Load
-                    </button>
-                  </div>
-                </div>
+              <button type="button" className="btn" onClick={handleLoad}>
+                Apply
+              </button>
+            </div>
 
             <Table
               columns={[
-                { key: 'Employee', label: 'Employee' },
-                { key: 'PracticeLead', label: 'Practice Lead' },
-                { key: 'Timestamp', label: 'Timestamp' },
-                { key: 'Reason', label: 'Reason' },
-                { key: 'Comments', label: 'Comments' }
+                { key: 'EmployeeName', label: 'Employee' },
+                { key: 'PLName', label: 'Practice Lead' },
+                { key: 'RejectionDateTime', label: 'Timestamp' },
+                { key: 'PLInitialComments', label: 'Comments' }
               ]}
               data={kraRejections}
               loading={false}
@@ -365,7 +377,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                     <div style={{ fontWeight: 700 }}>{u.EmployeeName}</div>
                     <div className="meta">{u.Department} • starts {u.Date}</div>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-end' }}>
+                  <div style={{ display: 'none', flexDirection: 'column', gap: '6px', alignItems: 'flex-end' }}>
                     <button type="button" className="small-btn" onClick={() => openProfile()}>View</button>
                   </div>
                 </div>
@@ -373,6 +385,31 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
             </div>
           </div>
         </aside>
+
+        {isOpen && (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Overdue Appraisals</h2>
+                <button type="button" className="modal-close" onClick={() => setIsOpen(false)}>✕</button>
+              </div>
+              <div className="modal-content">
+                <Table
+                  columns={[
+                    { key: 'EmployeeName', label: 'Employee' },
+                    { key: 'PLName', label: 'Practice Lead' },
+                    { key: 'RejectionDateTime', label: 'Timestamp' },
+                    { key: 'PLInitialComments', label: 'Comments' }
+                  ]}
+                  data={kraRejections}
+                  loading={false}
+                  loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
     </DashboardWrapper>
   );

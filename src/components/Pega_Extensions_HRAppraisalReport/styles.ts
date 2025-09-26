@@ -2,8 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   .wrap {
-    margin:28px auto;
-    padding:20px;
+    padding:12px 20px;
     display:grid;
     grid-template-columns:1fr 360px;
     gap:20px;
@@ -166,13 +165,14 @@ const GlobalStyle = createGlobalStyle`
       color:#dc2626;
     }
 
-    .overdue button {
+    .overdue button, .overdue a {
       background:#fff;
       border:1px solid #d1d5db;
       padding:8px 10px;
       border-radius:8px;
       color:#111827;
       cursor:pointer;
+      text-decoration: none;
     }
 
     /* Right column (filters + lists) */
@@ -185,7 +185,7 @@ const GlobalStyle = createGlobalStyle`
     .list {
       max-height:510px;
       overflow:auto;
-      padding:8px;
+      padding-top: 8px;
       display:flex;
       flex-direction:column;
       gap:8px;
@@ -267,6 +267,91 @@ const GlobalStyle = createGlobalStyle`
       .donut-wrap { width:100%; }
     }
   }
+
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    width: 800px;
+    max-width: 90%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #111827;
+  }
+
+  .modal-close {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #374151;
+    font-size: 14px;
+  }
+
+  .modal-close:hover { background: #f3f4f6; }
+
+  .modal-content {
+    color: #374151;
+    font-size: 15px;
+    line-height: 1.5;
+    height: 300px;
+    overflow-y: scroll;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .modal-footer .cancel {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    color: #111827;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .modal-footer .confirm {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
 `;
 
 export default GlobalStyle;
