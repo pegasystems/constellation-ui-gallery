@@ -397,7 +397,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                 <Table
                   columns={[
                     { key: 'EmployeeName', label: 'Employee' },
-                    { key: 'PLName', label: 'Practice Lead' },
                     { key: 'RejectionDateTime', label: 'Timestamp' },
                     { key: 'PLInitialComments', label: 'Comments' }
                   ]}

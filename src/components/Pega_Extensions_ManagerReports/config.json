@@ -1,0 +1,51 @@
+{
+  "name": "Pega_Extensions_ManagerReports",
+  "label": "Manager Report",
+  "description": "Manager Report",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ManagerReports",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "inProgressAppraisalsDataPage",
+        "label": "In Progress Proposals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "departmentalWorkloadChartDataPage",
+        "label": "Departmental Workload Chart Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "overdueProposalsDataPage",
+        "label": "Overdue Proposals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "stageDistributionDataPage",
+        "label": "Stage Distribution Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "upcomingAppraisalsDataPage",
+        "label": "Upcoming Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "recentAppraisalsDataPage",
+        "label": "Recent Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "kraRejectionDataPage",
+        "label": "KRA Rejection Data Page",
+        "format": "TEXT"
+      }
+  ],
+  "defaultConfig": {}
+}
