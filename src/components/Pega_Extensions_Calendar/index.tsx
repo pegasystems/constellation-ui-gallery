@@ -19,7 +19,7 @@ import {
 } from '@pega/cosmos-react-core';
 import StyledEventWrapper from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 registerIcon(plusIcon);
 
@@ -258,12 +258,10 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         'ASSIGNMENT_SUBMISSION',
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     loadEvents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

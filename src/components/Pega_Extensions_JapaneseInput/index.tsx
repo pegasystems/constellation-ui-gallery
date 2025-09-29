@@ -11,7 +11,7 @@ import {
   createTestIds,
   withTestIds,
 } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import {
   convertHiraganaToKatakana,
   fullWidthToHalfWidth,

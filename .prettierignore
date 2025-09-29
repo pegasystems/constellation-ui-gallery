@@ -12,6 +12,6 @@ build
 CHANGELOG.md
 **/public
 *.svg
-Pega_UIGallery
+Pega_Extensions
 store
 src/components/**/*.json

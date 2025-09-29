@@ -46,7 +46,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_UIGallery 4.0.0, Thu Sep 25 2025, 25.1.0-95",
+            "label": "Pega_Extensions 4.0.0, Mon Sep 29 2025, 25.1.0-95",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -56,7 +56,7 @@
         "NumCols": "2",
         "gridTemplateColumns": ""
     },
-    "buildDate": "2025-09-25T18:19:53.327Z",
+    "buildDate": "2025-09-29T17:46:22.436Z",
     "infinityVersion": "25.1.0-95",
     "packageCosmosVersion": "8.4.1"
 }

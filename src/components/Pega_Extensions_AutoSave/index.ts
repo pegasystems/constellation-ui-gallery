@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type AutoSaveProps = {
   propertyName: string;

@@ -1,6 +1,6 @@
 import { type MouseEvent } from 'react';
 import { withConfiguration, Link } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type ActionableButtonProps = {
   value: string;

@@ -1,5 +1,5 @@
 import { withConfiguration, Status, type StatusProps } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type StatusBadgeProps = {
   /**  The value to display in the status badge */

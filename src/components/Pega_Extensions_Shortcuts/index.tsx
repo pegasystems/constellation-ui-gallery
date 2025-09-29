@@ -1,7 +1,7 @@
 import { type MouseEvent, useCallback } from 'react';
 import { withConfiguration, Card, CardHeader, CardContent, Text, Link, Flex } from '@pega/cosmos-react-core';
 import { SimpleContent, GroupedContent } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type ShortcutsProps = {
   /** Display type of rendering

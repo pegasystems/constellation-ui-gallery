@@ -15,7 +15,7 @@ import {
 import { Task } from './Task';
 import { loadDetails, getFilters } from './utils';
 import { MainCard } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
@@ -187,7 +187,6 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         'ASSIGNMENT_SUBMISSION',
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* Subscribe to dashboard filter changes only if useInDashboard is true */
@@ -231,13 +230,11 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         );
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setLoading(true);
     loadTasks(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards]);
 
   const genState = (content: ReactNode) => (

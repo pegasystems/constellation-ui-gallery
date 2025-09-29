@@ -1,7 +1,7 @@
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import { withConfiguration, Flex, FormControl, FormField, QRCode, Text } from '@pega/cosmos-react-core';
 import StyledWrapper from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type QRCodeCompProps = {
   label: string;

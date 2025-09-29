@@ -3,10 +3,11 @@
     "import-relative-path": "Downloads",
     "export-relative-path": "Downloads",
     "server-config": {
-        "rulesetName": "ConstellationUIGallery",
+        "rulesetName": "ConstellationUIGalleryLib",
         "rulesetVersion": "01-01-01",
         "sourceOfComponents": "Server",
         "devBuild": false,
+        "devServerPort": "3030",
         "serverType": "infinity",
         "server": "",
         "clientId": "",
@@ -32,7 +33,7 @@
         "archiveRulesetVersion": "01-01-01"
     },
     "component": {
-        "library": "UIGallery",
+        "library": "Extensions",
         "type": "",
         "version": "4.0.0",
         "subtype": "",
@@ -40,6 +41,6 @@
         "icon": ""
     },
     "usePromotedWebPack": false,
-    "libraryModeCL": false,
+    "libraryModeCL": true,
     "showDebug": false
 }

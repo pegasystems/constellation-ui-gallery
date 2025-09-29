@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Input, Text } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type PasswordInputProps = {
   getPConnect: any;

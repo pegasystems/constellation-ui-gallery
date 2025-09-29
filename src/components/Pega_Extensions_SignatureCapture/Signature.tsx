@@ -25,7 +25,6 @@ const Signature = (props: SignatureProps) => {
       canvas.height = canvas.offsetHeight * ratio;
       canvas.getContext('2d')?.scale(ratio, ratio);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refCanvas.current]);
 
   useEffect(() => {
@@ -59,7 +58,6 @@ const Signature = (props: SignatureProps) => {
     initSignaturePad();
     window.addEventListener('resize', resizeCanvas);
     return () => stopSignaturePad();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <canvas ref={refCanvas} {...canvasProps} />;

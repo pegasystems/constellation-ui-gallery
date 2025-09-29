@@ -1,6 +1,6 @@
 import { withConfiguration, FieldGroup, Flex, useTheme } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsFieldGroupAsRowWrapper from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type FieldGroupAsRowProps = {
   heading: string;

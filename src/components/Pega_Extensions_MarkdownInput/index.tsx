@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { RichTextEditor, RichTextViewer, type EditorState } from '@pega/cosmos-react-rte';
 import { createUID, FormField, NoValue, withConfiguration } from '@pega/cosmos-react-core';
 
-import '../create-nonce';
+import '../shared/create-nonce';
 
 export interface MarkdownInputProps {
   /** field label */

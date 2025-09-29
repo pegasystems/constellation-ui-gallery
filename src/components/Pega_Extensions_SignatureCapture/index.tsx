@@ -3,7 +3,7 @@ import { withConfiguration, Image, Button, Flex, FormField, FormControl } from '
 import SignaturePad from 'signature_pad';
 import Signature from './Signature';
 import { StyledButtonsWrapper, StyledSignatureContent, StyledSignatureReadOnlyContent } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type SignatureCaptureProps = {
   getPConnect: any;
@@ -44,7 +44,6 @@ export const PegaExtensionsSignatureCapture = (props: SignatureCaptureProps) => 
     if (value) {
       ref.current?.fromDataURL(value);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

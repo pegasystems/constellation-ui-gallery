@@ -6,7 +6,7 @@ import {
   MagnifierPreview,
   MagnifierZoom,
 } from 'react-image-magnifiers';
-import '../create-nonce';
+import '../shared/create-nonce';
 import LightboxImage from './LightboxImage';
 
 export type PegaExtensionsImageMagnifyProps = {

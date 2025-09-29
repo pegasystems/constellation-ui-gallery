@@ -4,7 +4,7 @@ import { type EventContentArg } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { StyledCardContent, MainCard, GlobalStyle } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 export type PegaExtensionsSchedulerProps = {
   getPConnect: any;

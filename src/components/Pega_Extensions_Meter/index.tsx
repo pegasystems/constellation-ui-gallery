@@ -1,5 +1,5 @@
 import { withConfiguration, useTheme, FieldGroup, Flex, FormField, createUID } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import { StyledFieldGroupElementMeter, StyleGroupMeterWrapper } from './styles';
 
 import { useEffect, useState } from 'react';
@@ -106,7 +106,6 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
         })
         .catch(() => {});
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPage]);
 
   if (dataPage) {

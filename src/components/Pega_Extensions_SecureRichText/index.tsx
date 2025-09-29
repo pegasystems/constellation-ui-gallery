@@ -8,7 +8,7 @@ import { NoValue, registerIcon, useLiveLog, withConfiguration } from '@pega/cosm
 import * as listIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list.icon';
 import * as listNumberIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/list-number.icon';
 
-import '../create-nonce';
+import '../shared/create-nonce';
 
 registerIcon(listIcon, listNumberIcon);
 
@@ -206,7 +206,6 @@ export const PegaExtensionsSecureRichText = (props: RichTextProps) => {
     setTimeout(() => {
       updateWordCount();
     }, 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onInit = (editor: TinymceEditor) => {

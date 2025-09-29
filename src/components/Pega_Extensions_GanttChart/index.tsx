@@ -29,7 +29,7 @@ import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/p
 import * as timesIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/times.icon';
 
 import StyledGanttChartWrapper, { StyledHoverTooltipCard } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 import {
   viewModeOptions,
   type GanttChartProps,

@@ -9,7 +9,7 @@ import {
   FormField,
   FormControl,
 } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import { StyledFlexWrapper, StyledStarRatingMetaInfo, StyledStarWrapper } from './styles';
 
 type StarRatingInputProps = {

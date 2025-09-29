@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 export type CheckboxRowProps = {
   getPConnect?: any;
