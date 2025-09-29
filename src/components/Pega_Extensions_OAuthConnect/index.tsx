@@ -10,7 +10,7 @@ import {
   withConfiguration,
 } from '@pega/cosmos-react-core';
 import { StyledSummaryListHeader, StyledSummaryListContent } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 import * as NodeIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/node.icon';
 import * as ChainIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/chain.icon';

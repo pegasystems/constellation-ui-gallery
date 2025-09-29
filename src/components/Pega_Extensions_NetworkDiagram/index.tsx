@@ -30,7 +30,7 @@ import CustomNode from './CustomNode';
 import CustomEdge from './CustomEdge';
 import FloatingEdge from './FloatingEdge';
 import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 registerIcon(resetIcon);
 interface StringHashMap {

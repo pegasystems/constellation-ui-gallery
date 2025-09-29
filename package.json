@@ -43,7 +43,6 @@
     "listPublishedLib": "custom-dx-components listPublished",
     "move": "custom-dx-components moveComponent",
     "publish": "custom-dx-components publish",
-    "publishAll": "custom-dx-components publishAll",
     "publishLibVersion": "custom-dx-components publish",
     "rename": "custom-dx-components rename",
     "restoreLibVersion": "custom-dx-components restore",

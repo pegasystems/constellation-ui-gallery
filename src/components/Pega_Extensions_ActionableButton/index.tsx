@@ -1,5 +1,5 @@
 import { withConfiguration, Flex, Button } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type ActionableButtonProps = {
   label: string;

@@ -14,14 +14,14 @@ import {
   Checkbox,
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCompareTableLayoutWrapper, { SelectedBgCell, SelectedBgTh, SelectedCell } from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 // includes in bundle
 import getAllFields from './utils';
 
 import * as checkIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/check.icon';
 import * as timesIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/times.icon';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 registerIcon(checkIcon, timesIcon);
 

@@ -2,7 +2,7 @@ import JsBarcode from 'jsbarcode';
 import { withConfiguration, Flex, FormControl, FormField, ErrorState, Text } from '@pega/cosmos-react-core';
 import { useEffect, useRef, useState } from 'react';
 import StyledWrapper from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 export enum BarcodeType {
   CODE128 = 'CODE128',

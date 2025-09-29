@@ -1,7 +1,7 @@
 import { withConfiguration, Banner } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useState } from 'react';
 import MainContent from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type BannerProps = {
   /** Display type of rendering
@@ -138,7 +138,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
           .catch(() => {});
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [],
   );
 
@@ -162,7 +162,6 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
     return () => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onDismiss = () => {

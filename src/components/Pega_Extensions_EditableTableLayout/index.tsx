@@ -14,7 +14,7 @@ import {
 import StyledPegaExtensionsEditableTableLayoutWrapper from './styles';
 import * as trashIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/trash.icon';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
-import '../create-nonce';
+import '../shared/create-nonce';
 import getAllFields from './utils';
 
 registerIcon(plusIcon, trashIcon);

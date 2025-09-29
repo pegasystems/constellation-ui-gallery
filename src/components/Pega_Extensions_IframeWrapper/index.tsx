@@ -1,5 +1,5 @@
 import { withConfiguration } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import { useEffect, useRef, useState } from 'react';
 
 type IframeWrapperProps = {

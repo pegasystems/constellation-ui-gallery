@@ -21,7 +21,7 @@ import {
 import type { SummaryListItem, ModalMethods, ModalProps, LightboxItem, LightboxProps } from '@pega/cosmos-react-core';
 import { downloadBlob, addAttachment, downloadFile } from './utils';
 import StyledCardContent from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -248,7 +248,6 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
     return () => {
       (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 
   useEffect(() => {

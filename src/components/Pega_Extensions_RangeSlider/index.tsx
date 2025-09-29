@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { withConfiguration, Flex, cap, useDirection, CurrencyDisplay, FieldGroup } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import {
   StyledMinValue,
   StyledBar,

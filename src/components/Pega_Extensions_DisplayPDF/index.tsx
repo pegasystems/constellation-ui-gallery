@@ -9,7 +9,7 @@ import {
   type ModalMethods,
 } from '@pega/cosmos-react-core';
 
-import '../create-nonce';
+import '../shared/create-nonce';
 import { useRef, useState, useEffect } from 'react';
 import StyledList from './styles';
 

@@ -8,7 +8,7 @@ import {
   Text,
   registerIcon,
 } from '@pega/cosmos-react-core';
-import '../create-nonce';
+import '../shared/create-nonce';
 import TrendDisplayWrapper from './styles';
 
 import { useState } from 'react';

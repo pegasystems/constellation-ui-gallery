@@ -4,7 +4,7 @@ import { HideButtonsForm, StyledTaskList } from './styles';
 import { TaskListItem } from './TaskListItem';
 import { TaskDetail } from './TaskDetail';
 import type { Task, Category, HierarchicalFormAsTasksProps } from './types';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsTasksProps) => {
   const { heading, children, getPConnect } = props;
@@ -57,8 +57,9 @@ export const PegaExtensionsHierarchicalFormAsTasks = (props: HierarchicalFormAsT
 
       setViews(parsedViews);
       setCategories(parsedCategories);
-      // eslint-disable-next-line no-empty
-    } catch {}
+    } catch {
+      /* do nothing */
+    }
   }, [children]);
 
   const submitAssignment = () => {

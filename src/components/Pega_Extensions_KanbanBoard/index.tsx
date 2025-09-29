@@ -15,7 +15,7 @@ import { Column } from './Column';
 import { MainCard } from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 registerIcon(plusIcon, pencilIcon);
 type KanbanBoardProps = {
@@ -200,12 +200,10 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
         'ASSIGNMENT_SUBMISSION',
       );
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     loadTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groups, groupProperty]);
 
   if (!groups || !groupProperty) return null;

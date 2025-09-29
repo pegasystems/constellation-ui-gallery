@@ -64,6 +64,7 @@ export default [
       'jest/expect-expect': 'off',
       'testing-library/no-container': 'off',
       'testing-library/no-node-access': 'off',
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],

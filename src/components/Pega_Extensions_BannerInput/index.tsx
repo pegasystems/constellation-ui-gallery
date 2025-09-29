@@ -5,7 +5,7 @@ import * as flagWaveSolidIcon from '@pega/cosmos-react-core/lib/components/Icon/
 import * as checkIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/check.icon';
 import * as informationSolidIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information-solid.icon';
 
-import '../create-nonce';
+import '../shared/create-nonce';
 import { StyledBanner, StyledBannerStatus, StyledBannerText } from './styles';
 
 registerIcon(warnSolidIcon, flagWaveSolidIcon, checkIcon, informationSolidIcon);

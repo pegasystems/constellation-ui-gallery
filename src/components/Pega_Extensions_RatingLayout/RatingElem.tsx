@@ -36,7 +36,6 @@ const RatingElem = (props: RatingElemProps) => {
     };
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
     return c11nEnv.getPConnect().getActionsApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getPConnect]);
 
   const onChangeValue = (changeValue: number) => {

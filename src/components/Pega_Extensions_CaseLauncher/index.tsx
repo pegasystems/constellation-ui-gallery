@@ -1,6 +1,6 @@
 import { withConfiguration, Card, CardHeader, CardContent, CardFooter, Text, Button } from '@pega/cosmos-react-core';
 import StyledCard from './styles';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 // interface for props
 export type CaseLauncherProps = {

@@ -8,7 +8,7 @@
     "node_modules",
     "lib",
     "storybook-static",
-    "Pega_UIGallery",
+    "Pega_Extensions",
     "store"
   ],
   "compilerOptions": {

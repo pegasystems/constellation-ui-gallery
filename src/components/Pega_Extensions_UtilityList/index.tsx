@@ -15,7 +15,7 @@ import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
 import { renderObjectField } from './utils';
-import '../create-nonce';
+import '../shared/create-nonce';
 
 type UtilityListProps = {
   heading?: string;
@@ -127,7 +127,6 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
           setLoading(false);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPage, primaryField, secondaryFields, secondaryFieldTypes, getPConnect]);
 
   if (!primaryField || !dataPage) return null;
