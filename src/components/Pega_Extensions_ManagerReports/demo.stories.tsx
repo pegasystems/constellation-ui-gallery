@@ -19,102 +19,78 @@ if (!window.PCore) {
 }
 
 const mockData = {
-  inProgressAppraisalsData: {
-    data: {
-      data: [{ pySummaryCount: [10] }],
-    },
-  },
-  departmentalWorkloadChartData: {
-    data: {
-      data: [
-        { pyOrg: 'HR', pySummaryCount: [150] },
-        { pyOrg: 'Finance', pySummaryCount: [10] },
-        { pyOrg: 'Finance', pySummaryCount: [80] },
-        { pyOrg: 'Finance', pySummaryCount: [80] },
-        { pyOrg: 'Finance', pySummaryCount: [80] },
-        { pyOrg: 'Finance', pySummaryCount: [80] },
-        { pyOrg: 'Finance', pySummaryCount: [80] }
-      ],
-    },
-  },
-  upcomingAppraisalsData: {
-    data: {
-      data: [
-        { EmployeeName: 'John Doe', Department: 'HR', Date: '2025-10-15' },
-        { EmployeeName: 'Jane Smith', Department: 'Finance', Date: '2025-10-18' },
-      ],
-    },
-  },
-  recentAppraisalsData: {
-    data: {
-      data: [
-        { EmployeeName: 'Alice Brown', pyOrg: 'HR', pxCurrentStageLabel: 'Stage 1', AppraisalTargetDate: '2025-10-10', pyIntegerValue: 5 },
-        { EmployeeName: 'Bob White', pyOrg: 'Finance', pxCurrentStageLabel: 'Stage 2', AppraisalTargetDate: '2025-09-30', pyIntegerValue: 2 },
-      ],
-    },
-  },
-  kraRejectionData: {
+  workBasketDataPage: {
     data: {
       data: [
         {
-            "SearchByEmployee": "CTPL0213",
-            "RejectionDateTime": null,
-            "pzInsKey": "BIG-PAR-WORK PAR-31090",
-            "EmployeeDetails": {
-                "PLName": "Ravi",
-                "EmployeeName": "ROHIT SINGH GUSAIN"
-            },
-            "PLInitialComments": "Tested"
+            "pxUrgencyAssign": 10,
+            "pxProcessName": "Approval",
+            "pxRefObjectInsName": "PAR-31046",
+            "pxAssignedOperatorID": "Practice_Leads",
+            "pxTaskLabel": "Get Approval",
+            "pxRefObjectClass": "BIG-PAR-Work-AnnualPerformanceCycle",
+            "pyAssignmentStatus": "Pending-KRA Assignment",
+            "pyInstructions": "TASLIM SHAMSHUDDIN SAYYED",
+            "pzInsKey": "ASSIGN-WORKBASKET BIG-PAR-WORK PAR-31046!PYCASCADINGGETAPPROVAL",
+            "pxDeadlineTime": null,
+            "pxObjClass": "Assign-WorkBasket",
+            "pxGoalTime": null,
+            "pxCreateDateTime": "2025-09-16T06:09:54.940Z",
+            "pxRefObjectKey": "BIG-PAR-WORK PAR-31046",
+            "pyLabel": "CTPL0375",
+            "pxIsMultiStep": false
         },
         {
-            "SearchByEmployee": "CTPL0047",
-            "RejectionDateTime": null,
-            "pzInsKey": "BIG-PAR-WORK PAR-31091",
-            "EmployeeDetails": {
-                "PLName": "Ravi",
-                "EmployeeName": "VANDHARANI DURGA PRASAD"
-            },
-            "PLInitialComments": "Not Filled"
+            "pxUrgencyAssign": 10,
+            "pxProcessName": "Approval",
+            "pxRefObjectInsName": "PAR-31054",
+            "pxAssignedOperatorID": "Practice_Leads",
+            "pxTaskLabel": "Get Approval",
+            "pxRefObjectClass": "BIG-PAR-Work-AnnualPerformanceCycle",
+            "pyAssignmentStatus": "Pending-KRA Assignment",
+            "pyInstructions": "NILESH VIJAY PATIL",
+            "pzInsKey": "ASSIGN-WORKBASKET BIG-PAR-WORK PAR-31054!PYCASCADINGGETAPPROVAL",
+            "pxDeadlineTime": null,
+            "pxObjClass": "Assign-WorkBasket",
+            "pxGoalTime": null,
+            "pxCreateDateTime": "2025-09-18T10:02:44.913Z",
+            "pxRefObjectKey": "BIG-PAR-WORK PAR-31054",
+            "pyLabel": "CTPL0178",
+            "pxIsMultiStep": false
+        }
+      ]
+    },
+  },
+  upcomingAppraisalsDataPage: {
+    data: {
+      data: [
+        {
+            "pxObjClass": "BIG-PAR-Data-EmployeeInformation",
+            "pyNote": "Pending",
+            "EmployeeID": "CTPL0386",
+            "NextApparaisalDate": "2025-10-19T04:00:00.000Z",
+            "EmployeeName": "ROHIT ARVIND CHAKRAPANI"
+        },
+        {
+            "pxObjClass": "BIG-PAR-Data-EmployeeInformation",
+            "pyNote": "Pending",
+            "EmployeeID": "CTPL0213",
+            "NextApparaisalDate": "2025-10-29T04:00:00.000Z",
+            "EmployeeName": "ROHIT SINGH GUSAIN"
         }
       ],
     },
-  },
-  overdueProposalsData: {
-    data: {
-      data: [{ EmployeeName: 'Alice Brown', Department: 'HR', Date: '2025-09-25' }],
-    },
-  },
-  stageDistributionData: {
-    data: {
-      data: [
-        { pyStatusWork: 'Stage 1', pySummaryCount: [30] },
-        { pyStatusWork: 'Stage 2', pySummaryCount: [20] },
-        { pyStatusWork: 'Stage 3', pySummaryCount: [50] },
-        { pyStatusWork: 'Stage 3', pySummaryCount: [50] },
-        { pyStatusWork: 'Stage 3', pySummaryCount: [50] }
-      ],
-    },
-  },
+  }
 };
 
 window.PCore.getDataApiUtils = () => {
   return {
     getData: (endpoint) => {
       switch (endpoint) {
-        case 'inProgressAppraisalsDataPage':
-          return Promise.resolve(mockData.inProgressAppraisalsData);
-        case 'departmentalWorkloadChartDataPage':
-          return Promise.resolve(mockData.departmentalWorkloadChartData);
+        case 'workBasketDataPage':
+          return Promise.resolve(mockData.workBasketDataPage);
         case 'upcomingAppraisalsDataPage':
-          return Promise.resolve(mockData.upcomingAppraisalsData);
-        case 'recentAppraisalsDataPage':
-          return Promise.resolve(mockData.recentAppraisalsData);
-        case 'kraRejectionDataPage':
-          return Promise.resolve(mockData.kraRejectionData);
-        case 'overdueProposalsDataPage':
-          return Promise.resolve(mockData.overdueProposalsData);
-        case 'stageDistributionDataPage':
-          return Promise.resolve(mockData.stageDistributionData);
+          return Promise.resolve(mockData.upcomingAppraisalsDataPage);
         default:
           return Promise.reject(new Error('Unknown endpoint'));
       }
@@ -148,11 +124,6 @@ export const BaseManagerMonitoringDashboard: Story = (args) => {
 };
 
 BaseManagerMonitoringDashboard.args = {
-  inProgressAppraisalsDataPage: configProps.inProgressAppraisalsDataPage,
-  departmentalWorkloadChartDataPage: configProps.departmentalWorkloadChartDataPage,
-  overdueProposalsDataPage: configProps.overdueProposalsDataPage,
-  stageDistributionDataPage: configProps.stageDistributionDataPage,
-  upcomingAppraisalsDataPage: configProps.upcomingAppraisalsDataPage,
-  recentAppraisalsDataPage: configProps.recentAppraisalsDataPage,
-  kraRejectionDataPage: configProps.kraRejectionDataPage
+  workBasketDataPage: configProps.workBasketDataPage,
+  upcomingAppraisalsDataPage: configProps.upcomingAppraisalsDataPage
 };

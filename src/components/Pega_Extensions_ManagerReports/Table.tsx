@@ -6,15 +6,15 @@ type Column<T> = {
   render?: (row: T) => React.ReactNode;
   sortable?: boolean;
   onSort?: () => void;
+  button?: boolean;
+  date?: boolean;
 };
-
 
 type TableProps<T> = {
   columns: Column<T>[];
   data: T[];
   loading?: boolean;
   loadingMessage?: string;
-  onClick?: (value: string, value2: string) => void;
   sortByField?: string;
   sortByType?: 'ASC' | 'DESC';
 };
@@ -24,7 +24,6 @@ function Table<T extends Record<string, any>>({
   data,
   loading = false,
   loadingMessage = 'Loading...',
-  onClick,
   sortByField,
   sortByType
 }: TableProps<T>) {
@@ -33,11 +32,11 @@ function Table<T extends Record<string, any>>({
       <table>
         <thead>
           <tr>
-            {columns.map((col) => {
+            {columns.map((col, index) => {
               const isSorted = col.key === sortByField;
               return (
                 <th
-                  key={String(col.key)}
+                  key={`header-${String(col.key)}-${index}`}
                   style={{ cursor: col.sortable ? 'pointer' : 'default', userSelect: 'none' }}
                   onClick={col.sortable ? col.onSort : undefined}
                 >
@@ -58,26 +57,61 @@ function Table<T extends Record<string, any>>({
               <td colSpan={columns.length}>No data available</td>
             </tr>
           ) : (
-            data.map((row : any) => (
-              <tr key={row.pzInsKey}>
-                {columns.map((col) => {
-                  const isAction = String(col.key) === 'Action';
+            data.map((row: any) => (
+              <tr key={row.unique || row.pzInsKey || Math.random()}>
+                {columns.map((col, colIndex) => {
                   let cellContent: React.ReactNode;
-                  if (isAction) {
+                  if (col.button) {
+                    const value = row[col.key as keyof T] ?? '';
+                    let label = '';
+
+                    switch (value) {
+                      case 'Pending':
+                        label = 'Start Appraisal';
+                        break;
+                      case 'Completed':
+                        label = 'View Summary';
+                        break;
+                      case 'InProgress':
+                        label = 'Continue Appraisal';
+                        break;
+                      default:
+                        label = 'Open';
+                    }
+                    const linkHref = `/appraisal/${row.EmployeeID}`;
+
                     cellContent = (
-                      <button
-                        type="button"
-                        onClick={() => onClick?.(row.EmployeeID, row.EmployeeName)}
+                      <a
+                        href={linkHref}
+                        className='action-button'
+                        style={{ textDecoration: 'none', display: 'inline-block' }}
                       >
-                        View Details
-                      </button>
+                        {label}
+                      </a>
                     );
                   } else if (col.render) {
                     cellContent = col.render(row);
                   } else {
-                    cellContent = row[col.key as keyof T] ?? '';
+                    const value = row[col.key as keyof T] ?? '';
+
+                    if (col.date && typeof value === 'string') {
+                      const date = new Date(value);
+                      cellContent = date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      });
+                    } else {
+                      cellContent = value;
+                    }
+
                   }
-                  return <td key={String(col.key)}>{cellContent}</td>;
+
+                  return (
+                    <td key={`cell-${row.unique || row.pzInsKey}-${String(col.key)}-${colIndex}`}>
+                      {cellContent}
+                    </td>
+                  );
                 })}
               </tr>
             ))
@@ -85,7 +119,6 @@ function Table<T extends Record<string, any>>({
         </tbody>
       </table>
 
-      {/* Loading overlay */}
       {loading && (
         <div
           style={{
@@ -107,4 +140,5 @@ function Table<T extends Record<string, any>>({
     </div>
   );
 }
+
 export default Table;

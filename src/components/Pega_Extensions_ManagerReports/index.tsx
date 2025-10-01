@@ -3,6 +3,7 @@ import { withConfiguration } from '@pega/cosmos-react-core';
 import type { PConnFieldProps } from './PConnProps';
 import styled from 'styled-components';
 import fetchDataPage from './apiUtils';
+import Table from './Table';
 import GlobalStyle from './styles';
 import {
   Chart as ChartJS,
@@ -15,7 +16,6 @@ import {
 } from 'chart.js';
 import type { ChartData } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
-import { CSVLink } from 'react-csv';
 
 ChartJS.register(
   CategoryScale,
@@ -37,63 +37,74 @@ const DashboardWrapper = styled.div`
 
 interface DashboardProps extends PConnFieldProps {
   loadingMessage: string;
-  inProgressAppraisalsDataPage: string;
-  departmentalWorkloadChartDataPage: string;
+  workBasketDataPage: string;
   upcomingAppraisalsDataPage: string;
-  recentAppraisalsDataPage: string;
-  kraRejectionDataPage: string;
-  overdueProposalsDataPage: string;
-  stageDistributionDataPage: string;
 }
 
 function ManagerMonitoringDashboard(props: DashboardProps) {
   const {
     getPConnect,
     loadingMessage,
-    inProgressAppraisalsDataPage,
-    departmentalWorkloadChartDataPage,
-    upcomingAppraisalsDataPage,
-    recentAppraisalsDataPage,
-    kraRejectionDataPage,
-    overdueProposalsDataPage,
-    stageDistributionDataPage
+    workBasketDataPage,
+    upcomingAppraisalsDataPage
   } = props;
 
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
 
-  // === State Hooks for API data ===
-  const [teamTimeline, setTeamTimeline] = useState<any[]>([]);
-  const [reviewQueue, setReviewQueue] = useState<any[]>([]);
-  const [statusDistribution, setStatusDistribution] = useState<ChartData<'doughnut'>>({
-    labels: [],
-    datasets: []
-  });
-  const [pendingActionDistribution, setPendingActionDistribution] = useState<ChartData<'bar'>>({
-    labels: [],
-    datasets: []
-  });
+  const [workBasket, setworkBasket] = useState<any[]>([]);
+  const [appraisals, setAppraisals] = useState<any[]>([]);
 
-  const [days, setDays] = useState(90);
-  const [loading, setLoading] = useState(true);
-
-  // Chart Options
   const donutOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '70%',
+    cutout: 0,
+    radius: '100%',
     plugins: {
       legend: {
         display: true,
         position: 'bottom' as const,
         align: 'start' as const,
         labels: {
-          padding: 5
+          padding: 5,
+          usePointStyle: false
         }
       },
-      title: { display: false }
+      title: {
+        display: false
+      }
     }
   };
+
+  const [donutData, setDonutData] = useState<ChartData<'doughnut'>>({
+    labels: [],
+    datasets: []
+  });
+
+  const [barData, setBarData] = useState<ChartData<'bar'>>({
+    labels: [],
+    datasets: []
+  });
+
+  // const [loading, setLoading] = useState(true);
+
+  // Chart Options
+  // const donutOptions = {
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   cutout: '70%',
+  //   plugins: {
+  //     legend: {
+  //       display: true,
+  //       position: 'bottom' as const,
+  //       align: 'start' as const,
+  //       labels: {
+  //         padding: 5
+  //       }
+  //     },
+  //     title: { display: false }
+  //   }
+  // };
 
   const barOptions = {
     responsive: true,
@@ -103,157 +114,175 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
   // === API Calls ===
   useEffect(() => {
     async function loadData() {
-      setLoading(true);
+      // setLoading(true);
       try {
-        // Upcoming Appraisals → Team Timeline
-        const upcomingRes = await fetchDataPage(upcomingAppraisalsDataPage, context, { NoOfDays: days });
-        setTeamTimeline(upcomingRes.data || []);
+        const work = await fetchDataPage(workBasketDataPage, context, {});
 
-        // Review Queue → Pending Actions
-        const recentRes = await fetchDataPage(recentAppraisalsDataPage, context, {});
-        setReviewQueue(recentRes.data || []);
+        const mappedData = (work.data || []).map((item: any, index: number) => ({
+          ...item,
+          unique: `${item.pzInsKey || 'row'}-${index}`,
+          EmployeeName: item.pyInstructions,
+          EmployeeID: item.pyLabel,
+        }));
 
-        // Stage Distribution → Doughnut Chart
-        const stageRes = await fetchDataPage(stageDistributionDataPage, context, {});
-        setStatusDistribution({
-          labels: stageRes.data?.map((d: any) => d.stageName) || [],
+        setworkBasket(mappedData);
+        const apr = await fetchDataPage(upcomingAppraisalsDataPage, context, {});
+        const appraisalsWithUnique = (apr.data || []).map((item: any, index: number) => ({
+          ...item,
+          unique: `${item.pzInsKey || 'row'}-${index}`
+        }));
+        setAppraisals(appraisalsWithUnique);
+
+        const statusCountsMap = appraisalsWithUnique.reduce((acc, curr) => {
+          const status = curr.pyNote || 'Unknown';
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        const statusCountsArray = Object.entries(statusCountsMap).map(([status, count]) => ({
+          status,
+          count
+        }));
+
+
+        const barChartData: ChartData<'bar'> = {
+          labels: statusCountsArray.map(item => item?.status) ?? [],
           datasets: [
             {
-              label: 'Appraisals',
-              data: stageRes.data?.map((d: any) => d.count) || [],
-              backgroundColor: ['#2563eb', '#60a5fa', '#93c5fd', '#1e40af']
+              label: 'Summary Count',
+              data: statusCountsArray.map(item => Number(item.count) ?? 0),
+              backgroundColor: [
+                'rgba(37, 99, 235, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(201, 203, 207, 0.6)',
+                'rgba(100, 149, 237, 0.6)',
+              ],
+              borderColor: [
+                'rgba(37, 99, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(201, 203, 207, 1)',
+                'rgba(100, 149, 237, 1)',
+              ],
+              borderWidth: 1,
             }
           ]
-        });
+        };
 
-        // Departmental Workload → Bar Chart
-        const deptRes = await fetchDataPage(departmentalWorkloadChartDataPage, context, {});
-        setPendingActionDistribution({
-          labels: deptRes.data?.map((d: any) => d.department) || [],
+        setBarData(barChartData);
+
+        const chartData1 = mappedData.reduce((acc, curr) => {
+          const status = curr.pxProcessName || 'Unknown';
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        const chartData2 = Object.entries(chartData1).map(([status, count]) => ({
+          status,
+          count
+        }));
+
+        const chartData: ChartData<'doughnut'> = {
+          labels: chartData2?.map((item: any) => item?.status) ?? [],
           datasets: [
             {
-              label: 'Pending Actions',
-              data: deptRes.data?.map((d: any) => d.pendingCount) || [],
-              backgroundColor: '#2563eb'
+              label: '# of Proposals',
+              data: chartData2?.map((item: any) => item.count ?? 0) ?? [],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
             }
           ]
-        });
+        };
+
+        setDonutData(chartData);
+
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
     loadData();
-  }, [days, context, upcomingAppraisalsDataPage, recentAppraisalsDataPage, stageDistributionDataPage, departmentalWorkloadChartDataPage]);
+  }, [context, upcomingAppraisalsDataPage, workBasketDataPage]);
 
   // Example CSV export for overdue proposals (if required)
-  const overdueCsvData = [
-    ['Employee', 'Proposal Date', 'Status'],
-    ['Ahmed Tomi', '2025-09-01', 'Pending'],
-    ['Raed Labes', '2025-09-05', 'Overdue']
-  ];
+  // const overdueCsvData = [
+  //   ['Employee', 'Proposal Date', 'Status'],
+  //   ['Ahmed Tomi', '2025-09-01', 'Pending'],
+  //   ['Raed Labes', '2025-09-05', 'Overdue']
+  // ];
 
   return (
     <DashboardWrapper>
       <GlobalStyle />
 
       <div className="section">
-        <h1>My Team's Performance Timeline</h1>
-        <p><strong>Report Name:</strong> RPT_MGR_Team_Timeline</p>
-        <p><strong>Business Purpose:</strong> Forward-looking view of appraisal schedules and statuses.</p>
-
         <div className="widget">
-          <strong>Action Items / My Queue:</strong> {reviewQueue.length} appraisals awaiting your action.
+          <strong>Action Items / My Queue:</strong> {workBasketDataPage.length} appraisals awaiting your action.
           <a href="#myReviewQueue" className="link">Go to Work Queue</a>
         </div>
 
         <div className="chart-container" style={{ display: 'flex', gap: '40px', marginTop: '20px' }}>
           <div style={{ width: '45%', height: '300px' }}>
             <h2>Appraisal Status Distribution</h2>
-            <Doughnut data={statusDistribution} options={donutOptions} />
+            <Bar data={barData} options={barOptions}  />
           </div>
           <div style={{ width: '45%', height: '300px' }}>
             <h2>Pending Actions by Type</h2>
-            <Bar data={pendingActionDistribution} options={barOptions} />
+            <Doughnut data={donutData} options={donutOptions} />
           </div>
         </div>
 
         <h2>Team Appraisal Status</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Next Appraisal Due Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teamTimeline.length > 0 ? (
-              teamTimeline.map((row: any, idx: number) => (
-                <tr key={idx}>
-                  <td>{row.employeeName}</td>
-                  <td>{row.nextAppraisalDue}</td>
-                  <td>{row.status}</td>
-                  <td>
-                    <a href="#" className="action-button">
-                      {row.status === 'Not Started' ? 'Start Appraisal' : 'View Form'}
-                    </a>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={4}>{loading ? loadingMessage : 'No Data Available'}</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <Table
+          columns={[
+            { key: 'EmployeeName', label: 'Employee Name' },
+            { key: 'NextApparaisalDate', label: 'Next Appraisal Due Date', date : true },
+            { key: 'pyNote', label: 'Status' },
+            { key: 'pyNote', label: 'Appraisal Form', button : true }
+          ]}
+          data={appraisals}
+          loading={false}
+          loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+        />
       </div>
 
       <div className="section" id="myReviewQueue">
         <h1>My Review Queue</h1>
-        <p><strong>Report Name:</strong> VIEW_MGR_Action_Queue</p>
-        <p><strong>Business Purpose:</strong> Task-based view showing all pending actions requiring manager review.</p>
-
         <h2>Pending Appraisals</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Submission Date</th>
-              <th>Days Pending</th>
-              <th>Action Required</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reviewQueue.length > 0 ? (
-              reviewQueue.map((item: any, idx: number) => (
-                <tr key={idx}>
-                  <td>{item.employeeName}</td>
-                  <td>{item.submissionDate}</td>
-                  <td>{item.daysPending}</td>
-                  <td>{item.actionRequired}</td>
-                  <td>
-                    <button className="action-button">
-                      {item.actionButton || 'Start Review'}
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={5}>{loading ? loadingMessage : 'No Pending Reviews'}</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      <div style={{ marginTop: '20px' }}>
-        <CSVLink data={overdueCsvData} filename="overdue-proposals.csv">
-          Download Overdue Proposals CSV
-        </CSVLink>
+        <Table
+          columns={[
+            { key: 'EmployeeName', label: 'Employee' },
+            { key: 'pxCreateDateTime', label: 'Submission Date', date : true },
+            { key: 'pxProcessName', label: 'Action Required' },
+            { key: 'pxProcessName', label: 'Appraisal Form', button : true }
+          ]}
+          data={workBasket}
+          loading={false}
+          loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+        />
       </div>
     </DashboardWrapper>
   );

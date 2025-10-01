@@ -78,7 +78,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
     datasets: []
   });
 
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
