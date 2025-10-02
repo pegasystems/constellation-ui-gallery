@@ -1,107 +1,193 @@
 import { useEffect, useState } from 'react';
-import { withConfiguration, Table } from '@pega/cosmos-react-core';
-import { AppAnnouncement as PegaAppAnnouncement } from '@pega/cosmos-react-work';
+import { withConfiguration } from '@pega/cosmos-react-core';
 import type { PConnFieldProps } from './PConnProps';
-import './create-nonce';
+import styled from 'styled-components';
+import fetchDataPage from './apiUtils';
+import Table from './Table';
+import GlobalStyle from './styles';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Legend,
+} from 'chart.js';
+import type { ChartData } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-import StyledPegaExtensionsEmployeeReportsWrapper from './styles';
+ChartJS.register(
+  CategoryScale,
+  ArcElement,
+  LinearScale,
+  BarElement,
+  Title,
+  Legend
+);
 
-// interface for props
-interface PegaExtensionsEmployeeReportsProps extends PConnFieldProps {
-  // If any, enter additional props that only exist on TextInput here
-    datasource: any;
-    header: string;
-    description: string;
-    whatsnewlink: string;
-    image: string;
+const DashboardWrapper = styled.div`
+  background: #ffffff;
+  min-height: 100%;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: 14px;
+  color: #111827;
+`;
+
+interface DashboardProps extends PConnFieldProps {
+  loadingMessage: string;
+  currentAppraisalsDataPage: string;
+  employeeAllAppraisalsDataPage: string;
 }
 
-// props passed in combination of props from property panel (config.json) and run time props from Constellation
-// any default values in config.pros should be set in defaultProps at bottom of this file
-function PegaExtensionsEmployeeReports(props: PegaExtensionsEmployeeReportsProps) {
+function ManagerMonitoringDashboard(props: DashboardProps) {
+  const {
+    getPConnect,
+    loadingMessage,
+    currentAppraisalsDataPage,
+    employeeAllAppraisalsDataPage
+  } = props;
 
-  const { header, description, datasource = [], whatsnewlink, image, getPConnect } = props;
-  const [worklist, setWorklist] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const PConnect = getPConnect();
-  const dataViewName = 'D_pyMyWorkList';
   const context = PConnect.getContextName();
 
-  let details = [];
-  if (datasource && datasource.source) {
-    details = datasource.source.map((item: { name: any; }) => {
-      return item.name;
-    });
-  }
+  const [currentAppraisal, setCurrentAppraisal] = useState<any>({});
+  const [allAppraisals, setAllAppraisals] = useState<any[]>([]);
 
-  // setting up columns for the work list table
-  const columns = [
-    { renderer: 'caseType', label: PConnect.getLocalizedValue('Case type', '', '') },
-    { renderer: 'insKey', label: PConnect.getLocalizedValue('Key', '', '') },
-    { renderer: 'status', label: PConnect.getLocalizedValue('Status', '', '') },
-    { renderer: 'stage', label: PConnect.getLocalizedValue('Stage', '', '') }
-  ];
+  const [barData, setBarData] = useState<ChartData<'bar'>>({
+    labels: [],
+    datasets: []
+  });
 
-  // going to get data for worklist to put into a table
-  // data comes from calling a PCore function to get
-  // get data from a data page and a PConnect function
-  // to get getContextName
+  const barOptions = {
+    responsive: true,
+    plugins: { legend: { display: false } }
+  };
+
   useEffect(() => {
+    async function loadData() {
+      try {
+        const ca = await fetchDataPage(currentAppraisalsDataPage, context, {});
+        setCurrentAppraisal(ca?.data?.[0] || {});
 
-    PCore.getDataApiUtils()
-      .getData(dataViewName, {}, context)
-      .then((response: any) => {
-        setIsLoading(false);
-        if (response.data.data !== null) {
-          // table requires an index or will get setExtraStackFrame error
-          setWorklist(
-            response.data.data.map((entry: any, index: number) => {
-              // mapping the data into the column names
-              // MUST have an id/index or will get a setExtraStackFrame error
-              // put a key in the table
-              return {
-                caseType: entry.pxProcessName,
-                insKey: entry.pxRefObjectInsName,
-                status: entry.pyAssignmentStatus,
-                stage: entry.pxTaskLabel,
-                id: index
-              };
-            })
-          );
-        }
-        else {
-          setWorklist([]);
-          setIsLoading(false);
-        }
+        const allApr = await fetchDataPage(employeeAllAppraisalsDataPage, context, {});
+        const allAprModified = (allApr.data || []).map((item: any, index: number) => ({
+          ...item,
+          unique: `${item.pzInsKey || 'row'}-${index}`
+        }));
+        setAllAppraisals(allAprModified);
 
-      })
-      .catch((error: any) => {
-        setWorklist([]);
-        setIsLoading(false);
-        console.log(error);
-      });
-  }, [context]);
+        // Example dummy bar chart data (replace with real processing)
+        const statusCountsArray = [
+          { status: 'Completed', count: 5 },
+          { status: 'Pending', count: 3 }
+        ];
+
+        setBarData({
+          labels: statusCountsArray.map(item => item.status),
+          datasets: [
+            {
+              label: 'Summary Count',
+              data: statusCountsArray.map(item => Number(item.count) ?? 0),
+              backgroundColor: ['rgba(37, 99, 235, 0.6)', 'rgba(255, 159, 64, 0.6)'],
+              borderColor: ['rgba(37, 99, 235, 1)', 'rgba(255, 159, 64, 1)'],
+              borderWidth: 1,
+            }
+          ]
+        });
+      } finally {
+        // cleanup or setLoading(false) if needed
+      }
+    }
+    loadData();
+  }, [context, currentAppraisalsDataPage, employeeAllAppraisalsDataPage]);
 
   return (
-    <StyledPegaExtensionsEmployeeReportsWrapper>
-    <PegaAppAnnouncement
-      heading={header}
-      description={description}
-      details={details}
-      whatsNewLink={whatsnewlink}
-      image={image.replace(/ /g, '+')}
-    />
-    <br />
-    <Table
-      title={PConnect.getLocalizedValue('Work list', '', '')}
-      columns={columns}
-      data={worklist}
-      loading={isLoading}
-      loadingMessage={PConnect.getLocalizedValue('Loading Work list', '', '')}
-    />
-    </StyledPegaExtensionsEmployeeReportsWrapper>
-  );
+    <DashboardWrapper>
+      <GlobalStyle />
 
+      <div className="dashboard">
+        <h1>Employee Performance Dashboard</h1>
+
+        <div className="section">
+          <h2>Current Appraisal: { currentAppraisal?.pyDateValue?.[0] }</h2>
+
+          <div className="info-row">
+            <div className="info-card">
+              <p>
+                <label>Next Appraisal Due Date:</label><br />
+                { currentAppraisal?.pyDateValue?.[0] }
+              </p>
+            </div>
+            <div className="info-card">
+              <p>
+                <label>Status:</label><br />
+                { currentAppraisal?.pyStatusWork } due by { currentAppraisal?.AppraisalTargetDate }
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="section">
+          <h2>Final Appraisal Report</h2>
+          <div className="header">
+            <p><strong>Review Period:</strong> { currentAppraisal?.pyDateValue?.[0] } </p>
+          </div>
+
+          <h3>Final Score & Rating</h3>
+          <p><strong>Final Score:</strong> { currentAppraisal?.FinalRatingOfEmployee } / 5</p>
+          <p><strong>Rating Band:</strong> Exceeds Expectations</p>
+
+          <h3>Performance KRA(s)</h3>
+          <Table
+            columns={[
+              { key: 'PerformanceName', label: 'Performance Name' },
+              { key: 'FinalReviewer', label: 'Reviewer' },
+              { key: 'HRFinalRatingValue', label: 'Rating' }
+            ]}
+            data={ currentAppraisal?.PerformanceKRAs || [] }
+            loading={false}
+            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+          />
+
+          <h3>Competency KRAs</h3>
+          <Table
+            columns={[
+              { key: 'CompetencyName', label: 'Competency Name' },
+              { key: 'Reviewer', label: 'Reviewer' },
+              { key: 'HRCompFinalRatingValue', label: 'Rating' }
+            ]}
+            data={ currentAppraisal?.KRACompRO || [] }
+            loading={false}
+            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+          />
+        </div>
+
+        <div className="section">
+          <h2>Past Appraisals (Last 5 Years)</h2>
+          { allAppraisals.map((apr) => (
+            <details key={apr.unique}>
+              <summary>Appraisal Year: { apr.AppraisalTargetDate } </summary>
+              <p><strong>Score:</strong> { apr.FinalRatingOfEmployee }</p>
+              <p><strong>Rating:</strong> Exceeds Expectations</p>
+            </details>
+          ))}
+        </div>
+
+        <div className="section">
+          <h2>Performance Trend (Last 5 Years)</h2>
+          <Bar data={barData} options={barOptions} />
+        </div>
+
+        <button
+          className="print-btn"
+          onClick={() => window.print()}
+        >
+          Print to PDF
+        </button>
+      </div>
+    </DashboardWrapper>
+  );
 }
 
-export default withConfiguration(PegaExtensionsEmployeeReports);
+export default withConfiguration(ManagerMonitoringDashboard);

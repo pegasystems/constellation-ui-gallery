@@ -78,12 +78,10 @@ function Table<T extends Record<string, any>>({
                       default:
                         label = 'Open';
                     }
-                    const linkHref = 'https://pega24.crochetech.com/prweb/app/performance-appraisal--review';
+                    const linkHref = `/appraisal/${row.EmployeeID}`;
 
                     cellContent = (
                       <a
-                        target='_blank'
-                        rel='noreferrer'
                         href={linkHref}
                         className='action-button'
                         style={{ textDecoration: 'none', display: 'inline-block' }}

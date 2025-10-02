@@ -181,7 +181,7 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
         setBarData(barChartData);
 
         const chartData1 = mappedData.reduce((acc, curr) => {
-          const status = curr.pxProcessName || 'Unknown';
+          const status = curr.pyAssignmentStatus || '';
           acc[status] = (acc[status] || 0) + 1;
           return acc;
         }, {} as Record<string, number>);
@@ -276,8 +276,8 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
           columns={[
             { key: 'EmployeeName', label: 'Employee' },
             { key: 'pxCreateDateTime', label: 'Submission Date', date : true },
-            { key: 'pxProcessName', label: 'Action Required' },
-            { key: 'pxProcessName', label: 'Appraisal Form', button : true }
+            { key: 'pyAssignmentStatus', label: 'Action Required' },
+            { key: 'pyAssignmentStatus', label: 'Appraisal Form', button : true }
           ]}
           data={workBasket}
           loading={false}
