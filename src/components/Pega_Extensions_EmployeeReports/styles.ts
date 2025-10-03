@@ -3,8 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
 
 .dashboard {
-  max-width: 1100px;
-  margin: 40px auto;
   padding: 20px;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -12,7 +10,6 @@ const GlobalStyle = createGlobalStyle`
 }
 
 h1 {
-  text-align: center;
   color: #2a4d69;
 }
 
@@ -27,6 +24,7 @@ h1 {
 .section h2 {
   color: #1a3c5d;
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .info-row {
@@ -42,6 +40,10 @@ h1 {
   border-left: 5px solid #2a4d69;
   padding: 15px;
   border-radius: 5px;
+}
+
+p span {
+  font-weight: bold;
 }
 
 label {

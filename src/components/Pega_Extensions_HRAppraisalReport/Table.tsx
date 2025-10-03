@@ -6,6 +6,7 @@ type Column<T> = {
   render?: (row: T) => React.ReactNode;
   sortable?: boolean;
   onSort?: () => void;
+  date?: boolean;
 };
 
 
@@ -75,7 +76,21 @@ function Table<T extends Record<string, any>>({
                   } else if (col.render) {
                     cellContent = col.render(row);
                   } else {
-                    cellContent = row[col.key as keyof T] ?? '';
+                    const value = row[col.key as keyof T] ?? '';
+                    if (col.date && typeof value === 'string' && value) {
+                      const date = new Date(value);
+                      if (!Number.isNaN(date)) {
+                        cellContent = date.toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        });
+                      } else {
+                        cellContent = value; // fallback if invalid date
+                      }
+                    } else {
+                      cellContent = value;
+                    }
                   }
                   return <td key={String(col.key)}>{cellContent}</td>;
                 })}

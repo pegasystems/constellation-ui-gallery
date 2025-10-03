@@ -63,6 +63,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
   const [upcoming, setUpcoming] = useState<any[]>([]);
+  const [overdueCsvData, setOverdueCsvData] = useState<any[][]>([]);
   const [days, setDays] = useState(90);
   const [isOpen, setIsOpen] = useState(false);
   const [recent, setRecent] = useState<any[]>([]);
@@ -89,7 +90,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
         position: 'bottom' as const,
         align: 'start' as const,
         labels: {
-          padding: 5,
+          padding: 7,
           usePointStyle: false
         }
       },
@@ -100,7 +101,8 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   };
 
   const barOptions = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false
   };
 
   // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -167,6 +169,17 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
       );
       setOverdueProposals(o.data || []);
       setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
+
+      const csvData = [
+        ['EmployeeDetails', 'pyStatusWork'], // header row
+        ...(o.data || []).map((item: any) => [
+          item.EmployeeDetails?.EmployeeName ?? '', // or full EmployeeDetails object stringified if you need more
+          item.pyStatusWork ?? ''
+        ])
+      ];
+
+      setOverdueCsvData(csvData);
+
 
       const chartData: ChartData<'doughnut'> = {
         labels: s?.data?.map((item: any) => item?.pyStatusWork) ?? [],
@@ -248,12 +261,12 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
     // Placeholder for profile navigation logic
   };
 
-  const overdueCsvData = [
-    ['firstname', 'lastname', 'email'],
-    ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
-    ['Raed', 'Labes', 'rl@smthing.co.com'],
-    ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
-  ];
+  // const overdueCsvData = [
+  //   ['firstname', 'lastname', 'email'],
+  //   ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+  //   ['Raed', 'Labes', 'rl@smthing.co.com'],
+  //   ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
+  // ];
 
 
   return (
@@ -286,14 +299,14 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
           <div className="charts">
             <section className="donut-wrap card">
               <h3>Stage Distribution</h3>
-              <div style={{ width: '100%' }}>
+              <div style={{ width: '100%', height: '330px' }}>
                 <Doughnut data={donutData} options={options} height={250} />
               </div>
             </section>
             <section className="bar-wrap card">
               <h3>Departmental Workload</h3>
-              <div style={{ width: '100%' }}>
-                <Bar options={barOptions} data={barData} height={200} />
+              <div style={{ width: '100%', height: '330px' }}>
+                <Bar options={barOptions} data={barData} />
               </div>
             </section>
           </div>
@@ -355,7 +368,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
               columns={[
                 { key: 'EmployeeName', label: 'Employee' },
                 { key: 'PLName', label: 'Practice Lead' },
-                { key: 'RejectionDateTime', label: 'Timestamp' },
+                { key: 'RejectionDateTime', label: 'Timestamp', date : true },
                 { key: 'PLInitialComments', label: 'Comments' }
               ]}
               data={kraRejections}
@@ -396,10 +409,9 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                 <Table
                   columns={[
                     { key: 'EmployeeName', label: 'Employee' },
-                    { key: 'RejectionDateTime', label: 'Timestamp' },
-                    { key: 'PLInitialComments', label: 'Comments' }
+                    { key: 'pyStatusWork', label: 'Status' }
                   ]}
-                  data={kraRejections}
+                  data={overdueProposals}
                   loading={false}
                   loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
                 />

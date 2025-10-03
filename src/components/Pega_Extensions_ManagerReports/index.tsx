@@ -241,7 +241,7 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
       <div className="section">
         <div className="widget">
           <strong>Action Items / My Queue:</strong> {workBasketDataPage.length} appraisals awaiting your action.
-          <a href="#myReviewQueue" className="link">Go to Work Queue</a>
+          <a href="https://pega24.crochetech.com/prweb/app/performance-appraisal--review" className="link">Go to Work Queue</a>
         </div>
 
         <div className="chart-container" style={{ display: 'flex', gap: '40px', marginTop: '20px' }}>

@@ -40,7 +40,7 @@ interface DashboardProps extends PConnFieldProps {
   employeeAllAppraisalsDataPage: string;
 }
 
-function ManagerMonitoringDashboard(props: DashboardProps) {
+function EmployeeMonitoringDashboard(props: DashboardProps) {
   const {
     getPConnect,
     loadingMessage,
@@ -107,21 +107,19 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
       <GlobalStyle />
 
       <div className="dashboard">
-        <h1>Employee Performance Dashboard</h1>
-
         <div className="section">
           <h2>Current Appraisal: { currentAppraisal?.pyDateValue?.[0] }</h2>
 
           <div className="info-row">
             <div className="info-card">
               <p>
-                <label>Next Appraisal Due Date:</label><br />
+                <span>Next Appraisal Due Date:</span><br />
                 { currentAppraisal?.pyDateValue?.[0] }
               </p>
             </div>
             <div className="info-card">
               <p>
-                <label>Status:</label><br />
+                <span>Status:</span><br />
                 { currentAppraisal?.pyStatusWork } due by { currentAppraisal?.AppraisalTargetDate }
               </p>
             </div>
@@ -139,28 +137,32 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
           <p><strong>Rating Band:</strong> Exceeds Expectations</p>
 
           <h3>Performance KRA(s)</h3>
-          <Table
-            columns={[
-              { key: 'PerformanceName', label: 'Performance Name' },
-              { key: 'FinalReviewer', label: 'Reviewer' },
-              { key: 'HRFinalRatingValue', label: 'Rating' }
-            ]}
-            data={ currentAppraisal?.PerformanceKRAs || [] }
-            loading={false}
-            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-          />
+          <div style={{ width: '50%' }}>
+            <Table
+              columns={[
+                { key: 'PerformanceName', label: 'Performance Name' },
+                { key: 'FinalReviewer', label: 'Reviewer' },
+                { key: 'HRFinalRatingValue', label: 'Rating' }
+              ]}
+              data={ currentAppraisal?.PerformanceKRAs || [] }
+              loading={false}
+              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+            />
+          </div>
 
           <h3>Competency KRAs</h3>
-          <Table
-            columns={[
-              { key: 'CompetencyName', label: 'Competency Name' },
-              { key: 'Reviewer', label: 'Reviewer' },
-              { key: 'HRCompFinalRatingValue', label: 'Rating' }
-            ]}
-            data={ currentAppraisal?.KRACompRO || [] }
-            loading={false}
-            loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-          />
+          <div style={{ width: '50%' }}>
+            <Table
+              columns={[
+                { key: 'CompetencyName', label: 'Competency Name' },
+                { key: 'Reviewer', label: 'Reviewer' },
+                { key: 'HRCompFinalRatingValue', label: 'Rating' }
+              ]}
+              data={ currentAppraisal?.KRACompRO || [] }
+              loading={false}
+              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+            />
+          </div>
         </div>
 
         <div className="section">
@@ -180,6 +182,7 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
         </div>
 
         <button
+          type="button"
           className="print-btn"
           onClick={() => window.print()}
         >
@@ -190,4 +193,4 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
   );
 }
 
-export default withConfiguration(ManagerMonitoringDashboard);
+export default withConfiguration(EmployeeMonitoringDashboard);
