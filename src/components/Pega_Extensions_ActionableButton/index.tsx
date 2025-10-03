@@ -14,14 +14,21 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
     const availableActions =
       getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
     const targetAction = availableActions.find((action: { ID: string }) => action.ID === localAction);
-    const actionName = targetAction?.name || label;
+    const localizedLabel =
+      getPConnect().getContainerName() === 'primary'
+        ? getPConnect().getLocalizedValue(
+            label,
+            undefined,
+            `${getPConnect().getCaseInfo().getClassName().toUpperCase()}!VIEW!PYCASESUMMARY`,
+          )
+        : label;
+    const actionName = targetAction?.name || localizedLabel;
     const LaunchLocalAction = async () => {
       const actionsAPI = getPConnect().getActionsApi();
       if (getPConnect().getContainerName() === 'workarea') {
         await actionsAPI.saveAssignment(getPConnect().getContextName());
       }
-      const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
-      openLocalAction(localAction, {
+      actionsAPI.openLocalAction(localAction, {
         caseID: value,
         containerName: 'modal',
         type: 'express',
@@ -30,7 +37,7 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
     };
     return (
       <Flex container={{ direction: 'row' }}>
-        <Button onClick={LaunchLocalAction}>{label}</Button>
+        <Button onClick={LaunchLocalAction}>{localizedLabel}</Button>
       </Flex>
     );
   }
