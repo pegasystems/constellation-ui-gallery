@@ -53,6 +53,8 @@ function EmployeeMonitoringDashboard(props: DashboardProps) {
 
   const [currentAppraisal, setCurrentAppraisal] = useState<any>({});
   const [allAppraisals, setAllAppraisals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [barData, setBarData] = useState<ChartData<'bar'>>({
     labels: [],
@@ -67,6 +69,8 @@ function EmployeeMonitoringDashboard(props: DashboardProps) {
   useEffect(() => {
     async function loadData() {
       try {
+        setLoading(true);
+        setError(null);
         const ca = await fetchDataPage(currentAppraisalsDataPage, context, {});
         setCurrentAppraisal(ca?.data?.[0] || {});
 
@@ -77,25 +81,30 @@ function EmployeeMonitoringDashboard(props: DashboardProps) {
         }));
         setAllAppraisals(allAprModified);
 
-        // Example dummy bar chart data (replace with real processing)
-        const statusCountsArray = [
-          { status: 'Completed', count: 5 },
-          { status: 'Pending', count: 3 }
-        ];
+        const transformedData = allAprModified.map(item => ({
+          year: item.AppraisalTargetDate ? new Date(item.AppraisalTargetDate).getFullYear() : 'N/A',
+          score: item.FinalRatingOfEmployee ?? 0
+        }));
+
+        const labels = transformedData.map(item => item.year);
+        const scores = transformedData.map(item => item.score);
 
         setBarData({
-          labels: statusCountsArray.map(item => item.status),
+          labels,
           datasets: [
             {
-              label: 'Summary Count',
-              data: statusCountsArray.map(item => Number(item.count) ?? 0),
-              backgroundColor: ['rgba(37, 99, 235, 0.6)', 'rgba(255, 159, 64, 0.6)'],
-              borderColor: ['rgba(37, 99, 235, 1)', 'rgba(255, 159, 64, 1)'],
+              label: 'Employee Score',
+              data: scores,
+              backgroundColor: 'rgba(37, 99, 235, 0.6)',
+              borderColor: 'rgba(37, 99, 235, 1)',
               borderWidth: 1,
             }
           ]
         });
+      } catch (e) {
+        setError('Failed to load data');
       } finally {
+        setLoading(false);
         // cleanup or setLoading(false) if needed
       }
     }
@@ -107,87 +116,105 @@ function EmployeeMonitoringDashboard(props: DashboardProps) {
       <GlobalStyle />
 
       <div className="dashboard">
-        <div className="section">
-          <h2>Current Appraisal: { currentAppraisal?.pyDateValue?.[0] }</h2>
 
-          <div className="info-row">
-            <div className="info-card">
-              <p>
-                <span>Next Appraisal Due Date:</span><br />
-                { currentAppraisal?.pyDateValue?.[0] }
-              </p>
+        {/* Loading & Error UI */}
+        {loading && <p style={{ textAlign: 'center', color: '#2563eb' }}>Loading data...</p>}
+        {error && <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>}
+
+        {/* Only render dashboard content if not loading and no error */}
+        {!loading && !error && (
+          <>
+            <div className="section">
+              <h2>
+                Current Appraisal: { currentAppraisal?.pyDateValue?.[0]
+                  ? new Date(currentAppraisal.pyDateValue[0]).getFullYear()
+                  : 'N/A' }
+              </h2>
+
+              <div className="info-row">
+                <div className="info-card">
+                  <p>
+                    <span>Next Appraisal:</span><br />
+                    { currentAppraisal?.pyDateValue?.[0]
+                        ? new Date(currentAppraisal.pyDateValue[0]).getFullYear() + 1
+                        : 'N/A' }
+                  </p>
+                </div>
+                <div className="info-card">
+                  <p>
+                    <span>Status:</span><br />
+                    { currentAppraisal?.pyStatusWork || 'N/A' } due by { currentAppraisal?.AppraisalTargetDate || 'N/A' }
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="info-card">
-              <p>
-                <span>Status:</span><br />
-                { currentAppraisal?.pyStatusWork } due by { currentAppraisal?.AppraisalTargetDate }
-              </p>
+
+            <div className="section">
+              <h2>Final Appraisal Report</h2>
+              <div className="header">
+                <p><strong>Review Period:</strong> { currentAppraisal?.pyDateValue?.[0] || 'N/A' } </p>
+              </div>
+
+              <h3>Final Score & Rating</h3>
+              <p><strong>Final Score:</strong> { currentAppraisal?.FinalRatingOfEmployee ?? 'N/A' } / 5</p>
+
+              <h3 style={{ marginTop: '25px' }}>Performance KRA(s)</h3>
+              <div style={{ width: '50%' }}>
+                <Table
+                  columns={[
+                    { key: 'PerformanceName', label: 'Performance Name' },
+                    { key: 'FinalReviewer', label: 'Reviewer' },
+                    { key: 'HRFinalRatingValue', label: 'Rating' }
+                  ]}
+                  data={ currentAppraisal?.PerformanceKRAs || [] }
+                  loading={false}
+                  loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+                />
+              </div>
+
+              <h3 style={{ marginTop: '25px' }}>Competency KRAs</h3>
+              <div style={{ width: '50%' }}>
+                <Table
+                  columns={[
+                    { key: 'CompetencyName', label: 'Competency Name' },
+                    { key: 'Reviewer', label: 'Reviewer' },
+                    { key: 'HRCompFinalRatingValue', label: 'Rating' }
+                  ]}
+                  data={ currentAppraisal?.KRACompRO || [] }
+                  loading={false}
+                  loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+                />
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="section">
-          <h2>Final Appraisal Report</h2>
-          <div className="header">
-            <p><strong>Review Period:</strong> { currentAppraisal?.pyDateValue?.[0] } </p>
-          </div>
+            <div className="section">
+              <h2>Past Appraisals (Last { allAppraisals.length || 0 } Years)</h2>
+              { allAppraisals.map((apr) => (
+                <details key={apr.unique}>
+                  <summary>
+                    Appraisal Year: {apr.AppraisalTargetDate
+                      ? new Date(apr.AppraisalTargetDate).getFullYear()
+                      : 'N/A'}
+                  </summary>
+                  <p><strong>Score:</strong> { apr.FinalRatingOfEmployee ?? 'N/A' }</p>
+                </details>
+              )) }
+            </div>
 
-          <h3>Final Score & Rating</h3>
-          <p><strong>Final Score:</strong> { currentAppraisal?.FinalRatingOfEmployee } / 5</p>
-          <p><strong>Rating Band:</strong> Exceeds Expectations</p>
+            <div className="section">
+              <h2>Performance Trend (Last { allAppraisals.length || 0 } Years)</h2>
+              <Bar data={barData} options={barOptions} />
+            </div>
 
-          <h3>Performance KRA(s)</h3>
-          <div style={{ width: '50%' }}>
-            <Table
-              columns={[
-                { key: 'PerformanceName', label: 'Performance Name' },
-                { key: 'FinalReviewer', label: 'Reviewer' },
-                { key: 'HRFinalRatingValue', label: 'Rating' }
-              ]}
-              data={ currentAppraisal?.PerformanceKRAs || [] }
-              loading={false}
-              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-            />
-          </div>
-
-          <h3>Competency KRAs</h3>
-          <div style={{ width: '50%' }}>
-            <Table
-              columns={[
-                { key: 'CompetencyName', label: 'Competency Name' },
-                { key: 'Reviewer', label: 'Reviewer' },
-                { key: 'HRCompFinalRatingValue', label: 'Rating' }
-              ]}
-              data={ currentAppraisal?.KRACompRO || [] }
-              loading={false}
-              loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-            />
-          </div>
-        </div>
-
-        <div className="section">
-          <h2>Past Appraisals (Last 5 Years)</h2>
-          { allAppraisals.map((apr) => (
-            <details key={apr.unique}>
-              <summary>Appraisal Year: { apr.AppraisalTargetDate } </summary>
-              <p><strong>Score:</strong> { apr.FinalRatingOfEmployee }</p>
-              <p><strong>Rating:</strong> Exceeds Expectations</p>
-            </details>
-          ))}
-        </div>
-
-        <div className="section">
-          <h2>Performance Trend (Last 5 Years)</h2>
-          <Bar data={barData} options={barOptions} />
-        </div>
-
-        <button
-          type="button"
-          className="print-btn"
-          onClick={() => window.print()}
-        >
-          Print to PDF
-        </button>
+            <button
+              type="button"
+              className="print-btn"
+              onClick={() => window.print()}
+            >
+              Print to PDF
+            </button>
+          </>
+        )}
       </div>
     </DashboardWrapper>
   );

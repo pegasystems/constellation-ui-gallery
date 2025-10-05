@@ -47,7 +47,7 @@ const mockData = {
           "pxObjClass": "BIG-PAR-Work-AnnualPerformanceCycle",
           "pyStatusWork": "Pending-KRA Assignment",
           "pyID": "PAR-31108",
-          "FinalRatingOfEmployee": null,
+          "FinalRatingOfEmployee": 2,
           "pyDateValue": [
               "2026-01-01"
           ],

@@ -21,6 +21,11 @@ h1 {
   background: #fafafa;
 }
 
+.section h2, .section h3, .section p {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 .section h2 {
   color: #1a3c5d;
   margin-top: 0;

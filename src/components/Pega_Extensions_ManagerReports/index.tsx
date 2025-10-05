@@ -15,7 +15,7 @@ import {
   Legend,
 } from 'chart.js';
 import type { ChartData } from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
+import { Pie, Bar } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -59,7 +59,7 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
     responsive: true,
     maintainAspectRatio: false,
     cutout: 0,
-    radius: '100%',
+    radius: '80%',
     plugins: {
       legend: {
         display: true,
@@ -121,8 +121,8 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
         const mappedData = (work.data || []).map((item: any, index: number) => ({
           ...item,
           unique: `${item.pzInsKey || 'row'}-${index}`,
-          EmployeeName: item.pyInstructions,
-          EmployeeID: item.pyLabel,
+          EmployeeName: item.pyInstructions ?? '',
+          EmployeeID: item.pyLabel ?? ''
         }));
 
         setworkBasket(mappedData);
@@ -245,13 +245,13 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
         </div>
 
         <div className="chart-container" style={{ display: 'flex', gap: '40px', marginTop: '20px' }}>
-          <div style={{ width: '45%', height: '300px' }}>
-            <h2>Appraisal Status Distribution</h2>
-            <Bar data={barData} options={barOptions}  />
+          <div style={{ width: '45%', height: '350px' }}>
+            <h2 style={{ marginBottom: '15px' }}>Appraisal Status Distribution</h2>
+            <Bar data={barData} options={barOptions} height={200} />
           </div>
-          <div style={{ width: '45%', height: '300px' }}>
-            <h2>Pending Actions by Type</h2>
-            <Doughnut data={donutData} options={donutOptions} />
+          <div style={{ width: '45%', height: '350px' }}>
+            <h2 style={{ marginBottom: '15px' }}>Pending Actions by Type</h2>
+            <Pie data={donutData} options={donutOptions} width={100} />
           </div>
         </div>
 
@@ -260,8 +260,7 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
           columns={[
             { key: 'EmployeeName', label: 'Employee Name' },
             { key: 'NextApparaisalDate', label: 'Next Appraisal Due Date', date : true },
-            { key: 'pyNote', label: 'Status' },
-            { key: 'pyNote', label: 'Appraisal Form', button : true }
+            { key: 'pyNote', label: 'Status' }
           ]}
           data={appraisals}
           loading={false}
@@ -270,14 +269,13 @@ function ManagerMonitoringDashboard(props: DashboardProps) {
       </div>
 
       <div className="section" id="myReviewQueue">
-        <h1>My Review Queue</h1>
+        <h1 style={{ marginBottom: '15px' }}>My Review Queue</h1>
         <h2>Pending Appraisals</h2>
         <Table
           columns={[
             { key: 'EmployeeName', label: 'Employee' },
             { key: 'pxCreateDateTime', label: 'Submission Date', date : true },
-            { key: 'pyAssignmentStatus', label: 'Action Required' },
-            { key: 'pyAssignmentStatus', label: 'Appraisal Form', button : true }
+            { key: 'pyAssignmentStatus', label: 'Action Required' }
           ]}
           data={workBasket}
           loading={false}

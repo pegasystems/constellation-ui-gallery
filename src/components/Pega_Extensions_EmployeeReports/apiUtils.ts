@@ -14,6 +14,9 @@ const fetchDataPage = async(
     return response.data || {};
   } catch (error) {
     // eslint-disable-next-line no-console
+    console.log(dataPageName);
+    
+    // eslint-disable-next-line no-console
     console.error(`Error fetching data for ${dataPageName}:`, error);
     return {};
   }
