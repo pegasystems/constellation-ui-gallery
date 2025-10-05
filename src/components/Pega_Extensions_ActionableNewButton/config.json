@@ -1,0 +1,51 @@
+{
+  "name": "Pega_Extensions_ActionableNewButton",
+  "label": "Actionable New button",
+  "description": "Actionable New button",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ActionableNewButton",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "labelOption",
+      "label": "Label value",
+      "format": "SELECT",
+      "defaultValue": "custom",
+      "source": [
+        {
+          "key": "default",
+          "value": "Default"
+        },
+        {
+          "key": "custom",
+          "value": "Custom"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "label": "Custom label value",
+      "format": "VALUEINPUT",
+      "required": true,
+      "ruleType": "Paragraph"
+    },
+    {
+      "name": "localAction",
+      "label": "Local Action ID",
+      "format": "TEXT"
+    },
+    {
+      "name": "visibility",
+      "label": "Visible",
+      "format": "VISIBILITY"
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "localAction": ""
+  }
+}
