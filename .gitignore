@@ -139,6 +139,5 @@ dist
 .devcontainer/root_ca.crt
 
 # library mode DXCB
-.store/
-Pega_Extensions/
-Pega_Extensions.zip
+/Pega_Extensions/
+/Pega_Extensions.zip
