@@ -1,0 +1,36 @@
+{
+  "name": "Pega_Extensions_EmployeeReportingDashboard",
+  "label": "Employee Reports Dashboard",
+  "description": "Employee Reports Dashboard",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_EmployeeReportingDashboard",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "currentAppraisalsDataPage",
+        "label": "Current Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "employeeAllAppraisalsDataPage",
+        "label": "Employee All Appraisals Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "workBasketDataPage",
+        "label": "Work Basket Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "upcomingAppraisalsDataPage",
+        "label": "Upcoming Appraisals Data Page",
+        "format": "TEXT"
+      }
+  ],
+  "defaultConfig": {}
+}

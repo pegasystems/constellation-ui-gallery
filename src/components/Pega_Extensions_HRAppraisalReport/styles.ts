@@ -352,6 +352,40 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  .loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 600px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 1s linear infinite;
+  }
+
+  .loader-text {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #374151;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
 `;
 
 export default GlobalStyle;

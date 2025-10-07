@@ -66,6 +66,7 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const [overdueCsvData, setOverdueCsvData] = useState<any[][]>([]);
   const [days, setDays] = useState(90);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [recent, setRecent] = useState<any[]>([]);
   const [overdueProposals, setOverdueProposals] = useState<any[]>([]);
   const [appraisalsInProgress, setappraisalsInProgress] = useState<number>(0);
@@ -119,7 +120,27 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
   const [kraFrom, setKraFrom] = useState('');
   const [kraTo, setKraTo] = useState('');
 
-  const handleLoad = () => {
+  const handleLoad = async () => {
+    setIsLoading(true);
+    try {
+      const payload = {
+        FromDate: kraFrom,
+        ToDate: kraTo
+      };
+
+      const response = await fetchDataPage(kraRejectionDataPage, context, payload);
+      setKraRejections((response.data || []).map(item => ({
+        ...item,
+        EmployeeID: item.SearchByEmployee,
+        RejectionDateTime: item.RejectionDateTime,
+        PLName: item.EmployeeDetails.PLName,
+        EmployeeName: item.EmployeeDetails.EmployeeName
+      })));
+      setIsLoading(false);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error loading KRA rejection data:', error);
+    }
   };
 
   const handleChange = (e:any) => {
@@ -138,112 +159,114 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
 
   useEffect(() => {
     async function load() {
-      const [ip, dp, r, k, o, s] = await Promise.all([
-        fetchDataPage(inProgressAppraisalsDataPage, context, {}),
-        fetchDataPage(departmentalWorkloadChartDataPage, context, {}),
-        fetchDataPage(recentAppraisalsDataPage, context, {}),
-        fetchDataPage(kraRejectionDataPage, context, {}),
-        fetchDataPage(overdueProposalsDataPage, context, {}),
-        fetchDataPage(stageDistributionDataPage, context, {})
-      ]);
-      // eslint-disable-next-line no-console
-      console.log(ip);
-      // eslint-disable-next-line no-console
-      console.log(k);
+      try {
+        const [ip, dp, r, k, o, s] = await Promise.all([
+          fetchDataPage(inProgressAppraisalsDataPage, context, {}),
+          fetchDataPage(departmentalWorkloadChartDataPage, context, {}),
+          fetchDataPage(recentAppraisalsDataPage, context, {}),
+          fetchDataPage(kraRejectionDataPage, context, {}),
+          fetchDataPage(overdueProposalsDataPage, context, {}),
+          fetchDataPage(stageDistributionDataPage, context, {})
+        ]);
+        // eslint-disable-next-line no-console
+        console.log(ip);
+        // eslint-disable-next-line no-console
+        console.log(k);
 
-      setRecent(
-        (r.data || []).map(item => ({
+        setRecent(
+          (r.data || []).map(item => ({
+            ...item,
+            daysOverdue: Array.isArray(item.pyIntegerValue)
+              ? item.pyIntegerValue[0]
+              : item.pyIntegerValue
+          }))
+        );
+        setKraRejections((k.data || []).map( item => ({
           ...item,
-          daysOverdue: Array.isArray(item.pyIntegerValue)
-            ? item.pyIntegerValue[0]
-            : item.pyIntegerValue
+          EmployeeID : item.SearchByEmployee,
+          RejectionDateTime : item.RejectionDateTime,
+          PLName : item.EmployeeDetails.PLName,
+          EmployeeName : item.EmployeeDetails.EmployeeName
         }))
-      );
-      setKraRejections((k.data || []).map( item => ({
-        ...item,
-        EmployeeID : item.SearchByEmployee,
-        RejectionDateTime : item.RejectionDateTime,
-        PLName : item.EmployeeDetails.PLName,
-        EmployeeName : item.EmployeeDetails.EmployeeName
-      }))
-      );
-      setOverdueProposals(o.data || []);
-      setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
+        );
+        setOverdueProposals(o.data || []);
+        setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
 
-      const csvData = [
-        ['EmployeeDetails', 'pyStatusWork'], // header row
-        ...(o.data || []).map((item: any) => [
-          item.EmployeeDetails?.EmployeeName ?? '', // or full EmployeeDetails object stringified if you need more
-          item.pyStatusWork ?? ''
-        ])
-      ];
+        const csvData = [
+          ['EmployeeDetails', 'pyStatusWork'], // header row
+          ...(o.data || []).map((item: any) => [
+            item.EmployeeDetails?.EmployeeName ?? '', // or full EmployeeDetails object stringified if you need more
+            item.pyStatusWork ?? ''
+          ])
+        ];
+        setOverdueCsvData(csvData);
 
-      setOverdueCsvData(csvData);
+        const chartData: ChartData<'doughnut'> = {
+          labels: s?.data?.map((item: any) => item?.pyStatusWork) ?? [],
+          datasets: [
+            {
+              label: '# of Proposals',
+              data: s?.data?.map((item: any) => item.pySummaryCount?.[0] ?? 0) ?? [],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            }
+          ]
+        };
+        setDonutData(chartData);
 
-
-      const chartData: ChartData<'doughnut'> = {
-        labels: s?.data?.map((item: any) => item?.pyStatusWork) ?? [],
-        datasets: [
-          {
-            label: '# of Proposals',
-            data: s?.data?.map((item: any) => item.pySummaryCount?.[0] ?? 0) ?? [],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          }
-        ]
-      };
-      setDonutData(chartData);
-
-      const barChartData: ChartData<'bar'> = {
-        labels: dp?.data?.map(item => item.pyOrg) ?? [],
-        datasets: [
-          {
-            label: 'Summary Count',
-            data: dp?.data?.map(item => item.pySummaryCount?.[0] ?? 0) ?? [],
-            backgroundColor: [
-              'rgba(37, 99, 235, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(201, 203, 207, 0.6)',
-              'rgba(100, 149, 237, 0.6)',
-            ],
-            borderColor: [
-              'rgba(37, 99, 235, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(201, 203, 207, 1)',
-              'rgba(100, 149, 237, 1)',
-            ],
-            borderWidth: 1,
-          }
-        ]
-      };
-      // eslint-disable-next-line no-console
-      console.log(dp);
-      setBarData(barChartData);
+        const barChartData: ChartData<'bar'> = {
+          labels: dp?.data?.map(item => item.pyOrg) ?? [],
+          datasets: [
+            {
+              label: 'Summary Count',
+              data: dp?.data?.map(item => item.pySummaryCount?.[0] ?? 0) ?? [],
+              backgroundColor: [
+                'rgba(37, 99, 235, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(201, 203, 207, 0.6)',
+                'rgba(100, 149, 237, 0.6)',
+              ],
+              borderColor: [
+                'rgba(37, 99, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(201, 203, 207, 1)',
+                'rgba(100, 149, 237, 1)',
+              ],
+              borderWidth: 1,
+            }
+          ]
+        };
+        // eslint-disable-next-line no-console
+        console.log(dp);
+        setBarData(barChartData);
+      } finally {
+        setIsLoading(false);
+      }
     }
     load();
   }, [
@@ -335,7 +358,6 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
             />
           </div>
 
-          {/* KRA Rejections */}
           <div className="card">
             <h3 style={{ marginBottom: '10px'}}>HR KRA Rejection Analysis</h3>
 
@@ -347,7 +369,12 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                   type="date"
                   value={kraFrom}
                   onChange={(e) => setKraFrom(e.target.value)}
-                  style={{ border: '1px solid #ccc', height: 35, borderRadius: 5, padding: '0px 5px' }}
+                  style={{
+                    border: '1px solid #ccc',
+                    height: 35,
+                    borderRadius: 5,
+                    padding: '0px 5px'
+                  }}
                 />
               </label>
 
@@ -356,10 +383,24 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                 type="date"
                 value={kraTo}
                 onChange={(e) => setKraTo(e.target.value)}
-                style={{ border: '1px solid #ccc', height: 35, borderRadius: 5, padding: '0px 5px' }}
+                style={{
+                  border: '1px solid #ccc',
+                  height: 35,
+                  borderRadius: 5,
+                  padding: '0px 5px'
+                }}
               />
 
-              <button type="button" className="btn" onClick={handleLoad}>
+              <button
+                type="button"
+                className="btn"
+                onClick={handleLoad}
+                disabled={!kraFrom || !kraTo}
+                style={{
+                  opacity: !kraFrom || !kraTo ? 0.5 : 1,
+                  cursor: !kraFrom || !kraTo ? 'not-allowed' : 'pointer'
+                }}
+              >
                 Apply
               </button>
             </div>
@@ -372,13 +413,12 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
                 { key: 'PLInitialComments', label: 'Comments' }
               ]}
               data={kraRejections}
-              loading={false}
+              loading={isLoading}
               loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
             />
           </div>
         </main>
 
-        {/* Sidebar */}
         <aside className="side">
           <div className="card">
             <h4>Upcoming Appraisals</h4>
@@ -419,8 +459,15 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
             </div>
           </div>
         )}
-
       </div>
+
+      {isLoading && (
+        <div className="loader-container">
+          <div className="loader" />
+          <div className="loader-text">Loading...</div>
+        </div>
+      )}
+
     </DashboardWrapper>
   );
 }
