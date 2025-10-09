@@ -223,7 +223,7 @@ function ManagerDashboard(props: DashboardProps) {
       <div className='section'>
         <div className='widget'>
           <strong>Action Items / My Queue:</strong> {workBasket.length} appraisals awaiting your action.
-          <a href='https://pega24.crochetech.com/prweb/app/performance-appraisal--review' className='link'>
+          <a href='#myReviewQueue' className='link'>
             Go to Work Queue
           </a>
         </div>
@@ -239,7 +239,7 @@ function ManagerDashboard(props: DashboardProps) {
           </div>
         </div>
 
-        <h2>Team Appraisal Status</h2>
+        <h2 className='TeamAppraisalStatus'>Team Appraisal Status</h2>
         <Table
           columns={[
             { key: 'EmployeeName', label: 'Employee Name' },

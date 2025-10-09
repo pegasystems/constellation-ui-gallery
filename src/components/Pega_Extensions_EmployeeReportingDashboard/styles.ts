@@ -7,7 +7,7 @@ h1, h2 {
 }
 
 .section {
-  max-width: 1170px;
+  width: 100%;
   background-color: #fff;
   padding: 25px;
   margin: 0 auto 40px;
@@ -109,6 +109,10 @@ h2 {font-size: 18px;}
   width: 28px;
   height: 28px;
   animation: spin 1s linear infinite;
+}
+.TeamAppraisalStatus
+{
+ margin-top:60px;
 }
 
 .loader-text {

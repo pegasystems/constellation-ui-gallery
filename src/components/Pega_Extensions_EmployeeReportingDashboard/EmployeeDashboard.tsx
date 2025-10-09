@@ -184,7 +184,7 @@ function EmployeeDashboard(props: DashboardProps) {
                   columns={[
                     { key: 'CompetencyName', label: 'Competency Name' },
                     { key: 'Reviewer', label: 'Reviewer' },
-                    { key: 'HRCompFinalRatingValue', label: 'Rating' }
+                    { key: 'CompReviewerRating', label: 'Rating' }
                   ]}
                   data={ currentAppraisal?.KRACompRO || [] }
                   loading={false}
