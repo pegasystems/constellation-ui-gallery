@@ -161,36 +161,47 @@ function EmployeeDashboard(props: DashboardProps) {
                 <p><strong>Review Period:</strong> { currentAppraisal?.pyDateValue?.[0] || '' } </p>
               </div>
 
-              <h3>Final Score & Rating</h3>
-              <p><strong>Final Score:</strong> { currentAppraisal?.FinalRatingOfEmployee ?? '' } / 5</p>
+              { /* <h3>Final Score & Rating</h3> */ }
+              { /* <p><strong>Final Score:</strong> { currentAppraisal?.FinalRatingOfEmployee ?? '' } / 5</p> */ }
 
-              <h3 style={{ marginTop: '25px' }}>Performance KRA(s)</h3>
-              <div style={{ width: '50%' }}>
-                <Table
-                  columns={[
-                    { key: 'PerformanceName', label: 'Performance Name' },
-                    { key: 'FinalReviewer', label: 'Reviewer' },
-                    { key: 'HRFinalRatingValue', label: 'Rating' }
-                  ]}
-                  data={ currentAppraisal?.PerformanceKRAs || [] }
-                  loading={false}
-                  loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-                />
-              </div>
+              {currentAppraisal?.PerformanceKRAs?.length > 0 && (
+              <>
+                <h3 style={{ marginTop: '25px' }}>Performance KRA(s)</h3>
+                <div style={{ width: '50%' }}>
+                  <Table
+                    columns={[
+                      { key: 'PerformanceName', label: 'Performance Name' },
+                      { key: 'Emp_SelfRating_Perf', label: 'Self Rating' },
+                      { key: 'PLRating', label: 'PL Rating' },
+                      { key: 'RM_Ratings_Perf', label: 'RM Rating' },
+                      { key: 'CSMRating', label: 'CSM Rating' }
+                    ]}
+                    data={ currentAppraisal?.PerformanceKRAs || [] }
+                    loading={false}
+                    loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+                  />
+                  </div>
+              </>
+              )}
 
-              <h3 style={{ marginTop: '25px' }}>Competency KRAs</h3>
-              <div style={{ width: '50%' }}>
-                <Table
-                  columns={[
-                    { key: 'CompetencyName', label: 'Competency Name' },
-                    { key: 'Reviewer', label: 'Reviewer' },
-                    { key: 'CompReviewerRating', label: 'Rating' }
-                  ]}
-                  data={ currentAppraisal?.KRACompRO || [] }
-                  loading={false}
-                  loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
-                />
-              </div>
+              {currentAppraisal?.KRACompRO?.length > 0 && (
+              <>
+                <h3 style={{ marginTop: '25px' }}>Competency KRAs</h3>
+                <div style={{ width: '50%' }}>
+                  <Table
+                    columns={[
+                      { key: 'CompetencyName', label: 'Competency Name' },
+                      { key: 'Reviewer', label: 'Reviewer' },
+                      { key: 'CompReviewerRating', label: 'Rating' }
+                    ]}
+                    data={ currentAppraisal?.KRACompRO || [] }
+                    loading={false}
+                    loadingMessage={PConnect.getLocalizedValue(loadingMessage, '', '')}
+                  />
+                </div>
+              </>
+              )}
+
             </div>
 
             <div className="section">
