@@ -40,6 +40,11 @@ const setPCore = () => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getConstants: () => {
       return {
         CASE_INFO: {},

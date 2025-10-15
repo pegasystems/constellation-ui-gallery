@@ -140,10 +140,14 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
       isdayGrid = false;
     }
     const eventDateStr = `${obj[startTimeProperty].substring(0, 5)} - ${obj[endTimeProperty].substring(0, 5)}`;
+    const pyID = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID');
+    const pxObjClass = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass');
+    const pzInsKey = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey');
+    const pyStatusWork = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyStatusWork');
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
-      { caseClassName: obj.pxObjClass },
-      { workID: obj.pyID },
+      { caseClassName: obj[pxObjClass] },
+      { workID: obj[pyID] },
     );
     const linkEl = (
       <Link
@@ -161,18 +165,18 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         }
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(eventInfo.event.id), {
-            caseClassName: obj.pxObjClass,
+            caseClassName:  obj[pxObjClass],
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
-            getPConnect().getActionsApi().openWorkByHandle(obj.pzInsKey, obj.pxObjClass);
+            getPConnect().getActionsApi().openWorkByHandle(obj[pzInsKey], obj[pxObjClass]);
           }
         }}
       >
-        {isdayGrid ? obj.pyID : `${eventInfo.event.title} - ${eventDateStr}`}
+        {isdayGrid ? obj[pyID] : `${eventInfo.event.title} - ${eventDateStr}`}
       </Link>
     );
     if (!isdayGrid) {
@@ -200,7 +204,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
             {
               id: 'status',
               name: 'Status',
-              value: <Status variant='success'>{obj.pyStatusWork}</Status>,
+              value: <Status variant='success'>{obj[pyStatusWork]}</Status>,
             },
           ]}
         />
@@ -209,6 +213,9 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   };
 
   const loadEvents = () => {
+        const pzInsKey = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey');
+    const pyLabel = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel');
+
     (window as any).PCore.getDataApiUtils()
       .getData(dataPage, {})
       .then((response: any) => {
@@ -220,8 +227,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
             const endTime = item[endTimeProperty];
             if (sessionDate && startTime && endTime) {
               tmpevents.push({
-                id: item.pzInsKey,
-                title: item.pyLabel,
+                id: item[pzInsKey],
+                title: item[pyLabel],
                 start: new Date(`${sessionDate}T${startTime}`),
                 end: new Date(`${sessionDate}T${endTime}`),
                 item,
@@ -234,8 +241,10 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   };
 
   const handleEventClick = (eventClickInfo: EventClickArg) => {
+         const pzInsKey = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey');
+    const pxObjClass = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass');
     const eventDetails = eventClickInfo.event.extendedProps;
-    getPConnect().getActionsApi().openWorkByHandle(eventDetails.item.pzInsKey, eventDetails.item.pxObjClass);
+    getPConnect().getActionsApi().openWorkByHandle(eventDetails.item[pzInsKey], eventDetails.item[pxObjClass]);
   };
 
   const handleDateChange = (objInfo: any) => {

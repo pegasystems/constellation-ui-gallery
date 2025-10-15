@@ -67,7 +67,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
       const pConn = getPConnect();
       const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }],
+        dataViewParameters: [{ [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
         .getData(dataPage, payload, pConn.getContextName())

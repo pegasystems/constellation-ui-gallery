@@ -179,20 +179,20 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     <StyledList>
       {pdfFiles.map((file) => {
         return (
-          <li key={file.pyLabel}>
+          <li key={file[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')]}>
             <Button
               variant='link'
               onClick={() => {
                 viewAllModalRef.current = create(ViewPDFModal, {
-                  heading: file.pyLabel,
+                  heading: file[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
                   width,
                   height,
-                  value: file.pyContext,
+                  value: file[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyContext')],
                   showToolbar,
                 });
               }}
             >
-              {file.pyLabel}
+              {file[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')]}
             </Button>
           </li>
         );

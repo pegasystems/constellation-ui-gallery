@@ -56,7 +56,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const editTask = (id: string) => {
     getPConnect()
       .getActionsApi()
-      .openLocalAction('pyUpdateCaseDetails', {
+      .openLocalAction((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
         caseID: id,
         containerName: 'modal',
         actionTitle: getPConnect().getLocalizedValue('Edit task'),
@@ -92,11 +92,11 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         query: {
           ...(filterExpr ? { filter: filterExpr } : null),
           select: [
-            { field: 'pyID' },
-            { field: 'pyLabel' },
-            { field: 'pyStatusWork' },
-            { field: 'pzInsKey' },
-            { field: 'pxObjClass' },
+            { field: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID') },
+            { field: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel') },
+            { field: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyStatusWork') },
+            { field: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey') },
+            { field: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass') },
           ],
         },
       };
@@ -110,11 +110,11 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             const tmpTasks: any = [];
             response.data.data.forEach((item: any) => {
               tmpTasks.push({
-                id: item.pyID,
-                title: item.pyLabel,
-                status: item.pyStatusWork,
-                classname: item.pxObjClass,
-                insKey: item.pzInsKey,
+                id: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')],
+                title: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
+                status: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyStatusWork')],
+                classname: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')],
+                insKey: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')],
                 isVisible: true,
                 getDetails,
                 editTask,
@@ -149,7 +149,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             prevTasks?.forEach((tmpTask: any) => {
               let isVisible = false;
               response?.data?.data?.forEach((item: any) => {
-                if (item.pyID === tmpTask.id) {
+                if (item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] === tmpTask.id) {
                   isVisible = true;
                   tmpIsEmpty = false;
                 }

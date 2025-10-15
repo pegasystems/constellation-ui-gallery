@@ -75,6 +75,11 @@ const setPCore = (numProducts: number) => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getContextTreeManager: () => {
       return {
         addPageListNode: () => {},

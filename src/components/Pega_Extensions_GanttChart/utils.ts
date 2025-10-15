@@ -44,8 +44,8 @@ export const loadGanttData = async (
   if (response.data.data !== null) {
     response.data.data.forEach((item: any) => {
       const {
-        pyID: id,
-        pyLabel: name,
+        [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]: id,
+        [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')]: name,
         [categoryFieldName]: type,
         [parentFieldName]: project,
         [dependenciesFieldName]: dependencies,
@@ -151,7 +151,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
   await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
+    .getDataObjectView(detailsDataPage, detailsViewName, {
+      [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]: id,
+    })
     .then(async (res: any) => {
       const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
       await updateViewResources(res.data);
@@ -174,7 +176,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         },
       };
       messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config.pyID = id;
+      messageConfig.meta.config[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] = id;
       const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
@@ -199,7 +201,9 @@ export const updateItemDetails = async (props: UpdateItemDetails) => {
 
   const response = await (window as any).PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
 
-  const payload: any = { [pzInsKey]: updatedFieldValueList };
+  const payload: any = {
+    [pzInsKey]: updatedFieldValueList,
+  };
   return await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
     pzInsKey,
     payload,

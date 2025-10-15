@@ -106,7 +106,7 @@ export const addAttachment = (props: AddAttachmentProps) => {
   const { currentCategory, attachment, listOfAttachments, getPConnect, setImages, useLightBox, setElemRef } = props;
   const dateTime = <DateTimeDisplay value={new Date(attachment.createTime)} variant='relative' />;
   const secondaryItems = [
-    currentCategory === 'pxDocument' ? 'Document' : currentCategory,
+    currentCategory === (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxDocument') ? 'Document' : currentCategory,
     dateTime,
     attachment.createdByName ?? attachment.createdBy,
   ];

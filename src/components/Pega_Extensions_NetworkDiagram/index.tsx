@@ -133,22 +133,22 @@ function Flow(props: any) {
       const tmpNodesHash: StringHashMap = {};
       let parameters;
       if (selectionProperty) {
-        parameters = { pyGUID: selectionProperty };
+        parameters = { [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyGUID')]: selectionProperty };
       }
       const context = getPConnect().getContextName();
       const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
         invalidateCache: true,
       });
-      data.pyNodes.forEach((element: any) => {
-        tmpNodesHash[element.pyID] = element.pyLabel;
+      data[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyNodes')].forEach((element: any) => {
+        tmpNodesHash[element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]] = element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')];
         initialNodes.push({
-          id: element.pyID,
+          id: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')],
           data: {
-            id: element.pyID,
-            type: element.pyCategory,
-            label: element.pyLabel,
-            key: element.pzInsKey,
-            objClass: element.pyClassName,
+            id: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')],
+            type: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyCategory')],
+            label: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
+            key: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')],
+            objClass: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyClassName')],
             getPConnect,
             theme,
           },
@@ -156,15 +156,15 @@ function Flow(props: any) {
           type: 'custom',
         });
       });
-      data.pyEdges.forEach((element: any, i: number) => {
-        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element.pyFrom]} ${getPConnect().getLocalizedValue(
+      data[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyEdges')].forEach((element: any, i: number) => {
+        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyFrom')]]} ${getPConnect().getLocalizedValue(
           'to',
-        )} ${tmpNodesHash[element.pyTo]} ${getPConnect().getLocalizedValue('with label:')} ${element.pyLabel}`;
+        )} ${tmpNodesHash[element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyTo')]]} ${getPConnect().getLocalizedValue('with label:')} ${element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')]}`;
         const edge: any = {
-          id: element.pyID || `edge-${i}`,
-          source: element.pyFrom,
-          target: element.pyTo,
-          data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
+          id: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] || `edge-${i}`,
+          source: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyFrom')],
+          target: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyTo')],
+          data: { type: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyCategory')], label: element[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')], path: edgePath, theme },
           markerEnd: {
             type: MarkerType.ArrowClosed,
             width: 20,

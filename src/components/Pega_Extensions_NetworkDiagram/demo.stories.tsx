@@ -762,6 +762,11 @@ const setPCore = (Example: string) => {
         getTimeZone: () => 'local',
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEvents: () => {
       return {
         getCaseEvent: () => {

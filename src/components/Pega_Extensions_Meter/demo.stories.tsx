@@ -39,6 +39,11 @@ const setPCore = () => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,

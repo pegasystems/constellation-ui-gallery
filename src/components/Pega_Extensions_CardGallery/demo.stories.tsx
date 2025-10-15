@@ -202,6 +202,11 @@ const setPCore = (args: any) => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     createPConnect: () => ({
       getPConnect: () => ({
         createComponent: (meta: any) => {

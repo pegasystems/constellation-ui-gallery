@@ -238,8 +238,8 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
 
       await getPConnect()
         .getActionsApi()
-        .openLocalAction('pyUpdateCaseDetails', {
-          caseID: task.extendedProps.pzInsKey,
+        .openLocalAction((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
+          caseID: task.extendedProps[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')],
           containerName: 'modal',
           actionTitle: `Edit ${task.type}`,
           type: 'express',
