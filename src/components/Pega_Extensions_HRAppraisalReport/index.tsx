@@ -189,7 +189,13 @@ function HRAppraisalMonitoringDashboard(props: DashboardProps) {
           EmployeeName : item.EmployeeDetails.EmployeeName
         }))
         );
-        setOverdueProposals(o.data || []);
+
+        setOverdueProposals((o.data || []).map( item => ({
+          ...item,
+          EmployeeName : item.EmployeeDetails.EmployeeName
+        })
+        ));
+
         setappraisalsInProgress(ip.data?.[0]?.pySummaryCount?.[0] || 0);
 
         const csvData = [
