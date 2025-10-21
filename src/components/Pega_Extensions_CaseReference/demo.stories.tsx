@@ -71,5 +71,8 @@ export const Default: Story = {
   },
   args: {
     value: 'C-123',
+    refCaseInsKey: 'WORK-ITEM C-123',
+    allowPreview: true,
+    refCaseClassName: 'PegaSample-Task',
   },
 };
