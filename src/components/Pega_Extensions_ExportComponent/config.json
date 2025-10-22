@@ -1,0 +1,36 @@
+{
+  "name": "Pega_Extensions_ExportComponent",
+  "label": "Export Component",
+  "description": "Export Component",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ExportComponent",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+      {
+        "name": "caseTypesDataPage",
+        "label": "Case Types Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "exportDetailsDataPage",
+        "label": "Export Details Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "targetSystemDataPage",
+        "label": "Target System Data Page",
+        "format": "TEXT"
+      },
+      {
+        "name": "extractRuleDataPage",
+        "label": "Extract Rule Data Page",
+        "format": "TEXT"
+      }
+  ],
+  "defaultConfig": {}
+}

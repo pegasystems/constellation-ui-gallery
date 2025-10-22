@@ -3,8 +3,8 @@
     "import-relative-path": "Downloads",
     "export-relative-path": "Downloads",
     "server-config": {
-        "rulesetName": "DxComponent",
-        "rulesetVersion": "01-01-01",
+        "rulesetName": "CustomDXComponents",
+        "rulesetVersion": "01-01-02",
         "sourceOfComponents": "Server",
         "devBuild": false,
         "serverType": "infinity",
