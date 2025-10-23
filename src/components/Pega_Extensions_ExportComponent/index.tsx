@@ -42,6 +42,7 @@ interface DashboardProps extends PConnFieldProps {
   exportDetailsDataPage: string;
   targetSystemDataPage: string;
   extractRuleDataPage: string;
+  treeViewDataPage: string;
 }
 
 function ExportComponent(props: DashboardProps) {
@@ -51,6 +52,7 @@ function ExportComponent(props: DashboardProps) {
     exportDetailsDataPage,
     targetSystemDataPage,
     extractRuleDataPage,
+    treeViewDataPage
   } = props;
 
   const PConnect = getPConnect();
@@ -69,23 +71,22 @@ function ExportComponent(props: DashboardProps) {
   const [selectedMode, setSelectedMode] = useState('');
   const [selectedTarget, setSelectedTarget] = useState('');
   const [selectedExtract, setSelectedExtract] = useState('');
+  const [treeData, setTreeData] = useState<any>(null);
 
   // Load data pages
   useEffect(() => {
     async function loadData() {
       try {
-        const [caseTypeRes, exportDetailsRes, targetRes, extractRes] =
+        const [caseTypeRes, exportDetailsRes, targetRes] =
           await Promise.all([
             fetchPageDataPage(caseTypesDataPage, context, {}),
             fetchDataPage(exportDetailsDataPage, context, {}),
             fetchDataPage(targetSystemDataPage, context, {}),
-            fetchDataPage(extractRuleDataPage, context, {}),
           ]);
 
         setCaseTypes(caseTypeRes?.pxResults || []);
         setExportModes(exportDetailsRes?.data || []);
         setTargetSystems(targetRes?.data || []);
-        setExtractRules(extractRes?.data || []);
       } catch (err) {
         /* eslint-disable no-console */
         console.error('Error loading data pages:', err);
@@ -99,9 +100,52 @@ function ExportComponent(props: DashboardProps) {
     caseTypesDataPage,
     exportDetailsDataPage,
     targetSystemDataPage,
-    extractRuleDataPage,
     context,
   ]);
+
+  useEffect(() => {
+    async function loadExtractRules() {
+      if (!selectedCaseType) return;
+      try {
+        const payload = {
+          dataViewParameters: {
+            'CaseTypeClass': selectedCaseType
+          }
+        };
+
+        // { CaseTypeClass: selectedCaseType }
+        const extractRes = await fetchDataPage(
+          extractRuleDataPage,
+          context,
+          payload
+        );
+        setExtractRules(extractRes?.data || []);
+      } catch (err) {
+        console.error('Error loading extract rules:', err);
+      }
+    }
+    loadExtractRules();
+  }, [selectedCaseType, extractRuleDataPage, context]);
+
+  useEffect(() => {
+    async function loadTreeview() {
+      if (!selectedCaseType || !selectedExtract) return;
+
+      try {
+        const parameters = {
+          pyClassName: selectedCaseType,
+          pyPurpose: selectedExtract,
+        };
+        const res = await fetchPageDataPage(treeViewDataPage, context, parameters, {});
+        setTreeData(res?.pyTree || {});
+        console.log('Export Preview Data:', res?.pyTree);
+      } catch (err) {
+        console.error('Error loading export preview data:', err);
+      }
+    }
+
+    loadTreeview();
+  }, [selectedExtract, selectedCaseType, treeViewDataPage, context]);
 
   if (isLoading) return <div style={{ padding: 16 }}>Loading data...</div>;
 
@@ -123,7 +167,7 @@ function ExportComponent(props: DashboardProps) {
           >
             <option value="">Select</option>
             {caseTypes.map((item, index) => (
-              <option key={index} value={item.pyLabel}>
+              <option key={index} value={item.pyClassName}>
                 {item.pyLabel}
               </option>
             ))}
@@ -190,14 +234,36 @@ function ExportComponent(props: DashboardProps) {
               >
                 <option value="">Select</option>
                 {extractRules.map((item, index) => (
-                  <option key={index} value={item.pyGUID}>
-                    {item.ExtractRuleName}
+                  <option key={index} value={item.pyPurpose}>
+                    {item.pyLabel}
                   </option>
                 ))}
               </select>
             </FieldRow>
           )
         }
+
+        {
+          treeData && (
+            <div style={{
+              marginTop: '24px',
+              padding: '16px',
+              background: '#f9fafb',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              fontFamily: 'monospace',
+              fontSize: '13px',
+              whiteSpace: 'pre-wrap',
+              overflowX: 'auto'
+            }}>
+              <h4 style={{ marginBottom: '8px', fontFamily: 'Inter', fontSize: '15px' }}>Tree Data</h4>
+              <pre style={{ margin: 0 }}>
+                {JSON.stringify(treeData, null, 2)}
+              </pre>
+            </div>
+          )
+        }
+
 
       </div>
     </DashboardWrapper>

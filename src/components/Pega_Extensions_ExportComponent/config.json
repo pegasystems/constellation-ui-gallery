@@ -14,22 +14,32 @@
       {
         "name": "caseTypesDataPage",
         "label": "Case Types Data Page",
-        "format": "TEXT"
+        "format": "TEXT",
+        "required" : true
       },
       {
         "name": "exportDetailsDataPage",
         "label": "Export Details Data Page",
-        "format": "TEXT"
+        "format": "TEXT",
+        "required" : true
       },
       {
         "name": "targetSystemDataPage",
         "label": "Target System Data Page",
-        "format": "TEXT"
+        "format": "TEXT",
+        "required" : true
       },
       {
         "name": "extractRuleDataPage",
         "label": "Extract Rule Data Page",
-        "format": "TEXT"
+        "format": "TEXT",
+        "required" : true
+      },
+      {
+        "name": "treeViewDataPage",
+        "label": "Tree View Data Page",
+        "format": "TEXT",
+        "required" : true
       }
   ],
   "defaultConfig": {}
