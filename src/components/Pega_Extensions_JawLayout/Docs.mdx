@@ -1,0 +1,40 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Jaw Layout
+
+The **Jaw Layout** component displays teeth in a dental arch, allowing users to view and update tooth statuses interactively. It is designed for use in Pega Constellation applications and supports localization, accessibility, and status legends.
+
+<Primary />
+<Controls />
+
+## Configuration
+
+To use this component in a Pega application, you first need a Data Object to represent a single tooth. For this example, we'll call it `Tooth`. This `Tooth` data object should have a text property to hold the tooth's status (e.g., a `Status` field).
+
+Next, in your Case Type, create a new field and define it as a `Field group (list)` using the `Tooth` data object as its source. This will create an embedded list of `Tooth` data objects.
+
+Finally, create a new view and select the **Jaw Layout** template. In the view's content area ("Region A"), place the `Field group (list)` property you just created. The component is designed to automatically read the `Status` field from each entry in the list to render the dental chart. The `index.tsx` file for this component specifically extracts the `status` property from the provided data to display the tooth statuses.
+
+## Features
+
+- Teeth arranged in a parabolic arch to resemble a jaw.
+- Interactive status updates for each tooth (healthy, missing, extracted).
+- Toggle between Maxillary and Mandibular views.
+- Fully localized labels and headings.
+- Includes a legend for tooth status colors.
+
+## Accessibility
+
+- All interactive elements are keyboard accessible.
+- ARIA labels are provided for screen readers to ensure a comprehensive experience.
+
+## Legend
+
+The legend explains the color coding for tooth statuses:
+
+- **Healthy**: Default color
+- **Missing (M)**: Urgent color
+- **Extracted (E)**: Brand primary

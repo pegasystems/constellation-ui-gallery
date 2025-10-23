@@ -1,0 +1,23 @@
+{
+  "fields": {
+    "Dental Chart": "Dental Chart",
+    "Maxillary": "Maxillary",
+    "Mandibular": "Mandibular",
+    "Healthy": "Healthy",
+    "Missing (M)": "Missing (M)",
+    "Extracted (E)": "Extracted (E)",
+    "Dental chart view selection": "Dental chart view selection",
+    "Dental chart legend": "Dental chart legend",
+    "Tooth {tooth}, not in patient records": "Tooth {tooth}, not in patient records",
+    "Tooth {tooth}, status is {status}": "Tooth {tooth}, status is {status}",
+    "Tooth {tooth}, currently {status}, click to mark as {nextStatus}": "Tooth {tooth}, currently {status}, click to mark as {nextStatus}",
+    "healthy": "healthy",
+    "missing": "missing",
+    "extracted": "extracted",
+    "M": "M",
+    "E": "E",
+    "Status: {status}": "Status: {status}",
+    "The first field in the layout is not a valid Field Group (List).": "The first field in the layout is not a valid Field Group (List).",
+    "Loading content...": "Loading content..."
+  }
+}
