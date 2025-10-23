@@ -1,7 +1,7 @@
 {
   "name": "constellation-ui-gallery",
   "forwardPorts": [6006, 4010],
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "remoteEnv": {
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
   },
