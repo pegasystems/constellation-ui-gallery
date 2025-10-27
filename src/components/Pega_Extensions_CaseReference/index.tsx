@@ -4,23 +4,24 @@ import '../shared/create-nonce';
 
 type ActionableButtonProps = {
   value: string;
-  refCaseInsKey: string;
+  selectionProperty: string;
   getPConnect: any;
   refCaseClassName: string;
   allowPreview: boolean;
 };
 
 export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
-  const { getPConnect, refCaseInsKey, value, refCaseClassName, allowPreview } = props;
+  const { getPConnect, selectionProperty, value, refCaseClassName, allowPreview } = props;
 
-  if (value && typeof refCaseInsKey === 'string' && refCaseInsKey.includes(' ')) {
-    const caseID = refCaseInsKey.split(' ')[1];
+  if (value && typeof selectionProperty === 'string' && selectionProperty.includes(' ')) {
+    const caseID = selectionProperty.split(' ')[1];
+    const key = selectionProperty;
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: refCaseClassName },
       { workID: caseID },
       { page: 'pyDetails' },
-      { caseID: refCaseInsKey },
+      { caseID: key },
     );
 
     return (
@@ -28,7 +29,7 @@ export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
         href={linkURL}
         previewable={allowPreview}
         onPreview={() => {
-          getPConnect().getActionsApi().showCasePreview(encodeURI(refCaseInsKey), {
+          getPConnect().getActionsApi().showCasePreview(encodeURI(key), {
             caseClassName: refCaseClassName,
           });
         }}
@@ -36,7 +37,7 @@ export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
           /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
-            getPConnect().getActionsApi().openWorkByHandle(refCaseInsKey, refCaseClassName);
+            getPConnect().getActionsApi().openWorkByHandle(key, refCaseClassName);
           }
         }}
       >

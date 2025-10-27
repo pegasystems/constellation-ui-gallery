@@ -34,7 +34,6 @@
             "ruleType": "Paragraph"
         },
         {
-            "key": "selectionProperty",
             "format": "PROPERTY",
             "name": "selectionProperty",
             "label": "Selection Property",
@@ -73,7 +72,7 @@
         "detailFVLItem": true,
         "allowPreview": true
     },
-    "buildDate": "2025-10-27T19:02:09.460Z",
+    "buildDate": "2025-10-27T21:48:28.848Z",
     "infinityVersion": "25.1.0-95",
     "packageCosmosVersion": "8.5.0"
 }
