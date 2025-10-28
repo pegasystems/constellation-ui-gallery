@@ -284,7 +284,7 @@ function ExportComponentNew(props: DashboardProps) {
               >
                 <option value="">Select</option>
                 {exportModes.map((item, index) => (
-                  <option key={index} value={item.pyID}>
+                  <option key={index} value={item.ExportName}>
                     {item.ExportName}
                   </option>
                 ))}
