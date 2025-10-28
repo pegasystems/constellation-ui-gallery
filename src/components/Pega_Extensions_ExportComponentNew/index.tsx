@@ -178,7 +178,11 @@ function ExportComponentNew(props: DashboardProps) {
   async function submit() {
     try {
       const parameters = {
-        ...otherConfig
+        ...otherConfig,
+        CaseTypeName: selectedCaseType,
+        ExportMode: selectedMode,
+        TargetSystem: selectedTarget,
+        ExtractRuleName: selectedExtract
       };
 
       const res = await fetchPageDataPage('D_SaveDataExportDetails', context, parameters, {});
