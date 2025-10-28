@@ -4,6 +4,7 @@ import type { PConnFieldProps } from './PConnProps';
 import GlobalStyle from './styles';
 import { fetchDataPage, fetchPageDataPage } from './apiUtils';
 import styled from 'styled-components';
+import { Tree } from 'primereact/tree';
 
 const DashboardWrapper = styled.div`
   background: #ffffff;
@@ -37,6 +38,14 @@ const FieldRow = styled.div`
   }
 `;
 
+const SectionHeading = styled.h4`
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+`;
+
 interface DashboardProps extends PConnFieldProps {
   caseTypesDataPage: string;
   exportDetailsDataPage: string;
@@ -45,7 +54,7 @@ interface DashboardProps extends PConnFieldProps {
   treeViewDataPage: string;
 }
 
-function ExportComponent(props: DashboardProps) {
+function ExportComponentNew(props: DashboardProps) {
   const {
     getPConnect,
     caseTypesDataPage,
@@ -57,6 +66,8 @@ function ExportComponent(props: DashboardProps) {
 
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
+  /* eslint-disable no-console */
+  console.log(context);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -72,6 +83,44 @@ function ExportComponent(props: DashboardProps) {
   const [selectedTarget, setSelectedTarget] = useState('');
   const [selectedExtract, setSelectedExtract] = useState('');
   const [treeData, setTreeData] = useState<any>(null);
+  // const [nodes, setNodes] = useState<TreeNode[]>([]);
+
+  const configFields = [
+    { label: 'Bucket Name', prop: 'pyBucketName', required: true },
+    { label: 'Root path', prop: 'pyRootpath', required: true },
+    { label: 'Access key id', prop: 'pyAccessKeyId', required: true },
+    { label: 'Secret access key', prop: 'pySecretAccessKey', required: true }
+  ];
+
+  const advancedSettingsFields = [
+      { label: 'Connection max idle time', prop: 'pyConnectionMaxIdle' },
+      { label: 'Max connection pool size', prop: 'pyConnectionPoolMax' },
+      { label: 'New connection timeout', prop: 'pyConnectionTimeout' },
+      { label: 'Expiration time for connections in the pool', prop: 'pyConnectionTTL' },
+      { label: 'Request timeout', prop: 'pyRequestTimeout' }
+  ];
+
+  const [otherConfig, setOtherConfig] = useState<Record<string, string | boolean>>({
+    pyBucketName: '',
+    pyRootpath: '',
+    pyAccessKeyId: '',
+    pySecretAccessKey: '',
+    pyConnectionMaxIdle: '60000',
+    pyConnectionPoolMax: '50',
+    pyConnectionTimeout: '10000',
+    pyConnectionTTL: '-1',
+    pyRequestTimeout: '0',
+    pyEnableMetricCollection: false,
+    pyEnablePathStyleAccess: false,
+    TargetPath: '/Bix/ClientData'
+  });
+
+  const handleConfigChange = (property: string, value: any) => {
+    setOtherConfig(prev => ({
+      ...prev,
+      [property]: value
+    }));
+  };
 
   // Load data pages
   useEffect(() => {
@@ -83,7 +132,6 @@ function ExportComponent(props: DashboardProps) {
             fetchDataPage(exportDetailsDataPage, context, {}),
             fetchDataPage(targetSystemDataPage, context, {}),
           ]);
-
         setCaseTypes(caseTypeRes?.pxResults || []);
         setExportModes(exportDetailsRes?.data || []);
         setTargetSystems(targetRes?.data || []);
@@ -127,7 +175,42 @@ function ExportComponent(props: DashboardProps) {
     loadExtractRules();
   }, [selectedCaseType, extractRuleDataPage, context]);
 
+  async function submit() {
+    try {
+      const parameters = {
+        ...otherConfig
+      };
+
+      const res = await fetchPageDataPage('D_SaveDataExportDetails', context, parameters, {});
+      // setTreeData(res?.pyTree || {});
+      /* eslint-disable no-console */
+      console.log('Export Preview Data:', res);
+    } catch (err) {
+      /* eslint-disable no-console */
+      console.error('Error loading export preview data:', err);
+    }
+  }
+
   useEffect(() => {
+
+    function convertPegaTreeToPrime(nodes : any, parentKey = '0') {
+      return nodes.map((node : any, index : any) => {
+        const key = parentKey ? `${parentKey}-${index}` : `${index}`;
+        const label = node.pyNodeCaption;
+        const icon = node.pyImage || (node.pyUserData?.pyIcon ?? '');
+        const data =
+          node.pyUserData?.pySelectedValue ||
+          node.pyUserData?.pyPageClass ||
+          node.pyUserData?.pyType ||
+          '';
+        const children = node.pyTreeNodes?.length
+          ? convertPegaTreeToPrime(node.pyTreeNodes, key)
+          : [];
+
+        return { key, label, data, icon, children };
+      });
+    }
+
     async function loadTreeview() {
       if (!selectedCaseType || !selectedExtract) return;
 
@@ -137,24 +220,33 @@ function ExportComponent(props: DashboardProps) {
           pyPurpose: selectedExtract,
         };
         const res = await fetchPageDataPage(treeViewDataPage, context, parameters, {});
-        setTreeData(res?.pyTree || {});
+        const nodes = convertPegaTreeToPrime(res?.pyTree?.pyTreeNodes);
+        setTreeData(nodes);
+        /* eslint-disable no-console */
         console.log('Export Preview Data:', res?.pyTree);
       } catch (err) {
+        /* eslint-disable no-console */
         console.error('Error loading export preview data:', err);
       }
     }
-
     loadTreeview();
   }, [selectedExtract, selectedCaseType, treeViewDataPage, context]);
 
   if (isLoading) return <div style={{ padding: 16 }}>Loading data...</div>;
+
+  const isSubmitDisabled = !(
+    selectedCaseType &&
+    selectedMode &&
+    selectedTarget &&
+    selectedExtract
+  );
 
   return (
     <DashboardWrapper>
       <GlobalStyle />
       <h3>Data Export Accelerator</h3>
 
-      <div style={{ width: '500px', marginTop: '16px' }}>
+      <div style={{ width: '500px', marginTop: '16px' }} className='wrap'>
         <FieldRow>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor='caseType'>
@@ -211,7 +303,7 @@ function ExportComponent(props: DashboardProps) {
               >
                 <option value="">Select</option>
                 {targetSystems.map((item, index) => (
-                  <option key={index} value={item.pyGUID}>
+                  <option key={index} value={item.TargetSystem}>
                     {item.TargetSystem}
                   </option>
                 ))}
@@ -219,6 +311,78 @@ function ExportComponent(props: DashboardProps) {
             </FieldRow>
           )
         }
+
+        {(selectedTarget === 'other' || selectedTarget === 'Other') && (
+          <>
+            <SectionHeading>Configuration</SectionHeading>
+            { configFields.map(({ label, prop, required }) => (
+              <FieldRow key={prop}>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label>
+                  {label}: {required && <span>*</span>}
+                </label>
+                <input
+                  type="text"
+                  value={String(otherConfig[prop] ?? '')}
+                  onChange={(e) => handleConfigChange(prop, e.target.value)}
+                  required={required}
+                />
+              </FieldRow>
+            ))}
+
+            <SectionHeading>Advanced Settings</SectionHeading>
+            {
+              advancedSettingsFields.map(({ label, prop }) => (
+              <FieldRow key={prop}>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label>{label}:</label>
+                <input
+                  type="number"
+                  value={Number(otherConfig[prop] ?? 0)}
+                  onChange={(e) => handleConfigChange(prop, e.target.value)}
+                />
+              </FieldRow>
+            ))}
+
+            <FieldRow>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label>Enable metric collection</label>
+              <input
+                type="checkbox"
+                checked={Boolean(otherConfig.pyEnableMetricCollection)}
+                onChange={(e) =>
+                  handleConfigChange('pyEnableMetricCollection', e.target.checked)
+                }
+              />
+            </FieldRow>
+
+            <FieldRow>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label>Enable path style access</label>
+              <input
+                type="checkbox"
+                checked={Boolean(otherConfig.pyEnablePathStyleAccess)}
+                onChange={(e) =>
+                  handleConfigChange('pyEnablePathStyleAccess', e.target.checked)
+                }
+              />
+            </FieldRow>
+
+            <SectionHeading>Target Folder</SectionHeading>
+            <FieldRow>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label>
+                Target Folder Path: <span>*</span>
+              </label>
+              <input
+                type="text"
+                value={String(otherConfig.TargetPath ?? '')}
+                onChange={(e) => handleConfigChange('TargetPath', e.target.value)}
+                required
+              />
+            </FieldRow>
+          </>
+        )}
 
         {
           selectedTarget && (
@@ -256,13 +420,29 @@ function ExportComponent(props: DashboardProps) {
               whiteSpace: 'pre-wrap',
               overflowX: 'auto'
             }}>
-              <h4 style={{ marginBottom: '8px', fontFamily: 'Inter', fontSize: '15px' }}>Tree Data</h4>
-              <pre style={{ margin: 0 }}>
-                {JSON.stringify(treeData, null, 2)}
-              </pre>
+              <Tree value={treeData} className="w-full md:w-30rem" />
             </div>
           )
         }
+
+        <button
+          type='button'
+          onClick={submit}
+          disabled={isSubmitDisabled}
+          style={{
+            marginTop: '16px',
+            backgroundColor: isSubmitDisabled ? '#d1d5db' : '#2563eb',
+            color: isSubmitDisabled ? '#6b7280' : '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '8px 16px',
+            cursor: isSubmitDisabled ? 'not-allowed' : 'pointer',
+            transition: 'background-color 0.2s ease',
+          }}
+        >
+          Submit
+        </button>
+
 
 
       </div>
@@ -270,4 +450,4 @@ function ExportComponent(props: DashboardProps) {
   );
 }
 
-export default withConfiguration(ExportComponent);
+export default withConfiguration(ExportComponentNew);

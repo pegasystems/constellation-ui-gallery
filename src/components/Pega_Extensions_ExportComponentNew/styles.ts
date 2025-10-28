@@ -3,16 +3,30 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   .wrap {
     padding:12px 20px;
-    display:grid;
-    grid-template-columns:1fr 360px;
-    gap:20px;
     background-color:#ffffff;
     font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    color-scheme: light;
 
-    select {
+    select, input {
       padding: 7px 8px !important;
       border-radius: 4px !important;
+    }
+
+    ul.p-tree-container, ul.p-treenode-children {
+        list-style-type: none;
+    }
+
+    ul li.p-treenode:last-child {
+      border-bottom: 1px #000 solid;
+    }
+
+    ul li.p-treenode  {
+      border: 1px #000 solid;
+      border-bottom: 0px;
+    }
+
+
+    li div.p-treenode-content {
+      padding: 6px;
     }
 
 `;

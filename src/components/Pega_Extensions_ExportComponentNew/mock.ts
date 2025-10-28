@@ -3,7 +3,8 @@ const configProps = {
   caseTypesDataPage: 'caseTypesDataPage',
   exportDetailsDataPage: 'exportDetailsDataPage',
   targetSystemDataPage: 'targetSystemDataPage',
-  extractRuleDataPage: 'extractRuleDataPage'
+  extractRuleDataPage: 'extractRuleDataPage',
+  treeViewDataPage: 'treeViewDataPage'
 };
 
 export default configProps;
