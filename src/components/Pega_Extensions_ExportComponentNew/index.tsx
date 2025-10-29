@@ -84,6 +84,40 @@ function ExportComponentNew(props: DashboardProps) {
   const [selectedExtract, setSelectedExtract] = useState('');
   const [treeData, setTreeData] = useState<any>(null);
   // const [nodes, setNodes] = useState<TreeNode[]>([]);
+  const [dataBricksForm, setDataBricksForm] = useState<any>(null);
+
+  const [fileContent, setFileContent] = useState<any>(null);
+  const [uploadedTable, setUploadedTable] = useState<any>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        /* eslint-disable no-console */
+        console.log(json);
+        setFileContent(json);
+      } catch (error) {
+        /* eslint-disable no-console */
+        console.log('Invalid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // Generate table structure
+  const generateTableStructure = () => {
+    if (!fileContent) {
+      /* eslint-disable no-console */
+      console.log('Please upload a valid JSON file first.');
+      return;
+    }
+    setUploadedTable(fileContent);
+  };
+
 
   const configFields = [
     { label: 'Bucket Name', prop: 'pyBucketName', required: true },
@@ -236,7 +270,37 @@ function ExportComponentNew(props: DashboardProps) {
     loadTreeview();
   }, [selectedExtract, selectedCaseType, treeViewDataPage, context]);
 
+  useEffect(() => {
+    async function loadDataBricksForm() {
+      if (selectedMode === 'Kafka' && selectedTarget === 'DataBricks') {
+        try {
+          const payload = {
+            dataViewParameters: {
+              'CaseTypeName': selectedCaseType,
+              'TargetSystem': selectedTarget
+            }
+          };
+
+          const res = await fetchDataPage('D_LoadTableStructure', context, payload);
+          setDataBricksForm(res?.data);
+          /* eslint-disable no-console */
+          console.log('Loaded DataBricks Form Config:', res?.data);
+        } catch (err) {
+          /* eslint-disable no-console */
+          console.error('Error loading DataBricks form config:', err);
+        }
+      } else {
+        setDataBricksForm(null);
+      }
+    }
+
+    loadDataBricksForm();
+  }, [selectedCaseType, selectedMode, selectedTarget, context]);
+
   if (isLoading) return <div style={{ padding: 16 }}>Loading data...</div>;
+
+  /* eslint-disable no-console */
+  console.log(dataBricksForm);
 
   const isSubmitDisabled = !(
     selectedCaseType &&
@@ -245,12 +309,14 @@ function ExportComponentNew(props: DashboardProps) {
     selectedExtract
   );
 
+
+
   return (
     <DashboardWrapper>
       <GlobalStyle />
       <h3>Data Export Accelerator</h3>
 
-      <div style={{ width: '500px', marginTop: '16px' }} className='wrap'>
+      <div style={{ width: '700px', marginTop: '16px' }} className='wrap'>
         <FieldRow>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor='caseType'>
@@ -316,7 +382,7 @@ function ExportComponentNew(props: DashboardProps) {
           )
         }
 
-        {(selectedTarget === 'other' || selectedTarget === 'Other') && (
+        {( selectedMode === 'Amazon S3 Bucket' && (selectedTarget === 'other' || selectedTarget === 'Other')) && (
           <>
             <SectionHeading>Configuration</SectionHeading>
             { configFields.map(({ label, prop, required }) => (
@@ -385,6 +451,202 @@ function ExportComponentNew(props: DashboardProps) {
                 required
               />
             </FieldRow>
+          </>
+        )}
+
+        {selectedMode === 'Kafka' && selectedTarget === 'Other' && (
+          <>
+            <div
+              style={{
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                padding: '20px',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                marginBottom: '24px',
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: '#111827',
+                  marginBottom: '16px',
+                }}
+              >
+                Upload Table Definition (JSON)
+              </h3>
+
+              {/* File Input */}
+              <input
+                type="file"
+                accept=".json"
+                onChange={(e) => handleFileChange(e)}
+                style={{
+                  display: 'block',
+                  marginBottom: '12px',
+                  fontSize: '14px',
+                }}
+              />
+
+              <button
+                type="button"
+                onClick={generateTableStructure}
+                style={{
+                  backgroundColor: '#2563eb',
+                  color: '#fff',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  fontWeight: 500,
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                Generate Table Structure
+              </button>
+            </div>
+
+            {/* Generated Form Section */}
+            {uploadedTable && (
+              <div
+                style={{
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  padding: '20px',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    color: '#111827',
+                    marginBottom: '16px',
+                    borderBottom: '1px solid #e5e7eb',
+                    paddingBottom: '4px',
+                  }}
+                >
+                  {uploadedTable.physicalTableName}
+                </h3>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '16px',
+                  }}
+                >
+                  {uploadedTable.columns?.map((col: any, colIndex: number) => (
+                    <div
+                      key={`${uploadedTable.tableName}-${col.name}-${colIndex}`}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }}
+                    >
+                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <label
+                        style={{
+                          fontWeight: 500,
+                          color: '#374151',
+                          marginBottom: '4px',
+                        }}
+                      >
+                        {col.name}
+                      </label>
+                      <input
+                        type="text"
+                        name={col.name}
+                        placeholder={col.type}
+                        style={{
+                          border: '1px solid #d1d5db',
+                          borderRadius: '6px',
+                          padding: '6px 8px',
+                          fontSize: '14px',
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {(selectedMode === 'Kafka' && selectedTarget === 'DataBricks') && (
+          <>
+            <h3>DataBricks Table Configuration</h3>
+
+            {!dataBricksForm || dataBricksForm.length === 0 ? (
+              <div>Loading DataBricks configuration...</div>
+            ) : (
+              dataBricksForm.map((table: any, tableIndex: number) => (
+                <div
+                  key={tableIndex}
+                  style={{
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    padding: '20px',
+                    marginBottom: '24px',
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: 600,
+                      color: '#111827',
+                      marginBottom: '16px',
+                      borderBottom: '1px solid #e5e7eb',
+                      paddingBottom: '4px',
+                    }}
+                  >
+                    {table.physicalTableName}
+                  </h3>
+
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
+                      gap: '16px',
+                    }}
+                  >
+                    {table.columns?.map((col: any, colIndex: number) => (
+                      <div
+                        key={`${table.physicalTableName}-${col.name}-${colIndex}`}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}
+                      >
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                        <label
+                          style={{
+                            fontWeight: 500,
+                            color: '#374151',
+                            marginBottom: '4px',
+                          }}
+                        >
+                          {col.name}
+                        </label>
+                        <input
+                          type="text"
+                          name={col.name}
+                          style={{
+                            border: '1px solid #d1d5db',
+                            borderRadius: '6px',
+                            padding: '6px 8px',
+                            fontSize: '14px',
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
           </>
         )}
 

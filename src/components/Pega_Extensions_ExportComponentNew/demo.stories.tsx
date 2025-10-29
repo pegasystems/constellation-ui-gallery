@@ -19,6 +19,293 @@ if (!window.PCore) {
 }
 
 const mockData = {
+  D_LoadTableStructure: {
+    data : {
+      data : [
+        {
+            "pxObjClass": "Migration-Data",
+            "schema": "static_tables",
+            "physicalTableName": "clientonboard_address",
+            "catalog": "avneet_kumar_catalog",
+            "columns": [
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "false",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Address_id",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "false",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pzInsKey",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractIdentifier",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractDateTime",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "AddressType",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Country",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Street",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Town",
+                    "type": "STRING"
+                }
+            ],
+            "tableName": "clientonboard_address"
+        },
+        {
+            "schema": "static_tables",
+            "pxObjClass": "Migration-Data",
+            "physicalTableName": "clientonboard",
+            "columns": [
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "false",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Address_id",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "false",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pzInsKey",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractIdentifier",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractDateTime",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "AddressType",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Country",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Street",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Town",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "false",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pzInsKey",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractIdentifier",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pxExtractDateTime",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "AccountNumber",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "Name",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "SortCode",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "pyID",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "FirstName",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "LastName",
+                    "type": "STRING"
+                },
+                {
+                    "pxObjClass": "Migration-Data",
+                    "nullable": "true",
+                    "Expression": {
+                        "pxObjClass": "PegaGadget-ExpressionBuilder",
+                        "pyLabel": "Test"
+                    },
+                    "name": "MiddleName",
+                    "type": "STRING"
+                }
+            ],
+            "catalog": "avneet_kumar_catalog",
+            "primaryKey": [
+                "pzInsKey"
+            ],
+            "tableName": "clientonboard"
+        }
+    ]
+    }
+  },
   caseTypesDataPage: {
     pxResults: [
       {
