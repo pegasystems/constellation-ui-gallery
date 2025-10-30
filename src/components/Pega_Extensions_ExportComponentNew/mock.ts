@@ -4,7 +4,8 @@ const configProps = {
   exportDetailsDataPage: 'exportDetailsDataPage',
   targetSystemDataPage: 'targetSystemDataPage',
   extractRuleDataPage: 'extractRuleDataPage',
-  treeViewDataPage: 'treeViewDataPage'
+  treeViewDataPage: 'treeViewDataPage',
+  autoCompleteDataPage: 'autoCompleteDataPage'
 };
 
 export default configProps;

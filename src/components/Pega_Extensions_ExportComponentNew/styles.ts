@@ -9,6 +9,11 @@ const GlobalStyle = createGlobalStyle`
     select, input {
       padding: 7px 8px !important;
       border-radius: 4px !important;
+      border-color: #e4e4e4
+    }
+
+    label {
+      color: #3d3d3d;
     }
 
     ul.p-tree-container, ul.p-treenode-children {

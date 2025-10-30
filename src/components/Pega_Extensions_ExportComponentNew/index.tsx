@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { withConfiguration } from '@pega/cosmos-react-core';
 import type { PConnFieldProps } from './PConnProps';
 import GlobalStyle from './styles';
 import { fetchDataPage, fetchPageDataPage } from './apiUtils';
 import styled from 'styled-components';
 import { Tree } from 'primereact/tree';
+import { Toast } from 'primereact/toast';
+import 'primereact/resources/themes/lara-light-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import Autocomplete from './Autocomplete';
 
 const DashboardWrapper = styled.div`
   background: #ffffff;
@@ -49,6 +53,7 @@ const SectionHeading = styled.h4`
 interface DashboardProps extends PConnFieldProps {
   caseTypesDataPage: string;
   exportDetailsDataPage: string;
+  autoCompleteDataPage: string;
   targetSystemDataPage: string;
   extractRuleDataPage: string;
   treeViewDataPage: string;
@@ -58,12 +63,14 @@ function ExportComponentNew(props: DashboardProps) {
   const {
     getPConnect,
     caseTypesDataPage,
+    autoCompleteDataPage = 'D_AutoCompleteList',
     exportDetailsDataPage,
     targetSystemDataPage,
     extractRuleDataPage,
     treeViewDataPage
   } = props;
 
+  const toast = useRef<any>(null);
   const PConnect = getPConnect();
   const context = PConnect.getContextName();
   /* eslint-disable no-console */
@@ -76,6 +83,7 @@ function ExportComponentNew(props: DashboardProps) {
   const [exportModes, setExportModes] = useState<any[]>([]);
   const [targetSystems, setTargetSystems] = useState<any[]>([]);
   const [extractRules, setExtractRules] = useState<any[]>([]);
+  const [autoCompleteFields, setautoCompleteFields] = useState<any[]>([]);
 
   // Selected values
   const [selectedCaseType, setSelectedCaseType] = useState('');
@@ -88,6 +96,7 @@ function ExportComponentNew(props: DashboardProps) {
 
   const [fileContent, setFileContent] = useState<any>(null);
   const [uploadedTable, setUploadedTable] = useState<any>(null);
+  const [filteredAutoComplete, setFilteredAutoComplete] = useState<any[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -97,12 +106,46 @@ function ExportComponentNew(props: DashboardProps) {
     reader.onload = (event) => {
       try {
         const json = JSON.parse(event.target?.result as string);
-        /* eslint-disable no-console */
-        console.log(json);
+
+        const isValidStructure =
+          typeof json.physicalTableName === 'string' &&
+          Array.isArray(json.columns) &&
+          json.columns.length > 0 &&
+          json.columns.every(
+            (col: any) =>
+              typeof col.name === 'string' &&
+              typeof col.type === 'string'
+          );
+
+        if (!isValidStructure) {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Invalid File Format',
+            detail:
+              'The uploaded JSON does not match the required table structure format. Please check the expected keys (tableName, columns, etc.).',
+            life: 1000
+          });
+          setFileContent(null);
+          return;
+        }
+
         setFileContent(json);
+        // toast.current?.show({
+        //   severity: 'success',
+        //   summary: 'File Uploaded',
+        //   detail: `Successfully loaded table: ${json.tableName}`,
+        //   life: 3000
+        // });
+
       } catch (error) {
-        /* eslint-disable no-console */
-        console.log('Invalid JSON file.');
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Invalid File Format',
+          detail:
+            'The uploaded JSON does not match the required table structure format. Please check the expected keys (tableName, columns, etc.).',
+          life: 1000
+        });
+        setFileContent(null);
       }
     };
     reader.readAsText(file);
@@ -113,6 +156,13 @@ function ExportComponentNew(props: DashboardProps) {
     if (!fileContent) {
       /* eslint-disable no-console */
       console.log('Please upload a valid JSON file first.');
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Invalid File Format',
+        detail:
+          'The uploaded JSON does not match the required table structure format. Please check the expected keys (tableName, columns, etc.).',
+        life: 1000
+      });
       return;
     }
     setUploadedTable(fileContent);
@@ -160,15 +210,19 @@ function ExportComponentNew(props: DashboardProps) {
   useEffect(() => {
     async function loadData() {
       try {
-        const [caseTypeRes, exportDetailsRes, targetRes] =
+        const [caseTypeRes, exportDetailsRes, targetRes, autoCompleteFieldsRes] =
           await Promise.all([
             fetchPageDataPage(caseTypesDataPage, context, {}),
             fetchDataPage(exportDetailsDataPage, context, {}),
             fetchDataPage(targetSystemDataPage, context, {}),
+            fetchDataPage(autoCompleteDataPage, context, {})
           ]);
         setCaseTypes(caseTypeRes?.pxResults || []);
         setExportModes(exportDetailsRes?.data || []);
         setTargetSystems(targetRes?.data || []);
+        setautoCompleteFields(
+          (autoCompleteFieldsRes?.data || []).map(item => item.pyPropertyName)
+        );
       } catch (err) {
         /* eslint-disable no-console */
         console.error('Error loading data pages:', err);
@@ -182,7 +236,7 @@ function ExportComponentNew(props: DashboardProps) {
     caseTypesDataPage,
     exportDetailsDataPage,
     targetSystemDataPage,
-    context,
+    context
   ]);
 
   useEffect(() => {
@@ -272,7 +326,7 @@ function ExportComponentNew(props: DashboardProps) {
 
   useEffect(() => {
     async function loadDataBricksForm() {
-      if (selectedMode === 'Kafka' && selectedTarget === 'DataBricks') {
+      if (selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'databricks') {
         try {
           const payload = {
             dataViewParameters: {
@@ -313,6 +367,7 @@ function ExportComponentNew(props: DashboardProps) {
 
   return (
     <DashboardWrapper>
+      <Toast ref={toast} />
       <GlobalStyle />
       <h3>Data Export Accelerator</h3>
 
@@ -382,7 +437,7 @@ function ExportComponentNew(props: DashboardProps) {
           )
         }
 
-        {( selectedMode === 'Amazon S3 Bucket' && (selectedTarget === 'other' || selectedTarget === 'Other')) && (
+        {( selectedMode.toLowerCase() === 'amazon s3 bucket' && selectedTarget.toLowerCase() === 'other') && (
           <>
             <SectionHeading>Configuration</SectionHeading>
             { configFields.map(({ label, prop, required }) => (
@@ -454,7 +509,7 @@ function ExportComponentNew(props: DashboardProps) {
           </>
         )}
 
-        {selectedMode === 'Kafka' && selectedTarget === 'Other' && (
+        {selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'other' && (
           <>
             <div
               style={{
@@ -491,6 +546,7 @@ function ExportComponentNew(props: DashboardProps) {
 
               <button
                 type="button"
+                disabled={!fileContent}
                 onClick={generateTableStructure}
                 style={{
                   backgroundColor: '#2563eb',
@@ -525,6 +581,7 @@ function ExportComponentNew(props: DashboardProps) {
                     marginBottom: '16px',
                     borderBottom: '1px solid #e5e7eb',
                     paddingBottom: '4px',
+                    textTransform: 'capitalize'
                   }}
                 >
                   {uploadedTable.physicalTableName}
@@ -574,9 +631,9 @@ function ExportComponentNew(props: DashboardProps) {
           </>
         )}
 
-        {(selectedMode === 'Kafka' && selectedTarget === 'DataBricks') && (
+        {(selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'databricks') && (
           <>
-            <h3>DataBricks Table Configuration</h3>
+            <h3 style={{ marginBottom: '15px' }}>DataBricks Table Configuration</h3>
 
             {!dataBricksForm || dataBricksForm.length === 0 ? (
               <div>Loading DataBricks configuration...</div>
@@ -601,6 +658,7 @@ function ExportComponentNew(props: DashboardProps) {
                       marginBottom: '16px',
                       borderBottom: '1px solid #e5e7eb',
                       paddingBottom: '4px',
+                      textTransform: 'capitalize'
                     }}
                   >
                     {table.physicalTableName}
@@ -631,16 +689,7 @@ function ExportComponentNew(props: DashboardProps) {
                         >
                           {col.name}
                         </label>
-                        <input
-                          type="text"
-                          name={col.name}
-                          style={{
-                            border: '1px solid #d1d5db',
-                            borderRadius: '6px',
-                            padding: '6px 8px',
-                            fontSize: '14px',
-                          }}
-                        />
+                        <Autocomplete options={autoCompleteFields} />
                       </div>
                     ))}
                   </div>
@@ -708,7 +757,6 @@ function ExportComponentNew(props: DashboardProps) {
         >
           Submit
         </button>
-
 
 
       </div>

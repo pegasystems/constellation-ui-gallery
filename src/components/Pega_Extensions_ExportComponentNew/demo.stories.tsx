@@ -19,6 +19,40 @@ if (!window.PCore) {
 }
 
 const mockData = {
+  autoCompleteDataPage: {
+    data : {
+      data: [
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "pyDependsOnName"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "windchill_f"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "pyOTP"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "pySingleRunExplanation"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "iCalUID"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "pyUndefinedPageCountDesc"
+          },
+          {
+              "pxObjClass": "Rule-Obj-Property",
+              "pyPropertyName": "pyFileNameWithExtension"
+          }
+      ]
+    }
+  },
   D_LoadTableStructure: {
     data : {
       data : [
@@ -695,6 +729,10 @@ window.PCore.getDataApiUtils = () => {
   return {
     getData: (endpoint) => {
       switch (endpoint) {
+        case 'D_LoadTableStructure':
+          return Promise.resolve(mockData.D_LoadTableStructure);
+        case 'autoCompleteDataPage':
+          return Promise.resolve(mockData.autoCompleteDataPage);
         case 'caseTypesDataPage':
           return Promise.resolve(mockData.caseTypesDataPage);
         case 'exportDetailsDataPage':
@@ -724,7 +762,7 @@ export const BaseExportComponent: Story = (args) => {
       ignoreSuggestion: () => {},
       acceptSuggestion: () => {},
       setInheritedProps: () => {},
-      resolveConfigProps: () => {},
+      resolveConfigProps: () => {}
     }),
   };
 
@@ -740,5 +778,6 @@ BaseExportComponent.args = {
   exportDetailsDataPage: configProps.exportDetailsDataPage,
   targetSystemDataPage: configProps.targetSystemDataPage,
   extractRuleDataPage: configProps.extractRuleDataPage,
+  autoCompleteDataPage: configProps.autoCompleteDataPage,
   treeViewDataPage: configProps.treeViewDataPage
 };
