@@ -42,10 +42,11 @@ export const ToothContainer = styled.div.attrs<{ top: number; left: number }>(({
 export const ToothButton = styled(Button)<{ status: string; exists: boolean }>`
   &.tooth-button {
     width: 2.1875rem;
-    height: 2.1875rem;
+    height: 2.5125rem;
     font-size: 0.6875rem;
     font-weight: bold;
     border: 0.125rem solid ${({ theme }) => theme.base.palette['border-line']};
+    border-radius: 40% 40% 50% 50% / 50% 50% 50% 50%;
 
     background-color: ${({ status, exists, theme }) => {
       if (!exists) return theme.base.palette['secondary-background'];
