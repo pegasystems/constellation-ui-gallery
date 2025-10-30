@@ -7,9 +7,11 @@ const GlobalStyle = createGlobalStyle`
     font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 
     select, input {
-      padding: 7px 8px !important;
-      border-radius: 4px !important;
-      border-color: #e4e4e4
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;      
     }
 
     label {

@@ -1,0 +1,23 @@
+{
+  "name": "Pega_ConstellationUIGallery_htmlViewer",
+  "label": "Html Viewer",
+  "description": "Html Viewer",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "ConstellationUIGallery",
+  "allowedApplications": [],
+  "componentKey": "Pega_ConstellationUIGallery_htmlViewer",
+  "type": "Widget",
+  "subtype": "CASE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+   {
+      "name": "label",
+      "label": "Label value",
+      "format": "TEXT"
+    }
+  ],
+  "defaultConfig": {
+     "label": "@L Html Viewer"
+  }
+}

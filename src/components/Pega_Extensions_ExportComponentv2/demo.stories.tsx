@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 // @ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
-import ExportComponentNew from './index';
+import ExportComponentV2 from './index';
 import configProps from './mock';
 
-const meta: Meta<typeof ExportComponentNew> = {
-  title: 'ExportComponentNew',
-  component: ExportComponentNew,
+const meta: Meta<typeof ExportComponentV2> = {
+  title: 'ExportComponentV2',
+  component: ExportComponentV2,
   excludeStories: /.*Data$/,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof ExportComponentNew>;
+type Story = StoryObj<typeof ExportComponentV2>;
 
 if (!window.PCore) {
   window.PCore = {};
@@ -352,164 +352,241 @@ const mockData = {
       }]
   },
   treeData: {
-    data : {
+    pyTree : {
         pyTreeNodes: [
-            {
-                "pyNodeCaption": "BIG-ClientOnBoard-Work-ClientOnboard",
-                "pyExpanded": "true",
+          {
+            "pyNodeCaption": "BIG-ClientOnBoard-Work-ClientOnboard",
+            "pyExpanded": "true",
+            "pyUserData": {
+              "pySelectedValue": "BIG-ClientOnBoard-Work-ClientOnboard",
+              "pyOutputFormat": "CSV",
+              "pyPropertyMode": "Class",
+              "pyPageClass": "BIG-ClientOnBoard-Work-ClientOnboard",
+              "pyOutputName": "BIG-ClientOnBoard-Work-ClientOnboard",
+              "pyProperties": [],
+              "pyType": "Class",
+              "pyMapName": "",
+              "pyFilterString": "",
+              "pxWarningsToDisplay": []
+            },
+            "pyTreeNodes": [
+              {
+                "pyNodeCaption": "ClientDetails",
                 "pyUserData": {
-                    "pySelectedValue": "BIG-ClientOnBoard-Work-ClientOnboard",
-                    "pyOutputFormat": "CSV",
-                    "pyPropertyMode": "Class",
-                    "pyPageClass": "BIG-ClientOnBoard-Work-ClientOnboard",
-                    "pyOutputName": "BIG-ClientOnBoard-Work-ClientOnboard",
-                    "pyProperties": [
-                        {
-                            "pyNodeCaption": "BankDetails",
-                            "pyPropertyMode": "Page",
-                            "pyPageClass": "BIG-ClientOnBoard-Data-BankDetails",
-                            "pyMaxLength": 0,
-                            "pyStringType": "Text",
-                            "pyPropertyName": "BankDetails"
-                        },
-                        {
-                            "pyNodeCaption": "FirstName",
-                            "pyPropertyMode": "String",
-                            "pyPageClass": "",
-                            "pyMaxLength": 0,
-                            "pyStringType": "Text",
-                            "pyPropertyName": "FirstName"
-                        },
-                        {
-                            "pyNodeCaption": "MiddleName",
-                            "pyPropertyMode": "String",
-                            "pyPageClass": "",
-                            "pyMaxLength": 0,
-                            "pyStringType": "Text",
-                            "pyPropertyName": "MiddleName"
-                        }
-                    ],
-                    "pyType": "Class",
-                    "pyMapName": "",
-                    "pyFilterString": "",
-                    "pxWarningsToDisplay": []
+                  "pySelectedValue": "BIG-ClientOnBoard-Data-ClientDetails",
+                  "pyPropertyMode": "Page",
+                  "pyPageClass": "BIG-ClientOnBoard-Data-ClientDetails",
+                  "pyType": "Page"
                 },
                 "pyTreeNodes": [
-                    {
-                        "pyNodeCaption": "BankDetails",
+                  {
+                    "pyNodeCaption": "PersonalInfo",
+                    "pyUserData": {
+                      "pyPropertyMode": "Page",
+                      "pyPageClass": "BIG-ClientOnBoard-Data-PersonalInfo"
+                    },
+                    "pyTreeNodes": [
+                      {
+                        "pyNodeCaption": "Name",
                         "pyUserData": {
-                            "pySelectedValue": "BIG-ClientOnBoard-Data-BankDetails",
-                            "pyPrecision": "",
-                            "pyOutputFormat": "CSV",
-                            "pyPropertyMode": "Page",
-                            "pyPageClass": "BIG-ClientOnBoard-Data-BankDetails",
-                            "pyKeyName": "BankDetails_id",
-                            "pyProperties": [
-                                {
-                                    "pyNodeCaption": "AccountNumber",
-                                    "pyPropertyMode": "String",
-                                    "pyPageClass": "",
-                                    "pyMaxLength": 0,
-                                    "pyStringType": "Integer",
-                                    "pyPropertyName": "AccountNumber"
-                                },
-                                {
-                                    "pyNodeCaption": "Name",
-                                    "pyPropertyMode": "String",
-                                    "pyPageClass": "",
-                                    "pyMaxLength": 256,
-                                    "pyStringType": "Text",
-                                    "pyPropertyName": "Name"
-                                },
-                                {
-                                    "pyNodeCaption": "SortCode",
-                                    "pyPropertyMode": "String",
-                                    "pyPageClass": "",
-                                    "pyMaxLength": 256,
-                                    "pyStringType": "Text",
-                                    "pyPropertyName": "SortCode"
-                                }
-                            ],
-                            "pyType": "Page",
-                            "pyMapName": "",
-                            "pyFilterString": "",
-                            "pxWarningsToDisplay": []
+                          "pyPropertyMode": "Page",
+                          "pyPageClass": "BIG-ClientOnBoard-Data-Name"
                         },
                         "pyTreeNodes": [
-                            {
-                                "pyNodeCaption": "AccountNumber",
-                                "pyUserData": {
-                                    "pyPrecision": "",
-                                    "pyPropertyMode": "String",
-                                    "pyOutputFormat": "CSV",
-                                    "pyPageClass": "",
-                                    "pyType": "Integer"
-                                },
-                                "pyTreeNodes": [],
-                                "pyName": "AccountNumber",
-                                "pyImage": "desktopimages/ae_instance.gif"
+                          {
+                            "pyNodeCaption": "FirstName",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
                             },
-                            {
-                                "pyNodeCaption": "Name",
-                                "pyUserData": {
-                                    "pyPropertyMode": "String",
-                                    "pyOutputFormat": "CSV",
-                                    "pyPageClass": "",
-                                    "pyType": "Text"
-                                },
-                                "pyTreeNodes": [],
-                                "pyName": "Name",
-                                "pyImage": "desktopimages/ae_instance.gif"
+                            "pyTreeNodes": [],
+                            "pyName": "FirstName",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          },
+                          {
+                            "pyNodeCaption": "LastName",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
                             },
-                            {
-                                "pyNodeCaption": "SortCode",
-                                "pyUserData": {
-                                    "pyPropertyMode": "String",
-                                    "pyOutputFormat": "CSV",
-                                    "pyPageClass": "",
-                                    "pyType": "Text"
-                                },
-                                "pyTreeNodes": [],
-                                "pyName": "SortCode",
-                                "pyImage": "desktopimages/ae_instance.gif"
-                            }
+                            "pyTreeNodes": [],
+                            "pyName": "LastName",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          }
                         ],
-                        "pyName": "BankDetails",
-                        "pyImage": "images/page.gif",
-                        "pxWarningsToDisplay": []
-                    },
-                    {
-                        "pyNodeCaption": "FirstName",
+                        "pyName": "Name",
+                        "pyImage": "images/page.gif"
+                      },
+                      {
+                        "pyNodeCaption": "DateOfBirth",
                         "pyUserData": {
-                            "pyPropertyMode": "String",
-                            "pyOutputFormat": "CSV",
-                            "pyPageClass": "",
-                            "pyType": "Text",
-                            "pyMapName": ""
+                          "pyPropertyMode": "String",
+                          "pyType": "Date"
                         },
                         "pyTreeNodes": [],
-                        "pyName": "FirstName",
+                        "pyName": "DateOfBirth",
                         "pyImage": "desktopimages/ae_instance.gif"
+                      }
+                    ],
+                    "pyName": "PersonalInfo",
+                    "pyImage": "images/page.gif"
+                  },
+                  {
+                    "pyNodeCaption": "Address",
+                    "pyUserData": {
+                      "pyPropertyMode": "Page",
+                      "pyPageClass": "BIG-ClientOnBoard-Data-Address"
                     },
-                    {
-                        "pyNodeCaption": "MiddleName",
+                    "pyTreeNodes": [
+                      {
+                        "pyNodeCaption": "PermanentAddress",
                         "pyUserData": {
-                            "pyPropertyMode": "String",
-                            "pyOutputFormat": "CSV",
-                            "pyPageClass": "",
-                            "pyType": "Text",
-                            "pyMapName": ""
+                          "pyPropertyMode": "Page",
+                          "pyPageClass": "BIG-ClientOnBoard-Data-PermanentAddress"
                         },
-                        "pyTreeNodes": [],
-                        "pyName": "MiddleName",
-                        "pyImage": "desktopimages/ae_instance.gif"
-                    }
+                        "pyTreeNodes": [
+                          {
+                            "pyNodeCaption": "City",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
+                            },
+                            "pyTreeNodes": [],
+                            "pyName": "City",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          },
+                          {
+                            "pyNodeCaption": "PostalCode",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
+                            },
+                            "pyTreeNodes": [],
+                            "pyName": "PostalCode",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          }
+                        ],
+                        "pyName": "PermanentAddress",
+                        "pyImage": "images/page.gif"
+                      }
+                    ],
+                    "pyName": "Address",
+                    "pyImage": "images/page.gif"
+                  }
                 ],
-                "pyName": "BIG-ClientOnBoard-Work-ClientOnboard",
-                "pyPropRef": "",
-                "pyImage": "images/page.gif",
-                "pxWarningsToDisplay": []
-            }
+                "pyName": "ClientDetails",
+                "pyImage": "images/page.gif"
+              },
+              {
+                "pyNodeCaption": "BankDetails",
+                "pyUserData": {
+                  "pySelectedValue": "BIG-ClientOnBoard-Data-BankDetails",
+                  "pyPropertyMode": "Page",
+                  "pyPageClass": "BIG-ClientOnBoard-Data-BankDetails",
+                  "pyType": "Page"
+                },
+                "pyTreeNodes": [
+                  {
+                    "pyNodeCaption": "Account",
+                    "pyUserData": {
+                      "pyPropertyMode": "Page",
+                      "pyPageClass": "BIG-ClientOnBoard-Data-Account"
+                    },
+                    "pyTreeNodes": [
+                      {
+                        "pyNodeCaption": "AccountNumber",
+                        "pyUserData": {
+                          "pyPropertyMode": "String",
+                          "pyType": "Integer"
+                        },
+                        "pyTreeNodes": [],
+                        "pyName": "AccountNumber",
+                        "pyImage": "desktopimages/ae_instance.gif"
+                      },
+                      {
+                        "pyNodeCaption": "SortCode",
+                        "pyUserData": {
+                          "pyPropertyMode": "String",
+                          "pyType": "Text"
+                        },
+                        "pyTreeNodes": [],
+                        "pyName": "SortCode",
+                        "pyImage": "desktopimages/ae_instance.gif"
+                      },
+                      {
+                        "pyNodeCaption": "BranchDetails",
+                        "pyUserData": {
+                          "pyPropertyMode": "Page",
+                          "pyPageClass": "BIG-ClientOnBoard-Data-BranchDetails"
+                        },
+                        "pyTreeNodes": [
+                          {
+                            "pyNodeCaption": "BranchName",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
+                            },
+                            "pyTreeNodes": [],
+                            "pyName": "BranchName",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          },
+                          {
+                            "pyNodeCaption": "IFSCCode",
+                            "pyUserData": {
+                              "pyPropertyMode": "String",
+                              "pyType": "Text"
+                            },
+                            "pyTreeNodes": [],
+                            "pyName": "IFSCCode",
+                            "pyImage": "desktopimages/ae_instance.gif"
+                          },
+                          {
+                            "pyNodeCaption": "Contact",
+                            "pyUserData": {
+                              "pyPropertyMode": "Page",
+                              "pyPageClass": "BIG-ClientOnBoard-Data-BranchContact"
+                            },
+                            "pyTreeNodes": [
+                              {
+                                "pyNodeCaption": "PhoneNumber",
+                                "pyUserData": {
+                                  "pyPropertyMode": "String",
+                                  "pyType": "Text"
+                                },
+                                "pyTreeNodes": [],
+                                "pyName": "PhoneNumber",
+                                "pyImage": "desktopimages/ae_instance.gif"
+                              },
+                              {
+                                "pyNodeCaption": "Email",
+                                "pyUserData": {
+                                  "pyPropertyMode": "String",
+                                  "pyType": "Text"
+                                },
+                                "pyTreeNodes": [],
+                                "pyName": "Email",
+                                "pyImage": "desktopimages/ae_instance.gif"
+                              }
+                            ],
+                            "pyName": "Contact",
+                            "pyImage": "images/page.gif"
+                          }
+                        ],
+                        "pyName": "BranchDetails",
+                        "pyImage": "images/page.gif"
+                      }
+                    ],
+                    "pyName": "Account",
+                    "pyImage": "images/page.gif"
+                  }
+                ],
+                "pyName": "BankDetails",
+                "pyImage": "images/page.gif"
+              }
+            ],
+            "pyName": "BIG-ClientOnBoard-Work-ClientOnboard",
+            "pyImage": "images/page.gif"
+          }
         ]
     }
   },
@@ -716,7 +793,7 @@ window.PCore.getDataPageUtils = () => {
       switch (endpoint) {
         case 'caseTypesDataPage':
           return Promise.resolve(mockData.caseTypesDataPage);
-        case 'treeData':
+        case 'treeViewDataPage':
           return Promise.resolve(mockData.treeData);
         default:
           return Promise.reject(new Error('Unknown endpoint'));
@@ -768,7 +845,7 @@ export const BaseExportComponent: Story = (args) => {
 
   return (
     <>
-      <ExportComponentNew {...props} {...args} />
+      <ExportComponentV2 {...props} {...args} />
     </>
   );
 };

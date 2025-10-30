@@ -284,7 +284,7 @@ function ExportComponentV2(props: DashboardProps) {
       }
     }
     loadExtractRules();
-  }, [selectedCaseType, extractRuleDataPage, context]);
+  }, [selectedCaseType, selectedTarget, extractRuleDataPage, context]);
 
   async function submit() {
     try {
@@ -296,7 +296,10 @@ function ExportComponentV2(props: DashboardProps) {
       };
 
       let dataPageName = '';
-      if (selectedMode.toLowerCase() === 'amazon s3 bucket' && selectedTarget.toLowerCase() === 'other') {
+      if (
+        selectedMode.toLowerCase() === 'amazon s3 bucket' &&
+        ['other', 'snowflake', 'databricks'].includes(selectedTarget.toLowerCase())
+      ) {
         dataPageName = 'D_SaveDataExportDetails';
         parameters = { ...parameters, ...otherConfig };
       }
@@ -313,8 +316,30 @@ function ExportComponentV2(props: DashboardProps) {
 
       const res = await fetchPageDataPage(dataPageName, context, parameters, {});
       console.log('Export Preview Data:', res);
+
+      let successMessage = 'Export configuration saved successfully.';
+      if (res?.pzLoadTime) {
+        successMessage = `Export saved successfully at ${res.pzLoadTime || 'server time'}.`;
+      }
+
+      toast.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: successMessage,
+        life: 1000
+      });
     } catch (err) {
-      console.error('Error submitting export details:', err);
+      let errorMessage = 'Something went wrong while saving export details.';
+      if (err && typeof err === 'object') {
+        const e = err as { response?: { data?: { message?: string } }; message?: string };
+        errorMessage = e.response?.data?.message || e.message || errorMessage;
+      }
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: errorMessage,
+        life: 1000
+      });
     }
   }
 
@@ -394,11 +419,39 @@ function ExportComponentV2(props: DashboardProps) {
     selectedExtract
   );
 
+  const resetStates = (level: 'caseType' | 'mode' | 'target') => {
+    if (level === 'caseType') {
+      setSelectedMode('');
+      setSelectedTarget('');
+      setSelectedExtract('');
+      setTreeData(null);
+      setExtractRules([]);
+      setUploadedTable(null);
+      setDataBricksForm(null);
+    }
+
+    if (level === 'mode') {
+      setSelectedTarget('');
+      setSelectedExtract('');
+      setTreeData(null);
+      setExtractRules([]);
+      setUploadedTable(null);
+      setDataBricksForm(null);
+    }
+
+    if (level === 'target') {
+      setSelectedExtract('');
+      setTreeData(null);
+      setExtractRules([]);
+      setUploadedTable(null);
+      setDataBricksForm(null);
+    }
+  };
+
   return (
     <DashboardWrapper>
-      <Toast ref={toast} />
       <GlobalStyle />
-      <h3>Data Export Accelerator</h3>
+      <Toast ref={toast} />
 
       <div style={{ width: '700px', marginTop: '16px' }} className='wrap'>
         <FieldRow>
@@ -409,7 +462,10 @@ function ExportComponentV2(props: DashboardProps) {
           <select
             id='caseType'
             value={selectedCaseType}
-            onChange={(e) => setSelectedCaseType(e.target.value)}
+            onChange={(e) => {
+              setSelectedCaseType(e.target.value);
+              resetStates('caseType');
+            }}
           >
             <option value="">Select</option>
             {caseTypes.map((item, index) => (
@@ -430,7 +486,10 @@ function ExportComponentV2(props: DashboardProps) {
               <select
                 id='modeExport'
                 value={selectedMode}
-                onChange={(e) => setSelectedMode(e.target.value)}
+                onChange={(e) => {
+                  setSelectedMode(e.target.value);
+                  resetStates('mode');
+                }}
               >
                 <option value="">Select</option>
                 {exportModes.map((item, index) => (
@@ -453,7 +512,10 @@ function ExportComponentV2(props: DashboardProps) {
               <select
                 id='targetSystem'
                 value={selectedTarget}
-                onChange={(e) => setSelectedTarget(e.target.value)}
+                onChange={(e) => {
+                  setSelectedTarget(e.target.value);
+                  resetStates('target');
+                }}
               >
                 <option value="">Select</option>
                 {targetSystems.map((item, index) => (
@@ -758,19 +820,7 @@ function ExportComponentV2(props: DashboardProps) {
 
         {
           treeData && (
-            <div style={{
-              marginTop: '24px',
-              padding: '16px',
-              background: '#f9fafb',
-              border: '1px solid #e5e7eb',
-              borderRadius: '8px',
-              fontFamily: 'monospace',
-              fontSize: '13px',
-              whiteSpace: 'pre-wrap',
-              overflowX: 'auto'
-            }}>
-              <Tree value={treeData} className="w-full md:w-30rem" />
-            </div>
+            <Tree value={treeData} className="w-full md:w-30rem" />
           )
         }
 
