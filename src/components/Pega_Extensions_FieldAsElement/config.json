@@ -1,0 +1,17 @@
+{
+  "name": "Pega_ConstellationUIGallery_FieldAsElement",
+  "label": "Field as Element",
+  "description": "Field as Element",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "ConstellationUIGallery",
+  "allowedApplications": [],
+  "componentKey": "Pega_ConstellationUIGallery_FieldAsElement",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "localAction": ""
+  }
+}
