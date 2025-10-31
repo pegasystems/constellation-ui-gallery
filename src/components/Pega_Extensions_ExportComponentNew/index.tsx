@@ -641,18 +641,9 @@ function ExportComponentV2(props: DashboardProps) {
                       >
                         {col.name}
                       </label>
-                      <input
-                        type="text"
-                        name={col.name}
-                        value={uploadedTableValues[col.name] ?? ''}
-                        onChange={(e) => handleUploadedTableChange(col.name, e.target.value)}
-                        placeholder={col.type}
-                        style={{
-                          border: '1px solid #ccc',
-                          borderRadius: '6px',
-                          padding: '6px 8px',
-                          fontSize: '14px',
-                        }}
+                      <Autocomplete
+                        options={autoCompleteFields}
+                        onSelect={(value) => handleUploadedTableChange(col.name, value)}
                       />
                     </div>
                   ))}

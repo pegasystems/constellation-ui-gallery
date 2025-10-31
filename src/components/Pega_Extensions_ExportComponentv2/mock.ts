@@ -6,7 +6,9 @@ const configProps = {
   extractRuleDataPage: 'extractRuleDataPage',
   treeViewDataPage: 'treeViewDataPage',
   autoCompleteDataPage: 'autoCompleteDataPage',
-  loadTableStructureDataPage: 'loadTableStructureDataPage'
+  loadTableStructureDataPage: 'loadTableStructureDataPage',
+  kafkaDataBricksSaveDataPage: 'kafkaDataBricksSaveDataPage',
+  kafkaJsonSaveDataPage: 'kafkaJsonSaveDataPage'
 };
 
 export default configProps;

@@ -19,6 +19,12 @@ if (!window.PCore) {
 }
 
 const mockData = {
+  kafkaDataBricksSaveDataPage: { data : {
+    pzLoadTime: '123'
+  }},
+  kafkaJsonSaveDataPage: { data : {
+    pzLoadTime: '123'
+  }},
   autoCompleteDataPage: {
     data : {
       data: [
@@ -791,6 +797,10 @@ window.PCore.getDataPageUtils = () => {
   return {
     getPageDataAsync: (endpoint) => {
       switch (endpoint) {
+        case 'kafkaDataBricksSaveDataPage':
+          return Promise.resolve(mockData.kafkaDataBricksSaveDataPage);
+        case 'kafkaJsonSaveDataPage':
+          return Promise.resolve(mockData.kafkaJsonSaveDataPage);
         case 'caseTypesDataPage':
           return Promise.resolve(mockData.caseTypesDataPage);
         case 'treeViewDataPage':
@@ -857,5 +867,7 @@ BaseExportComponent.args = {
   extractRuleDataPage: configProps.extractRuleDataPage,
   autoCompleteDataPage: configProps.autoCompleteDataPage,
   treeViewDataPage: configProps.treeViewDataPage,
-  loadTableStructureDataPage: configProps.loadTableStructureDataPage
+  loadTableStructureDataPage: configProps.loadTableStructureDataPage,
+  kafkaDataBricksSaveDataPage: configProps.kafkaDataBricksSaveDataPage,
+  kafkaJsonSaveDataPage: configProps.kafkaJsonSaveDataPage
 };
