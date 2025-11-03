@@ -199,7 +199,7 @@ function ExportComponentV2(props: DashboardProps) {
     { label: 'Bucket Name', prop: 'pyBucketName', required: true },
     { label: 'Root path', prop: 'pyRootpath', required: true },
     { label: 'Access key id', prop: 'pyAccessKeyId', required: true },
-    { label: 'Secret access key', prop: 'pySecretAccessKey', required: true }
+    { label: 'Secret access key', prop: 'pySecretAccessKey', required: true, secure: true }
   ];
 
   const advancedSettingsFields = [
@@ -301,7 +301,7 @@ function ExportComponentV2(props: DashboardProps) {
         ['other', 'snowflake', 'databricks'].includes(selectedTarget.toLowerCase())
       ) {
         dataPageName = 'D_SaveDataExportDetails';
-        parameters = { ...parameters, ...otherConfig, ExtractRuleName: selectedExtract };
+        parameters = { ...parameters, ...otherConfig, ExtractRuleName: selectedExtract, ExportMode: selectedMode };
       }
 
       if (selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'other') {
@@ -552,14 +552,14 @@ function ExportComponentV2(props: DashboardProps) {
         {( selectedMode.toLowerCase() === 'amazon s3 bucket' && selectedTarget.toLowerCase() === 'other') && (
           <>
             <SectionHeading>Configuration</SectionHeading>
-            { configFields.map(({ label, prop, required }) => (
+            { configFields.map(({ label, prop, required, secure = false }) => (
               <FieldRow key={prop}>
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                 <label>
                   {label}: {required && <span>*</span>}
                 </label>
                 <input
-                  type="text"
+                  type={ secure ? 'password' : 'text' }
                   value={String(otherConfig[prop] ?? '')}
                   onChange={(e) => handleConfigChange(prop, e.target.value)}
                   required={required}
