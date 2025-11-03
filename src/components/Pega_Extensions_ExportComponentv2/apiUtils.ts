@@ -10,6 +10,8 @@ const fetchDataPage = async(
   payload: Record<string, any> = {}
 ): Promise<FetchDataPageResult> => {
   try {
+    // eslint-disable-next-line no-console
+    console.log(dataPageName, payload);
     const response = await PCore.getDataApiUtils().getData(dataPageName, payload, context);
     return response.data || {};
   } catch (error) {
@@ -27,6 +29,8 @@ const fetchPageDataPage = async(
   options: Record<string, any> = {}
 ): Promise<FetchDataPageResult> => {
   try {
+    // eslint-disable-next-line no-console
+    console.log(dataPageName, payload);
     const response = await PCore.getDataPageUtils().getPageDataAsync(dataPageName, context, payload, options);
     return response || {};
   } catch (error) {

@@ -7,7 +7,7 @@ type ActionableNewButtonProps = {
   getPConnect: any;
 };
 
-export const PegaExtensionsActionableNewButton = (props: ActionableNewButtonProps) => {
+export const PegaExtensionsFieldAsElement = (props: ActionableNewButtonProps) => {
   const { getPConnect, value, localAction } = props;
   if (value && localAction) {
     const availableActions =
@@ -40,4 +40,4 @@ export const PegaExtensionsActionableNewButton = (props: ActionableNewButtonProp
   return null;
 };
 
-export default withConfiguration(PegaExtensionsActionableNewButton);
+export default withConfiguration(PegaExtensionsFieldAsElement);

@@ -106,10 +106,12 @@ function ExportComponentV2(props: DashboardProps) {
   const [dataBricksValues, setDataBricksValues] = useState<Record<string, Record<string, string>>>({});
 
   const handleUploadedTableChange = (columnName: string, value: any) => {
+    console.log('Selected:', columnName, value);
     setUploadedTableValues(prev => ({
       ...prev,
       [columnName]: value
     }));
+    console.log(uploadedTableValues);
   };
 
   const handleDataBricksChange = (tableName: string, columnName: string, value: string) => {
@@ -290,9 +292,7 @@ function ExportComponentV2(props: DashboardProps) {
     try {
       let parameters: Record<string, any> = {
         CaseTypeName: selectedCaseType,
-        ExportMode: selectedMode,
-        TargetSystem: selectedTarget,
-        ExtractRuleName: selectedExtract
+        TargetSystem: selectedTarget
       };
 
       let dataPageName = '';
@@ -301,17 +301,36 @@ function ExportComponentV2(props: DashboardProps) {
         ['other', 'snowflake', 'databricks'].includes(selectedTarget.toLowerCase())
       ) {
         dataPageName = 'D_SaveDataExportDetails';
-        parameters = { ...parameters, ...otherConfig };
+        parameters = { ...parameters, ...otherConfig, ExtractRuleName: selectedExtract };
       }
 
       if (selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'other') {
         dataPageName = kafkaJsonSaveDataPage;
-        parameters = { ...parameters, TableData: uploadedTableValues };
+
+        const result = Object.entries(uploadedTableValues).map(([key, value]) => ({
+          [key]: { selectedvalue: value }
+        }));
+        parameters = { ...parameters, data: result };
       }
 
       if (selectedMode.toLowerCase() === 'kafka' && selectedTarget.toLowerCase() === 'databricks') {
         dataPageName = kafkaDataBricksSaveDataPage;
         parameters = { ...parameters, DataBricksConfig: dataBricksValues };
+
+        // const transformedConfig = Object.values(dataBricksValues)
+        //   .flatMap((columns: Record<string, string>) =>
+        //     Object.entries(columns).map(([field, value]) => ({
+        //       [field]: { selectedvalue: value }
+        //     }))
+        //   );
+
+        // console.log(dataBricksValues);
+        // console.log(transformedConfig);
+
+        parameters = {
+          ...parameters,
+          data: dataBricksValues
+        };
       }
 
       const res = await fetchPageDataPage(dataPageName, context, parameters, {});
@@ -364,6 +383,7 @@ function ExportComponentV2(props: DashboardProps) {
 
     async function loadTreeview() {
       if (!selectedCaseType || !selectedExtract) return;
+      if (selectedMode.toLowerCase() !== 'kafka' && !selectedExtract) return;
 
       try {
         const parameters = {
@@ -381,7 +401,7 @@ function ExportComponentV2(props: DashboardProps) {
       }
     }
     loadTreeview();
-  }, [selectedExtract, selectedCaseType, treeViewDataPage, context]);
+  }, [selectedMode, selectedExtract, selectedCaseType, treeViewDataPage, context]);
 
   useEffect(() => {
     async function loadDataBricksForm() {
@@ -412,11 +432,12 @@ function ExportComponentV2(props: DashboardProps) {
 
   if (isLoading) return <div style={{ padding: 16 }}>Loading data...</div>;
 
+  const isKafkaMode = selectedMode.toLowerCase() === 'kafka';
   const isSubmitDisabled = !(
     selectedCaseType &&
     selectedMode &&
     selectedTarget &&
-    selectedExtract
+    (isKafkaMode || selectedExtract)
   );
 
   const resetStates = (level: 'caseType' | 'mode' | 'target') => {
@@ -681,9 +702,9 @@ function ExportComponentV2(props: DashboardProps) {
 
                 <div
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
                   }}
                 >
                   {uploadedTable.columns?.map((col: any, colIndex: number) => (
@@ -691,23 +712,26 @@ function ExportComponentV2(props: DashboardProps) {
                       key={`${uploadedTable.tableName}-${col.name}-${colIndex}`}
                       style={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '12px'
                       }}
                     >
                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                       <label
                         style={{
+                          flex: '0 0 35%',
                           fontWeight: 500,
-                          color: '#374151',
-                          marginBottom: '4px',
+                          color: '#374151'
                         }}
                       >
                         {col.name}
                       </label>
-                      <Autocomplete
-                        options={autoCompleteFields}
-                        onSelect={(value) => handleUploadedTableChange(col.name, value)}
-                      />
+                      <div style={{ flex: 1 }}>
+                        <Autocomplete
+                          options={autoCompleteFields}
+                          onSelect={(value) => handleUploadedTableChange(col.name, value)}
+                        />
+                        </div>
                     </div>
                   ))}
                 </div>
@@ -751,9 +775,9 @@ function ExportComponentV2(props: DashboardProps) {
 
                   <div
                     style={{
-                      display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
-                      gap: '16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '12px'
                     }}
                   >
                     {table.columns?.map((col: any, colIndex: number) => (
@@ -761,23 +785,26 @@ function ExportComponentV2(props: DashboardProps) {
                         key={`${table.physicalTableName}-${col.name}-${colIndex}`}
                         style={{
                           display: 'flex',
-                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '12px'
                         }}
                       >
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                         <label
                           style={{
+                            flex: '0 0 35%',
                             fontWeight: 500,
-                            color: '#374151',
-                            marginBottom: '4px',
+                            color: '#374151'
                           }}
                         >
                           {col.name}
                         </label>
-                        <Autocomplete
-                          options={autoCompleteFields}
-                          onSelect={(value) => handleDataBricksChange(table.physicalTableName, col.name, value)}
-                        />
+                        <div style={{ flex: 1 }}>
+                          <Autocomplete
+                            options={autoCompleteFields}
+                            onSelect={(value) => handleDataBricksChange(table.physicalTableName, col.name, value)}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -787,28 +814,29 @@ function ExportComponentV2(props: DashboardProps) {
           </>
         )}
 
+
         {
-          selectedTarget && (
-            <FieldRow>
+          selectedTarget && selectedMode.toLowerCase() !== 'kafka' && (
+          <FieldRow>
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label htmlFor='extractRule'>
-                Extract Rule: <span>*</span>
-              </label>
-              <select
-                id='extractRule'
-                value={selectedExtract}
-                onChange={(e) => setSelectedExtract(e.target.value)}
-              >
-                <option value="">Select</option>
-                {extractRules.map((item, index) => (
-                  <option key={index} value={item.pyPurpose}>
-                    {item.pyLabel}
-                  </option>
-                ))}
-              </select>
-            </FieldRow>
-          )
-        }
+            <label htmlFor='extractRule'>
+              Extract Rule: <span>*</span>
+            </label>
+            <select
+              id='extractRule'
+              value={selectedExtract}
+              onChange={(e) => setSelectedExtract(e.target.value)}
+            >
+              <option value="">Select</option>
+              {extractRules.map((item, index) => (
+                <option key={index} value={item.pyPurpose}>
+                  {item.pyLabel}
+                </option>
+              ))}
+            </select>
+          </FieldRow>
+        )}
+
 
         {
           treeData && (

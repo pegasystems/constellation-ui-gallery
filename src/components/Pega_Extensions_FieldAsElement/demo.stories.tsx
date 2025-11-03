@@ -1,8 +1,8 @@
 import type { StoryObj } from '@storybook/react';
-import { PegaExtensionsActionableNewButton } from './index';
+import { PegaExtensionsFieldAsElement } from './index';
 
 export default {
-  title: 'Fields/ActionableNew Button',
+  title: 'Fields/Field As Element',
   argTypes: {
     getPConnect: {
       table: {
@@ -10,7 +10,7 @@ export default {
       },
     },
   },
-  component: PegaExtensionsActionableNewButton,
+  component: PegaExtensionsFieldAsElement,
 };
 
 const setPCore = () => {
@@ -35,7 +35,7 @@ const setPCore = () => {
   };
 };
 
-type Story = StoryObj<typeof PegaExtensionsActionableNewButton>;
+type Story = StoryObj<typeof PegaExtensionsFieldAsElement>;
 
 export const Default: Story = {
   render: (args) => {
@@ -67,7 +67,7 @@ export const Default: Story = {
         };
       },
     };
-    return <PegaExtensionsActionableNewButton {...props} />;
+    return <PegaExtensionsFieldAsElement {...props} />;
   },
   args: {
     label: 'Launch',
