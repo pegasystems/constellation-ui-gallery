@@ -34,11 +34,20 @@
             "ruleType": "Paragraph"
         },
         {
-            "key": "selectionProperty",
             "format": "PROPERTY",
             "name": "selectionProperty",
             "label": "Selection Property",
             "required": true
+        },
+        {
+            "name": "refCaseClassName",
+            "label": "Reference Case Class Name",
+            "format": "TEXT"
+        },
+        {
+            "name": "allowPreview",
+            "label": "Allow Preview",
+            "format": "BOOLEAN"
         },
         {
             "name": "visibility",
@@ -53,16 +62,17 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.0, Mon Sep 29 2025, 25.1.0-95",
+            "label": "Pega_Extensions 4.0.0, Mon Oct 27 2025, 25.1.0-95",
             "name": "PegaAboutData",
             "variant": "primary"
         }
     ],
     "defaultConfig": {
         "label": "@L $this.label",
-        "detailFVLItem": true
+        "detailFVLItem": true,
+        "allowPreview": true
     },
-    "buildDate": "2025-09-29T17:46:22.025Z",
+    "buildDate": "2025-10-27T21:48:28.848Z",
     "infinityVersion": "25.1.0-95",
-    "packageCosmosVersion": "8.4.1"
+    "packageCosmosVersion": "8.5.0"
 }
