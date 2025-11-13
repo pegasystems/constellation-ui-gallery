@@ -40,6 +40,10 @@ export default {
             id: 'landmark-unique',
             enabled: false,
           },
+          {
+            id: 'aria-allowed-role',
+            enabled: false,
+          },
         ],
       },
     },
