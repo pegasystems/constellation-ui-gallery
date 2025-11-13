@@ -3,8 +3,8 @@
     "label": "Case reference",
     "description": "Case reference",
     "organization": "Pega",
-    "version": "4.0.0",
-    "library": "Lib",
+    "version": "4.0.1",
+    "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CaseReference",
     "type": "Field",
@@ -62,7 +62,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.0, Mon Oct 27 2025, 25.1.0-95",
+            "label": "Pega_Extensions 4.0.1, Thu Nov 13 2025, 25.1.1-199",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -72,7 +72,7 @@
         "detailFVLItem": true,
         "allowPreview": true
     },
-    "buildDate": "2025-10-27T21:48:28.848Z",
-    "infinityVersion": "25.1.0-95",
-    "packageCosmosVersion": "8.5.0"
+    "buildDate": "2025-11-13T18:11:13.932Z",
+    "infinityVersion": "25.1.1-199",
+    "packageCosmosVersion": "8.8.0"
 }

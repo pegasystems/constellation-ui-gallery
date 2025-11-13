@@ -1,5 +1,5 @@
-// setup.js (for jest)
+// Jest global setup integrating Storybook decorators for composeStories tests.
 import { setProjectAnnotations } from '@storybook/react';
-import projectAnnotations from './.storybook/preview';
+import preview from './.storybook/preview';
 
-setProjectAnnotations(projectAnnotations);
+setProjectAnnotations(preview);

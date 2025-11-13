@@ -17,6 +17,8 @@
     "importsNotUsedAsValues": "remove",
     "skipLibCheck": true,
     "baseUrl": "./",
+    "moduleResolution": "bundler",
+    "module": "ESNext",
     "paths": {
       "@pega/pcore-pconnect-typedefs/*": ["node_modules/@pega/pcore-pconnect-typedefs/*"]
     }

@@ -1,13 +1,14 @@
 module.exports = function (api) {
-  api.cache(true);
+  const isTest = api.env('test');
+  api.cache(() => process.env.NODE_ENV);
   const presets = [
     [
       '@babel/preset-env',
       {
         targets: {
-          esmodules: true,
-          node: true,
+          node: 'current',
         },
+        modules: isTest ? 'commonjs' : false,
       },
     ],
     '@babel/preset-typescript',

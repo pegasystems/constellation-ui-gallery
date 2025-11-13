@@ -112,21 +112,28 @@ export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {
     <SliderContainer style={{ height }}>
       <SliderWrapper totalSlides={totalSlides} currentSlide={currentSlide}>
         {imageSliderData.map(
-          (slide: {
-            id: string | null | undefined;
-            title: string;
-            description: string;
-            imageURL: string | undefined;
-          }) => (
-            <SlideItem
-              key={slide.id || Math.random()} // Ensure unique key for SlideItem
-              slide={slide}
-              animationClass={animationClass}
-              isActive={currentSlide === parseInt(slide.id as string, 10)}
-              objectFit={objectFit}
-              textPosition={textPosition}
-            />
-          ),
+          (
+            slide: {
+              id: string | null | undefined;
+              title: string;
+              description: string;
+              imageURL: string | undefined;
+            },
+            idx: number,
+          ) => {
+            const key = slide.id ?? `slide-${idx}`;
+            const numericId = slide.id ? parseInt(slide.id as string, 10) : idx;
+            return (
+              <SlideItem
+                key={key}
+                slide={slide}
+                animationClass={animationClass}
+                isActive={currentSlide === numericId}
+                objectFit={objectFit}
+                textPosition={textPosition}
+              />
+            );
+          },
         )}
       </SliderWrapper>
 

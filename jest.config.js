@@ -3,6 +3,8 @@ const packagesToTranspile = [
   '@pega/cosmos-react-social',
   '@pega/cosmos-react-rte',
   '@pega/cosmos-react-work',
+  '@storybook/react',
+  'storybook',
   'shortcuts',
   'preact',
 ];
