@@ -65,6 +65,9 @@ export default [
       'testing-library/no-container': 'off',
       'testing-library/no-node-access': 'off',
       'react-hooks/exhaustive-deps': 'off',
+      // Temporarily disable new React Compiler strict rules pending refactor
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/preserve-manual-memoization': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],

@@ -3,8 +3,8 @@
     "label": "Signature Capture",
     "description": "Signature Capture",
     "organization": "Pega",
-    "version": "4.0.0",
-    "library": "Lib",
+    "version": "4.0.1",
+    "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_SignatureCapture",
     "type": "Field",
@@ -100,7 +100,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.0, Mon Sep 29 2025, 25.1.0-95",
+            "label": "Pega_Extensions 4.0.1, Thu Nov 13 2025, 25.1.1-199",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -110,7 +110,7 @@
         "isFormWidth": true,
         "detailFVLItem": true
     },
-    "buildDate": "2025-09-29T17:46:23.244Z",
-    "infinityVersion": "25.1.0-95",
-    "packageCosmosVersion": "8.4.1"
+    "buildDate": "2025-11-13T18:11:15.992Z",
+    "infinityVersion": "25.1.1-199",
+    "packageCosmosVersion": "8.8.0"
 }

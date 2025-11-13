@@ -49,8 +49,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   } = props;
   const [tasks, setTasks] = useState<any>();
   const filters = useRef<any>({});
-  const errorMsg = useRef<string>('');
-  const isEmpty = useRef<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const editTask = (id: string) => {
@@ -84,7 +84,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
 
   const loadTasks = (isFiltered: boolean) => {
     let payload = {};
-    errorMsg.current = '';
+    setErrorMsg('');
     if (useInDashboard) {
       const filterExpr = getFilters(filters.current);
       payload = {
@@ -129,18 +129,18 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
                 if (numTasks === 0) {
                   setTasks(tmpTasks);
                   setLoading(false);
-                  isEmpty.current = false;
+                  setIsEmpty(false);
                 }
               });
             } else {
               setTasks(tmpTasks);
               setLoading(false);
-              isEmpty.current = true;
+              setIsEmpty(true);
             }
           } else {
             setTasks([]);
             setLoading(false);
-            isEmpty.current = true;
+            setIsEmpty(true);
           }
         } else {
           setTasks((prevTasks: any[]) => {
@@ -156,16 +156,16 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
               });
               tmpTasks.push({ ...tmpTask, isVisible });
             });
-            isEmpty.current = tmpIsEmpty;
+            setIsEmpty(tmpIsEmpty);
             return tmpTasks;
           });
         }
       })
       .catch((error: any) => {
         if (error?.response?.data?.errorDetails?.length > 0 && error.response.data.errorDetails[0].localizedValue) {
-          errorMsg.current = error.response.data.errorDetails[0].localizedValue;
+          setErrorMsg(error.response.data.errorDetails[0].localizedValue);
         } else {
-          errorMsg.current = error.message;
+          setErrorMsg(error.message);
         }
         setLoading(false);
       });
@@ -256,10 +256,10 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         />,
       );
     }
-    if (errorMsg.current) {
-      return genState(<ErrorState message={errorMsg.current} />);
+    if (errorMsg) {
+      return genState(<ErrorState message={errorMsg} />);
     }
-    if (isEmpty.current) {
+    if (isEmpty) {
       return genState(<EmptyState />);
     }
     return (
@@ -269,7 +269,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         )}
       </MainCard>
     );
-  }, [loading, rendering, minWidth, tasks, getPConnect]);
+  }, [loading, rendering, minWidth, tasks, getPConnect, errorMsg, isEmpty]);
 
   return (
     <Card>

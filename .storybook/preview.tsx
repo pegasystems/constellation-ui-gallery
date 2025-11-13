@@ -2,7 +2,7 @@ import { useEffect as useReactEffect } from 'react';
 import { configureActions } from 'storybook/actions';
 import { css } from 'storybook/theming';
 import { useEffect as useStorybookEffect, useMemo as useStorybookMemo } from 'storybook/preview-api';
-import type { Preview } from '@storybook/react-webpack5';
+import type { Preview, Decorator } from '@storybook/react';
 import {
   Configuration,
   ModalManager,
@@ -46,10 +46,10 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      disable: true,
       grid: {
         disable: true,
       },
+      disabled: true,
     },
     outline: {
       disable: true,
@@ -58,7 +58,7 @@ const preview: Preview = {
   },
 
   decorators: [
-    (Story, context) => {
+    ((Story: any, context: any) => {
       const direction: 'ltr' | 'rtl' = context.globals.direction;
 
       useReactEffect(() => {
@@ -82,10 +82,10 @@ const preview: Preview = {
           </PopoverManager>
         </Configuration>
       );
-    },
+    }) as Decorator,
 
     // Sets up shadow DOM rendering
-    (Story, context) => {
+    ((Story: any, context: any) => {
       const backgroundStyles = useStorybookMemo(() => {
         const selector = context.viewMode === 'docs' ? `#anchor--${context.id} .docs-story` : '.sb-show-main';
 
@@ -168,7 +168,7 @@ const preview: Preview = {
       }, [backgroundStyles, context.viewMode, context.id]);
 
       return <Story {...context} />;
-    },
+    }) as Decorator,
   ],
 
   globalTypes: {
