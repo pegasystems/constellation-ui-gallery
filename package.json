@@ -61,7 +61,7 @@
     "validateAll": "custom-dx-components buildAllComponents"
   },
   "dependencies": {
-    "@arcgis/core": "^4.34.7",
+    "@arcgis/core": "^4.34.8",
     "@dagrejs/dagre": "^1.1.8",
     "@fullcalendar/core": "^6.1.19",
     "@fullcalendar/daygrid": "^6.1.19",
