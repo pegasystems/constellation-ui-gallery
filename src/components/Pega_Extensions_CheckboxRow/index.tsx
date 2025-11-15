@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
+import { updateAllSiblingCheckboxes, updateBooleanFieldsOnPage } from './utils';
 
 export type CheckboxRowProps = {
   getPConnect?: any;
@@ -13,23 +14,11 @@ export type CheckboxRowProps = {
   readOnly?: boolean;
   required?: boolean;
   testId?: string;
+  selectAllProperty?: string;
   fieldMetadata?: any;
   additionalProps?: any;
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
-};
-
-// Helper function to safely access nested object properties
-const getNestedValue = (obj: any, path: string) => {
-  return path.split('.').reduce((current, key) => {
-    // Handle array indices like 'Policies[0]'
-    if (key.includes('[') && key.includes(']')) {
-      const arrayKey = key.substring(0, key.indexOf('['));
-      const index = parseInt(key.substring(key.indexOf('[') + 1, key.indexOf(']')), 10);
-      return current?.[arrayKey]?.[index];
-    }
-    return current?.[key];
-  }, obj);
 };
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation
@@ -43,6 +32,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
     value,
     helperText = '',
     testId = '',
+    selectAllProperty = '',
     additionalProps,
     displayMode,
   } = props;
@@ -74,6 +64,32 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
   if (displayMode === 'DISPLAY_ONLY') {
     return <Text>{displayComp}</Text>;
   }
+  const handleChange = (checked: boolean) => {
+    setInputValue(checked);
+    if (value === checked) return;
+
+    actions.updateFieldValue(propName, checked);
+    hasValueChange.current = true;
+
+    const contextName = pConn.getContextName();
+    const storeData = (window as any).PCore.getStore().getState().data?.[contextName];
+    if (!storeData) return;
+
+    if (selectAllProperty) {
+      updateAllSiblingCheckboxes({ selectAllProperty, checked, pConn, storeData });
+      return;
+    }
+
+    const pageRef = pConn.options.pageReference; // e.g. caseInfo.content.Policies[0]
+    updateBooleanFieldsOnPage({
+      pageRef,
+      checked,
+      actions,
+      storeData,
+      excludeProp: propName,
+    });
+  };
+
   return (
     <Checkbox
       {...additionalProps}
@@ -85,30 +101,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
       disabled={disabled}
       readOnly={readOnly}
       required={required}
-      onChange={(e: MouseEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.checked);
-        if (value !== e.currentTarget.checked) {
-          actions.updateFieldValue(propName, e.currentTarget.checked);
-          hasValueChange.current = true;
-          const context = getPConnect().getContextName();
-
-          const storeData = (window as any).PCore.getStore().getState().data?.[context];
-          const pageRef = getPConnect().options.pageReference;
-          /* page Ref could be 'caseInfo.content.Policies[0]' */
-
-          const data: any = getNestedValue(storeData, pageRef);
-
-          /* Iterate over object - if a property is of type boolean - call updateFieldValue to set the value to e.currentTarget.checked */
-          Object.keys(data).forEach((key) => {
-            if (typeof data[key] === 'boolean') {
-              const otherPropName = `.${key}`;
-              if (otherPropName !== propName) {
-                actions.updateFieldValue(otherPropName, e.currentTarget.checked);
-              }
-            }
-          });
-        }
-      }}
+      onChange={(e: MouseEvent<HTMLInputElement>) => handleChange(e.currentTarget.checked)}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
         if ((!value || hasValueChange.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.checked);
