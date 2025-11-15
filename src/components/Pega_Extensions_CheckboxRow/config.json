@@ -40,6 +40,11 @@
       "label": "Custom label property"
     },
     {
+      "name": "selectAllProperty",
+      "label": "Select All Property",
+      "format": "TEXT"
+    },
+    {
       "name": "readOnly",
       "label": "Edit mode",
       "format": "READONLY"

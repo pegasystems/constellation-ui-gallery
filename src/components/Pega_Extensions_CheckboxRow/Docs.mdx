@@ -1,4 +1,4 @@
-import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
 import * as DemoStories from './demo.stories';
 
 <Meta of={DemoStories} />
@@ -9,6 +9,8 @@ The Checkbox Row component is a specialized component used in the context of an 
 
 This component shares the same configuration as the standard checkbox, but it includes an optional property called labelProperty. If you set a field for this property, the checkbox's caption will automatically use that field's value.
 
+The component can also be used outside of the embedded data list to provide the Select All functionality - When configuring the component, set the selectAllProperty to the path of the property that will contain the selection property, for example "Policies.IsSelected".
+
 <Primary />
 
 # Props
@@ -18,6 +20,8 @@ This component shares the same configuration as the standard checkbox, but it in
 # Configuration
 
 To use this component, use an embedded data list field configure as an editable inline table. Add a boolean field in the first field of the table and change it to this component. Set labelProperty if needed. Include other boolean fields in the table as editable.
+
+![Configuration](CheckboxRow_Configuration2.png)
 
 ![Configuration](CheckboxRow_Configuration.png)
 

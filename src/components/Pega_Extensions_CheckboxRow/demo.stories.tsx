@@ -19,6 +19,11 @@ export default {
         disable: true,
       },
     },
+    selectAllProperty: {
+      table: {
+        disable: true,
+      },
+    },
     variant: {
       table: {
         disable: true,
@@ -156,6 +161,7 @@ export const Default: Story = CheckboxRowDemo({
   labelProperty: '',
   validatemessage: '',
   helperText: '',
+  selectAllProperty: '',
   disabled: false,
   readOnly: false,
   required: false,
