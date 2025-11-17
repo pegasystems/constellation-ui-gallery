@@ -3,6 +3,8 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 const config: StorybookConfig = {
   core: {
     disableTelemetry: true,
+
+    disableWhatsNewNotifications: true,
   },
   framework: '@storybook/react-webpack5',
   staticDirs: ['./static'],
