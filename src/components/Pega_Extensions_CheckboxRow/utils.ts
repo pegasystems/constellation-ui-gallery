@@ -20,42 +20,6 @@ export const getLastPathSegment = (path: string): string => {
   return idx === -1 ? path : path.slice(idx + 1);
 };
 
-// Bulk update for sibling checkbox rows inside an embedded page array
-export const updateAllSiblingCheckboxes = (config: {
-  selectAllProperty: string;
-  checked: boolean;
-  pConn: any;
-  storeData: any;
-}) => {
-  const { selectAllProperty, checked, pConn, storeData } = config;
-  if (!selectAllProperty) return;
-
-  // Trim the selectAllProperty and remove any leading dots - Also the value should contain a single dot - e.g. Policies.IsSelected
-  const trimmedSelectAllProperty = selectAllProperty.trim().replace(/^[.]+/, '');
-  if (!/^[^.]+\.[^.]+$/.test(trimmedSelectAllProperty)) return;
-
-  const pageRef = pConn.options.pageReference + `.${trimmedSelectAllProperty}`;
-  const embeddedPageName = pageRef.substring(0, pageRef.lastIndexOf('.'));
-  const embeddedArray = getNestedValue(storeData, embeddedPageName);
-  if (!Array.isArray(embeddedArray) || embeddedArray.length === 0) return;
-  const contextName = pConn.getContextName();
-  const target = pConn.getTarget();
-  const fieldName = '.' + getLastPathSegment(trimmedSelectAllProperty);
-
-  for (let i = 0; i < embeddedArray.length; i++) {
-    const messageConfig = {
-      meta: { config: { context: contextName } },
-      options: {
-        context: contextName,
-        pageReference: embeddedPageName + `[${i}]`,
-        target,
-      },
-    };
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
-    c11nEnv?.getPConnect()?.getActionsApi()?.updateFieldValue(fieldName, checked);
-  }
-};
-
 // Update all boolean fields on the current page, excluding the triggering property
 export const updateBooleanFieldsOnPage = (config: {
   pageRef: string;
@@ -76,4 +40,60 @@ export const updateBooleanFieldsOnPage = (config: {
       }
     }
   });
+};
+
+// Bulk update for sibling checkbox rows inside an embedded page array
+export const updateAllSiblingCheckboxes = (config: {
+  selectAllProperty: string;
+  checked: boolean;
+  pConn: any;
+  storeData: any;
+}) => {
+  const { selectAllProperty, checked, pConn, storeData } = config;
+  if (!selectAllProperty) return;
+
+  // Trim the selectAllProperty and remove any leading dots
+  // The value should either contain a pagelist (e.g. Policies) or a single dot - e.g. Policies.IsSelected
+  const trimmedSelectAllProperty = selectAllProperty.trim().replace(/^[.]+/, '');
+  const isListPlusField = /^[^.]+\.[^.]+$/.test(trimmedSelectAllProperty); // e.g. Policies.IsSelected
+  const basePageRef = pConn.options.pageReference;
+  const pageRef = `${basePageRef}.${trimmedSelectAllProperty}`;
+  const embeddedPageName = isListPlusField ? pageRef.substring(0, pageRef.lastIndexOf('.')) : pageRef;
+  const embeddedArray = getNestedValue(storeData, embeddedPageName);
+  if (!Array.isArray(embeddedArray) || embeddedArray.length === 0) return;
+
+  const contextName = pConn.getContextName();
+  const target = pConn.getTarget();
+
+  // Helper to iterate each row and provide actions + indexed pageRef
+  const forEachRow = (cb: (rowPageRef: string, actions: any) => void) => {
+    for (let i = 0; i < embeddedArray.length; i += 1) {
+      const rowPageRef = `${embeddedPageName}[${i}]`;
+      const messageConfig = {
+        meta: { config: { context: contextName } },
+        options: { context: contextName, pageReference: rowPageRef, target },
+      };
+      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      const actions = c11nEnv?.getPConnect()?.getActionsApi();
+      if (actions) cb(rowPageRef, actions);
+    }
+  };
+  if (!isListPlusField) {
+    // Property points to the list itself (e.g. Policies): update all boolean fields in each row
+    forEachRow((rowPageRef, actions) => {
+      updateBooleanFieldsOnPage({
+        pageRef: rowPageRef,
+        checked,
+        actions,
+        storeData,
+        excludeProp: '',
+      });
+    });
+  } else {
+    // Property points to a specific field in each list row (e.g. Policies.IsSelected)
+    const fieldName = `.${getLastPathSegment(trimmedSelectAllProperty)}`;
+    forEachRow((_rowPageRef, actions) => {
+      actions.updateFieldValue(fieldName, checked);
+    });
+  }
 };

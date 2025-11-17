@@ -107,7 +107,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.1, Sat Nov 15 2025, 26.1.0-dev-15386",
+            "label": "Pega_Extensions 4.0.1, Mon Nov 17 2025, 26.1.0-dev-15386",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -116,7 +116,7 @@
         "label": "@L $this.label",
         "detailFVLItem": true
     },
-    "buildDate": "2025-11-15T14:31:28.468Z",
+    "buildDate": "2025-11-17T16:53:10.470Z",
     "infinityVersion": "26.1.0-dev-15386",
     "packageCosmosVersion": "8.8.0"
 }
