@@ -101,7 +101,10 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
             .then((resp: any) => {
               const respData = resp?.data?.responseData;
               const updateObj = { ...respData };
-              delete updateObj?.pzInsKey;
+              const keyToDelete = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey');
+              if (updateObj && keyToDelete in updateObj) {
+                delete updateObj[keyToDelete];
+              }
               (window as any).PCore.getStore().dispatch({
                 type: 'SET_PROPERTY',
                 payload: {

@@ -21,6 +21,11 @@ const setPCore = () => {
         CASE_INFO: {},
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getMessagingServiceManager: () => {
       return {
         subscribe: () => {
