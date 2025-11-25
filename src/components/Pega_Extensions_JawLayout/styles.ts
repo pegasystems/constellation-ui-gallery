@@ -65,6 +65,29 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean }>`
       if (status === 'M' || status === 'E') return theme.base.palette.light;
       return theme.base.palette['brand-primary'];
     }};
+
+    &:disabled {
+      opacity: 1;
+      cursor: default;
+
+      background-color: ${({ status, exists, theme }) => {
+        if (!exists) return theme.base.palette['secondary-background'];
+        switch (status) {
+          case 'M':
+            return theme.base.palette.urgent;
+          case 'E':
+            return theme.base.palette['brand-primary'];
+          default:
+            return theme.base.palette['primary-background'];
+        }
+      }};
+
+      color: ${({ status, exists, theme }) => {
+        if (!exists) return theme.base.palette['brand-primary'];
+        if (status === 'M' || status === 'E') return theme.base.palette.light;
+        return theme.base.palette['brand-primary'];
+      }};
+    }
   }
 `;
 
