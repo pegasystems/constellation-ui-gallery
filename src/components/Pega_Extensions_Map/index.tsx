@@ -305,7 +305,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       // Create the MapView with the specified container and properties
       if (locationInputType === 'propertyRef') {
         const inputLocation = getPConnect().getValue(locationRef);
-        const LatLong = inputLocation?.pyLatLon?.split(',');
+        const LatLong = inputLocation?.[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLatLon')]?.split(',');
         if (LatLong && LatLong.length === 2) {
           view = new MapView({
             container: mapDiv.current,
@@ -364,8 +364,8 @@ export const PegaExtensionsMap = (props: MapProps) => {
                   };
                   const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
                   const actionsApi = c11nEnv.getPConnect().getActionsApi();
-                  actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
-                  actionsApi.updateFieldValue('.pyAddress', result.name);
+                  actionsApi.updateFieldValue((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('.pyLatLon'), `${latitude}, ${longitude}`);
+                  actionsApi.updateFieldValue((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('.pyAddress'), result.name);
                 }
               });
             }

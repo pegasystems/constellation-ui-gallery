@@ -97,7 +97,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         }
       });
       tmpObjects.push({
-        id: item.pyID || item.pyLabel,
+        id: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] || item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
         primary,
         secondary: <MetaList items={secondaryItems} />,
       });

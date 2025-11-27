@@ -11,26 +11,26 @@ export type ObjectProps = {
 export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectProps) => {
   const value = item[propName];
   if (!value) return undefined;
-  if (propName === 'pyID' && item.pyID && item.pyLabel && item.pxObjClass && item.pzInsKey) {
+  if (propName === (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID') && item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')] && item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')] && item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')]) {
     const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
       (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
-      { caseClassName: item.pxObjClass },
-      { workID: item.pyID },
+      { caseClassName: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')] },
+      { workID: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] },
     );
     return linkURL ? (
       <Link
         href={linkURL}
         previewable
         onPreview={() => {
-          getPConnect().getActionsApi().showCasePreview(encodeURI(item.pzInsKey), {
-            caseClassName: item.pxObjClass,
+          getPConnect().getActionsApi().showCasePreview(encodeURI(item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')]), {
+            caseClassName: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')],
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
-            getPConnect().getActionsApi().openWorkByHandle(item.pzInsKey, item.pxObjClass);
+            getPConnect().getActionsApi().openWorkByHandle(item[item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')]], item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')]);
           }
         }}
       >

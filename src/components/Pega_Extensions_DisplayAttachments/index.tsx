@@ -145,7 +145,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       const listOfFiles: Array<any> = [];
       const listOfCategories = categories.split(',');
       response.forEach((attachment: any) => {
-        const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
+        const currentCategory = attachment.category?.trim() || attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyCategory')]?.trim();
         if (useAttachmentEndpoint) {
           /* Filter the attachment categories */
           if (categories && listOfCategories.length > 0) {
@@ -160,15 +160,15 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         } else {
           attachment = {
             ...attachment,
-            category: attachment.pyCategory,
-            name: attachment.pyMemo,
-            ID: attachment.pzInsKey,
-            type: attachment.pyFileCategory,
-            fileName: attachment.pyFileName,
-            mimeType: attachment.pyTopic,
-            categoryName: attachment.pyLabel,
-            createTime: attachment.pxCreateDateTime,
-            createdByName: attachment.pxCreateOpName,
+            category: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyCategory')],
+            name: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyMemo')],
+            ID: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')],
+            type: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyFileCategory')],
+            fileName: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyFileName')],
+            mimeType: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyTopic')],
+            categoryName: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
+            createTime: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxCreateDateTime')],
+            createdByName: attachment[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxCreateOpName')],
           };
         }
         attachment.mimeType = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');

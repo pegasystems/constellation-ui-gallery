@@ -59,6 +59,11 @@ const setPCore = () => {
         getLazyComponent: (f: string) => f,
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
