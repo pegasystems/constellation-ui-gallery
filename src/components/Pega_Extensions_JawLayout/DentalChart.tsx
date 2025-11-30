@@ -112,14 +112,13 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
         <ToothButton
           className='tooth-button'
           variant='simple'
-          onClick={cycleStatus}
-          disabled={!exists || readOnly}
-          readOnly={readOnly}
+          onClick={!exists || readOnly ? undefined : cycleStatus}
           aria-label={getAriaLabel()}
           role='button'
           tabIndex={exists && !readOnly ? 0 : -1}
           status={status}
           exists={exists}
+          style={{ cursor: !exists || readOnly ? 'default' : 'pointer' }}
         >
           {getButtonLabel()}
         </ToothButton>

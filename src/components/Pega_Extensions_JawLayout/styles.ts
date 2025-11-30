@@ -39,14 +39,15 @@ export const ToothContainer = styled.div.attrs<{ top: number; left: number }>(({
   transform: translate(-50%, -50%);
 `;
 
-export const ToothButton = styled(Button)<{ status: string; exists: boolean }>`
+export const ToothButton = styled(Button)<{ status: string; exists: boolean; readOnly?: boolean }>`
   &.tooth-button {
     width: 2.1875rem;
     height: 2.5125rem;
     font-size: 0.6875rem;
     font-weight: bold;
     border: 0.125rem solid ${({ theme }) => theme.base.palette['border-line']};
-    border-radius: 40% 40% 50% 50% / 50%;
+    border-radius: 40% 40% 50% 50% / 50% 50% 50% 50%;
+
     background-color: ${({ status, exists, theme }) => {
       if (!exists) return theme.base.palette['secondary-background'];
       switch (status) {
@@ -58,34 +59,12 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean }>`
           return theme.base.palette['primary-background'];
       }
     }};
+
     color: ${({ status, exists, theme }) => {
       if (!exists) return theme.base.palette['brand-primary'];
       if (status === 'M' || status === 'E') return theme.base.palette.light;
       return theme.base.palette['brand-primary'];
     }};
-
-    &:disabled {
-      opacity: 1;
-      cursor: default;
-
-      background-color: ${({ status, exists, theme }) => {
-        if (!exists) return theme.base.palette['secondary-background'];
-        switch (status) {
-          case 'M':
-            return theme.base.palette.urgent;
-          case 'E':
-            return theme.base.palette['brand-primary'];
-          default:
-            return theme.base.palette['primary-background'];
-        }
-      }};
-
-      color: ${({ status, exists, theme }) => {
-        if (!exists) return theme.base.palette['brand-primary'];
-        if (status === 'M' || status === 'E') return theme.base.palette.light;
-        return theme.base.palette['brand-primary'];
-      }};
-    }
   }
 `;
 
@@ -107,7 +86,8 @@ export const LegendColorSwatch = styled.div<{ status: 'healthy' | 'missing' | 'e
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 50%;
-  border: 0.0625rem solid ${({ theme }) => theme.base.palette['border-line']};
+  border: 0.0625rem solid ${({ theme }) => theme.base.palette['border-line']}; // 1px
+
   background-color: ${({ status, theme }) => {
     switch (status) {
       case 'missing':
