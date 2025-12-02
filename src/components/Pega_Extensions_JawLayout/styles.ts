@@ -46,8 +46,7 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean; rea
     font-size: 0.6875rem;
     font-weight: bold;
     border: 0.125rem solid ${({ theme }) => theme.base.palette['border-line']};
-    border-radius: 40% 40% 50% 50% / 50% 50% 50% 50%;
-
+    border-radius: 40% 40% 50% 50% / 50%;
     background-color: ${({ status, exists, theme }) => {
       if (!exists) return theme.base.palette['secondary-background'];
       switch (status) {
@@ -59,7 +58,6 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean; rea
           return theme.base.palette['primary-background'];
       }
     }};
-
     color: ${({ status, exists, theme }) => {
       if (!exists) return theme.base.palette['brand-primary'];
       if (status === 'M' || status === 'E') return theme.base.palette.light;
@@ -86,8 +84,7 @@ export const LegendColorSwatch = styled.div<{ status: 'healthy' | 'missing' | 'e
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 50%;
-  border: 0.0625rem solid ${({ theme }) => theme.base.palette['border-line']}; // 1px
-
+  border: 0.0625rem solid ${({ theme }) => theme.base.palette['border-line']};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case 'missing':
