@@ -27,6 +27,11 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getMessagingServiceManager: () => {
       return {
         subscribe: () => {

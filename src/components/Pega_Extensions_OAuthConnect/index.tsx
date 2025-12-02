@@ -62,18 +62,18 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
       });
 
       const mashup: any = await mashupDetails;
-      if (mashup.pyTaskStatus) {
-        switch (mashup.pyServiceType) {
+      if (mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyTaskStatus')]) {
+        switch (mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyServiceType')]) {
           case 'AUTHENTICATE':
-            setLoginStatus(mashup.pyIsAuthenticated);
-            if (mashup.pyIsAuthenticated && mashup.pyExpiresAt) {
-              const v = mashup.pyExpiresAt;
+            setLoginStatus(mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyIsAuthenticated')]);
+            if (mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyIsAuthenticated')] && mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyExpiresAt')]) {
+              const v = mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyExpiresAt')]  ;
               const expirationDate = new Date(
                 `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 19)}Z`,
               );
               const info = (
                 <Text>
-                  Successfully connected to {mashup.pyLabel}. Access token will expire on{' '}
+                  Successfully connected to {mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')]}. Access token will expire on{' '}
                   <DateTimeDisplay value={expirationDate} variant='datetime' format='short' />.
                 </Text>
               );
@@ -81,8 +81,8 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
             }
             break;
           case 'AUTHORIZE':
-            if (mashup.pyOauthURLRedirect) {
-              window.open(mashup.pyOauthURLRedirect, 'Sign In', 'width=800,height=800');
+            if (mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyOauthURLRedirect')]) {
+              window.open(mashup[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyOauthURLRedirect')], 'Sign In', 'width=800,height=800');
             }
             break;
           case 'REVOKE':

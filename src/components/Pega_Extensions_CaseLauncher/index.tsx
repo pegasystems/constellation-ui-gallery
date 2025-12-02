@@ -22,7 +22,7 @@ export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   /* Create a new case on click of the selected button */
   const createCase = (className: string) => {
     const options = {
-      flowType: 'pyStartCase',
+      flowType: (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyStartCase'),
       containerName: 'primary',
       openCaseViewAfterCreate: true,
     };

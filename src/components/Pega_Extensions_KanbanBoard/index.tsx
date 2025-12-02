@@ -51,7 +51,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
   const groupList = groups.split(',');
 
   const editTask = (id: string) => {
-    getPConnect().getActionsApi().openLocalAction('pyUpdateCaseDetails', {
+    getPConnect().getActionsApi().openLocalAction((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
       caseID: id,
       containerName: 'modal',
       actionTitle: 'Edit task',
@@ -147,16 +147,16 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
           response.data.data.forEach((item: any) => {
             const myColumn = tmpColumns[item[groupProperty]];
             if (myColumn?.taskList) {
-              tmpTasks[item.pyID] = {
-                id: item.pyID,
-                title: item.pyLabel,
-                classname: item.pxObjClass,
-                insKey: item.pzInsKey,
+              tmpTasks[item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]] = {
+                id: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')],
+                title: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyLabel')],
+                classname: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pxObjClass')],
+                insKey: item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pzInsKey')],
                 groupValue: item[groupProperty],
                 getDetails,
                 editTask,
               };
-              myColumn.taskList.push(tmpTasks[item.pyID]);
+              myColumn.taskList.push(tmpTasks[item[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]]);
             }
           });
 

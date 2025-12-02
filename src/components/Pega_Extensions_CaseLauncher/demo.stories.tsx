@@ -23,6 +23,11 @@ const setPCore = () => {
     getEnvironmentInfo: () => {
       return {};
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
   };
 };
 

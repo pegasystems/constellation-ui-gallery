@@ -16,7 +16,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
   await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
+    .getDataObjectView(detailsDataPage, detailsViewName, { [(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')]: id })
     .then(async (res: any) => {
       const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
       await updateViewResources(res.data);
@@ -39,7 +39,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         },
       };
       messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config.pyID = id;
+      messageConfig.meta.config[(window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyID')] = id;
       const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
