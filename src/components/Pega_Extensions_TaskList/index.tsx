@@ -12,6 +12,7 @@ import {
 } from '@pega/cosmos-react-core';
 import { Container, StyledAddTask } from './styles';
 import TaskElement from './Task';
+import '../shared/create-nonce';
 
 // Interface for props
 export type PegaExtensionsTaskListProps = {

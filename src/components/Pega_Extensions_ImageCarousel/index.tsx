@@ -4,6 +4,7 @@ import { SliderContainer, SliderWrapper } from './styles';
 import SlideItem from './SlideItem';
 import SliderControls from './Controls';
 import DotsNavigation from './DotsNavigation';
+import '../shared/create-nonce';
 
 // interface for props
 export interface ImageCarouselProps {
