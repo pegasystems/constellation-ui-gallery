@@ -21,7 +21,6 @@ import getAllFields from './utils';
 
 import * as checkIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/check.icon';
 import * as timesIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/times.icon';
-import '../shared/create-nonce';
 
 registerIcon(checkIcon, timesIcon);
 

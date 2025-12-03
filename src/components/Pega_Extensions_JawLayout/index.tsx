@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { withConfiguration, Progress, CardContent, Card, Flex, Text } from '@pega/cosmos-react-core';
 import getAllFields from './utils';
 import DentalChart from './DentalChart';
+import '../shared/create-nonce';
 
 export type JawLayoutProps = {
   getPConnect?: any;
