@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 export type CheckboxTriggerProps = {
   getPConnect?: any;
@@ -101,7 +102,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
             .then((resp: any) => {
               const respData = resp?.data?.responseData;
               const updateObj = { ...respData };
-              delete updateObj?.pzInsKey;
+              delete updateObj?.[getMappedKey('pzInsKey')];
               (window as any).PCore.getStore().dispatch({
                 type: 'SET_PROPERTY',
                 payload: {

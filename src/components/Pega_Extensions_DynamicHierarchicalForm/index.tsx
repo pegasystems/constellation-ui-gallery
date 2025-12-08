@@ -16,6 +16,7 @@ import {
 import getAllFields from './utils';
 import { MainContent, FixPopover } from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 export interface DynamicHierarchicalFormProps {
   /** Heading for this view */
@@ -106,16 +107,16 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     };
     const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
     const actionsApi = c11nEnv.getPConnect().getActionsApi();
-    actionsApi?.updateFieldValue('.IsSelected', IsSelected);
+    actionsApi?.updateFieldValue('.' + getMappedKey('IsSelected'), IsSelected);
     const tmpProducts = products.current.map((product, i) => {
-      if (i === index) return { ...product, IsSelected };
+      if (i === index) return { ...product, [getMappedKey('IsSelected')]: IsSelected };
       return product;
     });
     products.current = tmpProducts;
 
     let tmpHasSelectedProduct = false;
     for (const product of tmpProducts) {
-      if (product.IsSelected) {
+      if (product[getMappedKey('IsSelected')]) {
         tmpHasSelectedProduct = true;
         break;
       }
@@ -125,11 +126,11 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     changePanel((prevId: string) => {
       if (!IsSelected) {
         /* When unchecking - need to make sure the currentTab is not the one that will be hidden */
-        if (products.current[index].pyGUID === prevId) {
+        if (products.current[index][getMappedKey('pyGUID')] === prevId) {
           let newId = '';
           for (const [i, product] of products.current.entries()) {
-            if (product.IsSelected && index !== i) {
-              newId = product.pyGUID;
+            if (product[getMappedKey('IsSelected')] && index !== i) {
+              newId = product[getMappedKey('pyGUID')];
               break;
             }
           }
@@ -138,7 +139,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         return prevId;
       }
       /* When checking a new product, always focus the tab */
-      return products.current[index].pyGUID;
+      return products.current[index][getMappedKey('pyGUID')];
     });
 
     setTabs((prevTabs) => {
@@ -203,10 +204,10 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     }
     const Products = content[productRef.current];
     for (let i = 0; i < Products.length; i += 1) {
-      const pyLabel = Products[i].pyLabel;
-      const classID = Products[i].RuleClass;
-      const id = Products[i].pyGUID;
-      tmpItems.push({ id, primary: pyLabel, selected: Products[i].IsSelected });
+      const pyLabel = Products[i][getMappedKey('pyLabel')];
+      const classID = Products[i][getMappedKey('RuleClass')];
+      const id = Products[i][getMappedKey('pyGUID')];
+      tmpItems.push({ id, primary: pyLabel, selected: Products[i][getMappedKey('IsSelected')] });
       let fieldId = 0;
       for (fieldId = 0; fieldId < tmpFields.length; fieldId += 1) {
         if (classID === tmpFields[fieldId].ruleClass) {
@@ -234,7 +235,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         tmpTabs.push({
           name: pyLabel,
           id,
-          visible: Products[i].IsSelected,
+          visible: Products[i][getMappedKey('IsSelected')],
           content: myElem,
         });
       }
@@ -244,7 +245,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     products.current = Products;
     let tmpHasSelectedProduct = -1;
     for (const [i, product] of Products.entries()) {
-      if (product.IsSelected) {
+      if (product[getMappedKey('IsSelected')]) {
         tmpHasSelectedProduct = i;
         break;
       }

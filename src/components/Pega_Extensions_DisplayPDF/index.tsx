@@ -8,6 +8,7 @@ import {
   withConfiguration,
   type ModalMethods,
 } from '@pega/cosmos-react-core';
+import { getMappedKey } from '../shared/utils';
 
 import '../shared/create-nonce';
 import { useRef, useState, useEffect } from 'react';
@@ -110,7 +111,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
         dataViewParameters: [{ caseInstanceKey: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             setPdfFiles(response.data.data);
@@ -179,20 +180,20 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     <StyledList>
       {pdfFiles.map((file) => {
         return (
-          <li key={file.pyLabel}>
+          <li key={file[getMappedKey('pyLabel')]}>
             <Button
               variant='link'
               onClick={() => {
                 viewAllModalRef.current = create(ViewPDFModal, {
-                  heading: file.pyLabel,
+                  heading: file[getMappedKey('pyLabel')],
                   width,
                   height,
-                  value: file.pyContext,
+                  value: file[getMappedKey('pyContext')],
                   showToolbar,
                 });
               }}
             >
-              {file.pyLabel}
+              {file[getMappedKey('pyLabel')]}
             </Button>
           </li>
         );

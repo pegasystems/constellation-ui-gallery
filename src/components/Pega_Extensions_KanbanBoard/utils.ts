@@ -1,3 +1,4 @@
+import { getMappedKey } from '../shared/utils';
 /* This function calls the DX Constellation API to load a specific view for the case - The view is passed
    as parameter to this widget. You can have when and custom conditions on some of the fields that would allow you
   to customize the look and field of the cards
@@ -16,7 +17,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
   await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
+    .getDataObjectView(getMappedKey(detailsDataPage), detailsViewName, { [getMappedKey('pyID')]: id })
     .then(async (res: any) => {
       const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
       await updateViewResources(res.data);
@@ -39,7 +40,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         },
       };
       messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config.pyID = id;
+      messageConfig.meta.config[getMappedKey('pyID')] = id;
       const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
@@ -64,14 +65,13 @@ type UpdateGroupValueProps = {
 */
 export const updateGroupValue = (props: UpdateGroupValueProps) => {
   const { groupValue, groupProperty, columns, setColumns, task, getPConnect } = props;
-
   const context = getPConnect().getContextName();
   (window as any).PCore.getDataApiUtils()
     .getCaseEditLock(task.insKey, context)
     .then((response: any) => {
       const payload: any = {};
       const content: any = {};
-      content[groupProperty] = groupValue;
+      content[getMappedKey(groupProperty)] = groupValue;
       payload[task.insKey] = content;
 
       (window as any).PCore.getDataApiUtils()

@@ -16,6 +16,7 @@ import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/ic
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
 import { renderObjectField } from './utils';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 type UtilityListProps = {
   heading?: string;
@@ -97,7 +98,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         }
       });
       tmpObjects.push({
-        id: item.pyID || item.pyLabel,
+        id: item[getMappedKey('pyID')] || item[getMappedKey('pyLabel')],
         primary,
         secondary: <MetaList items={secondaryItems} />,
       });
@@ -115,7 +116,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         dataViewParameters: [{ CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, setCaseID ? payload : {}, pConn.getContextName())
+        .getData(getMappedKey(dataPage), setCaseID ? payload : {}, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             loadObjects(response.data.data);

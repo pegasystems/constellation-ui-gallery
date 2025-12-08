@@ -1,6 +1,7 @@
 import { withConfiguration, useTheme, FieldGroup, Flex, FormField, createUID } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
 import { StyledFieldGroupElementMeter, StyleGroupMeterWrapper } from './styles';
+import { getMappedKey } from '../shared/utils';
 
 import { useEffect, useState } from 'react';
 
@@ -78,23 +79,23 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
       const pConn = getPConnect();
       const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }],
+        dataViewParameters: [{ [getMappedKey('pyID')]: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             let tmpTotalValue = totalTasks;
             if (!totalTasks) {
               /* Calculate total value from all the rows */
               response.data.data.forEach((item: any) => {
-                tmpTotalValue += item.value || 0;
+                tmpTotalValue += item[getMappedKey('value')] || 0;
               });
             }
             const tmpevents: Array<Event> = [];
             response.data.data.forEach((item: any) => {
-              item.value = item.value || 0;
-              item.label = item.label || '';
+              item.value = item[getMappedKey('value')] || 0;
+              item.label = item[getMappedKey('label')] || '';
               if (!totalTasks && tmpTotalValue) {
                 item.value = (item.value * 100) / tmpTotalValue;
               }

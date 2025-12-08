@@ -42,6 +42,7 @@ import {
   loadDetails,
   updateItemDetails,
 } from './utils';
+import { getMappedKey } from '../shared/utils';
 
 registerIcon(plusIcon, pencilIcon, timesIcon);
 
@@ -139,13 +140,13 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
   const initializeGanttData = useCallback(async () => {
     setLoaderTasks(true);
     const data = await loadGanttData(
-      dataPage,
-      categoryFieldName,
-      parentFieldName,
-      dependenciesFieldName,
-      startDateFieldName,
-      endDateFieldName,
-      progressFieldName,
+      getMappedKey(dataPage),
+      getMappedKey(categoryFieldName),
+      getMappedKey(parentFieldName),
+      getMappedKey(dependenciesFieldName),
+      getMappedKey(startDateFieldName),
+      getMappedKey(endDateFieldName),
+      getMappedKey(progressFieldName),
     );
     setTasks(data);
     setLoaderTasks(false);
@@ -167,8 +168,8 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         const extendedTaskProps = tasks.find((t) => t.id === task.id)?.extendedProps;
         const newDetails = await loadDetails({
           id: task.id,
-          classname: extendedTaskProps.pxObjClass,
-          detailsDataPage,
+          classname: extendedTaskProps[getMappedKey('pxObjClass')],
+          detailsDataPage: getMappedKey(detailsDataPage),
           detailsViewName,
           getPConnect,
         });
@@ -199,9 +200,9 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
           getPConnect,
           item: task,
           updatedFieldValueList: {
-            [progressFieldName]: gtrTask.progress,
-            [startDateFieldName]: gtrTask.start,
-            [endDateFieldName]: gtrTask.end,
+            [getMappedKey(progressFieldName)]: gtrTask.progress,
+            [getMappedKey(startDateFieldName)]: gtrTask.start,
+            [getMappedKey(endDateFieldName)]: gtrTask.end,
           },
         });
         if (eventType === 'dateChange') {
@@ -239,7 +240,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
       await getPConnect()
         .getActionsApi()
         .openLocalAction('pyUpdateCaseDetails', {
-          caseID: task.extendedProps.pzInsKey,
+          caseID: task.extendedProps[getMappedKey('pzInsKey')],
           containerName: 'modal',
           actionTitle: `Edit ${task.type}`,
           type: 'express',

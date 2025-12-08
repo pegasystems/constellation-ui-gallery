@@ -37,8 +37,14 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
+        getKeyMapping: (key: string) => key,
         getOperatorIdentifier: () => {
           return 'operator';
         },

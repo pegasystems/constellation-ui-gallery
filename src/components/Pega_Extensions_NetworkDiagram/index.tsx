@@ -23,6 +23,7 @@ import ReactFlow, {
   type Edge,
 } from 'reactflow';
 import dagre from '@dagrejs/dagre';
+import { getMappedKey } from '../shared/utils';
 
 import StyledPegaExtensionsNetworkDiagram from './styles';
 
@@ -133,22 +134,27 @@ function Flow(props: any) {
       const tmpNodesHash: StringHashMap = {};
       let parameters;
       if (selectionProperty) {
-        parameters = { pyGUID: selectionProperty };
+        parameters = { [getMappedKey('pyGUID')]: selectionProperty };
       }
       const context = getPConnect().getContextName();
-      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
-        invalidateCache: true,
-      });
-      data.pyNodes.forEach((element: any) => {
-        tmpNodesHash[element.pyID] = element.pyLabel;
+      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(
+        getMappedKey(dataPage),
+        context,
+        parameters,
+        {
+          invalidateCache: true,
+        },
+      );
+      data[getMappedKey('pyNodes')].forEach((element: any) => {
+        tmpNodesHash[element[getMappedKey('pyID')]] = element[getMappedKey('pyLabel')];
         initialNodes.push({
-          id: element.pyID,
+          id: element[getMappedKey('pyID')],
           data: {
-            id: element.pyID,
-            type: element.pyCategory,
-            label: element.pyLabel,
-            key: element.pzInsKey,
-            objClass: element.pyClassName,
+            id: element[getMappedKey('pyID')],
+            type: element[getMappedKey('pyCategory')],
+            label: element[getMappedKey('pyLabel')],
+            key: element[getMappedKey('pzInsKey')],
+            objClass: element[getMappedKey('pyClassName')],
             getPConnect,
             theme,
           },
@@ -156,15 +162,20 @@ function Flow(props: any) {
           type: 'custom',
         });
       });
-      data.pyEdges.forEach((element: any, i: number) => {
-        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element.pyFrom]} ${getPConnect().getLocalizedValue(
+      data[getMappedKey('pyEdges')].forEach((element: any, i: number) => {
+        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element[getMappedKey('pyFrom')]]} ${getPConnect().getLocalizedValue(
           'to',
-        )} ${tmpNodesHash[element.pyTo]} ${getPConnect().getLocalizedValue('with label:')} ${element.pyLabel}`;
+        )} ${tmpNodesHash[element[getMappedKey('pyTo')]]} ${getPConnect().getLocalizedValue('with label:')} ${element[getMappedKey('pyLabel')]}`;
         const edge: any = {
-          id: element.pyID || `edge-${i}`,
-          source: element.pyFrom,
-          target: element.pyTo,
-          data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
+          id: element[getMappedKey('pyID')] || `edge-${i}`,
+          source: element[getMappedKey('pyFrom')],
+          target: element[getMappedKey('pyTo')],
+          data: {
+            type: element[getMappedKey('pyCategory')],
+            label: element[getMappedKey('pyLabel')],
+            path: edgePath,
+            theme,
+          },
           markerEnd: {
             type: MarkerType.ArrowClosed,
             width: 20,

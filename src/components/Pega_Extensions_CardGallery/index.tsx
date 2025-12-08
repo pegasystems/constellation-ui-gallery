@@ -16,6 +16,7 @@ import { Task } from './Task';
 import { loadDetails, getFilters } from './utils';
 import { MainCard } from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
@@ -56,7 +57,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const editTask = (id: string) => {
     getPConnect()
       .getActionsApi()
-      .openLocalAction('pyUpdateCaseDetails', {
+      .openLocalAction((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
         caseID: id,
         containerName: 'modal',
         actionTitle: getPConnect().getLocalizedValue('Edit task'),
@@ -92,17 +93,17 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         query: {
           ...(filterExpr ? { filter: filterExpr } : null),
           select: [
-            { field: 'pyID' },
-            { field: 'pyLabel' },
-            { field: 'pyStatusWork' },
-            { field: 'pzInsKey' },
-            { field: 'pxObjClass' },
+            { field: getMappedKey('pyID') },
+            { field: getMappedKey('pyLabel') },
+            { field: getMappedKey('pyStatusWork') },
+            { field: getMappedKey('pzInsKey') },
+            { field: getMappedKey('pxObjClass') },
           ],
         },
       };
     }
     (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, payload)
+      .getData((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(dataPage), payload)
       .then(async (response: any) => {
         if (!isFiltered) {
           /* First time - no data loaded */
@@ -110,11 +111,11 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             const tmpTasks: any = [];
             response.data.data.forEach((item: any) => {
               tmpTasks.push({
-                id: item.pyID,
-                title: item.pyLabel,
-                status: item.pyStatusWork,
-                classname: item.pxObjClass,
-                insKey: item.pzInsKey,
+                id: item[getMappedKey('pyID')],
+                title: item[getMappedKey('pyLabel')],
+                status: item[getMappedKey('pyStatusWork')],
+                classname: item[getMappedKey('pxObjClass')],
+                insKey: item[getMappedKey('pzInsKey')],
                 isVisible: true,
                 getDetails,
                 editTask,
@@ -149,7 +150,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             prevTasks?.forEach((tmpTask: any) => {
               let isVisible = false;
               response?.data?.data?.forEach((item: any) => {
-                if (item.pyID === tmpTask.id) {
+                if (item[getMappedKey('pyID')] === tmpTask.id) {
                   isVisible = true;
                   tmpIsEmpty = false;
                 }

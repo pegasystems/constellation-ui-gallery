@@ -21,7 +21,14 @@ export default {
 const setPCore = () => {
   (window as any).PCore = {
     getEnvironmentInfo: () => {
-      return {};
+      return {
+        getKeyMapping: (key: string) => key,
+      };
+    },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
     },
   };
 };

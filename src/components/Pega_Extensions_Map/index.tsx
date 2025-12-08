@@ -17,6 +17,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
 import { getAllFields, renderShapes, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 const ARCGIS_VERSION = '4.34';
 type MapProps = {
@@ -305,7 +306,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       // Create the MapView with the specified container and properties
       if (locationInputType === 'propertyRef') {
         const inputLocation = getPConnect().getValue(locationRef);
-        const LatLong = inputLocation?.pyLatLon?.split(',');
+        const LatLong = inputLocation?.[getMappedKey('pyLatLon')]?.split(',');
         if (LatLong && LatLong.length === 2) {
           view = new MapView({
             container: mapDiv.current,
@@ -364,8 +365,8 @@ export const PegaExtensionsMap = (props: MapProps) => {
                   };
                   const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
                   const actionsApi = c11nEnv.getPConnect().getActionsApi();
-                  actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
-                  actionsApi.updateFieldValue('.pyAddress', result.name);
+                  actionsApi.updateFieldValue('.' + getMappedKey('pyLatLon'), `${latitude}, ${longitude}`);
+                  actionsApi.updateFieldValue('.' + getMappedKey('pyAddress'), result.name);
                 }
               });
             }

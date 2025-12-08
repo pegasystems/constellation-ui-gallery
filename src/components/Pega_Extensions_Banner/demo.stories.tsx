@@ -21,6 +21,16 @@ const setPCore = () => {
         CASE_INFO: {},
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getKeyMapping: (key: string) => key,
+      };
+    },
     getMessagingServiceManager: () => {
       return {
         subscribe: () => {
