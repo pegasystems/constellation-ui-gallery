@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Button } from '@pega/cosmos-react-core';
+import { useRef } from 'react';
 import {
   DentalChartContainer,
   ChartHeader,
-  ViewToggleContainer,
+  JawsWrapper,
+  JawSection,
+  JawTitle,
   JawContainer,
   ToothContainer,
   ToothButton,
@@ -29,16 +30,52 @@ const calculateToothPosition = (index: number, total: number, radius: number) =>
 };
 
 const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading, getPConnect }: DentalChartProps) => {
-  const [currentView, setCurrentView] = useState<'maxillary' | 'mandibular'>('maxillary');
-
   const maxillaryUpper = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   const maxillaryLower = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   const mandibularUpper = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
   const mandibularLower = ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'];
 
+  // Create refs array for all tooth buttons
+  const toothRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const totalTeeth = maxillaryUpper.length + maxillaryLower.length + mandibularUpper.length + mandibularLower.length;
+
   const handleStatusChange = (index: number, newStatus: string) => {
     if (index >= 0) {
       updateToothStatus(index, newStatus);
+    }
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (globalIndex: number, event: React.KeyboardEvent) => {
+    const maxillaryCount = maxillaryUpper.length + maxillaryLower.length;
+    const isInMaxillary = globalIndex < maxillaryCount;
+    const jawStartIndex = isInMaxillary ? 0 : maxillaryCount;
+    const jawEndIndex = isInMaxillary ? maxillaryCount - 1 : totalTeeth - 1;
+
+    let targetIndex = -1;
+
+    switch (event.key) {
+      case 'ArrowRight':
+        // Move to previous tooth within the same jaw (toward 1/17)
+        if (globalIndex > jawStartIndex) {
+          targetIndex = globalIndex - 1;
+        }
+        break;
+
+      case 'ArrowLeft':
+        // Move to next tooth within the same jaw (toward 16/32)
+        if (globalIndex < jawEndIndex) {
+          targetIndex = globalIndex + 1;
+        }
+        break;
+
+      default:
+        return;
+    }
+
+    if (targetIndex >= 0 && targetIndex < totalTeeth && toothRefs.current[targetIndex]) {
+      event.preventDefault();
+      toothRefs.current[targetIndex]?.focus();
     }
   };
 
@@ -107,15 +144,30 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
       return tooth;
     };
 
+    // Ensure tabIndex=0 for first tooth in each jaw, -1 for others
+    let tabIndex = -1;
+    if (!readOnly && exists) {
+      if (
+        globalIndex === 0 ||
+        globalIndex === maxillaryUpper.length + maxillaryLower.length // first mandibular tooth
+      ) {
+        tabIndex = 0;
+      }
+    }
+
     return (
-      <ToothContainer key={`${tooth}-${status}`} top={position.y} left={position.x}>
+      <ToothContainer key={`tooth-${globalIndex}`} top={position.y} left={position.x}>
         <ToothButton
+          ref={(el: HTMLButtonElement | null) => {
+            toothRefs.current[globalIndex] = el;
+          }}
           className='tooth-button'
           variant='simple'
           onClick={!exists || readOnly ? undefined : cycleStatus}
+          onKeyDown={exists && !readOnly ? (e: React.KeyboardEvent) => handleKeyDown(globalIndex, e) : undefined}
           aria-label={getAriaLabel()}
           role='button'
-          tabIndex={exists && !readOnly ? 0 : -1}
+          tabIndex={tabIndex}
           status={status}
           exists={exists}
           style={{ cursor: !exists || readOnly ? 'default' : 'pointer' }}
@@ -126,52 +178,33 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
     );
   };
 
-  const renderViewToggle = () => (
-    <ViewToggleContainer role='tablist' aria-label={getPConnect?.().getLocalizedValue?.('Dental chart view selection')}>
-      {['Maxillary', 'Mandibular'].map((view) => (
-        <Button
-          key={view}
-          variant={currentView === view.toLowerCase() ? 'primary' : 'secondary'}
-          onClick={() => setCurrentView(view.toLowerCase() as 'maxillary' | 'mandibular')}
-          role='tab'
-          aria-selected={currentView === view.toLowerCase()}
-          aria-controls={`${view.toLowerCase()}-teeth-panel`}
-          id={`${view.toLowerCase()}-tab`}
-        >
-          {getPConnect?.().getLocalizedValue?.(view)}
-        </Button>
-      ))}
-    </ViewToggleContainer>
-  );
-
   const renderJaw = (
     viewType: 'maxillary' | 'mandibular',
     upperJaw: (number | string)[],
     lowerJaw: (number | string)[],
+    title: string,
   ) => {
     return (
-      <JawContainer
-        role='tabpanel'
-        aria-labelledby={`${viewType}-tab`}
-        hidden={currentView !== viewType}
-        id={`${viewType}-teeth-panel`}
-      >
-        {upperJaw.map((tooth, i) => {
-          const totalInArch = upperJaw.length;
-          const position = calculateToothPosition(i, totalInArch, 12.5);
-          const globalIndex = viewType === 'maxillary' ? i : maxillaryUpper.length + maxillaryLower.length + i;
-          return renderTooth(tooth, globalIndex, position);
-        })}
-        {lowerJaw.map((tooth, i) => {
-          const totalInArch = lowerJaw.length;
-          const position = calculateToothPosition(i, totalInArch, 7.5);
-          const globalIndex =
-            viewType === 'maxillary'
-              ? maxillaryUpper.length + i
-              : maxillaryUpper.length + maxillaryLower.length + mandibularUpper.length + i;
-          return renderTooth(tooth, globalIndex, position);
-        })}
-      </JawContainer>
+      <JawSection tabIndex={-1}>
+        <JawTitle>{title}</JawTitle>
+        <JawContainer role='region' aria-label={title} id={`${viewType}-teeth-panel`}>
+          {upperJaw.map((tooth, i) => {
+            const totalInArch = upperJaw.length;
+            const position = calculateToothPosition(i, totalInArch, 10.5);
+            const globalIndex = viewType === 'maxillary' ? i : maxillaryUpper.length + maxillaryLower.length + i;
+            return renderTooth(tooth, globalIndex, position);
+          })}
+          {lowerJaw.map((tooth, i) => {
+            const totalInArch = lowerJaw.length;
+            const position = calculateToothPosition(i, totalInArch, 7);
+            const globalIndex =
+              viewType === 'maxillary'
+                ? maxillaryUpper.length + i
+                : maxillaryUpper.length + maxillaryLower.length + mandibularUpper.length + i;
+            return renderTooth(tooth, globalIndex, position);
+          })}
+        </JawContainer>
+      </JawSection>
     );
   };
 
@@ -206,12 +239,23 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
   return (
     <DentalChartContainer>
       <ChartHeader>{heading}</ChartHeader>
-      {renderViewToggle()}
-
-      {renderJaw('maxillary', maxillaryUpper, maxillaryLower)}
-      {renderJaw('mandibular', mandibularUpper, mandibularLower)}
 
       {renderLegend()}
+
+      <JawsWrapper>
+        {renderJaw(
+          'maxillary',
+          maxillaryUpper,
+          maxillaryLower,
+          getPConnect?.().getLocalizedValue?.('Maxillary') || 'Maxillary',
+        )}
+        {renderJaw(
+          'mandibular',
+          mandibularUpper,
+          mandibularLower,
+          getPConnect?.().getLocalizedValue?.('Mandibular') || 'Mandibular',
+        )}
+      </JawsWrapper>
     </DentalChartContainer>
   );
 };
