@@ -1,6 +1,6 @@
 {
   "name": "pega-constellation-ui-gallery",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "A UI Gallery of Constellation DX Components",
   "keywords": [
     "pega"
@@ -89,7 +89,7 @@
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@pega/configs": "^0.17.0",
-    "@pega/custom-dx-components": "~25.1.22",
+    "@pega/custom-dx-components": "~0.26.10",
     "@pega/eslint-config": "^0.17.0",
     "@pega/pcore-pconnect-typedefs": "^4.1.0",
     "@pega/tsconfig": "^0.17.0",

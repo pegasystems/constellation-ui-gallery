@@ -3,7 +3,7 @@
     "label": "Form Full Width",
     "description": "Form Full Width",
     "organization": "Pega",
-    "version": "4.0.1",
+    "version": "5.0.0",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_FormFullWidth",
@@ -46,7 +46,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.1, Tue Dec 02 2025, 25.1.1-199",
+            "label": "Pega_Extensions 5.0.0, Wed Dec 10 2025, 25.1.1-199",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -56,7 +56,7 @@
         "NumCols": "2",
         "gridTemplateColumns": ""
     },
-    "buildDate": "2025-12-02T16:30:49.648Z",
+    "buildDate": "2025-12-10T21:15:25.398Z",
     "infinityVersion": "25.1.1-199",
-    "packageCosmosVersion": "8.9.4"
+    "packageCosmosVersion": "9.0.0-build.14.2"
 }
