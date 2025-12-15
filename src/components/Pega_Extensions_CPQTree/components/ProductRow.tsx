@@ -88,20 +88,23 @@ export const ProductRow = ({
     mainChildSpec?.[PROPERTY_NAMES.SPEC_NAME] &&
     mainChildSpec[PROPERTY_NAMES.SPEC_NAME].trim().toLowerCase() === productName.trim().toLowerCase();
 
-  // Collect all Configuration arrays from nested ChildSpecificationsList items
+  /**
+   * Collect Configuration arrays that should be rendered as additional flat fields.
+   *
+   * We deliberately exclude configurations that belong to the mainChildSpec and its
+   * nested ChildSpecificationsList hierarchy, because those are already rendered
+   * in the hierarchical view via `ChildSpecRow`.
+   *
+   * Instead, we only include configurations coming from *other* specs in the
+   * top-level `ChildSpecificationsList` (positions >= 1).
+   */
   const allConfigurations: Array<{ spec: any; config: any[] }> = [];
-  if (mainChildSpec?.[PROPERTY_NAMES.CONFIGURATION]) {
-    allConfigurations.push({ spec: mainChildSpec, config: mainChildSpec[PROPERTY_NAMES.CONFIGURATION] });
-  }
 
-  if (childSpecifications.length > 0) {
-    allConfigurations.push(...collectConfigurations(childSpecifications));
-  }
-
-  // Also check all child specs in the main list
+  // Top-level child specs list for the product offer (first item is mainChildSpec)
   const childSpecsList = productOffer[PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST] || [];
   if (childSpecsList.length > 1) {
-    allConfigurations.push(...collectConfigurations(childSpecsList.slice(1)));
+    const otherTopLevelSpecs = childSpecsList.slice(1);
+    allConfigurations.push(...collectConfigurations(otherTopLevelSpecs));
   }
 
   // Helper to get main spec quantity
@@ -278,39 +281,37 @@ export const ProductRow = ({
               })}
 
               {/* Configuration Fields from all other nested specs */}
-              {allConfigurations
-                .filter(({ spec }) => spec !== mainChildSpec && !childSpecifications.includes(spec))
-                .map(({ spec, config }, groupIndex) => {
-                  return (
-                    <div key={`config-group-${groupIndex}`}>
-                      {config.map((configItem: any, configIndex: number) => {
-                        // Generate a unique field ID for nested configurations
-                        const fieldId = `${configSectionId}-nested-${groupIndex}-field-${configIndex}`;
-                        // Ensure pxPropertyPath is set on configItem if missing
-                        // Construct from parent spec's path if available
-                        if (!configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] && spec?.[PROPERTY_NAMES.PX_PROPERTY_PATH]) {
-                          const parentPath = spec[PROPERTY_NAMES.PX_PROPERTY_PATH];
-                          // Construct path: parentPath.Configuration[index].ConfiguredFieldValue
-                          configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] =
-                            `${parentPath}.${PROPERTY_NAMES.CONFIGURATION}[${configIndex}].${PROPERTY_NAMES.CONFIGURED_FIELD_VALUE}`;
-                        }
-                        return (
-                          <ConfigFieldRow
-                            key={fieldId}
-                            configItem={configItem}
-                            index={configIndex}
-                            depth={shouldSkipConfigHeader ? 1 : 2}
-                            fieldId={fieldId}
-                            disabled={isDisabled}
-                            readOnly={readOnly}
-                            fieldValue={fieldValues.get(fieldId)}
-                            onFieldChange={onConfigFieldChange}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
+              {allConfigurations.map(({ spec, config }, groupIndex) => {
+                return (
+                  <div key={`config-group-${groupIndex}`}>
+                    {config.map((configItem: any, configIndex: number) => {
+                      // Generate a unique field ID for nested configurations
+                      const fieldId = `${configSectionId}-nested-${groupIndex}-field-${configIndex}`;
+                      // Ensure pxPropertyPath is set on configItem if missing
+                      // Construct from parent spec's path if available
+                      if (!configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] && spec?.[PROPERTY_NAMES.PX_PROPERTY_PATH]) {
+                        const parentPath = spec[PROPERTY_NAMES.PX_PROPERTY_PATH];
+                        // Construct path: parentPath.Configuration[index].ConfiguredFieldValue
+                        configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] =
+                          `${parentPath}.${PROPERTY_NAMES.CONFIGURATION}[${configIndex}].${PROPERTY_NAMES.CONFIGURED_FIELD_VALUE}`;
+                      }
+                      return (
+                        <ConfigFieldRow
+                          key={fieldId}
+                          configItem={configItem}
+                          index={configIndex}
+                          depth={shouldSkipConfigHeader ? 1 : 2}
+                          fieldId={fieldId}
+                          disabled={isDisabled}
+                          readOnly={readOnly}
+                          fieldValue={fieldValues.get(fieldId)}
+                          onFieldChange={onConfigFieldChange}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </>
           )}
         </>
