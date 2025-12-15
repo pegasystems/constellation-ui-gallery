@@ -51,6 +51,7 @@ export const StyledCard = styled(Card)`
   padding: 1rem;
   overflow-x: auto;
   min-width: 0;
+  max-width: 1200px;
 `;
 
 // ============================================
@@ -240,8 +241,8 @@ export const ProductsListContainer = styled.div`
 `;
 
 export const DetailsPanelContainer = styled.div<{ $isVisible?: boolean }>`
-  flex: 0 0 400px;
-  min-width: 400px;
+  flex: 0 0 500px;
+  min-width: 500px;
   border-left: 0.0625rem solid #ccc;
   padding-left: 1rem;
   position: relative;
