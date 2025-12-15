@@ -9,7 +9,14 @@ import pluginReactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
-    ignores: ['eslint.config.mjs', '**/dist/*', '**/*.config.{js,mjs,cjs,ts}', '**/node_modules/*'],
+    ignores: [
+      'eslint.config.mjs',
+      '**/dist/*',
+      '**/*.config.{js,mjs,cjs,ts}',
+      '**/node_modules/*',
+      'src/component-list.js',
+      'src/index.js',
+    ],
   },
   pluginJs.configs.recommended,
   {

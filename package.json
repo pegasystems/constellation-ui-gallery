@@ -49,6 +49,7 @@
     "setPermanent": "custom-dx-components setPermanent",
     "showStatus": "custom-dx-components showStatus",
     "start": "storybook dev --port 6006",
+    "startDevServer": "custom-dx-components startDevServer",
     "storeLibVersion": "custom-dx-components storeComponents",
     "storybook-docs": "storybook dev --docs --port 6006",
     "switchLib": "custom-dx-components switchLibrary",
