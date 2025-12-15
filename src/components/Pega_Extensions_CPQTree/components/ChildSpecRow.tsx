@@ -108,7 +108,7 @@ export const ChildSpecRow = ({
             />
           )}
           {!hasChildren && <IconSpacer />}
-          {showDetailsInfo && !disabled && onLoadDetails ? (
+          {hasChildren && showDetailsInfo && !disabled && onLoadDetails ? (
             <Button
               variant='link'
               type='button'
@@ -143,7 +143,8 @@ export const ChildSpecRow = ({
             if (!configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] && childSpec?.[PROPERTY_NAMES.PX_PROPERTY_PATH]) {
               const parentPath = childSpec[PROPERTY_NAMES.PX_PROPERTY_PATH];
               // Construct path: parentPath.Configuration[index].ConfiguredFieldValue
-              configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] = `${parentPath}.${PROPERTY_NAMES.CONFIGURATION}[${configIndex}].${PROPERTY_NAMES.CONFIGURED_FIELD_VALUE}`;
+              configItem[PROPERTY_NAMES.PX_PROPERTY_PATH] =
+                `${parentPath}.${PROPERTY_NAMES.CONFIGURATION}[${configIndex}].${PROPERTY_NAMES.CONFIGURED_FIELD_VALUE}`;
             }
             return (
               <ConfigFieldRow
