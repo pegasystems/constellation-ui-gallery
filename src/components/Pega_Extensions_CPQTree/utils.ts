@@ -772,8 +772,9 @@ export const clearRegisteredPageListPaths = (): void => {
  *
  * @param path - The path to the pagelist (e.g., "Tree[0].ProductOffer.ChildSpecificationsList[0].ChildSpecificationsList")
  * @param getPConnect - Function to get PConnect instance
+ * @param index - Optional index to use when calling addViewNode (defaults to 0)
  */
-export const addPageListNodeForPath = (path: string, getPConnect: any): void => {
+export const addPageListNodeForPath = (path: string, getPConnect: any, index: number = 0): void => {
   const PCore = (window as any).PCore;
   if (!PCore || !PCore.getContextTreeManager || !getPConnect) {
     return;
@@ -806,7 +807,7 @@ export const addPageListNodeForPath = (path: string, getPConnect: any): void => 
 
   // Call addPageListNode with the required parameters
   // For root path (Tree), set target; for nested paths, target should be undefined
-
+  console.log('addPageListNodeForPath', fullPath, pageName);
   const isRootPath = lastDotIndex < 0;
   PCore.getContextTreeManager().addPageListNode(
     getPConnect().getContextName(),
@@ -831,13 +832,133 @@ export const addPageListNodeForPath = (path: string, getPConnect: any): void => 
 
   PCore.getContextTreeManager().addViewNode(
     getPConnect().getContextName(),
-    'caseInfo.content.' + path + '[0]',
+    'caseInfo.content.' + path + `[${index}]`,
     getPConnect().viewName,
   );
 };
 
 /**
- * Adds a view node for a property path to the context tree manager
+ * Extracts all pagelist paths and their corresponding indices from a property path.
+ * For example, from "TreeGroup[0].Tree[0].ProductOffer.ChildSpecificationsList[5].Configuration[2].ConfiguredFieldValue"
+ * it would extract: [
+ *   { path: "TreeGroup", index: 0 },
+ *   { path: "TreeGroup[0].Tree", index: 0 },
+ *   { path: "TreeGroup[0].Tree[0].ProductOffer.ChildSpecificationsList", index: 5 },
+ *   { path: "TreeGroup[0].Tree[0].ProductOffer.ChildSpecificationsList[5].Configuration", index: 2 }
+ * ]
+ *
+ * @param propertyPath - The full property path
+ * @returns Array of objects containing pagelist paths and their indices
+ */
+const extractPagelistPathsFromPropertyPath = (propertyPath: string): Array<{ path: string; index: number }> => {
+  const pagelistPaths: Array<{ path: string; index: number }> = [];
+  const segments = propertyPath.split('.');
+  let pathWithoutIndex = ''; // Path without the current segment's index
+  let accumulatedPath = ''; // Full path with indices
+
+  for (let i = 0; i < segments.length; i++) {
+    const segment = segments[i];
+
+    // Remove index brackets to check the property name
+    const propertyName = segment.replace(/\[.*$/, '');
+
+    // Extract index from current segment (e.g., "Tree[0]" -> 0, "Tree" -> undefined)
+    const indexMatch = segment.match(/\[(\d+)\]$/);
+    const segmentIndex = indexMatch ? parseInt(indexMatch[1], 10) : undefined;
+
+    // Build path up to this property (without the index on the current segment)
+    let pathToProperty: string;
+    if (pathWithoutIndex) {
+      pathToProperty = pathWithoutIndex + '.' + propertyName;
+    } else {
+      pathToProperty = propertyName;
+    }
+
+    // Build accumulated path with indices
+    if (accumulatedPath) {
+      accumulatedPath += '.' + segment;
+    } else {
+      accumulatedPath = segment;
+    }
+
+    // Register TreeGroup at root
+    if (i === 0 && propertyName === 'TreeGroup') {
+      // For TreeGroup, use index 0 if available, otherwise 0
+      const index = segmentIndex !== undefined ? segmentIndex : 0;
+      if (!pagelistPaths.some((p) => p.path === 'TreeGroup')) {
+        pagelistPaths.push({ path: 'TreeGroup', index });
+      }
+    }
+
+    // Register Tree arrays (anywhere in the path)
+    if (propertyName === PROPERTY_NAMES.TREE) {
+      // The index is from the segment that contains this Tree property
+      // For "TreeGroup[0].Tree[0]", we want index 0 (from Tree[0])
+      // For "Tree[0]", we want index 0 (from Tree[0])
+      let index = 0; // Default to 0
+      if (segmentIndex !== undefined) {
+        index = segmentIndex;
+      }
+
+      if (!pagelistPaths.some((p) => p.path === pathToProperty)) {
+        pagelistPaths.push({ path: pathToProperty, index });
+      }
+    }
+
+    // Register ChildSpecificationsList arrays
+    if (propertyName === PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST) {
+      // The index is from the segment that follows this pagelist property
+      // For "ChildSpecificationsList[5].Configuration[2]", the segment is "ChildSpecificationsList[5]"
+      // We want index 5, which is the index of the item in ChildSpecificationsList
+      // But wait - the segment format is "ChildSpecificationsList[5]" where [5] is the index of the item
+      // So segmentIndex should already be 5
+      let index = 0; // Default to 0
+      if (segmentIndex !== undefined) {
+        index = segmentIndex;
+      } else if (i < segments.length - 1) {
+        // If the segment doesn't have an index, look at the next segment
+        // The next segment might be something like "Configuration[2]" where [2] is the index
+        // But that's the index of Configuration, not ChildSpecificationsList
+        // We need to look at the accumulated path to find the index
+        // Actually, if ChildSpecificationsList doesn't have an index in the segment,
+        // it means we're looking at the list itself, not an item, so default to 0
+      }
+
+      if (!pagelistPaths.some((p) => p.path === pathToProperty)) {
+        pagelistPaths.push({ path: pathToProperty, index });
+      }
+    }
+
+    // Register Configuration arrays
+    if (propertyName === PROPERTY_NAMES.CONFIGURATION) {
+      // The index is from the segment itself
+      // For "Configuration[2].ConfiguredFieldValue", the segment is "Configuration[2]"
+      // We want index 2, which is the index of the item in Configuration
+      let index = 0; // Default to 0
+      if (segmentIndex !== undefined) {
+        index = segmentIndex;
+      }
+
+      if (!pagelistPaths.some((p) => p.path === pathToProperty)) {
+        pagelistPaths.push({ path: pathToProperty, index });
+      }
+    }
+
+    // Update pathWithoutIndex for next iteration (include the full segment with index)
+    if (pathWithoutIndex) {
+      pathWithoutIndex += '.' + segment;
+    } else {
+      pathWithoutIndex = segment;
+    }
+  }
+
+  return pagelistPaths;
+};
+
+/**
+ * Adds a view node for a property path to the context tree manager.
+ * Before registering the view node, it automatically registers all pagelists in the path
+ * that haven't been registered yet.
  * This should be called for individual property paths (e.g., ConfiguredFieldValue.FieldValue, quantity)
  * @param path - The full property path (e.g., "Tree[0].Tree[0].ProductOffer.ChildSpecificationsList[0].Configuration[0].ConfiguredFieldValue.FieldValue")
  * @param getPConnect - Function to get PConnect instance
@@ -854,6 +975,14 @@ export const addViewNodeForPropertyPath = (path: string, getPConnect: any): void
     return;
   }
 
+  // Extract and register all pagelists in the path that haven't been registered yet
+  const pagelistPaths = extractPagelistPathsFromPropertyPath(path);
+  pagelistPaths.forEach(({ path: pagelistPath, index }) => {
+    if (!registeredPageListPaths.has(pagelistPath)) {
+      addPageListNodeForPath(pagelistPath, getPConnect, index);
+    }
+  });
+
   // Mark this path as registered
   registeredPropertyPaths.add(path);
 
@@ -866,7 +995,10 @@ export const addViewNodeForPropertyPath = (path: string, getPConnect: any): void
 };
 
 /**
- * Recursively finds all ChildSpecificationsList pagelists in an object and registers them
+ * Recursively finds properties with pxPropertyPath and registers them as view nodes.
+ * Pagelists in the path will be automatically registered by addViewNodeForPropertyPath.
+ * This function no longer directly registers pagelists - it only registers view nodes for editable properties.
+ *
  * @param obj - The object to traverse
  * @param basePath - The base path (e.g., "Tree[0].ProductOffer")
  * @param getPConnect - Function to get PConnect instance
@@ -884,48 +1016,37 @@ export const findAndRegisterPageLists = (
 
   visited.add(obj);
 
-  // Check if this object has a Configuration array property - register it as a pagelist
-  if (obj[PROPERTY_NAMES.CONFIGURATION] && Array.isArray(obj[PROPERTY_NAMES.CONFIGURATION])) {
-    // Register the Configuration array as a pagelist
-    const configurationPath = `${basePath}.${PROPERTY_NAMES.CONFIGURATION}`;
-    addPageListNodeForPath(configurationPath, getPConnect);
+  // Check if this object has a pxPropertyPath set (for leaf nodes with quantity or ConfiguredFieldValue)
+  // This is the key - when we find a property that needs to be edited, register it.
+  // addViewNodeForPropertyPath will automatically register all necessary pagelists in the path.
+  if (obj[PROPERTY_NAMES.PX_PROPERTY_PATH]) {
+    const propertyPath = obj[PROPERTY_NAMES.PX_PROPERTY_PATH];
+    // Register the property path as a view node (e.g., ConfiguredFieldValue or quantity)
+    // This will also register all pagelists in the path automatically
+    addViewNodeForPropertyPath(propertyPath, getPConnect);
+  }
 
-    // Process each configuration field item
+  // Recursively process nested structures to find all properties with pxPropertyPath
+  // We don't register pagelists here - only when we encounter editable properties
+  if (obj[PROPERTY_NAMES.CONFIGURATION] && Array.isArray(obj[PROPERTY_NAMES.CONFIGURATION])) {
     obj[PROPERTY_NAMES.CONFIGURATION].forEach((configItem: any, index: number) => {
       if (configItem && typeof configItem === 'object') {
-        const configItemPath = `${configurationPath}[${index}]`;
-        // Recursively process configuration items (they might have nested structures)
+        const configItemPath = `${basePath}.${PROPERTY_NAMES.CONFIGURATION}[${index}]`;
         findAndRegisterPageLists(configItem, configItemPath, getPConnect, visited);
       }
     });
   }
 
-  // Check if this object has a pxPropertyPath set (for leaf nodes with quantity or ConfiguredFieldValue)
-  // Only register if it's a leaf node (not an array item that's part of a pagelist)
-  if (obj[PROPERTY_NAMES.PX_PROPERTY_PATH]) {
-    const propertyPath = obj[PROPERTY_NAMES.PX_PROPERTY_PATH];
-    // Register the property path as a view node (e.g., ConfiguredFieldValue or quantity)
-    addViewNodeForPropertyPath(propertyPath, getPConnect);
-  }
-
-  // Check if this object has a ChildSpecificationsList property
   if (obj[PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST] && Array.isArray(obj[PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST])) {
-    // Register this pagelist
-    const pagelistPath = `${basePath}.${PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST}`;
-    addPageListNodeForPath(pagelistPath, getPConnect);
-
-    // Recursively process each item in the ChildSpecificationsList
     obj[PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST].forEach((childSpec: any, index: number) => {
       if (childSpec && typeof childSpec === 'object') {
-        const childSpecPath = `${pagelistPath}[${index}]`;
-        // Recursively check for nested ChildSpecificationsList
+        const childSpecPath = `${basePath}.${PROPERTY_NAMES.CHILD_SPECIFICATIONS_LIST}[${index}]`;
         findAndRegisterPageLists(childSpec, childSpecPath, getPConnect, visited);
       }
     });
   }
 
   // Also check other properties that might contain nested structures
-  // Skip Configuration and ChildSpecificationsList as they're already handled above
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       // Skip properties we've already processed
@@ -944,6 +1065,73 @@ export const findAndRegisterPageLists = (
           }
         });
       }
+    }
+  }
+};
+
+/**
+ * Registers a Tree pagelist for a given path if it hasn't been registered yet.
+ * This should be called when a Tree path is actually used during tree building.
+ *
+ * @param path - The path to the Tree pagelist (e.g., "Tree", "Tree[0].Tree", "TreeGroup[0].Tree")
+ * @param getPConnect - Function to get PConnect instance
+ * @param index - Optional index to use when calling addViewNode (defaults to 0)
+ */
+export const registerTreePagelistForPath = (path: string, getPConnect: any, index: number = 0): void => {
+  if (!path || !getPConnect) {
+    return;
+  }
+  addPageListNodeForPath(path, getPConnect, index);
+};
+
+/**
+ * Derives and registers Tree pagelists from a parent path that contains Tree segments.
+ * When a path like "TreeGroup[0].Tree[0]" is used, this registers:
+ * - "TreeGroup" (if at root)
+ * - "TreeGroup[0].Tree" (the Tree array being accessed)
+ * - Any nested Tree arrays as they're encountered
+ *
+ * @param parentPath - The parent path being used (e.g., "TreeGroup[0].Tree[0]", "Tree[0]")
+ * @param getPConnect - Function to get PConnect instance
+ */
+export const registerTreePagelistsFromPath = (parentPath: string, getPConnect: any): void => {
+  if (!parentPath || !getPConnect) {
+    return;
+  }
+
+  // Split the path into segments
+  const segments = parentPath.split('.');
+  let accumulatedPath = '';
+
+  for (let i = 0; i < segments.length; i++) {
+    const segment = segments[i];
+
+    // Register TreeGroup at the root if we encounter it
+    if (i === 0 && (segment === 'TreeGroup' || segment.startsWith('TreeGroup['))) {
+      registerTreePagelistForPath('TreeGroup', getPConnect);
+    }
+
+    // If this segment is a Tree property (with or without index), register it as a pagelist
+    if (segment === PROPERTY_NAMES.TREE || segment.startsWith(PROPERTY_NAMES.TREE + '[')) {
+      // Build the path up to this Tree property (without the index on Tree)
+      // For "TreeGroup[0].Tree[0]", we want to register "TreeGroup[0].Tree"
+      // For "Tree[0]", we want to register "Tree"
+      let pathToTree: string;
+      if (accumulatedPath) {
+        // Remove any index from the Tree segment and build the full path
+        pathToTree = accumulatedPath + '.' + PROPERTY_NAMES.TREE;
+      } else {
+        // Root Tree
+        pathToTree = PROPERTY_NAMES.TREE;
+      }
+      registerTreePagelistForPath(pathToTree, getPConnect);
+    }
+
+    // Build up the accumulated path for the next iteration
+    if (accumulatedPath) {
+      accumulatedPath += '.' + segment;
+    } else {
+      accumulatedPath = segment;
     }
   }
 };

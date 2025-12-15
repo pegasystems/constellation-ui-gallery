@@ -4,7 +4,6 @@ import {
   findRootTree,
   findSiteNode,
   clearRegisteredPageListPaths,
-  addPageListNodeForPath,
   extractProductId,
   extractQuantity,
   extractConfiguredFieldValue,
@@ -148,14 +147,6 @@ export const useCPQTreeData = (
       const cases: Array<CustomTreeNode> = [];
       const currentLoadTree = loadTreeRef.current;
       const currentChildrenPropertyName = childrenPropertyNameRef.current;
-      const currentGetPConnect = getPConnectRef.current;
-
-      // Detect if response has TreeGroup structure and build base path prefix
-      let basePathPrefix = '';
-      if (response?.TreeGroup && Array.isArray(response.TreeGroup) && response.TreeGroup.length > 0) {
-        // Include TreeGroup[0] in the base path
-        basePathPrefix = 'TreeGroup[0]';
-      }
 
       // Find root tree using utility function
       const rootTree = findRootTree(response, currentChildrenPropertyName);
@@ -165,37 +156,40 @@ export const useCPQTreeData = (
         if (siteNode && siteNode[PROPERTY_NAMES.TREE] && Array.isArray(siteNode[PROPERTY_NAMES.TREE])) {
           // Find the index of the site node in the rootTree array
           const siteNodeIndex = rootTree.findIndex((node: any) => node === siteNode);
-          // Build the parent path for products in the site node's Tree
-          // Include basePathPrefix if TreeGroup exists
+          // Build the parent path for products in the site node's Tree.
+          // For plain Tree responses this is "Tree[index]".
+          // For TreeGroup responses this is "TreeGroup[siteIndex]".
           const siteNodePath =
             siteNodeIndex >= 0
-              ? basePathPrefix
-                ? `${basePathPrefix}.Tree[${siteNodeIndex}]`
+              ? response?.TreeGroup
+                ? `TreeGroup[${siteNodeIndex}]`
                 : `Tree[${siteNodeIndex}]`
-              : basePathPrefix
-                ? `${basePathPrefix}.Tree[0]`
+              : response?.TreeGroup
+                ? 'TreeGroup[0]'
                 : 'Tree[0]';
+
           // Process products from site node's Tree
+          // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
+          // for editable properties during tree building
           siteNode[PROPERTY_NAMES.TREE].forEach((item: any, index: number) => {
             if (item[PROPERTY_NAMES.TYPE] === NODE_TYPES.PRODUCT) {
               const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-              addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
+              // Register Tree pagelists as we traverse - the loadTree function will build paths
+              // and we'll register them as they're used
               currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, siteNodePath, treeIndex);
             }
           });
         } else {
           // Fallback: process all items in rootTree
+          // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
           rootTree.forEach((item: any, index: number) => {
             const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-            addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-            const basePath = basePathPrefix || '';
-            currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, basePath, treeIndex);
+            currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, '', treeIndex);
           });
         }
       } else {
         // Response is a single root node
-        addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-        currentLoadTree(response, cases, caseInstanceKey, new WeakSet(), 0, basePathPrefix, 0);
+        currentLoadTree(response, cases, caseInstanceKey, new WeakSet(), 0, '', 0);
       }
 
       setObjects(cases);
@@ -283,13 +277,6 @@ export const useCPQTreeData = (
         const cases: Array<CustomTreeNode> = [];
         const currentLoadTree = loadTreeRef.current;
         const currentChildrenPropertyName = childrenPropertyNameRef.current;
-        const currentGetPConnect = getPConnectRef.current;
-
-        // Detect if response has TreeGroup structure and build base path prefix
-        let basePathPrefix = '';
-        if (updatedData?.TreeGroup && Array.isArray(updatedData.TreeGroup) && updatedData.TreeGroup.length > 0) {
-          basePathPrefix = 'TreeGroup[0]';
-        }
 
         // Find root tree using utility function
         const rootTree = findRootTree(updatedData, currentChildrenPropertyName);
@@ -299,30 +286,29 @@ export const useCPQTreeData = (
             const siteNodeIndex = rootTree.findIndex((node: any) => node === siteNode);
             const siteNodePath =
               siteNodeIndex >= 0
-                ? basePathPrefix
-                  ? `${basePathPrefix}.Tree[${siteNodeIndex}]`
+                ? updatedData?.TreeGroup
+                  ? `TreeGroup[${siteNodeIndex}]`
                   : `Tree[${siteNodeIndex}]`
-                : basePathPrefix
-                  ? `${basePathPrefix}.Tree[0]`
+                : updatedData?.TreeGroup
+                  ? 'TreeGroup[0]'
                   : 'Tree[0]';
+
+            // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
             siteNode[PROPERTY_NAMES.TREE].forEach((item: any, index: number) => {
               if (item[PROPERTY_NAMES.TYPE] === NODE_TYPES.PRODUCT) {
                 const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-                addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
                 currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, siteNodePath, treeIndex);
               }
             });
           } else {
+            // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
             rootTree.forEach((item: any, index: number) => {
               const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-              addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-              const basePath = basePathPrefix || '';
-              currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, basePath, treeIndex);
+              currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, '', treeIndex);
             });
           }
         } else {
-          addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-          currentLoadTree(updatedData, cases, caseInstanceKey, new WeakSet(), 0, basePathPrefix, 0);
+          currentLoadTree(updatedData, cases, caseInstanceKey, new WeakSet(), 0, '', 0);
         }
 
         setObjects(cases);
@@ -340,48 +326,39 @@ export const useCPQTreeData = (
             const cases: Array<CustomTreeNode> = [];
             const currentLoadTree = loadTreeRef.current;
             const currentChildrenPropertyName = childrenPropertyNameRef.current;
-            const currentGetPConnect = getPConnectRef.current;
 
-            let basePathPrefix = '';
-            if (
-              response.data.data[0]?.TreeGroup &&
-              Array.isArray(response.data.data[0].TreeGroup) &&
-              response.data.data[0].TreeGroup.length > 0
-            ) {
-              basePathPrefix = 'TreeGroup[0]';
-            }
+            const rootData = response.data.data[0];
 
-            const rootTree = findRootTree(response.data.data[0], currentChildrenPropertyName);
+            const rootTree = findRootTree(rootData, currentChildrenPropertyName);
             if (rootTree && Array.isArray(rootTree)) {
               const siteNode = findSiteNode(rootTree);
               if (siteNode && siteNode[PROPERTY_NAMES.TREE] && Array.isArray(siteNode[PROPERTY_NAMES.TREE])) {
                 const siteNodeIndex = rootTree.findIndex((node: any) => node === siteNode);
                 const siteNodePath =
                   siteNodeIndex >= 0
-                    ? basePathPrefix
-                      ? `${basePathPrefix}.Tree[${siteNodeIndex}]`
+                    ? rootData?.TreeGroup
+                      ? `TreeGroup[${siteNodeIndex}]`
                       : `Tree[${siteNodeIndex}]`
-                    : basePathPrefix
-                      ? `${basePathPrefix}.Tree[0]`
+                    : rootData?.TreeGroup
+                      ? 'TreeGroup[0]'
                       : 'Tree[0]';
+
+                // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
                 siteNode[PROPERTY_NAMES.TREE].forEach((item: any, index: number) => {
                   if (item[PROPERTY_NAMES.TYPE] === NODE_TYPES.PRODUCT) {
                     const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-                    addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
                     currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, siteNodePath, treeIndex);
                   }
                 });
               } else {
+                // Pagelists will be registered automatically when addViewNodeForPropertyPath is called
                 rootTree.forEach((item: any, index: number) => {
                   const treeIndex = item[PROPERTY_NAMES.INDEX] ? parseInt(item[PROPERTY_NAMES.INDEX], 10) - 1 : index;
-                  addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-                  const basePath = basePathPrefix || '';
-                  currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, basePath, treeIndex);
+                  currentLoadTree(item, cases, caseInstanceKey, new WeakSet(), 0, '', treeIndex);
                 });
               }
             } else {
-              addPageListNodeForPath(PROPERTY_NAMES.TREE, currentGetPConnect);
-              currentLoadTree(response.data.data[0], cases, caseInstanceKey, new WeakSet(), 0, basePathPrefix, 0);
+              currentLoadTree(rootData, cases, caseInstanceKey, new WeakSet(), 0, '', 0);
             }
 
             setObjects(cases);
