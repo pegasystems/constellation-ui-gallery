@@ -141,3 +141,6 @@ dist
 # library mode DXCB
 /Pega_Extensions/
 /Pega_Extensions.zip
+src/component-list.js
+src/component-list.json
+src/index.js

@@ -1,0 +1,87 @@
+{
+    "name": "Pega_Extensions_CPQTree",
+    "label": "CPQ tree",
+    "description": "CPQ tree",
+    "organization": "Pega",
+    "version": "4.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CPQTree",
+    "type": "Field",
+    "subtype": "Text",
+    "icon": "images/pz-checkbox-active.svg",
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "childrenPropertyName",
+            "label": "Name of the children property",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "showDetailsInfo",
+            "label": "Show details info",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "detailsDataPage",
+            "label": "Details Data Page name",
+            "format": "TEXT"
+        },
+        {
+            "name": "detailsViewName",
+            "label": "Details View name",
+            "format": "TEXT"
+        },
+        {
+            "name": "readOnly",
+            "label": "Edit mode",
+            "format": "READONLY"
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.1, Sun Dec 14 2025, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "CPQ Tree",
+        "childrenPropertyName": "Tree|Configuration",
+        "detailFVLItem": true,
+        "detailsDataPage": "D_Details",
+        "detailsViewName": "InfoDetails",
+        "isFormWidth": true
+    },
+    "buildDate": "2025-12-14T22:13:44.302Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.8.0"
+}

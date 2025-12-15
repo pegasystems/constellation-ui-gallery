@@ -1,0 +1,2623 @@
+{
+  "Tree": [
+    {
+      "CalculatePriceFlag": "true",
+      "ConfigBundleProductARC": "0",
+      "ConfigBundleProductMRC": "0",
+      "ConfigBundleProductNRC": "0",
+      "ID": "NoSite",
+      "Name": "Site independent products",
+      "ParentID": "NoSite",
+      "ProductCount": "3",
+      "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+      "pySelected": "true",
+      "TotalARC": "0.0",
+      "TotalBundleProductConfigMRC": "0",
+      "TotalSiteARC": "0.0",
+      "TotalSiteConfigARC": "0.0",
+      "TotalSiteConfigMRC": "0.0",
+      "TotalSiteConfigNRC": "0.0",
+      "TotalSiteMRC": "900.0",
+      "TotalSiteNRC": "1480.0",
+      "Type": "site",
+      "Site": {
+        "ConnectivityStatus": "1",
+        "ConnectivityStatusValue": "ONNET",
+        "CustomerID": "COM0000001",
+        "FullAddress": "Site independent products",
+        "LocationID": "NoSite",
+        "pxObjClass": "PegaComm-FW-CPQ-Data-Site",
+        "TrimName": "Site independent products"
+      },
+      "Tree": [
+        {
+          "CalculatePriceFlag": "true",
+          "ConfigBundleProductARC": "0",
+          "ConfigBundleProductMRC": "0",
+          "ConfigBundleProductNRC": "0",
+          "ID": "PO-2086",
+          "Index": "1",
+          "IsConfigTreeCreated": "true",
+          "Name": "Home broadband connection",
+          "ParentID": "NoSite",
+          "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+          "pyExpanded": "true",
+          "SelectedIndex": "1",
+          "TotalARC": "0",
+          "TotalBundleProductConfigMRC": "0",
+          "TotalConfigARC": "0.0",
+          "TotalConfigMRC": "0.0",
+          "TotalConfigNRC": "0.0",
+          "TotalSiteConfigARC": "0",
+          "Type": "product",
+          "UsedInBundle": "false",
+          "ProductOffer": {
+            "CheckServiceability": "false",
+            "ConfigARC": "0.0",
+            "ConfigMRC": "0.0",
+            "ConfigNRC": "0.0",
+            "description": "Home broadband connection",
+            "ID": "PO-2086",
+            "Index": "1",
+            "IsBundleOffer": "false",
+            "IsLocationBased": "false",
+            "name": "Home broadband connection",
+            "NonLocProductARC": "0.0",
+            "NonLocProductConfigMRC": "0.0",
+            "NonLocProductConfigNRC": "0.0",
+            "NonLocProductMRC": "400.0",
+            "NonLocProductNRC": "550.0",
+            "OfferNumber": "1",
+            "ProductLocationsCount": "0",
+            "ProductType": "Data",
+            "PSImage": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+            "pxObjClass": "PegaComm-Data-ProductABE-ProductOffering-Simple",
+            "pyTreeGridIcon": "images/SimpleOffer.png",
+            "quantity": "1",
+            "ShowNoImage": "false",
+            "status": "Available now",
+            "TotalActualNRC": "0",
+            "TotalARC": "0.0",
+            "TotalCatalogNonLocARC": "0.0",
+            "TotalCatalogNonLocMRC": "400.0",
+            "TotalCatalogNonLocNRC": "550.0",
+            "TotalCatalogNRC": "0",
+            "TotalConfigARC": "0.0",
+            "TotalConfigMRC": "0.0",
+            "TotalConfigNRC": "0.0",
+            "TotalFinalARC": "0",
+            "TotalFinalMRC": "0",
+            "TotalNRC": "550.0",
+            "TotalPOARC": "0.0",
+            "TotalPOMRC": "400.0",
+            "TotalPONRC": "550.0",
+            "TotalPOPrice": "950.0",
+            "TotalRC": "400.0",
+            "TotalSpecStandardARC": "0.0",
+            "TotalSpecStandardNRC": "300.0",
+            "TotalSpecStandardRC": "400.0",
+            "TotalUnitARCDiscount": "0",
+            "TotalUnitNRCDiscount": "0",
+            "TotalUnitRCDiscount": "0",
+            "Catalog": {
+              "ID": "PC-2001",
+              "name": "Voice solution",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductCatalog"
+            },
+            "CharacteristicValues": [],
+            "ChildSpecificationsList": [
+              {
+                "CalculatePriceFlag": "true",
+                "CheckServiceability": "false",
+                "ChildSpecCount": "5",
+                "ConfigARC": "0.0",
+                "ConfigMRC": "0.0",
+                "ConfigNRC": "0.0",
+                "HasDefaultConfig": "true",
+                "IsLocationBased": "false",
+                "IsRelationshipDefined": "true",
+                "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2031!",
+                "MaxCardinality": "1",
+                "MinCardinality": "1",
+                "PriceEntityID": "PE-2074",
+                "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                "pyExpanded": "true",
+                "pyTreeGridIcon": "webwb/DefaultConfigSpec.png",
+                "quantity": "1",
+                "SpecCategory": "Data",
+                "SpecID": "PS-2031",
+                "SpecName": "Broadband connection",
+                "TotalARC": "0.0",
+                "TotalChildConfigARC": "0.0",
+                "TotalChildConfigNRC": "0.0",
+                "TotalChildConfigRC": "0.0",
+                "TotalChildStandardARC": "0.0",
+                "TotalChildStandardNRC": "0.0",
+                "TotalChildStandardRC": "0.0",
+                "TotalConfigARC": "0.0",
+                "TotalConfigMRC": "0.0",
+                "TotalConfigNRC": "0.0",
+                "TotalSpecConfigARC": "0.0",
+                "TotalSpecConfigNRC": "0.0",
+                "TotalSpecConfigRC": "0.0",
+                "TotalStandardARC": "0.0",
+                "TotalStandardNRC": "300",
+                "TotalStandardRC": "400",
+                "TotalUnitARCDiscount": "0",
+                "TotalUnitNRCDiscount": "0",
+                "TotalUnitRCDiscount": "0",
+                "TrimName": "Broadband co...",
+                "ChildSpecificationsList": [
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "true",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "true",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2027",
+                    "PriceEntityID": "PE-2059",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2027",
+                    "SpecName": "Premises based Firewall",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Premises bas...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "550.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "0.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "1"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "false",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": [
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102621.027 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                        "RuleType": "include",
+                        "UniqueID": "includeSpecificationPS-2025",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2025",
+                          "name": "Security equipment- hardware",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      },
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102634.188 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                        "RuleType": "exclude",
+                        "UniqueID": "excludeSpecificationPS-2026",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2026",
+                          "name": "Proxy/virtual firewall",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2026",
+                    "PriceEntityID": "PE-2057",
+                    "pxCreateDateTime": "20170817T064631.506 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pySelected": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2026",
+                    "SpecName": "Proxy/virtual firewall",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Proxy/virtua...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "30.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "4"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2017",
+                    "PriceEntityID": "PE-2062",
+                    "pxCreateDateTime": "20170817T064702.107 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2017",
+                    "SpecName": "iPhone",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPhone",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "75.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "90.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "3"
+                    },
+                    "RelationshipDetails": {
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OnlyOneSpec": "PS-2018",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2018",
+                    "PriceEntityID": "PE-2055",
+                    "pxCreateDateTime": "20170817T064729.965 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2018",
+                    "SpecName": "iPad",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPad",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "210.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "2"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2025",
+                    "PriceEntityID": "PE-2054",
+                    "pxCreateDateTime": "20170817T091824.831 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2025",
+                    "SpecName": "Security equipment- hardware",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Security equ...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "200.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "5"
+                    },
+                    "RelationshipDetails": {
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                ],
+                "Configuration": [
+                  {
+                    "FieldClass": "PegaComm-Data-Characteristic",
+                    "FieldName": "Bandwidth",
+                    "FieldType": "Text",
+                    "HasValueList": "true",
+                    "pxCreateDateTime": "20170817T065028.785 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductConfigItem",
+                    "ConfiguredFieldValue": {
+                      "AdditionalARC": "0",
+                      "AdditionalMRC": "0",
+                      "AdditionalNRC": "0",
+                      "AdditionalWRC": "0",
+                      "FieldName": "Bandwidth",
+                      "FieldValue": "500 Mbps",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueDetails": {
+                      "FieldType": "Text",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueList": [
+                      {
+                        "AdditionalARC": "0",
+                        "AdditionalMRC": "8.25",
+                        "AdditionalNRC": "0.0",
+                        "AdditionalWRC": "0",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "1 Gbps",
+                        "IsPriceImpactingValue": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      },
+                      {
+                        "DefaultLabel": "Default",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "500 Mbps",
+                        "IsDefaultConfig": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      }
+                    ]
+                  }
+                ],
+                "Pricing": {
+                  "IsLocationBased": "false",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                  "Charges": {
+                    "NRC": "300",
+                    "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                    "RC": "400",
+                    "WeeklyRC": "0.0",
+                    "YearlyRC": "0.0"
+                  }
+                },
+                "PricingRules": [
+                  {
+                    "AdditionalARC": "0",
+                    "AdditionalMRC": "8.25",
+                    "AdditionalNRC": "0.0",
+                    "AdditionalWRC": "0",
+                    "FieldName": "Bandwidth",
+                    "FieldValue": "1 Gbps",
+                    "IsPriceImpactingValue": "true",
+                    "PriceEntityID": "PE-2063",
+                    "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                  }
+                ],
+                "SpecCompatibilityRules": [
+                  {
+                    "CompatibleBy": "Specification",
+                    "pxCreateDateTime": "20170817T065241.280 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                    "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                    "RuleType": "exclude",
+                    "UniqueID": "excludeSpecificationPS-2018",
+                    "Category": {
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                    },
+                    "ProductSpecification": {
+                      "ID": "PS-2018",
+                      "name": "iPad",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                    }
+                  }
+                ]
+              }
+            ],
+            "ContractTerms": {
+              "amount": "36",
+              "pxObjClass": "PegaCFF-BaseTypesABE-Duration"
+            },
+            "distributionChannel": [],
+            "OfferEligibility": {
+              "pxObjClass": "PegaComm-Data-ProductABE-OfferEligibility",
+              "EligibilityRules": []
+            },
+            "PolicyRuleList": [],
+            "Pricing": {
+              "BusinessLine": "B2B",
+              "IsLocationBased": "false",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+              "Charges": {
+                "NRC": "250",
+                "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                "pxSubscript": "Charges",
+                "RC": "0"
+              },
+              "ChildSpecificationsList": [
+                {
+                  "ChildSpecCount": "5",
+                  "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2031!",
+                  "MaxCardinality": "1",
+                  "MinCardinality": "1",
+                  "PriceEntityID": "PE-2074",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pyExpanded": "true",
+                  "SpecID": "PS-2031",
+                  "SpecName": "Broadband connection",
+                  "TotalARC": "0",
+                  "TotalChildStandardARC": "0",
+                  "TotalSpecConfigARC": "0",
+                  "TotalStandardARC": "0",
+                  "TotalStandardNRC": "0",
+                  "TotalStandardRC": "0",
+                  "TotalUnitARCDiscount": "0",
+                  "TotalUnitNRCDiscount": "0",
+                  "TotalUnitRCDiscount": "0",
+                  "TrimName": "Broadband co...",
+                  "ChildSpecificationsList": [
+                    {
+                      "ChildSpecCount": "0",
+                      "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                      "MaxCardinality": "7",
+                      "MinCardinality": "0",
+                      "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "PriceEntityID": "PE-2059",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                      "pyExpanded": "true",
+                      "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "SpecID": "PS-2027",
+                      "SpecName": "Premises based Firewall",
+                      "TotalARC": "0",
+                      "TotalChildStandardARC": "0",
+                      "TotalSpecConfigARC": "0",
+                      "TotalStandardARC": "0",
+                      "TotalStandardNRC": "0",
+                      "TotalStandardRC": "0",
+                      "TotalUnitARCDiscount": "0",
+                      "TotalUnitNRCDiscount": "0",
+                      "TotalUnitRCDiscount": "0",
+                      "TrimName": "Premises bas...",
+                      "ChildSpecificationsList": [],
+                      "Pricing": {
+                        "IsLocationBased": "false",
+                        "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                        "Charges": {
+                          "NRC": "550.0",
+                          "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                          "RC": "0.0",
+                          "WeeklyRC": "0.0",
+                          "YearlyRC": "0.0"
+                        }
+                      },
+                      "pzIndexes": {
+                        "Index_PS_ChildSpecs": "1"
+                      },
+                      "RelationshipDetails": {
+                        "IsDefault": "false",
+                        "name": "firewall type",
+                        "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                        "type": "OneOrMore"
+                      }
+                    },
+                    {
+                      "ChildSpecCount": "0",
+                      "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                      "MaxCardinality": "7",
+                      "MinCardinality": "0",
+                      "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "PriceEntityID": "PE-2057",
+                      "pxCreateDateTime": "20170817T064631.506 GMT",
+                      "pxCreateOperator": "PCFManager",
+                      "pxCreateOpName": "Product Catalog Manager",
+                      "pxCreateSystemID": "pega",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                      "pyExpanded": "true",
+                      "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "SpecID": "PS-2026",
+                      "SpecName": "Proxy/virtual firewall",
+                      "TotalARC": "0",
+                      "TotalChildStandardARC": "0",
+                      "TotalSpecConfigARC": "0",
+                      "TotalStandardARC": "0",
+                      "TotalStandardNRC": "0",
+                      "TotalStandardRC": "0",
+                      "TotalUnitARCDiscount": "0",
+                      "TotalUnitNRCDiscount": "0",
+                      "TotalUnitRCDiscount": "0",
+                      "TrimName": "Proxy/virtua...",
+                      "ChildSpecificationsList": [],
+                      "Pricing": {
+                        "IsLocationBased": "false",
+                        "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                        "Charges": {
+                          "NRC": "50.0",
+                          "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                          "RC": "30.0",
+                          "WeeklyRC": "0.0",
+                          "YearlyRC": "0.0"
+                        }
+                      },
+                      "pzIndexes": {
+                        "Index_PS_ChildSpecs": "4"
+                      },
+                      "RelationshipDetails": {
+                        "IsDefault": "true",
+                        "name": "firewall type",
+                        "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                        "type": "OneOrMore"
+                      }
+                    },
+                    {
+                      "ChildSpecCount": "0",
+                      "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                      "MaxCardinality": "7",
+                      "MinCardinality": "0",
+                      "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "PriceEntityID": "PE-2062",
+                      "pxCreateDateTime": "20170817T064702.107 GMT",
+                      "pxCreateOperator": "PCFManager",
+                      "pxCreateOpName": "Product Catalog Manager",
+                      "pxCreateSystemID": "pega",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                      "pyExpanded": "true",
+                      "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "SpecID": "PS-2017",
+                      "SpecName": "iPhone",
+                      "TotalARC": "0",
+                      "TotalChildStandardARC": "0",
+                      "TotalSpecConfigARC": "0",
+                      "TotalStandardARC": "0",
+                      "TotalStandardNRC": "0",
+                      "TotalStandardRC": "0",
+                      "TotalUnitARCDiscount": "0",
+                      "TotalUnitNRCDiscount": "0",
+                      "TotalUnitRCDiscount": "0",
+                      "TrimName": "iPhone",
+                      "ChildSpecificationsList": [],
+                      "Pricing": {
+                        "IsLocationBased": "false",
+                        "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                        "Charges": {
+                          "NRC": "75.0",
+                          "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                          "RC": "90.0",
+                          "WeeklyRC": "0.0",
+                          "YearlyRC": "0.0"
+                        }
+                      },
+                      "pzIndexes": {
+                        "Index_PS_ChildSpecs": "3"
+                      },
+                      "RelationshipDetails": {
+                        "name": "device",
+                        "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                        "type": "OnlyOne"
+                      }
+                    },
+                    {
+                      "ChildSpecCount": "0",
+                      "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                      "MaxCardinality": "7",
+                      "MinCardinality": "0",
+                      "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "PriceEntityID": "PE-2055",
+                      "pxCreateDateTime": "20170817T064729.965 GMT",
+                      "pxCreateOperator": "PCFManager",
+                      "pxCreateOpName": "Product Catalog Manager",
+                      "pxCreateSystemID": "pega",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                      "pyExpanded": "true",
+                      "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "SpecID": "PS-2018",
+                      "SpecName": "iPad",
+                      "TotalARC": "0",
+                      "TotalChildStandardARC": "0",
+                      "TotalSpecConfigARC": "0",
+                      "TotalStandardARC": "0",
+                      "TotalStandardNRC": "0",
+                      "TotalStandardRC": "0",
+                      "TotalUnitARCDiscount": "0",
+                      "TotalUnitNRCDiscount": "0",
+                      "TotalUnitRCDiscount": "0",
+                      "TrimName": "iPad",
+                      "ChildSpecificationsList": [],
+                      "Pricing": {
+                        "IsLocationBased": "false",
+                        "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                        "Charges": {
+                          "NRC": "50.0",
+                          "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                          "RC": "210.0",
+                          "WeeklyRC": "0.0",
+                          "YearlyRC": "0.0"
+                        }
+                      },
+                      "pzIndexes": {
+                        "Index_PS_ChildSpecs": "2"
+                      },
+                      "RelationshipDetails": {
+                        "IsDefault": "true",
+                        "name": "device",
+                        "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                        "type": "OnlyOne"
+                      }
+                    },
+                    {
+                      "ChildSpecCount": "0",
+                      "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                      "MaxCardinality": "7",
+                      "MinCardinality": "0",
+                      "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "PriceEntityID": "PE-2054",
+                      "pxCreateDateTime": "20170817T091824.831 GMT",
+                      "pxCreateOperator": "PCFManager",
+                      "pxCreateOpName": "Product Catalog Manager",
+                      "pxCreateSystemID": "pega",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                      "pyExpanded": "true",
+                      "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                      "SpecID": "PS-2025",
+                      "SpecName": "Security equipment- hardware",
+                      "TotalARC": "0",
+                      "TotalChildStandardARC": "0",
+                      "TotalSpecConfigARC": "0",
+                      "TotalStandardARC": "0",
+                      "TotalStandardNRC": "0",
+                      "TotalStandardRC": "0",
+                      "TotalUnitARCDiscount": "0",
+                      "TotalUnitNRCDiscount": "0",
+                      "TotalUnitRCDiscount": "0",
+                      "TrimName": "Security equ...",
+                      "ChildSpecificationsList": [],
+                      "Pricing": {
+                        "IsLocationBased": "false",
+                        "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                        "Charges": {
+                          "NRC": "50.0",
+                          "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                          "RC": "200.0",
+                          "WeeklyRC": "0.0",
+                          "YearlyRC": "0.0"
+                        }
+                      },
+                      "pzIndexes": {
+                        "Index_PS_ChildSpecs": "5"
+                      },
+                      "RelationshipDetails": {
+                        "name": "firewall type",
+                        "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                        "type": "OneOrMore"
+                      }
+                    }
+                  ],
+                  "Pricing": {
+                    "IsLocationBased": "false",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                    "Charges": {
+                      "NRC": "300",
+                      "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                      "RC": "400",
+                      "WeeklyRC": "0.0",
+                      "YearlyRC": "0.0"
+                    }
+                  },
+                  "PricingRules": [
+                    {
+                      "AdditionalARC": "0",
+                      "AdditionalMRC": "8.25",
+                      "AdditionalNRC": "0.0",
+                      "AdditionalWRC": "0",
+                      "FieldName": "Bandwidth",
+                      "FieldValue": "1 Gbps",
+                      "IsPriceImpactingValue": "true",
+                      "PriceEntityID": "PE-2063",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    }
+                  ]
+                }
+              ],
+              "Discounts": [],
+              "TerminationFee": {
+                "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-TerminationFee"
+              },
+              "Tree": [
+                {
+                  "ID": "PO-2086",
+                  "ImagePath": "images/ProdOffer.png",
+                  "Name": "Home broadband connection",
+                  "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2071",
+                  "PriceEntityID": "PE-2071",
+                  "PricingDetailsKey": "PE-2071Home broadband connection$250 one time charge20170817T092212.250 GMT",
+                  "PricingEntityName": "$250 one time charge",
+                  "pxObjClass": "PegaComm-Data-Tree",
+                  "pyExpanded": "true",
+                  "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTOFFERING PO-2086!",
+                  "SortingIndex": "1",
+                  "TrimName": "Home broadband co...",
+                  "Type": "Offer",
+                  "Tree": [
+                    {
+                      "ID": "PS-2031",
+                      "ImagePath": "images/ProdSpec.png",
+                      "Name": "Broadband connection",
+                      "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2074",
+                      "PriceEntityID": "PE-2074",
+                      "PricingDetailsKey": "PE-2074Broadband connection$300 one time + $400 monthly plan20170817T092257.603 GMT",
+                      "PricingEntityName": "$300 one time + $400 monthly plan",
+                      "pxObjClass": "PegaComm-Data-Tree",
+                      "pyExpanded": "true",
+                      "pzInsKey": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2031!",
+                      "SortingIndex": "2",
+                      "TrimName": "Broadband connection",
+                      "Type": "Spec",
+                      "Tree": [
+                        {
+                          "ImagePath": "images/ConfigItem.png",
+                          "Name": "Bandwidth",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "SortingIndex": "3",
+                          "TrimName": "Bandwidth",
+                          "Type": "ConfigName",
+                          "Tree": [
+                            {
+                              "ImagePath": "images/ConfigItem.png",
+                              "Name": "1 Gbps",
+                              "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2063",
+                              "PriceEntityID": "PE-2063",
+                              "PricingDetailsKey": "PE-20631 Gbps$8.25 Monthly Plan per user20170817T092221.384 GMT",
+                              "PricingEntityName": "$8.25 Monthly Plan per user",
+                              "pxObjClass": "PegaComm-Data-Tree",
+                              "pyExpanded": "true",
+                              "SortingIndex": "4",
+                              "TrimName": "1 Gbps",
+                              "Type": "ConfigValue",
+                              "Tree": []
+                            }
+                          ]
+                        },
+                        {
+                          "ID": "PS-2027",
+                          "ImagePath": "images/ProdSpec.png",
+                          "Name": "Premises based Firewall",
+                          "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2059",
+                          "PriceEntityID": "PE-2059",
+                          "PricingDetailsKey": "PE-2059Premises based Firewall$550 one time charge20170817T092225.211 GMT",
+                          "PricingEntityName": "$550 one time charge",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                          "SortingIndex": "5",
+                          "TrimName": "Premises based Fi...",
+                          "Type": "Spec",
+                          "Tree": []
+                        },
+                        {
+                          "ID": "PS-2026",
+                          "ImagePath": "images/ProdSpec.png",
+                          "Name": "Proxy/virtual firewall",
+                          "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2057",
+                          "PriceEntityID": "PE-2057",
+                          "PricingDetailsKey": "PE-2057Proxy/virtual firewall$50 one time + $30 monthly plan20170817T092231.513 GMT",
+                          "PricingEntityName": "$50 one time + $30 monthly plan",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                          "SortingIndex": "6",
+                          "TrimName": "Proxy/virtual fir...",
+                          "Type": "Spec",
+                          "Tree": []
+                        },
+                        {
+                          "ID": "PS-2017",
+                          "ImagePath": "images/ProdSpec.png",
+                          "Name": "iPhone",
+                          "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2062",
+                          "PriceEntityID": "PE-2062",
+                          "PricingDetailsKey": "PE-2062iPhone$75 one time +$90 monthly plan20170817T092236.154 GMT",
+                          "PricingEntityName": "$75 one time +$90 monthly plan",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                          "SortingIndex": "7",
+                          "TrimName": "iPhone",
+                          "Type": "Spec",
+                          "Tree": []
+                        },
+                        {
+                          "ID": "PS-2018",
+                          "ImagePath": "images/ProdSpec.png",
+                          "Name": "iPad",
+                          "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2055",
+                          "PriceEntityID": "PE-2055",
+                          "PricingDetailsKey": "PE-2055iPad$50 one time + $210 monthly plan20170817T092239.949 GMT",
+                          "PricingEntityName": "$50 one time + $210 monthly plan",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                          "SortingIndex": "8",
+                          "TrimName": "iPad",
+                          "Type": "Spec",
+                          "Tree": []
+                        },
+                        {
+                          "ID": "PS-2025",
+                          "ImagePath": "images/ProdSpec.png",
+                          "Name": "Security equipment- hardware",
+                          "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2054",
+                          "PriceEntityID": "PE-2054",
+                          "PricingDetailsKey": "PE-2054Security equipment- hardware$50 one time + $200 monthly plan20170817T092244.108 GMT",
+                          "PricingEntityName": "$50 one time + $200 monthly plan",
+                          "pxObjClass": "PegaComm-Data-Tree",
+                          "pyExpanded": "true",
+                          "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                          "SortingIndex": "9",
+                          "TrimName": "Security equipmen...",
+                          "Type": "Spec",
+                          "Tree": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "ProductSpecs": {
+              "BusinessLine": "B2B",
+              "ID": "PS-2031",
+              "name": "Broadband connection",
+              "ProductType": "Composite",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification",
+              "ChildSpecificationsList": [
+                {
+                  "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                  "MaxCardinality": "7",
+                  "MinCardinality": "0",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                  "SpecID": "PS-2027",
+                  "SpecName": "Premises based Firewall",
+                  "TrimName": "Premises bas...",
+                  "pzIndexes": {
+                    "Index_PS_ChildSpecs": "1"
+                  },
+                  "RelationshipDetails": {
+                    "IsDefault": "false",
+                    "name": "firewall type",
+                    "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                    "type": "OneOrMore"
+                  }
+                },
+                {
+                  "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                  "MaxCardinality": "7",
+                  "MinCardinality": "0",
+                  "pxCreateDateTime": "20170817T064631.506 GMT",
+                  "pxCreateOperator": "PCFManager",
+                  "pxCreateOpName": "Product Catalog Manager",
+                  "pxCreateSystemID": "pega",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                  "SpecID": "PS-2026",
+                  "SpecName": "Proxy/virtual firewall",
+                  "TrimName": "Proxy/virtua...",
+                  "pzIndexes": {
+                    "Index_PS_ChildSpecs": "4"
+                  },
+                  "RelationshipDetails": {
+                    "IsDefault": "true",
+                    "name": "firewall type",
+                    "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                    "type": "OneOrMore"
+                  }
+                },
+                {
+                  "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                  "MaxCardinality": "7",
+                  "MinCardinality": "0",
+                  "pxCreateDateTime": "20170817T064702.107 GMT",
+                  "pxCreateOperator": "PCFManager",
+                  "pxCreateOpName": "Product Catalog Manager",
+                  "pxCreateSystemID": "pega",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                  "SpecID": "PS-2017",
+                  "SpecName": "iPhone",
+                  "TrimName": "iPhone",
+                  "pzIndexes": {
+                    "Index_PS_ChildSpecs": "3"
+                  },
+                  "RelationshipDetails": {
+                    "name": "device",
+                    "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                    "type": "OnlyOne"
+                  }
+                },
+                {
+                  "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                  "MaxCardinality": "7",
+                  "MinCardinality": "0",
+                  "pxCreateDateTime": "20170817T064729.965 GMT",
+                  "pxCreateOperator": "PCFManager",
+                  "pxCreateOpName": "Product Catalog Manager",
+                  "pxCreateSystemID": "pega",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                  "SpecID": "PS-2018",
+                  "SpecName": "iPad",
+                  "TrimName": "iPad",
+                  "pzIndexes": {
+                    "Index_PS_ChildSpecs": "2"
+                  },
+                  "RelationshipDetails": {
+                    "IsDefault": "true",
+                    "name": "device",
+                    "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                    "type": "OnlyOne"
+                  }
+                },
+                {
+                  "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                  "MaxCardinality": "7",
+                  "MinCardinality": "0",
+                  "pxCreateDateTime": "20170817T091824.831 GMT",
+                  "pxCreateOperator": "PCFManager",
+                  "pxCreateOpName": "Product Catalog Manager",
+                  "pxCreateSystemID": "pega",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                  "SpecID": "PS-2025",
+                  "SpecName": "Security equipment- hardware",
+                  "TrimName": "Security equ...",
+                  "pzIndexes": {
+                    "Index_PS_ChildSpecs": "5"
+                  },
+                  "RelationshipDetails": {
+                    "name": "firewall type",
+                    "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                    "type": "OneOrMore"
+                  }
+                }
+              ],
+              "Configuration": {
+                "Name": "New config",
+                "pxInsName": "NEW CONFIG",
+                "pxObjClass": "PegaComm-Data-ProductABE-ProductConfiguration",
+                "pxSaveDateTime": "20170817T065320.893 GMT",
+                "pzInsKey": "PEGACOMM-DATA-PRODUCTABE-PRODUCTCONFIGURATION NEW CONFIG",
+                "ConfigItems": [
+                  {
+                    "FieldClass": "PegaComm-Data-Characteristic",
+                    "FieldName": "Bandwidth",
+                    "FieldType": "Text",
+                    "HasValueList": "true",
+                    "pxCreateDateTime": "20170817T065028.785 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductConfigItem",
+                    "FieldValueDetails": {
+                      "FieldType": "Text",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueList": [
+                      {
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "1 Gbps",
+                        "IsPriceImpactingValue": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      },
+                      {
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "500 Mbps",
+                        "IsDefaultConfig": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "SpecCompatibilityRules": [
+                {
+                  "CompatibleBy": "Specification",
+                  "pxCreateDateTime": "20170817T065241.280 GMT",
+                  "pxCreateOperator": "PCFManager",
+                  "pxCreateOpName": "Product Catalog Manager",
+                  "pxCreateSystemID": "pega",
+                  "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                  "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                  "RuleType": "exclude",
+                  "UniqueID": "excludeSpecificationPS-2018",
+                  "Category": {
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                  },
+                  "ProductSpecification": {
+                    "ID": "PS-2018",
+                    "name": "iPad",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                  }
+                }
+              ]
+            },
+            "validFor": {
+              "pxObjClass": "PegaCFF-BaseTypesABE-TimePeriod",
+              "startDateTime": "20170814T085400.000 GMT"
+            }
+          },
+          "Tree": [
+            {
+              "CalculatePriceFlag": "true",
+              "ConfigBundleProductARC": "0",
+              "ConfigBundleProductMRC": "0",
+              "ConfigBundleProductNRC": "0",
+              "ID": "PS-2031",
+              "Name": "Broadband connection",
+              "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+              "pyExpanded": "true",
+              "SelectedIndex": "1",
+              "TotalARC": "0",
+              "TotalBundleProductConfigMRC": "0",
+              "TotalSiteConfigARC": "0",
+              "Type": "Spec",
+              "ChildSpecification": {
+                "CalculatePriceFlag": "true",
+                "CheckServiceability": "false",
+                "ChildSpecCount": "5",
+                "ConfigARC": "0.0",
+                "ConfigMRC": "0.0",
+                "ConfigNRC": "0.0",
+                "HasDefaultConfig": "true",
+                "IsLocationBased": "false",
+                "IsRelationshipDefined": "true",
+                "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2031!",
+                "MaxCardinality": "1",
+                "MinCardinality": "1",
+                "PriceEntityID": "PE-2074",
+                "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                "pyExpanded": "true",
+                "pyTreeGridIcon": "webwb/DefaultConfigSpec.png",
+                "quantity": "1",
+                "SpecCategory": "Data",
+                "SpecID": "PS-2031",
+                "SpecName": "Broadband connection",
+                "TotalARC": "0.0",
+                "TotalChildConfigARC": "0.0",
+                "TotalChildConfigNRC": "0.0",
+                "TotalChildConfigRC": "0.0",
+                "TotalChildStandardARC": "0.0",
+                "TotalChildStandardNRC": "0.0",
+                "TotalChildStandardRC": "0.0",
+                "TotalConfigARC": "0.0",
+                "TotalConfigMRC": "0.0",
+                "TotalConfigNRC": "0.0",
+                "TotalSpecConfigARC": "0.0",
+                "TotalSpecConfigNRC": "0.0",
+                "TotalSpecConfigRC": "0.0",
+                "TotalStandardARC": "0.0",
+                "TotalStandardNRC": "300",
+                "TotalStandardRC": "400",
+                "TotalUnitARCDiscount": "0",
+                "TotalUnitNRCDiscount": "0",
+                "TotalUnitRCDiscount": "0",
+                "TrimName": "Broadband co...",
+                "ChildSpecificationsList": [
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "true",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "true",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2027",
+                    "PriceEntityID": "PE-2059",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2027",
+                    "SpecName": "Premises based Firewall",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Premises bas...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "550.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "0.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "1"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "false",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": [
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102621.027 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                        "RuleType": "include",
+                        "UniqueID": "includeSpecificationPS-2025",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2025",
+                          "name": "Security equipment- hardware",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      },
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102634.188 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                        "RuleType": "exclude",
+                        "UniqueID": "excludeSpecificationPS-2026",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2026",
+                          "name": "Proxy/virtual firewall",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2026",
+                    "PriceEntityID": "PE-2057",
+                    "pxCreateDateTime": "20170817T064631.506 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pySelected": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2026",
+                    "SpecName": "Proxy/virtual firewall",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Proxy/virtua...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "30.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "4"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2017",
+                    "PriceEntityID": "PE-2062",
+                    "pxCreateDateTime": "20170817T064702.107 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2017",
+                    "SpecName": "iPhone",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPhone",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "75.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "90.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "3"
+                    },
+                    "RelationshipDetails": {
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OnlyOneSpec": "PS-2018",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2018",
+                    "PriceEntityID": "PE-2055",
+                    "pxCreateDateTime": "20170817T064729.965 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2018",
+                    "SpecName": "iPad",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPad",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "210.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "2"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  },
+                  {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2025",
+                    "PriceEntityID": "PE-2054",
+                    "pxCreateDateTime": "20170817T091824.831 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2025",
+                    "SpecName": "Security equipment- hardware",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Security equ...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "200.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "5"
+                    },
+                    "RelationshipDetails": {
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                ],
+                "Configuration": [
+                  {
+                    "FieldClass": "PegaComm-Data-Characteristic",
+                    "FieldName": "Bandwidth",
+                    "FieldType": "Text",
+                    "HasValueList": "true",
+                    "pxCreateDateTime": "20170817T065028.785 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductConfigItem",
+                    "ConfiguredFieldValue": {
+                      "AdditionalARC": "0",
+                      "AdditionalMRC": "0",
+                      "AdditionalNRC": "0",
+                      "AdditionalWRC": "0",
+                      "FieldName": "Bandwidth",
+                      "FieldValue": "500 Mbps",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueDetails": {
+                      "FieldType": "Text",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueList": [
+                      {
+                        "AdditionalARC": "0",
+                        "AdditionalMRC": "8.25",
+                        "AdditionalNRC": "0.0",
+                        "AdditionalWRC": "0",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "1 Gbps",
+                        "IsPriceImpactingValue": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      },
+                      {
+                        "DefaultLabel": "Default",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "500 Mbps",
+                        "IsDefaultConfig": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      }
+                    ]
+                  }
+                ],
+                "Pricing": {
+                  "IsLocationBased": "false",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                  "Charges": {
+                    "NRC": "300",
+                    "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                    "RC": "400",
+                    "WeeklyRC": "0.0",
+                    "YearlyRC": "0.0"
+                  }
+                },
+                "PricingRules": [
+                  {
+                    "AdditionalARC": "0",
+                    "AdditionalMRC": "8.25",
+                    "AdditionalNRC": "0.0",
+                    "AdditionalWRC": "0",
+                    "FieldName": "Bandwidth",
+                    "FieldValue": "1 Gbps",
+                    "IsPriceImpactingValue": "true",
+                    "PriceEntityID": "PE-2063",
+                    "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                  }
+                ],
+                "SpecCompatibilityRules": [
+                  {
+                    "CompatibleBy": "Specification",
+                    "pxCreateDateTime": "20170817T065241.280 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                    "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                    "RuleType": "exclude",
+                    "UniqueID": "excludeSpecificationPS-2018",
+                    "Category": {
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                    },
+                    "ProductSpecification": {
+                      "ID": "PS-2018",
+                      "name": "iPad",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                    }
+                  }
+                ]
+              },
+              "Tree": [
+                {
+                  "CalculatePriceFlag": "true",
+                  "ConfigBundleProductARC": "0",
+                  "ConfigBundleProductMRC": "0",
+                  "ConfigBundleProductNRC": "0",
+                  "Name": "Bandwidth",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "1",
+                  "TotalARC": "0",
+                  "TotalBundleProductConfigMRC": "0",
+                  "TotalSiteConfigARC": "0",
+                  "Type": "ConfigName",
+                  "Configuration": {
+                    "FieldClass": "PegaComm-Data-Characteristic",
+                    "FieldName": "Bandwidth",
+                    "FieldType": "Text",
+                    "HasValueList": "true",
+                    "pxCreateDateTime": "20170817T065028.785 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductConfigItem",
+                    "ConfiguredFieldValue": {
+                      "AdditionalARC": "0",
+                      "AdditionalMRC": "0",
+                      "AdditionalNRC": "0",
+                      "AdditionalWRC": "0",
+                      "FieldName": "Bandwidth",
+                      "FieldValue": "500 Mbps",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueDetails": {
+                      "FieldType": "Text",
+                      "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                    },
+                    "FieldValueList": [
+                      {
+                        "AdditionalARC": "0",
+                        "AdditionalMRC": "8.25",
+                        "AdditionalNRC": "0.0",
+                        "AdditionalWRC": "0",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "1 Gbps",
+                        "IsPriceImpactingValue": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      },
+                      {
+                        "DefaultLabel": "Default",
+                        "FieldName": "Bandwidth",
+                        "FieldValue": "500 Mbps",
+                        "IsDefaultConfig": "true",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CharacteristicValue"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "CalculatePriceFlag": "false",
+                  "ConfigBundleProductARC": "0",
+                  "ConfigBundleProductMRC": "0",
+                  "ConfigBundleProductNRC": "0",
+                  "ID": "PS-2027",
+                  "Name": "Premises based Firewall",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "1",
+                  "TotalARC": "0",
+                  "TotalBundleProductConfigMRC": "0",
+                  "TotalSiteConfigARC": "0",
+                  "Type": "Spec",
+                  "ChildSpecification": {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "true",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "true",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2027!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2027",
+                    "PriceEntityID": "PE-2059",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2027",
+                    "SpecName": "Premises based Firewall",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Premises bas...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "550.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "0.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "1"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "false",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": [
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102621.027 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                        "RuleType": "include",
+                        "UniqueID": "includeSpecificationPS-2025",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2025",
+                          "name": "Security equipment- hardware",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      },
+                      {
+                        "CompatibleBy": "Specification",
+                        "pxCreateDateTime": "20170724T102634.188 GMT",
+                        "pxCreateOperator": "PCFManager",
+                        "pxCreateOpName": "Product Catalog Manager",
+                        "pxCreateSystemID": "pega",
+                        "pxObjClass": "PegaComm-Data-ProductABE-CompatibilityRule",
+                        "pyTempText": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                        "RuleType": "exclude",
+                        "UniqueID": "excludeSpecificationPS-2026",
+                        "Category": {
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductCategory"
+                        },
+                        "ProductSpecification": {
+                          "ID": "PS-2026",
+                          "name": "Proxy/virtual firewall",
+                          "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "CalculatePriceFlag": "true",
+                  "ConfigBundleProductARC": "0",
+                  "ConfigBundleProductMRC": "0",
+                  "ConfigBundleProductNRC": "0",
+                  "ID": "PS-2026",
+                  "Name": "Proxy/virtual firewall",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "2",
+                  "TotalARC": "0",
+                  "TotalBundleProductConfigMRC": "0",
+                  "TotalSiteConfigARC": "0",
+                  "Type": "Spec",
+                  "ChildSpecification": {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2026!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2026",
+                    "PriceEntityID": "PE-2057",
+                    "pxCreateDateTime": "20170817T064631.506 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pySelected": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2026",
+                    "SpecName": "Proxy/virtual firewall",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Proxy/virtua...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "30.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "4"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                },
+                {
+                  "CalculatePriceFlag": "false",
+                  "ConfigBundleProductARC": "0",
+                  "ConfigBundleProductMRC": "0",
+                  "ConfigBundleProductNRC": "0",
+                  "ID": "PS-2017",
+                  "Name": "iPhone",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "3",
+                  "TotalARC": "0",
+                  "TotalBundleProductConfigMRC": "0",
+                  "TotalSiteConfigARC": "0",
+                  "Type": "Spec",
+                  "ChildSpecification": {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2017",
+                    "PriceEntityID": "PE-2062",
+                    "pxCreateDateTime": "20170817T064702.107 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2017",
+                    "SpecName": "iPhone",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPhone",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "75.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "90.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "3"
+                    },
+                    "RelationshipDetails": {
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                },
+                {
+                  "CalculatePriceFlag": "true",
+                  "ConfigBundleProductARC": "0",
+                  "ConfigBundleProductMRC": "0",
+                  "ConfigBundleProductNRC": "0",
+                  "ID": "PS-2018",
+                  "Name": "iPad",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "4",
+                  "TotalARC": "0",
+                  "TotalBundleProductConfigMRC": "0",
+                  "TotalSiteConfigARC": "0",
+                  "Type": "Spec",
+                  "ChildSpecification": {
+                    "CalculatePriceFlag": "true",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "ConfigNRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2018!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OnlyOneSpec": "PS-2018",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2018",
+                    "PriceEntityID": "PE-2055",
+                    "pxCreateDateTime": "20170817T064729.965 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "SmartPhone",
+                    "SpecID": "PS-2018",
+                    "SpecName": "iPad",
+                    "TotalARC": "0.0",
+                    "TotalChildConfigARC": "0",
+                    "TotalChildConfigNRC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0.0",
+                    "TotalRC": "0.0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0.0",
+                    "TotalStandardNRC": "0.0",
+                    "TotalStandardRC": "0.0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "iPad",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "210.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "2"
+                    },
+                    "RelationshipDetails": {
+                      "IsDefault": "true",
+                      "name": "device",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OnlyOne"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                },
+                {
+                  "CalculatePriceFlag": "false",
+                  "ID": "PS-2025",
+                  "Name": "Security equipment- hardware",
+                  "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+                  "pyExpanded": "true",
+                  "SelectedIndex": "5",
+                  "Type": "Spec",
+                  "ChildSpecification": {
+                    "CalculatePriceFlag": "false",
+                    "CheckServiceability": "false",
+                    "ChildSpecCount": "0",
+                    "ConfigARC": "0",
+                    "ConfigMRC": "0",
+                    "IsLocationBased": "false",
+                    "KeyString": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2025!",
+                    "MaxCardinality": "7",
+                    "MinCardinality": "0",
+                    "OwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "ParentID": ",PS-2025",
+                    "PriceEntityID": "PE-2054",
+                    "pxCreateDateTime": "20170817T091824.831 GMT",
+                    "pxCreateOperator": "PCFManager",
+                    "pxCreateOpName": "Product Catalog Manager",
+                    "pxCreateSystemID": "pega",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                    "pyExpanded": "true",
+                    "pyTreeGridIcon": "webwb/SpecNormal.png",
+                    "pzIndexOwnerKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2031!",
+                    "quantity": "0",
+                    "SpecCategory": "DataSecurity",
+                    "SpecID": "PS-2025",
+                    "SpecName": "Security equipment- hardware",
+                    "TotalARC": "0",
+                    "TotalChildConfigRC": "0",
+                    "TotalChildStandardARC": "0",
+                    "TotalChildStandardNRC": "0",
+                    "TotalChildStandardRC": "0",
+                    "TotalConfigARC": "0",
+                    "TotalConfigMRC": "0",
+                    "TotalConfigNRC": "0",
+                    "TotalNRC": "0",
+                    "TotalRC": "0",
+                    "TotalSpecConfigARC": "0",
+                    "TotalSpecConfigNRC": "0",
+                    "TotalSpecConfigRC": "0",
+                    "TotalStandardARC": "0",
+                    "TotalStandardNRC": "0",
+                    "TotalStandardRC": "0",
+                    "TotalUnitARCDiscount": "0",
+                    "TotalUnitNRCDiscount": "0",
+                    "TotalUnitRCDiscount": "0",
+                    "TrimName": "Security equ...",
+                    "ChildSpecificationsList": [],
+                    "Configuration": [],
+                    "Pricing": {
+                      "IsLocationBased": "false",
+                      "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                      "Charges": {
+                        "NRC": "50.0",
+                        "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                        "RC": "200.0",
+                        "WeeklyRC": "0.0",
+                        "YearlyRC": "0.0"
+                      }
+                    },
+                    "pzIndexes": {
+                      "Index_PS_ChildSpecs": "5"
+                    },
+                    "RelationshipDetails": {
+                      "name": "firewall type",
+                      "pxObjClass": "PegaComm-Data-ProductABE-SpecRelationship",
+                      "type": "OneOrMore"
+                    },
+                    "SpecCompatibilityRules": []
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "CalculatePriceFlag": "true",
+          "ConfigBundleProductARC": "0",
+          "ConfigBundleProductMRC": "0",
+          "ConfigBundleProductNRC": "0",
+          "ID": "PO-2088",
+          "Index": "3",
+          "IsConfigTreeCreated": "true",
+          "Name": "Iphone device",
+          "ParentID": "NoSite",
+          "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+          "pyExpanded": "true",
+          "SelectedIndex": "3",
+          "TotalARC": "0",
+          "TotalBundleProductConfigMRC": "0",
+          "TotalConfigARC": "0.0",
+          "TotalConfigMRC": "0.0",
+          "TotalConfigNRC": "0.0",
+          "TotalSiteConfigARC": "0",
+          "Type": "product",
+          "UsedInBundle": "false",
+          "ProductOffer": {
+            "CheckServiceability": "false",
+            "ConfigARC": "0.0",
+            "ConfigMRC": "0.0",
+            "ConfigNRC": "0.0",
+            "ID": "PO-2088",
+            "Index": "3",
+            "IsBundleOffer": "false",
+            "IsLocationBased": "false",
+            "name": "Iphone device",
+            "NonLocProductARC": "0",
+            "NonLocProductConfigMRC": "0.0",
+            "NonLocProductConfigNRC": "0.0",
+            "NonLocProductMRC": "100",
+            "NonLocProductNRC": "380",
+            "OfferNumber": "1",
+            "ProductLocationsCount": "0",
+            "ProductType": "SmartPhone",
+            "PSImage": "PEGACOMM-FW-PCFW-WORK-PRODUCTSPECIFICATION PS-2017!",
+            "pxObjClass": "PegaComm-Data-ProductABE-ProductOffering-Simple",
+            "pyTreeGridIcon": "images/SimpleOffer.png",
+            "quantity": "1",
+            "ShowNoImage": "false",
+            "status": "Available now",
+            "TotalActualNRC": "0",
+            "TotalARC": "0.0",
+            "TotalCatalogNonLocARC": "0",
+            "TotalCatalogNonLocMRC": "100",
+            "TotalCatalogNonLocNRC": "380",
+            "TotalCatalogNRC": "0",
+            "TotalConfigARC": "0.0",
+            "TotalConfigMRC": "0.0",
+            "TotalConfigNRC": "0.0",
+            "TotalFinalARC": "0",
+            "TotalFinalMRC": "0",
+            "TotalNRC": "380",
+            "TotalPOARC": "0.0",
+            "TotalPOMRC": "100.0",
+            "TotalPONRC": "380.0",
+            "TotalPOPrice": "480.0",
+            "TotalRC": "100",
+            "TotalSpecStandardARC": "0.0",
+            "TotalSpecStandardNRC": "250",
+            "TotalSpecStandardRC": "0",
+            "TotalUnitARCDiscount": "0",
+            "TotalUnitNRCDiscount": "0",
+            "TotalUnitRCDiscount": "0",
+            "Catalog": {
+              "ID": "PC-2001",
+              "name": "Voice solution",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductCatalog"
+            },
+            "CharacteristicValues": [],
+            "ChildSpecificationsList": [
+              {
+                "CalculatePriceFlag": "true",
+                "CheckServiceability": "false",
+                "ChildSpecCount": "0",
+                "ConfigARC": "0",
+                "ConfigMRC": "0",
+                "ConfigNRC": "0",
+                "IsLocationBased": "false",
+                "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2017!",
+                "MaxCardinality": "1",
+                "MinCardinality": "1",
+                "PriceEntityID": "PE-2071",
+                "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                "quantity": "1",
+                "SpecID": "PS-2017",
+                "SpecName": "iPhone",
+                "TotalARC": "0.0",
+                "TotalChildConfigARC": "0",
+                "TotalChildConfigNRC": "0",
+                "TotalChildConfigRC": "0",
+                "TotalChildStandardARC": "0",
+                "TotalChildStandardNRC": "0",
+                "TotalChildStandardRC": "0",
+                "TotalConfigARC": "0",
+                "TotalConfigMRC": "0",
+                "TotalConfigNRC": "0",
+                "TotalSpecConfigARC": "0",
+                "TotalSpecConfigNRC": "0",
+                "TotalSpecConfigRC": "0",
+                "TotalStandardARC": "0.0",
+                "TotalStandardNRC": "250",
+                "TotalStandardRC": "0",
+                "TotalUnitARCDiscount": "0",
+                "TotalUnitNRCDiscount": "0",
+                "TotalUnitRCDiscount": "0",
+                "TrimName": "iPhone",
+                "ChildSpecificationsList": [],
+                "Configuration": [],
+                "Pricing": {
+                  "IsLocationBased": "false",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                  "Charges": {
+                    "NRC": "250",
+                    "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                    "RC": "0",
+                    "WeeklyRC": "0.0",
+                    "YearlyRC": "0.0"
+                  }
+                },
+                "SpecCompatibilityRules": []
+              }
+            ],
+            "ContractTerms": {
+              "amount": "36",
+              "pxObjClass": "PegaCFF-BaseTypesABE-Duration"
+            },
+            "distributionChannel": [],
+            "OfferEligibility": {
+              "pxObjClass": "PegaComm-Data-ProductABE-OfferEligibility",
+              "EligibilityRules": []
+            },
+            "PolicyRuleList": [],
+            "Pricing": {
+              "BusinessLine": "B2B",
+              "IsLocationBased": "false",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+              "Charges": {
+                "NRC": "130",
+                "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                "pxSubscript": "Charges",
+                "RC": "100"
+              },
+              "ChildSpecificationsList": [
+                {
+                  "ChildSpecCount": "0",
+                  "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2017!",
+                  "MaxCardinality": "1",
+                  "MinCardinality": "1",
+                  "PriceEntityID": "PE-2071",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                  "SpecID": "PS-2017",
+                  "SpecName": "iPhone",
+                  "TotalARC": "0",
+                  "TotalChildStandardARC": "0",
+                  "TotalSpecConfigARC": "0",
+                  "TotalStandardARC": "0",
+                  "TotalStandardNRC": "0",
+                  "TotalStandardRC": "0",
+                  "TotalUnitARCDiscount": "0",
+                  "TotalUnitNRCDiscount": "0",
+                  "TotalUnitRCDiscount": "0",
+                  "TrimName": "iPhone",
+                  "ChildSpecificationsList": [],
+                  "Pricing": {
+                    "IsLocationBased": "false",
+                    "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                    "Charges": {
+                      "NRC": "250",
+                      "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                      "RC": "0",
+                      "WeeklyRC": "0.0",
+                      "YearlyRC": "0.0"
+                    }
+                  }
+                }
+              ],
+              "Discounts": [],
+              "PricingRules": [],
+              "TerminationFee": {
+                "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-TerminationFee"
+              },
+              "Tree": [
+                {
+                  "ID": "PO-2088",
+                  "ImagePath": "images/ProdOffer.png",
+                  "Name": "Iphone device",
+                  "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2070",
+                  "PriceEntityID": "PE-2070",
+                  "PricingDetailsKey": "Iphone device20170821T071706.390 GMT",
+                  "pxObjClass": "PegaComm-Data-Tree",
+                  "pyExpanded": "true",
+                  "pzInsKey": "PEGACOMM-FW-PCFW-WORK-PRODUCTOFFERING PO-2088!",
+                  "SortingIndex": "1",
+                  "TrimName": "Iphone device",
+                  "Type": "Offer",
+                  "Tree": [
+                    {
+                      "ID": "PS-2017",
+                      "ImagePath": "images/ProdSpec.png",
+                      "Name": "iPhone",
+                      "PEKeyString": "PEGACOMM-FW-PCFW-WORK-PRICEENTITY PE-2071",
+                      "PriceEntityID": "PE-2071",
+                      "PricingDetailsKey": "PE-2071iPhone$250 one time charge20170821T071712.641 GMT",
+                      "PricingEntityName": "$250 one time charge",
+                      "pxObjClass": "PegaComm-Data-Tree",
+                      "pyExpanded": "true",
+                      "pzInsKey": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2017!",
+                      "SortingIndex": "2",
+                      "TrimName": "iPhone",
+                      "Type": "Spec",
+                      "Tree": []
+                    }
+                  ]
+                }
+              ]
+            },
+            "ProductSpecs": {
+              "BusinessLine": "B2B",
+              "ID": "PS-2017",
+              "name": "iPhone",
+              "ProductType": "Atomic",
+              "pxObjClass": "PegaComm-Data-ProductABE-ProductSpecification",
+              "ChildSpecificationsList": [],
+              "Configuration": {
+                "pxObjClass": "PegaComm-Data-ProductABE-ProductConfiguration"
+              },
+              "SpecCompatibilityRules": []
+            },
+            "validFor": {
+              "pxObjClass": "PegaCFF-BaseTypesABE-TimePeriod",
+              "startDateTime": "20170806T144600.000 GMT"
+            }
+          },
+          "Tree": [
+            {
+              "CalculatePriceFlag": "true",
+              "ConfigBundleProductARC": "0",
+              "ConfigBundleProductMRC": "0",
+              "ConfigBundleProductNRC": "0",
+              "ID": "PS-2017",
+              "Name": "iPhone",
+              "pxObjClass": "PegaComm-FW-CPQ-Data-Tree",
+              "pyExpanded": "true",
+              "SelectedIndex": "1",
+              "TotalARC": "0",
+              "TotalBundleProductConfigMRC": "0",
+              "TotalSiteConfigARC": "0",
+              "Type": "Spec",
+              "ChildSpecification": {
+                "CalculatePriceFlag": "true",
+                "CheckServiceability": "false",
+                "ChildSpecCount": "0",
+                "ConfigARC": "0",
+                "ConfigMRC": "0",
+                "ConfigNRC": "0",
+                "IsLocationBased": "false",
+                "KeyString": "PegaComm-FW-PCFW-Work-ProductSpecification PS-2017!",
+                "MaxCardinality": "1",
+                "MinCardinality": "1",
+                "PriceEntityID": "PE-2071",
+                "pxObjClass": "PegaComm-Data-ProductABE-ChildSpecs",
+                "quantity": "1",
+                "SpecID": "PS-2017",
+                "SpecName": "iPhone",
+                "TotalARC": "0.0",
+                "TotalChildConfigARC": "0",
+                "TotalChildConfigNRC": "0",
+                "TotalChildConfigRC": "0",
+                "TotalChildStandardARC": "0",
+                "TotalChildStandardNRC": "0",
+                "TotalChildStandardRC": "0",
+                "TotalConfigARC": "0",
+                "TotalConfigMRC": "0",
+                "TotalConfigNRC": "0",
+                "TotalSpecConfigARC": "0",
+                "TotalSpecConfigNRC": "0",
+                "TotalSpecConfigRC": "0",
+                "TotalStandardARC": "0.0",
+                "TotalStandardNRC": "250",
+                "TotalStandardRC": "0",
+                "TotalUnitARCDiscount": "0",
+                "TotalUnitNRCDiscount": "0",
+                "TotalUnitRCDiscount": "0",
+                "TrimName": "iPhone",
+                "ChildSpecificationsList": [],
+                "Configuration": [],
+                "Pricing": {
+                  "IsLocationBased": "false",
+                  "pxObjClass": "PegaComm-Data-ProductABE-ProductOfferingPrice",
+                  "Charges": {
+                    "NRC": "250",
+                    "pxObjClass": "PegaComm-Data-ProductABE-PriceComponent-Charge",
+                    "RC": "0",
+                    "WeeklyRC": "0.0",
+                    "YearlyRC": "0.0"
+                  }
+                },
+                "SpecCompatibilityRules": []
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
