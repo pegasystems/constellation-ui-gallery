@@ -1,7 +1,7 @@
 import { useRef } from 'react';
+import { Text } from '@pega/cosmos-react-core';
 import {
   DentalChartContainer,
-  ChartHeader,
   JawsWrapper,
   JawSection,
   JawTitle,
@@ -238,7 +238,9 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
 
   return (
     <DentalChartContainer>
-      <ChartHeader>{heading}</ChartHeader>
+      <Text variant='h3' as='h3' style={{ marginBottom: '0.5rem' }}>
+        {heading}
+      </Text>
 
       {renderLegend()}
 

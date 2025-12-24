@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { withConfiguration, Progress, CardContent, Card, Flex, Text } from '@pega/cosmos-react-core';
+import { withConfiguration, Progress, Text } from '@pega/cosmos-react-core';
 import getAllFields from './utils';
 import DentalChart from './DentalChart';
 import '../shared/create-nonce';
@@ -95,19 +95,13 @@ export const PegaExtensionsJawLayout = (props: JawLayoutProps) => {
   const statusCodes = fields[0]?.value || [];
 
   return (
-    <Card>
-      <CardContent>
-        <Flex container={{ direction: 'column', gap: 1 }}>
-          <DentalChart
-            heading={heading}
-            statusCodes={statusCodes}
-            updateToothStatus={updateToothStatus}
-            readOnly={readOnly}
-            getPConnect={getPConnect}
-          />
-        </Flex>
-      </CardContent>
-    </Card>
+    <DentalChart
+      statusCodes={statusCodes}
+      updateToothStatus={updateToothStatus}
+      readOnly={readOnly}
+      getPConnect={getPConnect}
+      heading={heading}
+    />
   );
 };
 
