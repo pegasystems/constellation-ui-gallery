@@ -2,41 +2,38 @@ import styled from 'styled-components';
 import { Button } from '@pega/cosmos-react-core';
 
 export const DentalChartContainer = styled.div`
-  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  background: none;
+  border: none;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
 
-export const ChartHeader = styled.h3`
-  text-align: left;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-`;
-
 export const JawsWrapper = styled.div`
   display: flex;
   gap: 1.5rem;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-  width: 100%;
+  width: auto;
+  align-self: flex-start;
 `;
 
 export const JawSection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   flex: 0 0 auto;
 `;
 
 export const JawTitle = styled.h4`
-  margin: 0 0 0.5rem 0;
-  text-align: center;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 0.85rem;
+  margin-bottom: -0.5rem;
 `;
 
 export const JawContainer = styled.div`
@@ -49,11 +46,11 @@ export const JawContainer = styled.div`
 export const ToothContainer = styled.div.attrs<{ top: number; left: number }>(({ top, left }) => ({
   style: {
     top: `calc(100% - ${top}rem)`,
-    left: `calc(50% + ${left}rem)`,
+    left: `${left + 10.5}rem`, // center arc in 25rem wide container
   },
 }))<{ top: number; left: number }>`
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
 `;
 
 export const ToothButton = styled(Button)<{ status: string; exists: boolean; readOnly?: boolean }>`
@@ -84,12 +81,13 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean; rea
 `;
 
 export const LegendContainer = styled.div({
-  marginTop: '0.5rem',
-  marginBottom: '1rem',
+  marginTop: '0.4rem',
+  marginBottom: '2.1rem',
   display: 'flex',
   justifyContent: 'flex-start',
   gap: '0.75rem',
   flexWrap: 'wrap',
+  alignSelf: 'flex-start',
 });
 
 export const LegendItem = styled.div(() => ({
