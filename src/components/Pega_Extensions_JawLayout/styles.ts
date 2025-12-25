@@ -30,7 +30,7 @@ export const JawSection = styled.div`
   flex: 0 0 auto;
 `;
 
-export const JawTitle = styled.h5`
+export const JawTitle = styled.h4`
   font-weight: 400;
   font-size: 0.85rem;
   margin-bottom: -0.5rem;
