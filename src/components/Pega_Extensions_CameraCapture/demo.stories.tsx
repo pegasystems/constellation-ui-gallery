@@ -38,7 +38,7 @@ window.PCore.getValue = (a) => {
   return a;
 }
 
-export const BasePegaExtensionsCameraCapture: Story = (args: any) => {
+export const Default: Story = (args: any) => {
   const props = {
     buttonText: args.buttonText,
     getPConnect: () => {
@@ -56,6 +56,6 @@ return (
   );
 };
 
-BasePegaExtensionsCameraCapture.args = {
+Default.args = {
   buttonText: configProps.buttonText
 };

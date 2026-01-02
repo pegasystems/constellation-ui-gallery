@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 import { Card, CardContent, Flex, Button, Input, withConfiguration} from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCameraCaptureWrapper from './styles';
+import '../shared/create-nonce';
 
 type CameraComponentProps = {
   buttonText: string;
