@@ -1,61 +1,48 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { StoryObj } from '@storybook/react-webpack5';
+import { PegaExtensionsCameraCapture } from './index';
 
-import PegaExtensionsCameraCapture from './index';
-
-import { configProps } from './mock';
-
-const meta: Meta<typeof PegaExtensionsCameraCapture> = {
-  title: 'PegaExtensionsCameraCapture',
+export default {
+  title: 'Widgets/Camera',
   component: PegaExtensionsCameraCapture,
-  excludeStories: /.*Data$/
+  argTypes: {
+    buttonText: {
+      control: 'text',
+    },
+    getPConnect: {
+      table: { disable: true },
+    },
+  },
 };
 
-export default meta;
-type Story = StoryObj<typeof PegaExtensionsCameraCapture>;
-
-if (!window.PCore) {
-  window.PCore = {} as any;
-}
-
-window.PCore.getConstants = () => {
-  return {
-    CASE_INFO: { CASE_INFO : 1 }
-  }
-}
-
-window.PCore.getAttachmentUtils = () => {
-  return {
-    linkAttachmentsToCase: () => {
-      return Promise.resolve({ ID: 1 });
+const setPCore = () => {
+  (window as any).PCore = {
+    getConstants: () => {
+      return {
+        CASE_INFO: {
+          CASE_INFO: '',
+        },
+      };
     },
-    uploadAttachment: () => {
-      return Promise.resolve({ ID: 1 });
-    }
   };
 };
 
-window.PCore.getValue = (a) => {
-  return a;
-}
+type Story = StoryObj<typeof PegaExtensionsCameraCapture>;
 
-export const Default: Story = (args: any) => {
-  const props = {
-    buttonText: args.buttonText,
-    getPConnect: () => {
-      return {
-        getValue: () => {/* nothing */},
-        getContextName: () => {/* nothing */}
-      };
-    }
-};
+export const Default: Story = {
+  render: (args) => {
+    setPCore();
 
-return (
-    <>
-      <PegaExtensionsCameraCapture {...props} {...args} />
-    </>
-  );
-};
+    const props = {
+      ...args,
+      getPConnect: () => ({
+        getContextName: () => '',
+        getValue: () => '',
+      }),
+    };
 
-Default.args = {
-  buttonText: configProps.buttonText
+    return <PegaExtensionsCameraCapture {...props} />;
+  },
+  args: {
+    buttonText: 'Capture with Camera',
+  },
 };

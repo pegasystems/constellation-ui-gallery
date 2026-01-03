@@ -8,10 +8,7 @@
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CameraCapture",
     "type": "Widget",
-    "subtype": [
-        "PAGE",
-        "CASE"
-    ],
+    "subtype": "CASE",
     "icon": "OneColumnPage.svg",
     "properties": [
       {

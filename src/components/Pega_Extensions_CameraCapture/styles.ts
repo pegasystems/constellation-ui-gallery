@@ -1,81 +1,75 @@
-import styled, { css } from 'styled-components'
+import { type themeDefinition } from '@pega/cosmos-react-core';
+import styled, { css } from 'styled-components';
 
-const StyledDiv = styled.div(() => css`
-  margin: 0;
+export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+  return css`
+    margin: 0;
 
-  input {
-    border-color: #e4e4e4;
-  }
+    .camera-container {
+      width: 100%;
+      height: 26.25rem;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .camera-container {
-    width: 100%;
-    height: 420px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .camera-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: ${theme.base.colors.black};
+      transition: opacity 0.3s ease-in-out;
+    }
 
-  .camera-video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #000;
-    transition: opacity 0.3s ease-in-out;
-  }
+    .captured-wrapper {
+      width: 80%;
+      height: auto;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
 
-  .captured-wrapper {
-    width: 80%;
-    height: auto;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #000;
-  }
+    .captured-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease-in-out;
+    }
 
-  .captured-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease-in-out;
-  }
+    .camera-buttons {
+      width: fit-content;
+    }
 
-  .camera-buttons {
-    color: #fff;
-    width: fit-content;
-  }
+    .inputAddon {
+      display: inline-flex;
+      padding: 0.3165rem 0.75rem;
+      margin-right: 0.3125rem;
+      border: 0.0625rem solid ${theme.base.palette['border-line']};
+      background: ${theme.base.palette['primary-background']};
+      border-left: 0;
+      border-radius: 0 0.375rem 0.375rem 0;
+    }
 
-  .inputAddon {
-    display: inline-flex;
-    padding: 7px 12px;
-    margin-right: 5px;
-    background: #f0f0f0;
-    border: 1px solid #e4e4e4;
-    border-left: 0;
-    border-radius: 0 6px 6px 0;
-  }
+    .custom-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      padding: 0.625rem 1rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+    }
 
-  .custom-toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
-  }
+    .custom-toast--success {
+      background-color: ${theme.base.colors.green.dark};
+      color: ${theme.base.colors.white};
+    }
 
-  .custom-toast--success {
-    background-color: #e6f4ea;
-    color: #0f5132;
-  }
-
-  .custom-toast--error {
-    background-color: #fdecea;
-    color: #842029;
-  }
-`);
-
-export default StyledDiv;
+    .custom-toast--error {
+      background-color: ${theme.base.colors.red.dark};
+      color: ${theme.base.colors.white};
+    }
+  `;
+});

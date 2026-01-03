@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import { Card, CardContent, Flex, Button, Input, withConfiguration} from '@pega/cosmos-react-core';
+import { Card, CardContent, Flex, Button, Input, withConfiguration } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsCameraCaptureWrapper from './styles';
 import '../shared/create-nonce';
 
@@ -8,7 +8,7 @@ type CameraComponentProps = {
   getPConnect: any;
 };
 
-function PegaExtensionsCameraCapture(props: CameraComponentProps) {
+export const PegaExtensionsCameraCapture = (props: CameraComponentProps) => {
   const { getPConnect, buttonText } = props;
 
   const [attachmentFieldName, setAttachmentFieldName] = useState('');
@@ -39,20 +39,14 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
   const IMAGE_MIME = 'image/png';
 
   const caseInfo = useMemo(() => {
-    return (
-      pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO) || {}
-    );
+    return pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO) || {};
   }, [pConn]);
 
   useEffect(() => {
     const now = new Date();
-    const formatted = now
-      .toISOString()
-      .replace(/[:.]/g, '-')
-      .replace('T', '_')
-      .replace('Z', '');
-      setAttachmentFieldName(`image_${formatted}`);
-  },[]);
+    const formatted = now.toISOString().replace(/[:.]/g, '-').replace('T', '_').replace('Z', '');
+    setAttachmentFieldName(`image_${formatted}`);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -89,10 +83,7 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
     return () => ro.disconnect();
   }, []);
 
-  const showMessage = (
-    message: string,
-    variant: MessageVariant = 'success'
-  ) => {
+  const showMessage = (message: string, variant: MessageVariant = 'success') => {
     setMessageState({
       visible: true,
       message,
@@ -116,14 +107,14 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
   };
 
   const stopCamera = useCallback(() => {
-    stream?.getTracks().forEach(t => t.stop());
+    stream?.getTracks().forEach((t) => t.stop());
     setStream(null);
     setCapturedImg(null);
     setCameraActive(false);
   }, [stream]);
 
   const stopCameraStream = () => {
-    stream?.getTracks().forEach(t => t.stop());
+    stream?.getTracks().forEach((t) => t.stop());
     setStream(null);
     setCameraActive(false);
   };
@@ -145,8 +136,9 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
     if (!videoElement || !canvasElement) return;
 
     const videoWidth = videoElement.videoWidth || containerWidth;
-    const videoHeight = videoElement.videoHeight
-      || (videoDims ? Math.round(videoWidth * (videoDims.height / videoDims.width)) : undefined);
+    const videoHeight =
+      videoElement.videoHeight ||
+      (videoDims ? Math.round(videoWidth * (videoDims.height / videoDims.width)) : undefined);
 
     if (!videoWidth || !videoHeight) {
       console.error('Cannot determine natural video dimensions for capture', { videoWidth, videoHeight });
@@ -166,7 +158,6 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
     setCapturedImg(capturedImageData);
     stopCameraStream();
   };
-
 
   const handleRetake = () => {
     setCapturedImg(null);
@@ -205,15 +196,10 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
       attachmentFieldName: 'File',
       fileType: 'PNG',
       name: name,
-      ID: id
+      ID: id,
     };
 
-    await (window as any).PCore.getAttachmentUtils().linkAttachmentsToCase(
-      caseInfo?.ID,
-      [file],
-      'File',
-      context
-    );
+    await (window as any).PCore.getAttachmentUtils().linkAttachmentsToCase(caseInfo?.ID, [file], 'File', context);
     stopCamera();
   };
 
@@ -229,7 +215,7 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
         file as any,
         onUploadProgress,
         errorHandler,
-        context
+        context,
       );
 
       if (!res?.ID) {
@@ -245,22 +231,18 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
 
   return (
     <StyledPegaExtensionsCameraCaptureWrapper>
-    {messageState.visible && (
-      <div
-        className={`custom-toast custom-toast--${messageState.variant}`}
-        role="status"
-        aria-live="polite"
-      >
-        {messageState.message}
-      </div>
-    )}
+      {messageState.visible && (
+        <div className={`custom-toast custom-toast--${messageState.variant}`} role='status' aria-live='polite'>
+          {messageState.message}
+        </div>
+      )}
       <Card>
         <CardContent>
           <Flex container={{ direction: 'column', gap: 2 }}>
             {!cameraActive && !capturedImg && (
               <Flex container={{ gap: 2 }}>
-                <Button variant="primary" onClick={startCamera} className='camera-buttons'>
-                  { buttonText }
+                <Button variant='primary' onClick={startCamera} className='camera-buttons'>
+                  {buttonText}
                 </Button>
               </Flex>
             )}
@@ -268,13 +250,20 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
             {cameraActive && !capturedImg && (
               <>
                 <div ref={containerRef} className='camera-container'>
-                  <video className='camera-video' ref={videoRef} autoPlay playsInline muted onLoadedMetadata={handleLoadedMetadata} />
+                  <video
+                    className='camera-video'
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    onLoadedMetadata={handleLoadedMetadata}
+                  />
                 </div>
                 <Flex container={{ gap: 2 }}>
-                  <Button variant="primary" onClick={captureImage} className='camera-buttons'>
+                  <Button variant='primary' onClick={captureImage} className='camera-buttons'>
                     Capture
                   </Button>
-                  <Button variant="primary" onClick={stopCamera} className='camera-buttons'>
+                  <Button variant='primary' onClick={stopCamera} className='camera-buttons'>
                     Turn off Camera
                   </Button>
                 </Flex>
@@ -285,26 +274,26 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
             {capturedImg && (
               <>
                 <div className='captured-wrapper'>
-                  <img className='captured-image' src={capturedImg} alt="Captured" />
+                  <img className='captured-image' src={capturedImg} alt='Captured' />
                 </div>
                 <Flex container={{}}>
                   <Input
                     value={attachmentFieldName}
                     type='text'
                     placeholder='Enter File Name (Optional)'
-                    style={{ width: "200px" }}
+                    style={{ width: '200px' }}
                     onChange={(e) => {
                       setAttachmentFieldName(e.currentTarget.value);
                     }}
                   />
-                  <div className="inputAddon">.png</div>
-                  <Button variant="primary" onClick={handleUpload} className='camera-buttons'>
+                  <div className='inputAddon'>.png</div>
+                  <Button variant='primary' onClick={handleUpload} className='camera-buttons'>
                     Save as Attachment
                   </Button>
-                  <Button variant="primary" onClick={handleRetake} className='camera-buttons'>
+                  <Button variant='primary' onClick={handleRetake} className='camera-buttons'>
                     Retake
                   </Button>
-                  <Button variant="primary" onClick={stopCamera} className='camera-buttons'>
+                  <Button variant='primary' onClick={stopCamera} className='camera-buttons'>
                     Turn off Camera
                   </Button>
                 </Flex>
@@ -315,6 +304,6 @@ function PegaExtensionsCameraCapture(props: CameraComponentProps) {
       </Card>
     </StyledPegaExtensionsCameraCaptureWrapper>
   );
-}
+};
 
 export default withConfiguration(PegaExtensionsCameraCapture);
