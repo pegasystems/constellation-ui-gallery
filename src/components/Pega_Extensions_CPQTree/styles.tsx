@@ -46,12 +46,11 @@ const fieldContainerStyles = css`
 // ============================================
 // Index/Main Component Styles
 // ============================================
-
-export const StyledCard = styled(Card)`
+ export const StyledCard = styled(Card)`
   padding: 1rem;
   overflow-x: auto;
   min-width: 0;
-  max-width: 1200px;
+  max-width: 75rem;
 `;
 
 // ============================================
@@ -241,9 +240,9 @@ export const ProductsListContainer = styled.div`
 `;
 
 export const DetailsPanelContainer = styled.div<{ $isVisible?: boolean }>`
-  flex: 0 0 500px;
-  min-width: 500px;
-  border-left: 0.0625rem solid #ccc;
+  flex: 0 0 31.25rem;
+  min-width: 31.25rem;
+  border-left: 0.0625rem solid #cccccc;
   padding-left: 1rem;
   position: relative;
   visibility: ${({ $isVisible }) => ($isVisible ? 'visible' : 'hidden')};

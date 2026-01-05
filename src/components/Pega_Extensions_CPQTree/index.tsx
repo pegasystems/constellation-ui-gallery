@@ -110,7 +110,13 @@ export const PegaExtensionsCPQTree = (props: CPQTreeProps) => {
   );
 
   // Data loading with automatic initialization
-  const { objects, loading, reloadTree } = useCPQTreeData(dataPage, getPConnect, loadTree, childrenPropertyName, initConfig);
+  const { objects, loading, reloadTree } = useCPQTreeData(
+    dataPage,
+    getPConnect,
+    loadTree,
+    childrenPropertyName,
+    initConfig,
+  );
 
   // Tree actions hook - pass reloadTree to enable tree reload after save
   const { handleConfigFieldChange, handleQuantityChange } = useTreeActions({
