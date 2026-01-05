@@ -6,54 +6,54 @@
 
 ## 1️⃣ Quick Overview – List of Existing Components
 
-| Component                                   | Short Description                                                  | Docs                                                                      |
-| ------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-| **Pega_Extensions_ActionableButton**        | A button that can trigger Pega actions or workflows.               | [Docs](./src/components/Pega_Extensions_ActionableButton/Docs.mdx)        |
-| **Pega_Extensions_AutoSave**                | Automatically saves form data as the user types or changes fields. | [Docs](./src/components/Pega_Extensions_AutoSave/Docs.mdx)                |
-| **Pega_Extensions_Banner**                  | Displays a banner message, typically for notifications or alerts.  | [Docs](./src/components/Pega_Extensions_Banner/Docs.mdx)                  |
-| **Pega_Extensions_BannerInput**             | Combines a banner with an input field for quick data entry.        | [Docs](./src/components/Pega_Extensions_BannerInput/Docs.mdx)             |
-| **Pega_Extensions_BarCode**                 | Generates and scans barcodes.                                      | [Docs](./src/components/Pega_Extensions_BarCode/Docs.mdx)                 |
-| **Pega_Extensions_Calendar**                | Calendar view for selecting dates, with support for events.        | [Docs](./src/components/Pega_Extensions_Calendar/Docs.mdx)                |
-| **Pega_Extensions_CardGallery**             | Displays items in a card‑style gallery layout.                     | [Docs](./src/components/Pega_Extensions_CardGallery/Docs.mdx)             |
-| **Pega_Extensions_CaseLauncher**            | Launches Pega cases or tasks from the UI.                          | [Docs](./src/components/Pega_Extensions_CaseLauncher/Docs.mdx)            |
-| **Pega_Extensions_CaseReference**           | References a Pega case, showing key details.                       | [Docs](./src/components/Pega_Extensions_CaseReference/Docs.mdx)           |
-| **Pega_Extensions_ChatGenAI**               | Integrates generative AI chat into the application.                | [Docs](./src/components/Pega_Extensions_ChatGenAI/Docs.mdx)               |
-| **Pega_Extensions_CheckboxRow**             | A row of checkboxes with optional triggers.                        | [Docs](./src/components/Pega_Extensions_CheckboxRow/Docs.mdx)             |
-| **Pega_Extensions_CheckboxTrigger**         | Checkbox that triggers actions on change.                          | [Docs](./src/components/Pega_Extensions_CheckboxTrigger/Docs.mdx)         |
-| **Pega_Extensions_CompareTableLayout**      | Displays data in a comparison table format.                        | [Docs](./src/components/Pega_Extensions_CompareTableLayout/Docs.mdx)      |
-| **Pega_Extensions_DisplayAttachments**      | Renders file attachments with download links.                      | [Docs](./src/components/Pega_Extensions_DisplayAttachments/Docs.mdx)      |
-| **Pega_Extensions_DisplayPDF**              | Shows PDF documents inline.                                        | [Docs](./src/components/Pega_Extensions_DisplayPDF/Docs.mdx)              |
-| **Pega_Extensions_DynamicHierarchicalForm** | Dynamically builds a hierarchical form based on data.              | [Docs](./src/components/Pega_Extensions_DynamicHierarchicalForm/Docs.mdx) |
-| **Pega_Extensions_EditableTableLayout**     | Table layout with inline editing capabilities.                     | [Docs](./src/components/Pega_Extensions_EditableTableLayout/Docs.mdx)     |
-| **Pega_Extensions_FieldGroupAsRow**         | Groups multiple fields into a single row layout.                   | [Docs](./src/components/Pega_Extensions_FieldGroupAsRow/Docs.mdx)         |
-| **Pega_Extensions_FormFullWidth**           | Expands a form to full width of container.                         | [Docs](./src/components/Pega_Extensions_FormFullWidth/Docs.mdx)           |
-| **Pega_Extensions_GanttChart**              | Visualizes tasks or events in a Gantt chart.                       | [Docs](./src/components/Pega_Extensions_GanttChart/Docs.mdx)              |
-| **Pega_Extensions_HierarchicalFormAsTasks** | Presents hierarchical forms in a task‑list style.                  | [Docs](./src/components/Pega_Extensions_HierarchicalFormAsTasks/Docs.mdx) |
-| **Pega_Extensions_IframeWrapper**           | Embeds external content within an iframe.                          | [Docs](./src/components/Pega_Extensions_IframeWrapper/Docs.mdx)           |
-| **Pega_Extensions_ImageCarousel**           | Carousel for images with navigation controls.                      | [Docs](./src/components/Pega_Extensions_ImageCarousel/Docs.mdx)           |
-| **Pega_Extensions_ImageMagnify**            | Magnifies images on hover or click.                                | [Docs](./src/components/Pega_Extensions_ImageMagnify/Docs.mdx)            |
-| **Pega_Extensions_JapaneseInput**           | Provides Japanese language input support.                          | [Docs](./src/components/Pega_Extensions_JapaneseInput/Docs.mdx)           |
-| **Pega_Extensions_KanbanBoard**             | Kanban board layout for task management.                           | [Docs](./src/components/Pega_Extensions_KanbanBoard/Docs.mdx)             |
-| **Pega_Extensions_Map**                     | Displays maps with markers and overlays.                           | [Docs](./src/components/Pega_Extensions_Map/Docs.mdx)                     |
-| **Pega_Extensions_MarkdownInput**           | Text area that supports Markdown formatting.                       | [Docs](./src/components/Pega_Extensions_MarkdownInput/Docs.mdx)           |
-| **Pega_Extensions_MaskedInput**             | Input field with masking (e.g., phone, SSN).                       | [Docs](./src/components/Pega_Extensions_MaskedInput/Docs.mdx)             |
-| **Pega_Extensions_Meter**                   | Visual meter for displaying progress or value ranges.              | [Docs](./src/components/Pega_Extensions_Meter/Docs.mdx)                   |
-| **Pega_Extensions_NetworkDiagram**          | Graphical network diagram with nodes and links.                    | [Docs](./src/components/Pega_Extensions_NetworkDiagram/Docs.mdx)          |
-| **Pega_Extensions_OAuthConnect**            | Handles OAuth authentication flows.                                | [Docs](./src/components/Pega_Extensions_OAuthConnect/Docs.mdx)            |
-| **Pega_Extensions_PasswordInput**           | Secure password input with strength indicator.                     | [Docs](./src/components/Pega_Extensions_PasswordInput/Docs.mdx)           |
-| **Pega_Extensions_QRCode**                  | Generates and scans QR codes.                                      | [Docs](./src/components/Pega_Extensions_QRCode/Docs.mdx)                  |
-| **Pega_Extensions_RangeSlider**             | Slider for selecting a numeric range.                              | [Docs](./src/components/Pega_Extensions_RangeSlider/Docs.mdx)             |
-| **Pega_Extensions_RatingLayout**            | Star or numeric rating component.                                  | [Docs](./src/components/Pega_Extensions_RatingLayout/Docs.mdx)            |
-| **Pega_Extensions_Scheduler**               | Scheduling UI for events and appointments.                         | [Docs](./src/components/Pega_Extensions_Scheduler/Docs.mdx)               |
-| **Pega_Extensions_SecureRichText**          | Rich‑text editor with security controls.                           | [Docs](./src/components/Pega_Extensions_SecureRichText/Docs.mdx)          |
-| **Pega_Extensions_Shortcuts**               | Provides keyboard shortcuts for quick actions.                     | [Docs](./src/components/Pega_Extensions_Shortcuts/Docs.mdx)               |
-| **Pega_Extensions_SignatureCapture**        | Capture user signatures via touch or mouse.                        | [Docs](./src/components/Pega_Extensions_SignatureCapture/Docs.mdx)        |
-| **Pega_Extensions_StarRatingInput**         | Input for star‑based ratings.                                      | [Docs](./src/components/Pega_Extensions_StarRatingInput/Docs.mdx)         |
-| **Pega_Extensions_StatusBadge**             | Badge showing status with color coding.                            | [Docs](./src/components/Pega_Extensions_StatusBadge/Docs.mdx)             |
-| **Pega_Extensions_TaskList**                | Displays a list of tasks with actions.                             | [Docs](./src/components/Pega_Extensions_TaskList/Docs.mdx)                |
-| **Pega_Extensions_TrendDisplay**            | Shows trends over time (charts, graphs).                           | [Docs](./src/components/Pega_Extensions_TrendDisplay/Docs.mdx)            |
-| **Pega_Extensions_UtilityList**             | Generic list component for utilities.                              | [Docs](./src/components/Pega_Extensions_UtilityList/Docs.mdx)             |
-| **shared**                                  | Shared utilities and hooks used by multiple components.            | N/A                                                                       |
+| Component                                   | Short Description                                                  | Docs                                                                      | Launchpad Support |
+| ------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | :---------------: |
+| **Pega_Extensions_ActionableButton**        | A button that can trigger Pega actions or workflows.               | [Docs](./src/components/Pega_Extensions_ActionableButton/Docs.mdx)        |        Yes        |
+| **Pega_Extensions_AutoSave**                | Automatically saves form data as the user types or changes fields. | [Docs](./src/components/Pega_Extensions_AutoSave/Docs.mdx)                |        No         |
+| **Pega_Extensions_Banner**                  | Displays a banner message, typically for notifications or alerts.  | [Docs](./src/components/Pega_Extensions_Banner/Docs.mdx)                  |        No         |
+| **Pega_Extensions_BannerInput**             | Combines a banner with an input field for quick data entry.        | [Docs](./src/components/Pega_Extensions_BannerInput/Docs.mdx)             |        Yes        |
+| **Pega_Extensions_BarCode**                 | Generates and scans barcodes.                                      | [Docs](./src/components/Pega_Extensions_BarCode/Docs.mdx)                 |        No         |
+| **Pega_Extensions_Calendar**                | Calendar view for selecting dates, with support for events.        | [Docs](./src/components/Pega_Extensions_Calendar/Docs.mdx)                |        Yes        |
+| **Pega_Extensions_CardGallery**             | Displays items in a card‑style gallery layout.                     | [Docs](./src/components/Pega_Extensions_CardGallery/Docs.mdx)             |    In Progress    |
+| **Pega_Extensions_CaseLauncher**            | Launches Pega cases or tasks from the UI.                          | [Docs](./src/components/Pega_Extensions_CaseLauncher/Docs.mdx)            |        Yes        |
+| **Pega_Extensions_CaseReference**           | References a Pega case, showing key details.                       | [Docs](./src/components/Pega_Extensions_CaseReference/Docs.mdx)           |        Yes        |
+| **Pega_Extensions_ChatGenAI**               | Integrates generative AI chat into the application.                | [Docs](./src/components/Pega_Extensions_ChatGenAI/Docs.mdx)               |        No         |
+| **Pega_Extensions_CheckboxRow**             | A row of checkboxes with optional triggers.                        | [Docs](./src/components/Pega_Extensions_CheckboxRow/Docs.mdx)             |        No         |
+| **Pega_Extensions_CheckboxTrigger**         | Checkbox that triggers actions on change.                          | [Docs](./src/components/Pega_Extensions_CheckboxTrigger/Docs.mdx)         |        No         |
+| **Pega_Extensions_CompareTableLayout**      | Displays data in a comparison table format.                        | [Docs](./src/components/Pega_Extensions_CompareTableLayout/Docs.mdx)      |        No         |
+| **Pega_Extensions_DisplayAttachments**      | Renders file attachments with download links.                      | [Docs](./src/components/Pega_Extensions_DisplayAttachments/Docs.mdx)      |        No         |
+| **Pega_Extensions_DisplayPDF**              | Shows PDF documents inline.                                        | [Docs](./src/components/Pega_Extensions_DisplayPDF/Docs.mdx)              |        Yes        |
+| **Pega_Extensions_DynamicHierarchicalForm** | Dynamically builds a hierarchical form based on data.              | [Docs](./src/components/Pega_Extensions_DynamicHierarchicalForm/Docs.mdx) |        No         |
+| **Pega_Extensions_EditableTableLayout**     | Table layout with inline editing capabilities.                     | [Docs](./src/components/Pega_Extensions_EditableTableLayout/Docs.mdx)     |        No         |
+| **Pega_Extensions_FieldGroupAsRow**         | Groups multiple fields into a single row layout.                   | [Docs](./src/components/Pega_Extensions_FieldGroupAsRow/Docs.mdx)         |        No         |
+| **Pega_Extensions_FormFullWidth**           | Expands a form to full width of container.                         | [Docs](./src/components/Pega_Extensions_FormFullWidth/Docs.mdx)           |        Yes        |
+| **Pega_Extensions_GanttChart**              | Visualizes tasks or events in a Gantt chart.                       | [Docs](./src/components/Pega_Extensions_GanttChart/Docs.mdx)              |        No         |
+| **Pega_Extensions_HierarchicalFormAsTasks** | Presents hierarchical forms in a task‑list style.                  | [Docs](./src/components/Pega_Extensions_HierarchicalFormAsTasks/Docs.mdx) |        No         |
+| **Pega_Extensions_IframeWrapper**           | Embeds external content within an iframe.                          | [Docs](./src/components/Pega_Extensions_IframeWrapper/Docs.mdx)           |        No         |
+| **Pega_Extensions_ImageCarousel**           | Carousel for images with navigation controls.                      | [Docs](./src/components/Pega_Extensions_ImageCarousel/Docs.mdx)           |        No         |
+| **Pega_Extensions_ImageMagnify**            | Magnifies images on hover or click.                                | [Docs](./src/components/Pega_Extensions_ImageMagnify/Docs.mdx)            |        No         |
+| **Pega_Extensions_JapaneseInput**           | Provides Japanese language input support.                          | [Docs](./src/components/Pega_Extensions_JapaneseInput/Docs.mdx)           |        No         |
+| **Pega_Extensions_KanbanBoard**             | Kanban board layout for task management.                           | [Docs](./src/components/Pega_Extensions_KanbanBoard/Docs.mdx)             |        No         |
+| **Pega_Extensions_Map**                     | Displays maps with markers and overlays.                           | [Docs](./src/components/Pega_Extensions_Map/Docs.mdx)                     |        No         |
+| **Pega_Extensions_MarkdownInput**           | Text area that supports Markdown formatting.                       | [Docs](./src/components/Pega_Extensions_MarkdownInput/Docs.mdx)           |        No         |
+| **Pega_Extensions_MaskedInput**             | Input field with masking (e.g., phone, SSN).                       | [Docs](./src/components/Pega_Extensions_MaskedInput/Docs.mdx)             |        Yes        |
+| **Pega_Extensions_Meter**                   | Visual meter for displaying progress or value ranges.              | [Docs](./src/components/Pega_Extensions_Meter/Docs.mdx)                   |        No         |
+| **Pega_Extensions_NetworkDiagram**          | Graphical network diagram with nodes and links.                    | [Docs](./src/components/Pega_Extensions_NetworkDiagram/Docs.mdx)          |    In Progress    |
+| **Pega_Extensions_OAuthConnect**            | Handles OAuth authentication flows.                                | [Docs](./src/components/Pega_Extensions_OAuthConnect/Docs.mdx)            |        No         |
+| **Pega_Extensions_PasswordInput**           | Secure password input with strength indicator.                     | [Docs](./src/components/Pega_Extensions_PasswordInput/Docs.mdx)           |        Yes        |
+| **Pega_Extensions_QRCode**                  | Generates and scans QR codes.                                      | [Docs](./src/components/Pega_Extensions_QRCode/Docs.mdx)                  |        No         |
+| **Pega_Extensions_RangeSlider**             | Slider for selecting a numeric range.                              | [Docs](./src/components/Pega_Extensions_RangeSlider/Docs.mdx)             |        No         |
+| **Pega_Extensions_RatingLayout**            | Star or numeric rating component.                                  | [Docs](./src/components/Pega_Extensions_RatingLayout/Docs.mdx)            |        No         |
+| **Pega_Extensions_Scheduler**               | Scheduling UI for events and appointments.                         | [Docs](./src/components/Pega_Extensions_Scheduler/Docs.mdx)               |        No         |
+| **Pega_Extensions_SecureRichText**          | Rich‑text editor with security controls.                           | [Docs](./src/components/Pega_Extensions_SecureRichText/Docs.mdx)          |        No         |
+| **Pega_Extensions_Shortcuts**               | Provides keyboard shortcuts for quick actions.                     | [Docs](./src/components/Pega_Extensions_Shortcuts/Docs.mdx)               |    In Progress    |
+| **Pega_Extensions_SignatureCapture**        | Capture user signatures via touch or mouse.                        | [Docs](./src/components/Pega_Extensions_SignatureCapture/Docs.mdx)        |        Yes        |
+| **Pega_Extensions_StarRatingInput**         | Input for star‑based ratings.                                      | [Docs](./src/components/Pega_Extensions_StarRatingInput/Docs.mdx)         |        Yes        |
+| **Pega_Extensions_StatusBadge**             | Badge showing status with color coding.                            | [Docs](./src/components/Pega_Extensions_StatusBadge/Docs.mdx)             |        Yes        |
+| **Pega_Extensions_TaskList**                | Displays a list of tasks with actions.                             | [Docs](./src/components/Pega_Extensions_TaskList/Docs.mdx)                |        No         |
+| **Pega_Extensions_TrendDisplay**            | Shows trends over time (charts, graphs).                           | [Docs](./src/components/Pega_Extensions_TrendDisplay/Docs.mdx)            |        No         |
+| **Pega_Extensions_UtilityList**             | Generic list component for utilities.                              | [Docs](./src/components/Pega_Extensions_UtilityList/Docs.mdx)             |    In Progress    |
+| **shared**                                  | Shared utilities and hooks used by multiple components.            | N/A                                                                       |        N/A        |
 
 ---
 
@@ -110,6 +110,16 @@ export enum MyComponentProps {
   /* Define any enum‑style props if needed */
 }
 
+type MyComponentExtProps = {
+  /* Custom props that will be exposed to Designer */
+  label: string;
+  value: string;
+  getPConnect: any;
+  readOnly?: boolean;
+  testId?: string;
+};
+
+export const PegaExtensionsMyComponent = (props: MyComponentExtProps) => {
 type MyComponentExtProps = {
   /* Custom props that will be exposed to Designer */
   label: string;
