@@ -14,8 +14,31 @@ type LoadDetailsProps = {
   detailsViewName: string;
   getPConnect: any;
 };
+const loadStaticDetails = async (props: LoadDetailsProps) => {
+  const { id } = props;
+  // In Launchpad, the detail data page typically requires parameters that aren't supported
+  // Display basic information instead
+  const React = (window as any).React;
+  return React.createElement(
+    'div',
+    { style: { padding: '0.5rem' } },
+    React.createElement(
+      'div',
+      { style: { marginBottom: '0.25rem' } },
+      React.createElement('strong', {}, 'ID: '),
+      React.createElement('span', {}, id),
+    ),
+  );
+};
+
 export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
+
+  /* Use case for Launchpad where readDataObject is not implemented */
+  if (!(window as any).PCore.getRestClient().doesRestApiExist('readDataObject')) {
+    return loadStaticDetails(props);
+  }
+
   let myElem;
   await (window as any).PCore.getDataApiUtils()
     .getDataObjectView(getMappedKey(detailsDataPage), detailsViewName, { [getMappedKey('pyID')]: id })
