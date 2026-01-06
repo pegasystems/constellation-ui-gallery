@@ -15,20 +15,56 @@ type LoadDetailsProps = {
   getPConnect: any;
 };
 const loadStaticDetails = async (props: LoadDetailsProps) => {
-  const { id } = props;
-  // In Launchpad, the detail data page typically requires parameters that aren't supported
-  // Display basic information instead
-  const React = (window as any).React;
-  return React.createElement(
-    'div',
-    { style: { padding: '0.5rem' } },
-    React.createElement(
-      'div',
-      { style: { marginBottom: '0.25rem' } },
-      React.createElement('strong', {}, 'ID: '),
-      React.createElement('span', {}, id),
-    ),
-  );
+  const { id, detailsDataPage } = props;
+
+  try {
+    const response = await (window as any).PCore.getDataApiUtils().getData(
+      (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(detailsDataPage),
+      {
+        dataViewParameters: {
+          ID: id,
+        },
+      },
+    );
+
+    if (response?.data?.data && response.data.data.length > 0) {
+      // Filter to find the specific record by ID
+      const itemData = response.data.data.find((item: any) => item[getMappedKey('pyID')] === id || item.ID === id);
+
+      if (!itemData) {
+        console.warn('No matching record found for ID:', id);
+        return null;
+      }
+
+      // Only render BusinessID, Status, and UpdateDateTime
+      const React = (window as any).React;
+      const { FieldValueList } = await import('@pega/cosmos-react-core');
+      const fields = [
+        {
+          id: 'BusinessID',
+          name: 'Business ID',
+          value: String(itemData.BusinessID || ''),
+        },
+        {
+          id: 'Status',
+          name: 'Status',
+          value: String(itemData.Status || ''),
+        },
+        {
+          id: 'UpdateDateTime',
+          name: 'Update Date/Time',
+          value: String(itemData.UpdateDateTime || ''),
+        },
+      ];
+      return React.createElement(FieldValueList, {
+        variant: 'stacked',
+        fields,
+      });
+    }
+  } catch (error) {
+    console.error('Error loading static details:', error);
+  }
+  return null;
 };
 
 export const loadDetails = async (props: LoadDetailsProps) => {
