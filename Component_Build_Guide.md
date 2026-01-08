@@ -33,7 +33,7 @@
 | **Pega_Extensions_ImageCarousel**           | Carousel for images with navigation controls.                      | [Docs](./src/components/Pega_Extensions_ImageCarousel/Docs.mdx)           |        No         |
 | **Pega_Extensions_ImageMagnify**            | Magnifies images on hover or click.                                | [Docs](./src/components/Pega_Extensions_ImageMagnify/Docs.mdx)            |        No         |
 | **Pega_Extensions_JapaneseInput**           | Provides Japanese language input support.                          | [Docs](./src/components/Pega_Extensions_JapaneseInput/Docs.mdx)           |        No         |
-| **Pega_Extensions_KanbanBoard**             | Kanban board layout for task management.                           | [Docs](./src/components/Pega_Extensions_KanbanBoard/Docs.mdx)             |        No         |
+| **Pega_Extensions_KanbanBoard**             | Kanban board layout for task management.                           | [Docs](./src/components/Pega_Extensions_KanbanBoard/Docs.mdx)             |    In Progress    |
 | **Pega_Extensions_Map**                     | Displays maps with markers and overlays.                           | [Docs](./src/components/Pega_Extensions_Map/Docs.mdx)                     |        No         |
 | **Pega_Extensions_MarkdownInput**           | Text area that supports Markdown formatting.                       | [Docs](./src/components/Pega_Extensions_MarkdownInput/Docs.mdx)           |        No         |
 | **Pega_Extensions_MaskedInput**             | Input field with masking (e.g., phone, SSN).                       | [Docs](./src/components/Pega_Extensions_MaskedInput/Docs.mdx)             |        Yes        |
