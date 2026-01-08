@@ -311,6 +311,13 @@ const setPCore = (args: any) => {
         },
       };
     },
+    getRestClient: () => {
+      return {
+        doesRestApiExist: () => {
+          return true;
+        },
+      };
+    },
     getDataApiUtils: () => {
       return {
         getCaseEditLock: () => {
