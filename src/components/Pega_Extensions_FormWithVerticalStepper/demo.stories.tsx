@@ -111,7 +111,7 @@ const mockGetPConnect = {
 };
 
 const createComponent = (config: any, key: string) => {
-  return <Input key={key} label={config.label.replace('@L ', '')} />;
+  return <Input key={key} label={config.label.replace('@L ', '')} autoComplete='off' />;
 };
 
 type Story = StoryObj<typeof PegaExtensionsFormWithVerticalStepper>;

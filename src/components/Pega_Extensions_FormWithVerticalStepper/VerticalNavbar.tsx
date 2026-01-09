@@ -58,6 +58,7 @@ function NavigationItemIcon({ status }: { status: string }) {
       icon={iconMap[status].icon}
       color={iconMap[status].color}
       backgroundColor={iconMap[status].backgroundColor}
+      aria-label={iconMap[status].name || 'Pending step'}
     />
   );
 }
