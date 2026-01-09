@@ -24,6 +24,20 @@
     "form-control": {
       "border-radius": 0.25,
       "border-color": "#005501"
+    },
+    "case-view": {
+      "stages": {
+        "status": {
+          "completed": {
+            "background": "#d4f7d5",
+            "foreground-color": "#0b381a"
+          },
+          "current": {
+            "background": "#005501",
+            "foreground-color": "#ffffff"
+          }
+        }
+      }
     }
   }
 }

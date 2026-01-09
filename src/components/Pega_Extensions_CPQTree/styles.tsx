@@ -46,7 +46,7 @@ const fieldContainerStyles = css`
 // ============================================
 // Index/Main Component Styles
 // ============================================
- export const StyledCard = styled(Card)`
+export const StyledCard = styled(Card)`
   padding: 1rem;
   overflow-x: auto;
   min-width: 0;
