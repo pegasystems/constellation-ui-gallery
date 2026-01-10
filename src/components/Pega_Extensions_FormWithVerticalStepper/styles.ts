@@ -1,6 +1,7 @@
 // individual style, comment out above, and uncomment here and add styles
-import styled, { createGlobalStyle, css } from 'styled-components';
 import { mix, rgba } from 'polished';
+import { tryCatch, type themeDefinition } from '@pega/cosmos-react-core';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 export default styled.div(() => {
   return css`
@@ -23,19 +24,33 @@ export const Container = styled.div`
   flex-grow: 1;
 `;
 
-export const ProgressDetails = styled.div`
-  padding-block: 0.625rem;
-  border-bottom: 0.0625rem solid ${(props) => props.theme.base.palette['border-line']};
-`;
+export const ProgressDetails = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+  return css`
+    padding-block: 0.625rem;
+    border-bottom: 0.0625rem solid ${theme.base.palette['border-line']};
+  `;
+});
 
 export const ProgressTitle = styled.div`
   font-weight: 600;
 `;
 
-export const ProgressDescription = styled.div`
-  color: ${(props) =>
-    rgba(props.theme.base.palette['foreground-color'], props.theme.base.transparency['transparent-2'])};
-`;
+export const ProgressDescription = styled.div(
+  ({
+    theme: {
+      base: {
+        palette: { 'foreground-color': fgColor },
+        transparency: { 'transparent-2': transparency },
+      },
+    },
+  }) => {
+    const color = tryCatch(() => rgba(fgColor, transparency));
+
+    return css`
+      color: ${color};
+    `;
+  },
+);
 
 export const NavigationList = styled.ul`
   list-style-type: none;
@@ -43,35 +58,64 @@ export const NavigationList = styled.ul`
   margin: 0;
 `;
 
-export const NavigationListItem = styled.li`
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.625rem;
-  padding-left: 0.313rem;
+export const NavigationListItem = styled.li(
+  ({
+    theme: {
+      base: {
+        palette: { 'primary-background': bgColor, interactive: fgColor },
+      },
+    },
+  }) => {
+    const hoverBgColor = tryCatch(() => mix(0.85, fgColor, bgColor));
 
-  &:hover {
-    background-color: ${(props) =>
-      mix(0.85, props.theme.base.palette['primary-background'], props.theme.base.palette.interactive)};
-  }
-`;
+    return css`
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.625rem;
+      padding-left: 0.313rem;
 
-export const NavigationItemTextContent = styled.div`
-  flex-grow: 1;
-  padding-block: 0.75rem;
-  border-bottom: 0.0625rem solid ${(props) => props.theme.base.palette['border-line']};
-`;
+      &:hover {
+        background-color: ${hoverBgColor};
+      }
+    `;
+  },
+);
 
-export const NavigationItemStatus = styled.div`
-  font-size: 0.8rem;
-  color: ${(props) =>
-    rgba(props.theme.base.palette['foreground-color'], props.theme.base.transparency['transparent-2'])};
-`;
+export const NavigationItemTextContent = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+  return css`
+    flex-grow: 1;
+    padding-block: 0.75rem;
+    border-bottom: 0.0625rem solid ${theme.base.palette['border-line']};
+  `;
+});
 
-export const NavigationItemTitle = styled.div<{ $status: string }>`
-  font-weight: ${(props) => (props.$status === 'success' ? '600' : '400')};
-`;
+export const NavigationItemStatus = styled.div(
+  ({
+    theme: {
+      base: {
+        palette: { 'foreground-color': fgColor },
+        transparency: { 'transparent-2': transparency },
+      },
+    },
+  }) => {
+    const color = tryCatch(() => rgba(fgColor, transparency));
+
+    return css`
+      font-size: 0.8rem;
+      color: ${color};
+    `;
+  },
+);
+
+export const NavigationItemTitle = styled.div(({ $status }: { $status: string }) => {
+  const fontWeight = $status === 'current' ? 600 : 400;
+
+  return css`
+    font-weight: ${fontWeight};
+  `;
+});
 
 /* Global styles to hide Pega generated top navigation and action buttons */
 export const HideTopNavigation = createGlobalStyle`

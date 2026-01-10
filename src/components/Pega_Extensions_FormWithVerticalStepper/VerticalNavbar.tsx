@@ -99,7 +99,9 @@ export default function VerticalNavbar({ getPConnect }: VerticalNavbarProps) {
           <NavigationListItem key={step.ID} className={step.visited_status} onClick={() => handleStepClick(step)}>
             <NavigationItemIcon status={step.visited_status} />
             <NavigationItemTextContent>
-              <NavigationItemStatus>{STATUS_MSG_MAP[step.visited_status]}</NavigationItemStatus>
+              <NavigationItemStatus>
+                {localizationService.getLocalizedText(STATUS_MSG_MAP[step.visited_status])}
+              </NavigationItemStatus>
               <NavigationItemTitle $status={step.visited_status}>{step.name}</NavigationItemTitle>
             </NavigationItemTextContent>
           </NavigationListItem>
