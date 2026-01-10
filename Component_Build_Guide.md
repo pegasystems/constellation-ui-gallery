@@ -29,6 +29,7 @@
 | **Pega_Extensions_EditableTableLayout**     | Table layout with inline editing capabilities.                                               | [Docs](./src/components/Pega_Extensions_EditableTableLayout/Docs.mdx)     |
 | **Pega_Extensions_FieldGroupAsRow**         | Groups multiple fields into a single row layout.                                             | [Docs](./src/components/Pega_Extensions_FieldGroupAsRow/Docs.mdx)         |
 | **Pega_Extensions_FormFullWidth**           | Expands a form to full width of container.                                                   | [Docs](./src/components/Pega_Extensions_FormFullWidth/Docs.mdx)           |
+| **Pega_Extensions_FormWithVerticalStepper** | Vertical Screen flow with navigation                                                         | [Docs](./src/components/Pega_Extensions_FormWithVerticalStepper/Docs.mdx) |
 | **Pega_Extensions_GanttChart**              | Visualizes tasks or events in a Gantt chart.                                                 | [Docs](./src/components/Pega_Extensions_GanttChart/Docs.mdx)              |
 | **Pega_Extensions_HierarchicalFormAsTasks** | Presents hierarchical forms in a task‑list style.                                            | [Docs](./src/components/Pega_Extensions_HierarchicalFormAsTasks/Docs.mdx) |
 | **Pega_Extensions_IframeWrapper**           | Embeds external content within an iframe.                                                    | [Docs](./src/components/Pega_Extensions_IframeWrapper/Docs.mdx)           |

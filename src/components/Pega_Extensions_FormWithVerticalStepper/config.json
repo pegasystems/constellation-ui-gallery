@@ -1,0 +1,90 @@
+{
+    "name": "Pega_Extensions_FormWithVerticalStepper",
+    "label": "Form with Vertical Stepper",
+    "description": "Form with Vertical Stepper",
+    "organization": "Pega",
+    "version": "4.0.1",
+    "library": "Extensions",
+    "componentKey": "Pega_Extensions_FormWithVerticalStepper",
+    "type": "Template",
+    "subtype": "FORM",
+    "subtypeLabel": "FORM",
+    "icon": "DefaultForm.svg",
+    "properties": [
+        {
+            "format": "SELECT",
+            "name": "stepperPosition",
+            "label": "Stepper Position",
+            "defaultValue": "left",
+            "source": [
+                {
+                    "key": "left",
+                    "value": "Left"
+                },
+                {
+                    "key": "right",
+                    "value": "Right"
+                }
+            ]
+        },
+        {
+            "format": "SELECT",
+            "name": "NumCols",
+            "label": "Layout",
+            "defaultValue": "1",
+            "helperText": "Multi-column layouts will be collapsed in narrow displays",
+            "helperTextVisibility": "$this.NumCols != '1'",
+            "source": [
+                {
+                    "key": "1",
+                    "value": "1 column"
+                },
+                {
+                    "key": "2",
+                    "value": "2 column"
+                },
+                {
+                    "key": "3",
+                    "value": "3 column"
+                }
+            ]
+        },
+        {
+            "format": "INSTRUCTIONS"
+        },
+        {
+            "name": "Fields",
+            "label": "Fields",
+            "format": "CONTENTPICKER",
+            "allowCreatingGroup": true
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "defaultCollapsed": true,
+            "properties": [
+                {
+                    "name": "inheritParentLayout",
+                    "label": "Embedded Views inherit parent View's column layout",
+                    "format": "BOOLEAN"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.1, Fri Jan 09 2026, 25.1.0-95",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2026-01-02T10:05:41.290Z",
+    "infinityVersion": "25.1.0-95",
+    "packageCosmosVersion": "8.9.4"
+}

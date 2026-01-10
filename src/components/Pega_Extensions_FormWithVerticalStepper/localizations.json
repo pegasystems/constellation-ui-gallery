@@ -1,0 +1,8 @@
+{
+  "fields": {
+    "Progress": "Progress",
+    "{0} of {1} steps completed": "{0} of {1} steps completed",
+    "Completed": "Completed",
+    "Not started yet": "Not started yet"
+  }
+}
