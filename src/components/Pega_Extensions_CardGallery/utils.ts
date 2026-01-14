@@ -14,6 +14,9 @@ type LoadDetailsProps = {
   detailsViewName: string;
   getPConnect: any;
 };
+
+//For LP you will need to create a new lookup data page query to "Primary . Business ID is equal to Parameters . ID
+//and use that as the lookup for the card gallery.
 const loadStaticDetails = async (props: LoadDetailsProps) => {
   const { id, detailsDataPage } = props;
 
@@ -29,7 +32,9 @@ const loadStaticDetails = async (props: LoadDetailsProps) => {
 
     if (response?.data?.data && response.data.data.length > 0) {
       // Filter to find the specific record by ID
-      const itemData = response.data.data.find((item: any) => item[getMappedKey('pyID')] === id || item.ID === id);
+      const itemData = response.data.data.find(
+        (item: any) => item[getMappedKey('pyID')] === id || item.BusinessID === id,
+      );
 
       if (!itemData) {
         console.warn('No matching record found for ID:', id);
