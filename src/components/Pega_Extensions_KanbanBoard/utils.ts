@@ -13,8 +13,72 @@ type LoadDetailsProps = {
   detailsViewName: string;
   getPConnect: any;
 };
+
+//For LP you will need to create a new lookup data page query to "Primary . Business ID is equal to Parameters . ID"
+//and use that as the lookup for the kanban board.
+const loadStaticDetails = async (props: LoadDetailsProps) => {
+  const { id, detailsDataPage } = props;
+
+  try {
+    const response = await (window as any).PCore.getDataApiUtils().getData(
+      (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(detailsDataPage),
+      {
+        dataViewParameters: {
+          ID: id,
+        },
+      },
+    );
+
+    if (response?.data?.data && response.data.data.length > 0) {
+      // Filter to find the specific record by ID
+      const itemData = response.data.data.find(
+        (item: any) => item[getMappedKey('pyID')] === id || item.BusinessID === id,
+      );
+
+      if (!itemData) {
+        console.warn('No matching record found for ID:', id);
+        return null;
+      }
+
+      // Only render BusinessID, Status, and UpdateDateTime
+      const React = (window as any).React;
+      const { FieldValueList } = await import('@pega/cosmos-react-core');
+      const fields = [
+        {
+          id: 'BusinessID',
+          name: 'Business ID',
+          value: String(itemData.BusinessID || ''),
+        },
+        {
+          id: 'Status',
+          name: 'Status',
+          value: String(itemData.Status || ''),
+        },
+        {
+          id: 'UpdateDateTime',
+          name: 'Update Date/Time',
+          value: String(itemData.UpdateDateTime || ''),
+        },
+      ];
+      return React.createElement(FieldValueList, {
+        variant: 'stacked',
+        fields,
+      });
+    }
+  } catch (error) {
+    console.error('Error loading static details:', error);
+  }
+  return null;
+};
+
 export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
+
+  /* Use case for Launchpad where readDataObject is not implemented */
+  if (!(window as any).PCore.getRestClient().doesRestApiExist('readDataObject')) {
+    return loadStaticDetails(props);
+  }
+
   let myElem;
   await (window as any).PCore.getDataApiUtils()
     .getDataObjectView(getMappedKey(detailsDataPage), detailsViewName, { [getMappedKey('pyID')]: id })
