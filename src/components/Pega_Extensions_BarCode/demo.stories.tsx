@@ -9,6 +9,11 @@ export default {
         disable: true,
       },
     },
+    getPConnect: {
+      table: {
+        disable: true,
+      },
+    },
     format: {
       options: Object.values(BarcodeType),
       control: 'select',

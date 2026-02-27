@@ -9,7 +9,7 @@ import {
   Progress,
 } from '@pega/cosmos-react-core';
 import type MapView from '@arcgis/core/views/MapView';
-import type Map from '@arcgis/core/views/MapView';
+import type Map from '@arcgis/core/Map';
 import type GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import type Draw from '@arcgis/core/views/draw/Draw';
 import type Graphic from '@arcgis/core/Graphic';
@@ -18,7 +18,7 @@ import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
 import { getAllFields, renderShapes, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
 import '../shared/create-nonce';
 
-const ARCGIS_VERSION = '4.34';
+const ARCGIS_VERSION = '5.0';
 type MapProps = {
   getPConnect?: any;
   heading?: string;
@@ -193,9 +193,11 @@ export const PegaExtensionsMap = (props: MapProps) => {
       }
       if (event.type === 'draw-complete') {
         const action = draw.create('polyline');
-        action.on(['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'], (newEvent) => {
-          updateVertices({ ...vars, event: newEvent });
-        });
+        const handleActionEvent = (newEvent: any) => updateVertices({ ...vars, event: newEvent });
+        const eventNames = ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'];
+        eventNames.forEach((eventName) =>
+          (action as { on(name: string, fn: (e: any) => void): void }).on(eventName, handleActionEvent),
+        );
 
         /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
         if (!isLastActionClear.current) {
@@ -214,24 +216,46 @@ export const PegaExtensionsMap = (props: MapProps) => {
   };
 
   const initComponent = useCallback(async () => {
-    const [config] = await (window as any).$arcgis.import(['esri/config']);
+    // ArcGIS 5.0+: use ESM dynamic import (import map resolves @arcgis/core to CDN)
+    const configModule = await import('@arcgis/core/config');
+    const config = configModule.default;
     if (apiKey) {
-      config.apiKey = apiKey; // Set the ArCGIS API key
+      config.apiKey = apiKey;
     }
 
-    const [Sketch, Search, Track, Map, Draw, GraphicsLayer, MapView, Graphic, webMercatorUtils, SpatialReference] =
-      await (window as any).$arcgis.import([
-        '@arcgis/core/widgets/Sketch.js',
-        '@arcgis/core/widgets/Search.js',
-        '@arcgis/core/widgets/Track.js',
-        '@arcgis/core/Map.js',
-        '@arcgis/core/views/draw/Draw.js',
-        '@arcgis/core/layers/GraphicsLayer.js',
-        '@arcgis/core/views/MapView.js',
-        '@arcgis/core/Graphic.js',
-        '@arcgis/core/geometry/support/webMercatorUtils.js',
-        '@arcgis/core/geometry/SpatialReference.js',
-      ]);
+    const [
+      SketchModule,
+      SearchModule,
+      TrackModule,
+      MapModule,
+      DrawModule,
+      GraphicsLayerModule,
+      MapViewModule,
+      GraphicModule,
+      webMercatorUtilsModule,
+      SpatialReferenceModule,
+    ] = await Promise.all([
+      import('@arcgis/core/widgets/Sketch'),
+      import('@arcgis/core/widgets/Search'),
+      import('@arcgis/core/widgets/Track'),
+      import('@arcgis/core/Map'),
+      import('@arcgis/core/views/draw/Draw'),
+      import('@arcgis/core/layers/GraphicsLayer'),
+      import('@arcgis/core/views/MapView'),
+      import('@arcgis/core/Graphic'),
+      import('@arcgis/core/geometry/support/webMercatorUtils'),
+      import('@arcgis/core/geometry/SpatialReference'),
+    ]);
+    const Sketch = SketchModule.default;
+    const Search = SearchModule.default;
+    const Track = TrackModule.default;
+    const Map = MapModule.default;
+    const Draw = DrawModule.default;
+    const GraphicsLayer = GraphicsLayerModule.default;
+    const MapView = MapViewModule.default;
+    const Graphic = GraphicModule.default;
+    const webMercatorUtils = webMercatorUtilsModule;
+    const SpatialReference = SpatialReferenceModule.default;
     const tmpFields: any = getAllFields(getPConnect);
 
     let embedDataRef = '';
@@ -298,7 +322,6 @@ export const PegaExtensionsMap = (props: MapProps) => {
       ptLayer = new GraphicsLayer();
       map = new Map({
         basemap: 'streets-vector',
-        spatialReference,
         layers: [ptLayer],
       });
 
@@ -336,11 +359,13 @@ export const PegaExtensionsMap = (props: MapProps) => {
             const sketchWidget = new Sketch({
               view,
               layer: ptLayer,
-              availableCreateTools: createTools.split(',').map((tool) => tool.toLowerCase().trim()),
+              availableCreateTools: createTools.split(',').map((tool) => tool.toLowerCase().trim()) as any,
             });
-            sketchWidget.on(['create', 'delete', 'update'], (event: any) => {
-              updateShapeDefinition(event, ptLayer);
-            });
+            (['create', 'delete', 'update'] as const).forEach((eventName) =>
+              sketchWidget.on(eventName, (event: any) => {
+                updateShapeDefinition(event, ptLayer);
+              })
+            );
             view.ui.add(sketchWidget, 'top-right');
           }
           if (bShowSearch) {
@@ -387,22 +412,22 @@ export const PegaExtensionsMap = (props: MapProps) => {
             }
 
             const action = draw.create('polyline');
-            action.on(
-              ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'],
-              (event: any) => {
-                updateVertices({
-                  ptLayer,
-                  view,
-                  draw,
-                  event,
-                  embedDataRef,
-                  latitudePropRef,
-                  longitudePropRef,
-                  imageMapRef,
-                  Graphic,
-                  webMercatorUtils,
-                });
-              },
+            const handleActionEvent = (event: any) =>
+              updateVertices({
+                ptLayer,
+                view,
+                draw,
+                event,
+                embedDataRef,
+                latitudePropRef,
+                longitudePropRef,
+                imageMapRef,
+                Graphic,
+                webMercatorUtils,
+              });
+            const actionEventNames = ['vertex-add', 'vertex-remove', 'cursor-update', 'redo', 'undo', 'draw-complete'];
+            actionEventNames.forEach((eventName) =>
+              (action as { on(name: string, fn: (e: any) => void): void }).on(eventName, handleActionEvent),
             );
 
             if (btnClearRef?.current) {
@@ -462,8 +487,9 @@ export const PegaExtensionsMap = (props: MapProps) => {
         arcgisStylesheet.href = `https://js.arcgis.com/${ARCGIS_VERSION}/esri/themes/light/main.css`;
         document.head.appendChild(arcgisStylesheet);
 
-        // Load ArcGIS Core Package
+        // ArcGIS 5.0+: module-based SDK — single script with type="module"
         arcgisCore = document.createElement('script');
+        arcgisCore.type = 'module';
         arcgisCore.src = `https://js.arcgis.com/${ARCGIS_VERSION}/`;
         document.head.appendChild(arcgisCore);
 
