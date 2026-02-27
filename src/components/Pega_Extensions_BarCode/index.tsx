@@ -64,35 +64,37 @@ export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {
         setStatus(validatemessage !== '' ? 'error' : undefined);
       }
       setInfo(validatemessage || helperText);
-      BarcodeRef.current.innerHTML = '';
-      BarcodeRef.current.style.display = 'none';
-      try {
-        JsBarcode(BarcodeRef.current, inputProperty, {
-          format,
-          displayValue,
-          width: 2,
-          height: 100,
-          fontOptions: '',
-          font: 'monospace',
-          textAlign: 'center',
-          textPosition: 'bottom',
-          textMargin: 2,
-          fontSize: 20,
-          background: '#ffffff',
-          lineColor: '#000000',
-          margin: 10,
-        });
-      } catch (msg: any) {
-        setInfo(msg);
-        setStatus('error');
-      }
-      const svg = BarcodeRef.current;
-      if (svg && propName) {
-        const serializer = new XMLSerializer();
-        const content = btoa(serializer.serializeToString(svg));
-        const blob = `data:image/svg+xml;base64,${content}`;
-        actions.updateFieldValue(propName, blob);
-        setOutputValue(blob);
+      if (BarcodeRef?.current) {
+        BarcodeRef.current.innerHTML = '';
+
+        try {
+          JsBarcode(BarcodeRef.current, inputProperty, {
+            format,
+            displayValue,
+            width: 2,
+            height: 100,
+            fontOptions: '',
+            font: 'monospace',
+            textAlign: 'center',
+            textPosition: 'bottom',
+            textMargin: 2,
+            fontSize: 20,
+            background: '#ffffff',
+            lineColor: '#000000',
+            margin: 10,
+          });
+        } catch (msg: any) {
+          setInfo(msg);
+          setStatus('error');
+        }
+        const svg = BarcodeRef.current;
+        if (svg && propName) {
+          const serializer = new XMLSerializer();
+          const content = btoa(serializer.serializeToString(svg));
+          const blob = `data:image/svg+xml;base64,${content}`;
+          actions.updateFieldValue(propName, blob);
+          setOutputValue(blob);
+        }
       }
     }
   }, [inputProperty, displayValue, format, validatemessage, helperText, readOnly, status, propName, actions]);
