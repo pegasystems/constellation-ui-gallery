@@ -94,7 +94,6 @@ const regionChildrenResolved = [
 ];
 
 const createComponent = (config: any) => {
-  // eslint-disable-next-line default-case
   switch (config.config.value) {
     case '@P .pySLADeadline':
       return renderField(regionChildrenResolved[0]);
@@ -142,6 +141,7 @@ export const Default: Story = {
   },
   args: {
     heading: 'Heading',
-    NumCols: '1'
+    NumCols: '1',
+    gridTemplateColumns: ''
   }
 };

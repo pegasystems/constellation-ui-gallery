@@ -77,7 +77,7 @@ export const downloadFile = (
         let arrayBuf: Uint8Array | BlobPart;
         if (isContentBinary(content.headers)) arrayBuf = content.data;
         else arrayBuf = base64ToArrayBuffer(content.data);
-        const blob = new Blob([arrayBuf], { type: attachment.mimeType });
+        const blob = new Blob([arrayBuf as BlobPart], { type: attachment.mimeType });
         const fileURL = URL.createObjectURL(blob);
         if (setImages) {
           const name = attachment.extension
@@ -141,7 +141,7 @@ export const addAttachment = (props: AddAttachmentProps) => {
 
   const kind = getKindFromMimeType(attachment.mimeType ?? '');
   const visual = <FileVisual type={kind} />;
-  const bCanUseLightBox = useLightBox && kind === 'image';
+  const bCanUseLightBox = useLightBox && canPreviewFile(kind);
   listOfAttachments.push({
     id: attachment.ID,
     visual,

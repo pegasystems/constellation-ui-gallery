@@ -1,8 +1,8 @@
 {
     "components-directory-path": "src/components",
     "server-config": {
-        "rulesetName": "",
-        "rulesetVersion": "",
+        "rulesetName": "ConstellationUIGallery",
+        "rulesetVersion": "01-01-01",
         "sourceOfComponents": "Server",
         "devBuild": false,
         "serverType": "infinity",
@@ -28,7 +28,7 @@
         "questions_askedOnce": "server,authService"
     },
     "component": {
-        "library": "Extensions",
+        "library": "ConstellationUIGallery",
         "type": "",
         "version": "1.0.0",
         "subtype": "",
