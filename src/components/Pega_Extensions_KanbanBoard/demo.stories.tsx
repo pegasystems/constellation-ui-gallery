@@ -256,6 +256,11 @@ const setPCore = () => {
         },
       };
     },
+    getRestClient: () => {
+      return {
+        doesRestApiExist: () => true,
+      };
+    },
   };
 };
 

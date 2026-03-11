@@ -1,19 +1,23 @@
 {
-    "name": "Pega_Extensions_AutoSave",
-    "label": "AutoSave Field on change",
-    "description": "AutoSave Field on change",
+    "name": "Pega_Extensions_DisplayBrackets",
+    "label": "Display Brackets",
+    "description": "Display Brackets",
     "organization": "Pega",
     "version": "5.0.1",
     "library": "Extensions",
     "allowedApplications": [],
-    "componentKey": "Pega_Extensions_AutoSave",
-    "type": "Field",
-    "subtype": "Text",
+    "componentKey": "Pega_Extensions_DisplayBrackets",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "icon": "OneColumnPage.svg",
     "properties": [
         {
-            "name": "propertyName",
-            "label": "Name of the property to autosave on Change (example: '.pyDescription')",
-            "format": "TEXT"
+            "name": "JsonField",
+            "label": "Json Field",
+            "format": "PROPERTY"
         },
         {
             "format": "LABEL",
@@ -29,7 +33,7 @@
         }
     ],
     "defaultConfig": {},
-    "buildDate": "2026-03-11T21:31:14.742Z",
+    "buildDate": "2026-03-11T21:31:15.686Z",
     "infinityVersion": "26.1.0-dev-15720",
     "packageCosmosVersion": "9.0.0-build.20.5"
 }

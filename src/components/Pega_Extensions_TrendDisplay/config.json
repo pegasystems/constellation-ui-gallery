@@ -3,7 +3,7 @@
     "label": "Trend Display",
     "description": "Trend Display",
     "organization": "Pega",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_TrendDisplay",
@@ -237,7 +237,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.0, Wed Dec 10 2025, 25.1.1-199",
+            "label": "Pega_Extensions 5.0.1, Wed Mar 11 2026, 26.1.0-dev-15720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -246,7 +246,7 @@
         "label": "@L $this.label",
         "detailFVLItem": true
     },
-    "buildDate": "2025-12-10T21:15:26.887Z",
-    "infinityVersion": "25.1.1-199",
-    "packageCosmosVersion": "9.0.0-build.14.2"
+    "buildDate": "2026-03-11T21:31:17.877Z",
+    "infinityVersion": "26.1.0-dev-15720",
+    "packageCosmosVersion": "9.0.0-build.20.5"
 }

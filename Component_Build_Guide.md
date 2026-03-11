@@ -22,6 +22,7 @@
 | **Pega_Extensions_CheckboxTrigger**         | Checkbox that triggers actions on change.                          | [Docs](./src/components/Pega_Extensions_CheckboxTrigger/Docs.mdx)         |        No         |
 | **Pega_Extensions_CompareTableLayout**      | Displays data in a comparison table format.                        | [Docs](./src/components/Pega_Extensions_CompareTableLayout/Docs.mdx)      |        No         |
 | **Pega_Extensions_DisplayAttachments**      | Renders file attachments with download links.                      | [Docs](./src/components/Pega_Extensions_DisplayAttachments/Docs.mdx)      |        No         |
+| **Pega_Extensions_DisplayBrackets**         | Displays tournament brackets from a JSON structure.                | [Docs](./src/components/Pega_Extensions_DisplayBrackets/Docs.mdx)         |    In Progress    |
 | **Pega_Extensions_DisplayPDF**              | Shows PDF documents inline.                                        | [Docs](./src/components/Pega_Extensions_DisplayPDF/Docs.mdx)              |        Yes        |
 | **Pega_Extensions_DynamicHierarchicalForm** | Dynamically builds a hierarchical form based on data.              | [Docs](./src/components/Pega_Extensions_DynamicHierarchicalForm/Docs.mdx) |        No         |
 | **Pega_Extensions_EditableTableLayout**     | Table layout with inline editing capabilities.                     | [Docs](./src/components/Pega_Extensions_EditableTableLayout/Docs.mdx)     |        No         |

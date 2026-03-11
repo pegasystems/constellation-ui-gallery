@@ -34,6 +34,11 @@ Below is a distilled “cheat‑sheet” of the Pega **best‑practice guideline
 | **14** | **Document Props with Types & Default Values**             | Generates a property table in Storybook and in the Pega Designer.                 | Define `interface Props` with JSDoc comments and default values.                                                               |
 | **15** | **Lint & Format Consistently**                             | Prevents merge conflicts and code drift.                                          | Run `npm run lint` and `npm run fix` before commits.                                                                           |
 | **16** | **Provide a Demo RAP**                                     | Enables quick import into a Pega app for testing.                                 | Build and publish a RAP (ZIP) that contains the compiled JS/CSS.                                                               |
+| **17** | **Use PCore APIs, not raw REST**                           | Response shape and endpoints differ by environment.                              | Use `PCore.getDataApiUtils().getData()`, `getDataObjectView()`, `getUserApi().getOperatorDetails()`, etc.                        |
+| **18** | **Validate and safely parse JSON / config**                 | Avoids runtime errors from malformed or missing data.                            | Use try/catch around `JSON.parse`; check array/object shape before use; provide sensible fallbacks.                              |
+| **19** | **Document props without environment assumptions**         | Keeps components reusable across Pega Platform and Launchpad.                     | Props should describe *what* is needed (IDs, status, labels), not *where* it comes from (e.g. specific property names).           |
+| **20** | **Stub PCore fully in Storybook**                         | Stories must run without a real Pega backend.                                    | Stub every PCore helper your component uses (e.g. `getKeyMapping`, `getDefaultQualifiedName`, `getData`, `getActions`).            |
+| **21** | **Test abstraction layers**                               | Ensures behavior is correct regardless of environment details.                    | Test that ID/label resolution and data access work when keys or response shapes are abstracted (e.g. via getKeyMapping).         |
 
 ---
 
@@ -131,8 +136,13 @@ Below is a distilled “cheat‑sheet” of the Pega **best‑practice guideline
 | Lint & format pass                                     |       |       |
 | Supports RTL & themes                                  |       |       |
 | No 3rd‑party UI libs                                   |       |       |
+| Use PCore APIs (not raw REST); validate JSON/config   |       |       |
+| Props documented without env-specific assumptions      |       |       |
+| Storybook stubs all PCore helpers used                 |       |       |
+| Tests cover abstraction layers (e.g. key mapping)     |       |       |
 | Export as a RAP for import                             |       |       |
 | PR follows repository guidelines                       |       |       |
+| For dual-environment: see [Launchpad vs Platform](./LAUNCHPAD_VS_PLATFORM.md) |       |       |
 
 ---
 
@@ -147,6 +157,7 @@ Below is a distilled “cheat‑sheet” of the Pega **best‑practice guideline
 | [Accessibility – WCAG 2.1](https://www.w3.org/TR/WCAG21/)                                                                                                                                                             | Accessibility compliance.   |
 | [Storybook Docs](https://storybook.js.org/docs/react/essentials/docs)                                                                                                                                                 | Docs.mdx usage.             |
 | [Testing – Jest & React Testing Library](https://jestjs.io/docs/getting-started)                                                                                                                                      | Unit testing guide.         |
+| [Launchpad vs Platform](./LAUNCHPAD_VS_PLATFORM.md)                                                                                                                                                                   | Differences when supporting both environments. |
 
 ---
 
