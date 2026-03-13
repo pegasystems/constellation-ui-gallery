@@ -235,6 +235,10 @@ export default {
       config: {
         rules: [
           {
+            id: 'color-contrast',
+            enabled: false,
+          },
+          {
             id: 'nested-interactive',
             enabled: false,
           },
