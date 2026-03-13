@@ -1,0 +1,78 @@
+{
+    "name": "Pega_Extensions_OrgBuilder",
+    "label": "Org Builder",
+    "description": "Org Builder",
+    "organization": "Pega",
+    "version": "4.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_OrgBuilder",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "dataPage",
+            "label": "Data Page name",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "key": "selectionProperty",
+            "format": "PROPERTY",
+            "name": "selectionProperty",
+            "label": "Selection Property"
+        },
+        {
+            "name": "height",
+            "label": "Height of the diagram",
+            "format": "TEXT"
+        },
+        {
+            "name": "showRefresh",
+            "label": "Show refresh action",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "referenceHeading",
+            "label": "Reference organization panel heading",
+            "format": "TEXT"
+        },
+        {
+            "name": "targetHeading",
+            "label": "Target organization panel heading",
+            "format": "TEXT"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.1, Tue Dec 02 2025, 25.1.1-199",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "heading": "Org Builder",
+        "dataPage": "",
+        "height": "40rem",
+        "referenceHeading": "",
+        "targetHeading": ""
+    },
+    "buildDate": "2025-12-02T16:30:50.714Z",
+    "infinityVersion": "25.1.1-199",
+    "packageCosmosVersion": "8.9.4"
+}

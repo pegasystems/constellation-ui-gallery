@@ -364,7 +364,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
             (['create', 'delete', 'update'] as const).forEach((eventName) =>
               sketchWidget.on(eventName, (event: any) => {
                 updateShapeDefinition(event, ptLayer);
-              })
+              }),
             );
             view.ui.add(sketchWidget, 'top-right');
           }
