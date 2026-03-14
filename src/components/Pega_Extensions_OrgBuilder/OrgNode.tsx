@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
 import styled from 'styled-components';
 import type { OrgNode } from './OrgTypes';
 import { getNodeColorHex, getNodeShape } from './OrgTypes';
@@ -95,67 +94,110 @@ const ConnectorLine = styled.div`
   border-top: 0.125rem dashed #9ca3af;
 `;
 
-const DraggableWrap = styled.div<{ $isDragging: boolean }>`
-  opacity: ${({ $isDragging }) => ($isDragging ? 0.5 : 1)};
+const DraggableWrap = styled.div`
+  /* No opacity here so parent nodes are never dimmed by inheritance */
 `;
 
-const DropTargetWrap = styled.div<{ $isOver: boolean; $depth: number; $isDisabled?: boolean }>`
-  display: flex;
+const DragContentWrap = styled.div<{ $isDragging: boolean }>`
+  opacity: ${({ $isDragging }) => ($isDragging ? 0.45 : 1)};
+  transform: ${({ $isDragging }) => ($isDragging ? 'scale(1.02)' : 'none')};
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+`;
+
+const DropTargetWrap = styled.div<{ $isOver: boolean; $isDisabled?: boolean }>`
+  display: inline-flex;
   flex-direction: column;
-  margin-left: ${({ $depth }) => $depth * 1}rem;
-  margin-bottom: 0.5rem;
   border-radius: 0.25rem;
   padding: ${({ $isOver, $isDisabled }) => ($isOver && !$isDisabled ? '0.25rem' : '0')};
   background-color: ${({ $isOver, $isDisabled }) => ($isOver && !$isDisabled ? '#eff6ff' : 'transparent')};
   border: ${({ $isOver, $isDisabled }) =>
     $isOver && !$isDisabled ? '0.125rem solid #2563eb' : '0.125rem solid transparent'};
   box-shadow: ${({ $isOver, $isDisabled }) =>
-    $isOver && !$isDisabled ? '0 0 0 0.125rem rgba(37, 99, 235, 0.25)' : 'none'};
+    $isOver && !$isDisabled ? '0 0 0 0.125rem rgba(37, 99, 235, 0.2)' : 'none'};
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease;
 `;
 
-const CursorGrab = styled.div`
-  cursor: grab;
+const CursorGrab = styled.div<{ $isDraggable: boolean }>`
+  cursor: ${({ $isDraggable }) => ($isDraggable ? 'grab' : 'default')};
   display: inline-flex;
   &:active {
-    cursor: grabbing;
+    cursor: ${({ $isDraggable }) => ($isDraggable ? 'grabbing' : 'default')};
   }
 `;
 
 interface OrgNodeComponentProps {
   node: OrgNode;
   panel: 'left' | 'right';
-  index?: number;
   onRemoveConnection?: (nodeId: string, parentId?: string) => void;
   parentId?: string;
   isRoot?: boolean;
   depth?: number;
-  /** Map of node id -> flattened index; used for left-panel tree so Draggable has correct index */
-  flattenedIndexMap?: Record<string, number>;
-  /** When true, render only the node row (no children). Used for flat right-panel drop list. */
-  contentOnly?: boolean;
+  draggedNodeId?: string | null;
+  hoveredTargetId?: string | null;
+  onDragStartNode?: (nodeId: string, source: 'left' | 'right', sourceNode: OrgNode) => void;
+  onDragEndNode?: () => void;
+  onDragOverNode?: (targetId: string) => boolean;
+  onDropOnNode?: (targetId: string) => void;
 }
 
 export function OrgNodeComponent({
   node,
   panel,
-  index = 0,
   onRemoveConnection,
   parentId,
   isRoot = false,
   depth = 0,
-  flattenedIndexMap,
-  contentOnly = false,
+  draggedNodeId,
+  hoveredTargetId,
+  onDragStartNode,
+  onDragEndNode,
+  onDragOverNode,
+  onDropOnNode,
 }: OrgNodeComponentProps) {
   const shape = getNodeShape(node.type);
   const bgHex = getNodeColorHex(node.type);
+  const isDragging = draggedNodeId === node.id;
+  const isDropDisabled = node.type === 'position';
+  const isDropTarget = panel === 'right' && hoveredTargetId === node.id && !isDropDisabled;
+  const isDraggable = !isRoot;
+
+  const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+    if (!isDraggable) return;
+    onDragStartNode?.(node.id, panel, node);
+    event.dataTransfer.effectAllowed = panel === 'left' ? 'copy' : 'move';
+    event.dataTransfer.setData('text/plain', node.id);
+  };
+
+  const handleDragEnd = () => {
+    onDragEndNode?.();
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    if (panel !== 'right') return;
+    const canDrop = onDragOverNode?.(node.id) ?? false;
+    if (!canDrop) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    if (panel !== 'right') return;
+    const canDrop = onDragOverNode?.(node.id) ?? false;
+    if (!canDrop) return;
+    event.preventDefault();
+    event.stopPropagation();
+    onDropOnNode?.(node.id);
+  };
 
   const renderRectangleContent = () => (
     <RectangleNode $bg={bgHex}>
-      {!isRoot && (panel === 'left' || panel === 'right') && (
+      {isDraggable && (
         <GripWrap>
           <Icon name='drag' />
         </GripWrap>
@@ -179,12 +221,30 @@ export function OrgNodeComponent({
 
   const renderTriangleContent = () => (
     <TriangleNodeContent>
+      {isDraggable && (
+        <GripWrap>
+          <Icon name='drag' />
+        </GripWrap>
+      )}
       <TriangleIcon />
       <span>{node.name}</span>
+      {panel === 'right' && !isRoot && onRemoveConnection && (
+        <RemoveBtn
+          type='button'
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemoveConnection(node.id, parentId);
+          }}
+          title='Remove connection'
+          aria-label='Remove connection'
+        >
+          <Icon name='times' />
+        </RemoveBtn>
+      )}
     </TriangleNodeContent>
   );
 
-  const nodeBox = <CursorGrab>{shape === 'triangle' ? renderTriangleContent() : renderRectangleContent()}</CursorGrab>;
+  const nodeBox = <CursorGrab $isDraggable={isDraggable}>{shape === 'triangle' ? renderTriangleContent() : renderRectangleContent()}</CursorGrab>;
 
   const childrenTree =
     node.children.length > 0 ? (
@@ -198,89 +258,51 @@ export function OrgNodeComponent({
               onRemoveConnection={onRemoveConnection}
               parentId={node.id}
               depth={depth + 1}
-              flattenedIndexMap={flattenedIndexMap}
+              draggedNodeId={draggedNodeId}
+              hoveredTargetId={hoveredTargetId}
+              onDragStartNode={onDragStartNode}
+              onDragEndNode={onDragEndNode}
+              onDragOverNode={onDragOverNode}
+              onDropOnNode={onDropOnNode}
             />
           </TreeChild>
         ))}
       </TreeChildren>
     ) : null;
 
-  if (contentOnly) {
-    return (
-      <NodeWrap $depth={depth}>
-        <div style={{ marginBottom: '0.5rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {nodeBox}
-            {childrenTree}
-          </div>
-        </div>
-      </NodeWrap>
-    );
-  }
+  const nodeContent = (
+    <DropTargetWrap $isOver={isDropTarget} $isDisabled={isDropDisabled} onDragOver={handleDragOver} onDrop={handleDrop}>
+      {isDraggable ? (
+        <DraggableWrap draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <DragContentWrap $isDragging={isDragging}>
+            <div style={{ marginBottom: '0.5rem' }}>{nodeBox}</div>
+          </DragContentWrap>
+        </DraggableWrap>
+      ) : (
+        <div style={{ marginBottom: '0.5rem' }}>{nodeBox}</div>
+      )}
+    </DropTargetWrap>
+  );
 
+  // Left panel non-root: wrap the full subtree in the draggable so the drag image shows node + all children.
+  // Dimming is only on DragContentWrap so ancestor nodes stay at full opacity.
   if (panel === 'left' && !isRoot) {
-    const flatIndex = flattenedIndexMap?.[node.id] ?? index;
     return (
       <NodeWrap $depth={depth}>
-        <Draggable draggableId={node.id} index={flatIndex}>
-          {(provided, snapshot) => {
-            const { style, ...restDraggableProps } = provided.draggableProps;
-            return (
-              <DraggableWrap
-                ref={provided.innerRef}
-                {...restDraggableProps}
-                style={style as React.CSSProperties}
-                $isDragging={snapshot.isDragging}
-              >
-                <div {...provided.dragHandleProps} style={{ display: 'flex', flexDirection: 'column' }}>
-                  {nodeBox}
-                  {childrenTree}
-                </div>
-              </DraggableWrap>
-            );
-          }}
-        </Draggable>
-      </NodeWrap>
-    );
-  }
-
-  // Right panel nodes: Droppable target + Draggable node so they can be rearranged within the right panel
-  if (panel === 'right' && !isRoot) {
-    return (
-      <Droppable droppableId={node.id} isDropDisabled={node.type === 'position'}>
-        {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            <DropTargetWrap $isOver={snapshot.isDraggingOver} $depth={depth} $isDisabled={node.type === 'position'}>
-              <Draggable draggableId={node.id} index={0}>
-                {(dragProvided, dragSnapshot) => {
-                  const { style, ...restDraggableProps } = dragProvided.draggableProps;
-                  return (
-                    <DraggableWrap
-                      ref={dragProvided.innerRef}
-                      {...restDraggableProps}
-                      style={style as React.CSSProperties}
-                      $isDragging={dragSnapshot.isDragging}
-                    >
-                      <div {...dragProvided.dragHandleProps} style={{ marginBottom: '0.5rem' }}>
-                        {nodeBox}
-                      </div>
-                    </DraggableWrap>
-                  );
-                }}
-              </Draggable>
-            </DropTargetWrap>
+        <DraggableWrap draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <DragContentWrap $isDragging={isDragging}>
+            <div style={{ marginBottom: '0.5rem' }}>{nodeBox}</div>
             {childrenTree}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+          </DragContentWrap>
+        </DraggableWrap>
+      </NodeWrap>
     );
   }
 
   return (
-    <NodeWrap $depth={0}>
+    <NodeWrap $depth={isRoot ? 0 : depth}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {nodeBox}
+        {panel === 'right' || !isRoot ? nodeContent : <div style={{ marginBottom: '0.5rem' }}>{nodeBox}</div>}
         {childrenTree}
       </div>
     </NodeWrap>

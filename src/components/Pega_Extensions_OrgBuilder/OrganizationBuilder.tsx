@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { DragDropContext, type DropResult } from '@hello-pangea/dnd';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import type { DragEvent } from 'react';
 import type { OrgNode, OrgBuilderDataPageResponse } from './OrgTypes';
 import { cloneNodeWithNewIds, getNodeById } from './OrgTypes';
 import { OrgPanel } from './OrgPanel';
@@ -27,20 +27,72 @@ import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/ic
 
 registerIcon(resetIcon, downloadIcon, informationIcon);
 
-type FlattenedItem = { node: OrgNode; depth: number };
+type DragSource = 'reference' | 'target';
 
-function flattenWithDepth(root: OrgNode, skipRootId?: string): FlattenedItem[] {
-  const out: FlattenedItem[] = [];
-  function visit(n: OrgNode, depth: number) {
-    if (skipRootId && n.id === skipRootId) {
-      n.children.forEach((c) => visit(c, depth));
+interface DragState {
+  nodeId: string;
+  source: DragSource;
+  sourceNode?: OrgNode;
+}
+
+function addNodeToParent(parent: OrgNode, nodeToAdd: OrgNode, targetId: string): OrgNode {
+  if (parent.id === targetId) {
+    if (parent.type === 'position') {
+      return parent;
+    }
+    return {
+      ...parent,
+      children: [...parent.children, nodeToAdd],
+    };
+  }
+  return {
+    ...parent,
+    children: parent.children.map((child) => addNodeToParent(child, nodeToAdd, targetId)),
+  };
+}
+
+function removeNodeFromTree(parent: OrgNode, nodeId: string, targetParentId?: string): OrgNode {
+  if (targetParentId && parent.id === targetParentId) {
+    return {
+      ...parent,
+      children: parent.children.filter((child) => child.id !== nodeId),
+    };
+  }
+  return {
+    ...parent,
+    children: parent.children
+      .filter((child) => {
+        if (!targetParentId && child.id === nodeId) return false;
+        return true;
+      })
+      .map((child) => removeNodeFromTree(child, nodeId, targetParentId)),
+  };
+}
+
+function extractNodeFromTree(parent: OrgNode, nodeId: string): { tree: OrgNode; extracted: OrgNode | null } {
+  let extracted: OrgNode | null = null;
+  const nextChildren: OrgNode[] = [];
+
+  parent.children.forEach((child) => {
+    if (child.id === nodeId) {
+      extracted = child;
       return;
     }
-    out.push({ node: n, depth });
-    n.children.forEach((c) => visit(c, depth + 1));
-  }
-  visit(root, 0);
-  return out;
+
+    const result = extractNodeFromTree(child, nodeId);
+    if (result.extracted) {
+      extracted = result.extracted;
+    }
+    nextChildren.push(result.tree);
+  });
+
+  return {
+    tree: {
+      ...parent,
+      children: nextChildren,
+    },
+    extracted,
+  };
 }
 
 export interface OrganizationBuilderProps {
@@ -70,6 +122,12 @@ export function OrganizationBuilder({
   const [historyIndex, setHistoryIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [dragState, setDragState] = useState<DragState | null>(null);
+  const [hoveredTargetId, setHoveredTargetId] = useState<string | null>(null);
+  const [isHoveringRoot, setIsHoveringRoot] = useState(false);
+  const dragStateRef = useRef<DragState | null>(null);
+  const dragEndTimeoutRef = useRef<number | null>(null);
+  const hoveredTargetIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -114,124 +172,181 @@ export function OrganizationBuilder({
     };
   }, [dataPage, selectionProperty, getPConnect, counter]);
 
-  const flattenedReference = useMemo(
-    () => (referenceOrg ? flattenWithDepth(referenceOrg, referenceOrg.id) : []),
-    [referenceOrg],
-  );
-
   const saveToHistory = useCallback(
     (newOrg: OrgNode) => {
-      setHistory((prev) => {
-        const newHistory = prev.slice(0, historyIndex + 1);
-        newHistory.push(newOrg);
-        return newHistory;
+      setHistoryIndex((prevIndex) => {
+        setHistory((prevHistory) => {
+          const newHistory = prevHistory.slice(0, prevIndex + 1);
+          newHistory.push(newOrg);
+          return newHistory;
+        });
+        return prevIndex + 1;
       });
-      setHistoryIndex((prev) => prev + 1);
     },
-    [historyIndex],
+    [],
   );
 
-  function addNodeToParent(parent: OrgNode, nodeToAdd: OrgNode, targetId: string): OrgNode {
-    if (parent.id === targetId) {
-      // Do not allow children under position nodes
-      if (parent.type === 'position') {
-        return parent;
-      }
-      return {
-        ...parent,
-        children: [...parent.children, nodeToAdd],
-      };
+  const clearDragInteraction = useCallback(() => {
+    if (dragEndTimeoutRef.current !== null) {
+      window.clearTimeout(dragEndTimeoutRef.current);
+      dragEndTimeoutRef.current = null;
     }
-    return {
-      ...parent,
-      children: parent.children.map((child) => addNodeToParent(child, nodeToAdd, targetId)),
+    dragStateRef.current = null;
+    hoveredTargetIdRef.current = null;
+    setDragState(null);
+    setHoveredTargetId(null);
+    setIsHoveringRoot(false);
+  }, []);
+
+  const canDropOnNode = useCallback((targetId: string) => {
+    const activeDragState = dragStateRef.current ?? dragState;
+    if (!activeDragState || !targetOrg) return false;
+
+    const targetNode = getNodeById(targetOrg, targetId);
+    if (!targetNode || targetNode.type === 'position') return false;
+
+    if (activeDragState.source === 'target') {
+      if (activeDragState.nodeId === targetId) return false;
+      const draggedNode = getNodeById(targetOrg, activeDragState.nodeId);
+      if (!draggedNode) return false;
+      if (getNodeById(draggedNode, targetId)) return false;
+    }
+
+    return true;
+  }, [dragState, targetOrg]);
+
+  const canDropOnRoot = useCallback(() => {
+    const activeDragState = dragStateRef.current ?? dragState;
+    if (!activeDragState || !targetOrg) return false;
+    return activeDragState.source !== 'target' || activeDragState.nodeId !== targetOrg.id;
+  }, [dragState, targetOrg]);
+
+  const handleDragStart = useCallback((nodeId: string, sourcePanel: 'left' | 'right', sourceNode: OrgNode) => {
+    if (dragEndTimeoutRef.current !== null) {
+      window.clearTimeout(dragEndTimeoutRef.current);
+      dragEndTimeoutRef.current = null;
+    }
+
+    const nextDragState: DragState = {
+      nodeId,
+      source: sourcePanel === 'left' ? 'reference' : 'target',
+      sourceNode: sourcePanel === 'left' ? sourceNode : undefined,
     };
-  }
 
-  const handleDragEnd = useCallback(
-    (result: DropResult) => {
-      const { source, destination, draggableId } = result;
-      console.log('[OrgBuilder] onDragEnd', { source, destination, draggableId, result });
-      if (!destination) {
-        console.log('[OrgBuilder] no destination, skip');
+    dragStateRef.current = nextDragState;
+    setDragState(nextDragState);
+    setHoveredTargetId(null);
+    setIsHoveringRoot(false);
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    dragEndTimeoutRef.current = window.setTimeout(() => {
+      clearDragInteraction();
+    }, 0);
+  }, [clearDragInteraction]);
+
+  const handleNodeDragOver = useCallback((targetId: string) => {
+    const canDrop = canDropOnNode(targetId);
+    const next = canDrop ? targetId : null;
+    hoveredTargetIdRef.current = next;
+    setHoveredTargetId(next);
+    setIsHoveringRoot(false);
+    return canDrop;
+  }, [canDropOnNode]);
+
+  const handleRootDragOver = useCallback(() => {
+    const canDrop = canDropOnRoot();
+    hoveredTargetIdRef.current = null;
+    setHoveredTargetId(null);
+    setIsHoveringRoot(canDrop);
+    return canDrop;
+  }, [canDropOnRoot]);
+
+  const handleDropOnNode = useCallback((targetId: string) => {
+    const activeDragState = dragStateRef.current ?? dragState;
+    if (!activeDragState) return;
+
+    if (activeDragState.source === 'reference') {
+      const referenceNode = activeDragState.sourceNode ?? (referenceOrg ? getNodeById(referenceOrg, activeDragState.nodeId) : undefined);
+      if (!referenceNode) {
+        clearDragInteraction();
         return;
       }
-      if (draggableId === 'root-placeholder') return;
 
-      // From reference (left) panel → target (right) panel
-      if (source.droppableId === 'reference') {
-        if (!referenceOrg || !initialTargetOrg) return;
-        const targetId = destination.droppableId === 'root' ? initialTargetOrg.id : destination.droppableId;
-        const refNode = getNodeById(referenceOrg, draggableId);
-        if (!refNode) {
-          console.log('[OrgBuilder] refNode not found for:', draggableId);
-          return;
-        }
-        const clonedNode = cloneNodeWithNewIds(refNode, 'target-');
-        setTargetOrg((prev) => {
-          if (!prev) return prev;
-          const parentNode = targetId === prev.id ? prev : getNodeById(prev, targetId);
-          if (parentNode && parentNode.type === 'position') {
-            console.log('[OrgBuilder] cannot drop onto position node');
-            return prev;
-          }
-          const newOrg = addNodeToParent(prev, clonedNode, targetId);
-          saveToHistory(newOrg);
-          return newOrg;
-        });
-        console.log('[OrgBuilder] drop from reference applied, targetId:', targetId);
+      setTargetOrg((prev) => {
+        if (!prev) return prev;
+        const targetNode = getNodeById(prev, targetId);
+        if (!targetNode || targetNode.type === 'position') return prev;
+
+        const newOrg = addNodeToParent(prev, cloneNodeWithNewIds(referenceNode, 'target-'), targetId);
+        saveToHistory(newOrg);
+        return newOrg;
+      });
+    } else {
+      setTargetOrg((prev) => {
+        if (!prev) return prev;
+        const draggedNode = getNodeById(prev, activeDragState.nodeId);
+        const targetNode = getNodeById(prev, targetId);
+        if (!draggedNode || !targetNode || targetNode.type === 'position') return prev;
+        if (draggedNode.id === targetId || getNodeById(draggedNode, targetId)) return prev;
+
+        const { tree: treeWithoutNode, extracted } = extractNodeFromTree(prev, activeDragState.nodeId);
+        if (!extracted) return prev;
+
+        const newOrg = addNodeToParent(treeWithoutNode, extracted, targetId);
+        saveToHistory(newOrg);
+        return newOrg;
+      });
+    }
+
+    clearDragInteraction();
+  }, [dragState, referenceOrg, saveToHistory, clearDragInteraction]);
+
+  const handleDropOnRoot = useCallback(() => {
+    const activeDragState = dragStateRef.current ?? dragState;
+    if (!activeDragState) return;
+
+    if (activeDragState.source === 'reference') {
+      const referenceNode = activeDragState.sourceNode ?? (referenceOrg ? getNodeById(referenceOrg, activeDragState.nodeId) : undefined);
+      if (!referenceNode) {
+        clearDragInteraction();
         return;
       }
 
-      // Internal drag within the target (right) panel – re-parent nodes
-      if (destination.droppableId && source.droppableId !== 'reference') {
-        if (!initialTargetOrg) return;
-        if (draggableId === initialTargetOrg.id) return;
-        if (destination.droppableId === source.droppableId) {
-          console.log('[OrgBuilder] same source and destination, skip');
-          return;
-        }
-        setTargetOrg((prev) => {
-          if (!prev) return prev;
-          const nodeToMove = getNodeById(prev, draggableId);
-          if (!nodeToMove) {
-            console.log('[OrgBuilder] node to move not found for:', draggableId);
-            return prev;
-          }
-          const withoutNode = removeNodeFromTree(prev, draggableId);
-          const targetId = destination.droppableId === 'root' ? withoutNode.id : destination.droppableId;
-          const parentNode = targetId === withoutNode.id ? withoutNode : getNodeById(withoutNode, targetId);
-          if (parentNode && parentNode.type === 'position') {
-            console.log('[OrgBuilder] cannot move under position node');
-            return prev;
-          }
-          const newOrg = addNodeToParent(withoutNode, nodeToMove, targetId);
-          saveToHistory(newOrg);
-          return newOrg;
-        });
-        console.log('[OrgBuilder] internal move applied');
+      setTargetOrg((prev) => {
+        if (!prev) return prev;
+        const newOrg = addNodeToParent(prev, cloneNodeWithNewIds(referenceNode, 'target-'), prev.id);
+        saveToHistory(newOrg);
+        return newOrg;
+      });
+    } else {
+      setTargetOrg((prev) => {
+        if (!prev || prev.id === activeDragState.nodeId) return prev;
+
+        const { tree: treeWithoutNode, extracted } = extractNodeFromTree(prev, activeDragState.nodeId);
+        if (!extracted) return prev;
+
+        const newOrg = addNodeToParent(treeWithoutNode, extracted, treeWithoutNode.id);
+        saveToHistory(newOrg);
+        return newOrg;
+      });
+    }
+
+    clearDragInteraction();
+  }, [dragState, referenceOrg, saveToHistory, clearDragInteraction]);
+
+  const handleDropInRightPanel = useCallback(
+    (event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      const targetId = hoveredTargetIdRef.current;
+      if (targetId) {
+        handleDropOnNode(targetId);
+      } else {
+        handleDropOnRoot();
       }
     },
-    [saveToHistory, referenceOrg, initialTargetOrg],
+    [handleDropOnNode, handleDropOnRoot],
   );
-
-  function removeNodeFromTree(parent: OrgNode, nodeId: string, targetParentId?: string): OrgNode {
-    if (targetParentId && parent.id === targetParentId) {
-      return {
-        ...parent,
-        children: parent.children.filter((child) => child.id !== nodeId),
-      };
-    }
-    return {
-      ...parent,
-      children: parent.children
-        .filter((child) => {
-          if (!targetParentId && child.id === nodeId) return false;
-          return true;
-        })
-        .map((child) => removeNodeFromTree(child, nodeId, targetParentId)),
-    };
-  }
 
   const handleRemoveConnection = useCallback(
     (nodeId: string, parentId?: string) => {
@@ -272,10 +387,6 @@ export function OrganizationBuilder({
     URL.revokeObjectURL(url);
   }, [targetOrg]);
 
-  const handleDragStart = useCallback((start: { draggableId: string; source: { droppableId: string } }) => {
-    console.log('[OrgBuilder] onDragStart', start);
-  }, []);
-
   if (loading) {
     return (
       <Screen>
@@ -296,62 +407,73 @@ export function OrganizationBuilder({
   }
 
   return (
-    <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <Screen>
-        <Content>
-          <HeaderRow>
-            <HeaderText>
-              <Title>Organisation Builder</Title>
-              <Subtitle>Build a new organization by dragging elements from the reference structure</Subtitle>
-            </HeaderText>
-            <ButtonGroup>
-              <Button variant='secondary' onClick={handleUndo} disabled={historyIndex === 0}>
-                <Icon name='reset' />
-                Undo
-              </Button>
-              <Button variant='secondary' onClick={handleReset}>
-                Reset
-              </Button>
-              <Button variant='primary' onClick={handleExport} disabled={!targetOrg}>
-                <Icon name='download' />
-                Export
-              </Button>
-            </ButtonGroup>
-          </HeaderRow>
+    <Screen>
+      <Content>
+        <HeaderRow>
+          <HeaderText>
+            <Title>Organisation Builder</Title>
+            <Subtitle>Build a new organization by dragging elements from the reference structure</Subtitle>
+          </HeaderText>
+          <ButtonGroup>
+            <Button variant='secondary' onClick={handleUndo} disabled={historyIndex === 0}>
+              <Icon name='reset' />
+              Undo
+            </Button>
+            <Button variant='secondary' onClick={handleReset}>
+              Reset
+            </Button>
+            <Button variant='primary' onClick={handleExport} disabled={!targetOrg}>
+              <Icon name='download' />
+              Export
+            </Button>
+          </ButtonGroup>
+        </HeaderRow>
 
-          <InstructionBox>
-            <InstructionIcon>
-              <Icon name='information' />
-            </InstructionIcon>
-            <InstructionContent>
-              <InstructionHeading>How to use:</InstructionHeading>
-              <InstructionList>
-                <li>Drag any node from the left panel to copy it (with all children) to the right panel</li>
-                <li>Drop on an existing node to make it a child of that node</li>
-                <li>Drop on the panel background to add it as a child of the root</li>
-                <li>Click the X button on any node in the right panel to remove it</li>
-              </InstructionList>
-            </InstructionContent>
-          </InstructionBox>
+        <InstructionBox>
+          <InstructionIcon>
+            <Icon name='information' />
+          </InstructionIcon>
+          <InstructionContent>
+            <InstructionHeading>How to use:</InstructionHeading>
+            <InstructionList>
+              <li>Drag any node from the left panel to copy it, with all of its children, into the target organization</li>
+              <li>Hover a node on the right panel to make it the future parent, then drop to attach the dragged node under it</li>
+              <li>Drop onto the empty area in the right panel to attach the node directly to the root</li>
+              <li>Drag nodes inside the right panel to move existing branches, or click X to remove a connection</li>
+            </InstructionList>
+          </InstructionContent>
+        </InstructionBox>
 
-          <PanelsRow>
-            <OrgPanel
-              title={referenceHeading}
-              subtitle={referenceOrg.shortName || referenceOrg.name}
-              organization={referenceOrg}
-              flattenedReference={flattenedReference}
-              panel='left'
-            />
-            <OrgPanel
-              title={targetHeading}
-              subtitle={initialTargetOrg.shortName || initialTargetOrg.name}
-              organization={targetOrg}
-              panel='right'
-              onRemoveConnection={handleRemoveConnection}
-            />
-          </PanelsRow>
-        </Content>
-      </Screen>
-    </DragDropContext>
+        <PanelsRow>
+          <OrgPanel
+            title={referenceHeading}
+            subtitle={referenceOrg.shortName || referenceOrg.name}
+            organization={referenceOrg}
+            panel='left'
+            draggedNodeId={dragState?.source === 'reference' ? dragState.nodeId : null}
+            onDragStartNode={handleDragStart}
+            onDragEndNode={handleDragEnd}
+          />
+          <OrgPanel
+            title={targetHeading}
+            subtitle={initialTargetOrg.shortName || initialTargetOrg.name}
+            organization={targetOrg}
+            panel='right'
+            onRemoveConnection={handleRemoveConnection}
+            draggedNodeId={dragState?.source === 'target' ? dragState.nodeId : null}
+            hoveredTargetId={hoveredTargetId}
+            isHoveringRoot={isHoveringRoot}
+            isDragInProgress={!!dragState}
+            onDragStartNode={handleDragStart}
+            onDragEndNode={handleDragEnd}
+            onDragOverNode={handleNodeDragOver}
+            onDragOverRoot={handleRootDragOver}
+            onDropInRightPanel={handleDropInRightPanel}
+            onDropOnNode={handleDropOnNode}
+            onDropOnRoot={handleDropOnRoot}
+          />
+        </PanelsRow>
+      </Content>
+    </Screen>
   );
 }
