@@ -35,12 +35,16 @@ export const PegaExtensionsJawLayout = (props: JawLayoutProps) => {
     if (getPConnect && embedDataRef && statusPropName) {
       try {
         const listPath = embedDataRef.replace('[*]', '');
-        const finalPageRef = `caseInfo.content${listPath.startsWith('.') ? '' : '.'}${listPath}[${index}]`;
+        // Use dynamic page reference for hierarchical form support
+        const stateProps = getPConnect().getStateProps();
+        const parentPageRef = stateProps?.pageReference || getPConnect().getPageReference() || 'caseInfo.content';
+        const finalPageRef = `${parentPageRef}${listPath.startsWith('.') ? '' : '.'}${listPath}[${index}]`;
         const messageConfig = {
           meta: props,
           options: {
             context: getPConnect().getContextName(),
             pageReference: finalPageRef,
+            referenceList: `.${listPath}`,
             target: getPConnect().getTarget(),
           },
         };
@@ -68,9 +72,12 @@ export const PegaExtensionsJawLayout = (props: JawLayoutProps) => {
       setStatusPropName(propName);
 
       try {
+        // Use dynamic page reference for hierarchical form support
+        const stateProps = getPConnect().getStateProps();
+        const basePageRef = stateProps?.pageReference || getPConnect().getPageReference() || 'caseInfo.content';
         (window as any).PCore.getContextTreeManager().addPageListNode(
           getPConnect().getContextName(),
-          'caseInfo.content',
+          basePageRef,
           getPConnect().meta.name,
           pageRef,
         );
