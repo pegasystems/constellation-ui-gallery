@@ -1,0 +1,25 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Hijri Calendar
+
+The **Hijri Calendar** is a specialized field-level component designed for Pega applications that require Islamic date selection. It supports the **Umm al-Qura** calendar system and automatically adjusts its layout for **Right-to-Left (RTL)** languages.
+
+## Key Features
+- **Theming:** Full support for Pega **Clarity** (Light) and **Midnight** (Dark) themes.
+- **Localization:** Automatically switches between English and Arabic labels based on the browser/Pega locale.
+- **Data Integrity:** Can store dates as either a formatted Hijri string or a Gregorian ISO string.
+
+<Primary />
+
+## Props
+
+The table below describes the configuration options available for this component in the Pega App Studio.
+
+<Controls />
+
+## Technical Usage
+
+When using this component in a Pega View, ensure the underlying property is mapped correctly to handle the return format (String vs Date).

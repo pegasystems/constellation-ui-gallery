@@ -1,0 +1,124 @@
+{
+  "name": "Org_Library_HijriCalendar",
+  "label": "Hijri Calendar",
+  "description": "A field component to display and pick Hijri dates",
+  "organization": "Org",
+  "version": "0.0.1",
+  "library": "Library",
+  "allowedApplications": [],
+  "componentKey": "Org_Library_HijriCalendar",
+  "type": "Field",
+  "subtype": "Date",
+  "icon": "images/pz-date-time-active.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "readOnly",
+      "label": "Edit mode",
+      "format": "READONLY"
+    },
+    {
+      "label": "Input settings",
+      "format": "GROUP",
+      "visibility": "(!readOnly = true)",
+      "properties": [
+        {
+          "name": "storeAsHijri",
+          "label": "Store value as Hijri string (DD/MM/YYYY)",
+          "format": "BOOLEAN",
+          "defaultValue": true
+        },
+        {
+          "format": "LABEL",
+          "label": "Year Range Configuration",
+          "variant": "secondary"
+        },
+        {
+          "name": "minYear",
+          "label": "Minimum Hijri Year",
+          "format": "NUMBER",
+          "defaultValue": 1400
+        },
+        {
+          "name": "maxYear",
+          "label": "Maximum Hijri Year",
+          "format": "NUMBER",
+          "defaultValue": 1500
+        },
+        {
+          "name": "helperText",
+          "label": "Helper text",
+          "format": "TEXT"
+        }
+      ]
+    },
+    {
+      "label": "Read-only settings",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "showAsFormattedText",
+          "label": "Show as formatted text",
+          "format": "BOOLEAN"
+        },
+        {
+          "format": "SELECT",
+          "name": "formatter",
+          "label": "Format",
+          "defaultValue": "defaultDate",
+          "source": [
+            { "key": "defaultDate", "value": "Default" },
+            { "key": "DateTime-Long", "value": "Date Time" },
+            { "key": "DateTime-Since", "value": "Since" }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "required",
+          "label": "Required",
+          "format": "REQUIRED",
+          "visibility": "(!readOnly = true)"
+        },
+        {
+          "name": "disabled",
+          "label": "Disabled",
+          "format": "DISABLED",
+          "visibility": "(!readOnly = true)"
+        },
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "minYear": 1400,
+    "maxYear": 1500,
+    "storeAsHijri": true
+  }
+}
