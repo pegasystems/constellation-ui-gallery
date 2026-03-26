@@ -105,7 +105,9 @@ const DropTargetWrap = styled.div<{ $isOver: boolean; $depth: number; $isDisable
   margin-left: ${({ $depth }) => $depth * 1}rem;
   margin-bottom: 0.5rem;
   border-radius: 0.25rem;
-  padding: ${({ $isOver, $isDisabled }) => ($isOver && !$isDisabled ? '0.25rem' : '0')};
+  box-sizing: border-box;
+
+  /* Border-only highlight so hover does not change layout (no padding jump). */
   background-color: ${({ $isOver, $isDisabled }) => ($isOver && !$isDisabled ? '#eff6ff' : 'transparent')};
   border: ${({ $isOver, $isDisabled }) =>
     $isOver && !$isDisabled ? '0.125rem solid #2563eb' : '0.125rem solid transparent'};
@@ -199,6 +201,7 @@ export function OrgNodeComponent({
               parentId={node.id}
               depth={depth + 1}
               flattenedIndexMap={flattenedIndexMap}
+              contentOnly={contentOnly}
             />
           </TreeChild>
         ))}
@@ -218,6 +221,8 @@ export function OrgNodeComponent({
     );
   }
 
+  // Left: one Draggable per row only — children are siblings so the list placeholder stays
+  // one-row tall (readonly reference tree is not “hollowed out” by a huge placeholder).
   if (panel === 'left' && !isRoot) {
     const flatIndex = flattenedIndexMap?.[node.id] ?? index;
     return (
@@ -232,14 +237,12 @@ export function OrgNodeComponent({
                 style={style as React.CSSProperties}
                 $isDragging={snapshot.isDragging}
               >
-                <div {...provided.dragHandleProps} style={{ display: 'flex', flexDirection: 'column' }}>
-                  {nodeBox}
-                  {childrenTree}
-                </div>
+                <div {...provided.dragHandleProps}>{nodeBox}</div>
               </DraggableWrap>
             );
           }}
         </Draggable>
+        {childrenTree}
       </NodeWrap>
     );
   }

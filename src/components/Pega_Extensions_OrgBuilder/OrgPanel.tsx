@@ -59,6 +59,17 @@ const DropZone = styled.div<{ $isDraggingOver: boolean }>`
 
 const RightDropZone = styled(DropZone)`
   min-height: 37.5rem;
+  position: relative;
+`;
+
+/** Keeps a valid Draggable in the root droppable without taking layout space (empty strip). */
+const RootPlaceholderSlot = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  pointer-events: none;
 `;
 
 interface OrgPanelProps {
@@ -90,9 +101,45 @@ export function OrgPanel({
   }, [flattenedReference]);
 
   const leftContent = isLeft && (
-    <Droppable droppableId='reference'>
+    <Droppable
+      droppableId='reference'
+      ignoreContainerClipping
+      renderClone={(provided, _snapshot, rubric) => {
+        const item = flattenedReference.find((x) => x.node.id === rubric.draggableId);
+        if (!item) return null;
+        const dp = provided.draggableProps;
+        const hp = provided.dragHandleProps;
+        return (
+          <div
+            ref={provided.innerRef}
+            {...dp}
+            {...(hp ?? {})}
+            style={{
+              ...(dp.style as React.CSSProperties),
+              ...(hp && typeof hp === 'object' && 'style' in hp && hp.style ? (hp.style as React.CSSProperties) : {}),
+            }}
+          >
+            <OrgNodeComponent
+              node={item.node}
+              panel='left'
+              contentOnly
+              depth={item.depth}
+              flattenedIndexMap={flattenedIndexMap}
+            />
+          </div>
+        );
+      }}
+      /* Mount drag clone on body in the iframe document. #storybook-root or other wrappers
+         often have transforms/overflow and break fixed positioning in the preview iframe. */
+      getContainerForClone={() => document.body}
+    >
       {(provided, snapshot) => (
-        <DropZone ref={provided.innerRef} {...provided.droppableProps} $isDraggingOver={snapshot.isDraggingOver}>
+        <DropZone
+          className='org-builder-reference-zone'
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          $isDraggingOver={snapshot.isDraggingOver}
+        >
           <OrgNodeComponent
             node={organization}
             panel='left'
@@ -107,31 +154,24 @@ export function OrgPanel({
   );
 
   const rightContent = isRight && (
-    <Droppable droppableId='root'>
+    <Droppable droppableId='root' ignoreContainerClipping>
       {(provided, snapshot) => (
         <RightDropZone ref={provided.innerRef} {...provided.droppableProps} $isDraggingOver={snapshot.isDraggingOver}>
-          {/* One disabled Draggable so this Droppable is a valid cross-list target */}
-          <Draggable draggableId='root-placeholder' index={0} isDragDisabled>
-            {(p) => {
-              const { style, ...rest } = p.draggableProps;
-              return (
-                <div
-                  ref={p.innerRef}
-                  {...rest}
-                  style={
-                    {
-                      ...style,
-                      minHeight: 1,
-                      height: 1,
-                      overflow: 'hidden',
-                      pointerEvents: 'none',
-                    } as React.CSSProperties
-                  }
-                  aria-hidden
-                />
-              );
-            }}
-          </Draggable>
+          {/* Disabled Draggable required for valid root target; kept out of layout flow */}
+          <RootPlaceholderSlot aria-hidden>
+            <Draggable draggableId='root-placeholder' index={0} isDragDisabled>
+              {(p) => {
+                const { style, ...rest } = p.draggableProps;
+                return (
+                  <div
+                    ref={p.innerRef}
+                    {...rest}
+                    style={{ ...(style as React.CSSProperties), width: 0, height: 0, minHeight: 0 }}
+                  />
+                );
+              }}
+            </Draggable>
+          </RootPlaceholderSlot>
           <OrgNodeComponent
             node={organization}
             panel='right'

@@ -1,0 +1,101 @@
+{
+    "name": "Pega_Extensions_DynamicTemplate",
+    "label": "Dynamic Template",
+    "description": "Dynamic Template",
+    "organization": "Pega",
+    "version": "4.0.2",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_DynamicTemplate",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "icon": "DynamicTemplate.svg",
+    "properties": [
+        {
+            "name": "HTMLContent",
+            "label": "HTML Content",
+            "format": "TEXT"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "name": "B",
+            "label": "Region B",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "name": "C",
+            "label": "Region C",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "name": "D",
+            "label": "Region D",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "name": "E",
+            "label": "Region E",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "name": "F",
+            "label": "Region F",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields",
+                "Views",
+                "Widgets",
+                "Insights"
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2026-03-26T21:41:11.130Z",
+    "infinityVersion": "25.1.2-397",
+    "packageCosmosVersion": "8.15.4"
+}

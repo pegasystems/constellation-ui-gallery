@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { DragDropContext, type DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, type DropResult, type DragStart } from '@hello-pangea/dnd';
 import type { OrgNode, OrgBuilderDataPageResponse } from './OrgTypes';
 import { cloneNodeWithNewIds, getNodeById } from './OrgTypes';
 import { OrgPanel } from './OrgPanel';
@@ -19,6 +19,7 @@ import {
   InstructionHeading,
   InstructionList,
   PanelsRow,
+  OrgBuilderDndGlobalStyle,
 } from './styles';
 import { Button, Icon, registerIcon, Text } from '@pega/cosmos-react-core';
 import * as resetIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/reset.icon';
@@ -66,10 +67,12 @@ export function OrganizationBuilder({
   const [referenceOrg, setReferenceOrg] = useState<OrgNode | null>(null);
   const [initialTargetOrg, setInitialTargetOrg] = useState<OrgNode | null>(null);
   const [targetOrg, setTargetOrg] = useState<OrgNode | null>(null);
-  const [history, setHistory] = useState<OrgNode[]>([]);
+  const [, setHistory] = useState<OrgNode[]>([]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  /** When set, CSS freezes the reference panel (no sibling shift / placeholder gap). */
+  const [dragSourceDroppableId, setDragSourceDroppableId] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -119,17 +122,16 @@ export function OrganizationBuilder({
     [referenceOrg],
   );
 
-  const saveToHistory = useCallback(
-    (newOrg: OrgNode) => {
-      setHistory((prev) => {
-        const newHistory = prev.slice(0, historyIndex + 1);
+  const saveToHistory = useCallback((newOrg: OrgNode) => {
+    setHistoryIndex((prevIndex) => {
+      setHistory((prevHistory) => {
+        const newHistory = prevHistory.slice(0, prevIndex + 1);
         newHistory.push(newOrg);
         return newHistory;
       });
-      setHistoryIndex((prev) => prev + 1);
-    },
-    [historyIndex],
-  );
+      return prevIndex + 1;
+    });
+  }, []);
 
   function addNodeToParent(parent: OrgNode, nodeToAdd: OrgNode, targetId: string): OrgNode {
     if (parent.id === targetId) {
@@ -148,14 +150,10 @@ export function OrganizationBuilder({
     };
   }
 
-  const handleDragEnd = useCallback(
+  const applyDragResult = useCallback(
     (result: DropResult) => {
       const { source, destination, draggableId } = result;
-      console.log('[OrgBuilder] onDragEnd', { source, destination, draggableId, result });
-      if (!destination) {
-        console.log('[OrgBuilder] no destination, skip');
-        return;
-      }
+      if (!destination) return;
       if (draggableId === 'root-placeholder') return;
 
       // From reference (left) panel → target (right) panel
@@ -163,23 +161,18 @@ export function OrganizationBuilder({
         if (!referenceOrg || !initialTargetOrg) return;
         const targetId = destination.droppableId === 'root' ? initialTargetOrg.id : destination.droppableId;
         const refNode = getNodeById(referenceOrg, draggableId);
-        if (!refNode) {
-          console.log('[OrgBuilder] refNode not found for:', draggableId);
-          return;
-        }
+        if (!refNode) return;
         const clonedNode = cloneNodeWithNewIds(refNode, 'target-');
         setTargetOrg((prev) => {
           if (!prev) return prev;
           const parentNode = targetId === prev.id ? prev : getNodeById(prev, targetId);
           if (parentNode && parentNode.type === 'position') {
-            console.log('[OrgBuilder] cannot drop onto position node');
             return prev;
           }
           const newOrg = addNodeToParent(prev, clonedNode, targetId);
           saveToHistory(newOrg);
           return newOrg;
         });
-        console.log('[OrgBuilder] drop from reference applied, targetId:', targetId);
         return;
       }
 
@@ -188,31 +181,39 @@ export function OrganizationBuilder({
         if (!initialTargetOrg) return;
         if (draggableId === initialTargetOrg.id) return;
         if (destination.droppableId === source.droppableId) {
-          console.log('[OrgBuilder] same source and destination, skip');
           return;
         }
         setTargetOrg((prev) => {
           if (!prev) return prev;
           const nodeToMove = getNodeById(prev, draggableId);
           if (!nodeToMove) {
-            console.log('[OrgBuilder] node to move not found for:', draggableId);
             return prev;
           }
           const withoutNode = removeNodeFromTree(prev, draggableId);
           const targetId = destination.droppableId === 'root' ? withoutNode.id : destination.droppableId;
           const parentNode = targetId === withoutNode.id ? withoutNode : getNodeById(withoutNode, targetId);
           if (parentNode && parentNode.type === 'position') {
-            console.log('[OrgBuilder] cannot move under position node');
             return prev;
           }
           const newOrg = addNodeToParent(withoutNode, nodeToMove, targetId);
           saveToHistory(newOrg);
           return newOrg;
         });
-        console.log('[OrgBuilder] internal move applied');
       }
     },
     [saveToHistory, referenceOrg, initialTargetOrg],
+  );
+
+  const onDragStart = useCallback((start: DragStart) => {
+    setDragSourceDroppableId(start.source.droppableId);
+  }, []);
+
+  const onDragEnd = useCallback(
+    (result: DropResult) => {
+      setDragSourceDroppableId(null);
+      applyDragResult(result);
+    },
+    [applyDragResult],
   );
 
   function removeNodeFromTree(parent: OrgNode, nodeId: string, targetParentId?: string): OrgNode {
@@ -246,11 +247,15 @@ export function OrganizationBuilder({
   );
 
   const handleUndo = useCallback(() => {
-    if (historyIndex > 0) {
-      setHistoryIndex((prev) => prev - 1);
-      setTargetOrg(history[historyIndex - 1]);
-    }
-  }, [history, historyIndex]);
+    setHistoryIndex((prevIndex) => {
+      if (prevIndex <= 0) return prevIndex;
+      setHistory((prevHistory) => {
+        setTargetOrg(prevHistory[prevIndex - 1]);
+        return prevHistory;
+      });
+      return prevIndex - 1;
+    });
+  }, []);
 
   const handleReset = useCallback(() => {
     if (initialTargetOrg) {
@@ -272,10 +277,6 @@ export function OrganizationBuilder({
     URL.revokeObjectURL(url);
   }, [targetOrg]);
 
-  const handleDragStart = useCallback((start: { draggableId: string; source: { droppableId: string } }) => {
-    console.log('[OrgBuilder] onDragStart', start);
-  }, []);
-
   if (loading) {
     return (
       <Screen>
@@ -295,8 +296,11 @@ export function OrganizationBuilder({
     );
   }
 
+  const refListFrozen = dragSourceDroppableId === 'reference';
+
   return (
-    <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd} autoScrollerOptions={{ disabled: true }}>
+      <OrgBuilderDndGlobalStyle />
       <Screen>
         <Content>
           <HeaderRow>
@@ -334,7 +338,7 @@ export function OrganizationBuilder({
             </InstructionContent>
           </InstructionBox>
 
-          <PanelsRow>
+          <PanelsRow className={refListFrozen ? 'org-builder-ref-dragging' : undefined}>
             <OrgPanel
               title={referenceHeading}
               subtitle={referenceOrg.shortName || referenceOrg.name}

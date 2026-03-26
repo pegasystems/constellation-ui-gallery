@@ -28,6 +28,7 @@ export default {
     },
   },
   parameters: {
+    layout: 'fullscreen',
     a11y: {
       context: '#storybook-root',
       config: {

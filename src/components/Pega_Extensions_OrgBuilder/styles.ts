@@ -1,4 +1,24 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+/**
+ * While dragging from the reference list, @hello-pangea/dnd normally translates items and
+ * reserves placeholder space. For a read-only source we neutralize those so the tree stays fixed.
+ * Selectors match hello-pangea data attributes (see dist/dnd.js).
+ */
+export const OrgBuilderDndGlobalStyle = createGlobalStyle`
+  .org-builder-ref-dragging .org-builder-reference-zone [data-rfd-draggable-id] {
+    transform: none !important;
+    transition: none !important;
+  }
+  .org-builder-ref-dragging .org-builder-reference-zone [data-rfd-placeholder-context-id] {
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    border: none !important;
+  }
+`;
 
 export default styled.div(({ height }: { height: string }) => ({
   height,

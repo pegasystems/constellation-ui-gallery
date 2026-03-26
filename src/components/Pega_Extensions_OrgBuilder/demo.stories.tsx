@@ -230,6 +230,8 @@ export default {
     },
   },
   parameters: {
+    /* Wider canvas: use full preview area; pair with globals.fullscreen below on Default */
+    layout: 'fullscreen',
     a11y: {
       context: '#storybook-root',
       config: {
@@ -321,6 +323,10 @@ interface OrgBuilderPropsExt extends OrgBuilderProps {
 
 type Story = StoryObj<OrgBuilderPropsExt>;
 export const Default: Story = {
+  /* Matches preview.tsx: when On, docs/canvas max-width is removed (wider iframe). */
+  globals: {
+    fullscreen: 'On',
+  },
   render: (args: OrgBuilderPropsExt) => {
     setPCore(args.Example);
     const props = {
