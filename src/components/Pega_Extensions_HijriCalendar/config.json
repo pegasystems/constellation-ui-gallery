@@ -2,9 +2,9 @@
   "name": "Org_Library_HijriCalendar",
   "label": "Hijri Calendar",
   "description": "A field component to display and pick Hijri dates",
-  "organization": "Org",
-  "version": "0.0.1",
-  "library": "Library",
+  "organization": "Pega",
+  "version": "4.0.1",
+  "library": "Extensions",
   "allowedApplications": [],
   "componentKey": "Org_Library_HijriCalendar",
   "type": "Field",
@@ -16,6 +16,11 @@
       "label": "Field label",
       "format": "TEXT",
       "required": true
+    },
+    {
+      "name": "value",
+      "label": "Value",
+      "format": "TEXT"
     },
     {
       "name": "readOnly",
@@ -34,11 +39,6 @@
           "defaultValue": true
         },
         {
-          "format": "LABEL",
-          "label": "Year Range Configuration",
-          "variant": "secondary"
-        },
-        {
           "name": "minYear",
           "label": "Minimum Hijri Year",
           "format": "NUMBER",
@@ -54,28 +54,6 @@
           "name": "helperText",
           "label": "Helper text",
           "format": "TEXT"
-        }
-      ]
-    },
-    {
-      "label": "Read-only settings",
-      "format": "GROUP",
-      "properties": [
-        {
-          "name": "showAsFormattedText",
-          "label": "Show as formatted text",
-          "format": "BOOLEAN"
-        },
-        {
-          "format": "SELECT",
-          "name": "formatter",
-          "label": "Format",
-          "defaultValue": "defaultDate",
-          "source": [
-            { "key": "defaultDate", "value": "Default" },
-            { "key": "DateTime-Long", "value": "Date Time" },
-            { "key": "DateTime-Since", "value": "Since" }
-          ]
         }
       ]
     },
@@ -99,18 +77,6 @@
           "name": "visibility",
           "label": "Visibility",
           "format": "VISIBILITY"
-        }
-      ]
-    },
-    {
-      "label": "Advanced",
-      "format": "GROUP",
-      "collapsible": true,
-      "properties": [
-        {
-          "name": "testId",
-          "label": "Test ID",
-          "format": "TEXT"
         }
       ]
     }

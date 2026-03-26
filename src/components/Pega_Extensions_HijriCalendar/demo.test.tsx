@@ -1,57 +1,43 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { Configuration } from '@pega/cosmos-react-core';
-/* Import the component - note we use the default export which is wrapped by withConfiguration */
-import HijriCalendar from './index';
+import { render, screen, fireEvent } from '@testing-library/react';
+import type { HijriCalendarProps } from './index';
+import { HijriCalendar } from './index';
+import '@testing-library/jest-dom';
 
-// 1. Create a robust mock for the PConnect object
 const mockPConnect = {
   getActionsApi: () => ({
     updateFieldValue: jest.fn(),
-    triggerFieldChange: jest.fn(),
+    triggerFieldChange: jest.fn()
   }),
   getStateProps: () => ({
-    value: 'testField'
+    value: 'testProp'
   }),
-  getComponentConfig: () => ({}),
-  getContextName: () => 'primary',
-};
-
-const renderWithPega = (ui: React.ReactElement, direction: 'ltr' | 'rtl' = 'ltr', theme: any = 'clarity') => {
-  return render(
-    <Configuration id="test-pega" theme={theme} direction={direction}>
-      {ui}
-    </Configuration>
-  );
+  getComponentConfig: () => ({})
 };
 
 describe('HijriCalendar Component', () => {
-  
-  test('should render without crashing when getPConnect is provided', () => {
-    // 2. Pass the mock as a function that returns the mock object
-    renderWithPega(
-      <HijriCalendar 
-        getPConnect={() => mockPConnect} 
-        label="Birth Date"
-      />
-    );
+  test('renders with correct label', () => {
+    render(<HijriCalendar getPConnect={() => mockPConnect as any} label="Birth Date" />);
+    expect(screen.getByText('Birth Date')).toBeInTheDocument();
+  });
+
+  test('opens calendar on button click', () => {
+    render(<HijriCalendar getPConnect={() => mockPConnect as any} />);
     
-    expect(screen.getByText(/Birth Date/i)).toBeInTheDocument();
+    
+    const toggleBtn = screen.getByLabelText('Toggle Hijri Calendar');
+    fireEvent.click(toggleBtn);
+    
+    
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
-  test('should show the calendar icon button', () => {
-    renderWithPega(<HijriCalendar getPConnect={() => mockPConnect} />);
-    const toggleButton = screen.getByLabelText(/Toggle Hijri Calendar/i);
-    expect(toggleButton).toBeInTheDocument();
-  });
-
-  test('should respect the RTL direction from the theme', () => {
-    const { container } = renderWithPega(
-      <HijriCalendar getPConnect={() => mockPConnect} />, 
-      'rtl'
-    );
-    // The InputWrapper uses direction: inherit, so it should be RTL
-    const wrapper = container.querySelector('div');
-    expect(wrapper).toHaveStyle('direction: inherit');
+  test('formats typed input correctly with slashes', () => {
+    render(<HijriCalendar getPConnect={() => mockPConnect as any} />);
+    const input = screen.getByPlaceholderText('DD/MM/YYYY') as HTMLInputElement;
+    
+    
+    fireEvent.change(input, { target: { value: '15091447' } });
+    expect(input.value).toBe('15/09/1447');
   });
 });

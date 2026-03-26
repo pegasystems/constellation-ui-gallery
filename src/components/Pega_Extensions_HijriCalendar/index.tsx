@@ -12,7 +12,7 @@ import {
   registerIcon
 } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
-
+import '../shared/create-nonce';
 
 // @ts-ignore
 import * as calendarIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/calendar.icon';
