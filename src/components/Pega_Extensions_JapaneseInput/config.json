@@ -3,7 +3,7 @@
     "label": "Japanese Input",
     "description": "Japanese input component that supports Hiragana to Katakana, Full-Width to Half-Width, Lowercase to Uppercase, and Japanese Era to Gregorian conversions.",
     "organization": "Pega",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_JapaneseInput",
@@ -154,7 +154,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.3, Thu Mar 26 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -165,7 +165,7 @@
         "isFormWidth": false,
         "isContainerWidth": false
     },
-    "buildDate": "2026-03-26T21:41:11.825Z",
+    "buildDate": "2026-03-26T22:19:28.876Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }

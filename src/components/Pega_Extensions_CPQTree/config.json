@@ -3,7 +3,7 @@
     "label": "CPQ tree",
     "description": "CPQ tree",
     "organization": "Pega",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CPQTree",
@@ -68,7 +68,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.3, Thu Mar 26 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -81,7 +81,7 @@
         "detailsViewName": "InfoDetails",
         "isFormWidth": true
     },
-    "buildDate": "2026-03-26T21:41:09.796Z",
+    "buildDate": "2026-03-26T22:19:26.795Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }

@@ -3,7 +3,7 @@
     "label": "Card Gallery",
     "description": "Card Gallery",
     "organization": "Pega",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CardGallery",
@@ -75,7 +75,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.3, Thu Mar 26 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -85,7 +85,7 @@
         "minWidth": "400px",
         "rendering": "horizontal"
     },
-    "buildDate": "2026-03-26T21:41:10.424Z",
+    "buildDate": "2026-03-26T22:19:27.424Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }

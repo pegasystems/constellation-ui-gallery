@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { createGlobalStyle } from 'styled-components';
 import { Configuration, DateInput, Text, withConfiguration, type DateInputProps } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
+
+/** Picker popover is portaled outside the field; scope via data-testid. */
+const DatePickerOverlayBorderFix = createGlobalStyle`
+  div[data-testid=":date-input:picker:date-picker:"] div[role="group"] {
+    border: none;
+  }
+`;
 
 type DateInputChange = {
   valueAsISOString?: string;
@@ -173,23 +181,26 @@ export const PegaExtensionsDateInput = (props: DateInputExtProps) => {
   };
 
   const dateInput = (
-    <DateInput
-      {...additionalProps}
-      label={label}
-      labelHidden={hideLabel}
-      info={validatemessage || helperText}
-      testId={testId}
-      value={inputValue}
-      status={status}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
-      min={fieldMetadata?.minValue || fieldMetadata?.min}
-      max={fieldMetadata?.maxValue || fieldMetadata?.max}
-      showWeekNumber={showWeekNumber}
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
+    <>
+      <DatePickerOverlayBorderFix />
+      <DateInput
+        {...additionalProps}
+        label={label}
+        labelHidden={hideLabel}
+        info={validatemessage || helperText}
+        testId={testId}
+        value={inputValue}
+        status={status}
+        disabled={disabled}
+        readOnly={readOnly}
+        required={required}
+        min={fieldMetadata?.minValue || fieldMetadata?.min}
+        max={fieldMetadata?.maxValue || fieldMetadata?.max}
+        showWeekNumber={showWeekNumber}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+    </>
   );
 
   if (!resolvedLocale) {

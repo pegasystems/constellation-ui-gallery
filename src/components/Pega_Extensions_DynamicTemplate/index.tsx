@@ -40,7 +40,25 @@ function extractCssAndHtml(html: string): { css: string; html: string } {
   } else {
     htmlOnly = trimmed;
   }
-  htmlOnly = htmlOnly.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
+
+  if (typeof DOMParser !== 'undefined') {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlOnly, 'text/html');
+    doc.querySelectorAll('style').forEach((styleEl) => {
+      styleEl.remove();
+    });
+    htmlOnly = doc.body ? doc.body.innerHTML.trim() : htmlOnly;
+  } else if (typeof DOMPurify !== 'undefined' && DOMPurify.sanitize) {
+    htmlOnly = DOMPurify.sanitize(htmlOnly, { FORBID_TAGS: ['style'] }).trim();
+  } else {
+    const styleStrip = /<style[^>]*>[\s\S]*?<\/style>/gi;
+    let prev = '';
+    while (htmlOnly !== prev) {
+      prev = htmlOnly;
+      htmlOnly = htmlOnly.replace(styleStrip, '');
+    }
+    htmlOnly = htmlOnly.trim();
+  }
 
   return { css, html: htmlOnly };
 }
