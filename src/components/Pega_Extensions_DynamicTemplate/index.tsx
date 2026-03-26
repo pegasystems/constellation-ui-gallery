@@ -49,6 +49,9 @@ function extractCssAndHtml(html: string): { css: string; html: string } {
     });
     htmlOnly = doc.body ? doc.body.innerHTML.trim() : htmlOnly;
   } else {
+    if (typeof DOMPurify !== 'undefined' && DOMPurify.sanitize) {
+      htmlOnly = DOMPurify.sanitize(htmlOnly, { FORBID_TAGS: ['style'] });
+    }
     htmlOnly = htmlOnly.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
   }
 
