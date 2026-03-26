@@ -229,7 +229,7 @@
         "autoplayDuration": "3000",
         "label": "Image Carousel"
     },
-    "buildDate": "2026-03-26T21:41:11.695Z",
+    "buildDate": "2026-03-26T22:15:49.166Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }

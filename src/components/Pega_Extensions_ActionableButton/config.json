@@ -60,7 +60,7 @@
         "label": "@L $this.label",
         "localAction": ""
     },
-    "buildDate": "2026-03-26T21:41:08.856Z",
+    "buildDate": "2026-03-26T22:15:45.912Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }

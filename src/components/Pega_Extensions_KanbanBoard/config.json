@@ -89,7 +89,7 @@
         "groups": "New,Open,Pending-Review,Resolved-Completed",
         "groupProperty": "pyStatusWork"
     },
-    "buildDate": "2026-03-26T21:41:11.984Z",
+    "buildDate": "2026-03-26T22:15:49.459Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.4"
+    "packageCosmosVersion": "8.15.5"
 }
