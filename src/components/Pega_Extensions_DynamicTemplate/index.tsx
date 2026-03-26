@@ -40,7 +40,17 @@ function extractCssAndHtml(html: string): { css: string; html: string } {
   } else {
     htmlOnly = trimmed;
   }
-  htmlOnly = htmlOnly.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
+
+  if (typeof DOMParser !== 'undefined') {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlOnly, 'text/html');
+    doc.querySelectorAll('style').forEach((styleEl) => {
+      styleEl.remove();
+    });
+    htmlOnly = doc.body ? doc.body.innerHTML.trim() : htmlOnly;
+  } else {
+    htmlOnly = htmlOnly.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
+  }
 
   return { css, html: htmlOnly };
 }
