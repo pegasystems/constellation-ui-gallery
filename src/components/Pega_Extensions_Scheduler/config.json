@@ -3,7 +3,7 @@
     "label": "Scheduler",
     "description": "Scheduler",
     "organization": "Pega",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_Scheduler",
@@ -66,7 +66,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.3, Thu Mar 26 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -76,7 +76,7 @@
         "isContainerWidth": true,
         "detailFVLItem": true
     },
-    "buildDate": "2026-03-26T22:15:50.311Z",
+    "buildDate": "2026-03-26T22:19:29.860Z",
     "infinityVersion": "25.1.2-397",
     "packageCosmosVersion": "8.15.5"
 }
