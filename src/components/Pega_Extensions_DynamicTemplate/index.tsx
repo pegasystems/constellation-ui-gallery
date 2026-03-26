@@ -48,11 +48,16 @@ function extractCssAndHtml(html: string): { css: string; html: string } {
       styleEl.remove();
     });
     htmlOnly = doc.body ? doc.body.innerHTML.trim() : htmlOnly;
+  } else if (typeof DOMPurify !== 'undefined' && DOMPurify.sanitize) {
+    htmlOnly = DOMPurify.sanitize(htmlOnly, { FORBID_TAGS: ['style'] }).trim();
   } else {
-    if (typeof DOMPurify !== 'undefined' && DOMPurify.sanitize) {
-      htmlOnly = DOMPurify.sanitize(htmlOnly, { FORBID_TAGS: ['style'] });
+    const styleStrip = /<style[^>]*>[\s\S]*?<\/style>/gi;
+    let prev = '';
+    while (htmlOnly !== prev) {
+      prev = htmlOnly;
+      htmlOnly = htmlOnly.replace(styleStrip, '');
     }
-    htmlOnly = htmlOnly.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '').trim();
+    htmlOnly = htmlOnly.trim();
   }
 
   return { css, html: htmlOnly };
