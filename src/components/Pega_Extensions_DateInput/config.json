@@ -1,0 +1,121 @@
+{
+    "name": "Pega_Extensions_DateInput",
+    "label": "Date Input",
+    "description": "Date input with locale-driven calendar support.",
+    "organization": "Pega",
+    "version": "4.0.2",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_DateInput",
+    "type": "Field",
+    "subtype": "Date",
+    "icon": "images/pz-text-input-active.svg",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "name": "readOnly",
+            "label": "Edit mode",
+            "format": "READONLY"
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "visibility": "(!readOnly = true)",
+            "properties": [
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                },
+                {
+                    "name": "localeOverride",
+                    "label": "Locale override (BCP-47)",
+                    "format": "TEXT"
+                },
+                {
+                    "name": "showWeekNumber",
+                    "label": "Show week number",
+                    "format": "BOOLEAN"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "required",
+                    "label": "Required",
+                    "format": "REQUIRED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "disabled",
+                    "label": "Disabled",
+                    "format": "DISABLED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.2, Thu Mar 26 2026, 25.1.2-397",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "detailFVLItem": true
+    },
+    "buildDate": "2026-03-26T21:41:10.854Z",
+    "infinityVersion": "25.1.2-397",
+    "packageCosmosVersion": "8.15.4"
+}

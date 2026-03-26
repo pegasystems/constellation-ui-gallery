@@ -1,0 +1,40 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+Date Input wraps the Cosmos DateInput component in a Cosmos Configuration provider so the field can render and accept dates using a locale-specific calendar.
+
+- Locale-driven calendar support
+  Use a BCP-47 locale tag such as `ja-JP-u-ca-japanese`, `ar-SA-u-ca-islamic-umalqura`, or `he-IL-u-ca-hebrew`.
+- Standard storage format
+  The field writes a normalized `YYYY-MM-DD` value back to Pega instead of storing localized calendar text.
+- Case-by-case localization
+  Use the user locale by default, or set `localeOverride` when a specific persona or workflow needs a different calendar.
+
+## Notes
+
+- This component is designed for date fields. It localizes display and picker behavior while keeping the stored value consistent.
+- Locale support depends on the browser Intl implementation and the calendars supported by Cosmos DateInput.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+Use the Japanese era calendar with the `ja-JP-u-ca-japanese` locale:
+
+<Story of={DemoStories.JapaneseEra} />
+
+Use the Hijri calendar with the `ar-SA-u-ca-islamic-umalqura` locale:
+
+<Story of={DemoStories.Hijri} />
+
+Render the same value in display-only mode:
+
+<Story of={DemoStories.DisplayOnly} />

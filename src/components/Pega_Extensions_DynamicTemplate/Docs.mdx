@@ -1,0 +1,154 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Dynamic Template is an open, layout-driven template where you provide an **HTML/CSS layout** in `HTMLContent` and define **slots** where config regions (A–F) are rendered. Authoring maps Fields, Views, Widgets, or Insights to each region; the component injects that content into the matching slots.
+
+<Primary />
+
+## Slot convention
+
+Slots are defined in your HTML with the attribute **`data-region`**. The value must be one of the config region names: **A**, **B**, **C**, **D**, **E**, or **F**.
+
+- Each element with `data-region="A"` will receive the content configured for **Region A** in the template authoring (e.g. from the CONTENTPICKER for "Region A").
+- Regions that have no slot in the HTML are skipped. Slots that have no configured content remain empty.
+
+Example layout:
+
+```html
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+  <aside data-region="A"></aside>
+  <main data-region="B"></main>
+  <footer data-region="C"></footer>
+</div>
+```
+
+The template is plain HTML and CSS, so it is straightforward to read and edit for an LLM or a front-end developer.
+
+# Template Reference
+
+Quick reference for building HTML templates. Region names are flexible; use **data-region** values that match your template type and layout.
+
+## Tabs
+
+Group content into switchable panels (e.g. Details / History / Attachments).
+
+| Role                 | Attribute / element                       | Purpose                                             |
+| -------------------- | ----------------------------------------- | --------------------------------------------------- |
+| Container            | **data-dynamic-template-tabs**            | Wraps the entire tab set                            |
+| Container (optional) | **data-tabs-orientation**                 | `"horizontal"` (default) or `"vertical"`            |
+| Container (optional) | **data-tabs-position**                    | `"start"` (default) or `"end"`                      |
+| Tab list             | **data-tab-list**                         | Wraps the tab triggers                              |
+| Trigger              | **data-tab** + **data-tab-id**            | One per tab; value is a unique id                   |
+| Panel                | **data-tab-panel** + same **data-tab-id** | One panel per tab; put **data-region** slots inside |
+| Container (optional) | **data-active-tab**                       | Initial active tab id; default is first tab         |
+
+**Example:**
+
+```html
+<div data-dynamic-template-tabs data-tabs-orientation="horizontal">
+  <div data-tab-list>
+    <button type="button" data-tab data-tab-id="details">Details</button>
+    <button type="button" data-tab data-tab-id="history">History</button>
+  </div>
+  <div data-tab-panel data-tab-id="details"><div data-region="main"></div></div>
+  <div data-tab-panel data-tab-id="history"><div data-region="supporting"></div></div>
+</div>
+```
+
+---
+
+## Accordion
+
+Expand/collapse sections (e.g. Summary / Data / Attachments in a sidebar).
+
+| Role                 | Attribute / element                             | Purpose                                             |
+| -------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| Container            | **data-dynamic-template-accordion**             | Wraps the accordion                                 |
+| Container (optional) | **data-accordion-type**                         | `"single"` (one open) or `"multiple"` (default)     |
+| Container (optional) | **data-accordion-open**                         | Id of section open on load; default is first        |
+| Item                 | **data-accordion-item** + **data-accordion-id** | One wrapper per section                             |
+| Trigger              | **data-accordion-trigger**                      | Button or heading that toggles the section          |
+| Content              | **data-accordion-content**                      | Collapsible panel; put **data-region** slots inside |
+
+**Example:**
+
+```html
+<div data-dynamic-template-accordion data-accordion-type="single">
+  <div data-accordion-item data-accordion-id="summary">
+    <button type="button" data-accordion-trigger>Summary</button>
+    <div data-accordion-content><div data-region="Summary"></div></div>
+  </div>
+  <div data-accordion-item data-accordion-id="attachments">
+    <button type="button" data-accordion-trigger>Attachments</button>
+    <div data-accordion-content><div data-region="Attachments"></div></div>
+  </div>
+</div>
+```
+
+---
+
+## Split (resizable panels)
+
+Resizable columns or rows (e.g. sidebar + main + rail). Direct children must alternate: **data-split-panel**, **data-split-handle**, **data-split-panel**, …
+
+| Role                 | Attribute / element             | Purpose                                                                                   |
+| -------------------- | ------------------------------- | ----------------------------------------------------------------------------------------- |
+| Container            | **data-dynamic-template-split** | Wraps the split layout; add **id** to persist sizes                                       |
+| Container (optional) | **data-split-orientation**      | `"horizontal"` (default) or `"vertical"`                                                  |
+| Container (optional) | **data-split-initial**          | Space-separated sizes, e.g. `"280px 1fr 200px"` (one per panel; use **1fr** for flexible) |
+| Panel                | **data-split-panel**            | One per column/row; put **data-region** slots inside                                      |
+| Handle               | **data-split-handle**           | Draggable divider between two panels                                                      |
+
+**Example (two columns):**
+
+```html
+<div data-dynamic-template-split data-split-initial="280px 1fr" id="main-split">
+  <aside data-split-panel><div data-region="Summary"></div></aside>
+  <div data-split-handle aria-hidden="true"></div>
+  <main data-split-panel><div data-region="main"></div></main>
+</div>
+```
+
+**Example (three columns):**
+
+```html
+<div data-dynamic-template-split data-split-initial="240px 1fr 200px">
+  <div data-split-panel data-region="Summary"></div>
+  <div data-split-handle aria-hidden="true"></div>
+  <div data-split-panel data-region="main"></div>
+  <div data-split-handle aria-hidden="true"></div>
+  <div data-split-panel data-region="feed"></div>
+</div>
+```
+
+## Sanitization
+
+`HTMLContent` is sanitized with DOMPurify before being rendered. Safe tags (e.g. `div`, `section`, `header`, `style`, `data-region`) and common attributes are allowed; script and unsafe attributes are removed.
+
+## Empty HTMLContent
+
+If `HTMLContent` is empty or not provided, the component uses a minimal default layout: a simple grid with six slots (`data-region="A"` through `data-region="F"`), so all configured regions still render in order.
+
+## Props
+
+<Controls />
+
+## Tab layout examples
+
+<Story of={DemoStories.TabLayoutHorizontal} />
+
+<Story of={DemoStories.TabLayoutVertical} />
+
+<Story of={DemoStories.TabLayoutHorizontalEnd} />
+
+<Story of={DemoStories.TabLayoutVerticalEnd} />
+
+## Additional examples
+
+<Story of={DemoStories.WithCustomLayout} />
+
+<Story of={DemoStories.EmptyHTMLUsesDefaultSlots} />

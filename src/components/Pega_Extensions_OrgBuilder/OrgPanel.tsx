@@ -1,9 +1,12 @@
 'use client';
 
-import type { DragEvent } from 'react';
+import React, { useMemo } from 'react';
+import { Draggable, Droppable } from '@hello-pangea/dnd';
 import styled from 'styled-components';
 import type { OrgNode } from './OrgTypes';
 import { OrgNodeComponent } from './OrgNode';
+
+type FlattenedItem = { node: OrgNode; depth: number };
 
 const PanelRoot = styled.div<{ $isLeft: boolean }>`
   flex: 1;
@@ -56,97 +59,130 @@ const DropZone = styled.div<{ $isDraggingOver: boolean }>`
 
 const RightDropZone = styled(DropZone)`
   min-height: 37.5rem;
+  position: relative;
+`;
+
+/** Keeps a valid Draggable in the root droppable without taking layout space (empty strip). */
+const RootPlaceholderSlot = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  pointer-events: none;
 `;
 
 interface OrgPanelProps {
   title: string;
   subtitle?: string;
   organization: OrgNode;
+  flattenedReference?: FlattenedItem[];
   panel: 'left' | 'right';
   onRemoveConnection?: (nodeId: string, parentId?: string) => void;
-  draggedNodeId?: string | null;
-  hoveredTargetId?: string | null;
-  isHoveringRoot?: boolean;
-  isDragInProgress?: boolean;
-  onDragStartNode?: (nodeId: string, source: 'left' | 'right', sourceNode: OrgNode) => void;
-  onDragEndNode?: () => void;
-  onDragOverNode?: (targetId: string) => boolean;
-  onDragOverRoot?: () => boolean;
-  onDropInRightPanel?: (event: DragEvent<HTMLDivElement>) => void;
-  onDropOnNode?: (targetId: string) => void;
-  onDropOnRoot?: () => void;
 }
 
 export function OrgPanel({
   title,
   subtitle,
   organization,
+  flattenedReference = [],
   panel,
   onRemoveConnection,
-  draggedNodeId,
-  hoveredTargetId,
-  isHoveringRoot = false,
-  isDragInProgress = false,
-  onDragStartNode,
-  onDragEndNode,
-  onDragOverNode,
-  onDragOverRoot,
-  onDropInRightPanel,
-  onDropOnNode,
 }: OrgPanelProps) {
   const isLeft = panel === 'left';
   const isRight = panel === 'right';
 
+  const flattenedIndexMap = useMemo(() => {
+    const map: Record<string, number> = {};
+    flattenedReference.forEach((item, i) => {
+      map[item.node.id] = i;
+    });
+    return map;
+  }, [flattenedReference]);
+
   const leftContent = isLeft && (
-    <DropZone $isDraggingOver={false}>
-      <OrgNodeComponent
-        node={organization}
-        panel='left'
-        isRoot={true}
-        depth={0}
-        draggedNodeId={draggedNodeId}
-        onDragStartNode={onDragStartNode}
-        onDragEndNode={onDragEndNode}
-      />
-    </DropZone>
+    <Droppable
+      droppableId='reference'
+      ignoreContainerClipping
+      renderClone={(provided, _snapshot, rubric) => {
+        const item = flattenedReference.find((x) => x.node.id === rubric.draggableId);
+        if (!item) return null;
+        const dp = provided.draggableProps;
+        const hp = provided.dragHandleProps;
+        return (
+          <div
+            ref={provided.innerRef}
+            {...dp}
+            {...(hp ?? {})}
+            style={{
+              ...(dp.style as React.CSSProperties),
+              ...(hp && typeof hp === 'object' && 'style' in hp && hp.style ? (hp.style as React.CSSProperties) : {}),
+            }}
+          >
+            <OrgNodeComponent
+              node={item.node}
+              panel='left'
+              contentOnly
+              depth={item.depth}
+              flattenedIndexMap={flattenedIndexMap}
+            />
+          </div>
+        );
+      }}
+      /* Mount drag clone on body in the iframe document. #storybook-root or other wrappers
+         often have transforms/overflow and break fixed positioning in the preview iframe. */
+      getContainerForClone={() => document.body}
+    >
+      {(provided, snapshot) => (
+        <DropZone
+          className='org-builder-reference-zone'
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          $isDraggingOver={snapshot.isDraggingOver}
+        >
+          <OrgNodeComponent
+            node={organization}
+            panel='left'
+            isRoot={true}
+            depth={0}
+            flattenedIndexMap={flattenedIndexMap}
+          />
+          {provided.placeholder}
+        </DropZone>
+      )}
+    </Droppable>
   );
 
   const rightContent = isRight && (
-    <RightDropZone
-      $isDraggingOver={isHoveringRoot}
-      onDragOver={(event) => {
-        if (isDragInProgress) {
-          event.preventDefault();
-          event.dataTransfer.dropEffect = 'move';
-        }
-        const isDirect = event.target === event.currentTarget;
-        if (isDirect) {
-          const canDrop = onDragOverRoot?.() ?? false;
-          if (canDrop) {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'move';
-          }
-        }
-      }}
-      onDrop={(event) => {
-        event.preventDefault();
-        onDropInRightPanel?.(event);
-      }}
-    >
-      <OrgNodeComponent
-        node={organization}
-        panel='right'
-        isRoot={true}
-        depth={0}
-        onRemoveConnection={onRemoveConnection}
-        draggedNodeId={draggedNodeId}
-        hoveredTargetId={hoveredTargetId}
-        onDragStartNode={onDragStartNode}
-        onDragEndNode={onDragEndNode}
-        onDragOverNode={onDragOverNode}
-        onDropOnNode={onDropOnNode}
-      />
-    </RightDropZone>
+    <Droppable droppableId='root' ignoreContainerClipping>
+      {(provided, snapshot) => (
+        <RightDropZone ref={provided.innerRef} {...provided.droppableProps} $isDraggingOver={snapshot.isDraggingOver}>
+          {/* Disabled Draggable required for valid root target; kept out of layout flow */}
+          <RootPlaceholderSlot aria-hidden>
+            <Draggable draggableId='root-placeholder' index={0} isDragDisabled>
+              {(p) => {
+                const { style, ...rest } = p.draggableProps;
+                return (
+                  <div
+                    ref={p.innerRef}
+                    {...rest}
+                    style={{ ...(style as React.CSSProperties), width: 0, height: 0, minHeight: 0 }}
+                  />
+                );
+              }}
+            </Draggable>
+          </RootPlaceholderSlot>
+          <OrgNodeComponent
+            node={organization}
+            panel='right'
+            isRoot={true}
+            depth={0}
+            onRemoveConnection={onRemoveConnection}
+          />
+          {provided.placeholder}
+        </RightDropZone>
+      )}
+    </Droppable>
   );
 
   return (
@@ -156,9 +192,7 @@ export function OrgPanel({
         {subtitle && <PanelSubtitle>{subtitle}</PanelSubtitle>}
         {isLeft && <PanelHelper>Drag nodes to the right panel to build your organization</PanelHelper>}
         {isRight && (
-          <PanelHelper>
-            Drop onto a node to make it its child, or onto the empty panel to attach to the root.
-          </PanelHelper>
+          <PanelHelper>Drop nodes here or on existing nodes to add them. Click X to remove connections.</PanelHelper>
         )}
       </PanelHeader>
 
