@@ -5,8 +5,6 @@ import {
   CardContent,
   CardHeader,
   ComboBox,
-  Flex,
-  Modal,
   type MenuItemProps,
   Option,
   Popover,
@@ -74,10 +72,8 @@ type LangSwitchPresentationContextValue = {
   setTimezoneFilter: (value: string) => void;
   filteredTimezoneItems: MenuItemProps[];
   isSwitching: boolean;
-  isTimezoneConfirmationOpen: boolean;
   handleTimezoneChange: (nextTimezone: string) => void;
   handleTimezoneApply: () => Promise<void>;
-  closeTimezoneConfirmation: () => void;
 };
 
 type LangSwitchPresentationProviderProps = LangSwitchPresentationContextValue & {
@@ -112,7 +108,6 @@ export const DEFAULT_TIMEZONE_ERROR_MESSAGE = 'Unable to switch timezone.';
 export const DEFAULT_APPLY_BUTTON_LABEL = 'Apply';
 export const DEFAULT_TIMEZONE_CONFIRMATION_HEADING = 'Timezone preference saved';
 export const DEFAULT_TIMEZONE_CONFIRMATION_MESSAGE = 'Your timezone change will apply the next time you log in.';
-export const DEFAULT_TIMEZONE_CONFIRMATION_OK = 'OK';
 
 const DEFAULT_SELECT_LABEL = 'Select language';
 const DEFAULT_TIMEZONE_SELECT_LABEL = 'Search timezone';
@@ -294,10 +289,8 @@ export function TimezoneSection() {
     setTimezoneFilter,
     filteredTimezoneItems,
     isSwitching,
-    isTimezoneConfirmationOpen,
     handleTimezoneChange,
     handleTimezoneApply,
-    closeTimezoneConfirmation,
   } = useLangSwitchPresentationContext();
 
   return (
@@ -307,59 +300,45 @@ export function TimezoneSection() {
         <StyledSectionMeta>{localize(DEFAULT_TIMEZONE_PREFERENCE_HELPER)}</StyledSectionMeta>
       </StyledSectionHeader>
       {availableTimezones.length > 0 ? (
-        <>
-          <StyledTimezoneControls>
-            <StyledTimezonePicker>
-              <ComboBox
-                aria-label={localize(DEFAULT_TIMEZONE_SELECT_LABEL)}
-                selected={{
-                  items: selectedTimezone
-                    ? {
-                        id: selectedTimezone,
-                        text: formatTimezoneLabel(selectedTimezone),
-                      }
-                    : undefined,
-                }}
-                value={timezoneFilter}
-                onChange={(event) => {
-                  setTimezoneFilter(event.target.value);
-                }}
-                onBlur={() => {
-                  setTimezoneFilter('');
-                }}
-                disabled={isSwitching}
-                info={localize(DEFAULT_REFRESH_NOTE)}
-                menu={{
-                  items: filteredTimezoneItems,
-                  mode: 'single-select',
-                  role: 'listbox',
-                  scrollAt: 8,
-                  emptyText: localize(DEFAULT_NO_TIMEZONES_FOUND_MESSAGE),
-                  onItemClick: (id) => {
-                    handleTimezoneChange(id);
-                  },
-                }}
-              />
-            </StyledTimezonePicker>
-            <StyledTimezoneAction>
-              <Button variant='primary' onClick={() => void handleTimezoneApply()} disabled={!isTimezoneApplyEnabled}>
-                {localize(DEFAULT_APPLY_BUTTON_LABEL)}
-              </Button>
-            </StyledTimezoneAction>
-          </StyledTimezoneControls>
-          {isTimezoneConfirmationOpen ? (
-            <Modal heading={localize(DEFAULT_TIMEZONE_CONFIRMATION_HEADING)}>
-              <Flex container={{ direction: 'column', gap: 1.5 }}>
-                <Text>{localize(DEFAULT_TIMEZONE_CONFIRMATION_MESSAGE)}</Text>
-                <Flex container={{ justify: 'end' }}>
-                  <Button variant='primary' onClick={closeTimezoneConfirmation}>
-                    {localize(DEFAULT_TIMEZONE_CONFIRMATION_OK)}
-                  </Button>
-                </Flex>
-              </Flex>
-            </Modal>
-          ) : null}
-        </>
+        <StyledTimezoneControls>
+          <StyledTimezonePicker>
+            <ComboBox
+              aria-label={localize(DEFAULT_TIMEZONE_SELECT_LABEL)}
+              selected={{
+                items: selectedTimezone
+                  ? {
+                      id: selectedTimezone,
+                      text: formatTimezoneLabel(selectedTimezone),
+                    }
+                  : undefined,
+              }}
+              value={timezoneFilter}
+              onChange={(event) => {
+                setTimezoneFilter(event.target.value);
+              }}
+              onBlur={() => {
+                setTimezoneFilter('');
+              }}
+              disabled={isSwitching}
+              info={localize(DEFAULT_REFRESH_NOTE)}
+              menu={{
+                items: filteredTimezoneItems,
+                mode: 'single-select',
+                role: 'listbox',
+                scrollAt: 8,
+                emptyText: localize(DEFAULT_NO_TIMEZONES_FOUND_MESSAGE),
+                onItemClick: (id) => {
+                  handleTimezoneChange(id);
+                },
+              }}
+            />
+          </StyledTimezonePicker>
+          <StyledTimezoneAction>
+            <Button variant='primary' onClick={() => void handleTimezoneApply()} disabled={!isTimezoneApplyEnabled}>
+              {localize(DEFAULT_APPLY_BUTTON_LABEL)}
+            </Button>
+          </StyledTimezoneAction>
+        </StyledTimezoneControls>
       ) : (
         <Text>{localize(DEFAULT_NO_TIMEZONES_MESSAGE)}</Text>
       )}

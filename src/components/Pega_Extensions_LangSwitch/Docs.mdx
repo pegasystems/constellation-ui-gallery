@@ -5,11 +5,9 @@ import * as DemoStories from './demo.stories';
 
 # Overview
 
-Renders a consumer-friendly language and timezone preference panel inside a card. The widget reads the current locale from `PCore.getEnvironmentInfo().getUseLocale()`, displays the configured language options in a dropdown, and calls `D_SetLocale` with the selected `useLocale` value.
+Renders a consumer-friendly language and timezone preference panel inside a card. The widget reads the current locale from `PCore.getEnvironmentInfo().getUseLocale()`, displays the configured language options in a dropdown, and reloads the page with the selected `locale` parameter. When `persistChanges` is enabled, it first calls `D_SetLocale` with the selected `useLocale` value before reloading.
 
-For timezone support, the widget reads the current timezone from `PCore.getEnvironmentInfo().getTimeZone()`, builds a searchable picker from the browser's available IANA timezone values via `Intl.supportedValuesOf('timeZone')`, and formats each option as `(UTC±hh:mm) - Friendly Name` so the list is easier to scan. Selecting a timezone stages the preference locally, and clicking Apply sends the raw timezone value back to the server through `D_SetLocale` with `useTimeZone`. After a successful `200` response, the widget shows a confirmation modal that explains the new timezone will apply on the user's next login.
-
-The updated presentation emphasizes current selections, clearer copy, and a more polished preference-panel layout for consumer-facing experiences.
+For timezone support, the widget reads the current timezone from `PCore.getEnvironmentInfo().getTimeZone()`, builds a searchable picker from the browser's available IANA timezone values via `Intl.supportedValuesOf('timeZone')`, and formats each option as `(UTC±hh:mm) - Friendly Name` so the list is easier to scan. Selecting a timezone stages the preference locally, and clicking Apply sends the raw timezone value back to the server through `D_SetLocale` with `useTimeZone`. When that request resolves without an explicit failure, the widget shows an inline confirmation alert explaining that the new timezone will apply on the user's next login.
 
 ## Configuration
 
@@ -27,6 +25,7 @@ Additional optional properties let you tailor the panel for a public-facing site
 - `compactView`: Renders a narrow language-only selector intended for nav rules or other placements around 60px wide. In this mode the control shows compact language codes such as `EN` and `FR`.
 - `heading`: Replaces the default title.
 - `helperText`: Adds supporting text under the title.
+- `persistChanges`: Calls `D_SetLocale` before reloading the page so the selected locale is persisted server-side. Defaults to `false`.
 - `showLocaleCode`: Shows locale codes such as `en_EN` beside friendly labels.
 - `showCurrentSummary`: Shows summary cards for the current language and timezone.
 - `prioritizeBrowserTimezone`: Pins the browser timezone to the top of the searchable timezone picker.
@@ -44,3 +43,13 @@ Use the compact view when the widget is placed in a tight navigation slot and on
 ## Props
 
 <Controls />
+
+## Configuration
+
+If you want to persist the changes, here is the D_SetLocale DP configuration that you will need to created
+
+![Data page](LangSwitch_Config_1.png)
+
+![Data page](LangSwitch_Config_2.png)
+
+![Data page](LangSwitch_Config_3.png)

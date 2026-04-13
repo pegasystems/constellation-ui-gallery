@@ -43,6 +43,12 @@
             "defaultValue": "Choose the language and timezone you want to use across the experience."
         },
         {
+            "name": "persistChanges",
+            "label": "Persist locale changes with D_SetLocale",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
             "name": "showLocaleCode",
             "label": "Show locale code",
             "format": "BOOLEAN",
@@ -79,11 +85,12 @@
         "compactView": false,
         "heading": "Language & Region",
         "helperText": "Choose the language and timezone you want to use across the experience.",
+        "persistChanges": false,
         "showLocaleCode": false,
         "showCurrentSummary": true,
         "prioritizeBrowserTimezone": true
     },
-    "buildDate": "2026-04-13T21:40:06.874Z",
+    "buildDate": "2026-04-13T22:59:06.718Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }

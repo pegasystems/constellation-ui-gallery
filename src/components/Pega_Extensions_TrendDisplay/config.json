@@ -246,7 +246,7 @@
         "label": "@L $this.label",
         "detailFVLItem": true
     },
-    "buildDate": "2026-04-13T21:40:08.105Z",
+    "buildDate": "2026-04-13T22:59:07.977Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }

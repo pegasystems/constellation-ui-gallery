@@ -26,7 +26,7 @@ const setPCore = (currentLocale = 'en_EN', currentTimezone = 'UTC', setTimezone 
     },
     getDataPageUtils: () => {
       return {
-        getPageDataAsync: () => Promise.resolve({ status: 200 }),
+        getPageDataAsync: () => Promise.resolve({ success: true }),
       };
     },
   };
@@ -199,6 +199,7 @@ test('calls D_SetLocale and reloads when the data page succeeds', async () => {
     <LangSwitchModule.PegaExtensionsLangSwitch
       Configuration='[{"name":"English","locale":"en_EN"},{"name":"French","locale":"fr_FR"}]'
       changeTimezone
+      persistChanges
       getPConnect={buildPConnect}
     />,
   );
@@ -216,7 +217,79 @@ test('calls D_SetLocale and reloads when the data page succeeds', async () => {
   });
 });
 
+test('skips D_SetLocale and reloads immediately when persistChanges is false', async () => {
+  const getPageDataAsync = jest.fn(async () => ({ status: 200 }));
+
+  runtime.PCore = {
+    getEnvironmentInfo: () => {
+      return {
+        getUseLocale: () => 'en_EN',
+        getTimeZone: () => 'UTC',
+      };
+    },
+    getDataPageUtils: () => {
+      return {
+        getPageDataAsync,
+      };
+    },
+  };
+
+  render(
+    <LangSwitchModule.PegaExtensionsLangSwitch
+      Configuration='[{"name":"English","locale":"en_EN"},{"name":"French","locale":"fr_FR"}]'
+      getPConnect={buildPConnect}
+    />,
+  );
+
+  fireEvent.change(screen.getByLabelText('Select language'), { target: { value: 'fr_FR' } });
+
+  await waitFor(() => {
+    expect(getPageDataAsync).not.toHaveBeenCalled();
+    expect(reloadMock).toHaveBeenCalledWith('fr_FR');
+  });
+});
+
 test('calls D_SetLocale from the compact view when the language changes', async () => {
+  const getPageDataAsync = jest.fn(async () => ({ status: 200 }));
+
+  runtime.PCore = {
+    getEnvironmentInfo: () => {
+      return {
+        getUseLocale: () => 'en_EN',
+        getTimeZone: () => 'UTC',
+      };
+    },
+    getDataPageUtils: () => {
+      return {
+        getPageDataAsync,
+      };
+    },
+  };
+
+  render(
+    <LangSwitchModule.PegaExtensionsLangSwitch
+      Configuration='[{"name":"English","locale":"en_EN"},{"name":"French","locale":"fr_FR"}]'
+      compactView
+      persistChanges
+      getPConnect={buildPConnect}
+    />,
+  );
+
+  fireEvent.click(screen.getByRole('button', { name: 'Select language' }));
+  fireEvent.click(await screen.findByRole('option', { name: /French/ }));
+
+  await waitFor(() => {
+    expect(getPageDataAsync.mock.calls[0]).toEqual([
+      'D_SetLocale',
+      'primary',
+      { useLocale: 'fr_FR' },
+      { invalidateCache: true },
+    ]);
+    expect(reloadMock).toHaveBeenCalledWith('fr_FR');
+  });
+});
+
+test('skips D_SetLocale from the compact view when persistChanges is false', async () => {
   const getPageDataAsync = jest.fn(async () => ({ status: 200 }));
 
   runtime.PCore = {
@@ -245,18 +318,13 @@ test('calls D_SetLocale from the compact view when the language changes', async 
   fireEvent.click(await screen.findByRole('option', { name: /French/ }));
 
   await waitFor(() => {
-    expect(getPageDataAsync.mock.calls[0]).toEqual([
-      'D_SetLocale',
-      'primary',
-      { useLocale: 'fr_FR' },
-      { invalidateCache: true },
-    ]);
+    expect(getPageDataAsync).not.toHaveBeenCalled();
     expect(reloadMock).toHaveBeenCalledWith('fr_FR');
   });
 });
 
-test('calls D_SetLocale with useTimeZone only when apply is clicked and shows a confirmation modal', async () => {
-  const getPageDataAsync = jest.fn(async () => ({ status: 200 }));
+test('calls D_SetLocale with useTimeZone only when apply is clicked and shows a confirmation alert', async () => {
+  const getPageDataAsync = jest.fn(async () => ({ success: true }));
 
   runtime.PCore = {
     getEnvironmentInfo: () => {
@@ -302,14 +370,47 @@ test('calls D_SetLocale with useTimeZone only when apply is clicked and shows a 
   });
 
   expect(reloadMock).not.toHaveBeenCalled();
-  expect(await screen.findByRole('dialog')).toBeTruthy();
-  expect(screen.getByText('Your timezone change will apply the next time you log in.')).toBeTruthy();
+  expect(await screen.findByRole('alert')).toBeTruthy();
+  expect(screen.getByText(/Timezone preference saved\./)).toBeTruthy();
+  expect(screen.getByText(/next time you log in\./)).toBeTruthy();
+});
 
-  fireEvent.click(screen.getByRole('button', { name: 'OK' }));
+test('treats a resolved timezone save without a status code as successful', async () => {
+  const getPageDataAsync = jest.fn(async () => undefined);
 
-  await waitFor(() => {
-    expect(screen.queryByRole('dialog')).toBeNull();
-  });
+  runtime.PCore = {
+    getEnvironmentInfo: () => {
+      return {
+        getUseLocale: () => 'en_EN',
+        getTimeZone: () => 'UTC',
+      };
+    },
+    getLocaleUtils: () => {
+      return {
+        getTimeZoneInUse: () => 'UTC',
+      };
+    },
+    getDataPageUtils: () => {
+      return {
+        getPageDataAsync,
+      };
+    },
+  };
+
+  render(
+    <LangSwitchModule.PegaExtensionsLangSwitch
+      Configuration='[{"name":"English","locale":"en_EN"}]'
+      changeTimezone
+      getPConnect={buildPConnect}
+    />,
+  );
+
+  fireEvent.click(screen.getByRole('combobox', { name: 'Search timezone' }));
+  fireEvent.click(await screen.findByRole('option', { name: formatTimezoneLabel('America/New_York') }));
+  fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
+
+  expect(await screen.findByRole('alert')).toBeTruthy();
+  expect(screen.queryByText('Unable to switch timezone.')).toBeNull();
 });
 
 afterAll(() => {

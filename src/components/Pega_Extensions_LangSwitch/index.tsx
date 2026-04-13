@@ -7,6 +7,8 @@ import {
   DEFAULT_LANGUAGE_ERROR_MESSAGE,
   DEFAULT_SWITCHING_LANGUAGE_MESSAGE,
   DEFAULT_SWITCHING_TIMEZONE_MESSAGE,
+  DEFAULT_TIMEZONE_CONFIRMATION_HEADING,
+  DEFAULT_TIMEZONE_CONFIRMATION_MESSAGE,
   DEFAULT_TIMEZONE_ERROR_MESSAGE,
   LanguageSection,
   LangSwitchInvalidConfiguration,
@@ -38,10 +40,25 @@ type LangSwitchProps = {
   compactView?: boolean;
   heading?: string;
   helperText?: string;
+  persistChanges?: boolean;
   showLocaleCode?: boolean;
   showCurrentSummary?: boolean;
   prioritizeBrowserTimezone?: boolean;
   getPConnect?: any;
+};
+
+const didTimezonePreferenceSaveSucceed = (response: unknown) => {
+  if (!response || typeof response !== 'object') {
+    return true;
+  }
+
+  const status = 'status' in response ? (response as { status?: unknown }).status : undefined;
+
+  if (typeof status === 'number') {
+    return status >= 200 && status < 300;
+  }
+
+  return !('error' in response) && !('errors' in response);
 };
 
 export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
@@ -52,6 +69,7 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
     getPConnect,
     heading = DEFAULT_HEADING,
     helperText = DEFAULT_HELPER_TEXT,
+    persistChanges = false,
     showLocaleCode = false,
     showCurrentSummary = true,
     prioritizeBrowserTimezone: shouldPrioritizeBrowserTimezone = true,
@@ -140,6 +158,11 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
       return;
     }
 
+    if (!persistChanges) {
+      langSwitchRuntime.reloadPage(nextLocale);
+      return;
+    }
+
     setIsSwitchingLocale(true);
 
     try {
@@ -166,6 +189,7 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
   const handleTimezoneChange = (nextTimezone: string) => {
     setSelectedTimezone(nextTimezone);
     setTimezoneFilter('');
+    setIsTimezoneConfirmationOpen(false);
     setErrorMessage('');
   };
 
@@ -174,6 +198,8 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
       return;
     }
 
+    setIsTimezoneConfirmationOpen(false);
+    setErrorMessage('');
     setIsSwitchingTimezone(true);
 
     try {
@@ -185,7 +211,7 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
         { invalidateCache: true },
       );
 
-      if (response?.status !== 200) {
+      if (!didTimezonePreferenceSaveSucceed(response)) {
         throw new Error('Unable to persist timezone preference.');
       }
 
@@ -196,10 +222,6 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
     } finally {
       setIsSwitchingTimezone(false);
     }
-  };
-
-  const closeTimezoneConfirmation = () => {
-    setIsTimezoneConfirmationOpen(false);
   };
 
   if (hasInvalidConfiguration) {
@@ -231,7 +253,6 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
     isTimezoneConfirmationOpen,
     handleTimezoneChange,
     handleTimezoneApply,
-    closeTimezoneConfirmation,
   };
 
   if (compactView) {
@@ -263,6 +284,13 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
             ) : null}
             {allowTimezoneSelection && isSwitchingTimezone ? (
               <StatusNotice message={localize(DEFAULT_SWITCHING_TIMEZONE_MESSAGE)} tone='info' role='status' />
+            ) : null}
+            {allowTimezoneSelection && isTimezoneConfirmationOpen ? (
+              <StatusNotice
+                message={`${localize(DEFAULT_TIMEZONE_CONFIRMATION_HEADING)}. ${localize(DEFAULT_TIMEZONE_CONFIRMATION_MESSAGE)}`}
+                tone='info'
+                role='alert'
+              />
             ) : null}
             {errorMessage ? <StatusNotice message={errorMessage} tone='urgent' role='alert' /> : null}
           </StyledPanel>
