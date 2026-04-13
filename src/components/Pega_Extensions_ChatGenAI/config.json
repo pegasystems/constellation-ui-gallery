@@ -52,7 +52,7 @@
         "maxHeight": "auto",
         "sendAllUserContext": "true"
     },
-    "buildDate": "2026-04-13T21:40:05.324Z",
+    "buildDate": "2026-04-13T22:59:05.164Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }

@@ -91,7 +91,7 @@
         "detailFVLItem": true,
         "isContainerWidth": true
     },
-    "buildDate": "2026-04-13T21:40:04.356Z",
+    "buildDate": "2026-04-13T22:59:04.222Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }

@@ -72,7 +72,7 @@
         "referenceHeading": "",
         "targetHeading": ""
     },
-    "buildDate": "2026-04-13T21:40:07.402Z",
+    "buildDate": "2026-04-13T22:59:07.238Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }

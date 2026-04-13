@@ -15,6 +15,11 @@ const meta: Meta<StoryArgs> = {
         type: 'boolean',
       },
     },
+    persistChanges: {
+      control: {
+        type: 'boolean',
+      },
+    },
     currentLocale: {
       control: {
         type: 'select',
@@ -52,7 +57,11 @@ const setPCore = (currentLocale: string, currentTimezone: string) => {
           _context: string,
           parameters: { useLocale?: string; useTimeZone?: string },
         ) => {
-          return Promise.resolve({ status: parameters.useLocale || parameters.useTimeZone ? 200 : 500 });
+          if (parameters.useLocale || parameters.useTimeZone) {
+            return Promise.resolve({ success: true });
+          }
+
+          return Promise.resolve({ status: 500 });
         },
       };
     },
@@ -96,6 +105,7 @@ export const Default: Story = {
     compactView: false,
     heading: 'Language & Region',
     helperText: 'Choose the language and timezone you want to use across the experience.',
+    persistChanges: false,
     showCurrentSummary: true,
     showLocaleCode: false,
     prioritizeBrowserTimezone: true,
@@ -130,6 +140,7 @@ export const CompactLanguageOnly: Story = {
     currentTimezone: 'UTC',
     changeTimezone: false,
     compactView: true,
+    persistChanges: false,
     showCurrentSummary: false,
     showLocaleCode: false,
     prioritizeBrowserTimezone: true,

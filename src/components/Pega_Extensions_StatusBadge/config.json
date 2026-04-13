@@ -99,7 +99,7 @@
         "urgentStatus": "@L blocked",
         "detailFVLItem": true
     },
-    "buildDate": "2026-04-13T21:40:08.012Z",
+    "buildDate": "2026-04-13T22:59:07.876Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.16.1"
+    "packageCosmosVersion": "8.17.0"
 }
