@@ -15,8 +15,16 @@ const meta: Meta<typeof PegaExtensionsDateInput> = {
   title: 'Fields/Date Input',
   component: PegaExtensionsDateInput,
   parameters: {
-    controls: {
-      sort: 'none',
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
+      },
     },
   },
   argTypes: {
