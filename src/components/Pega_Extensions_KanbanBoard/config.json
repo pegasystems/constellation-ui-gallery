@@ -78,7 +78,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Thu Mar 26 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -89,7 +89,7 @@
         "groups": "New,Open,Pending-Review,Resolved-Completed",
         "groupProperty": "pyStatusWork"
     },
-    "buildDate": "2026-03-26T22:19:29.051Z",
+    "buildDate": "2026-04-13T21:40:06.781Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.15.5"
+    "packageCosmosVersion": "8.16.1"
 }
