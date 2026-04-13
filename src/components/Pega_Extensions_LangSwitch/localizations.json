@@ -1,0 +1,29 @@
+{
+  "fields": {
+    "Language & Region": "Language & Region",
+    "Choose the language and timezone you want to use across the experience.": "Choose the language and timezone you want to use across the experience.",
+    "Select language": "Select language",
+    "Search timezone": "Search timezone",
+    "Current language": "Current language",
+    "Current timezone": "Current timezone",
+    "Language preference": "Language preference",
+    "Language changes refresh the page to apply translated content.": "Language changes refresh the page to apply translated content.",
+    "Timezone preference": "Timezone preference",
+    "Search for a city or UTC offset to find the timezone you want.": "Search for a city or UTC offset to find the timezone you want.",
+    "Detected from your device": "Detected from your device",
+    "Your page will refresh after you apply a new preference.": "Your page will refresh after you apply a new preference.",
+    "Provide a valid JSON array with name and locale values.": "Provide a valid JSON array with name and locale values.",
+    "No languages are available.": "No languages are available.",
+    "No timezones are available.": "No timezones are available.",
+    "No matching timezones were found.": "No matching timezones were found.",
+    "Switching language...": "Switching language...",
+    "Saving timezone...": "Saving timezone...",
+    "Unable to switch language.": "Unable to switch language.",
+    "Unable to switch timezone.": "Unable to switch timezone.",
+    "Apply": "Apply",
+    "Apply to save your timezone preference. The change takes effect the next time you log in.": "Apply to save your timezone preference. The change takes effect the next time you log in.",
+    "Timezone preference saved": "Timezone preference saved",
+    "Your timezone change will apply the next time you log in.": "Your timezone change will apply the next time you log in.",
+    "OK": "OK"
+  }
+}

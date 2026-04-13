@@ -1,0 +1,89 @@
+{
+    "name": "Pega_Extensions_LangSwitch",
+    "label": "Language Switch",
+    "description": "Render a language and timezone switcher in a widget",
+    "organization": "Pega",
+    "version": "4.0.3",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_LangSwitch",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "Configuration",
+            "label": "Languages configuration (JSON)",
+            "format": "TEXT"
+        },
+        {
+            "name": "changeTimezone",
+            "label": "Allow the user to select a timezone",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "compactView",
+            "label": "Use compact language-only view",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "defaultValue": "Language & Region"
+        },
+        {
+            "name": "helperText",
+            "label": "Helper text",
+            "format": "TEXT",
+            "defaultValue": "Choose the language and timezone you want to use across the experience."
+        },
+        {
+            "name": "showLocaleCode",
+            "label": "Show locale code",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "showCurrentSummary",
+            "label": "Show current preference summary",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "prioritizeBrowserTimezone",
+            "label": "Show browser timezone first",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "Configuration": "[{\"name\":\"English\",\"locale\":\"en_EN\"},{\"name\":\"French\",\"locale\":\"fr_FR\"}]",
+        "changeTimezone": false,
+        "compactView": false,
+        "heading": "Language & Region",
+        "helperText": "Choose the language and timezone you want to use across the experience.",
+        "showLocaleCode": false,
+        "showCurrentSummary": true,
+        "prioritizeBrowserTimezone": true
+    },
+    "buildDate": "2026-04-13T21:40:06.874Z",
+    "infinityVersion": "25.1.2-397",
+    "packageCosmosVersion": "8.16.1"
+}

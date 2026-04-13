@@ -21,6 +21,7 @@ module.exports = {
   moduleDirectories: ['node_modules', 'src'],
   setupFiles: ['./setupFiles.ts'],
   setupFilesAfterEnv: ['./setupTests.ts'],
+  testPathIgnorePatterns: ['<rootDir>/lib/'],
   transformIgnorePatterns: [`node_modules/(?!(${packagesToTranspileStr}))`],
   testEnvironment: 'jsdom',
   transform: {
