@@ -3,7 +3,7 @@
     "label": "Kanban Board",
     "description": "Kanban board",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_KanbanBoard",
@@ -78,7 +78,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -89,7 +89,7 @@
         "groups": "New,Open,Pending-Review,Resolved-Completed",
         "groupProperty": "pyStatusWork"
     },
-    "buildDate": "2026-04-13T22:59:06.625Z",
+    "buildDate": "2026-04-21T15:03:18.669Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }

@@ -3,7 +3,7 @@
     "label": "Language Switch",
     "description": "Render a language and timezone switcher in a widget",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_LangSwitch",
@@ -74,7 +74,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -90,7 +90,7 @@
         "showCurrentSummary": true,
         "prioritizeBrowserTimezone": true
     },
-    "buildDate": "2026-04-13T22:59:06.718Z",
+    "buildDate": "2026-04-21T15:03:18.755Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }

@@ -3,7 +3,7 @@
     "label": "Network Diagram",
     "description": "Network Diagram",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_NetworkDiagram",
@@ -86,7 +86,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -97,7 +97,7 @@
         "height": "40rem",
         "edgePath": "bezier"
     },
-    "buildDate": "2026-04-13T22:59:07.088Z",
+    "buildDate": "2026-04-21T15:03:19.209Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }

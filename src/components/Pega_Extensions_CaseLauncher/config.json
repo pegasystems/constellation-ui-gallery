@@ -3,7 +3,7 @@
     "label": "Case Launcher",
     "description": "Widget will render a heading, text and a button to start a case",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CaseLauncher",
@@ -64,13 +64,13 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
     ],
     "defaultConfig": {},
-    "buildDate": "2026-04-13T22:59:05.091Z",
+    "buildDate": "2026-04-21T15:03:17.252Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }
