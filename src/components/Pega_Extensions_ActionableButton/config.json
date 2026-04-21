@@ -3,7 +3,7 @@
     "label": "Actionable button",
     "description": "Actionable button",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_ActionableButton",
@@ -51,7 +51,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -60,7 +60,7 @@
         "label": "@L $this.label",
         "localAction": ""
     },
-    "buildDate": "2026-04-13T22:59:03.382Z",
+    "buildDate": "2026-04-21T15:03:15.498Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }

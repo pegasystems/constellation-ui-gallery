@@ -85,28 +85,32 @@ export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
       </Card>
     );
   }
+
+  let categories: any[] | undefined;
   try {
     const pageObj = JSON.parse(pageJSON);
-    const obj = pageObj.categories;
-    return (
-      <Card>
-        <CardContent>
-          <GroupedContent>
-            {obj?.map((object: any) => (
-              <Flex key={object.heading} container={{ direction: 'column' }}>
-                <Text variant='h2'>{object.heading}</Text>
-                {object.links?.map((link: any) => {
-                  return generateLink(link.name, link.page);
-                })}
-              </Flex>
-            ))}
-          </GroupedContent>
-        </CardContent>
-      </Card>
-    );
+    categories = pageObj?.categories;
   } catch {
-    /* empty */
+    categories = undefined;
   }
-  return null;
+
+  if (!Array.isArray(categories) || categories.length === 0) return null;
+
+  return (
+    <Card>
+      <CardContent>
+        <GroupedContent>
+          {categories.map((object: any) => (
+            <Flex key={object.heading} container={{ direction: 'column' }}>
+              <Text variant='h2'>{object.heading}</Text>
+              {object.links?.map((link: any) => {
+                return generateLink(link.name, link.page);
+              })}
+            </Flex>
+          ))}
+        </GroupedContent>
+      </CardContent>
+    </Card>
+  );
 };
 export default withConfiguration(PegaExtensionsShortcuts);

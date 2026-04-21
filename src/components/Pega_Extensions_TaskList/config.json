@@ -3,7 +3,7 @@
     "label": "TaskList",
     "description": "TaskList",
     "organization": "Pega",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_TaskList",
@@ -44,13 +44,13 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.3, Mon Apr 13 2026, 25.1.2-397",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
             "name": "PegaAboutData",
             "variant": "primary"
         }
     ],
     "defaultConfig": {},
-    "buildDate": "2026-04-13T22:59:07.907Z",
+    "buildDate": "2026-04-21T15:03:20.032Z",
     "infinityVersion": "25.1.2-397",
-    "packageCosmosVersion": "8.17.0"
+    "packageCosmosVersion": "8.17.2"
 }
