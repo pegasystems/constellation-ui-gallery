@@ -1,0 +1,38 @@
+{
+    "name": "Pega_Extensions_CameraCapture",
+    "label": "Camera Capture",
+    "description": "Camera Capture",
+    "organization": "Pega",
+    "version": "4.0.4",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_CameraCapture",
+    "type": "Widget",
+    "subtype": "CASE",
+    "icon": "OneColumnPage.svg",
+    "properties": [
+        {
+            "name": "buttonText",
+            "label": "Button text",
+            "format": "TEXT"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.4, Tue Apr 21 2026, 25.1.2-397",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "buttonText": "Capture with Capture"
+    },
+    "buildDate": "2026-04-21T15:03:17.066Z",
+    "infinityVersion": "25.1.2-397",
+    "packageCosmosVersion": "8.17.2"
+}

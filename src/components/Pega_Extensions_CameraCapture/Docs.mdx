@@ -1,0 +1,32 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The **Camera Capture** widget lets users take photos using their device camera and save them directly as case attachments. It provides a simple and intuitive interface for capturing, previewing, and attaching images to a case.
+
+It provides a streamlined UI for:
+
+- Starting the camera and previewing the live feed
+- Capturing an image
+- Retaking the image if necessary
+- Uploading the final image directly to a case
+
+#### Widget Configuration
+
+This widget does not require additional configuration parameters. However, it relies on:
+
+- **Case Info** from Pega:
+  - retrieved using `getPConnect().getValue(CASE_INFO)`
+
+<Primary />
+
+## Props
+
+<Controls />
+
+# Contributors
+
+This component was contributed by Gurbinder Singh working with [Bits In Glass | www.bitsinglass.com](https://www.bitsinglass.com)
