@@ -1,0 +1,159 @@
+{
+  "name": "Pega_Extensions_CustomKPIGauge",
+  "label": "Custom KPI Gauge",
+  "description": "A gauge widget that displays a single numeric value from a configurable data page with colored zones, target marker, trend indicator, and legend",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_CustomKPIGauge",
+  "type": "Widget",
+  "subtype": "PAGE",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Label",
+      "format": "TEXT"
+    },
+    {
+      "name": "subtitle",
+      "label": "Subtitle",
+      "format": "TEXT"
+    },
+    {
+      "name": "dataPageName",
+      "label": "Data Page name",
+      "format": "TEXT"
+    },
+    {
+      "name": "propertyName",
+      "label": "Value Field Name",
+      "format": "TEXT"
+    },
+    {
+      "name": "valueUnit",
+      "label": "Value unit (e.g. %, $, €, USD, items)",
+      "format": "TEXT"
+    },
+    {
+      "name": "minPropertyName",
+      "label": "Min Value Field Name",
+      "format": "TEXT"
+    },
+    {
+      "name": "maxPropertyName",
+      "label": "Max Value Field Name",
+      "format": "TEXT"
+    },
+    {
+      "name": "minValue",
+      "label": "Min Value (constant if no Min Field Name)",
+      "format": "NUMBER"
+    },
+    {
+      "name": "maxValue",
+      "label": "Max Value (constant if no Max Field Name)",
+      "format": "NUMBER"
+    },
+    {
+      "name": "thresholdLowPropertyName",
+      "label": "Low threshold Field Name (dynamic, from data page)",
+      "format": "TEXT"
+    },
+    {
+      "name": "thresholdLow",
+      "label": "Low threshold value (constant if no Low threshold Field Name)",
+      "format": "NUMBER"
+    },
+    {
+      "name": "thresholdHighPropertyName",
+      "label": "High threshold Field Name (dynamic, from data page)",
+      "format": "TEXT"
+    },
+    {
+      "name": "thresholdHigh",
+      "label": "High threshold value (constant if no High threshold Field Name)",
+      "format": "NUMBER"
+    },
+    {
+      "name": "targetValuePropertyName",
+      "label": "Target value Field Name (dynamic, from data page)",
+      "format": "TEXT"
+    },
+    {
+      "name": "targetValue",
+      "label": "Target value (constant if no Target Field Name)",
+      "format": "TEXT"
+    },
+    {
+      "name": "targetLabel",
+      "label": "Target label (e.g. Target, Goal — leave blank to hide)",
+      "format": "TEXT"
+    },
+    {
+      "name": "colorBelowLow",
+      "label": "Color for Low zone (below low threshold)",
+      "format": "TEXT"
+    },
+    {
+      "name": "colorBetween",
+      "label": "Color for Warning zone (between thresholds)",
+      "format": "TEXT"
+    },
+    {
+      "name": "colorAboveHigh",
+      "label": "Color for Good zone (at or above high threshold)",
+      "format": "TEXT"
+    },
+    {
+      "name": "showLegend",
+      "label": "Show legend",
+      "format": "BOOLEAN"
+    },
+    {
+      "name": "legendLowLabel",
+      "label": "Legend label for Low zone",
+      "format": "TEXT"
+    },
+    {
+      "name": "legendWarningLabel",
+      "label": "Legend label for Warning zone",
+      "format": "TEXT"
+    },
+    {
+      "name": "legendGoodLabel",
+      "label": "Legend label for Good zone",
+      "format": "TEXT"
+    },
+    {
+      "format": "LABEL",
+      "label": "About",
+      "name": "PegaAboutLabel",
+      "variant": "h3"
+    },
+    {
+      "format": "LABEL",
+      "label": "Pega_Extensions 1.0.0",
+      "name": "PegaAboutData",
+      "variant": "primary"
+    }
+  ],
+  "defaultConfig": {
+    "label": "Monthly Revenue ($)",
+    "subtitle": "Current Month",
+    "valueUnit": "$",
+    "minValue": 0,
+    "maxValue": 150,
+    "thresholdLow": 80,
+    "thresholdHigh": 120,
+    "targetValue": "120",
+    "targetLabel": "Target",
+    "colorBelowLow": "#d91e18",
+    "colorBetween": "#f59e0b",
+    "colorAboveHigh": "#2ca02c",
+    "showLegend": true,
+    "legendLowLabel": "Low",
+    "legendWarningLabel": "Warning",
+    "legendGoodLabel": "Good"
+  }
+}

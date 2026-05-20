@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title='PegaExtensionsCustomKPIGauge/Docs' />
+
+# Custom KPI Gauge
+
+A portal landing page widget that displays a single numeric value from a configurable data page as an arc-style gauge with colored zones, a needle indicator, an optional target marker, and a legend.
+
+## Features
+
+- **Arc gauge visualization**: A semicircular gauge with three color-coded zones (low, warning, good) and a needle pointing to the current value.
+- **Configurable data page**: Set any data page name and property at design time in Launchpad Studio.
+- **Dual thresholds**: Define low and high threshold values to create three distinct zones on the gauge.
+- **Dynamic thresholds and range**: Optionally read min, max, and threshold values from the data page response at runtime.
+- **Target marker**: Display an optional target value pill below the gauge value.
+- **Legend**: A toggleable legend showing the meaning of each color zone.
+- **Value unit**: Display a unit label (e.g., `$`, `%`, `€`) next to the value.
+- **Refresh button**: Re-fetch the data page value on demand without reloading the page.
+- **Loading and error states**: Shows a progress indicator while loading and a clear error message if something goes wrong.
+
+## Configuration properties
+
+| Property | Type | Description | Default |
+|----------|------|-------------|---------|
+| `label` | TEXT | Title displayed above the gauge | `"Monthly Revenue ($)"` |
+| `subtitle` | TEXT | Subtitle shown below the title | `"Current Month"` |
+| `dataPageName` | TEXT | Name of the data page to call | - |
+| `propertyName` | TEXT | Property name on the data page that holds the value | - |
+| `valueUnit` | TEXT | Unit label shown next to the value (e.g., `$`, `%`) | - |
+| `minPropertyName` | TEXT | Field name for dynamic min value from data page | - |
+| `maxPropertyName` | TEXT | Field name for dynamic max value from data page | - |
+| `minValue` | NUMBER | Constant min value (used when no min field is set) | `0` |
+| `maxValue` | NUMBER | Constant max value (used when no max field is set) | `150` |
+| `thresholdLowPropertyName` | TEXT | Field name for dynamic low threshold from data page | - |
+| `thresholdLow` | NUMBER | Constant low threshold value | `80` |
+| `thresholdHighPropertyName` | TEXT | Field name for dynamic high threshold from data page | - |
+| `thresholdHigh` | NUMBER | Constant high threshold value | `120` |
+| `targetValuePropertyName` | TEXT | Field name for dynamic target from data page | - |
+| `targetValue` | TEXT | Constant target value | `"120"` |
+| `targetLabel` | TEXT | Label for the target pill (leave blank to hide) | `"Target"` |
+| `colorBelowLow` | TEXT | Hex color for the Low zone | `"#d91e18"` (red) |
+| `colorBetween` | TEXT | Hex color for the Warning zone | `"#f59e0b"` (amber) |
+| `colorAboveHigh` | TEXT | Hex color for the Good zone | `"#2ca02c"` (green) |
+| `showLegend` | BOOLEAN | Whether to display the legend below the gauge | `true` |
+| `legendLowLabel` | TEXT | Legend text for the Low zone | `"Low"` |
+| `legendWarningLabel` | TEXT | Legend text for the Warning zone | `"Warning"` |
+| `legendGoodLabel` | TEXT | Legend text for the Good zone | `"Good"` |
+
+## Usage
+
+1. Add the widget to a portal landing page in Launchpad Studio.
+2. Configure the **Data Page name** (e.g., `D_MetricData`).
+3. Configure the **Value Field Name** (e.g., `TotalRevenue`).
+4. Set the **min/max** range and **low/high thresholds** to define the gauge zones.
+5. Optionally configure a **target value** and **legend labels**.
+6. The widget loads the data page, reads the specified property, and renders the gauge with the needle positioned at the current value within the appropriate color zone.
+
+## Examples
+
+### Default gauge
+The gauge displays `85 $` with the needle in the red (Low) zone because the value is below the low threshold of `80`. The target pill shows `Target: 120`.
+
+### Refresh
+Click the reload icon button in the top-right corner of the card to re-fetch the data page value and update the gauge.
