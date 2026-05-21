@@ -1,0 +1,20 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The Toggle field component binds to a boolean property and renders it with the Cosmos **Switch** control instead of the standard checkbox. Use the field **Label** for the form field heading and **Caption** for the text shown beside the switch.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Story of={DemoStories.On} />
+
+<Story of={DemoStories.ReadOnly} />
