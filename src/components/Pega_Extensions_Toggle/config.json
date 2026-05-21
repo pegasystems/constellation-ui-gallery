@@ -1,0 +1,188 @@
+{
+    "name": "Pega_Extensions_Toggle",
+    "label": "Toggle",
+    "description": "Boolean field rendered as a switch",
+    "organization": "Pega",
+    "version": "4.0.4",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_Toggle",
+    "type": "Field",
+    "subtype": "Boolean",
+    "icon": "images/pz-checkbox-active.svg",
+    "properties": [
+        {
+            "name": "label",
+            "label": "Label",
+            "format": "FIELDLABELINPUT",
+            "visibility": "hideLabel == false || hideLabel IS_NULL"
+        },
+        {
+            "name": "hideLabel",
+            "label": "Hide Label",
+            "format": "BOOLEAN",
+            "visibility": "$this.label IS_NULL",
+            "defaultValue": true
+        },
+        {
+            "name": "hideLabel",
+            "label": "Hide Label",
+            "format": "BOOLEAN",
+            "visibility": "$this.label IS_NOT_NULL",
+            "defaultValue": false
+        },
+        {
+            "name": "readOnly",
+            "label": "Edit mode",
+            "format": "READONLY"
+        },
+        {
+            "name": "additionalDetails",
+            "label": "Display as link to the object",
+            "format": "CASELINK",
+            "visibility": "@ISINEMBEDDEDDATAMULTI == true"
+        },
+        {
+            "label": "Column settings",
+            "format": "GROUP",
+            "visibility": "@ISINEMBEDDEDDATAMULTI == true",
+            "properties": [
+                {
+                    "name": "columnWidth",
+                    "label": "Column width",
+                    "format": "SELECT",
+                    "source": [
+                        {
+                            "key": "auto",
+                            "value": "Auto"
+                        },
+                        {
+                            "key": "custom",
+                            "value": "Custom"
+                        }
+                    ]
+                },
+                {
+                    "name": "width",
+                    "label": "Width (px)",
+                    "format": "NUMBER",
+                    "visibility": "$this.columnWidth == 'custom'"
+                }
+            ]
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "visibility": "(!readOnly = true)",
+            "properties": [
+                {
+                    "name": "caption",
+                    "format": "FIELDLABELINPUT",
+                    "required": true,
+                    "visibility": "@ISINEMBEDDEDDATAMULTI != true"
+                },
+                {
+                    "name": "caption",
+                    "format": "FIELDLABELINPUT",
+                    "visibility": "@ISINEMBEDDEDDATAMULTI == true"
+                },
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                },
+                {
+                    "format": "DEFAULTVALUE",
+                    "visibility": "@RULEVIEWTYPE == 'search'"
+                }
+            ]
+        },
+        {
+            "label": "Read-only settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "format": "SELECT",
+                    "name": "displayValue",
+                    "label": "Display Value",
+                    "defaultValue": "Yes/No",
+                    "localize": true,
+                    "splitValues": {
+                        "token": "/",
+                        "propertyNames": [
+                            "trueLabel",
+                            "falseLabel"
+                        ]
+                    },
+                    "source": [
+                        {
+                            "key": "Yes/No",
+                            "value": "Yes/No"
+                        },
+                        {
+                            "key": "True/False",
+                            "value": "True/False"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "required",
+                    "label": "Required",
+                    "format": "REQUIRED",
+                    "visibility": "!($this.readOnly == true) && (@VIEWTEMPLATESUBTYPE == 'FORM' || @ISINEMBEDDEDDATAMULTI == true || @RULEVIEWTYPE == 'search')"
+                },
+                {
+                    "name": "disabled",
+                    "label": "Disabled",
+                    "format": "DISABLED",
+                    "visibility": "!($this.readOnly == true) && (@VIEWTEMPLATESUBTYPE == 'FORM' || @ISINEMBEDDEDDATAMULTI == true || @RULEVIEWTYPE == 'search')"
+                },
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.4, Thu May 21 2026, 25.1.2-397",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "caption": "@FL .$this.name",
+        "trueLabel": "@L Yes",
+        "falseLabel": "@L No"
+    },
+    "buildDate": "2026-05-21T21:55:01.085Z",
+    "infinityVersion": "25.1.2-397",
+    "packageCosmosVersion": "8.21.5"
+}
