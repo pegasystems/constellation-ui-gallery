@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { withConfiguration, Card, CardHeader, CardContent, CardFooter, Text, Button } from '@pega/cosmos-react-core';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { withConfiguration, Card, CardContent, CardFooter, Button } from '@pega/cosmos-react-core';
 import StyledCard from './styles';
 import '../shared/create-nonce';
 
@@ -7,6 +7,7 @@ declare const PCore: {
   getPubSubUtils: () => {
     subscribe: (event: string, handler: (data: unknown) => void, id: string) => void;
     unsubscribe: (event: string, id: string) => void;
+    publish: (event: string, data?: unknown) => void;
   };
   getEvents: () => {
     getCaseEvent: () => Record<string, string>;
@@ -46,10 +47,9 @@ export interface CaseLauncherProps {
 }
 
 export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
-  const { heading, description, classFilter, labelPrimaryButton, getPConnect } = props;
+  const { getPConnect } = props;
   const pConn = getPConnect();
   const [isCaseActive, setIsCaseActive] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
   const [caseContent, setCaseContent] = useState<React.ReactNode>(null);
 
   const contextName = (pConn.getContextName as () => string)();
@@ -158,50 +158,80 @@ export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
     };
   }, [isCaseActive, contextName]);
 
-  const createCase = useCallback(
-    (className: string) => {
-      setIsCreating(true);
+  const createCase = useCallback((className: string) => {
+    const appPConnect = PCore.createPConnect({
+      options: { context: 'app' },
+    }).getPConnect() as Record<string, (...args: unknown[]) => unknown>;
 
-      const appPConnect = PCore.createPConnect({
-        options: { context: 'app' },
-      }).getPConnect() as Record<string, (...args: unknown[]) => unknown>;
+    const containerManager = appPConnect.getContainerManager() as {
+      initializeContainers: (info: Record<string, unknown>) => Promise<unknown>;
+    };
 
-      const containerManager = appPConnect.getContainerManager() as {
-        initializeContainers: (info: Record<string, unknown>) => Promise<unknown>;
-      };
-      containerManager.initializeContainers({ type: 'single', name: 'caseLauncherInline' });
+    const actionsApi = appPConnect.getActionsApi() as {
+      createWork: (className: string, options: Record<string, unknown>) => Promise<unknown>;
+    };
 
-      const actionsApi = appPConnect.getActionsApi() as {
-        createWork: (className: string, options: Record<string, unknown>) => Promise<unknown>;
-      };
+    console.log('[CaseLauncher] LOG6 createWork class:', className);
 
-      // LOG 6 — createWork
-      console.log('[CaseLauncher] LOG6 createWork class:', className);
-
-      actionsApi
-        .createWork(className, {
+    containerManager
+      .initializeContainers({ type: 'single', name: 'caseLauncherInline' })
+      .then(() =>
+        actionsApi.createWork(className, {
           flowType: 'pyStartCase',
           containerName: 'caseLauncherInline',
           renderInline: true,
           openCaseViewAfterCreate: true,
-        })
-        .then(() => {
-          console.log('[CaseLauncher] LOG6 createWork resolved');
-          setIsCaseActive(true);
-          setIsCreating(false);
-        })
-        .catch((err: unknown) => {
-          console.error('[CaseLauncher] LOG6 createWork error:', err);
-          setIsCreating(false);
-        });
-    },
-    [pConn],
-  );
+        }),
+      )
+      .then(() => {
+        console.log('[CaseLauncher] LOG6 createWork resolved');
+        setIsCaseActive(true);
+      })
+      .catch((err: unknown) => {
+        console.error('[CaseLauncher] LOG6 createWork error:', err);
+      });
+  }, []);
 
   const closeCase = useCallback(() => {
     PCore.getContainerUtils().closeContainerItem('app/caseLauncherInline_1', { skipDirtyCheck: true });
     setIsCaseActive(false);
     setCaseContent(null);
+  }, []);
+
+  const createCaseRef = useRef(createCase);
+  useEffect(() => {
+    createCaseRef.current = createCase;
+  }, [createCase]);
+
+  /** Listen for window.postMessage from QuickCreate to trigger inline case creation */
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      let className: string | undefined;
+
+      // Object-style: { action: 'quickLinkCreateCase', className }
+      if (
+        event.data &&
+        typeof event.data === 'object' &&
+        event.data.action === 'quickLinkCreateCase' &&
+        typeof event.data.className === 'string'
+      ) {
+        className = event.data.className;
+      }
+
+      // String-style fallback: "createCase:<className>"
+      if (!className && typeof event.data === 'string' && event.data.startsWith('createCase:')) {
+        className = event.data.slice('createCase:'.length);
+      }
+
+      if (className) {
+        createCaseRef.current(className);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
 
   // LOG 7 — render gate
@@ -210,38 +240,17 @@ export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   if (isCaseActive && caseContent) {
     return (
       <Card as={StyledCard}>
-        <CardHeader>
-          <Text variant='h2'>{heading}</Text>
-        </CardHeader>
         <CardContent>{caseContent}</CardContent>
         <CardFooter justify='end'>
-          <Button variant='simple' onClick={closeCase}>
-            Cancel
+          <Button variant='secondary' onClick={closeCase}>
+            Close
           </Button>
         </CardFooter>
       </Card>
     );
   }
 
-  return (
-    <Card as={StyledCard}>
-      <CardHeader>
-        <Text variant='h2'>{heading}</Text>
-      </CardHeader>
-      <CardContent>{description}</CardContent>
-      <CardFooter justify='end'>
-        <Button
-          variant='primary'
-          disabled={isCreating}
-          onClick={() => {
-            createCase(classFilter);
-          }}
-        >
-          {isCreating ? 'Creating...' : labelPrimaryButton}
-        </Button>
-      </CardFooter>
-    </Card>
-  );
+  return <></>;
 };
 
 export default withConfiguration(PegaExtensionsCaseLauncher);
