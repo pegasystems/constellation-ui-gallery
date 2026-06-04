@@ -1,0 +1,62 @@
+{
+    "name": "Pega_Extensions_PageListSwiper",
+    "label": "Page List Swiper",
+    "description": "Displays pages from a page list one at a time, allowing the user to accept or reject each page before proceeding to the next.",
+    "organization": "Pega",
+    "version": "4.0.0",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_PageListSwiper",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "properties": [
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields"
+            ],
+            "allowCreatingGroup": false
+        },
+        {
+            "name": "heading",
+            "label": "Heading",
+            "format": "TEXT",
+            "defaultValue": "Review Profiles"
+        },
+        {
+            "name": "acceptLabel",
+            "label": "Accept button label",
+            "format": "TEXT",
+            "defaultValue": "Accept"
+        },
+        {
+            "name": "rejectLabel",
+            "label": "Reject button label",
+            "format": "TEXT",
+            "defaultValue": "Reject"
+        },
+        {
+            "name": "completionMessage",
+            "label": "Completion message",
+            "format": "TEXT",
+            "defaultValue": "All profiles reviewed"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.0",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "buildDate": "2026-06-04T00:00:00.000Z",
+    "infinityVersion": "25.1.0",
+    "packageCosmosVersion": "8.21.5"
+}

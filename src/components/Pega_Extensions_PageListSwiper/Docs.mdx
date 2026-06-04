@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title='Templates/Page List Swiper' />
+
+# Page List Swiper
+
+Renders pages from a **page list** one at a time as a card. The user can **Accept** or **Reject** each page to move to the next one. When all pages have been reviewed, a summary is shown.
+
+## Use Case
+
+Ideal for workflows where a user must individually review and decide on items in a list — for example, approving/rejecting doctor profiles, candidate resumes, job applications, product requests, etc.
+
+## How It Works
+
+1. The component reads a **page list** configured in Region A. Each field added to Region A must be backed by a `ScalarList` (i.e., a list property such as `.Doctors[].pyName`).
+2. All fields share the same index — field index 0 is shown on card 1, index 1 on card 2, and so on.
+3. Clicking **Accept** or **Reject** advances to the next page and records the decision.
+4. A color-coded progress bar at the top tracks reviewed vs. pending pages.
+5. On completion a summary badge row shows totals.
+
+## Props
+
+| Prop                | Type     | Default                  | Description                                              |
+|---------------------|----------|--------------------------|----------------------------------------------------------|
+| `heading`           | `string` | `"Review Profiles"`      | Title displayed above the swiper                         |
+| `acceptLabel`       | `string` | `"Accept"`               | Label for the accept (positive) action button            |
+| `rejectLabel`       | `string` | `"Reject"`               | Label for the reject (negative) action button            |
+| `completionMessage` | `string` | `"All profiles reviewed"`| Message shown when all pages have been reviewed          |
+
+## Configuring in Pega Designer
+
+1. Add the **Page List Swiper** template to a view.
+2. In **Region A**, add fields from an embedded page list (e.g. `.Doctors[].pyName`, `.Doctors[].pySpecialization`).
+3. Each field's property path must follow the `@FILTERED_LIST .PageList[].PropertyName` pattern so the component can extract parallel value arrays.
+4. Optionally override `heading`, `acceptLabel`, `rejectLabel`, and `completionMessage` via inherited props.
