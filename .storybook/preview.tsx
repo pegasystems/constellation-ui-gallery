@@ -14,9 +14,9 @@ import {
   BaseThemeMachine,
 } from '@pega/cosmos-react-core';
 import type { DefaultSettableTheme, DefaultThemeDefinition } from '@pega/cosmos-react-core';
-import * as MantisTheme from './MantisTheme.json';
-import * as FlameTheme from './FlameTheme.json';
-import * as HoneyFlowerTheme from './HoneyFlowerTheme.json';
+import MantisTheme from './MantisTheme.json';
+import FlameTheme from './FlameTheme.json';
+import HoneyFlowerTheme from './HoneyFlowerTheme.json';
 
 configureActions({
   depth: 5,
@@ -31,12 +31,21 @@ const themes: Record<string, DefaultSettableTheme | undefined> = {
   HoneyFlower: HoneyFlowerTheme,
 };
 
-const themeMachines = Object.fromEntries(
-  Object.entries(themes).map(([name, theme]) => [
-    name,
-    new ThemeMachine<DefaultThemeDefinition>({ theme, parent: BaseThemeMachine }),
-  ]),
-);
+const themeMachineCache = new Map<string, ThemeMachine<DefaultThemeDefinition>>();
+
+const getThemeMachine = (themeName: string) => {
+  let themeMachine = themeMachineCache.get(themeName);
+
+  if (!themeMachine) {
+    themeMachine = new ThemeMachine<DefaultThemeDefinition>({
+      theme: themes[themeName],
+      parent: BaseThemeMachine,
+    });
+    themeMachineCache.set(themeName, themeMachine);
+  }
+
+  return themeMachine;
+};
 
 const preview: Preview = {
   parameters: {
@@ -91,7 +100,7 @@ const preview: Preview = {
 
         const maxWidth = context.globals.fullscreen !== 'On' ? '1000px' : 'none';
 
-        const themeMachine = themeMachines[context.globals.theme];
+        const themeMachine = getThemeMachine(context.globals.theme);
 
         let background: string;
 

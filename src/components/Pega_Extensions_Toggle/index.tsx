@@ -118,13 +118,7 @@ export const PegaExtensionsToggle = (props: ToggleProps) => {
       required={required}
       disabled={disabled}
     >
-      <Switch
-        label={caption}
-        on={inputValue}
-        disabled={disabled}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
+      <Switch label={caption} on={inputValue} disabled={disabled} onChange={handleChange} onBlur={handleBlur} />
     </FormField>
   );
 };
