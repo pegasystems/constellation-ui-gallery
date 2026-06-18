@@ -1,0 +1,225 @@
+src/components/Pega_Extensions_Banner/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 80
+src/components/Pega_Extensions_ExpandableTable/demo.test.tsx
+  s_165d755a74aa0f::t_a0bbf235294214 39-45,47
+  s_165d755a74aa0f::t_28fb6f5a13d167 6
+  s_165d755a74aa0f::t_af61d73fd67cd1 46
+src/components/Pega_Extensions_GanttChart/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 164
+src/components/Pega_Extensions_ImageMagnify/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 337
+src/components/Pega_Extensions_FieldGroupAsRow/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 41
+src/components/Pega_Extensions_LangSwitch/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 93
+src/components/Pega_Extensions_Map/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 148
+src/components/Pega_Extensions_MaskedInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 119
+src/components/Pega_Extensions_Toggle/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 185
+src/components/Pega_Extensions_CompareTableLayout/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 86
+src/components/Pega_Extensions_OAuthConnect/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 88
+src/components/Pega_Extensions_RangeSlider/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 71
+src/components/Pega_Extensions_DisplayAttachments/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 102
+src/components/Pega_Extensions_ExpandableTable/styles.ts
+  s_e5b575bfa20d1f::t_3f71e397c4acbc 7-10
+  s_aaebd7b0edbe30::t_0919e512894485 25-36
+  s_e5b575bfa20d1f::t_fec5ea7aa3878d 63
+src/components/Pega_Extensions_FormFullWidth/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 59
+src/components/Pega_Extensions_FormWithVerticalStepper/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 87
+src/components/Pega_Extensions_ImageCarousel/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 232
+src/components/Pega_Extensions_Calendar/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 105
+src/components/Pega_Extensions_ExpandableTable/utils.ts
+  s_165d755a74aa0f::t_9fbe5f4e870652 14-66,68-128,133-134,136-137,192-193,206,234
+  s_165d755a74aa0f::t_6dc6bf81f0dcf9 67
+  s_a24e5b6a04bd6a::t_774747f42f48cc 1-13,129-132,135,138-191,194-205,207-214
+src/components/Pega_Extensions_ExpandableTable/Docs.mdx
+  s_165d755a74aa0f::t_fdc94891690034 44-48,51-57
+  h_fddf624f9ff6a8 1,49-50
+src/components/Pega_Extensions_ExpandableTable/demo.stories.tsx
+  s_165d755a74aa0f::t_b72c4365a01ed5 365
+  s_165d755a74aa0f::t_f3a579788fcb92 266-307,314-364,366-398,400-492
+  s_a24e5b6a04bd6a::t_e76ca4dbdcd54f 157-240,251-256
+  s_165d755a74aa0f::t_466298c8cadc74 308-311
+  s_165d755a74aa0f::t_7073d4f7de66cf 312-313
+  s_165d755a74aa0f::t_66fa5731f8796f 399
+  s_165d755a74aa0f::t_7b07f525d2e3d8 241
+src/components/Pega_Extensions_IframeWrapper/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 73
+src/components/Pega_Extensions_ExpandableTable/index.tsx
+  s_7e34341213d8fb::t_3f9b6b44d229e1 144-145,147,150,162-177
+  s_165d755a74aa0f::t_f7a74594628c4d 133-134
+  s_182baa32c393cc::t_22b932fe52efc2 14-15,85
+  s_165d755a74aa0f::t_c0b95e1480733e 146,148-149,152-159
+  s_165d755a74aa0f::t_baf9c23981b27d 102
+  s_a24e5b6a04bd6a::t_bb9a135f41eff1 244-252
+  s_a24e5b6a04bd6a::t_e6e5b0f605e0c0 1
+  s_a24e5b6a04bd6a::t_5ae9df204fb9eb 24-83
+  s_a24e5b6a04bd6a::t_0e54802bf2fcb0 101
+  s_182baa32c393cc::t_dff1d1dbbfde59 237
+  s_165d755a74aa0f::t_99038fe1eab997 17-23
+  s_aaebd7b0edbe30::t_7bdea9905056af 213-215
+src/components/Pega_Extensions_SignatureCapture/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 113
+src/components/Pega_Extensions_Meter/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 89
+src/components/Pega_Extensions_BarCode/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 149
+src/components/Pega_Extensions_OrgBuilder/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 75
+src/components/Pega_Extensions_DynamicTemplate/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 98
+src/components/Pega_Extensions_DisplayPDF/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 81
+src/components/Pega_Extensions_CameraCapture/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 35
+src/components/Pega_Extensions_ExpandableTable/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 41
+src/components/Pega_Extensions_JawLayout/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 42
+src/components/Pega_Extensions_KanbanBoard/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 92
+src/components/Pega_Extensions_NetworkDiagram/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 100
+src/components/Pega_Extensions_CardGallery/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 88
+src/components/Pega_Extensions_BannerInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 94
+src/components/Pega_Extensions_SecureRichText/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 170
+src/components/Pega_Extensions_Shortcuts/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 72
+src/components/Pega_Extensions_TrendDisplay/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 249
+src/components/Pega_Extensions_HierarchicalFormAsTasks/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 42
+src/components/Pega_Extensions_ChatGenAI/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 55
+src/components/Pega_Extensions_EditableTableLayout/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 35
+src/components/Pega_Extensions_AutoSave/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 32
+src/components/Pega_Extensions_CaseReference/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 75
+src/components/Pega_Extensions_UtilityList/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 84
+src/components/Pega_Extensions_ExpandableTable/utils.test.ts
+  s_165d755a74aa0f::t_7521c9f1858e0c 11-12
+  s_165d755a74aa0f::t_8f698f317dc709 1-10,13-57
+src/components/Pega_Extensions_Scheduler/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 79
+package-lock.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 12,14-17,23,44-45,47,59,64-65,68,76,78-80,83,90-92,97-99,122,130-132,135-136,138-140,142,147-149,152,167-169,197-199,202,211-213,221-223,227-235,252-254,257-258,268-270,273,280-282,286-287,297-299,303-308,319-321,325,376-378,385-387,391-392,399-401,404-405,412-414,418-420,430-432,436,443-445,452-454,458-460,470-472,476-478,488-490,494-495,502-504,511-513,520-522,530-532,536-538,545-547,551-552,559-561,564,574-576,580-581,591-593,597,607-609,613,623-625,629-630,640-642,646-648,658-660,664-665,743-745,749,759-761,765,801-803,806,926-928,932,959-961,965,975-977,981-983,993-995,999-1001,1011-1013,1017,1027-1029,1033,1043-1045,1049-1050,1060-1062,1066-1067,1077-1079,1083-1088,1098-1100,1104-1105,1115-1117,1121-1122,1132-1134,1138-1139,1149-1151,1155,1165-1167,1171-1172,1182-1184,1188,1198-1200,1204-1205,1215-1217,1221,1231-1233,1237,1247-1249,1253-1254,1264-1266,1270-1272,1282-1284,1288,1298-1300,1304,1314-1316,1320,1330-1332,1336,1346-1348,1352-1353,1363-1365,1369-1370,1380-1382,1386-1389,1399-1401,1405-1406,1416-1418,1422-1423,1433-1435,1439,1449-1451,1455,1465-1467,1471,1481-1483,1487-1491,1501-1503,1507-1508,1518-1520,1524,1534-1536,1540-1541,1551-1553,1557,1567-1569,1573-1574,1584-1586,1590-1592,1602-1604,1608,1618-1620,1624,1634-1636,1640-1644,1654-1656,1660,1670-1672,1676-1677,1687-1689,1693,1703-1705,1709-1710,1720-1722,1726,1736-1738,1742,1752-1754,1758-1759,1769-1771,1775,1785-1787,1791,1801-1803,1807,1817-1819,1823-1827,1837-1839,1843,1853-1855,1859-1860,1870-1872,1876-1877,1887-1889,1893-1894,1904-1919,1921-1922,1924-1974,2005-2007,2011-2016,2026-2028,2032-2036,2046-2048,2055-2057,2067-2069,2072-2074,2081-2083,2086-2091,2099-2101,2104-2105,2195-2197,2266-2268,2272,2279-2281,2289-2291,2299-2301,2312-2314,2322-2324,2332-2334,2338,2366-2368,2372,2404-2406,2418-2420,2453-2455,2467-2469,2614-2616,2620,2641-2643,2669-2671,2675,2707-2709,2770-2772,2776,2784-2786,2794-2796,2804-2806,2814-2816,2943-2945,4090-4092,4107-4109,4124-4126,4141-4143,4158-4160,4175-4177,4192-4194,4209-4211,4226-4228,4243-4245,4260-4262,4277-4279,4294-4296,4311-4313,4328-4330,4345-4347,4362-4364,4379-4381,4396-4398,4413-4415,4430-4432,4447-4449,4464-4466,4481-4483,4498-4500,4515-4517,4576-4578,4667-4669,4787-4789,4792-4794,4801,4810-4812,4844-4846,4853-4855,4858,4862-4864,4867,4873-4875,4878,4881,6073-6075,6079-6080,6095-6097,6101-6103,6118-6120,6124-6128,6144-6146,6161-6163,6167-6169,6183-6185,6189,6203-6205,6209,6224-6226,6231,6516-6518,6523,6534-6545,6547-6549,6552,6627-6629,6688-6690,6807-6809,7217-7219,7231-7233,7245-7247,7259-7261,7273-7275,7287-7289,7301-7303,7315-7317,7329-7331,7343-7345,7357-7359,7371-7373,7385-7387,7399-7401,7413-7415,7427-7429,7441-7443,7451-7453,7459-7462,7466-7491,7493-7496,7498,7508-7510,7832-7834,7838-7841,7846-7848,7852-7854,7859-7861,7865-7867,7872-7874,7878-7882,7887-7889,7893-7895,7900-7902,7906-7912,7917-7919,7923-7925,7930-7932,7937,7942-7944,7948,7950,7955-7957,7961-7963,8001-8003,8258-8260,8271-8273,8530-8532,8570-8572,8621-8623,8626,8661-8663,8666-8668,8681-8683,8686-8687,8875-8877,8881,9091-9093,9105,9109-9111,9116,9118,9129,9149-9151,9155,9176,9216-9218,9277-9279,9290,9304-9306,9319,9357-9359,9363,9380,9389-9391,9402-9404,9409,9422,9458-9460,9472,9484-9486,9490-9492,9501,9624-9626,9642-9653,9665-9667,9682-9684,9699-9701,9716-9718,9733-9735,9750-9752,9767-9769,9784-9786,9801-9803,9818-9820,9835-9837,9852-9854,9875-9883,9903-9905,10566-10568,10773-10775,10794-10796,10851-10853,11138-11140,11144-11145,11160-11162,11192-11194,11280-11282,11677-11679,11683,11688-11690,11694-11697,11702-11704,11714-11716,11720-11721,11726-11728,11732-11737,11742-11744,11747-11748,11753-11755,11762-11764,11768-11772,11783-11785,11789,12162-12164,12831-12833,12874-12876,13193-13195,13208-13210,13243-13245,13253-13255,13259,13281-13283,13311-13313,13452-13454,13571-13573,13835,13854,13868,13934-13936,14407-14409,14589-14591,15140-15142,15146-15152,15157-15162,15165-15166,15180-15182,15186-15187,15189,15196-15198,15202-15205,15213-15215,15219-15221,15231-15233,15237,15245-15247,15251-15252,15262-15264,15268-15269,15276-15297,15311-15313,15320,15324-15326,15468-15470,16477-16479,16632-16641,16646,16677,16974-16976,17021,17114-17116,17195-17197,17343-17361,17366,17376,17383-17385,17418-17421,17460-17462,17466-17467,17469-17470,17480-17482,17497-17499,17510-17535,17745-17747,17753,17782-17784,17844-17846,17944-17946,17950-17951,17962-17964,17976-17978,17982-17985,18004-18006,18011-18013,18028-18030,18034,18098-18100,18164-18166,18188-18190,18194,18217-18219,18224,18301-18303,18362-18364,18372,18376-18378,18382-18383,18394-18396,18408-18410,18414-18417,18436-18438,18443-18445,18460-18462,18466,18530-18532,18702-18704,18778-18780,19825-19827,19854-19870,19976-19978,20078-20080,20091-20093,20100-20101,20240,20247-20249,20253-20256,20258-20261,20274,20357,20392,20671,20832,20861,20874,20927-20930,21422-21424,22097,22137-22152,22446,22744-22746,22806-22808,24451-24453,24847-24849,24860-24863,24873-24875,24877-24886,25440-25442,25447,25548-25550,25566-25584,26229-26231,26250,27633-27635,27824-27826,27910-27912,27969-27971,27998-28000,28466-28468,28654-28656,28713-28715,28968,29514-29516,29523-29541,29931-29934,29937-29942,29945-29948,29951-29953,29956,30206-30218,30220-30222,30226,30239-30241,31009-31011,31073-31075,31755-31757,31868-31870,32531-32533,32871-32873,32975-32977,33068-33070,33373-33375,33497,33564-33566,34124-34129,34176-34178,34387-34389,34393,34401,34448-34477,34753,34771,34848-34850,34866-34868,34873-34874,35139-35141,35157,35174-35176,35433-35435,35446,35480-35482,35536-35538,35774-35776,35780-35781,35784-35787,35797-35799,35803-35804,35806,36057-36059,36073,36075,36099,36254-36256,36689-36691,36695,37118-37120,37255-37257,37478-37480,37541-37543,37554-37556,37570,37572-37577,37634-37636,37837-37839,37843-37848,37889-37891,37895-37898,37913-37915,37920-37923,37936,37942-37944,37948-37951,37967-37969,37973-37974,37985-37987,37991-37993,38010-38012,38024-38026,38030-38033,38052-38054,38059-38061,38076-38078,38082,38156-38158,38239-38241,38393-38395,39280-39282,39464-39466,39560-39562,39566-39573,39723-39725,39771-39773,39923-39925,39930,40173-40175
+src/components/Pega_Extensions_CPQTree/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 84
+src/components/Pega_Extensions_ActionableButton/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 63
+src/components/Pega_Extensions_CheckboxTrigger/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 119
+src/components/Pega_Extensions_MarkdownInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 142
+src/components/Pega_Extensions_DynamicHierarchicalForm/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 62
+src/components/Pega_Extensions_RatingLayout/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 43
+src/components/Pega_Extensions_TaskList/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 53
+.storybook/preview.tsx
+  s_ded733c565c625::t_f872355c05d12a 35
+src/components/Pega_Extensions_DateInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 118
+src/components/Pega_Extensions_CaseLauncher/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 73
+src/components/Pega_Extensions_PasswordInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 113
+src/components/Pega_Extensions_CheckboxRow/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 118
+src/components/Pega_Extensions_StarRatingInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 134
+src/components/Pega_Extensions_StatusBadge/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 102
+store/Pega_Extensions/4.0.4/componentsconfig.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 1
+src/components/Pega_Extensions_JapaneseInput/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 168
+src/components/Pega_Extensions_QRCode/config.json
+  s_7e34341213d8fb::t_af7a36e0deef0b 103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "08ebf3a1532da083a23852656745fad4d65b7dbf",
+  "prompts": {},
+  "humans": {
+    "h_fddf624f9ff6a8": {
+      "author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  },
+  "sessions": {
+    "s_165d755a74aa0f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5c01413d-c61f-4dc8-bf92-abe576392179",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_182baa32c393cc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "61736c81-8da2-45b6-82f5-35c8782e438a",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_7e34341213d8fb": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "dee15179-afa5-4189-aa1a-0d884baff83a",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_a24e5b6a04bd6a": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "fef9fc5e-e1dd-4fc7-b631-354d0aa5e926",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_aaebd7b0edbe30": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "bceacdd6-7525-45d1-ab20-cb30503c7263",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_ded733c565c625": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "183daae4-4cf7-4a5a-829b-a08b9a32a95f",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_e5b575bfa20d1f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "311e1630-541d-4aac-970f-f3ea9943339e",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
