@@ -1,30 +1,29 @@
 {
-    "name": "Pega_Extensions_HierarchicalFormAsTasks",
-    "label": "Hierarchical Form as Tasks",
-    "description": "Hierarchical Form as Tasks",
+    "name": "Pega_Extensions_ExpandableTable",
+    "label": "Expandable Table",
+    "description": "Read-only table with expandable rows for viewing embedded data object details",
     "organization": "Pega",
     "version": "4.0.4",
     "library": "Extensions",
     "allowedApplications": [],
-    "componentKey": "Pega_Extensions_HierarchicalFormAsTasks",
+    "componentKey": "Pega_Extensions_ExpandableTable",
     "type": "Template",
-    "subtype": "FORM",
-    "icon": "HierarchicalForm.svg",
+    "subtype": "DETAILS",
     "properties": [
         {
-            "name": "heading",
-            "label": "Label",
-            "format": "TEXT"
-        },
-        {
             "name": "A",
-            "label": "Region A",
+            "label": "Region A (Columns)",
             "format": "CONTENTPICKER",
             "addTypeList": [
-                "Fields",
-                "Views"
+                "Fields"
             ],
-            "allowCreatingGroup": true
+            "allowCreatingGroup": false
+        },
+        {
+            "name": "detailViewName",
+            "label": "Detail view name",
+            "format": "TEXT",
+            "required": false
         },
         {
             "format": "LABEL",
@@ -39,7 +38,7 @@
             "variant": "primary"
         }
     ],
-    "buildDate": "2026-06-18T23:28:10.474Z",
+    "buildDate": "2026-06-18T23:28:10.148Z",
     "infinityVersion": "25.1.2-397",
     "packageCosmosVersion": "8.21.9"
 }
