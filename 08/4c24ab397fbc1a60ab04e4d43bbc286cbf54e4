@@ -1,0 +1,24 @@
+package-lock.json
+  s_7e34341213d8fb::t_adce13262e097d 25548-25550
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "084c24ab397fbc1a60ab04e4d43bbc286cbf54e4",
+  "prompts": {},
+  "humans": {
+    "h_fddf624f9ff6a8": {
+      "author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  },
+  "sessions": {
+    "s_7e34341213d8fb": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "dee15179-afa5-4189-aa1a-0d884baff83a",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
