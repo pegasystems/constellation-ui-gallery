@@ -190,6 +190,31 @@ export const Default: Story = {
         };
       },
     };
+    if (!args.apiKey) {
+      return (
+        <div
+          style={{
+            padding: '2rem',
+            border: '1px dashed #888',
+            borderRadius: '8px',
+            color: '#555',
+            textAlign: 'center',
+            height: args.height || '20rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            gap: '0.5rem',
+          }}
+        >
+          <strong>Map component (offline mode)</strong>
+          <span>
+            This component requires ArcGIS CDN (<code>js.arcgis.com</code>). Provide an{' '}
+            <code>apiKey</code> in the controls panel to enable it.
+          </span>
+        </div>
+      );
+    }
     return <PegaExtensionsMap {...props}></PegaExtensionsMap>;
   },
   args: {
