@@ -28,12 +28,13 @@ window.ResizeObserver = jest.fn(() => ({
 window.IntersectionObserver = jest.fn(() => ({
   root: null,
   rootMargin: '0',
+  scrollMargin: '0',
   thresholds: [],
   takeRecords: () => [],
   observe: () => {},
   unobserve: () => {},
   disconnect: () => {},
-}));
+})) as unknown as typeof IntersectionObserver;
 
 // mocks createSVGPoint
 Object.defineProperty(global.SVGSVGElement.prototype, 'createSVGPoint', {

@@ -1,0 +1,27 @@
+{
+  "name": "Pega_Extensions_ExpandableTable",
+  "label": "Expandable Table",
+  "description": "Read-only table with expandable rows for viewing embedded data object details",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_ExpandableTable",
+  "type": "Template",
+  "subtype": "DETAILS",
+  "properties": [
+    {
+      "name": "A",
+      "label": "Region A (Columns)",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields"],
+      "allowCreatingGroup": false
+    },
+    {
+      "name": "detailViewName",
+      "label": "Detail view name",
+      "format": "TEXT",
+      "required": false
+    }
+  ]
+}

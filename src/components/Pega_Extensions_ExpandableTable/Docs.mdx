@@ -1,0 +1,57 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The **Expandable Table** renders an embedded data list as a read-only table. Each row includes an expand / collapse toggle in the first column that loads a configurable Pega view for that row's embedded object — letting users see detailed information without leaving the table context.
+
+Key characteristics:
+
+- **Read-only cells** — column values are rendered in display-only mode; no inline editing.
+- **Row-level expand/collapse** — a chevron button in the first column toggles a detail panel beneath the row.
+- **Configurable detail view** — the view rendered on expand is specified in authoring via the **Detail view name** property; the component delegates to the Constellation `createComponent` API so the view is fully interactive and theme-aware.
+- **Sticky first column** — the expand button column stays visible during horizontal scroll.
+- **Lazy component loading** — cell renderers are loaded on demand through the Constellation component registry before the table is displayed.
+
+<Primary />
+
+<Controls />
+
+# Configuration
+
+## Step 1 – Create the table view
+
+In App Studio or Dev Studio, create a new view and select **Expandable Table** as the layout template.
+
+In the **Region A (Columns)** content picker, drill down into your embedded data page-list property and select the fields you want to display as table columns.
+
+## Step 2 – Configure the detail view
+
+In the **Detail view name** property, enter the name of the Pega view that should render when a row is expanded (for example, `ComputerDetails`). This view will be rendered in the context of the individual embedded object at the row's index.
+
+The detail view receives the embedded object as its data context via `pageReference`, so field references inside that view resolve against the selected embedded record automatically.
+
+## How expand works at runtime
+
+When the user clicks the expand button on a row, the component calls `PCore.createPConnect` with:
+
+- `meta.type = 'View'` and `meta.config.name` set to **detailViewName**
+- `options.pageReference` set to `caseInfo.content.<embedDataRef>[rowIndex]`
+
+This instructs the Constellation runtime to instantiate the configured view for the embedded object at that row.
+
+## Nested expandable tables
+
+When an Expandable Table is placed inside another table's detail view, the component resolves paths relative to the current view context (`getPageReference()`), not always from `caseInfo.content`. This allows a parent row's detail view to host a child Expandable Table bound to an embedded page list on that row (for example, line items on an order).
+
+<Story of={DemoStories.NestedTable} />
+
+For nested authoring:
+
+1. Configure the **parent** table against the top-level page list (for example, `.Orders[]`).
+2. Set the parent's **Detail view name** to a view that contains a **child** Expandable Table.
+3. In the child table, pick columns from the embedded list on the parent row (for example, `.LineItems[]`).
+
+The child table automatically inherits the parent row's `pageReference` and binds its rows to `caseInfo.content.Orders[n].LineItems[m]`.

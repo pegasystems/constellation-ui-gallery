@@ -120,10 +120,12 @@ export default styled.div(({ displayFormat }: { displayFormat: string }) => {
 
 export const SelectedCell = styled.td<{ isSelected: boolean; theme: DefaultTheme }>(({ isSelected, theme }) => {
   return css`
-    ${isSelected
-      ? `border: 0.125rem solid ${theme.components.button.color};
+    ${
+      isSelected
+        ? `border: 0.125rem solid ${theme.components.button.color};
         border-top: none;`
-      : ''}
+        : ''
+    }
     &.selection > label {
       border: 0.125rem solid ${theme.components.button.color};
       border-radius: ${`${theme.components.button['border-radius']}rem`};
