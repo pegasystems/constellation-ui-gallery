@@ -1,0 +1,36 @@
+src/components/Pega_Extensions_ExpandableTable/index.tsx
+  h_fddf624f9ff6a8 1-264
+src/components/Pega_Extensions_ExpandableTable/demo.test.tsx
+  h_fddf624f9ff6a8 1-46
+src/components/Pega_Extensions_ExpandableTable/styles.ts
+  h_fddf624f9ff6a8 1-69
+src/components/Pega_Extensions_ExpandableTable/demo.stories.tsx
+  h_fddf624f9ff6a8 1-492
+src/components/Pega_Extensions_ExpandableTable/utils.ts
+  h_fddf624f9ff6a8 1-248
+src/components/Pega_Extensions_ExpandableTable/config.json
+  h_fddf624f9ff6a8 1-27
+tsconfig.build.json
+  s_77dd3ba38eee76::t_56ab6ce2aa17f2 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "250671f0f25099c6fb941a76fa0d6752366ecd3b",
+  "prompts": {},
+  "humans": {
+    "h_fddf624f9ff6a8": {
+      "author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  },
+  "sessions": {
+    "s_77dd3ba38eee76": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "064246e7-5770-4744-b9f5-3bc8f6aedb78",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
