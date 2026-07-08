@@ -1,0 +1,29 @@
+package.json
+  h_fddf624f9ff6a8 81
+tsconfig.json
+  s_9ff98492d015b8::t_5c5e73481acf54 10,12
+  s_9ff98492d015b8::t_fd77d54b7b5cf8 4
+setupTests.ts
+  s_9ff98492d015b8::t_abe94c03f01612 31,37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "3b6f0ca58a42ed58fa359a1b4e113a0f11fc095a",
+  "prompts": {},
+  "humans": {
+    "h_fddf624f9ff6a8": {
+      "author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  },
+  "sessions": {
+    "s_9ff98492d015b8": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "d4e82667-6f6c-4442-8e21-deb55b851e7d",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
