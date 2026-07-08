@@ -1,15 +1,15 @@
 {
   "extends": "@pega/tsconfig/index.json",
   "include": ["./**/*", ".storybook/**/*"],
-  "exclude": ["**/*.mjs", "dist", "lib"],
+  "exclude": ["**/*.mjs", "dist", "lib", "storybook-static"],
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,
     "importsNotUsedAsValues": "remove",
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "moduleResolution": "bundler",
     "paths": {
-      "@pega/pcore-pconnect-typedefs/*": ["node_modules/@pega/pcore-pconnect-typedefs/*"]
+      "@pega/pcore-pconnect-typedefs/*": ["./node_modules/@pega/pcore-pconnect-typedefs/*"]
     }
   }
 }

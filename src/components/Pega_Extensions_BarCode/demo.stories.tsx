@@ -18,9 +18,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
-    /* Nothing */
-  };
+  (window as any).PCore = {/* Nothing */};
 };
 
 type Story = StoryObj<typeof PegaExtensionsBarCode>;
