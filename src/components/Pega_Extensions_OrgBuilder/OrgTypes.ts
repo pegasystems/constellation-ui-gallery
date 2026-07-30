@@ -1,13 +1,5 @@
 export type NodeType =
-  | 'corporation'
-  | 'division'
-  | 'department'
-  | 'factory'
-  | 'team'
-  | 'company'
-  | 'section'
-  | 'group'
-  | 'position';
+  'corporation' | 'division' | 'department' | 'factory' | 'team' | 'company' | 'section' | 'group' | 'position';
 
 export interface OrgNode {
   id: string;

@@ -3,6 +3,10 @@ import * as DemoStories from './demo.stories';
 
 <Meta of={DemoStories} />
 
+# Support
+
+This component is **deprecated** and may be removed in a future release of the UI Gallery. In Pega '26, you can switch language from the operator menu. While this component is more flexible and can be placed anywhere on a page, prefer the out-of-the-box functionality when possible.
+
 # Overview
 
 Renders a consumer-friendly language and timezone preference panel inside a card. The widget reads the current locale from `PCore.getEnvironmentInfo().getUseLocale()`, displays the configured language options in a dropdown, and reloads the page with the selected `locale` parameter. When `persistChanges` is enabled, it first calls `D_SetLocale` with the selected `useLocale` value before reloading.

@@ -22,6 +22,7 @@ export default styled.div(() => {
       min-width: 0;
     }
 
+    /* stylelint-disable unit-allowed-list */
     & .visually-hidden {
       position: absolute;
       width: 1px;

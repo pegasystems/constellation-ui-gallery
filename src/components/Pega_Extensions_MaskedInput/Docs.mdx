@@ -3,9 +3,15 @@ import * as DemoStories from './demo.stories';
 
 <Meta of={DemoStories} />
 
+# Support
+
+This component is **deprecated** and may be removed in a future release of the UI Gallery. In Pega '26, you can configure formatted inputs on form fields.
+
+**It is strongly recommended to remove this component from your application** and switch to the out-of-the-box formatted inputs.
+
 # Overview
 
-The masked input component should be used to enter a text field that follows a specific format like Social a Security Number or a ZIP code.
+The masked input component should be used to enter a text field that follows a specific format like a Social Security Number or a ZIP code.
 The input mask allows to constrain the information being entered into that format, without impairing the user’s ability to copy/paste or correct mistyping.
 
 This masking is based on the open source library [imaskJS](https://imask.js.org/). While this library supports other types of masks like Number or Date, this component should only be used for text fields.

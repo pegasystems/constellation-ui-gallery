@@ -109,8 +109,7 @@ export const PegaExtensionsDateInput = (props: DateInputExtProps) => {
   const propName = pConn.getStateProps().value;
   const hasValueChange = useRef(false);
   const environmentInfo = (window as any).PCore?.getEnvironmentInfo?.() as
-    | { getLocale?: () => string; getUseLocale?: () => string }
-    | undefined;
+    { getLocale?: () => string; getUseLocale?: () => string } | undefined;
   const resolvedLocale = resolveLocale(localeOverride, environmentInfo);
 
   const [inputValue, setInputValue] = useState(value);
