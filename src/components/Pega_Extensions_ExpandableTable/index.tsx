@@ -97,7 +97,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [embedDataRef, setEmbedDataRef] = useState<string>('');
   const [tableId, setTableId] = useState<string>('');
-  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set());
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(() => new Set());
   const [embedClass, setEmbedClass] = useState<string>('');
   const [basePageRef, setBasePageRef] = useState<string>('caseInfo.content');
 
@@ -213,8 +213,8 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
                 <th scope='col' style={{ width: '3rem' }}>
                   <span className='visually-hidden'>{getPConnect().getLocalizedValue('Row details')}</span>
                 </th>
-                {fields.map((field: any, idx: number) => (
-                  <th scope='col' key={`${tableId}-head-${idx}`} id={`${tableId}-head-${idx}`}>
+                {fields.map((field: any) => (
+                  <th scope='col' key={`${tableId}-head-${field.label}`} id={`${tableId}-head-${field.label}`}>
                     {field.label}
                   </th>
                 ))}
@@ -222,6 +222,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
             </thead>
             <tbody>
               {Array.from({ length: numRows }, (_, i) => i).map((_, rowIndex) => (
+                // eslint-disable-next-line @eslint-react/no-array-index-key -- rows are index-stable positional slots
                 <Fragment key={`rowgroup-${rowIndex}`}>
                   <tr>
                     <td>

@@ -55,6 +55,16 @@ const setPCore = () => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getKeyMapping: (key: string) => key,
+      };
+    },
     getDataApiUtils: () => {
       return {
         getData: () => {

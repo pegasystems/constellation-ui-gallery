@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 export type CheckboxTriggerProps = {
   getPConnect?: any;
@@ -39,7 +40,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -80,7 +81,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
         setInputValue(e.currentTarget.checked);
         if (value !== e.currentTarget.checked) {
           actions.updateFieldValue(propName, e.currentTarget.checked);
-          hasValueChange.current = true;
+          hasValueChangeRef.current = true;
           const context = getPConnect().getContextName();
           const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo?.content;
 
@@ -101,7 +102,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
             .then((resp: any) => {
               const respData = resp?.data?.responseData;
               const updateObj = { ...respData };
-              delete updateObj?.pzInsKey;
+              delete updateObj?.[getMappedKey('pzInsKey')];
               (window as any).PCore.getStore().dispatch({
                 type: 'SET_PROPERTY',
                 payload: {
@@ -114,9 +115,9 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
         }
       }}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
+        if ((!value || hasValueChangeRef.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.checked);
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

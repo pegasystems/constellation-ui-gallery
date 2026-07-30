@@ -177,7 +177,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                     <FieldValueList fields={fvl} />
                   </FieldGroup>
                 }
-                key={`rb-${i}`}
+                key={objectId || val}
                 id={val}
                 onChange={() => selectObject(objectId, i)}
                 checked={selection.length >= i ? selection[i] : false}
@@ -211,7 +211,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
               return (
                 <SelectedBgTh
                   scope='col'
-                  key={`${tableId}-col-${idx}`}
+                  key={`${tableId}-col-${val}`}
                   id={`${tableId}-col-${idx}`}
                   theme={theme}
                   isSelected={isSelected}
@@ -227,11 +227,17 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
             if (i > 0) {
               if (child.heading) {
                 return (
-                  <tr key={`total-cat-${i}`} className={`total cat-${child.category}`}>
+                  <tr key={`total-cat-${child.heading}`} className={`total cat-${child.category}`}>
                     <th>{child.heading}</th>
                     {fields[0].value.map((val: string, idx: number) => {
                       const isSelected = selection.length >= idx ? selection[idx] : false;
-                      return <SelectedBgCell key={idx} theme={theme} isSelected={isSelected} />;
+                      return (
+                        <SelectedBgCell
+                          key={`${tableId}-${child.heading}-col-${val}`}
+                          theme={theme}
+                          isSelected={isSelected}
+                        />
+                      );
                     })}
                   </tr>
                 );
@@ -239,14 +245,14 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
               /* Show a selection with radioButton if the label is called ID and the selectionProperty is provided */
               if (child.label === 'ID' && typeof selectionProperty !== 'undefined' && metadata.config.selectionProperty)
                 return (
-                  <tr key={`reg-row-${i}`}>
+                  <tr key={`reg-row-${child.label}`}>
                     <th>{getPConnect().getLocalizedValue('Selection')}</th>
                     {child.value &&
                       child.value.map((val: any, j: number) => {
                         const isSelected = selection.length >= j ? selection[j] : false;
                         return (
                           <SelectedCell
-                            key={`${tableId}-cell-${i}-${j}`}
+                            key={`${tableId}-cell-${child.label}-${val}`}
                             isSelected={isSelected}
                             theme={theme}
                             className='selection'
@@ -265,13 +271,17 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                   </tr>
                 );
               return (
-                <tr key={`reg-row-${i}`}>
+                <tr key={`reg-row-${child.label}`}>
                   <th scope='row'>{child.label}</th>
                   {child.value &&
                     child.value.map((val: any, j: number) => {
                       const isSelected = selection.length >= j ? selection[j] : false;
                       return (
-                        <SelectedBgCell theme={theme} isSelected={isSelected} key={`${tableId}-row-${i}-${j}`}>
+                        <SelectedBgCell
+                          theme={theme}
+                          isSelected={isSelected}
+                          key={`${tableId}-row-${child.label}-${val}`}
+                        >
                           {genField(child.componentType, val)}
                         </SelectedBgCell>
                       );

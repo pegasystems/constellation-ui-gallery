@@ -1,4 +1,4 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp, type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 export const StyledTaskList = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
@@ -35,6 +35,8 @@ export const StyledTaskList = styled.div(({ theme }: { theme: typeof themeDefini
     }
   `;
 });
+
+StyledTaskList.defaultProps = defaultThemeProp;
 
 export const HideButtonsForm = createGlobalStyle`
  main article form  {

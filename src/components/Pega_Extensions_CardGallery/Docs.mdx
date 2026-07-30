@@ -19,6 +19,10 @@ Each card will represent a case or data object. The list of cards to render is p
 
 Note: if 'useInDashboard' is true, the data page must be of type list - it must be 'queryable' and sourced from a Report Definition. Also the DP must return the following fields: 'pyID','pyLabel', 'pyStatusWork', 'pzInsKey', 'pxObjClass'. If you need other properties, you will need to update the code.
 
+## Launchpad
+
+On Launchpad, `readDataObject` / `getDataObjectView` may be unavailable. In that case the card details fallback loads a lookup list data page and shows mapped fields for ID (`pyID`), status (`pyStatusWork`), and update date/time (`pxUpdateDateTime`) via `getMappedKey`. Configure the lookup DP so the business ID parameter matches the mapped `pyID` key (for example Primary Business ID equals Parameters ID).
+
 <Story of={DemoStories.Default} />
 
 ## Props

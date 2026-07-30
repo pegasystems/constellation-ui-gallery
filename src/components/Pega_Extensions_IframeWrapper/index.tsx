@@ -35,7 +35,7 @@ export const PegaExtensionsIframeWrapper = (props: IframeWrapperProps) => {
         window.addEventListener('message', handleResize);
 
         return () => {
-          window.removeEventListener('load', handleResize);
+          window.removeEventListener('message', handleResize);
         };
       }
     }

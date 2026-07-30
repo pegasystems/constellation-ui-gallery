@@ -160,11 +160,12 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
 
   // useEffect to scroll to the bottom whenever the history changes if maxHeight is set to non auto
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (cardRef.current && maxHeight !== 'auto') {
         cardRef.current.scrollTop = cardRef.current.scrollHeight;
       }
     }, 0);
+    return () => clearTimeout(timeoutId);
   }, [history, maxHeight]);
 
   // useEffect to reset the context

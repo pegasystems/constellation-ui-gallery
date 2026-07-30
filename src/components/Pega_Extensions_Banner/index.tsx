@@ -2,6 +2,7 @@ import { withConfiguration, Banner } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useState } from 'react';
 import MainContent from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 type BannerProps = {
   /** Display type of rendering
@@ -47,7 +48,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
         queryPayload: {
           caseClassName: className,
           caseID: caseInstanceKey,
-          viewID: 'pyCaseSummary',
+          viewID: getMappedKey('pyCaseSummary'),
         },
       })
       .then((response: any) => {
@@ -122,14 +123,16 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
       if (dataPage) {
         const pConn = getPConnect();
         const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+        const pyID = getMappedKey('pyID');
         const payload = {
-          dataViewParameters: [{ pyID: CaseInstanceKey, ...(dismissed ? { dismissed: true } : null) }],
+          dataViewParameters: [{ [pyID]: CaseInstanceKey, ...(dismissed ? { dismissed: true } : null) }],
         };
         (window as any).PCore.getDataApiUtils()
           .getData(dataPage, payload, pConn.getContextName())
           .then((response: any) => {
             if (response.data.data !== null) {
-              setMessages(response.data.data.map((message: any) => message.pyDescription));
+              const pyDescription = getMappedKey('pyDescription');
+              setMessages(response.data.data.map((message: any) => message[pyDescription]));
               if (dismissed) {
                 refreshForm();
               }

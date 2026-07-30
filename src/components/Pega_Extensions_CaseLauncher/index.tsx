@@ -1,6 +1,7 @@
 import { withConfiguration, Card, CardHeader, CardContent, CardFooter, Text, Button } from '@pega/cosmos-react-core';
 import StyledCard from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 // interface for props
 export type CaseLauncherProps = {
@@ -22,7 +23,7 @@ export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   /* Create a new case on click of the selected button */
   const createCase = (className: string) => {
     const options = {
-      flowType: 'pyStartCase',
+      flowType: getMappedKey('pyStartCase'),
       containerName: 'primary',
       openCaseViewAfterCreate: true,
     };

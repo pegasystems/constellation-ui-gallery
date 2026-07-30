@@ -45,6 +45,10 @@ export default {
             id: 'aria-allowed-role',
             enabled: false,
           },
+          {
+            id: 'dlitem',
+            enabled: false,
+          },
         ],
       },
     },
@@ -262,9 +266,15 @@ const setPCore = (args: any) => {
         updateViewResources: () => {},
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
       };
     },
     getEvents: () => {
@@ -303,6 +313,13 @@ const setPCore = (args: any) => {
         PUB_SUB_EVENTS: {
           EVENT_DASHBOARD_FILTER_CHANGE: 'EVENT_DASHBOARD_FILTER_CHANGE',
           EVENT_DASHBOARD_FILTER_CLEAR_ALL: 'EVENT_DASHBOARD_FILTER_CLEAR_ALL',
+        },
+      };
+    },
+    getRestClient: () => {
+      return {
+        doesRestApiExist: () => {
+          return true;
         },
       };
     },

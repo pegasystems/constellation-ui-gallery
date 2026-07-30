@@ -758,9 +758,15 @@ const setPCore = (Example: string) => {
         getLazyComponent: (f: string) => f,
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
       };
     },
     getEvents: () => {

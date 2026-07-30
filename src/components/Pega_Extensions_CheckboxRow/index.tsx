@@ -39,7 +39,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -69,7 +69,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
     if (value === checked) return;
 
     actions.updateFieldValue(propName, checked);
-    hasValueChange.current = true;
+    hasValueChangeRef.current = true;
 
     const contextName = pConn.getContextName();
     const storeData = (window as any).PCore.getStore().getState().data?.[contextName];
@@ -103,9 +103,9 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
       required={required}
       onChange={(e: MouseEvent<HTMLInputElement>) => handleChange(e.currentTarget.checked)}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
+        if ((!value || hasValueChangeRef.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.checked);
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

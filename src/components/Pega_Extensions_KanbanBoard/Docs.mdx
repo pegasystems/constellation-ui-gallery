@@ -27,6 +27,10 @@ The library delivers the best drag and drop experience, is written in Typescript
 
 <Controls />
 
+## Launchpad
+
+On Launchpad, `readDataObject` / `getDataObjectView` may be unavailable. In that case the card details fallback loads a lookup list data page and shows mapped fields for ID (`pyID`), status (`pyStatusWork`), and update date/time (`pxUpdateDateTime`) via `getMappedKey`. Configure the lookup DP so the business ID parameter matches the mapped `pyID` key (for example Primary Business ID equals Parameters ID).
+
 ## Limitations
 
 The limitations of the components are:

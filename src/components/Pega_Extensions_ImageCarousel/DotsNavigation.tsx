@@ -2,7 +2,7 @@ import React from 'react';
 import { Dot, DotsContainer } from './styles';
 
 type DotsNavigationProps = {
-  imageSliderData: { id: string | number | null | undefined }[];
+  imageSliderData: { id: string | number | null | undefined; imageURL?: string; title?: string }[];
   currentSlide: number;
   showSlide: (index: number) => void;
 };
@@ -11,7 +11,7 @@ const DotsNavigation: React.FC<DotsNavigationProps> = ({ imageSliderData, curren
   <DotsContainer>
     {imageSliderData.map((slide, index) => (
       <Dot
-        key={slide.id ? slide.id : `dot-${index}`}
+        key={slide.id ?? slide.imageURL ?? slide.title}
         onClick={() => showSlide(index)}
         active={currentSlide === index}
       />

@@ -19,7 +19,8 @@ module.exports = {
   collectCoverageFrom: ['src/components/**/*.{ts,tsx,js,jsx}', '!**/*.(test|stories).{ts,tsx,js,jsx}'],
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   moduleDirectories: ['node_modules', 'src'],
-  setupFiles: ['./setupFiles.ts'],
+  // Polyfill before setupFiles so cosmos-react-core can load under jsdom.
+  setupFiles: ['./jest.polyfills.ts', './setupFiles.ts'],
   setupFilesAfterEnv: ['./setupTests.ts'],
   testPathIgnorePatterns: ['<rootDir>/lib/'],
   transformIgnorePatterns: [`node_modules/(?!(${packagesToTranspileStr}))`],

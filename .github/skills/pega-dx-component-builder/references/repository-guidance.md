@@ -13,10 +13,13 @@ This repository is a Pega Constellation DX component gallery. Use the existing c
 
 ## Files To Read Before Implementing
 
+- `AGENTS.md`
 - `Component_Build_Guide.md`
 - `best practices.md`
+- `LAUNCHPAD_VS_PLATFORM.md` (required for data, actions, case IDs, rule names)
 - `README.md`
 - the closest existing component under `src/components/`
+- `src/components/shared/utils.ts` (`getMappedKey`)
 
 ## Local Implementation Expectations
 
@@ -30,6 +33,19 @@ This repository is a Pega Constellation DX component gallery. Use the existing c
 - Prefer `getPConnect?: any` for component props unless the repo already provides a shared stronger type; avoid duplicating one-off `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces when the component only needs calls off `getPConnect()`.
 - When a component has multiple stories beyond the default one, document them in `Docs.mdx` under an `Example` or `Examples` section using `Story` blocks.
 - Keep tests focused on rendering, behavior, and integration boundaries that can run without a live Pega environment.
+
+## Launchpad / Dual-Environment Expectations
+
+Components are expected to run on **Pega Platform and Launchpad** unless the gallery marks them unsupported.
+
+- Use `getMappedKey` from `src/components/shared/utils.ts` for property names, data-page names, and local-action / flow-type names. Do not hard-code `pyID`, `pzInsKey`, `pxObjClass`, `pyStatusWork`, `pyLabel`, etc. as runtime object keys.
+- Read the current case id via `PCore.getConstants().CASE_INFO.CASE_INFO_ID`, not hard-coded paths like `caseInfo.businessID` or `.pyID`.
+- Use `getPConnect().getActionsApi()` and `PCore.getSemanticUrlUtils()` for navigation — never hand-build URLs.
+- Before calling optional Platform-only REST DX APIs (for example APIs behind `readDataObject` / `getDataObjectView`), check `PCore.getRestClient().doesRestApiExist('…')` and provide a fallback, or explicitly leave the component unsupported on Launchpad.
+- Prefer capability detection over `if (isLaunchpad)` branches.
+- In Storybook and Jest, stub at least `getNameSpaceUtils().getDefaultQualifiedName` and `getEnvironmentInfo().getKeyMapping` whenever `getMappedKey` is used; stub `getRestClient().doesRestApiExist` when optional APIs are gated.
+
+See `LAUNCHPAD_VS_PLATFORM.md` for full patterns and examples (`CardGallery`, `KanbanBoard`, `Calendar`, `UtilityList`, `NetworkDiagram`).
 
 ## Registration Guidance
 

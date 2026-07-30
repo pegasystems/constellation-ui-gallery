@@ -16,7 +16,7 @@ import { PROPERTY_NAMES, NODE_TYPES } from '../constants';
  * Custom hook for managing field values for controlled inputs
  */
 export const useFieldValues = (idPropertyName: string) => {
-  const [fieldValues, setFieldValues] = useState<Map<string, string>>(new Map());
+  const [fieldValues, setFieldValues] = useState<Map<string, string>>(() => new Map());
 
   /**
    * Initialize field values from loaded tree data

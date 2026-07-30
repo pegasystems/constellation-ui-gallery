@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '@pega/cosmos-react-core';
+import { Button, defaultThemeProp, type themeDefinition } from '@pega/cosmos-react-core';
 
 export const DentalChartContainer = styled.div`
   margin-top: 1rem;
@@ -53,7 +53,12 @@ export const ToothContainer = styled.div.attrs<{ top: number; left: number }>(({
   transform: translateY(-50%);
 `;
 
-export const ToothButton = styled(Button)<{ status: string; exists: boolean; readOnly?: boolean }>`
+export const ToothButton = styled(Button)<{
+  status: string;
+  exists: boolean;
+  readOnly?: boolean;
+  theme: typeof themeDefinition;
+}>`
   &.tooth-button {
     width: 1.75rem;
     height: 2rem;
@@ -79,6 +84,7 @@ export const ToothButton = styled(Button)<{ status: string; exists: boolean; rea
     }};
   }
 `;
+ToothButton.defaultProps = defaultThemeProp;
 
 export const LegendContainer = styled.div({
   marginTop: '0.4rem',
@@ -97,9 +103,12 @@ export const LegendItem = styled.div(() => ({
   fontSize: '0.75rem',
 }));
 
-export const LegendColorSwatch = styled.div<{ status: 'healthy' | 'missing' | 'extracted' }>`
-  width: 0.85rem;
-  height: 0.85rem;
+export const LegendColorSwatch = styled.div<{
+  status: 'healthy' | 'missing' | 'extracted';
+  theme: typeof themeDefinition;
+}>`
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
   border: 0.0625rem solid ${({ theme }) => theme.base.palette['border-line']};
   background-color: ${({ status, theme }) => {
@@ -113,3 +122,4 @@ export const LegendColorSwatch = styled.div<{ status: 'healthy' | 'missing' | 'e
     }
   }};
 `;
+LegendColorSwatch.defaultProps = defaultThemeProp;

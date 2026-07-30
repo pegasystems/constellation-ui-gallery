@@ -16,6 +16,7 @@ import { MainCard } from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 registerIcon(plusIcon, pencilIcon);
 type KanbanBoardProps = {
@@ -51,7 +52,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
   const groupList = groups.split(',');
 
   const editTask = (id: string) => {
-    getPConnect().getActionsApi().openLocalAction('pyUpdateCaseDetails', {
+    getPConnect().getActionsApi().openLocalAction(getMappedKey('pyUpdateCaseDetails'), {
       caseID: id,
       containerName: 'modal',
       actionTitle: 'Edit task',
@@ -134,7 +135,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
       parameters = { dataViewParameters: { key: contextProperty } };
     }
     (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, parameters)
+      .getData(getMappedKey(dataPage), parameters)
       .then(async (response: any) => {
         if (response.data.data !== null) {
           const tmpColumns: any = {};
@@ -145,18 +146,18 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
           });
           setColumns(tmpColumns);
           response.data.data.forEach((item: any) => {
-            const myColumn = tmpColumns[item[groupProperty]];
+            const myColumn = tmpColumns[item[getMappedKey(groupProperty)]];
             if (myColumn?.taskList) {
-              tmpTasks[item.pyID] = {
-                id: item.pyID,
-                title: item.pyLabel,
-                classname: item.pxObjClass,
-                insKey: item.pzInsKey,
-                groupValue: item[groupProperty],
+              tmpTasks[item[getMappedKey('pyID')]] = {
+                id: item[getMappedKey('pyID')],
+                title: item[getMappedKey('pyLabel')],
+                classname: item[getMappedKey('pxObjClass')],
+                insKey: item[getMappedKey('pzInsKey')],
+                groupValue: item[getMappedKey(groupProperty)],
                 getDetails,
                 editTask,
               };
-              myColumn.taskList.push(tmpTasks[item.pyID]);
+              myColumn.taskList.push(tmpTasks[item[getMappedKey('pyID')]]);
             }
           });
 

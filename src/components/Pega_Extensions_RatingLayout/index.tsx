@@ -23,11 +23,11 @@ interface Rating {
 export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
   const { getPConnect, label = '', showLabel = false, minWidth = '40ch' } = props;
   const [tabs, setTabs] = useState<Array<any>>([]);
-  const [panelShown, changePanel] = useState('0');
+  const [panelShown, setPanelShown] = useState('0');
   // Get the inherited props from the parent to determine label settings
   const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
   const handleTabChange = (id: string) => {
-    changePanel(id);
+    setPanelShown(id);
   };
   useEffect(() => {
     const tmpFields: any = getAllFields(getPConnect);

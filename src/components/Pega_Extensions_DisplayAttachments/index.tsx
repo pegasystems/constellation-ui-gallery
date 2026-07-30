@@ -22,6 +22,7 @@ import type { SummaryListItem, ModalMethods, ModalProps, LightboxItem, LightboxP
 import { downloadBlob, addAttachment, downloadFile } from './utils';
 import StyledCardContent from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -145,7 +146,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       const listOfFiles: Array<any> = [];
       const listOfCategories = categories.split(',');
       response.forEach((attachment: any) => {
-        const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
+        const currentCategory = attachment[getMappedKey('pyCategory')]?.trim();
         if (useAttachmentEndpoint) {
           /* Filter the attachment categories */
           if (categories && listOfCategories.length > 0) {
@@ -160,15 +161,15 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         } else {
           attachment = {
             ...attachment,
-            category: attachment.pyCategory,
-            name: attachment.pyMemo,
-            ID: attachment.pzInsKey,
-            type: attachment.pyFileCategory,
-            fileName: attachment.pyFileName,
-            mimeType: attachment.pyTopic,
-            categoryName: attachment.pyLabel,
-            createTime: attachment.pxCreateDateTime,
-            createdByName: attachment.pxCreateOpName,
+            category: attachment[getMappedKey('pyCategory')],
+            name: attachment[getMappedKey('pyMemo')],
+            ID: attachment[getMappedKey('pzInsKey')],
+            type: attachment[getMappedKey('pyFileCategory')],
+            fileName: attachment[getMappedKey('pyFileName')],
+            mimeType: attachment[getMappedKey('pyTopic')],
+            categoryName: attachment[getMappedKey('pyLabel')],
+            createTime: attachment[getMappedKey('pxCreateDateTime')],
+            createdByName: attachment[getMappedKey('pxCreateOpName')],
           };
         }
         attachment.mimeType = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');
@@ -215,7 +216,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         dataViewParameters: [{ LinkRefFrom: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             loadAttachments(response.data.data);

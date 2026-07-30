@@ -8,6 +8,7 @@ import {
   withConfiguration,
   type ModalMethods,
 } from '@pega/cosmos-react-core';
+import { getMappedKey } from '../shared/utils';
 
 import '../shared/create-nonce';
 import { useRef, useState, useEffect } from 'react';
@@ -60,6 +61,24 @@ const base64ToArrayBuffer = (base64: string) => {
   return bytes.buffer;
 };
 
+const usePdfObjectUrl = (value: string) => {
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    if (!value) {
+      setUrl('');
+      return undefined;
+    }
+    const buf = base64ToArrayBuffer(value);
+    const blob = new Blob([buf], { type: 'application/pdf' });
+    const objectUrl = URL.createObjectURL(blob);
+    setUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [value]);
+
+  return url;
+};
+
 const ViewPDFModal = ({
   heading,
   height,
@@ -73,13 +92,46 @@ const ViewPDFModal = ({
   value: string;
   showToolbar: boolean;
 }) => {
-  const buf = base64ToArrayBuffer(value);
-  const blob = new Blob([buf], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
+  const url = usePdfObjectUrl(value);
   return (
     <Modal heading={heading}>
-      <iframe src={`${url}${showToolbar ? '' : '#toolbar=0'}`} width={width} height={`${height}px`} title={heading} />
+      {url ? (
+        <iframe src={`${url}${showToolbar ? '' : '#toolbar=0'}`} width={width} height={`${height}px`} title={heading} />
+      ) : null}
     </Modal>
+  );
+};
+
+const DisplayPDFEmbed = ({
+  label,
+  width,
+  height,
+  showToolbar,
+  value,
+  hideLabel,
+}: {
+  label: string;
+  width: string;
+  height: number;
+  showToolbar: boolean;
+  value: string;
+  hideLabel: boolean;
+}) => {
+  const url = usePdfObjectUrl(value);
+  return (
+    <FormField label={label} labelHidden={hideLabel}>
+      <FormControl ariaLabel={label}>
+        {url ? (
+          <iframe
+            name={label}
+            src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
+            width={width}
+            height={`${height}px`}
+            title={label}
+          />
+        ) : null}
+      </FormControl>
+    </FormField>
   );
 };
 
@@ -110,7 +162,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
         dataViewParameters: [{ caseInstanceKey: CaseInstanceKey }],
       };
       (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             setPdfFiles(response.data.data);
@@ -144,21 +196,15 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     if (displayMode === DisplayMode.DisplayOnly) {
       return displayComp;
     }
-    const buf = base64ToArrayBuffer(value);
-    const blob = new Blob([buf], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
     return (
-      <FormField label={label} labelHidden={hideLabel}>
-        <FormControl ariaLabel={label}>
-          <iframe
-            name={label}
-            src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
-            width={width}
-            height={`${height}px`}
-            title={label}
-          />
-        </FormControl>
-      </FormField>
+      <DisplayPDFEmbed
+        label={label}
+        width={width}
+        height={height}
+        showToolbar={showToolbar}
+        value={value}
+        hideLabel={hideLabel}
+      />
     );
   }
 
@@ -179,20 +225,20 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     <StyledList>
       {pdfFiles.map((file) => {
         return (
-          <li key={file.pyLabel}>
+          <li key={file[getMappedKey('pyLabel')]}>
             <Button
               variant='link'
               onClick={() => {
                 viewAllModalRef.current = create(ViewPDFModal, {
-                  heading: file.pyLabel,
+                  heading: file[getMappedKey('pyLabel')],
                   width,
                   height,
-                  value: file.pyContext,
+                  value: file[getMappedKey('pyContext')],
                   showToolbar,
                 });
               }}
             >
-              {file.pyLabel}
+              {file[getMappedKey('pyLabel')]}
             </Button>
           </li>
         );

@@ -180,9 +180,9 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
               </caption>
               <thead>
                 <tr>
-                  {fields.map((field: any, idx: number) => {
+                  {fields.map((field: any) => {
                     return (
-                      <th scope='col' key={`${tableId}-head-${idx}`} id={`${tableId}-head-${idx}`}>
+                      <th scope='col' key={`${tableId}-head-${field.label}`} id={`${tableId}-head-${field.label}`}>
                         {field.label}
                       </th>
                     );
@@ -193,6 +193,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
               <tbody>
                 {Array.from({ length: numRows }, (_, i) => i).map((_, i) => {
                   return (
+                    // eslint-disable-next-line @eslint-react/no-array-index-key -- rows are index-stable positional slots
                     <tr key={`reg-row-${i}`}>
                       {fields.map((field: any, j: number) => {
                         return genField(field, i, `${tableId}-row-${i}-${j}`);

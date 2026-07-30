@@ -286,6 +286,17 @@ const setPCore = () => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
+      };
+    },
   };
 };
 

@@ -1,5 +1,6 @@
 import { type MouseEvent } from 'react';
 import { getKindFromMimeType, DateTimeDisplay, MetaList, FileVisual, Icon, Button } from '@pega/cosmos-react-core';
+import { getMappedKey } from '../shared/utils';
 
 export const canPreviewFile = (type: string) => {
   return type === 'image' || type === 'pdf';
@@ -106,7 +107,7 @@ export const addAttachment = (props: AddAttachmentProps) => {
   const { currentCategory, attachment, listOfAttachments, getPConnect, setImages, useLightBox, setElemRef } = props;
   const dateTime = <DateTimeDisplay value={new Date(attachment.createTime)} variant='relative' />;
   const secondaryItems = [
-    currentCategory === 'pxDocument' ? 'Document' : currentCategory,
+    currentCategory === getMappedKey('pxDocument') ? 'Document' : currentCategory,
     dateTime,
     attachment.createdByName ?? attachment.createdBy,
   ];

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp, themeDefinition } from '@pega/cosmos-react-core';
 
 const StyledCard = styled.article(({ theme }: { theme: typeof themeDefinition }) => {
   return css`
@@ -8,4 +8,6 @@ const StyledCard = styled.article(({ theme }: { theme: typeof themeDefinition })
     width: 100%;
   `;
 });
+
+StyledCard.defaultProps = defaultThemeProp;
 export default StyledCard;

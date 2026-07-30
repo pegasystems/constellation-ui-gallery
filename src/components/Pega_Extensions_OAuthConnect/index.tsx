@@ -11,6 +11,7 @@ import {
 } from '@pega/cosmos-react-core';
 import { StyledSummaryListHeader, StyledSummaryListContent } from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 import * as NodeIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/node.icon';
 import * as ChainIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/chain.icon';
@@ -50,7 +51,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
         };
         const context = getPConnect().getContextName();
         (window as any).PCore.getDataPageUtils()
-          .getPageDataAsync('D_OAuthConnect', context, parameters, {
+          .getPageDataAsync(getMappedKey('D_OAuthConnect'), context, parameters, {
             invalidateCache: true,
           })
           .then((response: any) => {
@@ -62,18 +63,18 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
       });
 
       const mashup: any = await mashupDetails;
-      if (mashup.pyTaskStatus) {
-        switch (mashup.pyServiceType) {
+      if (mashup[getMappedKey('pyTaskStatus')]) {
+        switch (mashup[getMappedKey('pyServiceType')]) {
           case 'AUTHENTICATE':
-            setLoginStatus(mashup.pyIsAuthenticated);
-            if (mashup.pyIsAuthenticated && mashup.pyExpiresAt) {
-              const v = mashup.pyExpiresAt;
+            setLoginStatus(mashup[getMappedKey('pyIsAuthenticated')]);
+            if (mashup[getMappedKey('pyIsAuthenticated')] && mashup[getMappedKey('pyExpiresAt')]) {
+              const v = mashup[getMappedKey('pyExpiresAt')];
               const expirationDate = new Date(
                 `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}T${v.substring(9, 11)}:${v.substring(11, 13)}:${v.substring(13, 19)}Z`,
               );
               const info = (
                 <Text>
-                  Successfully connected to {mashup.pyLabel}. Access token will expire on{' '}
+                  Successfully connected to {mashup[getMappedKey('pyLabel')]}. Access token will expire on{' '}
                   <DateTimeDisplay value={expirationDate} variant='datetime' format='short' />.
                 </Text>
               );
@@ -81,8 +82,8 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
             }
             break;
           case 'AUTHORIZE':
-            if (mashup.pyOauthURLRedirect) {
-              window.open(mashup.pyOauthURLRedirect, 'Sign In', 'width=800,height=800');
+            if (mashup[getMappedKey('pyOauthURLRedirect')]) {
+              window.open(mashup[getMappedKey('pyOauthURLRedirect')], 'Sign In', 'width=800,height=800');
             }
             break;
           case 'REVOKE':

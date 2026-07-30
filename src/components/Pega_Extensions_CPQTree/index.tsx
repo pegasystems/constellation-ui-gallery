@@ -160,7 +160,7 @@ export const PegaExtensionsCPQTree = (props: CPQTreeProps) => {
               const configSectionId = generateConfigNodeId(productId);
               return (
                 <ProductRow
-                  key={`${node.id}-${index}-${productId}`}
+                  key={node.id || productId}
                   product={node.itemData}
                   productIndex={index}
                   idPropertyName={idPropertyName}
