@@ -1,0 +1,48 @@
+src/components/Pega_Extensions_BannerInput/Docs.mdx
+  s_95ab0f4dc48aa3::t_b72e2d05ed4fda 8
+src/components/Pega_Extensions_MaskedInput/Docs.mdx
+  s_95ab0f4dc48aa3::t_9010cfedf88b3d 8-10
+  s_95ab0f4dc48aa3::t_1bca2e12a409bd 14
+src/components/Pega_Extensions_CaseReference/Docs.mdx
+  s_95ab0f4dc48aa3::t_d62ea2e0064b0e 8
+src/components/Pega_Extensions_StatusBadge/Docs.mdx
+  s_95ab0f4dc48aa3::t_b2902ae09b2d67 8
+src/components/Pega_Extensions_ChatGenAI/Docs.mdx
+  s_95ab0f4dc48aa3::t_06404c4bc4f2b7 8
+src/components/Pega_Extensions_CardGallery/Docs.mdx
+  s_95ab0f4dc48aa3::t_e381e42bc59df6 8
+src/components/Pega_Extensions_SignatureCapture/Docs.mdx
+  s_95ab0f4dc48aa3::t_8a58488f08a6ef 8
+Component_Build_Guide.md
+  s_95ab0f4dc48aa3::t_326aaed05d026b 9-11,13-15,21-43,48-56
+src/components/Pega_Extensions_LangSwitch/Docs.mdx
+  s_95ab0f4dc48aa3::t_6503d7af188c6e 8
+src/components/Pega_Extensions_CPQTree/Docs.mdx
+  s_95ab0f4dc48aa3::t_28bb22b64ae4a8 6-9
+src/components/Pega_Extensions_JapaneseInput/Docs.mdx
+  s_95ab0f4dc48aa3::t_9abff45645f8f7 8
+src/components/Pega_Extensions_SecureRichText/Docs.mdx
+  s_95ab0f4dc48aa3::t_64327d02d91d8d 8
+src/components/Pega_Extensions_Shortcuts/Docs.mdx
+  s_95ab0f4dc48aa3::t_56e75e67cad60c 8-10
+src/components/Pega_Extensions_DateInput/Docs.mdx
+  s_95ab0f4dc48aa3::t_56c44004ae2cea 8
+src/components/Pega_Extensions_AutoSave/Docs.mdx
+  s_95ab0f4dc48aa3::t_bfd7ec4b359382 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "89379f762885cac7f92ffc8985854550593d2064",
+  "prompts": {},
+  "sessions": {
+    "s_95ab0f4dc48aa3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "7a2e6a6f-0d5b-4495-bf95-110cca5ed166",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
