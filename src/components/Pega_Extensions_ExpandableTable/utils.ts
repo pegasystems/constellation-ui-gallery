@@ -49,8 +49,7 @@ export const getBasePageReference = (getPConnect: any): string => {
 const normalizeListName = (embedDataRef: string): string =>
   embedDataRef.startsWith('.') ? embedDataRef.slice(1) : embedDataRef;
 
-const segmentInPath = (path: string, segment: string): boolean =>
-  new RegExp(`\\.${segment}\\[\\d+\\]`).test(path);
+const segmentInPath = (path: string, segment: string): boolean => new RegExp(`\\.${segment}\\[\\d+\\]`).test(path);
 
 /** Extracts the embedded page-list path from a Pega field config value. */
 export const extractPageRefFromConfig = (configValue: string): string => {
@@ -68,11 +67,7 @@ export const extractPageRefFromConfig = (configValue: string): string => {
 };
 
 /** Builds the pageReference for a row in the embedded page list. */
-export const buildRowPageReference = (
-  basePageRef: string,
-  embedDataRef: string,
-  rowIndex: number,
-): string => {
+export const buildRowPageReference = (basePageRef: string, embedDataRef: string, rowIndex: number): string => {
   const listPath = normalizeListName(embedDataRef);
   if (!listPath.includes('[].')) {
     return `${basePageRef}.${listPath}[${rowIndex}]`;
@@ -191,11 +186,7 @@ export const loadRowDetailView = async (props: LoadRowDetailProps) => {
   const contextName = pConnect.getContextName();
   const basePageRef = getBasePageReference(getPConnect);
   const pageReference = buildRowPageReference(basePageRef, embedDataRef, rowIndex);
-  const metadata = (window as any).PCore.getViewResources().fetchViewResources(
-    detailViewName,
-    pConnect,
-    embedClass,
-  );
+  const metadata = (window as any).PCore.getViewResources().fetchViewResources(detailViewName, pConnect, embedClass);
 
   const messageConfig = {
     meta: metadata,

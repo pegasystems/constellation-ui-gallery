@@ -74,13 +74,15 @@ export const StyledBar = styled.div(({ theme }) => {
       height: 100%;
       width: calc(var(--max-slider-value) - var(--min-slider-value));
       background-color: ${interactiveColor};
-      ${ltr
-        ? css`
-            left: var(--min-slider-value);
-          `
-        : css`
-            right: var(--min-slider-value);
-          `}
+      ${
+        ltr
+          ? css`
+              left: var(--min-slider-value);
+            `
+          : css`
+              right: var(--min-slider-value);
+            `
+      }
     }
   `;
 });
@@ -109,13 +111,15 @@ export const StyledMinTrack = styled.div(
         top: calc(${spacing} / 2);
         left: var(--min-slider-value);
         right: var(--min-slider-value);
-        ${ltr
-          ? css`
-              transform: translate(-50%, 0);
-            `
-          : css`
-              transform: translate(50%, 0);
-            `}
+        ${
+          ltr
+            ? css`
+                transform: translate(-50%, 0);
+              `
+            : css`
+                transform: translate(50%, 0);
+              `
+        }
       }
     `;
   },
@@ -145,13 +149,15 @@ export const StyledMaxTrack = styled.div(
         top: calc(${spacing} / 2);
         left: var(--max-slider-value);
         right: var(--max-slider-value);
-        ${ltr
-          ? css`
-              transform: translate(-50%, 0);
-            `
-          : css`
-              transform: translate(50%, 0);
-            `}
+        ${
+          ltr
+            ? css`
+                transform: translate(-50%, 0);
+              `
+            : css`
+                transform: translate(50%, 0);
+              `
+        }
       }
     `;
   },
@@ -190,15 +196,17 @@ export const StyledMinValue = styled.div(({ theme }) => {
   return css`
     position: absolute;
     min-width: 1.5rem;
-    ${ltr
-      ? css`
-          left: calc(var(--min-slider-value) - 2.5rem);
-          right: auto;
-        `
-      : css`
-          right: calc(var(--min-slider-value) - 2.5rem);
-          left: auto;
-        `}
+    ${
+      ltr
+        ? css`
+            left: calc(var(--min-slider-value) - 2.5rem);
+            right: auto;
+          `
+        : css`
+            right: calc(var(--min-slider-value) - 2.5rem);
+            left: auto;
+          `
+    }
     top: 0;
     width: 5rem;
     display: flex;
@@ -224,13 +232,15 @@ export const StyledMinValue = styled.div(({ theme }) => {
       left: 50%;
       position: absolute;
       right: 50%;
-      ${ltr
-        ? css`
-            transform: translateX(-50%);
-          `
-        : css`
-            transform: translateX(50%);
-          `}
+      ${
+        ltr
+          ? css`
+              transform: translateX(-50%);
+            `
+          : css`
+              transform: translateX(50%);
+            `
+      }
       width: 0;
     }
     & > span::after {
@@ -260,15 +270,17 @@ export const StyledMaxValue = styled.div(({ theme }) => {
   return css`
     position: absolute;
     min-width: 1.5rem;
-    ${ltr
-      ? css`
-          left: calc(var(--max-slider-value) - 2.5rem);
-          right: auto;
-        `
-      : css`
-          right: calc(var(--max-slider-value) - 2.5rem);
-          left: auto;
-        `}
+    ${
+      ltr
+        ? css`
+            left: calc(var(--max-slider-value) - 2.5rem);
+            right: auto;
+          `
+        : css`
+            right: calc(var(--max-slider-value) - 2.5rem);
+            left: auto;
+          `
+    }
     top: 0;
     width: 5rem;
     display: flex;
@@ -293,13 +305,15 @@ export const StyledMaxValue = styled.div(({ theme }) => {
       left: 50%;
       position: absolute;
       right: 50%;
-      ${ltr
-        ? css`
-            transform: translateX(-50%);
-          `
-        : css`
-            transform: translateX(50%);
-          `}
+      ${
+        ltr
+          ? css`
+              transform: translateX(-50%);
+            `
+          : css`
+              transform: translateX(50%);
+            `
+      }
       width: 0;
     }
     & > span::after {
