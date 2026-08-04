@@ -118,8 +118,9 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     const fieldInput: any = {
       type: field.componentType,
       config: {
-        value: field.propref,
+        value: field?.value?.[rowIndex] || field.propref,
         label: field.label,
+        formatter: field.formatter,
         hideLabel: true,
         classID: field.contextClass,
         displayMode: 'DISPLAY_ONLY',
