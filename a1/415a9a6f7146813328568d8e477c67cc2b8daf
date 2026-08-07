@@ -1,0 +1,90 @@
+src/components/Pega_Extensions_CardGallery/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3,25
+src/components/Pega_Extensions_DisplayAttachments/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_ChatGenAI/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+package.json
+  s_67eec9b91fde37::t_076d9288539e3b 134
+src/components/Pega_Extensions_OrgBuilder/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 23
+src/components/Pega_Extensions_CaseLauncher/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+  s_67eec9b91fde37::t_337224246c316e 2
+src/components/Pega_Extensions_CompareTableLayout/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_FormWithVerticalStepper/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 27,86,112
+  s_67eec9b91fde37::t_337224246c316e 3
+src/components/Pega_Extensions_Map/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3,11
+src/components/Pega_Extensions_FieldGroupAsRow/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_Meter/ElemDisplay.tsx
+  s_67eec9b91fde37::t_f667f6696f815e 12-13
+  s_67eec9b91fde37::t_337224246c316e 3
+src/components/Pega_Extensions_StarRatingInput/styles.ts
+  s_67eec9b91fde37::t_337224246c316e 1
+  s_67eec9b91fde37::t_67917937f3492f 15,32
+src/components/Pega_Extensions_Meter/styles.ts
+  s_67eec9b91fde37::t_337224246c316e 1
+  s_67eec9b91fde37::t_67917937f3492f 4,44
+src/components/Pega_Extensions_NetworkDiagram/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_RatingLayout/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_HierarchicalFormAsTasks/styles.ts
+  s_67eec9b91fde37::t_337224246c316e 1
+  s_67eec9b91fde37::t_67917937f3492f 4
+src/components/Pega_Extensions_TrendDisplay/styles.ts
+  s_67eec9b91fde37::t_5d16519be3e15d 4-5
+src/components/Pega_Extensions_Scheduler/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 19
+.storybook/preview.tsx
+  s_67eec9b91fde37::t_4e0b7d8f5ccb66 86
+src/components/Pega_Extensions_Meter/ElemMeter.tsx
+  s_67eec9b91fde37::t_67917937f3492f 11
+src/components/Pega_Extensions_BannerInput/styles.ts
+  s_67eec9b91fde37::t_1e73222568b0dd 1,6,18-23,25-38
+  s_67eec9b91fde37::t_67917937f3492f 7
+  s_67eec9b91fde37::t_1e992ce2d25935 5,17,41
+jest.polyfills.ts
+  s_67eec9b91fde37::t_1c05ff58ca8311 35,38,42
+src/ReleaseNotes.mdx
+  s_1292c6126228f9::t_8e67175089a550 1-11,17-27,29-44,46-52,56,62-65,67
+src/components/Pega_Extensions_GanttChart/styles.ts
+  s_67eec9b91fde37::t_337224246c316e 1
+  s_67eec9b91fde37::t_67917937f3492f 27
+src/components/Pega_Extensions_CameraCapture/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+src/components/Pega_Extensions_JawLayout/styles.ts
+  s_67eec9b91fde37::t_337224246c316e 2
+src/components/Pega_Extensions_KanbanBoard/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3,24,34
+src/components/Pega_Extensions_Calendar/styles.ts
+  s_67eec9b91fde37::t_67917937f3492f 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a1415a9a6f7146813328568d8e477c67cc2b8daf",
+  "prompts": {},
+  "sessions": {
+    "s_1292c6126228f9": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "02b49df8-f0eb-4888-818f-0d915a24a744",
+        "model": "grok-4.5"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_67eec9b91fde37": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "dba20a43-3838-4be6-a367-b19570b86582",
+        "model": "grok-4.5"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
