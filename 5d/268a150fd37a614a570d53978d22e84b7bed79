@@ -1,0 +1,445 @@
+src/components/Pega_Extensions_HierarchicalFormAsTasks/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 29,47-70,74-83
+.github/skills/pega-dx-component-builder/references/repository-guidance.md
+  s_7fa616a80dd932::t_f7d622bba82ae4 33-34
+src/components/Pega_Extensions_Scheduler/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 78
+  s_d7f97c89063488::t_cfeb6faafe2581 146
+  s_7fa616a80dd932::t_f000c597bb01af 96
+src/components/Pega_Extensions_CameraCapture/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 26
+  s_7fa616a80dd932::t_c368371955e7d3 18
+  s_d7f97c89063488::t_cfeb6faafe2581 41
+src/components/Pega_Extensions_StarRatingInput/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 49
+src/components/Pega_Extensions_TaskList/Task.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 9,40
+src/components/Pega_Extensions_CheckboxRow/utils.ts
+  s_5e49b489ef4de6::t_a11e8aa917dca2 76
+  s_7fa616a80dd932::t_bc3be58f52205d 59
+src/components/Pega_Extensions_RatingLayout/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 59,179
+  s_7fa616a80dd932::t_c368371955e7d3 54
+  s_7fa616a80dd932::t_f000c597bb01af 61
+src/components/Pega_Extensions_EditableTableLayout/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 23,46,73,110
+  s_5e49b489ef4de6::t_58e8ba4d54d862 50
+  s_7fa616a80dd932::t_c368371955e7d3 124,135-136,161
+  s_5e49b489ef4de6::t_a11e8aa917dca2 49,76,113
+  s_5e49b489ef4de6::t_2e1fc3aad10c45 129
+src/components/Pega_Extensions_TaskList/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 35
+  s_7fa616a80dd932::t_f000c597bb01af 99
+tsconfig.json
+  s_7fa616a80dd932::t_aaa68005d59bff 24
+src/components/Pega_Extensions_ImageCarousel/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 37
+  s_7fa616a80dd932::t_f000c597bb01af 22
+src/components/Pega_Extensions_Toggle/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 6
+src/components/Pega_Extensions_LangSwitch/utils.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 7
+src/components/Pega_Extensions_Scheduler/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 10,59-60
+src/components/Pega_Extensions_UtilityList/utils.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 8,23-24
+src/components/Pega_Extensions_ChatGenAI/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 52
+  s_7fa616a80dd932::t_f000c597bb01af 69
+  s_d7f97c89063488::t_cfeb6faafe2581 84
+src/components/Pega_Extensions_FormWithVerticalStepper/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 49
+  s_7fa616a80dd932::t_c368371955e7d3 20,173
+src/components/Pega_Extensions_OrgBuilder/OrganizationBuilder.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 85
+src/components/Pega_Extensions_MaskedInput/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 7
+src/components/Pega_Extensions_Meter/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 47
+  s_5e49b489ef4de6::t_7aee92f2150774 82
+  s_7fa616a80dd932::t_c368371955e7d3 80,84
+src/components/Pega_Extensions_CaseReference/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 50
+  s_7fa616a80dd932::t_c368371955e7d3 27
+  s_d7f97c89063488::t_cfeb6faafe2581 67
+src/components/Pega_Extensions_DynamicHierarchicalForm/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 179,196,222,268
+  s_5e49b489ef4de6::t_6a605e0813a498 96-98
+  s_5e49b489ef4de6::t_a11e8aa917dca2 110,236
+  s_5e49b489ef4de6::t_08e1b6f3740500 184
+  s_7fa616a80dd932::t_bc3be58f52205d 40
+src/components/Pega_Extensions_DisplayAttachments/utils.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 54-57,59,61,105
+src/components/Pega_Extensions_FormWithVerticalStepper/VerticalNavbar.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 79
+src/components/Pega_Extensions_Banner/index.tsx
+  s_5e49b489ef4de6::t_7dc41e1c4651e6 131
+  s_5e49b489ef4de6::t_a11e8aa917dca2 97
+  s_7fa616a80dd932::t_c368371955e7d3 21,30,33,38,43,45-46,62,125,133,153,160,169
+  s_5e49b489ef4de6::t_65cac7b047a58f 80
+  s_5e49b489ef4de6::t_62f0a6aa128334 128-130
+src/components/Pega_Extensions_FormWithVerticalStepper/types.ts
+  s_7fa616a80dd932::t_c368371955e7d3 8,12,16
+src/components/Pega_Extensions_OAuthConnect/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 23,44,52,108,111,120
+src/components/Pega_Extensions_CaseLauncher/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 16
+src/components/Pega_Extensions_DisplayPDF/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 160,164,215
+  s_5e49b489ef4de6::t_d0a19d88e65679 162
+  s_7fa616a80dd932::t_bc3be58f52205d 49
+src/components/Pega_Extensions_Meter/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 86
+  s_d7f97c89063488::t_cfeb6faafe2581 137
+  s_d7f97c89063488::t_38d56d95c60c0f 91,93
+  s_7fa616a80dd932::t_c368371955e7d3 34
+src/components/Pega_Extensions_DisplayPDF/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 68
+  s_7fa616a80dd932::t_f000c597bb01af 108
+  s_d7f97c89063488::t_cfeb6faafe2581 134
+src/components/Pega_Extensions_BarCode/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 32
+src/components/Pega_Extensions_OrgBuilder/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 317
+  s_d7f97c89063488::t_cfeb6faafe2581 368
+  s_7fa616a80dd932::t_c368371955e7d3 268
+src/components/Pega_Extensions_StarRatingInput/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 91
+  s_7fa616a80dd932::t_c368371955e7d3 32
+  s_7fa616a80dd932::t_f000c597bb01af 43
+src/components/Pega_Extensions_HierarchicalFormAsTasks/TaskDetail.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 8
+src/components/Pega_Extensions_Shortcuts/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 21,26
+src/components/Pega_Extensions_CaseReference/index.tsx
+  s_5e49b489ef4de6::t_246e3b64fef721 22
+  s_7fa616a80dd932::t_c368371955e7d3 8,19-20
+src/components/Pega_Extensions_CPQTree/utils.ts
+  s_7fa616a80dd932::t_c368371955e7d3 175-176,777,965,1008,1078-1080,1082,1099,1310,1322,1325,1357
+  s_5e49b489ef4de6::t_a11e8aa917dca2 1351,1387
+  s_5e49b489ef4de6::t_ade13986bd8182 991
+  s_5e49b489ef4de6::t_8d910a7520478c 814,835
+  s_5e49b489ef4de6::t_d858a02156ecf7 1349-1350,1385-1386
+src/components/Pega_Extensions_KanbanBoard/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 123
+  s_d7f97c89063488::t_cfeb6faafe2581 168,320
+  s_7fa616a80dd932::t_f000c597bb01af 266
+AGENTS.md
+  s_7fa616a80dd932::t_b1a15c77bc8599 40
+  s_7fa616a80dd932::t_cb259391a02813 39
+.github/skills/pega-dx-component-builder/SKILL.md
+  s_7fa616a80dd932::t_12b2bee62773ec 64-65
+src/components/Pega_Extensions_BarCode/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 48
+  s_7fa616a80dd932::t_f000c597bb01af 26
+src/components/Pega_Extensions_CardGallery/Task.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 10,44
+src/components/Pega_Extensions_OAuthConnect/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 106
+  s_7fa616a80dd932::t_c368371955e7d3 22
+src/components/Pega_Extensions_KanbanBoard/Column.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 10
+src/components/Pega_Extensions_OrgBuilder/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 38
+src/components/Pega_Extensions_RangeSlider/demo.stories.tsx
+  s_d7f97c89063488::t_5eef06344daf3d 93
+  s_d7f97c89063488::t_cfeb6faafe2581 41,89
+src/components/Pega_Extensions_CardGallery/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 35,60,105-106,177-178,186-187,196-197,211-212,222-223,227-228,252
+src/components/Pega_Extensions_CPQTree/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 36,134
+src/components/Pega_Extensions_FormWithVerticalStepper/ActionButtons.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 8,14,20,49
+src/components/Pega_Extensions_HierarchicalFormAsTasks/types.ts
+  s_7fa616a80dd932::t_c368371955e7d3 7,20
+src/components/Pega_Extensions_Toggle/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 78,89
+  s_7fa616a80dd932::t_c368371955e7d3 44
+  s_7fa616a80dd932::t_f000c597bb01af 55
+  s_d7f97c89063488::t_53a3cd50367c57 83,85
+src/components/Pega_Extensions_SignatureCapture/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 9
+src/components/Pega_Extensions_UtilityList/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 141
+  s_d7f97c89063488::t_cfeb6faafe2581 154
+  s_7fa616a80dd932::t_c368371955e7d3 40
+src/components/Pega_Extensions_RatingLayout/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 11
+src/components/Pega_Extensions_KanbanBoard/utils.ts
+  s_7fa616a80dd932::t_c368371955e7d3 14,27,75,80,88,123,135,143
+  s_5e49b489ef4de6::t_a11e8aa917dca2 110
+  s_5e49b489ef4de6::t_14a526850b7c4e 81-86,108-109
+src/components/Pega_Extensions_ActionableButton/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 35
+  s_d7f97c89063488::t_cfeb6faafe2581 67
+  s_7fa616a80dd932::t_c368371955e7d3 17
+src/components/Pega_Extensions_Banner/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 122
+  s_7fa616a80dd932::t_c368371955e7d3 18
+  s_d7f97c89063488::t_cfeb6faafe2581 83,152
+src/components/Pega_Extensions_LangSwitch/demo.test.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 32,196,235,267,307,346,398
+  s_7fa616a80dd932::t_c368371955e7d3 6
+src/components/Pega_Extensions_ExpandableTable/index.tsx
+  s_5e49b489ef4de6::t_4a87584a827608 161
+  s_d7f97c89063488::t_07f0c3f93e87d6 122,124,159,166
+  s_7fa616a80dd932::t_c368371955e7d3 30,73,139,156,167,191
+  s_7fa616a80dd932::t_bc3be58f52205d 89,136
+src/components/Pega_Extensions_CameraCapture/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 8,42,202,214
+  s_5e49b489ef4de6::t_1b2799274123e1 221,225
+src/components/Pega_Extensions_Map/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 52
+  s_d7f97c89063488::t_cfeb6faafe2581 77,191
+  s_7fa616a80dd932::t_f000c597bb01af 79
+src/components/Pega_Extensions_CheckboxRow/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 42
+  s_7fa616a80dd932::t_f000c597bb01af 91
+  s_d7f97c89063488::t_5afc87578237d7 143,145
+  s_d7f97c89063488::t_cfeb6faafe2581 138,149
+src/components/Pega_Extensions_CPQTree/hooks/useTreeActions.ts
+  s_7fa616a80dd932::t_c368371955e7d3 19,28,56,80-82,84
+  s_5e49b489ef4de6::t_3cf248cef946e5 194
+src/components/shared/utils.ts
+  s_7fa616a80dd932::t_c368371955e7d3 7-8
+src/components/Pega_Extensions_CustomKPIGauge/demo.test.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 12,33,62,88
+  s_7fa616a80dd932::t_f000c597bb01af 29
+src/components/Pega_Extensions_PasswordInput/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 6
+Component_Build_Guide.md
+  s_7fa616a80dd932::t_6130d82fc8d177 298,302,306-312
+  s_7fa616a80dd932::t_2b8a50f8d52f1f 239-240
+  s_7fa616a80dd932::t_eaaecacb4b13c0 241-245,257-258,276,279
+  s_7fa616a80dd932::t_4a1d37fd3ffd7c 126,145-146,148,150
+src/components/Pega_Extensions_DisplayBrackets/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 9
+src/components/Pega_Extensions_QRCode/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 22
+  s_d7f97c89063488::t_cfeb6faafe2581 43
+src/components/Pega_Extensions_CPQTree/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 451
+  s_d7f97c89063488::t_cfeb6faafe2581 372
+  s_7fa616a80dd932::t_c368371955e7d3 79
+  s_d7f97c89063488::t_0c8cd4ea12e69c 537
+src/pega-globals.d.ts
+  s_7fa616a80dd932::t_20ebbd323b43ee 1-21
+.github/agents/pega-dx-component-builder.agent.md
+  s_7fa616a80dd932::t_0fa5bc60dea36d 33
+src/components/Pega_Extensions_NetworkDiagram/CustomNode.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 51
+  s_7fa616a80dd932::t_c368371955e7d3 59-60
+src/components/Pega_Extensions_CheckboxTrigger/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 86,89,97,106
+  s_7fa616a80dd932::t_bc3be58f52205d 7
+src/components/Pega_Extensions_DisplayAttachments/index.tsx
+  s_5e49b489ef4de6::t_a3c8fa4cc568ba 216
+  s_7fa616a80dd932::t_bc3be58f52205d 73
+  s_7fa616a80dd932::t_c368371955e7d3 110,134,206,214,218,241,250
+src/components/Pega_Extensions_QRCode/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 17
+LAUNCHPAD_VS_PLATFORM.md
+  s_7fa616a80dd932::t_285720fbb3074d 14-15
+  s_7fa616a80dd932::t_7c0eadbb0f71b9 127
+  s_7fa616a80dd932::t_e4b5bc056a25b7 205,224
+  s_7fa616a80dd932::t_af72faa9df73c4 56
+src/components/Pega_Extensions_Shortcuts/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 21
+  s_7fa616a80dd932::t_f000c597bb01af 37
+  s_d7f97c89063488::t_cfeb6faafe2581 57
+src/components/Pega_Extensions_CPQTree/hooks/useCPQTreeData.ts
+  s_7fa616a80dd932::t_c368371955e7d3 39,139,215,274,316,318
+src/components/Pega_Extensions_DisplayBrackets/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 92
+  s_d7f97c89063488::t_caccf0ab69914a 107,109
+  s_d7f97c89063488::t_cfeb6faafe2581 143
+  s_7fa616a80dd932::t_f000c597bb01af 102
+src/components/Pega_Extensions_JawLayout/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 138
+  s_7fa616a80dd932::t_c368371955e7d3 121-122
+src/components/Pega_Extensions_CardGallery/utils.ts
+  s_5e49b489ef4de6::t_0830ddf11bb652 82-87,109-110
+  s_5e49b489ef4de6::t_a11e8aa917dca2 111
+  s_7fa616a80dd932::t_c368371955e7d3 15,28,76,81,89
+src/components/Pega_Extensions_RangeSlider/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 40
+  s_5e49b489ef4de6::t_883a83e231ee99 262,264-265
+  s_5e49b489ef4de6::t_e064e86f35d523 70-71,77-79
+src/components/Pega_Extensions_CompareTableLayout/demo.stories.tsx
+  s_d7f97c89063488::t_4c0ec98cae8e6a 397,399
+  s_d7f97c89063488::t_cfeb6faafe2581 451
+  s_7fa616a80dd932::t_f000c597bb01af 413
+  s_7fa616a80dd932::t_c368371955e7d3 400
+src/components/Pega_Extensions_ChatGenAI/index.tsx
+  s_5e49b489ef4de6::t_d48297e9e343ca 79-80
+  s_7fa616a80dd932::t_c368371955e7d3 32,77
+src/components/Pega_Extensions_NetworkDiagram/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 810
+  s_d7f97c89063488::t_cfeb6faafe2581 857
+  s_7fa616a80dd932::t_c368371955e7d3 755
+src/components/Pega_Extensions_CardGallery/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 206
+  s_d7f97c89063488::t_cfeb6faafe2581 251,416
+  s_7fa616a80dd932::t_f000c597bb01af 363
+src/components/Pega_Extensions_DisplayAttachments/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 46
+  s_7fa616a80dd932::t_f000c597bb01af 300
+  s_d7f97c89063488::t_b048970d2b2c4a 305,307
+  s_d7f97c89063488::t_cfeb6faafe2581 318
+src/components/Pega_Extensions_GanttChart/utils.ts
+  s_7fa616a80dd932::t_c368371955e7d3 30,43,149,154,162,194,205
+  s_5e49b489ef4de6::t_a11e8aa917dca2 184
+  s_5e49b489ef4de6::t_3e7c627e1f1de2 155-160,182-183
+src/components/Pega_Extensions_GanttChart/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 279-280,290-291,325,403
+src/components/Pega_Extensions_LangSwitch/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 80
+  s_7fa616a80dd932::t_c368371955e7d3 47
+  s_d7f97c89063488::t_cfeb6faafe2581 89,97,122
+src/components/Pega_Extensions_Map/utils.ts
+  s_7fa616a80dd932::t_c368371955e7d3 161-164,166,175,185,202,209
+src/components/Pega_Extensions_PasswordInput/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 109
+  s_7fa616a80dd932::t_f000c597bb01af 61
+  s_7fa616a80dd932::t_c368371955e7d3 50
+src/components/Pega_Extensions_CustomKPIGauge/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 11
+  s_7fa616a80dd932::t_c368371955e7d3 7
+src/components/Pega_Extensions_Calendar/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 151
+  s_d7f97c89063488::t_cfeb6faafe2581 196
+  s_7fa616a80dd932::t_c368371955e7d3 57
+src/components/Pega_Extensions_CheckboxRow/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 7,83
+  s_7fa616a80dd932::t_c368371955e7d3 75
+src/components/Pega_Extensions_CPQTree/hooks/useTreeBuilder.ts
+  s_7fa616a80dd932::t_c368371955e7d3 32
+src/components/Pega_Extensions_LangSwitch/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 47
+src/components/Pega_Extensions_MaskedInput/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 61
+  s_7fa616a80dd932::t_c368371955e7d3 50
+  s_d7f97c89063488::t_cfeb6faafe2581 102,114
+  s_d7f97c89063488::t_fa05e08fb7e6bf 107,109
+src/components/Pega_Extensions_DisplayBrackets/Operator.tsx
+  s_5e49b489ef4de6::t_796d992d1f9373 1,27,34,69-81,83-87,92-93,121-129,131-135
+  s_5e49b489ef4de6::t_920bdf82ac79d0 82,130
+src/components/Pega_Extensions_CompareTableLayout/index.tsx
+  s_5e49b489ef4de6::t_5a8e294e46c426 58,61-62
+  s_7fa616a80dd932::t_c368371955e7d3 107-108,142
+  s_5e49b489ef4de6::t_179034063eb58a 244
+  s_7fa616a80dd932::t_bc3be58f52205d 32
+src/components/Pega_Extensions_ImageCarousel/Controls.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 7
+src/components/Pega_Extensions_Map/index.tsx
+  s_5e49b489ef4de6::t_b28e6904b315ff 275
+  s_5e49b489ef4de6::t_a11e8aa917dca2 389
+  s_7fa616a80dd932::t_c368371955e7d3 270,527
+  s_7fa616a80dd932::t_bc3be58f52205d 24
+  s_5e49b489ef4de6::t_8c6042834efac8 121
+  s_5e49b489ef4de6::t_dd836ae4336d9d 154,163
+.github/skills/pega-dx-component-builder/assets/component-delivery-checklist.md
+  s_7fa616a80dd932::t_1f0c8c3720e3ff 10
+src/components/Pega_Extensions_JawLayout/DentalChart.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 21
+src/components/Pega_Extensions_ActionableButton/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 8,14
+src/components/Pega_Extensions_EditableTableLayout/demo.stories.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 150-151
+  s_d7f97c89063488::t_cfeb6faafe2581 192,238
+  s_7fa616a80dd932::t_c368371955e7d3 132
+  s_7fa616a80dd932::t_f000c597bb01af 201
+src/components/Pega_Extensions_DisplayBrackets/Avatar.tsx
+  s_5e49b489ef4de6::t_10b346aebba9f0 61
+  s_7fa616a80dd932::t_c368371955e7d3 18,35,49
+src/components/Pega_Extensions_JawLayout/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 78
+  s_5e49b489ef4de6::t_a11e8aa917dca2 51
+  s_5e49b489ef4de6::t_94f536e0b26c5d 83
+  s_7fa616a80dd932::t_bc3be58f52205d 8
+src/components/Pega_Extensions_ExpandableTable/utils.ts
+  s_5e49b489ef4de6::t_f197342bcc8e4a 39
+  s_7fa616a80dd932::t_c368371955e7d3 8,37,124-127,129,136,141,147,156,158,193,206
+src/components/Pega_Extensions_KanbanBoard/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 32,137,190-191,199-200,236
+  s_5e49b489ef4de6::t_a25e6e86585866 134
+src/components/Pega_Extensions_KanbanBoard/Task.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 16,47,83
+src/components/Pega_Extensions_RatingLayout/RatingElem.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 9
+  s_5e49b489ef4de6::t_a11e8aa917dca2 37
+src/components/Pega_Extensions_Calendar/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 43,151-152,223,260-261,269-270
+src/components/Pega_Extensions_CustomKPIGauge/index.tsx
+  s_7fa616a80dd932::t_bc3be58f52205d 38
+src/components/Pega_Extensions_NetworkDiagram/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 71,143
+  s_5e49b489ef4de6::t_8cc90401802a01 147-148,165
+src/components/Pega_Extensions_UtilityList/index.tsx
+  s_5e49b489ef4de6::t_0b8b5f302c1bf8 116
+  s_7fa616a80dd932::t_c368371955e7d3 29,66,69,114,118
+src/components/Pega_Extensions_GanttChart/demo.stories.tsx
+  s_7fa616a80dd932::t_f000c597bb01af 313
+  s_7fa616a80dd932::t_c368371955e7d3 168
+  s_d7f97c89063488::t_cfeb6faafe2581 205,366
+src/components/Pega_Extensions_MarkdownInput/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 40
+src/components/Pega_Extensions_ExpandableTable/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 219,259,300-303,396,411,452-455,491
+  s_7fa616a80dd932::t_c368371955e7d3 153
+  s_7fa616a80dd932::t_bc3be58f52205d 205-210,368,403
+  s_7fa616a80dd932::t_f000c597bb01af 224,465
+src/components/Pega_Extensions_TaskList/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 22,70,74,100
+  s_5e49b489ef4de6::t_f04bb12222323b 72
+src/components/Pega_Extensions_DynamicHierarchicalForm/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 70
+  s_7fa616a80dd932::t_f000c597bb01af 163
+src/components/Pega_Extensions_CheckboxTrigger/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 37
+  s_7fa616a80dd932::t_f000c597bb01af 86
+  s_d7f97c89063488::t_cfeb6faafe2581 133,144
+  s_d7f97c89063488::t_8c03edfdb0d0f8 138,140
+src/components/Pega_Extensions_SignatureCapture/demo.stories.tsx
+  s_d7f97c89063488::t_cfeb6faafe2581 94
+  s_7fa616a80dd932::t_c368371955e7d3 32
+  s_7fa616a80dd932::t_f000c597bb01af 43
+src/components/Pega_Extensions_CaseLauncher/demo.stories.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 22
+  s_d7f97c89063488::t_cfeb6faafe2581 52
+  s_7fa616a80dd932::t_f000c597bb01af 33
+src/components/Pega_Extensions_ImageCarousel/index.tsx
+  s_7fa616a80dd932::t_c368371955e7d3 63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "5d268a150fd37a614a570d53978d22e84b7bed79",
+  "prompts": {},
+  "sessions": {
+    "s_5e49b489ef4de6": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e3fc16e8-c919-455f-b54d-a429b1c963bd",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_7fa616a80dd932": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b76ded26-4fe5-45cb-b60d-85f9cc9c69e8",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    },
+    "s_d7f97c89063488": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e415bf1a-ef0e-4062-822b-4cb3b29bf656",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
