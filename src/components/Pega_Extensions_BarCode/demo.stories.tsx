@@ -23,7 +23,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {/* Nothing */};
+  window.PCore = {/* Nothing */} as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsBarCode>;
@@ -45,7 +45,7 @@ export const Default: Story = {
               updateFieldValue: () => {},
             };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsBarCode {...props} />;

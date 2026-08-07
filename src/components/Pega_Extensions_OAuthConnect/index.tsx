@@ -20,7 +20,7 @@ registerIcon(NodeIcon, ChainIcon);
 
 export type OAuthConnectProps = {
   heading?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   profileName: string;
   connectLabel: string;
   showDisconnect: boolean;
@@ -41,8 +41,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
 
   const getMashupDetails = useCallback(
     async (authProfileName: any, Event: any) => {
-      const gadgetId =
-        getPConnect().getCaseInfo().getKey() + (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier();
+      const gadgetId = getPConnect().getCaseInfo().getKey() + PCore.getEnvironmentInfo().getOperatorIdentifier();
       const mashupDetails = new Promise((resolve) => {
         const parameters = {
           Event,
@@ -50,7 +49,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
           gadgetId,
         };
         const context = getPConnect().getContextName();
-        (window as any).PCore.getDataPageUtils()
+        PCore.getDataPageUtils()
           .getPageDataAsync(getMappedKey('D_OAuthConnect'), context, parameters, {
             invalidateCache: true,
           })
@@ -106,10 +105,10 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
     const mashupSubfilter = {
       matcher: 'OAUTH2',
       criteria: {
-        ID: getPConnect().getCaseInfo().getKey() + (window as any).PCore.getEnvironmentInfo().getOperatorIdentifier(),
+        ID: getPConnect().getCaseInfo().getKey() + PCore.getEnvironmentInfo().getOperatorIdentifier(),
       },
     };
-    const mashupSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+    const mashupSubId = PCore.getMessagingServiceManager().subscribe(
       mashupSubfilter,
       loadMashup,
       getPConnect().getContextName(),
@@ -118,7 +117,7 @@ export const PegaExtensionsOAuthConnect = (props: OAuthConnectProps) => {
     loadMashup();
 
     return () => {
-      (window as any).PCore.getMessagingServiceManager().unsubscribe(mashupSubId);
+      PCore.getMessagingServiceManager().unsubscribe(mashupSubId);
     };
   }, [getMashupDetails, getPConnect, profileName]);
 

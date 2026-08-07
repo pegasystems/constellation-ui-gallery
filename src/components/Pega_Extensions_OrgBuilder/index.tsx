@@ -35,7 +35,7 @@ export interface OrgBuilderProps {
   /** Right panel heading (organization to create) */
   targetHeading?: string;
 
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 export const PegaExtensionsOrgBuilder = (props: OrgBuilderProps) => {

@@ -18,7 +18,7 @@ export type DentalChartProps = {
   updateToothStatus: (index: number, newStatus: string) => void;
   readOnly?: boolean;
   heading?: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 //Helper function to calculate tooth position on a curve

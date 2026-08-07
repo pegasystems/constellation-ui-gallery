@@ -4,7 +4,7 @@ export type LocaleConfiguration = {
 };
 
 const runtime = globalThis as typeof globalThis & {
-  PCore?: any;
+  PCore?: typeof PCore;
 };
 
 const intlRuntime = Intl as typeof Intl & {

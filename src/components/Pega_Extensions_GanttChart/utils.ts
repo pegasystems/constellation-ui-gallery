@@ -27,7 +27,7 @@ export type GanttChartProps = {
   defaultViewMode: ViewModeType;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /** Loads data for Gantt chart from a datapage */
@@ -40,7 +40,7 @@ export const loadGanttData = async (
   endDateFieldName: string,
   progressFieldName: string,
 ) => {
-  const response = await (window as any).PCore.getDataApiUtils().getData(getMappedKey(dataPage), {});
+  const response = await PCore.getDataApiUtils().getData(getMappedKey(dataPage), {});
   const mappedTasks: Array<Task> = [];
   if (response.data.data !== null) {
     response.data.data.forEach((item: any) => {
@@ -146,15 +146,20 @@ type LoadDetailsProps = {
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
-  await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(getMappedKey(detailsDataPage), detailsViewName, { [getMappedKey('pyID')]: id })
+  await PCore.getDataApiUtils()
+    .getDataObjectView(
+      getMappedKey(detailsDataPage),
+      detailsViewName,
+      { [getMappedKey('pyID')]: id },
+      getPConnect().getContextName(),
+    )
     .then(async (res: any) => {
-      const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+      const { fetchViewResources, updateViewResources } = PCore.getViewResources();
       await updateViewResources(res.data);
       const transientItemID = getPConnect()
         .getContainerManager()
@@ -174,9 +179,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
           pageReference: 'content',
         },
       };
-      messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config[getMappedKey('pyID')] = id;
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      messageConfig.meta.config!.showLabel = false;
+      messageConfig.meta.config![getMappedKey('pyID')] = id;
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
     });
@@ -186,7 +191,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
 export type UpdateItemDetails = {
   item: Task;
   updatedFieldValueList: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /* This method will update the case groupValue automatically using the edit action
@@ -197,12 +202,7 @@ export const updateItemDetails = async (props: UpdateItemDetails) => {
   const { getPConnect, item, updatedFieldValueList } = props;
   const { [getMappedKey('pzInsKey')]: pzInsKey } = item.extendedProps;
   const context = getPConnect().getContextName();
-  const response = await (window as any).PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
+  const response = await PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
   const payload: any = { [pzInsKey]: updatedFieldValueList };
-  return await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
-    pzInsKey,
-    payload,
-    response.headers.etag,
-    context,
-  );
+  return await PCore.getDataApiUtils().updateCaseEditFieldsData(pzInsKey, payload, response.headers.etag, context);
 };

@@ -265,7 +265,7 @@ const setPCore = (Example: string) => {
       pyTargetOrganization: simpleTarget,
     };
   }
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -314,7 +314,7 @@ const setPCore = (Example: string) => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 interface OrgBuilderPropsExt extends OrgBuilderProps {
@@ -365,7 +365,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsOrgBuilder {...props} />;

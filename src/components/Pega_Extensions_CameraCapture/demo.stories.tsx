@@ -15,7 +15,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {
@@ -23,7 +23,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCameraCapture>;
@@ -34,10 +34,11 @@ export const Default: Story = {
 
     const props = {
       ...args,
-      getPConnect: () => ({
-        getContextName: () => '',
-        getValue: () => '',
-      }),
+      getPConnect: () =>
+        ({
+          getContextName: () => '',
+          getValue: () => '',
+        }) as unknown as typeof PConnect,
     };
 
     return <PegaExtensionsCameraCapture {...props} />;

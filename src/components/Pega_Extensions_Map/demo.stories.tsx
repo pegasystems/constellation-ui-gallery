@@ -49,7 +49,7 @@ const genComponent = (config: any) => {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -63,19 +63,20 @@ const setPCore = () => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        getActionsApi: () => ({ updateFieldValue: () => {} }),
-        getContextName: () => '',
-        getValue: () => 'C-123',
-        getListActions: () => {
-          return {
-            update: () => {},
-            deleteEntry: () => {},
-          };
-        },
-      }),
+      getPConnect: () =>
+        ({
+          getActionsApi: () => ({ updateFieldValue: () => {} }),
+          getContextName: () => '',
+          getValue: () => 'C-123',
+          getListActions: () => {
+            return {
+              update: () => {},
+              deleteEntry: () => {},
+            };
+          },
+        }) as unknown as typeof PConnect,
     }),
-  };
+  } as unknown as typeof PCore;
 };
 
 const genResponse = (args: any) => {
@@ -187,7 +188,7 @@ export const Default: Story = {
           resolveConfigProps: (f: any) => {
             return { value: f.values };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsMap {...props}></PegaExtensionsMap>;

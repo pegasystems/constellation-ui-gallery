@@ -37,7 +37,7 @@ export interface DynamicHierarchicalFormProps {
    * @default true
    */
   enableItemSelection: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 }
 
 const getFilterRegex = (inputValue: string) => {
@@ -93,7 +93,9 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     const caseKey = getPConnect().getCaseInfo().getKey();
     const refreshOptions = { autoDetectRefresh: true, propertyName: '' };
     const viewName = getPConnect().getCaseInfo().getCurrentAssignmentViewName();
-    getPConnect().getActionsApi().refreshCaseView(caseKey, viewName, '', refreshOptions);
+    getPConnect()
+      .getActionsApi()
+      .refreshCaseView(caseKey ?? '', viewName ?? '', '', refreshOptions);
   };
 
   const updateProducts = (index: number, IsSelected: boolean) => {
@@ -105,7 +107,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         target: getPConnect().getTarget(),
       },
     };
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+    const c11nEnv = PCore.createPConnect(messageConfig as any);
     const actionsApi = c11nEnv.getPConnect().getActionsApi();
     actionsApi?.updateFieldValue('.' + getMappedKey('IsSelected'), IsSelected);
     const tmpProducts = productsRef.current.map((product, i) => {
@@ -174,11 +176,12 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
 
   useEffect(() => {
     /* In 24.2, we need to initialize the context tree manager */
-    (window as any).PCore.getContextTreeManager().addPageListNode(
+    PCore.getContextTreeManager().addPageListNode(
       getPConnect().getContextName(),
       'caseInfo.content',
-      getPConnect().meta.name,
+      getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
       productRef.current,
+      {},
     );
 
     const SelectedProducts: any = getAllFields(0, getPConnect);
@@ -190,7 +193,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
     const tmpTabs: Array<any> = [];
     const tmpItems: Array<MenuItemProps> = [];
     const context = getPConnect().getContextName();
-    const content: any = (window as any).PCore.getStore().getState().data?.[context]?.caseInfo?.content;
+    const content: any = PCore.getStore().getState().data?.[context]?.caseInfo?.content;
     productRef.current = SelectedProducts[0].authorContext.substring(1);
     productSelectionRequiredRef.current = false;
     if (SelectedProducts[0]?.inheritedProps?.length > 0) {
@@ -216,7 +219,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
       }
       if (fieldId < tmpFields.length) {
         /* Match was made */
-        const metadata = (window as any).PCore.getViewResources().fetchViewResources(
+        const metadata = PCore.getViewResources().fetchViewResources(
           tmpFields[fieldId].name,
           getPConnect(),
           tmpFields[fieldId].ruleClass,
@@ -230,7 +233,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
             target: getPConnect().getTarget(),
           },
         };
-        const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+        const c11nEnv = PCore.createPConnect(messageConfig as any);
         const myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
         tmpTabs.push({
           name: pyLabel,
@@ -262,7 +265,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
         <Flex item={{ grow: 1, alignSelf: 'auto' }}>
           <Progress
             placement='block'
-            message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+            message={PCore.getLocaleUtils().getLocaleValue(
               'Loading content...',
               'Generic',
               '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -276,7 +279,7 @@ export const PegaExtensionsDynamicHierarchicalForm = (props: DynamicHierarchical
   return (
     <>
       <FixPopover />
-      <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
+      <FieldGroup name={propsToUse.showLabel ? (propsToUse?.label ?? undefined) : undefined}>
         {enableItemSelection ? (
           <ComboBox
             mode='multi-select'

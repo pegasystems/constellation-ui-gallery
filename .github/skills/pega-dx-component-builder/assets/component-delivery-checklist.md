@@ -7,7 +7,7 @@ Use this checklist before concluding the task.
 - `index.tsx` exports a typed component and wraps it with `withConfiguration`.
 - Field-style components keep `hideLabel` as the public prop, pass `labelHidden={hideLabel}` only to Cosmos controls, and avoid exposing `labelHidden` as part of the component API.
 - Field-style components type `disabled`, `readOnly`, and `required` as booleans and use the shared coercion pattern so runtime string `'true'` values still behave correctly.
-- `getPConnect` follows repo conventions, typically `getPConnect?: any`, without duplicate local `PegaConnect` or related helper interfaces unless a shared type already exists.
+- `getPConnect` follows repo conventions: `getPConnect: () => typeof PConnect` (from `@pega/pcore-pconnect-typedefs`), without duplicate local `PegaConnect` or related helper interfaces.
 - Required PConnect or PCore usage is verified against repo examples or official docs.
 - Launchpad safety (see `LAUNCHPAD_VS_PLATFORM.md`):
   - Property names, data-page names, and local-action / flow-type names go through `getMappedKey` (or equivalent namespace + key mapping).

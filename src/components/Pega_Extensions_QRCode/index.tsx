@@ -14,7 +14,7 @@ type QRCodeCompProps = {
   testId?: string;
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsQRCode = (props: QRCodeCompProps) => {

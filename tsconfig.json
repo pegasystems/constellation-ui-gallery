@@ -21,6 +21,7 @@
     "moduleResolution": "bundler",
     "module": "ESNext",
     "paths": {
+      "@pega/pcore-pconnect-typedefs": ["node_modules/@pega/pcore-pconnect-typedefs/index.d.ts"],
       "@pega/pcore-pconnect-typedefs/*": ["node_modules/@pega/pcore-pconnect-typedefs/*"]
     }
   }

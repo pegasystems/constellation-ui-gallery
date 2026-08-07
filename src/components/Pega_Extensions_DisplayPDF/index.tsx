@@ -46,7 +46,7 @@ export type DisplayPDFProps = {
   hideLabel?: boolean;
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const base64ToArrayBuffer = (base64: string) => {
@@ -157,11 +157,11 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     if (dataPage && getPConnect) {
       const pConn = getPConnect();
 
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ caseInstanceKey: CaseInstanceKey }],
+        dataViewParameters: { caseInstanceKey: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
@@ -212,7 +212,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',

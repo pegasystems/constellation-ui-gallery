@@ -26,7 +26,7 @@ type UtilityListProps = {
   primaryField: string;
   secondaryFields?: string;
   secondaryFieldTypes?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /* To register more icon, you need to import them as shown above */
@@ -63,10 +63,10 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   const [objects, setObjects] = useState<Array<SummaryListItem>>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const viewAllModalRef = useRef<ModalMethods<any>>();
-  const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+  const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
   const publishUtilityUpdated = (count: any) => {
-    (window as any).PCore.getPubSubUtils().publish('WidgetUpdated', {
+    PCore.getPubSubUtils().publish('WidgetUpdated', {
       widget: 'PEGA_EXTENSIONS_UTILITYLIST',
       count,
       caseID,
@@ -111,11 +111,11 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ CaseInstanceKey }],
+        dataViewParameters: { CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(getMappedKey(dataPage), setCaseID ? payload : {}, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {

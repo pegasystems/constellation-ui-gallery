@@ -129,7 +129,7 @@ type Story = StoryObj<typeof PegaExtensionsEditableTableLayout>;
 
 export const Default: Story = {
   render: (args: TableLayoutProps) => {
-    (window as any).PCore = {
+    window.PCore = {
       getLocaleUtils: () => {
         return {
           getLocaleValue: (val: string) => {
@@ -147,10 +147,9 @@ export const Default: Story = {
           getPConnect: () => {
             return {
               createComponent: (f: any) => {
-                const index = context.options.pageReference.substring(
-                  context.options.pageReference.indexOf('[') + 1,
-                  context.options.pageReference.indexOf(']'),
-                );
+                const index = context
+                  .getPageReference()
+                  .substring(context.getPageReference().indexOf('[') + 1, context.getPageReference().indexOf(']'));
                 if (f.type === 'Currency') {
                   return (
                     <CurrencyInput
@@ -190,7 +189,7 @@ export const Default: Story = {
                   },
                 };
               },
-            };
+            } as unknown as typeof PConnect;
           },
         };
       },
@@ -199,7 +198,7 @@ export const Default: Story = {
           getLazyComponent: (f: string) => f,
         };
       },
-    };
+    } as unknown as typeof PCore;
 
     const props = {
       template: 'CompareTableLayout',
@@ -236,7 +235,7 @@ export const Default: Story = {
           resolveConfigProps: (f: any) => {
             return { ...f, propref: f.value, pageref: 'tasks' };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsEditableTableLayout {...props} />;

@@ -75,7 +75,7 @@ const genValue = (args: any) => {
   return JSON.stringify(obj);
 };
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
@@ -93,7 +93,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<StorySchedulerProps>;
@@ -143,7 +143,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsScheduler {...props} />;

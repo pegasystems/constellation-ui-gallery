@@ -35,7 +35,7 @@ type DataPageValueDisplayProps = {
   legendLowLabel?: string;
   legendWarningLabel?: string;
   legendGoodLabel?: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /* ── Helpers ─────────────────────────────────────────────── */
@@ -390,7 +390,6 @@ export const PegaExtensionsCustomKPIGauge = (props: DataPageValueDisplayProps) =
     setLoading(true);
     setError('');
 
-    const PCore = (window as any).PCore;
     if (!PCore) {
       setLoading(false);
       setError('PCore is not available.');

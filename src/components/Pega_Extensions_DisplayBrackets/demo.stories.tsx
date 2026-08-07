@@ -89,7 +89,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => ({
       getLocaleValue: (value: any) => value,
     }),
@@ -99,14 +99,14 @@ const setPCore = () => {
           resolve(OperatorDetails);
         }),
     }),
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<PegaExtensionsTournamentProps>;
 
-const PegaExtensionsDisplayBracketsDemo = (inputs: PegaExtensionsTournamentProps) => {
+const PegaExtensionsDisplayBracketsDemo = (inputs: Omit<PegaExtensionsTournamentProps, 'getPConnect'>) => {
   return {
-    render: (args: PegaExtensionsTournamentProps) => {
+    render: (args: Omit<PegaExtensionsTournamentProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
@@ -140,7 +140,7 @@ const PegaExtensionsDisplayBracketsDemo = (inputs: PegaExtensionsTournamentProps
             resolveConfigProps: () => {
               /* nothing */
             },
-          };
+          } as unknown as typeof PConnect;
         },
       };
       return <PegaExtensionsDisplayBrackets {...props} />;

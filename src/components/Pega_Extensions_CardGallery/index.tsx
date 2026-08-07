@@ -32,7 +32,7 @@ type CardGalleryProps = {
   minWidth?: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
@@ -57,7 +57,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const editTask = (id: string) => {
     getPConnect()
       .getActionsApi()
-      .openLocalAction((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
+      .openLocalAction(PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
         caseID: id,
         containerName: 'modal',
         actionTitle: getPConnect().getLocalizedValue('Edit task'),
@@ -102,8 +102,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         },
       };
     }
-    (window as any).PCore.getDataApiUtils()
-      .getData((window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(dataPage), payload)
+    PCore.getDataApiUtils()
+      .getData(PCore.getNameSpaceUtils().getDefaultQualifiedName(dataPage), payload)
       .then(async (response: any) => {
         if (!isFiltered) {
           /* First time - no data loaded */
@@ -174,8 +174,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks(false);
@@ -183,8 +183,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };
@@ -193,8 +193,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   /* Subscribe to dashboard filter changes only if useInDashboard is true */
   useEffect(() => {
     if (useInDashboard) {
-      (window as any).PCore.getPubSubUtils().subscribe(
-        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+      PCore.getPubSubUtils().subscribe(
+        PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
         (data: any) => {
           const { filterId, filterExpression } = data;
           if (filterExpression) {
@@ -208,8 +208,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         false,
         getPConnect().getContextName(),
       );
-      (window as any).PCore.getPubSubUtils().subscribe(
-        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+      PCore.getPubSubUtils().subscribe(
+        PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
         () => {
           filtersRef.current = {};
           loadTasks(true);
@@ -219,13 +219,13 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         getPConnect().getContextName(),
       );
       return () => {
-        (window as any).PCore.getPubSubUtils().unsubscribe(
-          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+        PCore.getPubSubUtils().unsubscribe(
+          PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
           'dashboard-component-cardgallery',
           getPConnect().getContextName(),
         );
-        (window as any).PCore.getPubSubUtils().unsubscribe(
-          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+        PCore.getPubSubUtils().unsubscribe(
+          PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
           'dashboard-component-cardgallery',
           getPConnect().getContextName(),
         );
@@ -249,7 +249,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       return genState(
         <Progress
           placement='block'
-          message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          message={PCore.getLocaleUtils().getLocaleValue(
             'Loading content...',
             'Generic',
             '@BASECLASS!GENERIC!PYGENERICFIELDS',

@@ -59,7 +59,7 @@ export const Default: Story = {
               },
             };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsMarkdownInput {...props} />;

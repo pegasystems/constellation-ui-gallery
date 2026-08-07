@@ -36,7 +36,7 @@ interface DataInitConfig {
  */
 export const useCPQTreeData = (
   dataPage: string,
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
   loadTree: (
     item: any,
     cases: Array<CustomTreeNode>,
@@ -136,7 +136,7 @@ export const useCPQTreeData = (
     // Clear registered page list paths when dataPage changes to allow re-registration
     clearRegisteredPageListPaths();
 
-    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    const caseInstanceKey = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
     const loadObjects = (response: any) => {
       // Check if this is still the current request
@@ -212,7 +212,7 @@ export const useCPQTreeData = (
     abortControllerRef.current = abortController;
 
     console.log('loadObjects', dataPage);
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(dataPage, { dataViewParameters: { caseInstanceKey } })
       .then((response: any) => {
         // Check if this is still the current request
@@ -271,9 +271,7 @@ export const useCPQTreeData = (
     async (updatedData?: any) => {
       if (updatedData !== null && updatedData !== undefined) {
         // Use the provided updated data directly
-        const caseInstanceKey = getPConnectRef
-          .current()
-          .getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+        const caseInstanceKey = getPConnectRef.current().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
         const cases: Array<CustomTreeNode> = [];
         const currentLoadTree = loadTreeRef.current;
         const currentChildrenPropertyName = childrenPropertyNameRef.current;
@@ -315,11 +313,9 @@ export const useCPQTreeData = (
       } else {
         console.log('reloadTree', dataPage);
         // Fallback: reload from data page if no data provided
-        const caseInstanceKey = getPConnectRef
-          .current()
-          .getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+        const caseInstanceKey = getPConnectRef.current().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
         try {
-          const response = await (window as any).PCore.getDataApiUtils().getData(dataPage, {
+          const response = await PCore.getDataApiUtils().getData(dataPage, {
             dataViewParameters: { caseInstanceKey },
           });
           if (response.data.data[0] !== null) {

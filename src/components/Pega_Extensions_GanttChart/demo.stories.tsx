@@ -165,7 +165,7 @@ const tasks: any = {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -174,34 +174,35 @@ const setPCore = () => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        createComponent: (meta: any) => {
-          const id = meta.config.pyID;
-          const fields = [
-            {
-              name: 'ID',
-              value: (
-                <h3>
-                  <Link href='/' previewable>
-                    {id}
-                  </Link>
-                </h3>
-              ),
-            },
-            { name: 'Description', value: tasks[id].pyDescription },
-            { name: 'Progress', value: tasks[id].Progress },
-            {
-              name: 'Start',
-              value: <DateTimeDisplay variant='datetime' value={tasks[id].StartDate} />,
-            },
-            {
-              name: 'End',
-              value: <DateTimeDisplay variant='datetime' value={tasks[id].EndDate} />,
-            },
-          ];
-          return <FieldValueList variant='stacked' fields={fields} />;
-        },
-      }),
+      getPConnect: () =>
+        ({
+          createComponent: (meta: any) => {
+            const id = meta.config.pyID;
+            const fields = [
+              {
+                name: 'ID',
+                value: (
+                  <h3>
+                    <Link href='/' previewable>
+                      {id}
+                    </Link>
+                  </h3>
+                ),
+              },
+              { name: 'Description', value: tasks[id].pyDescription },
+              { name: 'Progress', value: tasks[id].Progress },
+              {
+                name: 'Start',
+                value: <DateTimeDisplay variant='datetime' value={tasks[id].StartDate} />,
+              },
+              {
+                name: 'End',
+                value: <DateTimeDisplay variant='datetime' value={tasks[id].EndDate} />,
+              },
+            ];
+            return <FieldValueList variant='stacked' fields={fields} />;
+          },
+        }) as unknown as typeof PConnect,
     }),
     getComponentsRegistry: () => {
       return {
@@ -309,7 +310,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsGanttChart>;
@@ -362,7 +363,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
 

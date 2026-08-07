@@ -6,7 +6,7 @@ import '../shared/create-nonce';
 
 export type PegaExtensionsTournamentProps = {
   JsonField: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const CustomSeed = ({ seed }: { seed: any }) => {

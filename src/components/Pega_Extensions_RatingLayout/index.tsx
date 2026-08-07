@@ -8,7 +8,7 @@ import '../shared/create-nonce';
 export type RatingLayoutProps = {
   label?: string;
   showLabel?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   minWidth?: string;
 };
 
@@ -66,7 +66,7 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
   }, [getPConnect]);
 
   return (
-    <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
+    <FieldGroup name={propsToUse.showLabel ? (propsToUse?.label ?? undefined) : undefined}>
       <Flex container={{ direction: 'column' }}>
         <Flex item={{ grow: 1 }}>
           <Tabs tabs={tabs} onTabClick={handleTabChange} currentTabId={panelShown} />

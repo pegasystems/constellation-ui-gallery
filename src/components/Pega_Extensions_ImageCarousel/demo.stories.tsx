@@ -19,7 +19,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {/* Nothing */};
+  window.PCore = {/* Nothing */} as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsImageCarousel>;
@@ -34,7 +34,7 @@ export const Default: Story = {
           getLocalizedValue: (val: string) => {
             return val;
           },
-        };
+        } as unknown as typeof PConnect;
       },
       datasource: {
         source: [

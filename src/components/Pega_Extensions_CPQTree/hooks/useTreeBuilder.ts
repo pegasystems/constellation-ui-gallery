@@ -29,7 +29,7 @@ export const useTreeBuilder = (
   childrenPropertyName: string | RegExp,
   displayPropertyName: string,
   idPropertyName: string,
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
 ) => {
   type LoadTreeFn = (
     item: any,

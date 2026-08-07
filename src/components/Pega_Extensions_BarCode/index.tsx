@@ -29,7 +29,7 @@ type BarCodeExtProps = {
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
 
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsBarCode = (props: BarCodeExtProps) => {

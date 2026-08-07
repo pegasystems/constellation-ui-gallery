@@ -39,7 +39,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -88,7 +88,7 @@ const setPCore = () => {
         dispatch: () => {},
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const setPConnect = () => {
@@ -135,18 +135,18 @@ const setPConnect = () => {
     resolveConfigProps: () => {
       /* nothing */
     },
-  };
+  } as unknown as typeof PConnect;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCheckboxRow>;
 
-const CheckboxRowDemo = (inputs: CheckboxRowProps) => {
+const CheckboxRowDemo = (inputs: Omit<CheckboxRowProps, 'getPConnect'>) => {
   return {
-    render: (args: CheckboxRowProps) => {
+    render: (args: Omit<CheckboxRowProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
-        getPConnect: setPConnect,
+        getPConnect: setPConnect as () => typeof PConnect,
       };
       return <PegaExtensionsCheckboxRow {...props} />;
     },

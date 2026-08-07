@@ -4,7 +4,7 @@
  * @returns Launchpad identifier if available else it will return the same key passed
  */
 export function getMappedKey(key: string): string {
-  const namespacedKey = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(key);
-  const mappedKey = (window as any).PCore.getEnvironmentInfo().getKeyMapping(namespacedKey);
+  const namespacedKey = PCore.getNameSpaceUtils().getDefaultQualifiedName(key);
+  const mappedKey = PCore.getEnvironmentInfo().getKeyMapping(namespacedKey);
   return mappedKey || namespacedKey;
 }

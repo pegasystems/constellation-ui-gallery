@@ -47,7 +47,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -58,7 +58,7 @@ const setPCore = () => {
         getTimeZone: () => 'local',
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const setPConnect = () => {
@@ -99,19 +99,19 @@ const setPConnect = () => {
     resolveConfigProps: () => {
       /* nothing */
     },
-  };
+  } as unknown as typeof PConnect;
 };
 
 type Story = StoryObj<typeof PegaExtensionsMaskedInput>;
 
-const MaskedInputDemo = (inputs: MaskedInputProps) => {
+const MaskedInputDemo = (inputs: Omit<MaskedInputProps, 'getPConnect'>) => {
   return {
-    render: (args: MaskedInputProps) => {
+    render: (args: Omit<MaskedInputProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
         additionalProps: { style: { maxWidth: '80ch' } },
-        getPConnect: setPConnect,
+        getPConnect: setPConnect as () => typeof PConnect,
       };
       return <PegaExtensionsMaskedInput {...props} />;
     },

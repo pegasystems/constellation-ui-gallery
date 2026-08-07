@@ -44,7 +44,7 @@ export type MeterProps = {
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
 
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export type Event = {
@@ -77,11 +77,11 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ [getMappedKey('pyID')]: CaseInstanceKey }],
+        dataViewParameters: { [getMappedKey('pyID')]: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {

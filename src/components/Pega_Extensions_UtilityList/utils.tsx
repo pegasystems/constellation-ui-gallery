@@ -5,7 +5,7 @@ import { getMappedKey } from '../shared/utils';
 export type ObjectProps = {
   propName: string;
   type: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   item: any;
 };
 
@@ -20,8 +20,8 @@ export const renderObjectField = ({ propName, type, item, getPConnect }: ObjectP
     item[getMappedKey('pxObjClass')] &&
     item[getMappedKey('pzInsKey')]
   ) {
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: item[getMappedKey('pxObjClass')] },
       { workID: item[getMappedKey('pyID')] },
     );

@@ -4,7 +4,7 @@ import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
 import '../shared/create-nonce';
 
 export type MaskedInputProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   mask: string;
   value?: string;

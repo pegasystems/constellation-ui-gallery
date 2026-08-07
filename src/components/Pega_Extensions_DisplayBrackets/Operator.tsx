@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, type ReactNode, type ReactElement } from 'react';
 import {
   Link,
   Button,
@@ -25,14 +24,14 @@ interface PegaExtensionsDisplayBracketsOperatorProps {
   helperText: string;
 }
 
-let pTarget = null;
+let pTarget: HTMLElement | null = null;
 
 export default function Operator(props: PegaExtensionsDisplayBracketsOperatorProps) {
   const { id, name, label, testId, helperText, externalUser, metaObj } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [popoverEl, setPopoverEl] = useElement(null);
-  const [popoverContent, setPopoverContent] = useState(null);
+  const [popoverContent, setPopoverContent] = useState<ReactNode>(null);
   const theme: any = useTheme();
 
   /* If the id has changed, we need to reset the popover */
@@ -67,24 +66,31 @@ export default function Operator(props: PegaExtensionsDisplayBracketsOperatorPro
       ];
       setIsLoading(false);
       setPopoverContent(
-        <Glimpse
-          visual={
-            <Avatar
-              metaObj={{
-                name: externalUser.name,
-              }}
-            />
-          }
-          primary={externalUser.name}
-          secondary={[externalUser.position]}
-          fields={fields}
-          target={pTarget}
-        />,
+        (
+          <Glimpse
+            id={id}
+            visual={
+              <Avatar
+                metaObj={{
+                  name: externalUser.name,
+                }}
+              />
+            }
+            primary={externalUser.name}
+            secondary={[externalUser.position]}
+            fields={fields}
+            target={pTarget!}
+            onDismiss={() => {
+              pTarget = null;
+            }}
+          />
+        ) as ReactElement,
       );
     } else {
       return PCore.getUserApi()
         .getOperatorDetails(id, true)
-        .then((res) => {
+        .then((response) => {
+          const res = response as any;
           if (res.data?.data && res.data.data[0].BusinessID && res.data.data[0].Name) {
             const fields = [];
             if (res.data.data[0].Name) {
@@ -112,18 +118,21 @@ export default function Operator(props: PegaExtensionsDisplayBracketsOperatorPro
 
             setIsLoading(false);
             setPopoverContent(
-              <Glimpse
-                heading={{
-                  primary: res.data.data[0].Name,
-                  secondary: res.data.data[0].BusinessID,
-                  visual: opAvatar,
-                }}
-                fields={fields}
-                target={pTarget}
-                onDismiss={() => {
-                  pTarget = null;
-                }}
-              />,
+              (
+                <Glimpse
+                  id={id}
+                  heading={{
+                    primary: res.data.data[0].Name,
+                    secondary: res.data.data[0].BusinessID,
+                    visual: opAvatar,
+                  }}
+                  fields={fields}
+                  target={pTarget!}
+                  onDismiss={() => {
+                    pTarget = null;
+                  }}
+                />
+              ) as ReactElement,
             );
           }
         });

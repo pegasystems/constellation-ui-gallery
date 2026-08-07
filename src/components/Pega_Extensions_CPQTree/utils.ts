@@ -172,8 +172,8 @@ export const generateLinkURL = (nodeClass: string, workId: string, caseInstanceK
     return '';
   }
 
-  return (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-    (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+  return PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+    PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
     { caseClassName: nodeClass },
     { workID: workId },
   );
@@ -774,8 +774,7 @@ export const clearRegisteredPageListPaths = (): void => {
  * @param getPConnect - Function to get PConnect instance
  * @param index - Optional index to use when calling addViewNode (defaults to 0)
  */
-export const addPageListNodeForPath = (path: string, getPConnect: any, index: number = 0): void => {
-  const PCore = (window as any).PCore;
+export const addPageListNodeForPath = (path: string, getPConnect: () => typeof PConnect, index: number = 0): void => {
   if (!PCore || !PCore.getContextTreeManager || !getPConnect) {
     return;
   }
@@ -812,7 +811,7 @@ export const addPageListNodeForPath = (path: string, getPConnect: any, index: nu
   PCore.getContextTreeManager().addPageListNode(
     getPConnect().getContextName(),
     fullPath,
-    getPConnect().viewName,
+    getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
     pageName,
 
     {
@@ -833,7 +832,7 @@ export const addPageListNodeForPath = (path: string, getPConnect: any, index: nu
   PCore.getContextTreeManager().addViewNode(
     getPConnect().getContextName(),
     'caseInfo.content.' + path + `[${index}]`,
-    getPConnect().viewName,
+    getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
   );
 };
 
@@ -963,9 +962,8 @@ const extractPagelistPathsFromPropertyPath = (propertyPath: string): Array<{ pat
  * @param path - The full property path (e.g., "Tree[0].Tree[0].ProductOffer.ChildSpecificationsList[0].Configuration[0].ConfiguredFieldValue.FieldValue")
  * @param getPConnect - Function to get PConnect instance
  */
-export const addViewNodeForPropertyPath = (path: string, getPConnect: any): void => {
+export const addViewNodeForPropertyPath = (path: string, getPConnect: () => typeof PConnect): void => {
   console.log('addViewNodeForPropertyPath', path);
-  const PCore = (window as any).PCore;
   if (!PCore || !PCore.getContextTreeManager || !getPConnect) {
     return;
   }
@@ -990,7 +988,7 @@ export const addViewNodeForPropertyPath = (path: string, getPConnect: any): void
   PCore.getContextTreeManager().addViewNode(
     getPConnect().getContextName(),
     'caseInfo.content.' + path,
-    getPConnect().viewName,
+    getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
   );
 };
 
@@ -1007,7 +1005,7 @@ export const addViewNodeForPropertyPath = (path: string, getPConnect: any): void
 export const findAndRegisterPageLists = (
   obj: any,
   basePath: string,
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
   visited: WeakSet<object> = new WeakSet(),
 ): void => {
   if (!obj || typeof obj !== 'object' || visited.has(obj)) {
@@ -1077,7 +1075,11 @@ export const findAndRegisterPageLists = (
  * @param getPConnect - Function to get PConnect instance
  * @param index - Optional index to use when calling addViewNode (defaults to 0)
  */
-export const registerTreePagelistForPath = (path: string, getPConnect: any, index: number = 0): void => {
+export const registerTreePagelistForPath = (
+  path: string,
+  getPConnect: () => typeof PConnect,
+  index: number = 0,
+): void => {
   if (!path || !getPConnect) {
     return;
   }
@@ -1094,7 +1096,7 @@ export const registerTreePagelistForPath = (path: string, getPConnect: any, inde
  * @param parentPath - The parent path being used (e.g., "TreeGroup[0].Tree[0]", "Tree[0]")
  * @param getPConnect - Function to get PConnect instance
  */
-export const registerTreePagelistsFromPath = (parentPath: string, getPConnect: any): void => {
+export const registerTreePagelistsFromPath = (parentPath: string, getPConnect: () => typeof PConnect): void => {
   if (!parentPath || !getPConnect) {
     return;
   }
@@ -1305,7 +1307,7 @@ type LoadDetailsProps = {
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   nodeData?: any; // The node's itemData to use (should be passed directly from the selected node)
 };
 export const loadDetails = async (props: LoadDetailsProps) => {
@@ -1317,10 +1319,10 @@ export const loadDetails = async (props: LoadDetailsProps) => {
   if (isFirstCall) {
     // First call: Make API call to get UI meta and update view resources
     // But use tree data (not API response data) for the transient data
-    await (window as any).PCore.getDataApiUtils()
-      .getDataObjectView(detailsDataPage, detailsViewName, { caseInstanceKey: id })
+    await PCore.getDataApiUtils()
+      .getDataObjectView(detailsDataPage, detailsViewName, { caseInstanceKey: id }, getPConnect().getContextName())
       .then(async (res: any) => {
-        const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+        const { fetchViewResources, updateViewResources } = PCore.getViewResources();
         await updateViewResources(res.data);
         loadedViewResources.add(detailsViewName);
 
@@ -1344,15 +1346,15 @@ export const loadDetails = async (props: LoadDetailsProps) => {
             pageReference: 'content',
           },
         };
-        messageConfig.meta.config.showLabel = false;
-        messageConfig.meta.config.pyID = id;
-        const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+        messageConfig.meta.config!.showLabel = false;
+        messageConfig.meta.config!.pyID = id;
+        const c11nEnv = PCore.createPConnect(messageConfig as any);
 
         myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
       });
   } else {
     // Subsequent calls: Skip API call and updateViewResources, use tree data instead
-    const { fetchViewResources } = (window as any).PCore.getViewResources();
+    const { fetchViewResources } = PCore.getViewResources();
 
     // Get or create transient item (addTransientItem handles existing items)
     const transientItemID = getPConnect()
@@ -1380,9 +1382,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
         pageReference: 'content',
       },
     };
-    messageConfig.meta.config.showLabel = false;
-    messageConfig.meta.config.pyID = id;
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+    messageConfig.meta.config!.showLabel = false;
+    messageConfig.meta.config!.pyID = id;
+    const c11nEnv = PCore.createPConnect(messageConfig as any);
 
     myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
   }

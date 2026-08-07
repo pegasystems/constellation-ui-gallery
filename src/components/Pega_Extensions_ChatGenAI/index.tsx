@@ -29,7 +29,7 @@ type ChatGenAIProps = {
   dataPage: string;
   maxHeight: string;
   sendAllUserContext: boolean;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 registerIcon(resetIcon, sendIcon, robotSolid);
@@ -74,10 +74,10 @@ export const PegaExtensionsChatGenAI = (props: ChatGenAIProps) => {
         return previous;
       });
       const context = getPConnect().getContextName();
-      (window as any).PCore.getDataPageUtils()
+      PCore.getDataPageUtils()
         .getPageDataAsync(dataViewName, context, parameters, { invalidateCache: true })
-        .then(({ pyMessage }: { pyMessage: string }) => {
-          loadResponse(pyMessage ?? genAIErrorMessage);
+        .then((response: any) => {
+          loadResponse(response?.pyMessage ?? genAIErrorMessage);
         })
         .catch((error: Error) => {
           loadResponse(`${getPConnect().getLocalizedValue('Error')} ${error.message}. ${genAIErrorMessage}`);

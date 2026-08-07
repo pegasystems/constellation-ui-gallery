@@ -67,7 +67,7 @@ const setPCore = (numProducts: number) => {
     });
   }
 
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -91,38 +91,39 @@ const setPCore = (numProducts: number) => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        createComponent: (meta: any) => {
-          return (
-            <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
-              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field1`} label='Field1' /> : null}
-              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field2`} label='Field2' /> : null}
-              {Math.random() < 0.8 ? <TextArea name={`${meta.config.name}field3`} label='Field3' /> : null}
-              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field4`} label='Field4' /> : null}
-              {Math.random() < 0.8 ? <Input name={`${meta.config.name}field5`} label='Field5' /> : null}
-              {Math.random() < 0.8 ? (
-                <CheckboxGroup name={`${meta.config.name}options`} label='Options'>
-                  {['Option1', 'Option2', 'Option3'].map((option) => (
-                    <Checkbox key={option} label={option} value={option} />
-                  ))}
-                </CheckboxGroup>
-              ) : null}
-              {Math.random() < 0.8 ? (
-                <RadioButtonGroup name={`${meta.config.name}choice`} label='Choice'>
-                  {['Yes', 'No'].map((option) => (
-                    <RadioButton key={option} label={option} value={option} />
-                  ))}
-                </RadioButtonGroup>
-              ) : null}
-            </Grid>
-          );
-        },
-        getActionsApi: () => {
-          return {
-            updateFieldValue: () => {},
-          };
-        },
-      }),
+      getPConnect: () =>
+        ({
+          createComponent: (meta: any) => {
+            return (
+              <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
+                {Math.random() < 0.8 ? <Input name={`${meta.config.name}field1`} label='Field1' /> : null}
+                {Math.random() < 0.8 ? <Input name={`${meta.config.name}field2`} label='Field2' /> : null}
+                {Math.random() < 0.8 ? <TextArea name={`${meta.config.name}field3`} label='Field3' /> : null}
+                {Math.random() < 0.8 ? <Input name={`${meta.config.name}field4`} label='Field4' /> : null}
+                {Math.random() < 0.8 ? <Input name={`${meta.config.name}field5`} label='Field5' /> : null}
+                {Math.random() < 0.8 ? (
+                  <CheckboxGroup name={`${meta.config.name}options`} label='Options'>
+                    {['Option1', 'Option2', 'Option3'].map((option) => (
+                      <Checkbox key={option} label={option} value={option} />
+                    ))}
+                  </CheckboxGroup>
+                ) : null}
+                {Math.random() < 0.8 ? (
+                  <RadioButtonGroup name={`${meta.config.name}choice`} label='Choice'>
+                    {['Yes', 'No'].map((option) => (
+                      <RadioButton key={option} label={option} value={option} />
+                    ))}
+                  </RadioButtonGroup>
+                ) : null}
+              </Grid>
+            );
+          },
+          getActionsApi: () => {
+            return {
+              updateFieldValue: () => {},
+            };
+          },
+        }) as unknown as typeof PConnect,
     }),
     getComponentsRegistry: () => {
       return {
@@ -159,7 +160,7 @@ const setPCore = (numProducts: number) => {
         dispatch: () => {},
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const genResponse = (numProducts: number) => {
@@ -293,7 +294,7 @@ export const Default: Story = {
           resolveConfigProps: (f: any) => {
             return f;
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsDynamicHierarchicalForm {...props}></PegaExtensionsDynamicHierarchicalForm>;

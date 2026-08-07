@@ -17,7 +17,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         PUB_SUB_EVENTS: {
@@ -46,7 +46,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const generateChildren = (count: number) => {
@@ -80,7 +80,7 @@ const mainResponse = {
           getRawMetadata: () => {
             return mainResponse.children[0];
           },
-        };
+        } as unknown as typeof PConnect;
       },
       children: generateChildren(10),
     },
@@ -170,7 +170,7 @@ export const Default: Story = {
         return steps;
       }
 
-      if (field === (window as any).PCore.getConstants().CASE_INFO.ACTION_BUTTONS) {
+      if (field === PCore.getConstants().CASE_INFO.ACTION_BUTTONS) {
         const isFirstStep = steps[0].visited_status === 'current';
         const isLastStep = steps[steps.length - 1].visited_status === 'current';
 

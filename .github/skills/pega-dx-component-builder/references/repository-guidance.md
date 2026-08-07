@@ -30,7 +30,8 @@ This repository is a Pega Constellation DX component gallery. Use the existing c
 - In story defaults, use `hideLabel: false` for field-style components and do not add a parallel `labelHidden` arg.
 - For field-style component props, keep `hideLabel` in the public TypeScript API even when the Cosmos component still expects `labelHidden={hideLabel}` internally.
 - Match repo field patterns by typing `disabled`, `readOnly`, and `required` as booleans while still coercing runtime string `'true'` values with the shared `[readOnly, required, disabled].map(...)` block used by `MaskedInput` and `DateInput`.
-- Prefer `getPConnect?: any` for component props unless the repo already provides a shared stronger type; avoid duplicating one-off `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces when the component only needs calls off `getPConnect()`.
+- Prefer `getPConnect: () => typeof PConnect` for component props (types from `@pega/pcore-pconnect-typedefs` via `src/pega-globals.d.ts`); avoid duplicating one-off `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces when the component only needs calls off `getPConnect()`.
+- Prefer bare `PCore.*` over `(window as any).PCore`. Cast incomplete Storybook/test mocks with `as unknown as typeof PCore` / `as unknown as typeof PConnect`.
 - When a component has multiple stories beyond the default one, document them in `Docs.mdx` under an `Example` or `Examples` section using `Story` blocks.
 - Keep tests focused on rendering, behavior, and integration boundaries that can run without a live Pega environment.
 

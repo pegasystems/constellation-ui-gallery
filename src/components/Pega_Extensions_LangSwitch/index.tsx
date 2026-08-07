@@ -44,7 +44,7 @@ type LangSwitchProps = {
   showLocaleCode?: boolean;
   showCurrentSummary?: boolean;
   prioritizeBrowserTimezone?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const didTimezonePreferenceSaveSucceed = (response: unknown) => {

@@ -76,7 +76,7 @@ export default function VerticalNavbar({ getPConnect }: VerticalNavbarProps) {
     if (step.visited_status === 'current') return;
 
     // Validate the form before navigating to another step
-    if ((window as any).PCore.getFormUtils().isFormValid(context, pageReference)) {
+    if (PCore.getFormUtils().isFormValid(context, pageReference)) {
       // Navigate to the selected step
       getPConnect().getActionsApi().navigateToStep(step.ID, context);
     }

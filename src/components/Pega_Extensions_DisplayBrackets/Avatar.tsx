@@ -15,7 +15,7 @@ function Avatar(props: PegaExtensionsDisplayBracketsAvatarProps) {
   const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
   const [userState, setUserState] = useState<'active' | 'inactive'>('inactive');
 
-  const environmentInfo = (window as any).PCore?.getEnvironmentInfo?.();
+  const environmentInfo = PCore?.getEnvironmentInfo?.();
 
   const userName =
     metaObj?.name ??
@@ -32,7 +32,7 @@ function Avatar(props: PegaExtensionsDisplayBracketsAvatarProps) {
       return;
     }
 
-    (window as any).PCore?.getAssetLoader?.()
+    PCore?.getAssetLoader?.()
       ?.getSvcImage(imageKey)
       .then((blob: Blob) => URL.createObjectURL(blob))
       .then((imagePath: string) => setImageBlobUrl(imagePath))
@@ -46,7 +46,7 @@ function Avatar(props: PegaExtensionsDisplayBracketsAvatarProps) {
       return;
     }
 
-    const presenceManager = (window as any).PCore?.getMessagingServiceManager?.().getUserPresence?.();
+    const presenceManager = PCore?.getMessagingServiceManager?.().getUserPresence?.();
     if (!presenceManager) {
       return;
     }
@@ -58,7 +58,7 @@ function Avatar(props: PegaExtensionsDisplayBracketsAvatarProps) {
       setUserState(state === 'online' ? 'active' : 'inactive');
     };
 
-    const subscriptionId = presenceManager.subscribe(userIdentifier, handleUserStateChange);
+    const subscriptionId = presenceManager.subscribe(userIdentifier, handleUserStateChange, '');
 
     return () => {
       presenceManager.unsubscribe(userIdentifier, subscriptionId);

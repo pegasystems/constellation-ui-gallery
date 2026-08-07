@@ -5,7 +5,7 @@ import DentalChart from './DentalChart';
 import '../shared/create-nonce';
 
 export type JawLayoutProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   readOnly?: boolean;
   heading?: string;
 };
@@ -48,7 +48,7 @@ export const PegaExtensionsJawLayout = (props: JawLayoutProps) => {
             target: getPConnect().getTarget(),
           },
         };
-        const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+        const c11nEnv = PCore.createPConnect(messageConfig as any);
         c11nEnv.getPConnect().getActionsApi()?.updateFieldValue(`.${statusPropName}`, newStatus);
       } catch (e) {
         console.error('❌ Error calling updateFieldValue:', e);
@@ -75,11 +75,12 @@ export const PegaExtensionsJawLayout = (props: JawLayoutProps) => {
         // Use dynamic page reference for hierarchical form support
         const stateProps = getPConnect().getStateProps();
         const basePageRef = stateProps?.pageReference || getPConnect().getPageReference() || 'caseInfo.content';
-        (window as any).PCore.getContextTreeManager().addPageListNode(
+        PCore.getContextTreeManager().addPageListNode(
           getPConnect().getContextName(),
           basePageRef,
-          getPConnect().meta.name,
+          getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
           pageRef,
+          {},
         );
       } catch {
         /* Silently fail if already registered */

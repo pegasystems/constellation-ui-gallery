@@ -5,7 +5,7 @@ import '../shared/create-nonce';
 
 type CameraComponentProps = {
   buttonText: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCameraCapture = (props: CameraComponentProps) => {
@@ -39,7 +39,7 @@ export const PegaExtensionsCameraCapture = (props: CameraComponentProps) => {
   const IMAGE_MIME = 'image/png';
 
   const caseInfo = useMemo(() => {
-    return pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO) || {};
+    return pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO) || {};
   }, [pConn]);
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export const PegaExtensionsCameraCapture = (props: CameraComponentProps) => {
       ID: id,
     };
 
-    await (window as any).PCore.getAttachmentUtils().linkAttachmentsToCase(caseInfo?.ID, [file], 'File', context);
+    await PCore.getAttachmentUtils().linkAttachmentsToCase(caseInfo?.ID, [file], 'File', context);
     stopCamera();
   };
 
@@ -211,18 +211,18 @@ export const PegaExtensionsCameraCapture = (props: CameraComponentProps) => {
     const file = base64ToFile(capturedImg, fileName);
     (file as any).ID = id;
     try {
-      const res = await (window as any).PCore.getAttachmentUtils().uploadAttachment(
+      const res = await PCore.getAttachmentUtils().uploadAttachment(
         file as any,
         onUploadProgress,
         errorHandler,
         context,
       );
 
-      if (!res?.ID) {
+      if (!(res as any)?.ID) {
         throw new Error('Upload failed');
       }
 
-      await linkFile(res.ID, fileName);
+      await linkFile((res as any).ID, fileName);
       showMessage('Attachment added to case successfully', 'success');
     } catch {
       showMessage('Failed to upload attachment. Please try again.', 'error');

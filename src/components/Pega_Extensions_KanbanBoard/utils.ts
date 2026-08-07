@@ -11,7 +11,7 @@ type LoadDetailsProps = {
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 // Launchpad fallback when readDataObject is unavailable: use a lookup list DP
@@ -24,7 +24,7 @@ const loadStaticDetails = async (props: LoadDetailsProps) => {
   const localize = (label: string) => getPConnect?.()?.getLocalizedValue?.(label) || label;
 
   try {
-    const response = await (window as any).PCore.getDataApiUtils().getData(getMappedKey(detailsDataPage), {
+    const response = await PCore.getDataApiUtils().getData(getMappedKey(detailsDataPage), {
       dataViewParameters: {
         [pyID]: id,
       },
@@ -72,15 +72,20 @@ export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
 
   /* Use case for Launchpad where readDataObject is not implemented */
-  if (!(window as any).PCore.getRestClient().doesRestApiExist('readDataObject')) {
+  if (!PCore.getRestClient().doesRestApiExist('readDataObject')) {
     return loadStaticDetails(props);
   }
 
   let myElem;
-  await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(getMappedKey(detailsDataPage), detailsViewName, { [getMappedKey('pyID')]: id })
+  await PCore.getDataApiUtils()
+    .getDataObjectView(
+      getMappedKey(detailsDataPage),
+      detailsViewName,
+      { [getMappedKey('pyID')]: id },
+      getPConnect().getContextName(),
+    )
     .then(async (res: any) => {
-      const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+      const { fetchViewResources, updateViewResources } = PCore.getViewResources();
       await updateViewResources(res.data);
       const transientItemID = getPConnect()
         .getContainerManager()
@@ -100,9 +105,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
           pageReference: 'content',
         },
       };
-      messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config[getMappedKey('pyID')] = id;
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      messageConfig.meta.config!.showLabel = false;
+      messageConfig.meta.config![getMappedKey('pyID')] = id;
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
     });
@@ -115,7 +120,7 @@ type UpdateGroupValueProps = {
   columns: any;
   setColumns: any;
   task: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 /* This method will update the case groupValue automatically using the edit action
    triggered through the pyUpdateCaseDetails local action. You can run some post-processing through this local action to
@@ -127,7 +132,7 @@ type UpdateGroupValueProps = {
 export const updateGroupValue = (props: UpdateGroupValueProps) => {
   const { groupValue, groupProperty, columns, setColumns, task, getPConnect } = props;
   const context = getPConnect().getContextName();
-  (window as any).PCore.getDataApiUtils()
+  PCore.getDataApiUtils()
     .getCaseEditLock(task.insKey, context)
     .then((response: any) => {
       const payload: any = {};
@@ -135,7 +140,7 @@ export const updateGroupValue = (props: UpdateGroupValueProps) => {
       content[getMappedKey(groupProperty)] = groupValue;
       payload[task.insKey] = content;
 
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .updateCaseEditFieldsData(task.insKey, payload, response.headers.etag, context)
         .then(() => {
           task.groupValue = groupValue;

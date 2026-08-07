@@ -33,7 +33,7 @@ export type CPQTreeProps = {
   readOnly?: boolean;
   detailsDataPage?: string;
   detailsViewName?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCPQTree = (props: CPQTreeProps) => {
@@ -131,7 +131,7 @@ export const PegaExtensionsCPQTree = (props: CPQTreeProps) => {
       <Progress
         placement='local'
         message={
-          (window as any).PCore?.getLocaleUtils()?.getLocaleValue(
+          PCore?.getLocaleUtils()?.getLocaleValue(
             'Loading content...',
             'Generic',
             '@BASECLASS!GENERIC!PYGENERICFIELDS',

@@ -16,7 +16,7 @@ interface ChangeEntry {
  * Configuration options for tree actions hook
  */
 interface TreeActionsConfig {
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   updateFieldValue: UpdateFieldValueFn;
   dataPage: string;
   reloadTree?: ReloadTreeFn;
@@ -25,8 +25,7 @@ interface TreeActionsConfig {
 /**
  * Creates a PConnect environment for dispatching actions
  */
-const createPConnectEnv = (getPConnect: any, reference: string, isConfigField: boolean = false) => {
-  const PCore = (window as any).PCore;
+const createPConnectEnv = (getPConnect: () => typeof PConnect, reference: string, isConfigField: boolean = false) => {
   if (!PCore?.getStore) return null;
 
   // For configuration fields, the reference already points to ConfiguredFieldValue
@@ -54,7 +53,7 @@ const createPConnectEnv = (getPConnect: any, reference: string, isConfigField: b
  * Dispatches field value update to PCore store
  */
 const dispatchFieldUpdate = (
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
   reference: string,
   value: number | string,
   isConfigField: boolean = false,
@@ -78,8 +77,11 @@ const dispatchFieldUpdate = (
  * Calls the data page to persist changes using the same data page used to load the tree
  * Returns the updated tree data from the data page
  */
-const saveTreeData = async (getPConnect: any, dataPage: string, changes: ChangeEntry[]): Promise<any> => {
-  const PCore = (window as any).PCore;
+const saveTreeData = async (
+  getPConnect: () => typeof PConnect,
+  dataPage: string,
+  changes: ChangeEntry[],
+): Promise<any> => {
   if (!PCore?.getDataPageUtils || !dataPage) return null;
   const caseInstanceKey = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
@@ -189,8 +191,7 @@ export const useTreeActions = ({ getPConnect, updateFieldValue, dataPage, reload
       addChange(changePath, String(value));
 
       // Dispatch to PCore store
-      const PCore = (window as any).PCore;
-      if (PCore?.getStore) {
+      if (PCore?.getStore?.()) {
         const reference = `caseInfo.content.${propertyPath}`;
         dispatchFieldUpdate(getPConnect, reference, value, isConfigField);
       }

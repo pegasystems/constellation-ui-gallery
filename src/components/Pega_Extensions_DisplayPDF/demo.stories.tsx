@@ -65,7 +65,7 @@ const getBinary = async () => {
 };
 
 const setPCore = (url: string) => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -105,7 +105,7 @@ const setPCore = (url: string) => {
         CASE_INFO: {},
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsDisplayPDF>;
@@ -131,7 +131,7 @@ export const Default: Story = {
           return {
             getContextName: () => '',
             getValue: () => 'C-123',
-          };
+          } as unknown as typeof PConnect;
         },
       };
 

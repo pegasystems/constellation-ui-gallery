@@ -5,7 +5,7 @@ type TaskDetailProps = {
   task: Task;
   onSubmit: (task: Task) => void;
   onClose: (task: Task) => void;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /**

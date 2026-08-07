@@ -26,7 +26,7 @@ export const Default: Story = {
           getLocalizedValue: (val: string) => {
             return val;
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
 
@@ -44,41 +44,43 @@ export const Default: Story = {
 
     // Mock the children components with the correct structure
     const generateView = (viewName: string) => ({
-      getPConnect: () => ({
-        getComponent: () => (
-          <Card>
-            <CardHeader>
-              <Text variant='h2'>{viewName}</Text>
-            </CardHeader>
-            <CardContent>
-              <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
-                {[1, 2, 3].map((index) => (
-                  <FormField key={index} label={`${viewName}-Field${index}`}>
-                    <FormControl ariaLabel={`${viewName}-Field${index}`}>
-                      <Input />
-                    </FormControl>
-                  </FormField>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
-        ),
-        getConfigProps: () => ({
-          name: viewName,
-        }),
-      }),
+      getPConnect: () =>
+        ({
+          getComponent: () => (
+            <Card>
+              <CardHeader>
+                <Text variant='h2'>{viewName}</Text>
+              </CardHeader>
+              <CardContent>
+                <Grid container={{ gap: 1, cols: `repeat(1, minmax(0, 1fr))` }} style={{ maxWidth: '80ch' }}>
+                  {[1, 2, 3].map((index) => (
+                    <FormField key={index} label={`${viewName}-Field${index}`}>
+                      <FormControl ariaLabel={`${viewName}-Field${index}`}>
+                        <Input />
+                      </FormControl>
+                    </FormField>
+                  ))}
+                </Grid>
+              </CardContent>
+            </Card>
+          ),
+          getConfigProps: () => ({
+            name: viewName,
+          }),
+        }) as unknown as typeof PConnect,
     });
 
     const generateGroup = (groupNumber: number, viewCount: number) => ({
-      getPConnect: () => ({
-        getConfigProps: () => ({
-          heading: `Group${groupNumber}`,
-        }),
-        getChildren: () =>
-          Array(viewCount)
-            .fill(null)
-            .map((_, i) => generateView(`View${groupNumber}-${i + 1}`)),
-      }),
+      getPConnect: () =>
+        ({
+          getConfigProps: () => ({
+            heading: `Group${groupNumber}`,
+          }),
+          getChildren: () =>
+            Array(viewCount)
+              .fill(null)
+              .map((_, i) => generateView(`View${groupNumber}-${i + 1}`)),
+        }) as unknown as typeof PConnect,
     });
 
     const generateChildren = (groupCount: number, viewsPerGroup: number) => [

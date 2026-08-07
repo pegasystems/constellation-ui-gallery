@@ -4,7 +4,7 @@ import '../shared/create-nonce';
 import { updateAllSiblingCheckboxes, updateBooleanFieldsOnPage } from './utils';
 
 export type CheckboxRowProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   labelProperty?: string;
   value?: boolean;
@@ -72,7 +72,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
     hasValueChangeRef.current = true;
 
     const contextName = pConn.getContextName();
-    const storeData = (window as any).PCore.getStore().getState().data?.[contextName];
+    const storeData = PCore.getStore().getState().data?.[contextName];
     if (!storeData) return;
 
     if (selectAllProperty) {
@@ -80,7 +80,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
       return;
     }
 
-    const pageRef = pConn.options.pageReference; // e.g. caseInfo.content.Policies[0]
+    const pageRef = pConn.getPageReference(); // e.g. caseInfo.content.Policies[0]
     updateBooleanFieldsOnPage({
       pageRef,
       checked,

@@ -31,7 +31,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {
@@ -83,14 +83,14 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsMeter>;
 
-const MeterDemo = (inputs: MeterProps) => {
+const MeterDemo = (inputs: Omit<MeterProps, 'getPConnect'>) => {
   return {
-    render: (args: MeterProps) => {
+    render: (args: Omit<MeterProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
@@ -134,7 +134,7 @@ const MeterDemo = (inputs: MeterProps) => {
             resolveConfigProps: () => {
               /* nothing */
             },
-          };
+          } as unknown as typeof PConnect;
         },
       };
       return <PegaExtensionsMeter {...props} />;

@@ -7,7 +7,7 @@ export type ColumnProps = {
   title: string;
   id: string;
   tasks: any;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const Column = (props: ColumnProps) => {

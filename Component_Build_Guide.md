@@ -123,7 +123,7 @@ type MyComponentExtProps = {
   label: string;
   value: string;
   dataPage?: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   readOnly?: boolean;
   testId?: string;
 };
@@ -142,12 +142,12 @@ export const PegaExtensionsMyComponent = (props: MyComponentExtProps) => {
   }, [internal, readOnly, actions]);
 
   useEffect(() => {
-    if (!dataPage || !getPConnect) return;
-    const caseId = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    if (!dataPage) return;
+    const caseId = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const payload = {
-      dataViewParameters: [{ [getMappedKey('pyID')]: caseId }],
+      dataViewParameters: { [getMappedKey('pyID')]: caseId },
     };
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(getMappedKey(dataPage), payload, pConn.getContextName())
       .then((response: any) => {
         /* map response rows with getMappedKey('pyLabel'), etc. */
@@ -236,12 +236,13 @@ export default {
 
 const Template: StoryObj<PegaExtensionsMyComponentProps> = (args) => {
   const props = {
-    getPConnect: () => ({
-      getActionsApi: () => ({ updateFieldValue: () => {}, openWorkByHandle: () => {} }),
-      getContextName: () => 'app/primary_1',
-      getValue: () => 'CASE-1',
-      getLocalizedValue: (v: string) => v,
-    }),
+    getPConnect: () =>
+      ({
+        getActionsApi: () => ({ updateFieldValue: () => {}, openWorkByHandle: () => {} }),
+        getContextName: () => 'app/primary_1',
+        getValue: () => 'CASE-1',
+        getLocalizedValue: (v: string) => v,
+      }) as unknown as typeof PConnect,
     ...args,
   };
   return <PegaExtensionsMyComponent {...props} />;
@@ -253,11 +254,8 @@ Primary.args = {
   value: 'Initial value',
 };
 
-if (!window.PCore) {
-  (window as any).PCore = {};
-}
-(window as any).PCore = {
-  ...(window as any).PCore,
+window.PCore = {
+  ...window.PCore,
   getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'ID' } }),
   getNameSpaceUtils: () => ({
     getDefaultQualifiedName: (name: string) => name,
@@ -275,8 +273,10 @@ if (!window.PCore) {
     getActions: () => ({ ACTION_OPENWORKBYHANDLE: 'openWorkByHandle' }),
     getResolvedSemanticURL: () => '',
   }),
-};
+} as unknown as typeof PCore;
 ```
+
+> **Typing:** PCore / PConnect types come from `@pega/pcore-pconnect-typedefs` (ambient globals in `src/pega-globals.d.ts`). Use `getPConnect: () => typeof PConnect` and bare `PCore.*`. Cast incomplete Storybook mocks with `as unknown as typeof PCore` / `as unknown as typeof PConnect`.
 
 > **Launchpad:** If the component uses `getMappedKey`, always stub `getNameSpaceUtils` and `getEnvironmentInfo().getKeyMapping`. If it gates optional APIs, stub `getRestClient().doesRestApiExist`. See [LAUNCHPAD_VS_PLATFORM.md](./LAUNCHPAD_VS_PLATFORM.md) §8.
 
@@ -295,15 +295,21 @@ const mockPConnect = {
 };
 
 beforeAll(() => {
-  (window as any).PCore = {
+  window.PCore = {
     getNameSpaceUtils: () => ({ getDefaultQualifiedName: (n: string) => n }),
     getEnvironmentInfo: () => ({ getKeyMapping: (k: string) => k }),
     getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'ID' } }),
-  };
+  } as unknown as typeof PCore;
 });
 
 test('renders label and value', () => {
-  render(<PegaExtensionsMyComponent label='Test' value='Hello' getPConnect={() => mockPConnect} />);
+  render(
+    <PegaExtensionsMyComponent
+      label='Test'
+      value='Hello'
+      getPConnect={() => mockPConnect as unknown as typeof PConnect}
+    />,
+  );
   expect(screen.getByText('Test')).toBeInTheDocument();
   expect(screen.getByText('Hello')).toBeInTheDocument();
 });

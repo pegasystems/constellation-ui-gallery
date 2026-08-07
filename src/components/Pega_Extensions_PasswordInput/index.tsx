@@ -3,7 +3,7 @@ import { withConfiguration, Input, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
 
 type PasswordInputProps = {
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   value: string;
   helperText?: string;

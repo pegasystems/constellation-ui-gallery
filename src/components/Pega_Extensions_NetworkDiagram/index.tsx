@@ -68,7 +68,7 @@ export interface NetworkDiagramProps {
    * @default bezier
    */
   edgePath?: 'bezier' | 'straight' | 'step' | 'floating';
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 const position = { x: 0, y: 0 };
@@ -140,16 +140,12 @@ function Flow(props: any) {
         parameters = { [getMappedKey('pyGUID')]: selectionProperty };
       }
       const context = getPConnect().getContextName();
-      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(
-        getMappedKey(dataPage),
-        context,
-        parameters,
-        {
-          invalidateCache: true,
-        },
-      );
+      const data = await PCore.getDataPageUtils().getPageDataAsync(getMappedKey(dataPage), context, parameters, {
+        invalidateCache: true,
+      });
       if (cancelled) return;
-      data[getMappedKey('pyNodes')].forEach((element: any) => {
+      const pageData = data as any;
+      pageData[getMappedKey('pyNodes')].forEach((element: any) => {
         tmpNodesHash[element[getMappedKey('pyID')]] = element[getMappedKey('pyLabel')];
         initialNodes.push({
           id: element[getMappedKey('pyID')],
@@ -166,7 +162,7 @@ function Flow(props: any) {
           type: 'custom',
         });
       });
-      data[getMappedKey('pyEdges')].forEach((element: any, i: number) => {
+      pageData[getMappedKey('pyEdges')].forEach((element: any, i: number) => {
         const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element[getMappedKey('pyFrom')]]} ${getPConnect().getLocalizedValue(
           'to',
         )} ${tmpNodesHash[element[getMappedKey('pyTo')]]} ${getPConnect().getLocalizedValue('with label:')} ${element[getMappedKey('pyLabel')]}`;

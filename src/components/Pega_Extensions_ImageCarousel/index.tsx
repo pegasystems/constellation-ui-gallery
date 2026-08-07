@@ -60,7 +60,7 @@ export interface ImageCarouselProps {
     | 'BottomCenter'
     | 'BottomRight';
 
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 }
 
 export const PegaExtensionsImageCarousel = (props: ImageCarouselProps) => {

@@ -3,7 +3,7 @@ import { withConfiguration, Switch, Text, FormField } from '@pega/cosmos-react-c
 import '../shared/create-nonce';
 
 export type ToggleProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   caption: string;
   value?: boolean;

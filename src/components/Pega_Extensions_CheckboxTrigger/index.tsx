@@ -4,7 +4,7 @@ import '../shared/create-nonce';
 import { getMappedKey } from '../shared/utils';
 
 export type CheckboxTriggerProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   dataPage: string;
   value?: boolean;
@@ -83,10 +83,10 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
           actions.updateFieldValue(propName, e.currentTarget.checked);
           hasValueChangeRef.current = true;
           const context = getPConnect().getContextName();
-          const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo?.content;
+          const data: any = PCore.getStore().getState().data?.[context]?.dataInfo?.content;
 
           /* To force the refresh, we will call a savable DP that will contain the current value and return the update content */
-          const itemData = (window as any).PCore.getContainerUtils().getContainerItemData(
+          const itemData = PCore.getContainerUtils().getContainerItemData(
             getPConnect().getTarget(),
             getPConnect().getContextName(),
           );
@@ -94,7 +94,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
           const newObj = { ...data };
           delete newObj?.classID;
           const bodyData = { ...newObj, ...key };
-          (window as any).PCore.getRestClient()
+          PCore.getRestClient()
             .invokeRestApi('createDataObject', {
               body: { data: bodyData },
               queryPayload: { data_view_ID: dataPage },
@@ -103,7 +103,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
               const respData = resp?.data?.responseData;
               const updateObj = { ...respData };
               delete updateObj?.[getMappedKey('pzInsKey')];
-              (window as any).PCore.getStore().dispatch({
+              PCore.getStore().dispatch({
                 type: 'SET_PROPERTY',
                 payload: {
                   context: getPConnect().getContextName(),

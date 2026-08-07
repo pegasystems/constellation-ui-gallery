@@ -19,7 +19,7 @@ export default {
 
 const setPCore = (args: { isConnected: boolean; profileName: string }) => {
   const { isConnected, profileName } = args;
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {
@@ -103,7 +103,7 @@ const setPCore = (args: { isConnected: boolean; profileName: string }) => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<OAuthConnectStoryProps>;
@@ -131,7 +131,7 @@ export const Default: Story = {
           },
           getContextName: () => '',
           getValue: () => 'A-5',
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsOAuthConnect {...props} />;

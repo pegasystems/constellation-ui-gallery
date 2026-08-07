@@ -29,7 +29,7 @@ type KanbanBoardProps = {
   groupProperty: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
@@ -131,10 +131,10 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
     setLoading(true);
     const metadata = getPConnect().getRawMetadata();
     let parameters = {};
-    if (typeof contextProperty !== 'undefined' && metadata?.config?.contextProperty) {
+    if (typeof contextProperty !== 'undefined' && (metadata?.config as any)?.contextProperty) {
       parameters = { dataViewParameters: { key: contextProperty } };
     }
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(getMappedKey(dataPage), parameters)
       .then(async (response: any) => {
         if (response.data.data !== null) {
@@ -187,8 +187,8 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks();
@@ -196,8 +196,8 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };
@@ -233,7 +233,7 @@ export const PegaExtensionsKanbanBoard = (props: KanbanBoardProps) => {
           {loading ? (
             <Progress
               placement='local'
-              message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+              message={PCore.getLocaleUtils().getLocaleValue(
                 'Loading content...',
                 'Generic',
                 '@BASECLASS!GENERIC!PYGENERICFIELDS',

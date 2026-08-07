@@ -4,7 +4,7 @@ import { ButtonPrev, ButtonNext } from './styles';
 type SliderControlsProps = {
   prevSlide: () => void;
   nextSlide: () => void;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 };
 
 const SliderControls: React.FC<SliderControlsProps> = ({ prevSlide, nextSlide, getPConnect }) => (

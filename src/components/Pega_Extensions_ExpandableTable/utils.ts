@@ -5,7 +5,7 @@ type LoadRowDetailProps = {
   embedClass: string;
   embedDataRef: string;
   rowIndex: number;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const hasViewMetadata = (metadata: any) =>
@@ -34,9 +34,9 @@ export const getNestedStoreValue = (obj: any, path: string) => {
 };
 
 /** Returns the page reference for the current view context (supports nested embeds). */
-export const getBasePageReference = (getPConnect: any): string => {
+export const getBasePageReference = (getPConnect: () => typeof PConnect): string => {
   const pConn = getPConnect();
-  const pageRef = pConn.getPageReference?.() || pConn.options?.pageReference || 'caseInfo.content';
+  const pageRef = pConn.getPageReference?.() || 'caseInfo.content';
   if (pageRef === 'content') {
     return 'caseInfo.content';
   }
@@ -121,25 +121,30 @@ export const getPageListRegistration = (
   return { parentPath, listProperty };
 };
 
-const getRowEmbedClass = (getPConnect: any, embedDataRef: string, rowIndex: number, fallbackClass: string) => {
+const getRowEmbedClass = (
+  getPConnect: () => typeof PConnect,
+  embedDataRef: string,
+  rowIndex: number,
+  fallbackClass: string,
+) => {
   if (fallbackClass) {
     return fallbackClass;
   }
   const basePageRef = getBasePageReference(getPConnect);
   const rowPageRef = buildRowPageReference(basePageRef, embedDataRef, rowIndex);
   const context = getPConnect().getContextName();
-  const storeData = (window as any).PCore.getStore()?.getState()?.data?.[context];
+  const storeData = PCore.getStore()?.getState()?.data?.[context];
   const row = getNestedStoreValue(storeData, rowPageRef);
   return row?.pxObjClass || row?.pyObjClass || '';
 };
 
-const ensureViewResources = async (detailViewName: string, embedClass: string, getPConnect: any) => {
+const ensureViewResources = async (detailViewName: string, embedClass: string, getPConnect: () => typeof PConnect) => {
   const cacheKey = `${detailViewName}:${embedClass}`;
   if (loadedViewResources.has(cacheKey)) {
     return;
   }
 
-  const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+  const { fetchViewResources, updateViewResources } = PCore.getViewResources();
   const cachedMetadata = fetchViewResources(detailViewName, getPConnect(), embedClass);
   if (hasViewMetadata(cachedMetadata)) {
     loadedViewResources.add(cacheKey);
@@ -148,10 +153,9 @@ const ensureViewResources = async (detailViewName: string, embedClass: string, g
 
   const pConnect = getPConnect();
   const caseInstanceKey =
-    pConnect.getCaseInfo?.()?.getKey?.() ||
-    pConnect.getValue?.((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    pConnect.getCaseInfo?.()?.getKey?.() || pConnect.getValue?.(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
-  const response = await (window as any).PCore.getRestClient().invokeRestApi(
+  const response = await PCore.getRestClient().invokeRestApi(
     'loadView',
     {
       queryPayload: {
@@ -186,7 +190,7 @@ export const loadRowDetailView = async (props: LoadRowDetailProps) => {
   const contextName = pConnect.getContextName();
   const basePageRef = getBasePageReference(getPConnect);
   const pageReference = buildRowPageReference(basePageRef, embedDataRef, rowIndex);
-  const metadata = (window as any).PCore.getViewResources().fetchViewResources(detailViewName, pConnect, embedClass);
+  const metadata = PCore.getViewResources().fetchViewResources(detailViewName, pConnect, embedClass);
 
   const messageConfig = {
     meta: metadata,
@@ -199,7 +203,7 @@ export const loadRowDetailView = async (props: LoadRowDetailProps) => {
     },
   };
 
-  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+  const c11nEnv = PCore.createPConnect(messageConfig);
   return c11nEnv.getPConnect().createComponent(messageConfig.meta);
 };
 

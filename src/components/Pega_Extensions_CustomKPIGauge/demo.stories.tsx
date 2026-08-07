@@ -4,11 +4,11 @@ import { configProps, mockDataPageResponse } from './mock';
 import PegaExtensionsCustomKPIGauge from './index';
 
 /* Fake PCore so the component can fetch mock data in Storybook */
-(window as any).PCore = {
+window.PCore = {
   getDataApiUtils: () => ({
     getData: () => Promise.resolve(mockDataPageResponse),
   }),
-};
+} as unknown as typeof PCore;
 
 const meta: Meta<typeof PegaExtensionsCustomKPIGauge> = {
   title: 'Widgets/Custom KPI Gauge',
@@ -107,7 +107,7 @@ export const BasePegaExtensionsCustomKPIGauge: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
 

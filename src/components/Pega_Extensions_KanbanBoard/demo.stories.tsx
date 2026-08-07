@@ -120,7 +120,7 @@ const tasks: any = {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -129,42 +129,43 @@ const setPCore = () => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        createComponent: (meta: any) => {
-          const id = meta.config.pyID;
-          const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
-          return (
-            <Details
-              name='Details'
-              highlightedData={highlightedData}
-              collapsible={false}
-              columns={{
-                a: (
-                  <DetailsList
-                    items={[
-                      {
-                        id: 'Description',
-                        name: 'Description',
-                        value: tasks[id].pyDescription,
-                      },
-                      {
-                        id: 'Assigned To',
-                        name: 'Assigned To',
-                        value: tasks[id].pxCreateOpName,
-                      },
-                      {
-                        id: 'Due date',
-                        name: 'Due date',
-                        value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />,
-                      },
-                    ]}
-                  />
-                ),
-              }}
-            />
-          );
-        },
-      }),
+      getPConnect: () =>
+        ({
+          createComponent: (meta: any) => {
+            const id = meta.config.pyID;
+            const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
+            return (
+              <Details
+                name='Details'
+                highlightedData={highlightedData}
+                collapsible={false}
+                columns={{
+                  a: (
+                    <DetailsList
+                      items={[
+                        {
+                          id: 'Description',
+                          name: 'Description',
+                          value: tasks[id].pyDescription,
+                        },
+                        {
+                          id: 'Assigned To',
+                          name: 'Assigned To',
+                          value: tasks[id].pxCreateOpName,
+                        },
+                        {
+                          id: 'Due date',
+                          name: 'Due date',
+                          value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />,
+                        },
+                      ]}
+                    />
+                  ),
+                }}
+              />
+            );
+          },
+        }) as unknown as typeof PConnect,
     }),
     getComponentsRegistry: () => {
       return {
@@ -262,7 +263,7 @@ const setPCore = () => {
         doesRestApiExist: () => true,
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsKanbanBoard>;
@@ -316,7 +317,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsKanbanBoard {...props} />;

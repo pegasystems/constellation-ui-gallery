@@ -70,7 +70,7 @@ export type UtilityListProps = {
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
   enableDownloadAll?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const ViewAllModal = ({
@@ -107,7 +107,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [elemRef, setElemRef] = useState<HTMLElement>();
   const [images, setImages] = useState<LightboxProps['items'] | null>(null);
-  const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+  const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
   const viewAllModalRef = useRef<ModalMethods<any>>();
   const theme = useTheme();
   const downloadAll = () => {
@@ -131,7 +131,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
 
   const publishAttachmentsUpdated = useCallback(
     (count: any) => {
-      (window as any).PCore.getPubSubUtils().publish('WidgetUpdated', {
+      PCore.getPubSubUtils().publish('WidgetUpdated', {
         widget: 'PEGA_EXTENSIONS_DISPLAYATTACHMENTS',
         count,
         caseID,
@@ -203,7 +203,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
   const initialLoad = useCallback(() => {
     const pConn = getPConnect();
     if (useAttachmentEndpoint) {
-      const attachmentUtils = (window as any).PCore.getAttachmentUtils();
+      const attachmentUtils = PCore.getAttachmentUtils();
       attachmentUtils
         .getCaseAttachments(caseID, pConn.getContextName())
         .then((resp: any) => loadAttachments(resp))
@@ -211,11 +211,11 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
           setLoading(false);
         });
     } else {
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ LinkRefFrom: CaseInstanceKey }],
+        dataViewParameters: { LinkRefFrom: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
@@ -238,7 +238,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         ID: caseID,
       },
     };
-    const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+    const attachSubId = PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         /* If an attachment is added- force a reload of the events */
@@ -247,7 +247,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       getPConnect().getContextName(),
     );
     return () => {
-      (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
+      PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
   }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 

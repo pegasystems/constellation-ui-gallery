@@ -21,7 +21,7 @@ import { getMappedKey } from '../shared/utils';
 
 const ARCGIS_VERSION = '5.0';
 type MapProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   heading?: string;
   height?: string;
   displayMode: string;
@@ -118,6 +118,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
   const numPointsRef = useRef<number>(0);
   const isLastActionClearRef = useRef<boolean>(false);
   const metadata = getPConnect().getRawMetadata();
+  const selectionProp = (metadata?.config as any)?.selectionProperty;
 
   const captureEvent = (event: any) => {
     event.stopPropagation();
@@ -150,11 +151,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
   };
   // This function is called when a shape is added or removed by the sketch widget.
   const updateShapeDefinition = (event: any, ptLayer: GraphicsLayer) => {
-    if (
-      typeof selectionProperty !== 'undefined' &&
-      metadata.config.selectionProperty &&
-      (!event.state || event.state === 'complete')
-    ) {
+    if (typeof selectionProperty !== 'undefined' && selectionProp && (!event.state || event.state === 'complete')) {
       const graphics = ptLayer.graphics;
       const listShapes: ShapeDefinition[] = [];
 
@@ -163,7 +160,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
         listShapes.push(genShapeObject(graphic));
       });
 
-      const prop = metadata.config.selectionProperty.replace('@P ', '');
+      const prop = selectionProp.replace('@P ', '');
       getPConnect()
         .getActionsApi()
         .updateFieldValue(prop, JSON.stringify({ shapes: listShapes }));
@@ -270,11 +267,12 @@ export const PegaExtensionsMap = (props: MapProps) => {
 
     // In 24.2, we need to initialize the context tree manager
     if (displayMode !== 'DISPLAY_ONLY') {
-      (window as any).PCore.getContextTreeManager().addPageListNode(
+      PCore.getContextTreeManager().addPageListNode(
         getPConnect().getContextName(),
         'caseInfo.content',
-        getPConnect().meta.name,
+        getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
         'Locations',
+        {},
       );
     }
 
@@ -388,7 +386,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
                       target: getPConnect().getTarget(),
                     },
                   };
-                  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+                  const c11nEnv = PCore.createPConnect(messageConfig as any);
                   const actionsApi = c11nEnv.getPConnect().getActionsApi();
                   actionsApi.updateFieldValue('.' + getMappedKey('pyLatLon'), `${latitude}, ${longitude}`);
                   actionsApi.updateFieldValue('.' + getMappedKey('pyAddress'), result.name);
@@ -526,7 +524,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',

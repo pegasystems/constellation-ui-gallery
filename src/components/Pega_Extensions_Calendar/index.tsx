@@ -40,7 +40,7 @@ type CalendarProps = {
   defaultViewMode: 'Monthly' | 'Weekly' | 'Daily';
   nowIndicator: boolean;
   weekendIndicator: boolean;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 type Event = {
@@ -148,8 +148,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
     const pxObjClass = getMappedKey('pxObjClass');
     const pzInsKey = getMappedKey('pzInsKey');
     const pyStatusWork = getMappedKey('pyStatusWork');
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj[pxObjClass] },
       { workID: obj[pyID] },
     );
@@ -220,7 +220,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
     const pzInsKey = getMappedKey('pzInsKey');
     const pyLabel = getMappedKey('pyLabel');
 
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getData(getMappedKey(dataPage), {})
       .then((response: any) => {
         if (response.data.data !== null) {
@@ -257,8 +257,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadEvents();
@@ -266,8 +266,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };

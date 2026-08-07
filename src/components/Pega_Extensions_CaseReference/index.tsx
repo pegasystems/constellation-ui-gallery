@@ -5,7 +5,7 @@ import '../shared/create-nonce';
 type ActionableButtonProps = {
   value: string;
   selectionProperty: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   refCaseClassName: string;
   allowPreview: boolean;
 };
@@ -16,12 +16,10 @@ export const PegaExtensionsCaseReference = (props: ActionableButtonProps) => {
   if (value && typeof selectionProperty === 'string' && selectionProperty.includes(' ')) {
     const caseID = selectionProperty.split(' ')[1];
     const key = selectionProperty;
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: refCaseClassName },
-      { workID: caseID },
-      { page: 'pyDetails' },
-      { caseID: key },
+      { workID: caseID, page: 'pyDetails', caseID: key },
     );
 
     return (

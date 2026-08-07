@@ -7,7 +7,7 @@ export type TaskProps = {
   status: string;
   details?: any;
   editTask: any;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const Task = (props: TaskProps) => {
@@ -41,7 +41,7 @@ export const Task = (props: TaskProps) => {
           {details || (
             <Progress
               placement='inline'
-              message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+              message={PCore.getLocaleUtils().getLocaleValue(
                 'Loading content...',
                 'Generic',
                 '@BASECLASS!GENERIC!PYGENERICFIELDS',

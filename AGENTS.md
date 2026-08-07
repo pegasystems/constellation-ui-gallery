@@ -36,8 +36,8 @@ Closest existing component under `src/components/Pega_Extensions_<Name>/` is als
    - Navigate with `getActionsApi()` and `PCore.getSemanticUrlUtils()` — never hand-build URLs.
    - Gate optional Platform-only REST DX APIs with `PCore.getRestClient().doesRestApiExist('…')`, or mark the component unsupported on Launchpad.
    - Do **not** use `if (isLaunchpad)` when key mapping or capability detection can solve the difference.
-5. **Stub PCore fully in Storybook/tests** for every helper the component calls (`getNameSpaceUtils`, `getKeyMapping`, `getData*`, Semantic URL utils, `doesRestApiExist`, …).
-6. **Match field-component conventions** when applicable: `hideLabel` public API, boolean `disabled`/`readOnly`/`required` with string `'true'` coercion, `getPConnect?: any`, `withConfiguration`, `../shared/create-nonce`.
+5. **Stub PCore fully in Storybook/tests** for every helper the component calls (`getNameSpaceUtils`, `getKeyMapping`, `getData*`, Semantic URL utils, `doesRestApiExist`, …). Cast incomplete mocks with `as unknown as typeof PCore` / `as unknown as typeof PConnect`.
+6. **Match field-component conventions** when applicable: `hideLabel` public API, boolean `disabled`/`readOnly`/`required` with string `'true'` coercion, `getPConnect: () => typeof PConnect` (types from `@pega/pcore-pconnect-typedefs` via [`src/pega-globals.d.ts`](./src/pega-globals.d.ts)), prefer bare `PCore.*` over `(window as any).PCore`, `withConfiguration`, `../shared/create-nonce`. Do not invent local `PegaConnect` / `PegaActionsApi` interfaces.
 
 ---
 

@@ -150,7 +150,7 @@ type Story = StoryObj<typeof PegaExtensionsExpandableTable>;
 
 export const Default: Story = {
   render: (args: ExpandableTableProps) => {
-    (window as any).PCore = {
+    window.PCore = {
       getLocaleUtils: () => ({
         getLocaleValue: (val: string) => val,
       }),
@@ -198,63 +198,65 @@ export const Default: Story = {
         }),
       }),
       createPConnect: (context: any) => ({
-        getPConnect: () => ({
-          createComponent: (f: any) => {
-            if (f.type === 'View' || f.config?.name) {
-              const pageRef: string = context.options.pageReference ?? '';
+        getPConnect: () =>
+          ({
+            createComponent: (f: any) => {
+              if (f.type === 'View' || f.config?.name) {
+                const pageRef: string = context.getPageReference() ?? '';
+                const match = pageRef.match(/\[(\d+)\]/);
+                const rowIndex = match ? parseInt(match[1], 10) : 0;
+                return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
+              }
+              const pageRef: string = context.getPageReference() ?? '';
               const match = pageRef.match(/\[(\d+)\]/);
               const rowIndex = match ? parseInt(match[1], 10) : 0;
-              return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
-            }
-            const pageRef: string = context.options.pageReference ?? '';
-            const match = pageRef.match(/\[(\d+)\]/);
-            const rowIndex = match ? parseInt(match[1], 10) : 0;
-            const val = Array.isArray(context.meta.config.value)
-              ? context.meta.config.value[rowIndex]
-              : context.meta.config.value;
-            return <Text>{`${val ?? ''}`}</Text>;
-          },
-          getTarget: () => 'workarea',
-        }),
+              const val = Array.isArray(context.meta.config.value)
+                ? context.meta.config.value[rowIndex]
+                : context.meta.config.value;
+              return <Text>{`${val ?? ''}`}</Text>;
+            },
+            getTarget: () => 'workarea',
+          }) as unknown as typeof PConnect,
       }),
       getComponentsRegistry: () => ({
         getLazyComponent: (f: string) => f,
       }),
-    };
+    } as unknown as typeof PCore;
 
     const props: ExpandableTableProps = {
       ...args,
-      getPConnect: () => ({
-        meta: {
-          name: '',
-        },
-        options: {
-          viewName: '',
-        },
-        getLocalizedValue: (val: string) => val,
-        getContextName: () => 'workarea',
-        getTarget: () => 'workarea',
-        getCaseInfo: () => ({
-          getKey: () => 'S-123',
-        }),
-        getValue: () => 'S-123',
-        getPageReference: () => 'caseInfo.content',
-        getChildren: () => genResponse().children,
-        getRawMetadata: () => genResponse(),
-        getInheritedProps: () => genResponse().config.inheritedProps,
-        setInheritedProp: () => {
-          /* nothing */
-        },
-        setValue: () => {
-          /* nothing */
-        },
-        resolveConfigProps: (f: any) => ({
-          ...f,
-          propref: f.value,
-          pageref: 'computers',
-          contextClass: 'Data-Computer',
-        }),
-      }),
+      getPConnect: () =>
+        ({
+          meta: {
+            name: '',
+          },
+          options: {
+            viewName: '',
+          },
+          getLocalizedValue: (val: string) => val,
+          getContextName: () => 'workarea',
+          getTarget: () => 'workarea',
+          getCaseInfo: () => ({
+            getKey: () => 'S-123',
+          }),
+          getValue: () => 'S-123',
+          getPageReference: () => 'caseInfo.content',
+          getChildren: () => genResponse().children,
+          getRawMetadata: () => genResponse(),
+          getInheritedProps: () => genResponse().config.inheritedProps,
+          setInheritedProp: () => {
+            /* nothing */
+          },
+          setValue: () => {
+            /* nothing */
+          },
+          resolveConfigProps: (f: any) => ({
+            ...f,
+            propref: f.value,
+            pageref: 'computers',
+            contextClass: 'Data-Computer',
+          }),
+        }) as unknown as typeof PConnect,
     };
 
     return <PegaExtensionsExpandableTable {...props} />;
@@ -295,9 +297,10 @@ const genNestedLineItemsResponse = () => {
             type: 'ScalarList',
           },
         ] as Array<info>,
-        getPConnect: () => ({
-          getRawMetadata: () => nestedView.children[0],
-        }),
+        getPConnect: () =>
+          ({
+            getRawMetadata: () => nestedView.children[0],
+          }) as unknown as typeof PConnect,
       },
     ],
     classID: 'Data-Order',
@@ -358,52 +361,54 @@ const createMockPCore = (args: ExpandableTableProps) => ({
     }),
   }),
   createPConnect: (context: any) => ({
-    getPConnect: () => ({
-      createComponent: (f: any) => {
-        if (f.type === 'View' || f.config?.name) {
-          const pageRef: string = context.options.pageReference ?? '';
-          const rowIndex = getRowIndexFromPageRef(pageRef);
+    getPConnect: () =>
+      ({
+        createComponent: (f: any) => {
+          if (f.type === 'View' || f.config?.name) {
+            const pageRef: string = context.getPageReference() ?? '';
+            const rowIndex = getRowIndexFromPageRef(pageRef);
 
-          if (f.config?.name === 'OrderLineItems') {
-            const nestedView = genNestedLineItemsResponse();
-            const nestedProps: ExpandableTableProps = {
-              detailViewName: '',
-              getPConnect: () => ({
-                meta: { name: 'NestedLineItems' },
-                options: { viewName: 'OrderLineItems', pageReference: pageRef },
-                getLocalizedValue: (val: string) => val,
-                getContextName: () => 'workarea',
-                getTarget: () => 'workarea',
-                getPageReference: () => pageRef,
-                getCaseInfo: () => ({ getKey: () => 'S-123' }),
-                getValue: () => 'S-123',
-                getChildren: () => nestedView.children,
-                getRawMetadata: () => nestedView,
-                getInheritedProps: () => nestedView.config.inheritedProps,
-                setInheritedProp: () => {},
-                setValue: () => {},
-                resolveConfigProps: (fieldConfig: any) => ({
-                  ...fieldConfig,
-                  propref: fieldConfig.value,
-                  pageref: 'LineItems',
-                  contextClass: 'Data-LineItem',
-                }),
-              }),
-            };
-            return <PegaExtensionsExpandableTable {...nestedProps} />;
+            if (f.config?.name === 'OrderLineItems') {
+              const nestedView = genNestedLineItemsResponse();
+              const nestedProps: ExpandableTableProps = {
+                detailViewName: '',
+                getPConnect: () =>
+                  ({
+                    meta: { name: 'NestedLineItems' },
+                    options: { viewName: 'OrderLineItems', pageReference: pageRef },
+                    getLocalizedValue: (val: string) => val,
+                    getContextName: () => 'workarea',
+                    getTarget: () => 'workarea',
+                    getPageReference: () => pageRef,
+                    getCaseInfo: () => ({ getKey: () => 'S-123' }),
+                    getValue: () => 'S-123',
+                    getChildren: () => nestedView.children,
+                    getRawMetadata: () => nestedView,
+                    getInheritedProps: () => nestedView.config.inheritedProps,
+                    setInheritedProp: () => {},
+                    setValue: () => {},
+                    resolveConfigProps: (fieldConfig: any) => ({
+                      ...fieldConfig,
+                      propref: fieldConfig.value,
+                      pageref: 'LineItems',
+                      contextClass: 'Data-LineItem',
+                    }),
+                  }) as unknown as typeof PConnect,
+              };
+              return <PegaExtensionsExpandableTable {...nestedProps} />;
+            }
+
+            return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
           }
-
-          return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
-        }
-        const pageRef: string = context.options.pageReference ?? '';
-        const rowIndex = getRowIndexFromPageRef(pageRef);
-        const val = Array.isArray(context.meta.config.value)
-          ? context.meta.config.value[rowIndex]
-          : context.meta.config.value;
-        return <Text>{`${val ?? ''}`}</Text>;
-      },
-      getTarget: () => 'workarea',
-    }),
+          const pageRef: string = context.getPageReference() ?? '';
+          const rowIndex = getRowIndexFromPageRef(pageRef);
+          const val = Array.isArray(context.meta.config.value)
+            ? context.meta.config.value[rowIndex]
+            : context.meta.config.value;
+          return <Text>{`${val ?? ''}`}</Text>;
+        },
+        getTarget: () => 'workarea',
+      }) as unknown as typeof PConnect,
   }),
   getComponentsRegistry: () => ({
     getLazyComponent: (f: string) => f,
@@ -444,9 +449,10 @@ const genOrdersResponse = () => {
             type: 'ScalarList',
           },
         ] as Array<info>,
-        getPConnect: () => ({
-          getRawMetadata: () => demoView.children[0],
-        }),
+        getPConnect: () =>
+          ({
+            getRawMetadata: () => demoView.children[0],
+          }) as unknown as typeof PConnect,
       },
     ],
     classID: 'Work-MyComponents',
@@ -456,32 +462,33 @@ const genOrdersResponse = () => {
 
 export const NestedTable: Story = {
   render: (args: ExpandableTableProps) => {
-    (window as any).PCore = createMockPCore(args);
+    window.PCore = createMockPCore(args) as unknown as typeof PCore;
 
     const ordersView = genOrdersResponse();
     const props: ExpandableTableProps = {
       ...args,
-      getPConnect: () => ({
-        meta: { name: 'OrdersTable' },
-        options: { viewName: 'OrdersTable' },
-        getLocalizedValue: (val: string) => val,
-        getContextName: () => 'workarea',
-        getTarget: () => 'workarea',
-        getPageReference: () => 'caseInfo.content',
-        getCaseInfo: () => ({ getKey: () => 'S-123' }),
-        getValue: () => 'S-123',
-        getChildren: () => ordersView.children,
-        getRawMetadata: () => ordersView,
-        getInheritedProps: () => ordersView.config.inheritedProps,
-        setInheritedProp: () => {},
-        setValue: () => {},
-        resolveConfigProps: (fieldConfig: any) => ({
-          ...fieldConfig,
-          propref: fieldConfig.value,
-          pageref: 'orders',
-          contextClass: 'Data-Order',
-        }),
-      }),
+      getPConnect: () =>
+        ({
+          meta: { name: 'OrdersTable' },
+          options: { viewName: 'OrdersTable' },
+          getLocalizedValue: (val: string) => val,
+          getContextName: () => 'workarea',
+          getTarget: () => 'workarea',
+          getPageReference: () => 'caseInfo.content',
+          getCaseInfo: () => ({ getKey: () => 'S-123' }),
+          getValue: () => 'S-123',
+          getChildren: () => ordersView.children,
+          getRawMetadata: () => ordersView,
+          getInheritedProps: () => ordersView.config.inheritedProps,
+          setInheritedProp: () => {},
+          setValue: () => {},
+          resolveConfigProps: (fieldConfig: any) => ({
+            ...fieldConfig,
+            propref: fieldConfig.value,
+            pageref: 'orders',
+            contextClass: 'Data-Order',
+          }),
+        }) as unknown as typeof PConnect,
     };
 
     return <PegaExtensionsExpandableTable {...props} />;

@@ -82,7 +82,7 @@ export function OrganizationBuilder({
       try {
         const context = getPConnect().getContextName();
         const parameters = selectionProperty ? { pyGUID: selectionProperty } : undefined;
-        const data = (await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
+        const data = (await PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
           invalidateCache: true,
         })) as OrgBuilderDataPageResponse;
         if (cancelled) return;

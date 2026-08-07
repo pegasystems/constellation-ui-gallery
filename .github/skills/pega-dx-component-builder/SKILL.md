@@ -61,7 +61,8 @@ Default operating mode:
    - place important custom props near the top of Storybook `argTypes` and set explicit defaults for common DX props such as `testId: ''` and `hideLabel: false` when relevant
    - for field-style components, keep `hideLabel` as the public component prop and pass `labelHidden={hideLabel}` only to the underlying Cosmos control when that control uses the Cosmos prop name
    - for field-style components, type `disabled`, `readOnly`, and `required` as boolean props, but preserve runtime compatibility by coercing `true` and string `'true'` values with the shared `[readOnly, required, disabled].map(...)` pattern used by `MaskedInput` and `DateInput`
-   - prefer `getPConnect?: any` for repo-aligned field component props and call `getActionsApi()`, `getStateProps()`, and `ignoreSuggestion()` from the returned object instead of introducing duplicate local `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces unless a stronger shared type already exists in the repo
+   - prefer `getPConnect: () => typeof PConnect` for repo-aligned field component props (types from `@pega/pcore-pconnect-typedefs` via `src/pega-globals.d.ts`) and call `getActionsApi()`, `getStateProps()`, and `ignoreSuggestion()` from the returned object instead of introducing duplicate local `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces
+   - prefer bare `PCore.*` over `(window as any).PCore`; cast incomplete Storybook/test mocks with `as unknown as typeof PCore` / `as unknown as typeof PConnect`
    - if you add non-default stories, add them to a `## Example` or `## Examples` section in `Docs.mdx` using `Story` blocks
 5. Prefer `@pega/cosmos-react-core`, existing repo dependencies, and functional React patterns. Use `withConfiguration`, `getPConnect`, and `PCore` only where needed and only after confirming the usage pattern.
 6. For any PCore/PConnect integration that touches identifiers, rule names, or data:

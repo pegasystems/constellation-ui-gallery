@@ -4,7 +4,7 @@ export type Task = {
   id: string;
   title: string;
   category: string;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
   status: 'Completed' | 'Not yet started' | 'Optional' | 'Cannot start yet';
   content: ReactElement;
   visible: boolean;
@@ -17,7 +17,7 @@ export type Category = {
 export type HierarchicalFormAsTasksProps = {
   heading: string;
   children: any;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
   numberOfGroups?: number;
   viewsPerGroup?: number;
 };

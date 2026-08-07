@@ -29,7 +29,7 @@ export type TableLayoutProps = {
   displayFormat: 'spreadsheet' | 'financialreport' | 'radio-button-card';
   selectionProperty?: string;
   currencyFormat: 'standard' | 'compact' | 'parentheses';
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 type FieldObj = {
@@ -55,10 +55,11 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
 
   const metadata = getPConnect().getRawMetadata();
   const theme = useTheme();
+  const selectionProp = (metadata?.config as any)?.selectionProperty;
 
   const selectObject = (ID: any, index: number) => {
-    if (metadata.config.selectionProperty) {
-      const prop = metadata.config.selectionProperty.replace('@P ', '');
+    if (selectionProp) {
+      const prop = selectionProp.replace('@P ', '');
       getPConnect().getActionsApi().updateFieldValue(prop, ID);
       getPConnect().getActionsApi().triggerFieldChange(prop, ID);
     }
@@ -103,11 +104,8 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
     if (tmpFields && tmpFields[0] && tmpFields[0].value) {
       setNumCols(tmpFields[0].value.length);
       tmpFields.forEach((child: any) => {
-        if (
-          child.componentType &&
-          !(window as any).PCore.getComponentsRegistry().getLazyComponent(child.componentType)
-        ) {
-          (window as any).PCore.getAssetLoader()
+        if (child.componentType && !PCore.getComponentsRegistry().getLazyComponent(child.componentType)) {
+          PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
               setNumFields((prevCount) => prevCount + 1);
@@ -141,7 +139,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -243,7 +241,7 @@ export const PegaExtensionsCompareTableLayout = (props: TableLayoutProps) => {
                 );
               }
               /* Show a selection with radioButton if the label is called ID and the selectionProperty is provided */
-              if (child.label === 'ID' && typeof selectionProperty !== 'undefined' && metadata.config.selectionProperty)
+              if (child.label === 'ID' && typeof selectionProperty !== 'undefined' && selectionProp)
                 return (
                   <tr key={`reg-row-${child.label}`}>
                     <th>{getPConnect().getLocalizedValue('Selection')}</th>

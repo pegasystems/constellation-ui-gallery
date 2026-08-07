@@ -44,7 +44,7 @@ const meta: Meta<StoryArgs> = {
 export default meta;
 
 const setPCore = (currentLocale: string, currentTimezone: string) => {
-  (globalThis as typeof globalThis & { PCore?: any }).PCore = {
+  (globalThis as typeof globalThis & { PCore?: typeof PCore }).PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -77,7 +77,7 @@ const setPCore = (currentLocale: string, currentTimezone: string) => {
         setTimezone: () => {},
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<StoryArgs>;
@@ -86,7 +86,7 @@ const buildPConnect = () => {
   return {
     getContextName: () => 'primary',
     getLocalizedValue: (value: string) => value,
-  };
+  } as unknown as typeof PConnect;
 };
 
 export const Default: Story = {
@@ -94,7 +94,7 @@ export const Default: Story = {
     setPCore(args.currentLocale, args.currentTimezone);
     const props = {
       ...args,
-      getPConnect: buildPConnect,
+      getPConnect: buildPConnect as () => typeof PConnect,
     };
     return <PegaExtensionsLangSwitch {...props} />;
   },
@@ -119,7 +119,7 @@ export const CompactLanguageOnly: Story = {
     setPCore(args.currentLocale, args.currentTimezone);
     const props = {
       ...args,
-      getPConnect: buildPConnect,
+      getPConnect: buildPConnect as () => typeof PConnect,
     };
 
     return (

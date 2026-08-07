@@ -13,7 +13,7 @@ export type CaseLauncherProps = {
   classFilter: any;
   /** Primary button label  */
   labelPrimaryButton: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {

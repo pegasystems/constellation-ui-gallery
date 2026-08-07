@@ -9,7 +9,7 @@ const { BasePegaExtensionsCustomKPIGauge } = composeStories(DemoStories);
 
 /* Mock PCore globally for tests */
 beforeEach(() => {
-  (window as any).PCore = {
+  window.PCore = {
     getDataApiUtils: () => ({
       getData: jest.fn().mockResolvedValue({
         data: {
@@ -26,11 +26,11 @@ beforeEach(() => {
       publish: jest.fn(),
       subscribe: jest.fn(),
     }),
-  };
+  } as unknown as typeof PCore;
 });
 
 afterEach(() => {
-  delete (window as any).PCore;
+  delete (window as Partial<Window>).PCore;
 });
 
 test('renders CustomKPIGauge with label', async () => {
@@ -59,7 +59,7 @@ test('renders value when below low threshold', async () => {
 });
 
 test('applies green color when value is above high threshold', async () => {
-  (window as any).PCore.getDataApiUtils = () => ({
+  PCore.getDataApiUtils = () => ({
     getData: jest.fn().mockResolvedValue({
       data: {
         data: [{ TotalRevenue: 130 }],
@@ -85,7 +85,7 @@ test('refresh button re-fetches data', async () => {
     },
   });
 
-  (window as any).PCore.getDataApiUtils = () => ({
+  PCore.getDataApiUtils = () => ({
     getData: getDataMock,
   });
 

@@ -276,8 +276,8 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       async () => {
         /* If an assignment is updated - force a reload of the events */
         setLoaderTasks(true);
@@ -287,8 +287,8 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };
@@ -322,7 +322,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
         <ProgressComponent
           visible={loaderTasks}
           placement='local'
-          message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          message={PCore.getLocaleUtils().getLocaleValue(
             'Loading content...',
             'Generic',
             '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -400,7 +400,7 @@ export const PegaExtensionsGanttChart = (props: GanttChartProps) => {
                     <ProgressComponent
                       visible={loaderDetails}
                       placement='local'
-                      message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                      message={PCore.getLocaleUtils().getLocaleValue(
                         'Loading content...',
                         'Generic',
                         '@BASECLASS!GENERIC!PYGENERICFIELDS',

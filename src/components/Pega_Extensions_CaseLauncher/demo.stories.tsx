@@ -19,7 +19,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getEnvironmentInfo: () => {
       return {
         getKeyMapping: (key: string) => key,
@@ -30,7 +30,7 @@ const setPCore = () => {
         getDefaultQualifiedName: (name: string) => name,
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCaseLauncher>;
@@ -49,7 +49,7 @@ export const Default: Story = {
               },
             };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsCaseLauncher {...props} />;

@@ -11,8 +11,8 @@ Almost every Launchpad-safe change in this gallery goes through one shared helpe
 ```ts
 // src/components/shared/utils.ts
 export function getMappedKey(key: string): string {
-  const namespacedKey = (window as any).PCore.getNameSpaceUtils().getDefaultQualifiedName(key);
-  const mappedKey = (window as any).PCore.getEnvironmentInfo().getKeyMapping(namespacedKey);
+  const namespacedKey = PCore.getNameSpaceUtils().getDefaultQualifiedName(key);
+  const mappedKey = PCore.getEnvironmentInfo().getKeyMapping(namespacedKey);
   return mappedKey || namespacedKey;
 }
 ```
@@ -53,7 +53,7 @@ Do **not** hard-code `pyID`, `pzInsKey`, `pxObjClass`, `pyStatusWork`, `pyLabel`
 - When reading the **current case ID from context**, prefer PCore constants, not string paths:
 
   ```ts
-  const caseId = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+  const caseId = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
   ```
 
   Avoid hard-coded paths such as `'caseInfo.businessID'` or `'.pyID'` unless you are intentionally reading a host-provided path that is already environment-neutral.
@@ -124,7 +124,7 @@ Some Platform DX APIs are **not implemented** (or not registered) in Launchpad. 
 ### Capability detection (preferred over `if (isLaunchpad)`)
 
 ```ts
-const canReadDataObject = (window as any).PCore.getRestClient().doesRestApiExist('readDataObject');
+const canReadDataObject = PCore.getRestClient().doesRestApiExist('readDataObject');
 
 if (!canReadDataObject) {
   // Launchpad-safe fallback – e.g. list data page + FieldValueList
@@ -202,7 +202,7 @@ Layout and theming should **behave the same** in both environments. Do not add e
 Stories and mocks must support **both** environments. Whenever a component imports `getMappedKey` (or otherwise touches namespace / key mapping / optional REST APIs), stub at least:
 
 ```ts
-(window as any).PCore = {
+window.PCore = {
   getConstants: () => ({
     CASE_INFO: { CASE_INFO_ID: 'ID' /* … */ },
   }),
@@ -221,7 +221,7 @@ Stories and mocks must support **both** environments. Whenever a component impor
     getResolvedSemanticURL: () => '',
   }),
   // …other helpers the component calls
-};
+} as unknown as typeof PCore;
 ```
 
 **Guidelines:**

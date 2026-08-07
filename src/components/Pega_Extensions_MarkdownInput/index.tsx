@@ -37,7 +37,7 @@ export interface MarkdownInputProps {
   fieldMetadata?: {
     additionalInformation: string;
   };
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
