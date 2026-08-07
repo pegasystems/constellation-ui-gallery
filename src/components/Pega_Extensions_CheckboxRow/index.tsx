@@ -4,7 +4,7 @@ import '../shared/create-nonce';
 import { updateAllSiblingCheckboxes, updateBooleanFieldsOnPage } from './utils';
 
 export type CheckboxRowProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   labelProperty?: string;
   value?: boolean;
@@ -39,7 +39,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -69,10 +69,10 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
     if (value === checked) return;
 
     actions.updateFieldValue(propName, checked);
-    hasValueChange.current = true;
+    hasValueChangeRef.current = true;
 
     const contextName = pConn.getContextName();
-    const storeData = (window as any).PCore.getStore().getState().data?.[contextName];
+    const storeData = PCore.getStore().getState().data?.[contextName];
     if (!storeData) return;
 
     if (selectAllProperty) {
@@ -80,7 +80,7 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
       return;
     }
 
-    const pageRef = pConn.options.pageReference; // e.g. caseInfo.content.Policies[0]
+    const pageRef = pConn.getPageReference(); // e.g. caseInfo.content.Policies[0]
     updateBooleanFieldsOnPage({
       pageRef,
       checked,
@@ -103,9 +103,9 @@ export const PegaExtensionsCheckboxRow = (props: CheckboxRowProps) => {
       required={required}
       onChange={(e: MouseEvent<HTMLInputElement>) => handleChange(e.currentTarget.checked)}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
+        if ((!value || hasValueChangeRef.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.checked);
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

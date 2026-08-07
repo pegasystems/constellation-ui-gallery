@@ -5,14 +5,13 @@ type ActionableButtonProps = {
   label: string;
   value: string;
   localAction: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => {
   const { getPConnect, label, value, localAction } = props;
   if (value && localAction) {
-    const availableActions =
-      getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
+    const availableActions = getPConnect().getValue(PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
     const targetAction = availableActions.find((action: { ID: string }) => action.ID === localAction);
     const localizedLabel =
       getPConnect().getContainerName() === 'primary'

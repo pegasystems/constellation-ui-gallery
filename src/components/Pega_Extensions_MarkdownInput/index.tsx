@@ -37,7 +37,7 @@ export interface MarkdownInputProps {
   fieldMetadata?: {
     additionalInformation: string;
   };
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
@@ -55,10 +55,10 @@ export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
     fieldMetadata,
   } = props;
 
-  const [id] = useState(createUID());
+  const [id] = useState(() => createUID());
   const pConn = getPConnect();
   const editorRef = useRef<EditorState>(null);
-  const [newValue, setValue] = useState(value);
+  const [newValue, setNewValue] = useState(value);
 
   const fieldAdditionalInfo = fieldMetadata?.additionalInformation;
   const additionalInfo = fieldAdditionalInfo
@@ -95,7 +95,7 @@ export const PegaExtensionsMarkdownInput = (props: MarkdownInputProps) => {
         pConn.getValidationApi().validate(content);
       }
       if (newValue !== content) {
-        setValue(content);
+        setNewValue(content);
         actionsApi.updateFieldValue(property, content);
         actionsApi.triggerFieldChange(property, content);
       }

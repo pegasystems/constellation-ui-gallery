@@ -15,10 +15,20 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {},
+      };
+    },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getKeyMapping: (key: string) => key,
       };
     },
     getMessagingServiceManager: () => {
@@ -51,25 +61,26 @@ const setPCore = () => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        getActionsApi: () => ({
-          finishAssignment: () => {
-            return Promise.resolve({
-              data: {
-                data: {},
-              },
-            });
+      getPConnect: () =>
+        ({
+          getActionsApi: () => ({
+            finishAssignment: () => {
+              return Promise.resolve({
+                data: {
+                  data: {},
+                },
+              });
+            },
+          }),
+          getContextName: () => '',
+          getValue: () => 'C-123',
+          getListActions: () => {
+            return {
+              update: () => {},
+              deleteEntry: () => {},
+            };
           },
-        }),
-        getContextName: () => '',
-        getValue: () => 'C-123',
-        getListActions: () => {
-          return {
-            update: () => {},
-            deleteEntry: () => {},
-          };
-        },
-      }),
+        }) as unknown as typeof PConnect,
     }),
     getDataApiUtils: () => {
       return {
@@ -108,7 +119,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsBanner>;
@@ -138,7 +149,7 @@ export const Default: Story = {
               },
             };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsBanner {...props} />;

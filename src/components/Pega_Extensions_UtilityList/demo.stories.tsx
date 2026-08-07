@@ -37,7 +37,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getConstants: () => {
       return {
         CASE_INFO: {},
@@ -53,6 +53,16 @@ const setPCore = () => {
             ACTION_OPENWORKBYHANDLE: 'openWorkByHandle',
           };
         },
+      };
+    },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getKeyMapping: (key: string) => key,
       };
     },
     getDataApiUtils: () => {
@@ -128,7 +138,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsUtilityList>;
@@ -141,7 +151,7 @@ export const Default: Story = {
         return {
           getContextName: () => '',
           getValue: () => 'C-123',
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsUtilityList {...props} />;

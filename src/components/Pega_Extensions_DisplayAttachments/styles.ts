@@ -1,7 +1,6 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export default styled.button(({ theme }: { theme: typeof themeDefinition }) => {
+export default styled.button(({ theme }) => {
   return css`
     border: 0.0625rem solid ${theme.base.palette['border-line']};
     padding: 0.5rem;

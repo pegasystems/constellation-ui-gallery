@@ -1,6 +1,7 @@
 import { withConfiguration, useTheme, FieldGroup, Flex, FormField, createUID } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
 import { StyledFieldGroupElementMeter, StyleGroupMeterWrapper } from './styles';
+import { getMappedKey } from '../shared/utils';
 
 import { useEffect, useState } from 'react';
 
@@ -43,7 +44,7 @@ export type MeterProps = {
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
 
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export type Event = {
@@ -69,32 +70,32 @@ export const PegaExtensionsMeter = (props: MeterProps) => {
     getPConnect,
   } = props;
 
-  const [id] = useState(createUID());
+  const [id] = useState(() => createUID());
   const [events, setEvents] = useState<Array<Event>>([]);
   const [totalValue, setTotalValue] = useState(totalTasks);
   const theme = useTheme();
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }],
+        dataViewParameters: { [getMappedKey('pyID')]: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+      PCore.getDataApiUtils()
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             let tmpTotalValue = totalTasks;
             if (!totalTasks) {
               /* Calculate total value from all the rows */
               response.data.data.forEach((item: any) => {
-                tmpTotalValue += item.value || 0;
+                tmpTotalValue += item[getMappedKey('value')] || 0;
               });
             }
             const tmpevents: Array<Event> = [];
             response.data.data.forEach((item: any) => {
-              item.value = item.value || 0;
-              item.label = item.label || '';
+              item.value = item[getMappedKey('value')] || 0;
+              item.label = item[getMappedKey('label')] || '';
               if (!totalTasks && tmpTotalValue) {
                 item.value = (item.value * 100) / tmpTotalValue;
               }

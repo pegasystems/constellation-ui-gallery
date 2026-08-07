@@ -1,5 +1,6 @@
 import { type MouseEvent } from 'react';
 import { getKindFromMimeType, DateTimeDisplay, MetaList, FileVisual, Icon, Button } from '@pega/cosmos-react-core';
+import { getMappedKey } from '../shared/utils';
 
 export const canPreviewFile = (type: string) => {
   return type === 'image' || type === 'pdf';
@@ -50,9 +51,14 @@ const fileDownload = (data: string, attachment: any, headers: any) => {
     - if URL, will open the link in a new tab
     - Otherwise, will download the file
  */
-export const downloadFile = (attachment: any, getPConnect: any, setImages: any, bForceDownload: boolean) => {
+export const downloadFile = (
+  attachment: any,
+  getPConnect: () => typeof PConnect,
+  setImages: any,
+  bForceDownload: boolean,
+) => {
   const kind = getKindFromMimeType(attachment.mimeType);
-  (window as any).PCore.getAttachmentUtils()
+  PCore.getAttachmentUtils()
     .downloadAttachment(attachment.ID, getPConnect().getContextName(), attachment.responseType)
     .then((content: any) => {
       if (canPreviewFile(kind) && !bForceDownload) {
@@ -96,7 +102,7 @@ type AddAttachmentProps = {
   currentCategory: string;
   attachment: any;
   listOfAttachments: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   setImages: any;
   useLightBox: boolean;
   setElemRef: any;
@@ -106,7 +112,7 @@ export const addAttachment = (props: AddAttachmentProps) => {
   const { currentCategory, attachment, listOfAttachments, getPConnect, setImages, useLightBox, setElemRef } = props;
   const dateTime = <DateTimeDisplay value={new Date(attachment.createTime)} variant='relative' />;
   const secondaryItems = [
-    currentCategory === 'pxDocument' ? 'Document' : currentCategory,
+    currentCategory === getMappedKey('pxDocument') ? 'Document' : currentCategory,
     dateTime,
     attachment.createdByName ?? attachment.createdBy,
   ];

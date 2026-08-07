@@ -1,8 +1,8 @@
 import { meetsContrastGuidelines } from 'polished';
 import styled, { css } from 'styled-components';
 
-const TrendDisplayWrapper = styled.div(
-  ({ colorValue, renderingMode }: { colorValue?: string; renderingMode: string }) => {
+const TrendDisplayWrapper = styled.div<{ colorValue?: string; renderingMode: string }>(
+  ({ colorValue, renderingMode }) => {
     if (renderingMode === 'badge' && colorValue && colorValue !== 'auto' && colorValue !== 'trend') {
       // Calculate the score for contrast - if pass, we will override the color of the primary button
       const scoreWhite = meetsContrastGuidelines(colorValue, '#FFF');

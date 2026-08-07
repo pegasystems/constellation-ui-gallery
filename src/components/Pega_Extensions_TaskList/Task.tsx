@@ -6,7 +6,7 @@ import type { Task } from './index';
 interface TaskElementProps {
   task: Task;
   deleteTask: (id: string) => void;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 }
 const TaskElement = (props: TaskElementProps) => {
   const { task, deleteTask, getPConnect } = props;
@@ -37,7 +37,7 @@ const TaskElement = (props: TaskElementProps) => {
   const toggleStatus = () => {
     setStatus((prevStatus) => {
       // API call to update the backend
-      (window as any).PCore.getRestClient()
+      PCore.getRestClient()
         .invokeRestApi('updateDataObject', {
           queryPayload: {
             data_view_ID: 'D_TaskListSavable',

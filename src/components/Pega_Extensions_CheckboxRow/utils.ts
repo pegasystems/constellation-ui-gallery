@@ -56,7 +56,7 @@ export const updateAllSiblingCheckboxes = (config: {
   // The value should either contain a pagelist (e.g. Policies) or a single dot - e.g. Policies.IsSelected
   const trimmedSelectAllProperty = selectAllProperty.trim().replace(/^[.]+/, '');
   const isListPlusField = /^[^.]+\.[^.]+$/.test(trimmedSelectAllProperty); // e.g. Policies.IsSelected
-  const basePageRef = pConn.options.pageReference;
+  const basePageRef = pConn.getPageReference();
   const pageRef = `${basePageRef}.${trimmedSelectAllProperty}`;
   const embeddedPageName = isListPlusField ? pageRef.substring(0, pageRef.lastIndexOf('.')) : pageRef;
   const embeddedArray = getNestedValue(storeData, embeddedPageName);
@@ -73,7 +73,7 @@ export const updateAllSiblingCheckboxes = (config: {
         meta: { config: { context: contextName } },
         options: { context: contextName, pageReference: rowPageRef, target },
       };
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
       const actions = c11nEnv?.getPConnect()?.getActionsApi();
       if (actions) cb(rowPageRef, actions);
     }

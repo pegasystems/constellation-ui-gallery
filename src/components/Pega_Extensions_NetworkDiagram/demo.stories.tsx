@@ -752,15 +752,21 @@ const setPCore = (Example: string) => {
       ],
     };
   }
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
       };
     },
     getEvents: () => {
@@ -801,7 +807,7 @@ const setPCore = (Example: string) => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 interface NetworkDiagramPropsExt extends NetworkDiagramProps {
@@ -848,7 +854,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsNetworkDiagram {...props} />;

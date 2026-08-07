@@ -1,4 +1,4 @@
-import { type themeDefinition, tryCatch, Card, defaultThemeProp, StyledFieldValueList } from '@pega/cosmos-react-core';
+import { tryCatch, Card, defaultThemeProp, StyledFieldValueList } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 
@@ -24,7 +24,7 @@ export const StyledHoverTooltipCard: typeof Card = styled(Card)(({ theme }) => {
 
 StyledHoverTooltipCard.defaultProps = defaultThemeProp;
 
-export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+const StyledGanttChartRoot = styled.div(({ theme }) => {
   const ganttExternalCSS = `
   .today {
     rect {
@@ -386,3 +386,7 @@ export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
     }
   `;
 });
+
+StyledGanttChartRoot.defaultProps = defaultThemeProp;
+
+export default StyledGanttChartRoot;

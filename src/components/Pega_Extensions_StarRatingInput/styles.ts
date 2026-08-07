@@ -1,3 +1,4 @@
+import { defaultThemeProp } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
 export const StyledFlexWrapper = styled.div(() => {
@@ -26,10 +27,12 @@ export const StyledStarWrapper = styled.div(({ theme }) => {
     }
   `;
 });
-export const StyledStarRatingMetaInfo = styled.div((props) => {
-  const { theme } = props;
+StyledStarWrapper.defaultProps = defaultThemeProp;
+
+export const StyledStarRatingMetaInfo = styled.div(({ theme }) => {
   return css`
     padding-block: ${theme.base.spacing};
     margin-inline-start: ${theme.base.spacing};
   `;
 });
+StyledStarRatingMetaInfo.defaultProps = defaultThemeProp;

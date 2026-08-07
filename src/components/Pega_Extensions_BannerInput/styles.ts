@@ -1,6 +1,8 @@
-import { tryCatch } from '@pega/cosmos-react-core';
+import { defaultThemeProp, tryCatch } from '@pega/cosmos-react-core';
 import { getContrast, readableColor } from 'polished';
 import styled, { css } from 'styled-components';
+
+type BannerVariant = 'success' | 'urgent' | 'info' | 'warn' | 'pending';
 
 export const StyledBanner = styled.div(({ theme }) => {
   return css`
@@ -10,8 +12,9 @@ export const StyledBanner = styled.div(({ theme }) => {
     grid-template-columns: 2rem minmax(0, 1fr);
   `;
 });
+StyledBanner.defaultProps = defaultThemeProp;
 
-export const StyledBannerStatus = styled.div(({ variant, theme }: { variant: string; theme: any }) => {
+export const StyledBannerStatus = styled.div<{ variant: BannerVariant }>(({ variant, theme }) => {
   const background = theme.base.palette[variant];
   const color = tryCatch(() =>
     getContrast(background, theme.base.palette['primary-background']) >= 3
@@ -33,7 +36,9 @@ export const StyledBannerStatus = styled.div(({ variant, theme }: { variant: str
     align-items: center;
   `;
 });
-export const StyledBannerText = styled.div(({ variant, theme }: { variant: string; theme: any }) => {
+StyledBannerStatus.defaultProps = defaultThemeProp;
+
+export const StyledBannerText = styled.div<{ variant: BannerVariant }>(({ variant, theme }) => {
   const background = theme.base.palette['primary-background'];
   const color = readableColor(background);
   return css`
@@ -50,3 +55,4 @@ export const StyledBannerText = styled.div(({ variant, theme }: { variant: strin
     color: ${color};
   `;
 });
+StyledBannerText.defaultProps = defaultThemeProp;

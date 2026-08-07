@@ -38,7 +38,7 @@ const mainResponse = {
           getRawMetadata: () => {
             return mainResponse.children[0];
           },
-        };
+        } as unknown as typeof PConnect;
       },
       children: [],
     },
@@ -86,11 +86,11 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     const regionAChildren = mainResponse.children[0].children.map(() => {
-      return props.getPConnect().createComponent();
+      return (props.getPConnect() as any).createComponent();
     });
 
     return <PegaExtensionsRangeSlider {...props}>{regionAChildren}</PegaExtensionsRangeSlider>;

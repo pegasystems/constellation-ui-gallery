@@ -1,4 +1,4 @@
-import { Children, useRef, useLayoutEffect, useMemo, useState } from 'react';
+import { useRef, useLayoutEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import DOMPurify from 'dompurify';
 import styled from 'styled-components';
@@ -241,7 +241,7 @@ export const PegaExtensionsDynamicTemplate = (props: DynamicTemplateProps) => {
     const regionsFromConnect = pConnect?.getChildren?.() ?? [];
     if (!Array.isArray(regionsFromConnect)) return map;
 
-    const childArray = Children.toArray(props.children ?? []);
+    const childArray = Array.isArray(props.children) ? props.children : props.children != null ? [props.children] : [];
 
     // Constellation passes one React child per region (aligned with metadata). Storybook/tests
     // often mock regions only via getChildren() with no props.children.
@@ -307,6 +307,7 @@ export const PegaExtensionsDynamicTemplate = (props: DynamicTemplateProps) => {
       <div
         ref={layoutRef}
         className='pega-extensions-dynamic-template-layout'
+        // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml -- HTML is sanitized with DOMPurify
         dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
       />
       {portalTargets.map((target) => createPortal(regionMap[target.name], target.element))}

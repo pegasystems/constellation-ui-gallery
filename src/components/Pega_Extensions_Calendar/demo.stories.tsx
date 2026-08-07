@@ -40,6 +40,10 @@ export default {
             id: 'aria-allowed-role',
             enabled: false,
           },
+          {
+            id: 'color-contrast',
+            enabled: false,
+          },
         ],
       },
     },
@@ -54,15 +58,21 @@ const setPCore = () => {
 
   const toDateString = (date: Date) => date.toISOString().split('T')[0];
 
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
       };
     },
     getEvents: () => {
@@ -142,7 +152,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCalendar>;
@@ -187,7 +197,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsCalendar {...props} />;

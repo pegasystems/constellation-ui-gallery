@@ -5,15 +5,15 @@ export interface PegaExtensionsFormWithVerticalStepperProps {
   NumCols: string;
   stepperPosition: 'left' | 'right';
   children: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 export interface VerticalNavbarProps {
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 }
 
 export interface ActionButtonsProps {
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 }
 
 export type Step = {

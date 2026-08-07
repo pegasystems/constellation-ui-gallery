@@ -7,7 +7,7 @@ import { StyledCardContent, MainCard, GlobalStyle } from './styles';
 import '../shared/create-nonce';
 
 export type PegaExtensionsSchedulerProps = {
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   value: string;
   hideLabel: boolean;
   testId?: string;
@@ -56,8 +56,8 @@ export const PegaExtensionsScheduler = (props: PegaExtensionsSchedulerProps) => 
 
   const renderEventContent = (eventInfo: EventContentArg) => {
     const obj = eventInfo.event._def.extendedProps.item;
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
       { caseClassName: obj.ObjClass },
       { workID: obj.ID },
     );

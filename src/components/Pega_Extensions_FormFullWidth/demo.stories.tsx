@@ -58,7 +58,7 @@ const mainResponse = {
           getRawMetadata: () => {
             return mainResponse.children[0];
           },
-        };
+        } as unknown as typeof PConnect;
       },
       children: generateChildren(16),
     },

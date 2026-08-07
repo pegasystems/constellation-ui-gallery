@@ -32,7 +32,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -64,6 +64,16 @@ const setPCore = () => {
         },
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getKeyMapping: (key: string) => key,
+      };
+    },
     getDataApiUtils: () => {
       return {
         getData: () => {
@@ -86,7 +96,7 @@ const setPCore = () => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsTaskList>;
@@ -102,7 +112,7 @@ export const Default: Story = {
           },
           getContextName: () => '',
           getValue: () => 'C-123',
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsTaskList {...props} />;

@@ -18,12 +18,12 @@ type ShortcutsProps = {
   pages?: string;
   /** JSON object passed a string - only used if displayType is grouped */
   pageJSON?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
   const { heading = 'Shortcuts', displayType = 'simple', names = '', pages = '', pageJSON = '', getPConnect } = props;
-  const { ACTION_SHOWVIEW } = (window as any).PCore.getSemanticUrlUtils().getActions();
+  const { ACTION_SHOWVIEW } = PCore.getSemanticUrlUtils().getActions();
 
   const generateLink = useCallback(
     (name: string, page: string) => {
@@ -41,11 +41,7 @@ export const PegaExtensionsShortcuts = (props: ShortcutsProps) => {
 
       const pageClass = page.substring(0, delimiter).trim();
       const pageName = page.substring(delimiter + 1).trim();
-      const linkRef = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-        ACTION_SHOWVIEW,
-        { page: pageName },
-        '',
-      );
+      const linkRef = PCore.getSemanticUrlUtils().getResolvedSemanticURL(ACTION_SHOWVIEW, { page: pageName }, {});
       return (
         <Link
           key={name}

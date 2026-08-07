@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export default styled.div(({ minWidth }: { minWidth: string }) => {
+export default styled.div<{ minWidth: string }>(({ minWidth }) => {
   return css`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(${minWidth}, 1fr));

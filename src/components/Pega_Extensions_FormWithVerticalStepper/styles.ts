@@ -1,6 +1,6 @@
 // individual style, comment out above, and uncomment here and add styles
 import { mix, rgba } from 'polished';
-import { tryCatch, type themeDefinition } from '@pega/cosmos-react-core';
+import { tryCatch } from '@pega/cosmos-react-core';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 export default styled.div(() => {
@@ -24,7 +24,7 @@ export const Container = styled.div`
   flex-grow: 1;
 `;
 
-export const ProgressDetails = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const ProgressDetails = styled.div(({ theme }) => {
   return css`
     padding-block: 0.625rem;
     border-bottom: 0.0625rem solid ${theme.base.palette['border-line']};
@@ -83,7 +83,7 @@ export const NavigationListItem = styled.li(
   },
 );
 
-export const NavigationItemTextContent = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const NavigationItemTextContent = styled.div(({ theme }) => {
   return css`
     flex-grow: 1;
     padding-block: 0.75rem;
@@ -109,7 +109,7 @@ export const NavigationItemStatus = styled.div(
   },
 );
 
-export const NavigationItemTitle = styled.div(({ $status }: { $status: string }) => {
+export const NavigationItemTitle = styled.div<{ $status: string }>(({ $status }) => {
   const fontWeight = $status === 'current' ? 600 : 400;
 
   return css`

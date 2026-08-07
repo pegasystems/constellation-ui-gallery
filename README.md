@@ -9,7 +9,8 @@ These components have been tested on Pega '23.1, '24.1, '24.2 and '25.1 and migh
 - Version 1.x and branch release/1.x.x should be used for Pega '23
 - Version 2.x and branch release/2.0 should be used for Pega '24.1
 - Version 3.x and branch release/3.0 should be used for Pega '24.2
-- Version 4.x and branch master should be used for Pega '25.1
+- Version 4.x and branch release/4.0 should be used for Pega '25.1
+- Version 4.x and branch master should be used for Pega '26.1
 
 Older versions of the Pega Platform have not been tested and are not supported.
 
@@ -25,7 +26,7 @@ To build and compile the application - use the following commands:
 
 Install npm from [nodejs.org](https://nodejs.org/en/download/)
 
-You should have the following versions installed: System node version 24.x and npm version 10.x or higher if you are using master - for release branch, use node 20.0
+You should have the following versions installed: System node version 24.x and npm version 10.x or higher if you are using master.
 
 If you already have [VS Code](https://code.visualstudio.com/) and [Docker](https://docs.docker.com/get-docker/) installed, you can click [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/pegasystems/constellation-ui-gallery) to get started. Clicking these links will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
 

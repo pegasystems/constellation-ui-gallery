@@ -1,3 +1,4 @@
+import { getMappedKey } from '../shared/utils';
 /* This function calls the DX Constellation API to load a specific view for the case - The view is passed
    as parameter to this widget. You can have when and custom conditions on some of the fields that would allow you
   to customize the look and field of the cards
@@ -10,15 +11,81 @@ type LoadDetailsProps = {
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
+
+// Launchpad fallback when readDataObject is unavailable: use a lookup list DP
+// (e.g. Primary.BusinessID equals Parameters.ID) and render a small FieldValueList.
+const loadStaticDetails = async (props: LoadDetailsProps) => {
+  const { id, detailsDataPage, getPConnect } = props;
+  const pyID = getMappedKey('pyID');
+  const pyStatusWork = getMappedKey('pyStatusWork');
+  const pxUpdateDateTime = getMappedKey('pxUpdateDateTime');
+  const localize = (label: string) => getPConnect?.()?.getLocalizedValue?.(label) || label;
+
+  try {
+    const response = await PCore.getDataApiUtils().getData(getMappedKey(detailsDataPage), {
+      dataViewParameters: {
+        [pyID]: id,
+      },
+    });
+
+    if (response?.data?.data && response.data.data.length > 0) {
+      const itemData = response.data.data.find((item: any) => item[pyID] === id);
+
+      if (!itemData) {
+        console.warn('No matching record found for ID:', id);
+        return null;
+      }
+
+      const React = (window as any).React;
+      const { FieldValueList } = await import('@pega/cosmos-react-core');
+      const fields = [
+        {
+          id: pyID,
+          name: localize('ID'),
+          value: String(itemData[pyID] || ''),
+        },
+        {
+          id: pyStatusWork,
+          name: localize('Status'),
+          value: String(itemData[pyStatusWork] || ''),
+        },
+        {
+          id: pxUpdateDateTime,
+          name: localize('Update Date/Time'),
+          value: String(itemData[pxUpdateDateTime] || ''),
+        },
+      ];
+      return React.createElement(FieldValueList, {
+        variant: 'stacked',
+        fields,
+      });
+    }
+  } catch (error) {
+    console.error('Error loading static details:', error);
+  }
+  return null;
+};
+
 export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
+
+  /* Use case for Launchpad where readDataObject is not implemented */
+  if (!PCore.getRestClient().doesRestApiExist('readDataObject')) {
+    return loadStaticDetails(props);
+  }
+
   let myElem;
-  await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
+  await PCore.getDataApiUtils()
+    .getDataObjectView(
+      getMappedKey(detailsDataPage),
+      detailsViewName,
+      { [getMappedKey('pyID')]: id },
+      getPConnect().getContextName(),
+    )
     .then(async (res: any) => {
-      const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+      const { fetchViewResources, updateViewResources } = PCore.getViewResources();
       await updateViewResources(res.data);
       const transientItemID = getPConnect()
         .getContainerManager()
@@ -38,9 +105,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
           pageReference: 'content',
         },
       };
-      messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config.pyID = id;
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      messageConfig.meta.config!.showLabel = false;
+      messageConfig.meta.config![getMappedKey('pyID')] = id;
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
     });
@@ -53,7 +120,7 @@ type UpdateGroupValueProps = {
   columns: any;
   setColumns: any;
   task: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 /* This method will update the case groupValue automatically using the edit action
    triggered through the pyUpdateCaseDetails local action. You can run some post-processing through this local action to
@@ -64,17 +131,16 @@ type UpdateGroupValueProps = {
 */
 export const updateGroupValue = (props: UpdateGroupValueProps) => {
   const { groupValue, groupProperty, columns, setColumns, task, getPConnect } = props;
-
   const context = getPConnect().getContextName();
-  (window as any).PCore.getDataApiUtils()
+  PCore.getDataApiUtils()
     .getCaseEditLock(task.insKey, context)
     .then((response: any) => {
       const payload: any = {};
       const content: any = {};
-      content[groupProperty] = groupValue;
+      content[getMappedKey(groupProperty)] = groupValue;
       payload[task.insKey] = content;
 
-      (window as any).PCore.getDataApiUtils()
+      PCore.getDataApiUtils()
         .updateCaseEditFieldsData(task.insKey, payload, response.headers.etag, context)
         .then(() => {
           task.groupValue = groupValue;

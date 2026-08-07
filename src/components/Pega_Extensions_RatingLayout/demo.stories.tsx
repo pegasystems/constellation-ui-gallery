@@ -51,13 +51,14 @@ const genComponent = (config: any) => {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     createPConnect: () => ({
-      getPConnect: () => ({
-        getActionsApi: () => ({ updateFieldValue: () => {} }),
-      }),
+      getPConnect: () =>
+        ({
+          getActionsApi: () => ({ updateFieldValue: () => {} }),
+        }) as unknown as typeof PConnect,
     }),
-  };
+  } as unknown as typeof PCore;
 };
 
 const genResponse = (numCategories?: number, numRatings?: number) => {
@@ -175,7 +176,7 @@ export const Default: Story = {
           resolveConfigProps: (f: any) => {
             return { value: f.values };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsRatingLayout {...props}></PegaExtensionsRatingLayout>;

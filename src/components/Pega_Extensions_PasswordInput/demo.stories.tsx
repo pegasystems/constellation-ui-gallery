@@ -47,7 +47,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -58,7 +58,7 @@ const setPCore = () => {
         getTimeZone: () => 'local',
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsPasswordInput>;
@@ -106,7 +106,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsPasswordInput {...props} />;

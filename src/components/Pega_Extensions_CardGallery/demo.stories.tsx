@@ -45,6 +45,10 @@ export default {
             id: 'aria-allowed-role',
             enabled: false,
           },
+          {
+            id: 'dlitem',
+            enabled: false,
+          },
         ],
       },
     },
@@ -199,7 +203,7 @@ const tasks: any = {
 };
 
 const setPCore = (args: any) => {
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -208,42 +212,43 @@ const setPCore = (args: any) => {
       };
     },
     createPConnect: () => ({
-      getPConnect: () => ({
-        createComponent: (meta: any) => {
-          const id = meta.config.pyID;
-          const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
-          return (
-            <Details
-              name={''}
-              highlightedData={highlightedData}
-              collapsible={false}
-              columns={{
-                a: (
-                  <DetailsList
-                    items={[
-                      {
-                        id: 'Description',
-                        name: 'Description',
-                        value: tasks[id].pyDescription,
-                      },
-                      {
-                        id: 'Assigned To',
-                        name: 'Assigned To',
-                        value: tasks[id].pxCreateOpName,
-                      },
-                      {
-                        id: 'Due date',
-                        name: 'Due date',
-                        value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />,
-                      },
-                    ]}
-                  />
-                ),
-              }}
-            />
-          );
-        },
-      }),
+      getPConnect: () =>
+        ({
+          createComponent: (meta: any) => {
+            const id = meta.config.pyID;
+            const highlightedData = [<FieldValueItem key='CaseID' variant='stacked' name='CaseID' value={id} />];
+            return (
+              <Details
+                name={''}
+                highlightedData={highlightedData}
+                collapsible={false}
+                columns={{
+                  a: (
+                    <DetailsList
+                      items={[
+                        {
+                          id: 'Description',
+                          name: 'Description',
+                          value: tasks[id].pyDescription,
+                        },
+                        {
+                          id: 'Assigned To',
+                          name: 'Assigned To',
+                          value: tasks[id].pxCreateOpName,
+                        },
+                        {
+                          id: 'Due date',
+                          name: 'Due date',
+                          value: <DateTimeDisplay variant='date' value={tasks[id].pyDueDate} />,
+                        },
+                      ]}
+                    />
+                  ),
+                }}
+              />
+            );
+          },
+        }) as unknown as typeof PConnect,
     }),
     getComponentsRegistry: () => {
       return {
@@ -262,9 +267,15 @@ const setPCore = (args: any) => {
         updateViewResources: () => {},
       };
     },
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
     getEnvironmentInfo: () => {
       return {
         getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
       };
     },
     getEvents: () => {
@@ -306,6 +317,13 @@ const setPCore = (args: any) => {
         },
       };
     },
+    getRestClient: () => {
+      return {
+        doesRestApiExist: () => {
+          return true;
+        },
+      };
+    },
     getDataApiUtils: () => {
       return {
         getCaseEditLock: () => {
@@ -342,7 +360,7 @@ const setPCore = (args: any) => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsCardGallery>;
@@ -395,7 +413,7 @@ export const Default: Story = {
           resolveConfigProps: () => {
             /* nothing */
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsCardGallery {...props} />;

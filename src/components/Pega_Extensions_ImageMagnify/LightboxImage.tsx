@@ -22,16 +22,20 @@ const LightboxImage = (props: PegaExtensionsImageMagnifyProps) => {
   const [subType, setSubType] = useState('');
 
   useEffect(() => {
-    fetch(value)
+    const abortController = new AbortController();
+    fetch(value, { signal: abortController.signal })
       .then((response) => {
         if (response.ok) {
           const contentType = response?.headers?.get('content-type') || '';
           setSubType(contentType?.split('/')[1]);
         }
       })
-      .catch(() => {
-        setSubType('');
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          setSubType('');
+        }
       });
+    return () => abortController.abort();
   }, [value]);
 
   const onClick = () => {

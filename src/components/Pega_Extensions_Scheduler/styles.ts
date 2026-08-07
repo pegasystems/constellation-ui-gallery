@@ -1,4 +1,3 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 export const StyledCardContent = styled.div(() => {
@@ -17,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const MainCard = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const MainCard = styled.div(({ theme }) => {
   return css`
     border: 0.0625rem solid ${theme.base.palette['border-line']};
   `;

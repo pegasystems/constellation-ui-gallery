@@ -9,58 +9,61 @@ interface SignatureProps extends Options {
 }
 
 const Signature = (props: SignatureProps) => {
-  const refCanvas = useRef<HTMLCanvasElement>(null);
-  const refSignaturePad = useRef<SignaturePad>();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const padRef = useRef<SignaturePad>();
   const { signaturePadRef, canvasProps, onEndStroke } = props;
   const theme = useTheme();
   const clearCanvas = () => {
-    return refSignaturePad?.current?.clear();
+    return padRef?.current?.clear();
   };
 
   const resizeCanvas = useCallback(() => {
-    if (refCanvas?.current) {
-      const canvas = refCanvas.current;
+    if (canvasRef?.current) {
+      const canvas = canvasRef.current;
       const ratio = Math.max(window.devicePixelRatio || 1, 1);
       canvas.width = canvas.offsetWidth * ratio;
       canvas.height = canvas.offsetHeight * ratio;
       canvas.getContext('2d')?.scale(ratio, ratio);
     }
-  }, [refCanvas.current]);
+  }, [canvasRef.current]);
 
   useEffect(() => {
     const initSignaturePad = () => {
       resizeCanvas();
-      return refSignaturePad?.current?.on();
+      return padRef?.current?.on();
     };
 
-    const stopSignaturePad = () => {
-      window.removeEventListener('resize', resizeCanvas);
-      clearCanvas();
-      return refSignaturePad?.current?.off();
-    };
-
-    const canvas = refCanvas?.current;
+    const canvas = canvasRef?.current;
     if (!canvas) return;
 
     const signaturePad = new SignaturePad(canvas, {
       penColor: theme.base.palette['foreground-color'],
     });
-    refSignaturePad.current = signaturePad;
+    padRef.current = signaturePad;
     if (signaturePadRef) {
       signaturePadRef.current = signaturePad;
     }
+
+    const handleEndStroke = () => {
+      onEndStroke?.();
+    };
     if (onEndStroke) {
-      signaturePad.addEventListener('endStroke', () => {
-        onEndStroke();
-      });
+      signaturePad.addEventListener('endStroke', handleEndStroke);
     }
 
     initSignaturePad();
     window.addEventListener('resize', resizeCanvas);
-    return () => stopSignaturePad();
+    return () => {
+      if (onEndStroke) {
+        signaturePad.removeEventListener('endStroke', handleEndStroke);
+      }
+      window.removeEventListener('resize', resizeCanvas);
+      clearCanvas();
+      padRef?.current?.off();
+    };
   }, []);
 
-  return <canvas ref={refCanvas} {...canvasProps} />;
+  return <canvas ref={canvasRef} {...canvasProps} />;
 };
 
 export default Signature;

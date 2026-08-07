@@ -4,7 +4,7 @@ import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
+import eslintReact from '@eslint-react/eslint-plugin';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 
 export default [
@@ -21,11 +21,6 @@ export default [
   pluginJs.configs.recommended,
   {
     files: ['**/*.{js,ts,jsx,tsx}'],
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
@@ -36,13 +31,12 @@ export default [
   },
   { languageOptions: { globals: globals.browser } },
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  eslintReact.configs['recommended-typescript'],
   {
     plugins: {
       'react-hooks': pluginReactHooks,
     },
     rules: {
-      'react/react-in-jsx-scope': 'off',
       ...pluginReactHooks.configs.recommended.rules,
     },
     ignores: ['*.test.tsx'],
@@ -75,6 +69,11 @@ export default [
       // Temporarily disable new React Compiler strict rules pending refactor
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/preserve-manual-memoization': 'off',
+      // Prefer eslint-plugin-react-hooks for hooks; disable overlapping @eslint-react rules
+      '@eslint-react/rules-of-hooks': 'off',
+      '@eslint-react/exhaustive-deps': 'off',
+      '@eslint-react/set-state-in-effect': 'off',
+      '@eslint-react/set-state-in-render': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],

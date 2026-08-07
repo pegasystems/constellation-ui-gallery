@@ -64,20 +64,7 @@ Object.defineProperty(global.SVGSVGElement.prototype, 'createSVGPoint', {
   };
 };
 
-// Mocks the window.matchMedia function used in useBreakpoint hook
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+// window.matchMedia is polyfilled in jest.polyfills.ts (needed before cosmos loads)
 
 // Mock Web Animations API
 Object.defineProperty(Element.prototype, 'animate', {

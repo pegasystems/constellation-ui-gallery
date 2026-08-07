@@ -20,6 +20,7 @@ import {
 import StyledEventWrapper from './styles';
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 registerIcon(plusIcon);
 
@@ -39,7 +40,7 @@ type CalendarProps = {
   defaultViewMode: 'Monthly' | 'Weekly' | 'Daily';
   nowIndicator: boolean;
   weekendIndicator: boolean;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 type Event = {
@@ -83,25 +84,28 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   } = props;
 
   // Use the given property names, or default to 'SessionDate', 'StartTime', and 'EndTime'
-  const dateProperty = rawDateProperty?.trim() || 'SessionDate';
-  const startTimeProperty = rawStartTimeProperty?.trim() || 'StartTime';
-  const endTimeProperty = rawEndTimeProperty?.trim() || 'EndTime';
+  const dateProperty = getMappedKey(rawDateProperty?.trim() || 'SessionDate');
+  const startTimeProperty = getMappedKey(rawStartTimeProperty?.trim() || 'StartTime');
+  const endTimeProperty = getMappedKey(rawEndTimeProperty?.trim() || 'EndTime');
 
   const [events, setEvents] = useState<Array<Event>>([]);
   const calendarRef = useRef(null);
   const theme = useTheme();
-  let dateInfo: DateInfo = { view: { type: VIEW_TYPE.MONTH } };
-  const dateInfoStr = localStorage.getItem('fullcalendar');
-  if (dateInfoStr) {
-    dateInfo = JSON.parse(dateInfoStr);
-    if (dateInfo.view.type === VIEW_TYPE.MONTH && dateInfo.end && dateInfo.start) {
-      /* If showing month - find the date in the middle to get the month */
-      const endDate = new Date(dateInfo.end).valueOf();
-      const startDate = new Date(dateInfo.start).valueOf();
-      const middle = new Date(endDate - (endDate - startDate) / 2);
-      dateInfo.startStr = `${middle.toISOString().substring(0, 7)}-01`;
+  const [dateInfo] = useState<DateInfo>(() => {
+    let info: DateInfo = { view: { type: VIEW_TYPE.MONTH } };
+    const dateInfoStr = localStorage.getItem('fullcalendar');
+    if (dateInfoStr) {
+      info = JSON.parse(dateInfoStr);
+      if (info.view.type === VIEW_TYPE.MONTH && info.end && info.start) {
+        /* If showing month - find the date in the middle to get the month */
+        const endDate = new Date(info.end).valueOf();
+        const startDate = new Date(info.start).valueOf();
+        const middle = new Date(endDate - (endDate - startDate) / 2);
+        info.startStr = `${middle.toISOString().substring(0, 7)}-01`;
+      }
     }
-  }
+    return info;
+  });
 
   const getDefaultView = () => {
     if (dateInfo?.view?.type) {
@@ -140,10 +144,14 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
       isdayGrid = false;
     }
     const eventDateStr = `${obj[startTimeProperty].substring(0, 5)} - ${obj[endTimeProperty].substring(0, 5)}`;
-    const linkURL = (window as any).PCore.getSemanticUrlUtils().getResolvedSemanticURL(
-      (window as any).PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
-      { caseClassName: obj.pxObjClass },
-      { workID: obj.pyID },
+    const pyID = getMappedKey('pyID');
+    const pxObjClass = getMappedKey('pxObjClass');
+    const pzInsKey = getMappedKey('pzInsKey');
+    const pyStatusWork = getMappedKey('pyStatusWork');
+    const linkURL = PCore.getSemanticUrlUtils().getResolvedSemanticURL(
+      PCore.getSemanticUrlUtils().getActions().ACTION_OPENWORKBYHANDLE,
+      { caseClassName: obj[pxObjClass] },
+      { workID: obj[pyID] },
     );
     const linkEl = (
       <Link
@@ -161,18 +169,18 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
         }
         onPreview={() => {
           getPConnect().getActionsApi().showCasePreview(encodeURI(eventInfo.event.id), {
-            caseClassName: obj.pxObjClass,
+            caseClassName: obj[pxObjClass],
           });
         }}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           /* for links - need to set onClick for spa to avoid full reload - (cmd | ctrl) + click for opening in new tab */
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
-            getPConnect().getActionsApi().openWorkByHandle(obj.pzInsKey, obj.pxObjClass);
+            getPConnect().getActionsApi().openWorkByHandle(obj[pzInsKey], obj[pxObjClass]);
           }
         }}
       >
-        {isdayGrid ? obj.pyID : `${eventInfo.event.title} - ${eventDateStr}`}
+        {isdayGrid ? obj[pyID] : `${eventInfo.event.title} - ${eventDateStr}`}
       </Link>
     );
     if (!isdayGrid) {
@@ -200,7 +208,7 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
             {
               id: 'status',
               name: 'Status',
-              value: <Status variant='success'>{obj.pyStatusWork}</Status>,
+              value: <Status variant='success'>{obj[pyStatusWork]}</Status>,
             },
           ]}
         />
@@ -209,8 +217,11 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   };
 
   const loadEvents = () => {
-    (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, {})
+    const pzInsKey = getMappedKey('pzInsKey');
+    const pyLabel = getMappedKey('pyLabel');
+
+    PCore.getDataApiUtils()
+      .getData(getMappedKey(dataPage), {})
       .then((response: any) => {
         if (response.data.data !== null) {
           const tmpevents: Array<Event> = [];
@@ -220,8 +231,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
             const endTime = item[endTimeProperty];
             if (sessionDate && startTime && endTime) {
               tmpevents.push({
-                id: item.pzInsKey,
-                title: item.pyLabel,
+                id: item[pzInsKey],
+                title: item[pyLabel],
                 start: new Date(`${sessionDate}T${startTime}`),
                 end: new Date(`${sessionDate}T${endTime}`),
                 item,
@@ -234,8 +245,10 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
   };
 
   const handleEventClick = (eventClickInfo: EventClickArg) => {
+    const pzInsKey = getMappedKey('pzInsKey');
+    const pxObjClass = getMappedKey('pxObjClass');
     const eventDetails = eventClickInfo.event.extendedProps;
-    getPConnect().getActionsApi().openWorkByHandle(eventDetails.item.pzInsKey, eventDetails.item.pxObjClass);
+    getPConnect().getActionsApi().openWorkByHandle(eventDetails.item[pzInsKey], eventDetails.item[pxObjClass]);
   };
 
   const handleDateChange = (objInfo: any) => {
@@ -244,8 +257,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadEvents();
@@ -253,8 +266,8 @@ export const PegaExtensionsCalendar = (props: CalendarProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };

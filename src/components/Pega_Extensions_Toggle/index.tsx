@@ -3,7 +3,7 @@ import { withConfiguration, Switch, Text, FormField } from '@pega/cosmos-react-c
 import '../shared/create-nonce';
 
 export type ToggleProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   caption: string;
   value?: boolean;
@@ -56,7 +56,7 @@ export const PegaExtensionsToggle = (props: ToggleProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -93,17 +93,17 @@ export const PegaExtensionsToggle = (props: ToggleProps) => {
     setInputValue(checked);
     if (value !== checked) {
       actions.updateFieldValue(propName, checked);
-      hasValueChange.current = true;
+      hasValueChangeRef.current = true;
     }
   };
 
   const handleBlur = (e: ChangeEvent<HTMLInputElement>) => {
-    if ((!value || hasValueChange.current) && !readOnly) {
+    if ((!value || hasValueChangeRef.current) && !readOnly) {
       actions.triggerFieldChange(propName, e.currentTarget.checked);
       if (hasSuggestions) {
         pConn.ignoreSuggestion();
       }
-      hasValueChange.current = false;
+      hasValueChangeRef.current = false;
     }
   };
 

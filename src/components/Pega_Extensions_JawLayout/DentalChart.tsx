@@ -18,7 +18,7 @@ export type DentalChartProps = {
   updateToothStatus: (index: number, newStatus: string) => void;
   readOnly?: boolean;
   heading?: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 //Helper function to calculate tooth position on a curve
@@ -36,7 +36,7 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
   const mandibularLower = ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'];
 
   // Create refs array for all tooth buttons
-  const toothRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const toothRef = useRef<(HTMLButtonElement | null)[]>([]);
   const totalTeeth = maxillaryUpper.length + maxillaryLower.length + mandibularUpper.length + mandibularLower.length;
 
   const handleStatusChange = (index: number, newStatus: string) => {
@@ -73,9 +73,9 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
         return;
     }
 
-    if (targetIndex >= 0 && targetIndex < totalTeeth && toothRefs.current[targetIndex]) {
+    if (targetIndex >= 0 && targetIndex < totalTeeth && toothRef.current[targetIndex]) {
       event.preventDefault();
-      toothRefs.current[targetIndex]?.focus();
+      toothRef.current[targetIndex]?.focus();
     }
   };
 
@@ -159,7 +159,7 @@ const DentalChart = ({ statusCodes, updateToothStatus, readOnly = false, heading
       <ToothContainer key={`tooth-${globalIndex}`} top={position.y} left={position.x}>
         <ToothButton
           ref={(el: HTMLButtonElement | null) => {
-            toothRefs.current[globalIndex] = el;
+            toothRef.current[globalIndex] = el;
           }}
           className='tooth-button'
           variant='simple'

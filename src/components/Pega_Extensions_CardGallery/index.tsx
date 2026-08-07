@@ -16,6 +16,7 @@ import { Task } from './Task';
 import { loadDetails, getFilters } from './utils';
 import { MainCard } from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 import * as plusIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/plus.icon';
 import * as pencilIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/pencil.icon';
@@ -31,7 +32,7 @@ type CardGalleryProps = {
   minWidth?: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
@@ -48,7 +49,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
     getPConnect,
   } = props;
   const [tasks, setTasks] = useState<any>();
-  const filters = useRef<any>({});
+  const filtersRef = useRef<any>({});
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -56,7 +57,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   const editTask = (id: string) => {
     getPConnect()
       .getActionsApi()
-      .openLocalAction('pyUpdateCaseDetails', {
+      .openLocalAction(PCore.getNameSpaceUtils().getDefaultQualifiedName('pyUpdateCaseDetails'), {
         caseID: id,
         containerName: 'modal',
         actionTitle: getPConnect().getLocalizedValue('Edit task'),
@@ -86,23 +87,23 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
     let payload = {};
     setErrorMsg('');
     if (useInDashboard) {
-      const filterExpr = getFilters(filters.current);
+      const filterExpr = getFilters(filtersRef.current);
       payload = {
         dataViewParameters: {},
         query: {
           ...(filterExpr ? { filter: filterExpr } : null),
           select: [
-            { field: 'pyID' },
-            { field: 'pyLabel' },
-            { field: 'pyStatusWork' },
-            { field: 'pzInsKey' },
-            { field: 'pxObjClass' },
+            { field: getMappedKey('pyID') },
+            { field: getMappedKey('pyLabel') },
+            { field: getMappedKey('pyStatusWork') },
+            { field: getMappedKey('pzInsKey') },
+            { field: getMappedKey('pxObjClass') },
           ],
         },
       };
     }
-    (window as any).PCore.getDataApiUtils()
-      .getData(dataPage, payload)
+    PCore.getDataApiUtils()
+      .getData(PCore.getNameSpaceUtils().getDefaultQualifiedName(dataPage), payload)
       .then(async (response: any) => {
         if (!isFiltered) {
           /* First time - no data loaded */
@@ -110,11 +111,11 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             const tmpTasks: any = [];
             response.data.data.forEach((item: any) => {
               tmpTasks.push({
-                id: item.pyID,
-                title: item.pyLabel,
-                status: item.pyStatusWork,
-                classname: item.pxObjClass,
-                insKey: item.pzInsKey,
+                id: item[getMappedKey('pyID')],
+                title: item[getMappedKey('pyLabel')],
+                status: item[getMappedKey('pyStatusWork')],
+                classname: item[getMappedKey('pxObjClass')],
+                insKey: item[getMappedKey('pzInsKey')],
                 isVisible: true,
                 getDetails,
                 editTask,
@@ -149,7 +150,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
             prevTasks?.forEach((tmpTask: any) => {
               let isVisible = false;
               response?.data?.data?.forEach((item: any) => {
-                if (item.pyID === tmpTask.id) {
+                if (item[getMappedKey('pyID')] === tmpTask.id) {
                   isVisible = true;
                   tmpIsEmpty = false;
                 }
@@ -173,8 +174,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
 
   /* Subscribe to changes to the assignment case */
   useEffect(() => {
-    (window as any).PCore.getPubSubUtils().subscribe(
-      (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+    PCore.getPubSubUtils().subscribe(
+      PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
       () => {
         /* If an assignment is updated - force a reload of the events */
         loadTasks(false);
@@ -182,8 +183,8 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       'ASSIGNMENT_SUBMISSION',
     );
     return () => {
-      (window as any).PCore.getPubSubUtils().unsubscribe(
-        (window as any).PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
+      PCore.getPubSubUtils().unsubscribe(
+        PCore.getEvents().getCaseEvent().ASSIGNMENT_SUBMISSION,
         'ASSIGNMENT_SUBMISSION',
       );
     };
@@ -192,14 +193,14 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
   /* Subscribe to dashboard filter changes only if useInDashboard is true */
   useEffect(() => {
     if (useInDashboard) {
-      (window as any).PCore.getPubSubUtils().subscribe(
-        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+      PCore.getPubSubUtils().subscribe(
+        PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
         (data: any) => {
           const { filterId, filterExpression } = data;
           if (filterExpression) {
-            filters.current[filterId] = filterExpression;
+            filtersRef.current[filterId] = filterExpression;
           } else {
-            delete filters.current[filterId];
+            delete filtersRef.current[filterId];
           }
           loadTasks(true);
         },
@@ -207,10 +208,10 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         false,
         getPConnect().getContextName(),
       );
-      (window as any).PCore.getPubSubUtils().subscribe(
-        (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+      PCore.getPubSubUtils().subscribe(
+        PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
         () => {
-          filters.current = {};
+          filtersRef.current = {};
           loadTasks(true);
         },
         'dashboard-component-cardgallery',
@@ -218,13 +219,13 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
         getPConnect().getContextName(),
       );
       return () => {
-        (window as any).PCore.getPubSubUtils().unsubscribe(
-          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
+        PCore.getPubSubUtils().unsubscribe(
+          PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CHANGE,
           'dashboard-component-cardgallery',
           getPConnect().getContextName(),
         );
-        (window as any).PCore.getPubSubUtils().unsubscribe(
-          (window as any).PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
+        PCore.getPubSubUtils().unsubscribe(
+          PCore.getConstants().PUB_SUB_EVENTS.EVENT_DASHBOARD_FILTER_CLEAR_ALL,
           'dashboard-component-cardgallery',
           getPConnect().getContextName(),
         );
@@ -248,7 +249,7 @@ export const PegaExtensionsCardGallery = (props: CardGalleryProps) => {
       return genState(
         <Progress
           placement='block'
-          message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+          message={PCore.getLocaleUtils().getLocaleValue(
             'Loading content...',
             'Generic',
             '@BASECLASS!GENERIC!PYGENERICFIELDS',

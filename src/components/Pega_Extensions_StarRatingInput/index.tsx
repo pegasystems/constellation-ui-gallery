@@ -46,7 +46,7 @@ type StarRatingInputProps = {
   /** display mode */
   displayMode?: 'DISPLAY_ONLY' | '';
 
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 // props passed in combination of props from property panel (config.json) and run time props from Constellation

@@ -13,19 +13,19 @@ export type TaskProps = {
   details?: any;
   getDetails: any;
   editTask: any;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const Task = (props: TaskProps) => {
   const { index, insKey, classname, id, title, groupValue, details, getDetails, editTask, getPConnect } = props;
-  const [newdetails, setDetails] = useState<any>(details);
+  const [newDetails, setNewDetails] = useState<any>(details);
   const theme = useTheme();
   const onEdit = () => {
     editTask(insKey);
   };
 
   const addDetails = async () => {
-    setDetails(await getDetails(id, classname));
+    setNewDetails(await getDetails(id, classname));
   };
 
   useEffect(() => {
@@ -41,10 +41,10 @@ export const Task = (props: TaskProps) => {
             <Text variant='h3'>{title}</Text>
           </CardHeader>
           <CardContent>
-            {newdetails || (
+            {newDetails || (
               <Progress
                 placement='inline'
-                message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                message={PCore.getLocaleUtils().getLocaleValue(
                   'Loading content...',
                   'Generic',
                   '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -77,10 +77,10 @@ export const Task = (props: TaskProps) => {
               <Text variant='h3'>{title}</Text>
             </CardHeader>
             <CardContent>
-              {newdetails || (
+              {newDetails || (
                 <Progress
                   placement='inline'
-                  message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+                  message={PCore.getLocaleUtils().getLocaleValue(
                     'Loading content...',
                     'Generic',
                     '@BASECLASS!GENERIC!PYGENERICFIELDS',

@@ -20,7 +20,7 @@ import getAllFields from './utils';
 registerIcon(plusIcon, trashIcon);
 
 export type TableLayoutProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
@@ -43,11 +43,11 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
           context: getPConnect().getContextName(),
           pageReference: 'caseInfo.content',
           referenceList: `.${embedDataRef}`,
-          viewName: getPConnect().options.viewName,
+          viewName: getPConnect().viewName,
         },
       };
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
-      c11nEnv.index = prevCount;
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
+      (c11nEnv as any).index = prevCount;
       c11nEnv.getPConnect().getListActions().insert({}, prevCount);
 
       return prevCount + 1;
@@ -70,10 +70,10 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
           context: getPConnect().getContextName(),
           pageReference: 'caseInfo.content',
           referenceList: `.${embedDataRef}`,
-          viewName: getPConnect().options.viewName,
+          viewName: getPConnect().viewName,
         },
       };
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
 
       c11nEnv.getPConnect().getListActions().deleteEntry(index);
 
@@ -107,10 +107,10 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
         hasForm: true,
         pageReference: `caseInfo.content.${embedDataRef}[${index}]`,
         referenceList: `.${embedDataRef}`,
-        viewName: getPConnect().options.viewName,
+        viewName: getPConnect().viewName,
       },
     };
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+    const c11nEnv = PCore.createPConnect(messageConfig as any);
 
     return <td key={key}>{c11nEnv.getPConnect().createComponent(fieldInput)}</td>;
   };
@@ -121,21 +121,19 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
       setEmbedDataRef(tmpFields[0].pageref);
 
       /* New API added in 24.2 - not needed for 24.1 */
-      (window as any).PCore.getContextTreeManager().addPageListNode(
+      PCore.getContextTreeManager().addPageListNode(
         getPConnect().getContextName(),
         'caseInfo.content',
-        getPConnect().meta.name,
+        getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
         tmpFields[0].pageref,
+        {},
       );
 
       setNumRows(tmpFields[0].value.length);
       /* This logic will load the DX Component if it is not already loaded */
       tmpFields.forEach((child: any) => {
-        if (
-          child.componentType &&
-          !(window as any).PCore.getComponentsRegistry().getLazyComponent(child.componentType)
-        ) {
-          (window as any).PCore.getAssetLoader()
+        if (child.componentType && !PCore.getComponentsRegistry().getLazyComponent(child.componentType)) {
+          PCore.getAssetLoader()
             .getLoader('component-loader')([child.componentType])
             .then(() => {
               setNumFields((prevCount) => prevCount + 1);
@@ -160,7 +158,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -180,9 +178,9 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
               </caption>
               <thead>
                 <tr>
-                  {fields.map((field: any, idx: number) => {
+                  {fields.map((field: any) => {
                     return (
-                      <th scope='col' key={`${tableId}-head-${idx}`} id={`${tableId}-head-${idx}`}>
+                      <th scope='col' key={`${tableId}-head-${field.label}`} id={`${tableId}-head-${field.label}`}>
                         {field.label}
                       </th>
                     );
@@ -193,6 +191,7 @@ export const PegaExtensionsEditableTableLayout = (props: TableLayoutProps) => {
               <tbody>
                 {Array.from({ length: numRows }, (_, i) => i).map((_, i) => {
                   return (
+                    // eslint-disable-next-line @eslint-react/no-array-index-key -- rows are index-stable positional slots
                     <tr key={`reg-row-${i}`}>
                       {fields.map((field: any, j: number) => {
                         return genField(field, i, `${tableId}-row-${i}-${j}`);

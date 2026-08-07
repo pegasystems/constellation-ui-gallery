@@ -13,12 +13,13 @@ import {
 import { Container, StyledAddTask } from './styles';
 import TaskElement from './Task';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 // Interface for props
 export type PegaExtensionsTaskListProps = {
   heading: string;
   dataPage: string;
-  getPConnect: () => any;
+  getPConnect: () => typeof PConnect;
 };
 // Task type definition
 export interface Task {
@@ -66,12 +67,12 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
     setIsLoading(true);
     try {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ pyID: CaseInstanceKey }],
+        dataViewParameters: { [getMappedKey('pyID')]: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+      PCore.getDataApiUtils()
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             setIsLoading(false);
@@ -96,7 +97,7 @@ export const PegaExtensionsTaskList = (props: PegaExtensionsTaskListProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',

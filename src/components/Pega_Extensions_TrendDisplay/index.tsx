@@ -117,7 +117,7 @@ export const PegaExtensionsTrendDisplay = (props: TrendDisplayProps) => {
         content: fieldAdditionalInfo,
       }
     : undefined;
-  const [id] = useState(createUID());
+  const [id] = useState(() => createUID());
   const theme = useTheme();
 
   const noOfFractionDigits = currencyDecimalPrecision === 'auto' ? undefined : parseInt(currencyDecimalPrecision, 10);

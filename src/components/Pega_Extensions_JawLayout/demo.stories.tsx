@@ -118,23 +118,24 @@ export const Default: Story = {
     };
 
     // Setup mock PCore
-    if (!(window as any).PCore) {
-      (window as any).PCore = {
+    if (!window.PCore) {
+      window.PCore = {
         getLocaleUtils: () => ({
           getLocaleValue: (val: string) => val,
         }),
         getContextTreeManager: () => ({ addPageListNode: () => {} }),
         createPConnect: () => ({
-          getPConnect: () => ({
-            getActionsApi: () => ({
-              updateFieldValue: (prop: string, value: string) => {
-                console.log(`MOCK BACKEND: updateFieldValue called for ${prop} with value ${value}`);
-              },
-            }),
-          }),
+          getPConnect: () =>
+            ({
+              getActionsApi: () => ({
+                updateFieldValue: (prop: string, value: string) => {
+                  console.log(`MOCK BACKEND: updateFieldValue called for ${prop} with value ${value}`);
+                },
+              }),
+            }) as unknown as typeof PConnect,
         }),
         getComponentsRegistry: () => ({ getLazyComponent: (f: string) => f }),
-      };
+      } as unknown as typeof PCore;
     }
 
     const mockProps = genResponse();
@@ -143,6 +144,8 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          viewName: '',
+          getComponentName: () => '',
           getLocalizedValue: (key: string) => {
             return (localizations.fields as any)[key] || key;
           },
@@ -152,7 +155,7 @@ export const Default: Story = {
           getRawMetadata: () => mockProps,
           getInheritedProps: () => mockProps.config.inheritedProps,
           resolveConfigProps: (rawConfig: any) => ({ ...rawConfig }),
-        };
+        } as unknown as typeof PConnect;
       },
     };
 

@@ -41,7 +41,7 @@ export default {
 };
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getComponentsRegistry: () => {
       return {
         getLazyComponent: (f: string) => f,
@@ -52,7 +52,7 @@ const setPCore = () => {
         getTimeZone: () => 'local',
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const setPConnect = () => {
@@ -75,18 +75,18 @@ const setPConnect = () => {
     ignoreSuggestion: () => {
       /* nothing */
     },
-  };
+  } as unknown as typeof PConnect;
 };
 
 type Story = StoryObj<typeof PegaExtensionsToggle>;
 
-const ToggleDemo = (inputs: ToggleProps) => {
+const ToggleDemo = (inputs: Omit<ToggleProps, 'getPConnect'>) => {
   return {
-    render: (args: ToggleProps) => {
+    render: (args: Omit<ToggleProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
-        getPConnect: setPConnect,
+        getPConnect: setPConnect as () => typeof PConnect,
       };
       return <PegaExtensionsToggle {...props} />;
     },

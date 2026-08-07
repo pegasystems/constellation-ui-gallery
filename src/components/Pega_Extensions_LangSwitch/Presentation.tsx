@@ -194,6 +194,7 @@ export function LanguageSection() {
     languages.length > 0 ? (
       <Select
         aria-label={localize(DEFAULT_SELECT_LABEL)}
+        autoComplete='language'
         value={selectedLocale}
         onChange={handleLocaleChange}
         disabled={isSwitching}
@@ -304,6 +305,7 @@ export function TimezoneSection() {
           <StyledTimezonePicker>
             <ComboBox
               aria-label={localize(DEFAULT_TIMEZONE_SELECT_LABEL)}
+              autoComplete='off'
               selected={{
                 items: selectedTimezone
                   ? {

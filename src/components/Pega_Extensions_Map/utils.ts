@@ -158,7 +158,12 @@ export const renderShapes = (ptLayer: GraphicsLayer, view: MapView, selectionPro
   }
 };
 
-export const deletePoints = (getPConnect: any, props: any, embedDataRef: string, numPoints: number) => {
+export const deletePoints = (
+  getPConnect: () => typeof PConnect,
+  props: any,
+  embedDataRef: string,
+  numPoints: number,
+) => {
   const messageConfig = {
     meta: props,
     options: {
@@ -167,7 +172,7 @@ export const deletePoints = (getPConnect: any, props: any, embedDataRef: string,
       target: getPConnect().getTarget(),
     },
   };
-  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+  const c11nEnv = PCore.createPConnect(messageConfig);
   for (let index = numPoints; index > 0; index -= 1) {
     c11nEnv
       .getPConnect()
@@ -177,7 +182,7 @@ export const deletePoints = (getPConnect: any, props: any, embedDataRef: string,
 };
 
 export const addPoint = (
-  getPConnect: any,
+  getPConnect: () => typeof PConnect,
   props: any,
   embedDataRef: string,
   longitudePropRef: string,
@@ -194,14 +199,14 @@ export const addPoint = (
       target: getPConnect().getTarget(),
     },
   };
-  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+  const c11nEnv = PCore.createPConnect(messageConfig);
   const actionsApi = c11nEnv.getPConnect().getActionsApi();
   const ll = webMercatorUtils.xyToLngLat(x[0], x[1]);
   actionsApi?.updateFieldValue(longitudePropRef, ll[0]);
   actionsApi?.updateFieldValue(latitudePropRef, ll[1]);
 };
 
-export const addScreenShot = (getPConnect: any, view: MapView, imageMapRef: string) => {
+export const addScreenShot = (getPConnect: () => typeof PConnect, view: MapView, imageMapRef: string) => {
   if (imageMapRef) {
     view
       .takeScreenshot({

@@ -6,7 +6,7 @@ import { StyledButtonsWrapper, StyledSignatureContent, StyledSignatureReadOnlyCo
 import '../shared/create-nonce';
 
 type SignatureCaptureProps = {
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   value: string;
   helperText?: string;

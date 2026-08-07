@@ -76,7 +76,7 @@ const setPCore = (Example: string) => {
       break;
   }
 
-  (window as any).PCore = {
+  window.PCore = {
     getLocaleUtils: () => {
       return {
         getLocaleValue: (val: string) => {
@@ -88,287 +88,288 @@ const setPCore = (Example: string) => {
       // Store messageConfig in closure for access in createComponent
       const storedMessageConfig = messageConfig;
       return {
-        getPConnect: () => ({
-          createComponent: (meta: any) => {
-            const id = meta.config.pyID;
+        getPConnect: () =>
+          ({
+            createComponent: (meta: any) => {
+              const id = meta.config.pyID;
 
-            // Try to retrieve node data from transient data store
-            let nodeData: any = null;
+              // Try to retrieve node data from transient data store
+              let nodeData: any = null;
 
-            // First try: get from contextName if available in meta.options
-            const contextName = meta.options?.contextName || meta.options?.context;
-            if (contextName && transientDataStore.has(contextName)) {
-              const transientItem = transientDataStore.get(contextName);
-              nodeData = transientItem?.data?.content || null;
-            }
-
-            // Second try: if we have stored messageConfig, try to get contextName from there
-            if (!nodeData && storedMessageConfig?.options?.contextName) {
-              const msgContextName = storedMessageConfig.options.contextName;
-              if (transientDataStore.has(msgContextName)) {
-                const transientItem = transientDataStore.get(msgContextName);
+              // First try: get from contextName if available in meta.options
+              const contextName = meta.options?.contextName || meta.options?.context;
+              if (contextName && transientDataStore.has(contextName)) {
+                const transientItem = transientDataStore.get(contextName);
                 nodeData = transientItem?.data?.content || null;
               }
-            }
 
-            // Third try: lookup by ID directly from nodeDataStore
-            if (!nodeData && id && nodeDataStore.has(id)) {
-              nodeData = nodeDataStore.get(id);
-            }
-
-            // Fourth try: search all transient items for matching ID
-            if (!nodeData && id) {
-              for (const [, value] of transientDataStore.entries()) {
-                const itemData = value?.data?.content;
-                if (itemData && (itemData.ID === id || itemData.ProductOffer?.ID === id)) {
-                  nodeData = itemData;
-                  break;
+              // Second try: if we have stored messageConfig, try to get contextName from there
+              if (!nodeData && storedMessageConfig?.options?.contextName) {
+                const msgContextName = storedMessageConfig.options.contextName;
+                if (transientDataStore.has(msgContextName)) {
+                  const transientItem = transientDataStore.get(msgContextName);
+                  nodeData = transientItem?.data?.content || null;
                 }
               }
-            }
 
-            // Build highlighted data - show Name and ID
-            const highlightedData = [];
-            if (nodeData?.Name) {
-              highlightedData.push(<FieldValueItem key='Name' variant='stacked' name='Name' value={nodeData.Name} />);
-            }
-            if (id) {
-              highlightedData.push(<FieldValueItem key='ID' variant='stacked' name='ID' value={id} />);
-            }
+              // Third try: lookup by ID directly from nodeDataStore
+              if (!nodeData && id && nodeDataStore.has(id)) {
+                nodeData = nodeDataStore.get(id);
+              }
 
-            // Build details items from node data if available
-            const detailsItems = [];
-            if (nodeData) {
-              // For product nodes
-              if (nodeData.Type === 'product' && nodeData.ProductOffer) {
-                if (nodeData.ProductOffer.description) {
-                  detailsItems.push({
-                    id: 'Description',
-                    name: 'Description',
-                    value: nodeData.ProductOffer.description,
-                  });
-                } else if (nodeData.ProductOffer.name) {
-                  detailsItems.push({
-                    id: 'Description',
-                    name: 'Description',
-                    value: nodeData.ProductOffer.name,
-                  });
-                }
-                if (nodeData.ProductOffer.status) {
-                  detailsItems.push({
-                    id: 'Status',
-                    name: 'Status',
-                    value: nodeData.ProductOffer.status,
-                  });
-                }
-                if (nodeData.ProductOffer.ProductType) {
-                  detailsItems.push({
-                    id: 'Product Type',
-                    name: 'Product Type',
-                    value: nodeData.ProductOffer.ProductType,
-                  });
-                }
-                if (nodeData.ProductOffer.quantity) {
-                  detailsItems.push({
-                    id: 'Quantity',
-                    name: 'Quantity',
-                    value: String(nodeData.ProductOffer.quantity),
-                  });
-                }
-                if (nodeData.ProductOffer.TotalPOMRC) {
-                  detailsItems.push({
-                    id: 'Total MRC',
-                    name: 'Total MRC',
-                    value: String(nodeData.ProductOffer.TotalPOMRC),
-                  });
-                }
-                if (nodeData.ProductOffer.TotalPONRC) {
-                  detailsItems.push({
-                    id: 'Total NRC',
-                    name: 'Total NRC',
-                    value: String(nodeData.ProductOffer.TotalPONRC),
-                  });
-                }
-                if (nodeData.ProductOffer.TotalPOPrice) {
-                  detailsItems.push({
-                    id: 'Total Price',
-                    name: 'Total Price',
-                    value: String(nodeData.ProductOffer.TotalPOPrice),
-                  });
-                }
-                if (nodeData.ProductOffer.Catalog?.name) {
-                  detailsItems.push({
-                    id: 'Catalog',
-                    name: 'Catalog',
-                    value: nodeData.ProductOffer.Catalog.name,
-                  });
+              // Fourth try: search all transient items for matching ID
+              if (!nodeData && id) {
+                for (const [, value] of transientDataStore.entries()) {
+                  const itemData = value?.data?.content;
+                  if (itemData && (itemData.ID === id || itemData.ProductOffer?.ID === id)) {
+                    nodeData = itemData;
+                    break;
+                  }
                 }
               }
-              // For site nodes
-              else if (nodeData.Type === 'site' && nodeData.Site) {
-                if (nodeData.Site.FullAddress) {
-                  detailsItems.push({
-                    id: 'Address',
-                    name: 'Address',
-                    value: nodeData.Site.FullAddress,
-                  });
-                }
-                if (nodeData.Site.City) {
-                  detailsItems.push({
-                    id: 'City',
-                    name: 'City',
-                    value: nodeData.Site.City,
-                  });
-                }
-                if (nodeData.Site.stateOrProvince) {
-                  detailsItems.push({
-                    id: 'State',
-                    name: 'State',
-                    value: nodeData.Site.stateOrProvince,
-                  });
-                }
-                if (nodeData.Site.postcode) {
-                  detailsItems.push({
-                    id: 'Postcode',
-                    name: 'Postcode',
-                    value: nodeData.Site.postcode,
-                  });
-                }
-                if (nodeData.Site.ConnectivityStatusValue) {
-                  detailsItems.push({
-                    id: 'Connectivity Status',
-                    name: 'Connectivity Status',
-                    value: nodeData.Site.ConnectivityStatusValue,
-                  });
-                }
-                if (nodeData.Site.CustomerID) {
-                  detailsItems.push({
-                    id: 'Customer ID',
-                    name: 'Customer ID',
-                    value: nodeData.Site.CustomerID,
-                  });
-                }
-                if (nodeData.TotalSiteMRC) {
-                  detailsItems.push({
-                    id: 'Total Site MRC',
-                    name: 'Total Site MRC',
-                    value: String(nodeData.TotalSiteMRC),
-                  });
-                }
-                if (nodeData.TotalSiteNRC) {
-                  detailsItems.push({
-                    id: 'Total Site NRC',
-                    name: 'Total Site NRC',
-                    value: String(nodeData.TotalSiteNRC),
-                  });
-                }
-              }
-              // For child spec nodes (have SpecCategory, SpecID, SpecName)
-              if (nodeData.SpecCategory || nodeData.SpecID || nodeData.SpecName) {
-                if (nodeData.SpecName) {
-                  detailsItems.push({
-                    id: 'Spec Name',
-                    name: 'Spec Name',
-                    value: nodeData.SpecName,
-                  });
-                }
-                if (nodeData.SpecID) {
-                  detailsItems.push({
-                    id: 'Spec ID',
-                    name: 'Spec ID',
-                    value: nodeData.SpecID,
-                  });
-                }
-                if (nodeData.SpecCategory) {
-                  detailsItems.push({
-                    id: 'Spec Category',
-                    name: 'Spec Category',
-                    value: nodeData.SpecCategory,
-                  });
-                }
-                if (nodeData.Version) {
-                  detailsItems.push({
-                    id: 'Version',
-                    name: 'Version',
-                    value: String(nodeData.Version),
-                  });
-                }
-                if (nodeData.quantity) {
-                  detailsItems.push({
-                    id: 'Quantity',
-                    name: 'Quantity',
-                    value: String(nodeData.quantity),
-                  });
-                }
-                if (nodeData.MinCardinality !== undefined) {
-                  detailsItems.push({
-                    id: 'Min Cardinality',
-                    name: 'Min Cardinality',
-                    value: String(nodeData.MinCardinality),
-                  });
-                }
-                if (nodeData.MaxCardinality !== undefined) {
-                  detailsItems.push({
-                    id: 'Max Cardinality',
-                    name: 'Max Cardinality',
-                    value: String(nodeData.MaxCardinality),
-                  });
-                }
-              }
-              // For other node types or fallback
-              else {
-                if (nodeData.Type) {
-                  detailsItems.push({
-                    id: 'Type',
-                    name: 'Type',
-                    value: nodeData.Type,
-                  });
-                }
-                if (nodeData.ProductCount) {
-                  detailsItems.push({
-                    id: 'Product Count',
-                    name: 'Product Count',
-                    value: String(nodeData.ProductCount),
-                  });
-                }
-                if (nodeData.TotalSiteMRC) {
-                  detailsItems.push({
-                    id: 'Total Site MRC',
-                    name: 'Total Site MRC',
-                    value: String(nodeData.TotalSiteMRC),
-                  });
-                }
-                if (nodeData.TotalSiteNRC) {
-                  detailsItems.push({
-                    id: 'Total Site NRC',
-                    name: 'Total Site NRC',
-                    value: String(nodeData.TotalSiteNRC),
-                  });
-                }
-              }
-            }
 
-            // Fallback to default items if no node data available
-            if (detailsItems.length === 0) {
-              detailsItems.push({
-                id: 'Description',
-                name: 'Description',
-                value: 'No data available',
-              });
-            }
+              // Build highlighted data - show Name and ID
+              const highlightedData = [];
+              if (nodeData?.Name) {
+                highlightedData.push(<FieldValueItem key='Name' variant='stacked' name='Name' value={nodeData.Name} />);
+              }
+              if (id) {
+                highlightedData.push(<FieldValueItem key='ID' variant='stacked' name='ID' value={id} />);
+              }
 
-            return (
-              <Details
-                name='Details'
-                highlightedData={highlightedData}
-                collapsible={false}
-                columns={{
-                  a: <DetailsList items={detailsItems} />,
-                }}
-              />
-            );
-          },
-        }),
+              // Build details items from node data if available
+              const detailsItems = [];
+              if (nodeData) {
+                // For product nodes
+                if (nodeData.Type === 'product' && nodeData.ProductOffer) {
+                  if (nodeData.ProductOffer.description) {
+                    detailsItems.push({
+                      id: 'Description',
+                      name: 'Description',
+                      value: nodeData.ProductOffer.description,
+                    });
+                  } else if (nodeData.ProductOffer.name) {
+                    detailsItems.push({
+                      id: 'Description',
+                      name: 'Description',
+                      value: nodeData.ProductOffer.name,
+                    });
+                  }
+                  if (nodeData.ProductOffer.status) {
+                    detailsItems.push({
+                      id: 'Status',
+                      name: 'Status',
+                      value: nodeData.ProductOffer.status,
+                    });
+                  }
+                  if (nodeData.ProductOffer.ProductType) {
+                    detailsItems.push({
+                      id: 'Product Type',
+                      name: 'Product Type',
+                      value: nodeData.ProductOffer.ProductType,
+                    });
+                  }
+                  if (nodeData.ProductOffer.quantity) {
+                    detailsItems.push({
+                      id: 'Quantity',
+                      name: 'Quantity',
+                      value: String(nodeData.ProductOffer.quantity),
+                    });
+                  }
+                  if (nodeData.ProductOffer.TotalPOMRC) {
+                    detailsItems.push({
+                      id: 'Total MRC',
+                      name: 'Total MRC',
+                      value: String(nodeData.ProductOffer.TotalPOMRC),
+                    });
+                  }
+                  if (nodeData.ProductOffer.TotalPONRC) {
+                    detailsItems.push({
+                      id: 'Total NRC',
+                      name: 'Total NRC',
+                      value: String(nodeData.ProductOffer.TotalPONRC),
+                    });
+                  }
+                  if (nodeData.ProductOffer.TotalPOPrice) {
+                    detailsItems.push({
+                      id: 'Total Price',
+                      name: 'Total Price',
+                      value: String(nodeData.ProductOffer.TotalPOPrice),
+                    });
+                  }
+                  if (nodeData.ProductOffer.Catalog?.name) {
+                    detailsItems.push({
+                      id: 'Catalog',
+                      name: 'Catalog',
+                      value: nodeData.ProductOffer.Catalog.name,
+                    });
+                  }
+                }
+                // For site nodes
+                else if (nodeData.Type === 'site' && nodeData.Site) {
+                  if (nodeData.Site.FullAddress) {
+                    detailsItems.push({
+                      id: 'Address',
+                      name: 'Address',
+                      value: nodeData.Site.FullAddress,
+                    });
+                  }
+                  if (nodeData.Site.City) {
+                    detailsItems.push({
+                      id: 'City',
+                      name: 'City',
+                      value: nodeData.Site.City,
+                    });
+                  }
+                  if (nodeData.Site.stateOrProvince) {
+                    detailsItems.push({
+                      id: 'State',
+                      name: 'State',
+                      value: nodeData.Site.stateOrProvince,
+                    });
+                  }
+                  if (nodeData.Site.postcode) {
+                    detailsItems.push({
+                      id: 'Postcode',
+                      name: 'Postcode',
+                      value: nodeData.Site.postcode,
+                    });
+                  }
+                  if (nodeData.Site.ConnectivityStatusValue) {
+                    detailsItems.push({
+                      id: 'Connectivity Status',
+                      name: 'Connectivity Status',
+                      value: nodeData.Site.ConnectivityStatusValue,
+                    });
+                  }
+                  if (nodeData.Site.CustomerID) {
+                    detailsItems.push({
+                      id: 'Customer ID',
+                      name: 'Customer ID',
+                      value: nodeData.Site.CustomerID,
+                    });
+                  }
+                  if (nodeData.TotalSiteMRC) {
+                    detailsItems.push({
+                      id: 'Total Site MRC',
+                      name: 'Total Site MRC',
+                      value: String(nodeData.TotalSiteMRC),
+                    });
+                  }
+                  if (nodeData.TotalSiteNRC) {
+                    detailsItems.push({
+                      id: 'Total Site NRC',
+                      name: 'Total Site NRC',
+                      value: String(nodeData.TotalSiteNRC),
+                    });
+                  }
+                }
+                // For child spec nodes (have SpecCategory, SpecID, SpecName)
+                if (nodeData.SpecCategory || nodeData.SpecID || nodeData.SpecName) {
+                  if (nodeData.SpecName) {
+                    detailsItems.push({
+                      id: 'Spec Name',
+                      name: 'Spec Name',
+                      value: nodeData.SpecName,
+                    });
+                  }
+                  if (nodeData.SpecID) {
+                    detailsItems.push({
+                      id: 'Spec ID',
+                      name: 'Spec ID',
+                      value: nodeData.SpecID,
+                    });
+                  }
+                  if (nodeData.SpecCategory) {
+                    detailsItems.push({
+                      id: 'Spec Category',
+                      name: 'Spec Category',
+                      value: nodeData.SpecCategory,
+                    });
+                  }
+                  if (nodeData.Version) {
+                    detailsItems.push({
+                      id: 'Version',
+                      name: 'Version',
+                      value: String(nodeData.Version),
+                    });
+                  }
+                  if (nodeData.quantity) {
+                    detailsItems.push({
+                      id: 'Quantity',
+                      name: 'Quantity',
+                      value: String(nodeData.quantity),
+                    });
+                  }
+                  if (nodeData.MinCardinality !== undefined) {
+                    detailsItems.push({
+                      id: 'Min Cardinality',
+                      name: 'Min Cardinality',
+                      value: String(nodeData.MinCardinality),
+                    });
+                  }
+                  if (nodeData.MaxCardinality !== undefined) {
+                    detailsItems.push({
+                      id: 'Max Cardinality',
+                      name: 'Max Cardinality',
+                      value: String(nodeData.MaxCardinality),
+                    });
+                  }
+                }
+                // For other node types or fallback
+                else {
+                  if (nodeData.Type) {
+                    detailsItems.push({
+                      id: 'Type',
+                      name: 'Type',
+                      value: nodeData.Type,
+                    });
+                  }
+                  if (nodeData.ProductCount) {
+                    detailsItems.push({
+                      id: 'Product Count',
+                      name: 'Product Count',
+                      value: String(nodeData.ProductCount),
+                    });
+                  }
+                  if (nodeData.TotalSiteMRC) {
+                    detailsItems.push({
+                      id: 'Total Site MRC',
+                      name: 'Total Site MRC',
+                      value: String(nodeData.TotalSiteMRC),
+                    });
+                  }
+                  if (nodeData.TotalSiteNRC) {
+                    detailsItems.push({
+                      id: 'Total Site NRC',
+                      name: 'Total Site NRC',
+                      value: String(nodeData.TotalSiteNRC),
+                    });
+                  }
+                }
+              }
+
+              // Fallback to default items if no node data available
+              if (detailsItems.length === 0) {
+                detailsItems.push({
+                  id: 'Description',
+                  name: 'Description',
+                  value: 'No data available',
+                });
+              }
+
+              return (
+                <Details
+                  name='Details'
+                  highlightedData={highlightedData}
+                  collapsible={false}
+                  columns={{
+                    a: <DetailsList items={detailsItems} />,
+                  }}
+                />
+              );
+            },
+          }) as unknown as typeof PConnect,
       };
     },
     getComponentsRegistry: () => {
@@ -447,7 +448,7 @@ const setPCore = (Example: string) => {
         },
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 interface CPQTreePropsExt extends CPQTreeProps {
@@ -533,7 +534,7 @@ export const Default: Story = {
               },
             };
           },
-        };
+        } as unknown as typeof PConnect;
       },
     };
     return <PegaExtensionsCPQTree {...props} />;

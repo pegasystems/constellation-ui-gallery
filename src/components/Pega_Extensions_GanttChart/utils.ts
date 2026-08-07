@@ -3,6 +3,7 @@ import type { Task as GTRTask, StylingOption, ViewMode as GTRViewModeType } from
 import { ViewMode as GTRViewMode } from 'gantt-task-react';
 import type { TaskType } from 'gantt-task-react/dist/types/public-types';
 import type { DefaultTheme } from 'styled-components';
+import { getMappedKey } from '../shared/utils';
 
 export type ViewModeType = 'Hourly' | 'Daily' | 'Weekly' | 'Monthly' | 'Yearly';
 
@@ -26,7 +27,7 @@ export type GanttChartProps = {
   defaultViewMode: ViewModeType;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /** Loads data for Gantt chart from a datapage */
@@ -39,19 +40,19 @@ export const loadGanttData = async (
   endDateFieldName: string,
   progressFieldName: string,
 ) => {
-  const response = await (window as any).PCore.getDataApiUtils().getData(dataPage, {});
+  const response = await PCore.getDataApiUtils().getData(getMappedKey(dataPage), {});
   const mappedTasks: Array<Task> = [];
   if (response.data.data !== null) {
     response.data.data.forEach((item: any) => {
       const {
-        pyID: id,
-        pyLabel: name,
-        [categoryFieldName]: type,
-        [parentFieldName]: project,
-        [dependenciesFieldName]: dependencies,
-        [startDateFieldName]: start,
-        [endDateFieldName]: end,
-        [progressFieldName]: progress,
+        [getMappedKey('pyID')]: id,
+        [getMappedKey('pyLabel')]: name,
+        [getMappedKey(categoryFieldName)]: type,
+        [getMappedKey(parentFieldName)]: project,
+        [getMappedKey(dependenciesFieldName)]: dependencies,
+        [getMappedKey(startDateFieldName)]: start,
+        [getMappedKey(endDateFieldName)]: end,
+        [getMappedKey(progressFieldName)]: progress,
       } = item;
       mappedTasks.push({
         id,
@@ -145,15 +146,20 @@ type LoadDetailsProps = {
   classname: string;
   detailsDataPage: string;
   detailsViewName: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 export const loadDetails = async (props: LoadDetailsProps) => {
   const { id, classname, detailsDataPage, detailsViewName, getPConnect } = props;
   let myElem;
-  await (window as any).PCore.getDataApiUtils()
-    .getDataObjectView(detailsDataPage, detailsViewName, { pyID: id })
+  await PCore.getDataApiUtils()
+    .getDataObjectView(
+      getMappedKey(detailsDataPage),
+      detailsViewName,
+      { [getMappedKey('pyID')]: id },
+      getPConnect().getContextName(),
+    )
     .then(async (res: any) => {
-      const { fetchViewResources, updateViewResources } = (window as any).PCore.getViewResources();
+      const { fetchViewResources, updateViewResources } = PCore.getViewResources();
       await updateViewResources(res.data);
       const transientItemID = getPConnect()
         .getContainerManager()
@@ -173,9 +179,9 @@ export const loadDetails = async (props: LoadDetailsProps) => {
           pageReference: 'content',
         },
       };
-      messageConfig.meta.config.showLabel = false;
-      messageConfig.meta.config.pyID = id;
-      const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+      messageConfig.meta.config!.showLabel = false;
+      messageConfig.meta.config![getMappedKey('pyID')] = id;
+      const c11nEnv = PCore.createPConnect(messageConfig as any);
 
       myElem = c11nEnv.getPConnect().createComponent(messageConfig.meta);
     });
@@ -185,7 +191,7 @@ export const loadDetails = async (props: LoadDetailsProps) => {
 export type UpdateItemDetails = {
   item: Task;
   updatedFieldValueList: any;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /* This method will update the case groupValue automatically using the edit action
@@ -194,16 +200,9 @@ export type UpdateItemDetails = {
 */
 export const updateItemDetails = async (props: UpdateItemDetails) => {
   const { getPConnect, item, updatedFieldValueList } = props;
-  const { pzInsKey } = item.extendedProps;
+  const { [getMappedKey('pzInsKey')]: pzInsKey } = item.extendedProps;
   const context = getPConnect().getContextName();
-
-  const response = await (window as any).PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
-
+  const response = await PCore.getDataApiUtils().getCaseEditLock(pzInsKey, context);
   const payload: any = { [pzInsKey]: updatedFieldValueList };
-  return await (window as any).PCore.getDataApiUtils().updateCaseEditFieldsData(
-    pzInsKey,
-    payload,
-    response.headers.etag,
-    context,
-  );
+  return await PCore.getDataApiUtils().updateCaseEditFieldsData(pzInsKey, payload, response.headers.etag, context);
 };

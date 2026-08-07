@@ -20,7 +20,7 @@ export const OrgBuilderDndGlobalStyle = createGlobalStyle`
   }
 `;
 
-export default styled.div(({ height }: { height: string }) => ({
+export default styled.div<{ height: string }>(({ height }) => ({
   height,
   width: '100%',
 }));

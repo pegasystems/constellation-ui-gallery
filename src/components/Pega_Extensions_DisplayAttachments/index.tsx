@@ -22,6 +22,7 @@ import type { SummaryListItem, ModalMethods, ModalProps, LightboxItem, LightboxP
 import { downloadBlob, addAttachment, downloadFile } from './utils';
 import StyledCardContent from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 import * as polarisIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/polaris.icon';
 import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/information.icon';
@@ -69,7 +70,7 @@ export type UtilityListProps = {
   displayFormat?: 'list' | 'tiles';
   useLightBox?: boolean;
   enableDownloadAll?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const ViewAllModal = ({
@@ -106,7 +107,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [elemRef, setElemRef] = useState<HTMLElement>();
   const [images, setImages] = useState<LightboxProps['items'] | null>(null);
-  const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+  const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
   const viewAllModalRef = useRef<ModalMethods<any>>();
   const theme = useTheme();
   const downloadAll = () => {
@@ -130,7 +131,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
 
   const publishAttachmentsUpdated = useCallback(
     (count: any) => {
-      (window as any).PCore.getPubSubUtils().publish('WidgetUpdated', {
+      PCore.getPubSubUtils().publish('WidgetUpdated', {
         widget: 'PEGA_EXTENSIONS_DISPLAYATTACHMENTS',
         count,
         caseID,
@@ -145,7 +146,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       const listOfFiles: Array<any> = [];
       const listOfCategories = categories.split(',');
       response.forEach((attachment: any) => {
-        const currentCategory = attachment.category?.trim() || attachment.pyCategory?.trim();
+        const currentCategory = attachment[getMappedKey('pyCategory')]?.trim();
         if (useAttachmentEndpoint) {
           /* Filter the attachment categories */
           if (categories && listOfCategories.length > 0) {
@@ -160,15 +161,15 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         } else {
           attachment = {
             ...attachment,
-            category: attachment.pyCategory,
-            name: attachment.pyMemo,
-            ID: attachment.pzInsKey,
-            type: attachment.pyFileCategory,
-            fileName: attachment.pyFileName,
-            mimeType: attachment.pyTopic,
-            categoryName: attachment.pyLabel,
-            createTime: attachment.pxCreateDateTime,
-            createdByName: attachment.pxCreateOpName,
+            category: attachment[getMappedKey('pyCategory')],
+            name: attachment[getMappedKey('pyMemo')],
+            ID: attachment[getMappedKey('pzInsKey')],
+            type: attachment[getMappedKey('pyFileCategory')],
+            fileName: attachment[getMappedKey('pyFileName')],
+            mimeType: attachment[getMappedKey('pyTopic')],
+            categoryName: attachment[getMappedKey('pyLabel')],
+            createTime: attachment[getMappedKey('pxCreateDateTime')],
+            createdByName: attachment[getMappedKey('pxCreateOpName')],
           };
         }
         attachment.mimeType = getMimeTypeFromFile(attachment.fileName || attachment.nameWithExt || '');
@@ -202,7 +203,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
   const initialLoad = useCallback(() => {
     const pConn = getPConnect();
     if (useAttachmentEndpoint) {
-      const attachmentUtils = (window as any).PCore.getAttachmentUtils();
+      const attachmentUtils = PCore.getAttachmentUtils();
       attachmentUtils
         .getCaseAttachments(caseID, pConn.getContextName())
         .then((resp: any) => loadAttachments(resp))
@@ -210,12 +211,12 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
           setLoading(false);
         });
     } else {
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ LinkRefFrom: CaseInstanceKey }],
+        dataViewParameters: { LinkRefFrom: CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, payload, pConn.getContextName())
+      PCore.getDataApiUtils()
+        .getData(getMappedKey(dataPage), payload, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             loadAttachments(response.data.data);
@@ -237,7 +238,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
         ID: caseID,
       },
     };
-    const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+    const attachSubId = PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         /* If an attachment is added- force a reload of the events */
@@ -246,7 +247,7 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       getPConnect().getContextName(),
     );
     return () => {
-      (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
+      PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
   }, [categories, useLightBox, useAttachmentEndpoint, enableDownloadAll, getPConnect, initialLoad]);
 

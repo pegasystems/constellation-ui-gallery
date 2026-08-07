@@ -43,7 +43,7 @@ async function getFile(url: string) {
 }
 
 const setPCore = () => {
-  (window as any).PCore = {
+  window.PCore = {
     getMessagingServiceManager: () => {
       return {
         subscribe: () => {
@@ -286,14 +286,25 @@ const setPCore = () => {
         },
       };
     },
-  };
+    getNameSpaceUtils: () => {
+      return {
+        getDefaultQualifiedName: (name: string) => name,
+      };
+    },
+    getEnvironmentInfo: () => {
+      return {
+        getTimeZone: () => 'local',
+        getKeyMapping: (key: string) => key,
+      };
+    },
+  } as unknown as typeof PCore;
 };
 
 type Story = StoryObj<typeof PegaExtensionsDisplayAttachments>;
 
-const DisplayAttachmentsDemo = (inputs: UtilityListProps) => {
+const DisplayAttachmentsDemo = (inputs: Omit<UtilityListProps, 'getPConnect'>) => {
   return {
-    render: (args: UtilityListProps) => {
+    render: (args: Omit<UtilityListProps, 'getPConnect'>) => {
       setPCore();
       const props = {
         ...args,
@@ -304,7 +315,7 @@ const DisplayAttachmentsDemo = (inputs: UtilityListProps) => {
             },
             getContextName: () => '',
             getValue: () => 'C-123',
-          };
+          } as unknown as typeof PConnect;
         },
       };
       return <PegaExtensionsDisplayAttachments {...props} />;

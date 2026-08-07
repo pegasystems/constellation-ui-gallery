@@ -4,7 +4,7 @@ import IMask, { type FactoryArg, type InputMaskElement } from 'imask';
 import '../shared/create-nonce';
 
 export type MaskedInputProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   mask: string;
   value?: string;
@@ -45,9 +45,9 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
   const maxLength = fieldMetadata?.maxLength;
-  const hasValueChange = useRef(false);
-  const [maskObj, setMask] = useState<any>(null);
-  const ref = useRef<InputMaskElement>(null);
+  const hasValueChangeRef = useRef(false);
+  const [maskObj, setMaskObj] = useState<any>(null);
+  const inputMaskRef = useRef<InputMaskElement>(null);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -60,7 +60,7 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
   useEffect(() => setInputValue(value), [value]);
 
   useEffect(() => {
-    if (ref?.current && !disabled && !readOnly) {
+    if (inputMaskRef?.current && !disabled && !readOnly) {
       const maskOptions: FactoryArg = {
         mask,
         definitions: {
@@ -72,10 +72,10 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
       if (maskObj) {
         maskObj.updateOptions(maskOptions);
       } else {
-        setMask(IMask(ref.current, maskOptions));
+        setMaskObj(IMask(inputMaskRef.current, maskOptions));
       }
     }
-  }, [ref, mask, disabled, readOnly, maskObj]);
+  }, [inputMaskRef, mask, disabled, readOnly, maskObj]);
 
   useEffect(() => {
     if (validatemessage !== '') {
@@ -96,7 +96,7 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
   return (
     <Input
       {...additionalProps}
-      ref={ref}
+      ref={inputMaskRef}
       label={label}
       labelHidden={hideLabel}
       info={validatemessage || helperText || mask}
@@ -115,7 +115,7 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
         setInputValue(e.currentTarget.value);
         if (value !== e.currentTarget.value) {
           actions.updateFieldValue(propName, e.currentTarget.value);
-          hasValueChange.current = true;
+          hasValueChangeRef.current = true;
         }
       }}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
@@ -123,12 +123,12 @@ export const PegaExtensionsMaskedInput = (props: MaskedInputProps) => {
           setInputValue(e.currentTarget.value);
           actions.updateFieldValue(propName, e.currentTarget.value);
         }
-        if (!value || hasValueChange.current) {
+        if (!value || hasValueChangeRef.current) {
           actions.triggerFieldChange(propName, e.currentTarget.value);
           if (hasSuggestions) {
             pConn.ignoreSuggestion();
           }
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

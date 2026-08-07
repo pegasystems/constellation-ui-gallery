@@ -23,6 +23,7 @@ import ReactFlow, {
   type Edge,
 } from 'reactflow';
 import dagre from '@dagrejs/dagre';
+import { getMappedKey } from '../shared/utils';
 
 import StyledPegaExtensionsNetworkDiagram from './styles';
 
@@ -67,7 +68,7 @@ export interface NetworkDiagramProps {
    * @default bezier
    */
   edgePath?: 'bezier' | 'straight' | 'step' | 'floating';
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 }
 
 const position = { x: 0, y: 0 };
@@ -127,28 +128,33 @@ function Flow(props: any) {
   const theme = useTheme();
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
+
     async function getNodesDetails() {
       const initialNodes: Array<Node> = [];
       const initialEdges: Array<Edge> = [];
       const tmpNodesHash: StringHashMap = {};
       let parameters;
       if (selectionProperty) {
-        parameters = { pyGUID: selectionProperty };
+        parameters = { [getMappedKey('pyGUID')]: selectionProperty };
       }
       const context = getPConnect().getContextName();
-      const data = await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
+      const data = await PCore.getDataPageUtils().getPageDataAsync(getMappedKey(dataPage), context, parameters, {
         invalidateCache: true,
       });
-      data.pyNodes.forEach((element: any) => {
-        tmpNodesHash[element.pyID] = element.pyLabel;
+      if (cancelled) return;
+      const pageData = data as any;
+      pageData[getMappedKey('pyNodes')].forEach((element: any) => {
+        tmpNodesHash[element[getMappedKey('pyID')]] = element[getMappedKey('pyLabel')];
         initialNodes.push({
-          id: element.pyID,
+          id: element[getMappedKey('pyID')],
           data: {
-            id: element.pyID,
-            type: element.pyCategory,
-            label: element.pyLabel,
-            key: element.pzInsKey,
-            objClass: element.pyClassName,
+            id: element[getMappedKey('pyID')],
+            type: element[getMappedKey('pyCategory')],
+            label: element[getMappedKey('pyLabel')],
+            key: element[getMappedKey('pzInsKey')],
+            objClass: element[getMappedKey('pyClassName')],
             getPConnect,
             theme,
           },
@@ -156,15 +162,20 @@ function Flow(props: any) {
           type: 'custom',
         });
       });
-      data.pyEdges.forEach((element: any, i: number) => {
-        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element.pyFrom]} ${getPConnect().getLocalizedValue(
+      pageData[getMappedKey('pyEdges')].forEach((element: any, i: number) => {
+        const ariaLabel = `${getPConnect().getLocalizedValue('Relation from')} ${tmpNodesHash[element[getMappedKey('pyFrom')]]} ${getPConnect().getLocalizedValue(
           'to',
-        )} ${tmpNodesHash[element.pyTo]} ${getPConnect().getLocalizedValue('with label:')} ${element.pyLabel}`;
+        )} ${tmpNodesHash[element[getMappedKey('pyTo')]]} ${getPConnect().getLocalizedValue('with label:')} ${element[getMappedKey('pyLabel')]}`;
         const edge: any = {
-          id: element.pyID || `edge-${i}`,
-          source: element.pyFrom,
-          target: element.pyTo,
-          data: { type: element.pyCategory, label: element.pyLabel, path: edgePath, theme },
+          id: element[getMappedKey('pyID')] || `edge-${i}`,
+          source: element[getMappedKey('pyFrom')],
+          target: element[getMappedKey('pyTo')],
+          data: {
+            type: element[getMappedKey('pyCategory')],
+            label: element[getMappedKey('pyLabel')],
+            path: edgePath,
+            theme,
+          },
           markerEnd: {
             type: MarkerType.ArrowClosed,
             width: 20,
@@ -206,11 +217,15 @@ function Flow(props: any) {
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
       }
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         fitView();
       }, 10);
     }
     getNodesDetails();
+    return () => {
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [height, edgePath, counter, setNodes, setEdges, getPConnect, theme, fitView, dataPage, selectionProperty]);
 
   return (

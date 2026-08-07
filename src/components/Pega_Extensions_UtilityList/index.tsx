@@ -16,6 +16,7 @@ import * as informationIcon from '@pega/cosmos-react-core/lib/components/Icon/ic
 import * as clipboardIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/clipboard.icon';
 import { renderObjectField } from './utils';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 type UtilityListProps = {
   heading?: string;
@@ -25,7 +26,7 @@ type UtilityListProps = {
   primaryField: string;
   secondaryFields?: string;
   secondaryFieldTypes?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 /* To register more icon, you need to import them as shown above */
@@ -62,10 +63,10 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   const [objects, setObjects] = useState<Array<SummaryListItem>>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const viewAllModalRef = useRef<ModalMethods<any>>();
-  const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+  const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
   const publishUtilityUpdated = (count: any) => {
-    (window as any).PCore.getPubSubUtils().publish('WidgetUpdated', {
+    PCore.getPubSubUtils().publish('WidgetUpdated', {
       widget: 'PEGA_EXTENSIONS_UTILITYLIST',
       count,
       caseID,
@@ -97,7 +98,7 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
         }
       });
       tmpObjects.push({
-        id: item.pyID || item.pyLabel,
+        id: item[getMappedKey('pyID')] || item[getMappedKey('pyLabel')],
         primary,
         secondary: <MetaList items={secondaryItems} />,
       });
@@ -110,12 +111,12 @@ export const PegaExtensionsUtilityList = (props: UtilityListProps) => {
   useEffect(() => {
     if (dataPage) {
       const pConn = getPConnect();
-      const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+      const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
       const payload = {
-        dataViewParameters: [{ CaseInstanceKey }],
+        dataViewParameters: { CaseInstanceKey },
       };
-      (window as any).PCore.getDataApiUtils()
-        .getData(dataPage, setCaseID ? payload : {}, pConn.getContextName())
+      PCore.getDataApiUtils()
+        .getData(getMappedKey(dataPage), setCaseID ? payload : {}, pConn.getContextName())
         .then((response: any) => {
           if (response.data.data !== null) {
             loadObjects(response.data.data);

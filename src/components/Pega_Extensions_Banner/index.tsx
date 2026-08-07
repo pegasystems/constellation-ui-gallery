@@ -2,6 +2,7 @@ import { withConfiguration, Banner } from '@pega/cosmos-react-core';
 import { useCallback, useEffect, useState } from 'react';
 import MainContent from './styles';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 type BannerProps = {
   /** Display type of rendering
@@ -17,7 +18,7 @@ type BannerProps = {
   /** If dismissible is true, the component can call a case wide actions where you can perform some post-processing.
    */
   dismissAction?: string;
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsBanner = (props: BannerProps) => {
@@ -26,28 +27,28 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   const [isDismissed, setIsDismissed] = useState(false);
 
   const updateItemDetails = () => {
-    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    const caseInstanceKey = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const context = getPConnect().getContextName();
 
-    (window as any).PCore.getDataApiUtils()
+    PCore.getDataApiUtils()
       .getCaseEditLock(caseInstanceKey, context)
       .then((response: any) => {
         /* Upon successful, update the latest etag. */
         const updatedEtag = response.headers.etag;
-        (window as any).PCore.getContainerUtils().updateCaseContextEtag(getPConnect().getContextName(), updatedEtag);
+        PCore.getContainerUtils().updateCaseContextEtag(getPConnect().getContextName(), updatedEtag);
       });
   };
 
   const refreshForm = useCallback(() => {
-    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    const caseInstanceKey = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
-    const className = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_CLASSID);
-    (window as any).PCore.getRestClient()
+    const className = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_CLASSID);
+    PCore.getRestClient()
       .invokeRestApi('loadView', {
         queryPayload: {
           caseClassName: className,
           caseID: caseInstanceKey,
-          viewID: 'pyCaseSummary',
+          viewID: getMappedKey('pyCaseSummary'),
         },
       })
       .then((response: any) => {
@@ -58,7 +59,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
   const dismissCaseWideAction = () => {
     const dataObj = getPConnect().getDataObject(getPConnect().getContextName());
 
-    const caseInstanceKey = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    const caseInstanceKey = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
 
     getPConnect()
       .getContainerManager()
@@ -76,7 +77,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
         },
       });
 
-    const items = Object.keys((window as any).PCore.getContainerUtils().getContainerItems('app/primary'));
+    const items = Object.keys(PCore.getContainerUtils().getContainerItems('app/primary') ?? {});
     const tmpContainerName = items[items.length - 1];
 
     const messageConfig = {
@@ -93,7 +94,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
       },
     };
 
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+    const c11nEnv = PCore.createPConnect(messageConfig as any);
 
     try {
       c11nEnv
@@ -121,15 +122,20 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
     (dismissed?: boolean) => {
       if (dataPage) {
         const pConn = getPConnect();
-        const CaseInstanceKey = pConn.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+        const CaseInstanceKey = pConn.getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+        const pyID = getMappedKey('pyID');
         const payload = {
-          dataViewParameters: [{ pyID: CaseInstanceKey, ...(dismissed ? { dismissed: true } : null) }],
+          dataViewParameters: {
+            [pyID]: CaseInstanceKey,
+            ...(dismissed ? { dismissed: true } : {}),
+          } as any,
         };
-        (window as any).PCore.getDataApiUtils()
+        PCore.getDataApiUtils()
           .getData(dataPage, payload, pConn.getContextName())
           .then((response: any) => {
             if (response.data.data !== null) {
-              setMessages(response.data.data.map((message: any) => message.pyDescription));
+              const pyDescription = getMappedKey('pyDescription');
+              setMessages(response.data.data.map((message: any) => message[pyDescription]));
               if (dismissed) {
                 refreshForm();
               }
@@ -144,14 +150,14 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
 
   /* Initial Load of the content - Subscribe to changes to the assignment case */
   useEffect(() => {
-    const caseID = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
+    const caseID = getPConnect().getValue(PCore.getConstants().CASE_INFO.CASE_INFO_ID);
     const filter = {
       matcher: 'TASKLIST',
       criteria: {
         ID: caseID,
       },
     };
-    const attachSubId = (window as any).PCore.getMessagingServiceManager().subscribe(
+    const attachSubId = PCore.getMessagingServiceManager().subscribe(
       filter,
       () => {
         loadMessages();
@@ -160,7 +166,7 @@ export const PegaExtensionsBanner = (props: BannerProps) => {
     );
     loadMessages();
     return () => {
-      (window as any).PCore.getMessagingServiceManager().unsubscribe(attachSubId);
+      PCore.getMessagingServiceManager().unsubscribe(attachSubId);
     };
   }, []);
 

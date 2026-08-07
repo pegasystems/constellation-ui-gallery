@@ -158,8 +158,8 @@ export const FieldComponent = ({ field, index = 0 }: FieldComponentProps) => {
             }
           }}
         >
-          {options.map((option: any, optIndex: number) => (
-            <option key={`${componentKey}-option-${optIndex}`} value={option.value || option.label}>
+          {options.map((option: any) => (
+            <option key={`${componentKey}-option-${option.value || option.label}`} value={option.value || option.label}>
               {option.label || option.value}
             </option>
           ))}

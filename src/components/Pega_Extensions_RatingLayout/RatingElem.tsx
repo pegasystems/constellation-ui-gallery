@@ -6,7 +6,7 @@ type RatingElemProps = {
   label: string;
   propIndex: number;
   path: string;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const tickValues = ['N/A', 'Low', 'Medium', 'High', 'Severe'];
@@ -34,7 +34,7 @@ const RatingElem = (props: RatingElemProps) => {
         target: getPConnect().getTarget(),
       },
     };
-    const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+    const c11nEnv = PCore.createPConnect(messageConfig as any);
     return c11nEnv.getPConnect().getActionsApi();
   }, [getPConnect]);
 

@@ -37,7 +37,7 @@ type RangeSliderProps = {
    */
   currencyCode: string;
   /** Function to get the PConnect object for interacting with the Pega API */
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   /** The children elements to be rendered inside the range slider component */
   children: any;
   maxValueProperty: number;
@@ -67,14 +67,16 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
 
   // Get the inherited props from the parent to determine label settings
   const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
-  const maxValuePropName = getPConnect().getRawMetadata().config?.maxValueProperty?.replace('@P ', '') || '';
-  const minValuePropName = getPConnect().getRawMetadata().config?.minValueProperty?.replace('@P ', '') || '';
+  const maxValuePropName = (getPConnect().getRawMetadata()?.config as any)?.maxValueProperty?.replace('@P ', '') || '';
+  const minValuePropName = (getPConnect().getRawMetadata()?.config as any)?.minValueProperty?.replace('@P ', '') || '';
 
   const refreshForm = useCallback(() => {
     const caseKey = getPConnect().getCaseInfo().getKey();
     const refreshOptions = { autoDetectRefresh: true, propertyName: '' };
     const viewName = getPConnect().getCaseInfo().getCurrentAssignmentViewName();
-    getPConnect().getActionsApi().refreshCaseView(caseKey, viewName, '', refreshOptions);
+    getPConnect()
+      .getActionsApi()
+      .refreshCaseView(caseKey ?? '', viewName ?? '', '', refreshOptions);
   }, [getPConnect]);
 
   const getNearestValue = (input: number, increment: number): number => {
@@ -257,7 +259,10 @@ export const PegaExtensionsRangeSlider = (props: RangeSliderProps) => {
   const maxPercentage = ((Number(maxValue) - min) / (max - min)) * 100;
 
   return (
-    <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null} as={StyledRangeSliderWrapper}>
+    <FieldGroup
+      name={propsToUse.showLabel ? (propsToUse?.label ?? undefined) : undefined}
+      as={StyledRangeSliderWrapper}
+    >
       <Flex
         as={StyledSlider}
         container={{

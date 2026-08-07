@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as LangSwitchModule from './index';
 import { formatTimezoneLabel, getAvailableTimezones, langSwitchRuntime, prioritizeTimezones } from './utils';
 
-const runtime = globalThis as typeof globalThis & { PCore?: any };
+const runtime = globalThis as typeof globalThis & { PCore?: typeof PCore };
 const reloadMock = jest.fn();
 const intlRuntime = Intl as typeof Intl & {
   supportedValuesOf?: (key: string) => string[];
@@ -29,7 +29,7 @@ const setPCore = (currentLocale = 'en_EN', currentTimezone = 'UTC', setTimezone 
         getPageDataAsync: () => Promise.resolve({ success: true }),
       };
     },
-  };
+  } as unknown as typeof PCore;
 };
 
 const buildPConnect = () => {
@@ -193,7 +193,7 @@ test('calls D_SetLocale and reloads when the data page succeeds', async () => {
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch
@@ -232,7 +232,7 @@ test('skips D_SetLocale and reloads immediately when persistChanges is false', a
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch
@@ -264,7 +264,7 @@ test('calls D_SetLocale from the compact view when the language changes', async 
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch
@@ -304,7 +304,7 @@ test('skips D_SetLocale from the compact view when persistChanges is false', asy
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch
@@ -343,7 +343,7 @@ test('calls D_SetLocale with useTimeZone only when apply is clicked and shows a 
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch
@@ -395,7 +395,7 @@ test('treats a resolved timezone save without a status code as successful', asyn
         getPageDataAsync,
       };
     },
-  };
+  } as unknown as typeof PCore;
 
   render(
     <LangSwitchModule.PegaExtensionsLangSwitch

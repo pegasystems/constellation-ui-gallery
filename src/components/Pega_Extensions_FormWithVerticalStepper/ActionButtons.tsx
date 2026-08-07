@@ -5,22 +5,19 @@ import { ActionButtonsWrapper, HideActionButtons } from './styles';
 export default function ActionButtons({ getPConnect }: ActionButtonsProps) {
   const toasterCtx = useToaster();
 
-  const CASE_CONSTANTS = (window as any).PCore.getConstants().CASE_INFO;
+  const CASE_CONSTANTS = PCore.getConstants().CASE_INFO;
   const actionsButtonData: ActionButtonData = getPConnect().getValue(CASE_CONSTANTS.ACTION_BUTTONS);
 
   const actionsAPI = getPConnect().getActionsApi();
   const context = getPConnect().getContextName();
 
-  const localizedVal = (window as any).PCore.getLocaleUtils().getLocaleValue;
+  const localizedVal = PCore.getLocaleUtils().getLocaleValue;
   const localeCategory = 'Assignment';
 
   function onSaveActionSuccess(data: any) {
     // skip publishing EVENT_CANCEL for save for later use-cases.
     actionsAPI.cancelAssignment(context, true).then(() => {
-      (window as any).PCore.getPubSubUtils().publish(
-        (window as any).PCore.getConstants().PUB_SUB_EVENTS.CASE_EVENTS.CREATE_STAGE_SAVED,
-        data,
-      );
+      PCore.getPubSubUtils().publish(PCore.getConstants().PUB_SUB_EVENTS.CASE_EVENTS.CREATE_STAGE_SAVED, data);
     });
   }
 
@@ -49,9 +46,7 @@ export default function ActionButtons({ getPConnect }: ActionButtonsProps) {
           });
           const caseID = getPConnect().getCaseInfo().getKey();
           const assignmentID = getPConnect().getCaseInfo().getAssignmentID();
-          const caseType = getPConnect()
-            .getCaseInfo()
-            .c11nEnv.getValue((window as any).PCore.getConstants().CASE_INFO.CASE_TYPE_ID);
+          const caseType = getPConnect().getCaseInfo().c11nEnv.getValue(PCore.getConstants().CASE_INFO.CASE_TYPE_ID);
           onSaveActionSuccess({ caseType, caseID, assignmentID });
         });
         break;

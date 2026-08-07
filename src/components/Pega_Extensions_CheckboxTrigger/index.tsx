@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef, type MouseEvent } from 'react';
 import { withConfiguration, Checkbox, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 export type CheckboxTriggerProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   dataPage: string;
   value?: boolean;
@@ -39,7 +40,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
   const pConn = getPConnect();
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   [readOnly, required, disabled] = [readOnly, required, disabled].map(
@@ -80,12 +81,12 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
         setInputValue(e.currentTarget.checked);
         if (value !== e.currentTarget.checked) {
           actions.updateFieldValue(propName, e.currentTarget.checked);
-          hasValueChange.current = true;
+          hasValueChangeRef.current = true;
           const context = getPConnect().getContextName();
-          const data: any = (window as any).PCore.getStore().getState().data?.[context]?.dataInfo?.content;
+          const data: any = PCore.getStore().getState().data?.[context]?.dataInfo?.content;
 
           /* To force the refresh, we will call a savable DP that will contain the current value and return the update content */
-          const itemData = (window as any).PCore.getContainerUtils().getContainerItemData(
+          const itemData = PCore.getContainerUtils().getContainerItemData(
             getPConnect().getTarget(),
             getPConnect().getContextName(),
           );
@@ -93,7 +94,7 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
           const newObj = { ...data };
           delete newObj?.classID;
           const bodyData = { ...newObj, ...key };
-          (window as any).PCore.getRestClient()
+          PCore.getRestClient()
             .invokeRestApi('createDataObject', {
               body: { data: bodyData },
               queryPayload: { data_view_ID: dataPage },
@@ -101,8 +102,8 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
             .then((resp: any) => {
               const respData = resp?.data?.responseData;
               const updateObj = { ...respData };
-              delete updateObj?.pzInsKey;
-              (window as any).PCore.getStore().dispatch({
+              delete updateObj?.[getMappedKey('pzInsKey')];
+              PCore.getStore().dispatch({
                 type: 'SET_PROPERTY',
                 payload: {
                   context: getPConnect().getContextName(),
@@ -114,9 +115,9 @@ export const PegaExtensionsCheckboxTrigger = (props: CheckboxTriggerProps) => {
         }
       }}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
+        if ((!value || hasValueChangeRef.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.checked);
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

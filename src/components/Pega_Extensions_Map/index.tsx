@@ -17,10 +17,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyledClearBtn, StyledPegaExtensionsMap } from './styles';
 import { getAllFields, renderShapes, createGraphic, deletePoints, addPoint, addScreenShot } from './utils';
 import '../shared/create-nonce';
+import { getMappedKey } from '../shared/utils';
 
 const ARCGIS_VERSION = '5.0';
 type MapProps = {
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   heading?: string;
   height?: string;
   displayMode: string;
@@ -112,11 +113,12 @@ export const PegaExtensionsMap = (props: MapProps) => {
   } = props;
   const theme = useTheme();
   const [scriptsLoaded, setScriptsLoaded] = useState(false);
-  const mapDiv = useRef(null);
+  const mapDivRef = useRef(null);
   const btnClearRef = useRef<HTMLButtonElement>(null);
-  const numPoints = useRef<number>(0);
-  const isLastActionClear = useRef<boolean>(false);
+  const numPointsRef = useRef<number>(0);
+  const isLastActionClearRef = useRef<boolean>(false);
   const metadata = getPConnect().getRawMetadata();
+  const selectionProp = (metadata?.config as any)?.selectionProperty;
 
   const captureEvent = (event: any) => {
     event.stopPropagation();
@@ -149,11 +151,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
   };
   // This function is called when a shape is added or removed by the sketch widget.
   const updateShapeDefinition = (event: any, ptLayer: GraphicsLayer) => {
-    if (
-      typeof selectionProperty !== 'undefined' &&
-      metadata.config.selectionProperty &&
-      (!event.state || event.state === 'complete')
-    ) {
+    if (typeof selectionProperty !== 'undefined' && selectionProp && (!event.state || event.state === 'complete')) {
       const graphics = ptLayer.graphics;
       const listShapes: ShapeDefinition[] = [];
 
@@ -162,7 +160,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
         listShapes.push(genShapeObject(graphic));
       });
 
-      const prop = metadata.config.selectionProperty.replace('@P ', '');
+      const prop = selectionProp.replace('@P ', '');
       getPConnect()
         .getActionsApi()
         .updateFieldValue(prop, JSON.stringify({ shapes: listShapes }));
@@ -200,15 +198,15 @@ export const PegaExtensionsMap = (props: MapProps) => {
         );
 
         /* Update the cache with the set of instructions - only clear if the last action was not the clear action */
-        if (!isLastActionClear.current) {
-          deletePoints(getPConnect, props, embedDataRef, numPoints.current);
+        if (!isLastActionClearRef.current) {
+          deletePoints(getPConnect, props, embedDataRef, numPointsRef.current);
         } else {
-          isLastActionClear.current = false;
+          isLastActionClearRef.current = false;
         }
         event.vertices.forEach((x: any, index: number) => {
           addPoint(getPConnect, props, embedDataRef, longitudePropRef, latitudePropRef, index, x, webMercatorUtils);
         });
-        numPoints.current = event.vertices.length;
+        numPointsRef.current = event.vertices.length;
 
         addScreenShot(getPConnect, view, imageMapRef);
       }
@@ -269,11 +267,12 @@ export const PegaExtensionsMap = (props: MapProps) => {
 
     // In 24.2, we need to initialize the context tree manager
     if (displayMode !== 'DISPLAY_ONLY') {
-      (window as any).PCore.getContextTreeManager().addPageListNode(
+      PCore.getContextTreeManager().addPageListNode(
         getPConnect().getContextName(),
         'caseInfo.content',
-        getPConnect().meta.name,
+        getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
         'Locations',
+        {},
       );
     }
 
@@ -317,7 +316,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       }
     }
 
-    if (mapDiv.current) {
+    if (mapDivRef.current) {
       const spatialReference = new SpatialReference({ wkid: 3857 }); // Web Mercator
       ptLayer = new GraphicsLayer();
       map = new Map({
@@ -328,10 +327,10 @@ export const PegaExtensionsMap = (props: MapProps) => {
       // Create the MapView with the specified container and properties
       if (locationInputType === 'propertyRef') {
         const inputLocation = getPConnect().getValue(locationRef);
-        const LatLong = inputLocation?.pyLatLon?.split(',');
+        const LatLong = inputLocation?.[getMappedKey('pyLatLon')]?.split(',');
         if (LatLong && LatLong.length === 2) {
           view = new MapView({
-            container: mapDiv.current,
+            container: mapDivRef.current,
             map,
             center: [parseFloat(LatLong[1]), parseFloat(LatLong[0])],
             zoom: parseFloat(ZoomRef),
@@ -342,7 +341,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       /* If the locationRef is not set, use the constant values */
       if (!view) {
         view = new MapView({
-          container: mapDiv.current,
+          container: mapDivRef.current,
           map,
           center: [parseFloat(Longitude), parseFloat(Latitude)],
           zoom: parseFloat(Zoom),
@@ -387,10 +386,10 @@ export const PegaExtensionsMap = (props: MapProps) => {
                       target: getPConnect().getTarget(),
                     },
                   };
-                  const c11nEnv = (window as any).PCore.createPConnect(messageConfig);
+                  const c11nEnv = PCore.createPConnect(messageConfig as any);
                   const actionsApi = c11nEnv.getPConnect().getActionsApi();
-                  actionsApi.updateFieldValue('.pyLatLon', `${latitude}, ${longitude}`);
-                  actionsApi.updateFieldValue('.pyAddress', result.name);
+                  actionsApi.updateFieldValue('.' + getMappedKey('pyLatLon'), `${latitude}, ${longitude}`);
+                  actionsApi.updateFieldValue('.' + getMappedKey('pyAddress'), result.name);
                 }
               });
             }
@@ -433,8 +432,8 @@ export const PegaExtensionsMap = (props: MapProps) => {
             if (btnClearRef?.current) {
               btnClearRef.current.onclick = () => {
                 ptLayer.removeAll();
-                deletePoints(getPConnect, props, embedDataRef, numPoints.current);
-                isLastActionClear.current = true;
+                deletePoints(getPConnect, props, embedDataRef, numPointsRef.current);
+                isLastActionClearRef.current = true;
               };
             }
           }
@@ -447,7 +446,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
           tmpFields[0].value.forEach((val: any, index: any) => {
             vertices.push([tmpFields[1].value[index], val]);
           });
-          numPoints.current = vertices.length;
+          numPointsRef.current = vertices.length;
           createGraphic(ptLayer, view, vertices, false, theme, Graphic);
         }
 
@@ -525,7 +524,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
     return (
       <Progress
         placement='local'
-        message={(window as any).PCore.getLocaleUtils().getLocaleValue(
+        message={PCore.getLocaleUtils().getLocaleValue(
           'Loading content...',
           'Generic',
           '@BASECLASS!GENERIC!PYGENERICFIELDS',
@@ -543,7 +542,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
         <StyledClearBtn hide={displayMode === 'DISPLAY_ONLY' || bFreeFormDrawing}>
           <Button ref={btnClearRef}>{getPConnect().getLocalizedValue('Clear')}</Button>
         </StyledClearBtn>
-        <StyledPegaExtensionsMap height={height} ref={mapDiv} onClick={captureEvent} />
+        <StyledPegaExtensionsMap height={height} ref={mapDivRef} onClick={captureEvent} />
       </CardContent>
     </Card>
   );

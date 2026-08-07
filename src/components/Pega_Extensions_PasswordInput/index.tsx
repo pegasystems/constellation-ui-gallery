@@ -3,7 +3,7 @@ import { withConfiguration, Input, Text } from '@pega/cosmos-react-core';
 import '../shared/create-nonce';
 
 type PasswordInputProps = {
-  getPConnect: any;
+  getPConnect: () => typeof PConnect;
   label: string;
   value: string;
   helperText?: string;
@@ -41,7 +41,7 @@ export const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
   const actions = pConn.getActionsApi();
   const propName = pConn.getStateProps().value;
   const maxLength = fieldMetadata?.maxLength;
-  const hasValueChange = useRef(false);
+  const hasValueChangeRef = useRef(false);
 
   let { readOnly, required, disabled } = props;
   const { value } = props;
@@ -91,16 +91,16 @@ export const PegaExtensionsPasswordInput = (props: PasswordInputProps) => {
         setInputValue(e.currentTarget.value);
         if (value !== e.currentTarget.value) {
           actions.updateFieldValue(propName, e.currentTarget.value);
-          hasValueChange.current = true;
+          hasValueChangeRef.current = true;
         }
       }}
       onBlur={(e: MouseEvent<HTMLInputElement>) => {
-        if ((!value || hasValueChange.current) && !readOnly) {
+        if ((!value || hasValueChangeRef.current) && !readOnly) {
           actions.triggerFieldChange(propName, e.currentTarget.value);
           if (hasSuggestions) {
             pConn.ignoreSuggestion();
           }
-          hasValueChange.current = false;
+          hasValueChangeRef.current = false;
         }
       }}
     />

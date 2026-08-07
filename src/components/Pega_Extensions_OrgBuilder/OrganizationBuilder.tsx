@@ -67,7 +67,7 @@ export function OrganizationBuilder({
   const [referenceOrg, setReferenceOrg] = useState<OrgNode | null>(null);
   const [initialTargetOrg, setInitialTargetOrg] = useState<OrgNode | null>(null);
   const [targetOrg, setTargetOrg] = useState<OrgNode | null>(null);
-  const [, setHistory] = useState<OrgNode[]>([]);
+  const [history, setHistory] = useState<OrgNode[]>([]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -82,7 +82,7 @@ export function OrganizationBuilder({
       try {
         const context = getPConnect().getContextName();
         const parameters = selectionProperty ? { pyGUID: selectionProperty } : undefined;
-        const data = (await (window as any).PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
+        const data = (await PCore.getDataPageUtils().getPageDataAsync(dataPage, context, parameters, {
           invalidateCache: true,
         })) as OrgBuilderDataPageResponse;
         if (cancelled) return;
@@ -247,15 +247,10 @@ export function OrganizationBuilder({
   );
 
   const handleUndo = useCallback(() => {
-    setHistoryIndex((prevIndex) => {
-      if (prevIndex <= 0) return prevIndex;
-      setHistory((prevHistory) => {
-        setTargetOrg(prevHistory[prevIndex - 1]);
-        return prevHistory;
-      });
-      return prevIndex - 1;
-    });
-  }, []);
+    if (historyIndex <= 0) return;
+    setTargetOrg(history[historyIndex - 1]);
+    setHistoryIndex(historyIndex - 1);
+  }, [history, historyIndex]);
 
   const handleReset = useCallback(() => {
     if (initialTargetOrg) {

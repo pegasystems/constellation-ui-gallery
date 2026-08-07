@@ -8,7 +8,7 @@ import '../shared/create-nonce';
 export type RatingLayoutProps = {
   label?: string;
   showLabel?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
   minWidth?: string;
 };
 
@@ -23,11 +23,11 @@ interface Rating {
 export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
   const { getPConnect, label = '', showLabel = false, minWidth = '40ch' } = props;
   const [tabs, setTabs] = useState<Array<any>>([]);
-  const [panelShown, changePanel] = useState('0');
+  const [panelShown, setPanelShown] = useState('0');
   // Get the inherited props from the parent to determine label settings
   const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
   const handleTabChange = (id: string) => {
-    changePanel(id);
+    setPanelShown(id);
   };
   useEffect(() => {
     const tmpFields: any = getAllFields(getPConnect);
@@ -66,7 +66,7 @@ export const PegaExtensionsRatingLayout = (props: RatingLayoutProps) => {
   }, [getPConnect]);
 
   return (
-    <FieldGroup name={propsToUse.showLabel ? propsToUse?.label : null}>
+    <FieldGroup name={propsToUse.showLabel ? (propsToUse?.label ?? undefined) : undefined}>
       <Flex container={{ direction: 'column' }}>
         <Flex item={{ grow: 1 }}>
           <Tabs tabs={tabs} onTabClick={handleTabChange} currentTabId={panelShown} />

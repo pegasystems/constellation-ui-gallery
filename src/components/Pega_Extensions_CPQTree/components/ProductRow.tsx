@@ -282,8 +282,10 @@ export const ProductRow = ({
 
               {/* Configuration Fields from all other nested specs */}
               {allConfigurations.map(({ spec, config }, groupIndex) => {
+                const groupKey =
+                  spec?.[PROPERTY_NAMES.PX_PROPERTY_PATH] ?? spec?.[PROPERTY_NAMES.NAME] ?? 'config-group';
                 return (
-                  <div key={`config-group-${groupIndex}`}>
+                  <div key={`config-group-${groupKey}`}>
                     {config.map((configItem: any, configIndex: number) => {
                       // Generate a unique field ID for nested configurations
                       const fieldId = `${configSectionId}-nested-${groupIndex}-field-${configIndex}`;

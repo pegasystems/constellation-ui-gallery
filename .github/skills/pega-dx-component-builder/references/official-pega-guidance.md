@@ -30,3 +30,15 @@ Primary source:
 - Keep styling theme-aware and avoid hard-coded UI patterns that diverge from Constellation.
 - Use PConnect or PCore only where there is an actual runtime need.
 - Document assumptions whenever the official docs do not fully specify a runtime contract needed by the task.
+
+## Launchpad-Safe API Usage
+
+Official PCore/PConnect docs describe the public bridge, but **not every Platform API exists on Launchpad**. In this repository:
+
+- Prefer public data helpers (`getDataApiUtils`, `getDataPageUtils`) over raw REST and over assuming a fixed response envelope.
+- Resolve identifiers and rule names with the repo helper `getMappedKey` (namespace + key mapping) — see `LAUNCHPAD_VS_PLATFORM.md`.
+- Treat case identity constants (`PCore.getConstants().CASE_INFO.*`) as the supported way to read case context.
+- Use Actions API + Semantic URL utils for open/create/preview flows.
+- When an API may be missing on Launchpad, detect it with `PCore.getRestClient().doesRestApiExist('…')` and degrade gracefully, or mark the component unsupported.
+
+Do not invent Launchpad-only private APIs. If behavior cannot be achieved with documented public APIs plus the patterns in `LAUNCHPAD_VS_PLATFORM.md`, stop and report the gap.

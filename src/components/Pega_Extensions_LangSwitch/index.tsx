@@ -44,7 +44,7 @@ type LangSwitchProps = {
   showLocaleCode?: boolean;
   showCurrentSummary?: boolean;
   prioritizeBrowserTimezone?: boolean;
-  getPConnect?: any;
+  getPConnect: () => typeof PConnect;
 };
 
 const didTimezonePreferenceSaveSucceed = (response: unknown) => {
@@ -93,7 +93,7 @@ export const PegaExtensionsLangSwitch = (props: LangSwitchProps) => {
   const allowTimezoneSelection = changeTimezone && !compactView;
   const resolvedCurrentLocale = resolveConfiguredLocale(currentLocale, languages);
   const [selectedLocale, setSelectedLocale] = useState(resolvedCurrentLocale);
-  const [selectedTimezone, setSelectedTimezone] = useState(getCurrentTimezone());
+  const [selectedTimezone, setSelectedTimezone] = useState(() => getCurrentTimezone());
   const [persistedTimezone, setPersistedTimezone] = useState(currentTimezone);
   const [isSwitchingLocale, setIsSwitchingLocale] = useState(false);
   const [isSwitchingTimezone, setIsSwitchingTimezone] = useState(false);

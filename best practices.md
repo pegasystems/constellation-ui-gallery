@@ -16,24 +16,31 @@ Below is a distilled “cheat‑sheet” of the Pega **best‑practice guideline
 
 ## 2. Design & Development Principles
 
-| #      | Practice                                                   | Why It Matters                                                                    | How To Do It                                                                                                                   |
-| ------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **1**  | **Use the Constellation Presentational Component Library** | Keeps UI consistent with the rest of the platform.                                | Import from `@pega/cosmos-react-core` (e.g., `<Flex>`, `<Banner>`, `<Button>`).                                                |
-| **2**  | **Leverage Pega’s public APIs**                            | Guarantees platform‑level integration (data binding, actions, navigation).        | Use `getPConnect()` for state, actions, and `PCore` for global services.                                                       |
-| **3**  | **Use Styled‑Components + Design Tokens**                  | Enables theme‑aware styling while keeping style scoped.                           | Create a `styles.ts` that imports `styled-components` and references tokens (`theme.color.primary`, `theme.spacing.xl`, etc.). |
-| **4**  | **Write in TypeScript**                                    | Strong typing catches errors early, generates PropDocs, and improves IDE support. | Add a `.tsx` file with `type Props = { … }` and export the component as `React.FC<Props>` or similar.                          |
-| **5**  | **Prefer Functional Components**                           | Easier to read, test, and hook into Pega’s React‑based lifecycle.                 | Use hooks (`useEffect`, `useState`, `useCallback`) rather than class components.                                               |
-| **6**  | **Use `rem` units over `px`**                              | Guarantees accessibility (zoom, font‑size changes) and consistency across themes. | In your styled components use `font-size: 1rem; padding: 0.5rem;` etc.                                                         |
-| **7**  | **Avoid Direct DOM Manipulation**                          | Keeps React’s virtual DOM in sync.                                                | Use React refs only for third‑party libraries that require it; otherwise stay declarative.                                     |
-| **8**  | **Provide a Storybook Story & Docs.mdx**                   | Gives designers and developers a live preview and a documentation source.         | Create `demo.stories.tsx` and `Docs.mdx` that use the same props as the component.                                             |
-| **9**  | **Add Unit & Accessibility Tests**                         | Ensures reliability across Pega releases and meets WCAG 2.1.                      | Use `@testing-library/react` and `jest` for unit tests; run `npm test` and `npm run e2e` (if applicable).                      |
-| **10** | **No 3rd‑party UI Libraries**                              | Keeps the component lightweight and compatible with the Constellation library.    | Do **not** import Material‑UI, Ant‑Design, etc. – rely on Constellation’s built‑in components.                                 |
-| **11** | **Use Only Open‑Source, Pega‑Compatible Packages**         | Avoid licensing or compatibility issues.                                          | Verify the package’s license and React version compatibility.                                                                  |
-| **12** | **Follow the Constellation Design Tokens & Style Guide**   | Guarantees brand consistency.                                                     | Use `theme` tokens and `styled-components` helpers from the Constellation library.                                             |
-| **13** | **Support Right‑to‑Left (RTL) and Themes**                 | Enables global usage.                                                             | In Storybook, enable the toolbar to switch themes; use `theme.direction` to adapt layout.                                      |
-| **14** | **Document Props with Types & Default Values**             | Generates a property table in Storybook and in the Pega Designer.                 | Define `interface Props` with JSDoc comments and default values.                                                               |
-| **15** | **Lint & Format Consistently**                             | Prevents merge conflicts and code drift.                                          | Run `npm run lint` and `npm run fix` before commits.                                                                           |
-| **16** | **Provide a Demo RAP**                                     | Enables quick import into a Pega app for testing.                                 | Build and publish a RAP (ZIP) that contains the compiled JS/CSS.                                                               |
+| #      | Practice                                                   | Why It Matters                                                                    | How To Do It                                                                                                                                            |
+| ------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1**  | **Use the Constellation Presentational Component Library** | Keeps UI consistent with the rest of the platform.                                | Import from `@pega/cosmos-react-core` (e.g., `<Flex>`, `<Banner>`, `<Button>`).                                                                         |
+| **2**  | **Leverage Pega’s public APIs**                            | Guarantees platform‑level integration (data binding, actions, navigation).        | Use `getPConnect()` for state, actions, and `PCore` for global services.                                                                                |
+| **3**  | **Use Styled‑Components + Design Tokens**                  | Enables theme‑aware styling while keeping style scoped.                           | Create a `styles.ts` that imports `styled-components` and references tokens (`theme.color.primary`, `theme.spacing.xl`, etc.).                          |
+| **4**  | **Write in TypeScript**                                    | Strong typing catches errors early, generates PropDocs, and improves IDE support. | Add a `.tsx` file with `type Props = { … }` and export the component as `React.FC<Props>` or similar.                                                   |
+| **5**  | **Prefer Functional Components**                           | Easier to read, test, and hook into Pega’s React‑based lifecycle.                 | Use hooks (`useEffect`, `useState`, `useCallback`) rather than class components.                                                                        |
+| **6**  | **Use `rem` units over `px`**                              | Guarantees accessibility (zoom, font‑size changes) and consistency across themes. | In your styled components use `font-size: 1rem; padding: 0.5rem;` etc.                                                                                  |
+| **7**  | **Avoid Direct DOM Manipulation**                          | Keeps React’s virtual DOM in sync.                                                | Use React refs only for third‑party libraries that require it; otherwise stay declarative.                                                              |
+| **8**  | **Provide a Storybook Story & Docs.mdx**                   | Gives designers and developers a live preview and a documentation source.         | Create `demo.stories.tsx` and `Docs.mdx` that use the same props as the component.                                                                      |
+| **9**  | **Add Unit & Accessibility Tests**                         | Ensures reliability across Pega releases and meets WCAG 2.1.                      | Use `@testing-library/react` and `jest` for unit tests; run `npm test` and `npm run e2e` (if applicable).                                               |
+| **10** | **No 3rd‑party UI Libraries**                              | Keeps the component lightweight and compatible with the Constellation library.    | Do **not** import Material‑UI, Ant‑Design, etc. – rely on Constellation’s built‑in components.                                                          |
+| **11** | **Use Only Open‑Source, Pega‑Compatible Packages**         | Avoid licensing or compatibility issues.                                          | Verify the package’s license and React version compatibility.                                                                                           |
+| **12** | **Follow the Constellation Design Tokens & Style Guide**   | Guarantees brand consistency.                                                     | Use `theme` tokens and `styled-components` helpers from the Constellation library.                                                                      |
+| **13** | **Support Right‑to‑Left (RTL) and Themes**                 | Enables global usage.                                                             | In Storybook, enable the toolbar to switch themes; use `theme.direction` to adapt layout.                                                               |
+| **14** | **Document Props with Types & Default Values**             | Generates a property table in Storybook and in the Pega Designer.                 | Define `interface Props` with JSDoc comments and default values.                                                                                        |
+| **15** | **Lint & Format Consistently**                             | Prevents merge conflicts and code drift.                                          | Run `npm run lint` and `npm run fix` before commits.                                                                                                    |
+| **16** | **Provide a Demo RAP**                                     | Enables quick import into a Pega app for testing.                                 | Build and publish a RAP (ZIP) that contains the compiled JS/CSS.                                                                                        |
+| **17** | **Use PCore APIs, not raw REST**                           | Response shape and endpoints differ by environment.                               | Use `PCore.getDataApiUtils().getData()`, `getDataObjectView()`, `getUserApi().getOperatorDetails()`, etc.                                               |
+| **18** | **Validate and safely parse JSON / config**                | Avoids runtime errors from malformed or missing data.                             | Use try/catch around `JSON.parse`; check array/object shape before use; provide sensible fallbacks.                                                     |
+| **19** | **Document props without environment assumptions**         | Keeps components reusable across Pega Platform and Launchpad.                     | Props should describe _what_ is needed (IDs, status, labels), not _where_ it comes from (e.g. specific property names).                                 |
+| **20** | **Stub PCore fully in Storybook**                          | Stories must run without a real Pega backend.                                     | Stub every PCore helper your component uses (e.g. `getKeyMapping`, `getDefaultQualifiedName`, `getData`, `getActions`).                                 |
+| **21** | **Test abstraction layers**                                | Ensures behavior is correct regardless of environment details.                    | Test that ID/label resolution and data access work when keys or response shapes are abstracted (e.g. via getKeyMapping).                                |
+| **22** | **Resolve keys via `getMappedKey`**                        | Property and rule names differ between Platform and Launchpad.                    | Import `getMappedKey` from `src/components/shared/utils.ts`; never hard-code `pyID` / `pzInsKey` / `pxObjClass` as object keys.                         |
+| **23** | **Detect optional APIs, don’t branch on env name**         | Some DX REST APIs (e.g. `readDataObject`) are missing on Launchpad.               | Use `PCore.getRestClient().doesRestApiExist('…')` and a fallback; avoid `if (isLaunchpad)`. See [LAUNCHPAD_VS_PLATFORM.md](./LAUNCHPAD_VS_PLATFORM.md). |
 
 ---
 
@@ -116,37 +123,45 @@ Below is a distilled “cheat‑sheet” of the Pega **best‑practice guideline
 
 ## 4. Quick Reference – Checklist
 
-| Item                                                   | Done? | Notes |
-| ------------------------------------------------------ | ----- | ----- |
-| Folder name follows `Pega_Extensions_<Name>`           |       |       |
-| `config.json` matches folder name                      |       |       |
-| `index.tsx` uses `withConfiguration` and `getPConnect` |       |       |
-| Typescript props & JSDoc                               |       |       |
-| Uses Constellation presentational components           |       |       |
-| Styled‑components + design tokens                      |       |       |
-| No `px`, no hard‑coded colors                          |       |       |
-| Functional component                                   |       |       |
-| Storybook story + Docs.mdx                             |       |       |
-| Unit tests + accessibility tests                       |       |       |
-| Lint & format pass                                     |       |       |
-| Supports RTL & themes                                  |       |       |
-| No 3rd‑party UI libs                                   |       |       |
-| Export as a RAP for import                             |       |       |
-| PR follows repository guidelines                       |       |       |
+| Item                                                                          | Done? | Notes |
+| ----------------------------------------------------------------------------- | ----- | ----- |
+| Folder name follows `Pega_Extensions_<Name>`                                  |       |       |
+| `config.json` matches folder name                                             |       |       |
+| `index.tsx` uses `withConfiguration` and `getPConnect`                        |       |       |
+| Typescript props & JSDoc                                                      |       |       |
+| Uses Constellation presentational components                                  |       |       |
+| Styled‑components + design tokens                                             |       |       |
+| No `px`, no hard‑coded colors                                                 |       |       |
+| Functional component                                                          |       |       |
+| Storybook story + Docs.mdx                                                    |       |       |
+| Unit tests + accessibility tests                                              |       |       |
+| Lint & format pass                                                            |       |       |
+| Supports RTL & themes                                                         |       |       |
+| No 3rd‑party UI libs                                                          |       |       |
+| Use PCore APIs (not raw REST); validate JSON/config                           |       |       |
+| Props documented without env-specific assumptions                             |       |       |
+| Storybook stubs all PCore helpers used                                        |       |       |
+| Tests cover abstraction layers (e.g. key mapping)                             |       |       |
+| Keys/rule names via `getMappedKey`; no hard-coded `py*`/`pz*`/`px*` keys      |       |       |
+| Optional APIs gated with `doesRestApiExist` (no `isLaunchpad` switches)       |       |       |
+| Export as a RAP for import                                                    |       |       |
+| PR follows repository guidelines                                              |       |       |
+| For dual-environment: see [Launchpad vs Platform](./LAUNCHPAD_VS_PLATFORM.md) |       |       |
 
 ---
 
 ## 5. Useful Links
 
-| Resource                                                                                                                                                                                                              | Purpose                     |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| [Design Requirements – Constellation DX Components](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/design-requirements-constellation-dx-components.html) | Core design rules.          |
-| [Governance & Best Practices](https://community.pega.com/event/clsa-community-extension-dx-components-responsible-lsas-guide?)                                                                                        | Governance framework.       |
-| [Using PCore & PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html)                                                           | API reference.              |
-| [Design Tokens & Styled‑Components](https://design.pega.com/develop)                                                                                                                                                  | Theme & styling guidelines. |
-| [Accessibility – WCAG 2.1](https://www.w3.org/TR/WCAG21/)                                                                                                                                                             | Accessibility compliance.   |
-| [Storybook Docs](https://storybook.js.org/docs/react/essentials/docs)                                                                                                                                                 | Docs.mdx usage.             |
-| [Testing – Jest & React Testing Library](https://jestjs.io/docs/getting-started)                                                                                                                                      | Unit testing guide.         |
+| Resource                                                                                                                                                                                                              | Purpose                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [Design Requirements – Constellation DX Components](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/design-requirements-constellation-dx-components.html) | Core design rules.                             |
+| [Governance & Best Practices](https://community.pega.com/event/clsa-community-extension-dx-components-responsible-lsas-guide?)                                                                                        | Governance framework.                          |
+| [Using PCore & PConnect Public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html)                                                           | API reference.                                 |
+| [Design Tokens & Styled‑Components](https://design.pega.com/develop)                                                                                                                                                  | Theme & styling guidelines.                    |
+| [Accessibility – WCAG 2.1](https://www.w3.org/TR/WCAG21/)                                                                                                                                                             | Accessibility compliance.                      |
+| [Storybook Docs](https://storybook.js.org/docs/react/essentials/docs)                                                                                                                                                 | Docs.mdx usage.                                |
+| [Testing – Jest & React Testing Library](https://jestjs.io/docs/getting-started)                                                                                                                                      | Unit testing guide.                            |
+| [Launchpad vs Platform](./LAUNCHPAD_VS_PLATFORM.md)                                                                                                                                                                   | Differences when supporting both environments. |
 
 ---
 

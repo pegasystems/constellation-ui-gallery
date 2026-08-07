@@ -1,6 +1,6 @@
 import styled, { css, useTheme } from 'styled-components';
 import { type Event } from './index';
-import { readableColor, themeDefinition } from '@pega/cosmos-react-core';
+import { readableColor } from '@pega/cosmos-react-core';
 import { rgba } from 'polished';
 
 type ElemDisplayProps = {
@@ -9,8 +9,8 @@ type ElemDisplayProps = {
   totalValue?: number;
 };
 
-export const StyledElementDisplay = styled.div(
-  ({ textColor, valueColor, theme }: { textColor: string; valueColor: string; theme: typeof themeDefinition }) => {
+export const StyledElementDisplay = styled.div<{ textColor: string; valueColor: string }>(
+  ({ textColor, valueColor, theme }) => {
     const {
       base: { spacing },
     } = theme;

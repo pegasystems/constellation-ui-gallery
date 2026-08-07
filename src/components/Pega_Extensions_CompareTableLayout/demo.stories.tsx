@@ -394,10 +394,10 @@ const genResponse = (displayFormat: string, selectionProperty: string) => {
 
 type Story = StoryObj<typeof PegaExtensionsCompareTableLayout>;
 
-const CompareTableDemo = (inputs: TableLayoutProps) => {
+const CompareTableDemo = (inputs: Omit<TableLayoutProps, 'getPConnect'>) => {
   return {
-    render: (args: TableLayoutProps) => {
-      (window as any).PCore = {
+    render: (args: Omit<TableLayoutProps, 'getPConnect'>) => {
+      window.PCore = {
         getLocaleUtils: () => {
           return {
             getLocaleValue: (val: string) => {
@@ -410,7 +410,7 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
             getLazyComponent: (f: string) => f,
           };
         },
-      };
+      } as unknown as typeof PCore;
       const selProp = args.selectionProperty === 'Select an object' ? '.prop1' : '';
       const props = {
         template: 'CompareTableLayout',
@@ -448,7 +448,7 @@ const CompareTableDemo = (inputs: TableLayoutProps) => {
                 triggerFieldChange: () => {},
               };
             },
-          };
+          } as unknown as typeof PConnect;
         },
       };
       return <PegaExtensionsCompareTableLayout {...props}></PegaExtensionsCompareTableLayout>;
