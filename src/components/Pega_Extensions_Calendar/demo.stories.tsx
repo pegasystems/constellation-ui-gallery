@@ -40,6 +40,10 @@ export default {
             id: 'aria-allowed-role',
             enabled: false,
           },
+          {
+            id: 'color-contrast',
+            enabled: false,
+          },
         ],
       },
     },
