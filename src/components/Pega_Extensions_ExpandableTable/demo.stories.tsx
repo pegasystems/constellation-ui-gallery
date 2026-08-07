@@ -201,13 +201,12 @@ export const Default: Story = {
         getPConnect: () =>
           ({
             createComponent: (f: any) => {
+              const pageRef: string = context.options?.pageReference ?? context.getPageReference?.() ?? '';
               if (f.type === 'View' || f.config?.name) {
-                const pageRef: string = context.getPageReference() ?? '';
                 const match = pageRef.match(/\[(\d+)\]/);
                 const rowIndex = match ? parseInt(match[1], 10) : 0;
                 return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
               }
-              const pageRef: string = context.getPageReference() ?? '';
               const match = pageRef.match(/\[(\d+)\]/);
               const rowIndex = match ? parseInt(match[1], 10) : 0;
               const val = Array.isArray(context.meta.config.value)
@@ -230,6 +229,8 @@ export const Default: Story = {
           meta: {
             name: '',
           },
+          viewName: '',
+          getComponentName: () => '',
           options: {
             viewName: '',
           },
@@ -364,8 +365,8 @@ const createMockPCore = (args: ExpandableTableProps) => ({
     getPConnect: () =>
       ({
         createComponent: (f: any) => {
+          const pageRef: string = context.options?.pageReference ?? context.getPageReference?.() ?? '';
           if (f.type === 'View' || f.config?.name) {
-            const pageRef: string = context.getPageReference() ?? '';
             const rowIndex = getRowIndexFromPageRef(pageRef);
 
             if (f.config?.name === 'OrderLineItems') {
@@ -375,6 +376,8 @@ const createMockPCore = (args: ExpandableTableProps) => ({
                 getPConnect: () =>
                   ({
                     meta: { name: 'NestedLineItems' },
+                    viewName: 'OrderLineItems',
+                    getComponentName: () => 'OrderLineItems',
                     options: { viewName: 'OrderLineItems', pageReference: pageRef },
                     getLocalizedValue: (val: string) => val,
                     getContextName: () => 'workarea',
@@ -400,7 +403,6 @@ const createMockPCore = (args: ExpandableTableProps) => ({
 
             return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
           }
-          const pageRef: string = context.getPageReference() ?? '';
           const rowIndex = getRowIndexFromPageRef(pageRef);
           const val = Array.isArray(context.meta.config.value)
             ? context.meta.config.value[rowIndex]
@@ -470,6 +472,8 @@ export const NestedTable: Story = {
       getPConnect: () =>
         ({
           meta: { name: 'OrdersTable' },
+          viewName: 'OrdersTable',
+          getComponentName: () => 'OrdersTable',
           options: { viewName: 'OrdersTable' },
           getLocalizedValue: (val: string) => val,
           getContextName: () => 'workarea',

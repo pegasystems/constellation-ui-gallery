@@ -245,6 +245,8 @@ export const Default: Story = {
           meta: {
             name: '',
           },
+          viewName: '',
+          getComponentName: () => '',
           options: {
             viewName: '',
           },

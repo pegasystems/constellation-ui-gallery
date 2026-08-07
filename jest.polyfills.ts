@@ -1,4 +1,31 @@
 /**
+ * window.matchMedia — used by @pega/cosmos-react-core at module load
+ * (isTouchDevice). Must run before setupFiles imports Storybook preview / cosmos.
+ * jsdom does not implement matchMedia.
+ */
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  }),
+});
+
+/**
+ * structuredClone — used by @dagrejs/dagre. Available in Node, but not on the
+ * jsdom global used by Jest.
+ */
+if (typeof globalThis.structuredClone !== 'function') {
+  globalThis.structuredClone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+}
+
+/**
  * CSS Custom Highlight API — used by @pega/cosmos-react-core (useHighlight).
  * jsdom does not implement Highlight / CSS.highlights.
  */

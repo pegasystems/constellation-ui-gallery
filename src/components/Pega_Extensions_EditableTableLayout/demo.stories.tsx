@@ -147,9 +147,8 @@ export const Default: Story = {
           getPConnect: () => {
             return {
               createComponent: (f: any) => {
-                const index = context
-                  .getPageReference()
-                  .substring(context.getPageReference().indexOf('[') + 1, context.getPageReference().indexOf(']'));
+                const pageRef: string = context.options?.pageReference ?? context.getPageReference?.() ?? '';
+                const index = pageRef.substring(pageRef.indexOf('[') + 1, pageRef.indexOf(']'));
                 if (f.type === 'Currency') {
                   return (
                     <CurrencyInput
@@ -209,6 +208,8 @@ export const Default: Story = {
           meta: {
             name: '',
           },
+          viewName: '',
+          getComponentName: () => '',
           options: {
             viewName: '',
           },

@@ -118,7 +118,7 @@ export const Default: Story = {
     };
 
     // Setup mock PCore
-    if (!PCore) {
+    if (!window.PCore) {
       window.PCore = {
         getLocaleUtils: () => ({
           getLocaleValue: (val: string) => val,
@@ -144,6 +144,8 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          viewName: '',
+          getComponentName: () => '',
           getLocalizedValue: (key: string) => {
             return (localizations.fields as any)[key] || key;
           },
