@@ -83,7 +83,7 @@ const preview: Preview = {
           id='Preview'
         >
           <PopoverManager>
-            <Toaster dismissAfter={5000}>
+            <Toaster>
               <ModalManager>
                 <Story {...context} />
               </ModalManager>

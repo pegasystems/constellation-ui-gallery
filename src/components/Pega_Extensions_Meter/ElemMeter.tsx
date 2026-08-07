@@ -8,7 +8,7 @@ type ElemMeterProps = {
   totalValue?: number;
 };
 
-export const StyledElementMeter = styled.div(({ event }: { event: Event }) => {
+export const StyledElementMeter = styled.div<{ event: Event }>(({ event }) => {
   return css`
     background-color: ${event.color};
     width: ${event.value}%;

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const StyledCardContent = styled.div(({ maxHeight }: { maxHeight: string }) => {
+export const StyledCardContent = styled.div<{ maxHeight: string }>(({ maxHeight }) => {
   return css`
     max-height: ${maxHeight};
     overflow-y: auto;

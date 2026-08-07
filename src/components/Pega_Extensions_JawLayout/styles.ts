@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Button, defaultThemeProp, type themeDefinition } from '@pega/cosmos-react-core';
-
+import { Button, defaultThemeProp } from '@pega/cosmos-react-core';
 export const DentalChartContainer = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -57,7 +56,6 @@ export const ToothButton = styled(Button)<{
   status: string;
   exists: boolean;
   readOnly?: boolean;
-  theme: typeof themeDefinition;
 }>`
   &.tooth-button {
     width: 1.75rem;
@@ -105,7 +103,6 @@ export const LegendItem = styled.div(() => ({
 
 export const LegendColorSwatch = styled.div<{
   status: 'healthy' | 'missing' | 'extracted';
-  theme: typeof themeDefinition;
 }>`
   width: 1.25rem;
   height: 1.25rem;

@@ -1,7 +1,7 @@
-import { defaultThemeProp, themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export const StyleGroupMeterWrapper = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyleGroupMeterWrapper = styled.div(({ theme }) => {
   const {
     base: { spacing, colors, 'border-radius': borderRadius },
   } = theme;
@@ -41,7 +41,7 @@ export const StyleGroupMeterWrapper = styled.div(({ theme }: { theme: typeof the
 });
 StyleGroupMeterWrapper.defaultProps = defaultThemeProp;
 
-export const StyledFieldGroupElementMeter = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyledFieldGroupElementMeter = styled.div(({ theme }) => {
   const {
     base: { spacing },
   } = theme;

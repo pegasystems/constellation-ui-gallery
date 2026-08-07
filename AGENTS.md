@@ -8,17 +8,17 @@ This gallery ships **Constellation DX components** that must work on **Pega Plat
 
 ## Read these docs first
 
-| Doc | When to read |
-| --- | --- |
-| [Component_Build_Guide.md](./Component_Build_Guide.md) | Scaffolding a component, folder layout, `config.json`, Storybook/tests, Launchpad support column |
-| [best practices.md](./best%20practices.md) | General Constellation DX design and development rules |
-| [LAUNCHPAD_VS_PLATFORM.md](./LAUNCHPAD_VS_PLATFORM.md) | **Required** before any change that touches data APIs, case IDs, property keys, rule names, navigation, or local actions |
-| [README.md](./README.md) | Install, Storybook, lint, test, and publish overview |
-| [.github/skills/pega-dx-component-builder/SKILL.md](./.github/skills/pega-dx-component-builder/SKILL.md) | End-to-end procedure for creating or extending a component |
-| [.github/skills/pega-dx-component-builder/references/repository-guidance.md](./.github/skills/pega-dx-component-builder/references/repository-guidance.md) | Repo-specific conventions |
-| [.github/skills/pega-dx-component-builder/references/official-pega-guidance.md](./.github/skills/pega-dx-component-builder/references/official-pega-guidance.md) | PCore / PConnect public API summary |
-| [.github/skills/pega-dx-component-builder/assets/component-delivery-checklist.md](./.github/skills/pega-dx-component-builder/assets/component-delivery-checklist.md) | Pre-merge delivery checklist |
-| [.github/agents/pega-dx-component-builder.agent.md](./.github/agents/pega-dx-component-builder.agent.md) | GitHub agent persona for DX component work |
+| Doc                                                                                                                                                                  | When to read                                                                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| [Component_Build_Guide.md](./Component_Build_Guide.md)                                                                                                               | Scaffolding a component, folder layout, `config.json`, Storybook/tests, Launchpad support column                         |
+| [best practices.md](./best%20practices.md)                                                                                                                           | General Constellation DX design and development rules                                                                    |
+| [LAUNCHPAD_VS_PLATFORM.md](./LAUNCHPAD_VS_PLATFORM.md)                                                                                                               | **Required** before any change that touches data APIs, case IDs, property keys, rule names, navigation, or local actions |
+| [README.md](./README.md)                                                                                                                                             | Install, Storybook, lint, test, and publish overview                                                                     |
+| [.github/skills/pega-dx-component-builder/SKILL.md](./.github/skills/pega-dx-component-builder/SKILL.md)                                                             | End-to-end procedure for creating or extending a component                                                               |
+| [.github/skills/pega-dx-component-builder/references/repository-guidance.md](./.github/skills/pega-dx-component-builder/references/repository-guidance.md)           | Repo-specific conventions                                                                                                |
+| [.github/skills/pega-dx-component-builder/references/official-pega-guidance.md](./.github/skills/pega-dx-component-builder/references/official-pega-guidance.md)     | PCore / PConnect public API summary                                                                                      |
+| [.github/skills/pega-dx-component-builder/assets/component-delivery-checklist.md](./.github/skills/pega-dx-component-builder/assets/component-delivery-checklist.md) | Pre-merge delivery checklist                                                                                             |
+| [.github/agents/pega-dx-component-builder.agent.md](./.github/agents/pega-dx-component-builder.agent.md)                                                             | GitHub agent persona for DX component work                                                                               |
 
 Closest existing component under `src/components/Pega_Extensions_<Name>/` is also a primary source of truth. Reuse its structure before introducing a new pattern.
 

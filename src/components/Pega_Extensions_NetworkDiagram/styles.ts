@@ -1,7 +1,6 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export default styled.div(({ height, theme }: { height: string; theme: typeof themeDefinition }) => {
+export default styled.div<{ height: string }>(({ height, theme }) => {
   const {
     components: {
       button: { 'focus-shadow': focusShadow },

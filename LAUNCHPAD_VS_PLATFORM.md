@@ -25,15 +25,15 @@ export function getMappedKey(key: string): string {
 
 Use it for:
 
-| Use case                         | Example                                                              |
-| -------------------------------- | -------------------------------------------------------------------- |
-| Case / work IDs in data rows     | `item[getMappedKey('pyID')]`, `item[getMappedKey('pzInsKey')]`       |
-| Class / status / label fields    | `item[getMappedKey('pxObjClass')]`, `item[getMappedKey('pyLabel')]`  |
-| Data page / data object names    | `getData(getMappedKey(dataPage), …)`                                 |
-| Designer-configured field names  | `getMappedKey(rawStartTimeProperty \|\| 'StartTime')`                |
-| Local action / flow type names   | `getMappedKey('pyStartCase')`, `getMappedKey('pyUpdateCaseDetails')` |
-| Field updates on the case        | `updateFieldValue('.' + getMappedKey('pyLatLon'), value)`            |
-| Data-view / filter field lists   | `{ field: getMappedKey('pyStatusWork') }`                            |
+| Use case                        | Example                                                              |
+| ------------------------------- | -------------------------------------------------------------------- |
+| Case / work IDs in data rows    | `item[getMappedKey('pyID')]`, `item[getMappedKey('pzInsKey')]`       |
+| Class / status / label fields   | `item[getMappedKey('pxObjClass')]`, `item[getMappedKey('pyLabel')]`  |
+| Data page / data object names   | `getData(getMappedKey(dataPage), …)`                                 |
+| Designer-configured field names | `getMappedKey(rawStartTimeProperty \|\| 'StartTime')`                |
+| Local action / flow type names  | `getMappedKey('pyStartCase')`, `getMappedKey('pyUpdateCaseDetails')` |
+| Field updates on the case       | `updateFieldValue('.' + getMappedKey('pyLatLon'), value)`            |
+| Data-view / filter field lists  | `{ field: getMappedKey('pyStatusWork') }`                            |
 
 Do **not** hard-code `pyID`, `pzInsKey`, `pxObjClass`, `pyStatusWork`, `pyLabel`, `pyGUID`, etc. when reading or writing runtime data.
 
@@ -53,12 +53,11 @@ Do **not** hard-code `pyID`, `pzInsKey`, `pxObjClass`, `pyStatusWork`, `pyLabel`
 - When reading the **current case ID from context**, prefer PCore constants, not string paths:
 
   ```ts
-  const caseId = getPConnect().getValue(
-    (window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID,
-  );
+  const caseId = getPConnect().getValue((window as any).PCore.getConstants().CASE_INFO.CASE_INFO_ID);
   ```
 
   Avoid hard-coded paths such as `'caseInfo.businessID'` or `'.pyID'` unless you are intentionally reading a host-provided path that is already environment-neutral.
+
 - Use PCore actions (`openWorkByHandle`, `createWork`, `showCasePreview`, etc.) and pass the identifiers they expect; let the runtime map them per environment.
 
 ---
@@ -140,12 +139,12 @@ Reference implementations: `Pega_Extensions_CardGallery/utils.ts`, `Pega_Extensi
 
 ### Practical guidance
 
-| Prefer / check                                              | Avoid in shared components                                      |
-| ----------------------------------------------------------- | --------------------------------------------------------------- |
-| `doesRestApiExist('…')` before calling optional REST DX APIs | `if (isLaunchpad)` / env-name branches                          |
-| `getData` + mapped parameters when object-view APIs missing | Calling `getDataObjectView` unconditionally                     |
-| `getActionsApi()` / Semantic URL utils                      | Hand-built Infinity URLs or Launchpad routes                    |
-| Mapped property access on list rows                         | Assuming `pyNodes` / `pyEdges` / `pyID` keys exist unmapped     |
+| Prefer / check                                               | Avoid in shared components                                  |
+| ------------------------------------------------------------ | ----------------------------------------------------------- |
+| `doesRestApiExist('…')` before calling optional REST DX APIs | `if (isLaunchpad)` / env-name branches                      |
+| `getData` + mapped parameters when object-view APIs missing  | Calling `getDataObjectView` unconditionally                 |
+| `getActionsApi()` / Semantic URL utils                       | Hand-built Infinity URLs or Launchpad routes                |
+| Mapped property access on list rows                          | Assuming `pyNodes` / `pyEdges` / `pyID` keys exist unmapped |
 
 If an API is required and has no Launchpad equivalent, document the component as **not Launchpad-supported** (see the Launchpad column in [Component_Build_Guide.md](./Component_Build_Guide.md)) rather than shipping a broken path.
 
@@ -216,7 +215,7 @@ Stories and mocks must support **both** environments. Whenever a component impor
   getRestClient: () => ({
     doesRestApiExist: () => true, // or false to exercise Launchpad fallback
   }),
-  getDataApiUtils: () => ({ /* getData, getDataObjectView, … */ }),
+  getDataApiUtils: () => ({/* getData, getDataObjectView, … */}),
   getSemanticUrlUtils: () => ({
     getActions: () => ({ ACTION_OPENWORKBYHANDLE: 'openWorkByHandle' }),
     getResolvedSemanticURL: () => '',

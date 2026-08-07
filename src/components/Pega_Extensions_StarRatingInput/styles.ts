@@ -1,4 +1,4 @@
-import { defaultThemeProp, type themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
 export const StyledFlexWrapper = styled.div(() => {
@@ -12,7 +12,7 @@ export const StyledFlexWrapper = styled.div(() => {
   `;
 });
 
-export const StyledStarWrapper = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyledStarWrapper = styled.div(({ theme }) => {
   return css`
     color: ${theme.components.rating.color};
     display: inline-flex;
@@ -29,7 +29,7 @@ export const StyledStarWrapper = styled.div(({ theme }: { theme: typeof themeDef
 });
 StyledStarWrapper.defaultProps = defaultThemeProp;
 
-export const StyledStarRatingMetaInfo = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyledStarRatingMetaInfo = styled.div(({ theme }) => {
   return css`
     padding-block: ${theme.base.spacing};
     margin-inline-start: ${theme.base.spacing};

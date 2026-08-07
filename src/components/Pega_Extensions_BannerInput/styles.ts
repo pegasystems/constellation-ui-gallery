@@ -1,8 +1,10 @@
-import { defaultThemeProp, tryCatch, type themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp, tryCatch } from '@pega/cosmos-react-core';
 import { getContrast, readableColor } from 'polished';
 import styled, { css } from 'styled-components';
 
-export const StyledBanner = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+type BannerVariant = 'success' | 'urgent' | 'info' | 'warn' | 'pending';
+
+export const StyledBanner = styled.div(({ theme }) => {
   return css`
     border-radius: ${theme.components.card['border-radius']};
     min-height: 3.5rem;
@@ -12,33 +14,31 @@ export const StyledBanner = styled.div(({ theme }: { theme: typeof themeDefiniti
 });
 StyledBanner.defaultProps = defaultThemeProp;
 
-export const StyledBannerStatus = styled.div(
-  ({ variant, theme }: { variant: string; theme: typeof themeDefinition }) => {
-    const background = theme.base.palette[variant];
-    const color = tryCatch(() =>
-      getContrast(background, theme.base.palette['primary-background']) >= 3
-        ? theme.base.palette['primary-background']
-        : readableColor(background),
-    );
+export const StyledBannerStatus = styled.div<{ variant: BannerVariant }>(({ variant, theme }) => {
+  const background = theme.base.palette[variant];
+  const color = tryCatch(() =>
+    getContrast(background, theme.base.palette['primary-background']) >= 3
+      ? theme.base.palette['primary-background']
+      : readableColor(background),
+  );
 
-    return css`
-      background-color: ${background};
-      color: ${color};
-      border: 0.0625rem solid ${background};
-      border-inline-end: none;
-      border-start-start-radius: inherit;
-      border-end-start-radius: inherit;
-      font-size: 1.25rem;
-      padding: 0 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    `;
-  },
-);
+  return css`
+    background-color: ${background};
+    color: ${color};
+    border: 0.0625rem solid ${background};
+    border-inline-end: none;
+    border-start-start-radius: inherit;
+    border-end-start-radius: inherit;
+    font-size: 1.25rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+});
 StyledBannerStatus.defaultProps = defaultThemeProp;
 
-export const StyledBannerText = styled.div(({ variant, theme }: { variant: string; theme: typeof themeDefinition }) => {
+export const StyledBannerText = styled.div<{ variant: BannerVariant }>(({ variant, theme }) => {
   const background = theme.base.palette['primary-background'];
   const color = readableColor(background);
   return css`

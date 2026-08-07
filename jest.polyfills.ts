@@ -2,7 +2,7 @@
  * CSS Custom Highlight API — used by @pega/cosmos-react-core (useHighlight).
  * jsdom does not implement Highlight / CSS.highlights.
  */
-(globalThis as typeof globalThis & { Highlight: unknown }).Highlight = class Highlight {
+class HighlightPolyfill {
   #ranges = new Set<unknown>();
 
   constructor(...ranges: unknown[]) {
@@ -30,14 +30,16 @@
   get size() {
     return this.#ranges.size;
   }
-};
+}
+
+Object.assign(globalThis, { Highlight: HighlightPolyfill });
 
 const cssGlobal = globalThis as typeof globalThis & {
-  CSS?: { highlights?: Map<string, unknown> };
+  CSS?: typeof CSS & { highlights?: Map<string, unknown> };
 };
 
 if (!cssGlobal.CSS) {
-  cssGlobal.CSS = { highlights: new Map() };
+  Object.assign(globalThis, { CSS: { highlights: new Map() } });
 } else if (!cssGlobal.CSS.highlights) {
   Object.defineProperty(cssGlobal.CSS, 'highlights', {
     value: new Map(),

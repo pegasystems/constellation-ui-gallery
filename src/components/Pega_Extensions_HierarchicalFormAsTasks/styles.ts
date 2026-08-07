@@ -1,7 +1,7 @@
-import { defaultThemeProp, type themeDefinition } from '@pega/cosmos-react-core';
+import { defaultThemeProp } from '@pega/cosmos-react-core';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
-export const StyledTaskList = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyledTaskList = styled.div(({ theme }) => {
   return css`
     legend {
       margin-block-end: 0;

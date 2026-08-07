@@ -80,6 +80,7 @@ Every component lives in its own folder under `src/components` and follows the *
 > **Tip:** The folder name _must_ match the `name` and `componentKey` fields in `config.json`.
 
 > **Launchpad:** See [LAUNCHPAD_VS_PLATFORM.md](./LAUNCHPAD_VS_PLATFORM.md) before wiring PCore data or actions.
+
 ---
 
 ## 3️⃣ `config.json` – Pega Blueprint

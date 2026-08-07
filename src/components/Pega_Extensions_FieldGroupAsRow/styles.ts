@@ -1,7 +1,6 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export default styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export default styled.div(({ theme }) => {
   return css`
     & > div > div > div > div:last-child > div {
       display: flex;

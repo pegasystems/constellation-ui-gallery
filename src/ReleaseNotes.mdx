@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title='Release Notes' />
+
+# Release Notes
+
+This page summarizes notable version-to-version changes in the Constellation UI Gallery, focused on component removals, deprecations, and limited-support guidance. For full release details and RAP downloads, see the [GitHub releases](https://github.com/pegasystems/constellation-ui-gallery/releases).
+
+## Version compatibility
+
+| Gallery version | Pega Platform | Branch          |
+| --------------- | ------------- | --------------- |
+| 5.x             | Pega '26.1    | `master`        |
+| 4.x             | Pega '25.1    | `release/4.0`   |
+| 3.x             | Pega '24.2    | `release/3.0`   |
+| 2.x             | Pega '24.1    | `release/2.0`   |
+| 1.x             | Pega '23      | `release/1.x.x` |
+
+Only the latest Pega Platform version is actively worked on. See [Support and Contributing](?path=/docs/support-and-contributing--docs) for support expectations.
+
+---
+
+## Version 5.x (Pega '26)
+
+Components that became available out of the box in Pega 26.1 are **removed** from the Constellation UI Gallery:
+
+| Component          | Replacement / reason                                                    |
+| ------------------ | ----------------------------------------------------------------------- |
+| **AutoSave**       | Available OOB in Pega 26.1                                              |
+| **DateInput**      | Available OOB in Pega 26.1 (locale-specific calendars)                  |
+| **JapaneseInput**  | Available OOB in Pega 26.1                                              |
+| **SecureRichText** | Available OOB in Pega 26.1; OOB Rich Text can disable link/image insert |
+
+Migrate applications that still reference these gallery components to the corresponding platform capabilities.
+
+---
+
+## Version 4.x (Pega '25.1)
+
+Version 4.x is compatible with **Pega '25.1 only**. The 4.0.5 release is the **last feature release** for 4.0.x; later 4.0.x releases include security fixes only if needed. That distribution was tested and built for **Pega 25.1.3** using Cosmos library `8.21.9-3` and styled-components `5.3.6`.
+
+### Components removed in 4.x
+
+| Component         | Replacement / reason                                 |
+| ----------------- | ---------------------------------------------------- |
+| **CaseHierarchy** | Provided OOB in Pega '25.1; removed from the gallery |
+
+### Components deprecated in 4.x
+
+These components remain available in 4.x but are marked **deprecated** (and may be removed in a future release). Migrate to the platform alternative when possible:
+
+| Component            | Replacement / reason                                         |
+| -------------------- | ------------------------------------------------------------ |
+| **BannerInput**      | Prefer instruction-text banners in Pega '26                  |
+| **CardGallery**      | Prefer Insight-based gallery templates in Pega '26           |
+| **ChatGenAI**        | Prefer Pega Platform agent functionality                     |
+| **LangSwitch**       | Prefer language switch via the operator menu in Pega '26     |
+| **MaskedInput**      | Prefer OOB formatted inputs on form fields in Pega '26       |
+| **Shortcuts**        | Prefer the OOB Shortcuts widget in Pega '26                  |
+| **SignatureCapture** | Prefer paragraph field displayed as signature in Pega 26.1.2 |
+| **StatusBadge**      | Prefer formatting a text field as status in an Insight       |
+
+### Limited support (not deprecated, but constrained)
+
+| Component         | Notes                                                                           |
+| ----------------- | ------------------------------------------------------------------------------- |
+| **CaseReference** | Prefer OOB Case Reference except for current-case / custom-ID preview use cases |
+| **CPQTree**       | Read-only; not full CPQ application support                                     |

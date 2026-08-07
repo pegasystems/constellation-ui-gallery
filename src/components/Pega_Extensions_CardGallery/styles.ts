@@ -1,7 +1,6 @@
-import { type themeDefinition } from '@pega/cosmos-react-core';
 import styled, { css } from 'styled-components';
 
-export const StyledCardContent = styled.div(({ theme }: { theme: typeof themeDefinition }) => {
+export const StyledCardContent = styled.div(({ theme }) => {
   return css`
     & > article {
       border: 0.0625rem solid ${theme.base.palette['border-line']};
@@ -23,7 +22,7 @@ export const StyledCardContent = styled.div(({ theme }: { theme: typeof themeDef
   `;
 });
 
-export const MainCard = styled.div(({ rendering, minWidth }: { rendering: string; minWidth: string }) => {
+export const MainCard = styled.div<{ rendering: string; minWidth: string }>(({ rendering, minWidth }) => {
   if (rendering === 'horizontal') {
     return css`
       display: grid;
