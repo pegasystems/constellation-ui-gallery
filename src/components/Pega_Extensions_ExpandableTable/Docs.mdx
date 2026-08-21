@@ -9,9 +9,11 @@ The **Expandable Table** renders an embedded data list as a read-only table. Eac
 
 Key characteristics:
 
-- **Read-only cells** — column values are rendered in display-only mode; no inline editing.
+- **Read-only cells** — column values are rendered in display-only mode; no inline editing (except boolean select-all checkboxes).
 - **Row-level expand/collapse** — a chevron button in the first column toggles a detail panel beneath the row.
 - **Configurable detail view** — the view rendered on expand is specified in authoring via the **Detail view name** property; the component delegates to the Constellation `createComponent` API so the view is fully interactive and theme-aware.
+- **ID + URL merge** — when a column labeled `ID` is immediately followed by a `URL` field, the two columns are merged into one: the cell shows a link with the ID as the label and the URL as the href.
+- **Boolean select-all** — boolean / `Checkbox` columns render as a narrow first data column (no visible label). Checking or unchecking updates that row and every nested boolean field under the row.
 - **Sticky first column** — the expand button column stays visible during horizontal scroll.
 - **Lazy component loading** — cell renderers are loaded on demand through the Constellation component registry before the table is displayed.
 
@@ -55,3 +57,54 @@ For nested authoring:
 3. In the child table, pick columns from the embedded list on the parent row (for example, `.LineItems[]`).
 
 The child table automatically inherits the parent row's `pageReference` and binds its rows to `caseInfo.content.Orders[n].LineItems[m]`.
+
+## ID + URL linked column
+
+When **Region A (Columns)** includes a field whose label is exactly `ID`, and the **next** column is a `URL` field type, the Expandable Table merges those two columns into one.
+
+| Authoring columns | Displayed column |
+| --- | --- |
+| `ID` then `URL` (adjacent) | Single **ID** column; each cell is a link |
+| Cell content | Link **label** = ID value; link **href** = URL value |
+
+### Authoring steps
+
+1. Add the identifier field to **Region A** and set its label to `ID` (exact match).
+2. Immediately after it, add a property whose type / component is `URL`.
+3. Optionally add other columns before or after the pair; only consecutive `ID` + `URL` pairs are merged.
+
+If the columns are not adjacent, or the label is not exactly `ID`, both columns render separately as usual.
+
+### Try it
+
+<Story of={DemoStories.IdUrlLink} />
+
+## Boolean columns and nested select-all
+
+When you include a **boolean** property (for example `IsSelected`) in **Region A (Columns)**, the Expandable Table renders it as an interactive checkbox instead of display-only text.
+
+Checking or unchecking that checkbox:
+
+1. Updates the boolean on the **current row**.
+2. Walks **nested pages and page lists** under that row and sets every boolean field to the same value.
+
+This is similar to [Checkbox Row](?path=/docs/fields-checkbox-row--docs), but children are nested under the row (for example `Documents[0].Files[n].IsSelected`) rather than sibling fields on the same page.
+
+### Authoring steps
+
+1. On the **parent** Expandable Table, add a boolean field such as `.IsSelected` to **Region A (Columns)**. Boolean columns are shown first (after the expand control), in a narrow column with no visible header or checkbox caption.
+2. Set **Detail view name** to a view that contains a **child** Expandable Table (or other controls bound to nested data).
+3. On the **child** Expandable Table, also include the nested boolean field (for example `.Files[].IsSelected`) if you want those checkboxes visible and kept in sync, and set the child's **Detail view name** so nested rows can expand their own detail view.
+4. Use the same property name on parent and child when you want a clear select-all relationship (commonly `IsSelected`).
+
+### Runtime behavior
+
+- Parent checkbox checked → parent `IsSelected = true` and every nested boolean under that row (for example all `Files[].IsSelected`) becomes `true`.
+- Parent checkbox unchecked → the same nested booleans become `false`.
+- Nested tables subscribe to the Redux store so their checkbox UI refreshes when a parent select-all updates store values.
+
+### Try it
+
+Expand a document, then toggle its **Selected** checkbox. The nested **Files** checkboxes update together.
+
+<Story of={DemoStories.SelectAllNested} />
