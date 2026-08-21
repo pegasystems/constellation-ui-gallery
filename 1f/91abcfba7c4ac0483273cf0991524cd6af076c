@@ -1,0 +1,21 @@
+src/components/Pega_Extensions_Map/demo.stories.tsx
+  s_f1a667607f9ce6::t_c11c4361245929 139-140
+src/components/Pega_Extensions_Map/index.tsx
+  s_f1a667607f9ce6::t_84cbd7163c67c5 273
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1f91abcfba7c4ac0483273cf0991524cd6af076c",
+  "prompts": {},
+  "sessions": {
+    "s_f1a667607f9ce6": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "7e0c4cbd-08b5-4e8d-a58a-0eda817217dc",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
