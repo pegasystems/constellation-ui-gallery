@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsCameraCapture } from './index';
 
 export default {
@@ -12,7 +12,7 @@ export default {
       table: { disable: true },
     },
   },
-};
+} satisfies Meta<typeof PegaExtensionsCameraCapture>;
 
 const setPCore = () => {
   window.PCore = {

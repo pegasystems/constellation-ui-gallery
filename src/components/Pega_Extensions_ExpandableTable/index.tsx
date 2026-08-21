@@ -1,14 +1,16 @@
-import { Fragment, useState, useEffect, useCallback } from 'react';
+import { Fragment, useState, useEffect, useCallback, type ChangeEvent } from 'react';
 import {
   withConfiguration,
   Progress,
   Text,
+  Link,
   createUID,
   Button,
   Icon,
   registerIcon,
   CardContent,
   Card,
+  Checkbox,
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsExpandableTableWrapper from './styles';
 import * as caretDownIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/caret-down.icon';
@@ -20,6 +22,11 @@ import getAllFields, {
   buildRowPageReference,
   buildReferenceList,
   getPageListRegistration,
+  isBooleanField,
+  applyBooleanSelectAll,
+  syncBooleanFieldValuesFromStore,
+  buildDisplayColumns,
+  type DisplayColumn,
 } from './utils';
 
 type RowDetailPanelProps = {
@@ -84,6 +91,54 @@ const RowDetailPanel = ({ rowIndex, detailViewName, embedDataRef, embedClass, ge
 
 registerIcon(caretDownIcon, caretRightIcon);
 
+type BooleanSelectAllCellProps = {
+  field: any;
+  rowIndex: number;
+  basePageRef: string;
+  embedDataRef: string;
+  getPConnect: () => typeof PConnect;
+};
+
+const toChecked = (value: any): boolean => value === true || value === 'true';
+
+const BooleanSelectAllCell = ({
+  field,
+  rowIndex,
+  basePageRef,
+  embedDataRef,
+  getPConnect,
+}: BooleanSelectAllCellProps) => {
+  const value = field?.value?.[rowIndex];
+  const [checked, setChecked] = useState(() => toChecked(value));
+
+  useEffect(() => {
+    setChecked(toChecked(value));
+  }, [value]);
+
+  const handleChange = (nextChecked: boolean) => {
+    setChecked(nextChecked);
+    const pConn = getPConnect();
+    const contextName = pConn.getContextName();
+    const storeData = PCore.getStore()?.getState()?.data?.[contextName];
+    applyBooleanSelectAll({
+      rowPageRef: buildRowPageReference(basePageRef, embedDataRef, rowIndex),
+      field,
+      checked: nextChecked,
+      contextName,
+      target: pConn.getTarget?.(),
+      storeData,
+    });
+  };
+
+  return (
+    <Checkbox
+      label={<span className='checkbox-col-caption'>{field.label || 'Select'}</span>}
+      checked={checked}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.checked)}
+    />
+  );
+};
+
 export type ExpandableTableProps = {
   detailViewName?: string;
   getPConnect: () => typeof PConnect;
@@ -115,11 +170,24 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     });
   };
 
-  const genCell = (field: any, rowIndex: number, key: string) => {
+  const genFieldCell = (field: any, rowIndex: number, key: string) => {
+    if (isBooleanField(field, rowIndex)) {
+      return (
+        <td key={key} className='checkbox-col'>
+          <BooleanSelectAllCell
+            field={field}
+            rowIndex={rowIndex}
+            basePageRef={basePageRef}
+            embedDataRef={embedDataRef}
+            getPConnect={getPConnect}
+          />
+        </td>
+      );
+    }
     const fieldInput: any = {
       type: field.componentType,
       config: {
-        value: field?.value?.[rowIndex] || field.propref,
+        value: field?.value?.[rowIndex] ?? field.propref,
         label: field.label,
         formatter: field.formatter,
         hideLabel: true,
@@ -140,6 +208,45 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     return <td key={key}>{c11nEnv.getPConnect().createComponent(fieldInput)}</td>;
   };
 
+  const genIdUrlLinkCell = (idField: any, urlField: any, rowIndex: number, key: string) => {
+    const idValue = idField?.value?.[rowIndex];
+    const urlValue = urlField?.value?.[rowIndex];
+    const label = idValue !== null && idValue !== undefined && idValue !== '' ? `${idValue}` : '';
+    if (!label) {
+      return (
+        <td key={key}>
+          <span className='visually-hidden'>{'\u00A0'}</span>
+        </td>
+      );
+    }
+    if (!urlValue) {
+      return (
+        <td key={key}>
+          <Text>{label}</Text>
+        </td>
+      );
+    }
+    return (
+      <td key={key}>
+        <Link href={`${urlValue}`} target='_blank' rel='noopener noreferrer' aria-label={label}>
+          {label}
+        </Link>
+      </td>
+    );
+  };
+
+  const genCell = (column: DisplayColumn, rowIndex: number) => {
+    if (column.kind === 'idUrlLink') {
+      return genIdUrlLinkCell(
+        column.idField,
+        column.urlField,
+        rowIndex,
+        `${tableId}-row-${rowIndex}-${column.idIndex}`,
+      );
+    }
+    return genFieldCell(column.field, rowIndex, `${tableId}-row-${rowIndex}-${column.index}`);
+  };
+
   useEffect(() => {
     const tmpFields = getAllFields(getPConnect);
     const columnFields = tmpFields.filter((field: any) => field.type !== 'reference');
@@ -156,7 +263,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
       PCore.getContextTreeManager().addPageListNode(
         getPConnect().getContextName(),
         parentPath,
-        getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
+        getPConnect().viewName ?? getPConnect().getComponentName?.() ?? '',
         listProperty,
         {},
       );
@@ -184,6 +291,33 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     }
   }, [numFields, fields]);
 
+  useEffect(() => {
+    if (!embedDataRef) {
+      return undefined;
+    }
+    const store = PCore.getStore?.();
+    if (typeof store?.subscribe !== 'function') {
+      return undefined;
+    }
+
+    const contextName = getPConnect().getContextName();
+    const syncFromStore = () => {
+      const storeData = store.getState()?.data?.[contextName];
+      setFields((prevFields) => {
+        const { fields: nextFields, changed } = syncBooleanFieldValuesFromStore({
+          fields: prevFields,
+          storeData,
+          basePageRef,
+          embedDataRef,
+        });
+        return changed ? nextFields : prevFields;
+      });
+    };
+
+    syncFromStore();
+    return store.subscribe(syncFromStore);
+  }, [getPConnect, basePageRef, embedDataRef]);
+
   if (loading) {
     return (
       <Progress
@@ -197,7 +331,15 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     );
   }
 
-  const colSpan = fields.length + 1;
+  const displayColumns = buildDisplayColumns(fields);
+  const colSpan = displayColumns.length + 1;
+  const hasVisibleHeaders = displayColumns.some((column) => {
+    if (column.kind === 'field' && isBooleanField(column.field)) {
+      return false;
+    }
+    const label = column.kind === 'idUrlLink' ? column.idField.label : column.field.label;
+    return typeof label === 'string' && label.trim().length > 0;
+  });
 
   return (
     <Card>
@@ -207,18 +349,44 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
             <caption>
               <Text variant='h3'>{inheritedProps.label}</Text>
             </caption>
-            <thead>
-              <tr>
-                <th scope='col' style={{ width: '3rem' }}>
-                  <span className='visually-hidden'>{getPConnect().getLocalizedValue('Row details')}</span>
-                </th>
-                {fields.map((field: any) => (
-                  <th scope='col' key={`${tableId}-head-${field.label}`} id={`${tableId}-head-${field.label}`}>
-                    {field.label}
+            <colgroup>
+              <col className='expand-col' />
+              {displayColumns.map((column) => {
+                const colKey = column.kind === 'idUrlLink' ? column.idIndex : column.index;
+                const isCheckbox = column.kind === 'field' && isBooleanField(column.field);
+                return <col key={`${tableId}-col-${colKey}`} className={isCheckbox ? 'checkbox-col' : undefined} />;
+              })}
+            </colgroup>
+            {hasVisibleHeaders && (
+              <thead>
+                <tr>
+                  <th scope='col'>
+                    <span className='visually-hidden'>{getPConnect().getLocalizedValue('Row details')}</span>
                   </th>
-                ))}
-              </tr>
-            </thead>
+                  {displayColumns.map((column) => {
+                    const colKey = column.kind === 'idUrlLink' ? column.idIndex : column.index;
+                    if (column.kind === 'field' && isBooleanField(column.field)) {
+                      return (
+                        <th
+                          scope='col'
+                          key={`${tableId}-head-${colKey}`}
+                          id={`${tableId}-head-${colKey}`}
+                          className='checkbox-col'
+                        >
+                          <span className='visually-hidden'>{column.field.label}</span>
+                        </th>
+                      );
+                    }
+                    const label = column.kind === 'idUrlLink' ? column.idField.label : column.field.label;
+                    return (
+                      <th scope='col' key={`${tableId}-head-${colKey}`} id={`${tableId}-head-${colKey}`}>
+                        {label}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+            )}
             <tbody>
               {Array.from({ length: numRows }, (_, i) => i).map((_, rowIndex) => (
                 // eslint-disable-next-line @eslint-react/no-array-index-key -- rows are index-stable positional slots
@@ -237,7 +405,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
                         <Icon name={expandedRows.has(rowIndex) ? 'caret-down' : 'caret-right'} />
                       </Button>
                     </td>
-                    {fields.map((field: any, j: number) => genCell(field, rowIndex, `${tableId}-row-${rowIndex}-${j}`))}
+                    {displayColumns.map((column) => genCell(column, rowIndex))}
                   </tr>
                   {expandedRows.has(rowIndex) && (
                     <tr className='expandable-detail-row'>

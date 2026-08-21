@@ -32,12 +32,12 @@ const setPCore = (currentLocale = 'en_EN', currentTimezone = 'UTC', setTimezone 
   } as unknown as typeof PCore;
 };
 
-const buildPConnect = () => {
+const buildPConnect = (() => {
   return {
     getContextName: () => 'primary',
     getLocalizedValue: (value: string) => value,
   };
-};
+}) as unknown as () => typeof PConnect;
 
 beforeEach(() => {
   jest.restoreAllMocks();
