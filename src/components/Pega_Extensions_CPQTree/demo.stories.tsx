@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { FieldValueItem } from '@pega/cosmos-react-core';
 import { Details, DetailsList } from '@pega/cosmos-react-work';
 import { PegaExtensionsCPQTree, type CPQTreeProps } from './index';
@@ -62,7 +62,7 @@ export default {
     },
   },
   component: PegaExtensionsCPQTree,
-};
+} satisfies Meta;
 
 const setPCore = (Example: string) => {
   // Use data from sample.json regardless of example selection for now

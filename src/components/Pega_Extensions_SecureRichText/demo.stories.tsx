@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { PegaExtensionsSecureRichText } from './index';
 
@@ -57,7 +57,7 @@ export default {
     },
   },
   component: PegaExtensionsSecureRichText,
-};
+} satisfies Meta<typeof PegaExtensionsSecureRichText>;
 
 const setPCore = () => {
   (window as any).PCore = {

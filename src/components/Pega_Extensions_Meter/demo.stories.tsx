@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsMeter, type MeterProps } from './index';
 
 export default {
@@ -28,7 +28,7 @@ export default {
     },
   },
   component: PegaExtensionsMeter,
-};
+} satisfies Meta;
 
 const setPCore = () => {
   (window as any).PCore = {
