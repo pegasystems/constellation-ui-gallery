@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsIframeWrapper } from './index';
 
 export default {
@@ -7,7 +7,7 @@ export default {
     height: { control: 'number', if: { arg: 'heightMode', eq: 'fixed' } },
   },
   component: PegaExtensionsIframeWrapper,
-};
+} satisfies Meta<typeof PegaExtensionsIframeWrapper>;
 
 type Story = StoryObj<typeof PegaExtensionsIframeWrapper>;
 

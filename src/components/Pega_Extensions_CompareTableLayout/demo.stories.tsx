@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsCompareTableLayout, type TableLayoutProps } from './index';
 import { CurrencyDisplay } from '@pega/cosmos-react-core';
 
@@ -43,7 +43,7 @@ export default {
     },
   },
   component: PegaExtensionsCompareTableLayout,
-};
+} satisfies Meta<typeof PegaExtensionsCompareTableLayout>;
 
 const genComponent = (config: any, format: any) => {
   if (config.type === 'Currency') {

@@ -5,6 +5,11 @@ import 'jest-canvas-mock';
 // Wait time needed
 const TIMEOUT = 300000;
 
+// jsdom does not expose structuredClone; @dagrejs/dagre 3.1+ requires it for layout()
+if (typeof globalThis.structuredClone !== 'function') {
+  globalThis.structuredClone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+}
+
 // mocks open
 global.open = jest.fn();
 

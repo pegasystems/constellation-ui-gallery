@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsOrgBuilder, type OrgBuilderProps } from './index';
 import type { OrgBuilderDataPageResponse } from './OrgTypes';
 
@@ -249,7 +249,7 @@ export default {
     },
   },
   component: PegaExtensionsOrgBuilder,
-};
+} satisfies Meta;
 
 const setPCore = (Example: string) => {
   let data: OrgBuilderDataPageResponse;

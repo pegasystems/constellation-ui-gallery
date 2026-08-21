@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsToggle, type ToggleProps } from './index';
 
 export default {
@@ -38,7 +38,7 @@ export default {
     },
   },
   component: PegaExtensionsToggle,
-};
+} satisfies Meta<typeof PegaExtensionsToggle>;
 
 const setPCore = () => {
   (window as any).PCore = {

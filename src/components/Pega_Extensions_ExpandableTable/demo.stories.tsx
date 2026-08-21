@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Text } from '@pega/cosmos-react-core';
 import { PegaExtensionsExpandableTable, type ExpandableTableProps } from './index';
 
@@ -7,6 +7,7 @@ type configInfo = {
   componentType?: string;
   label?: string;
   heading?: string;
+  name?: string;
 };
 
 type info = {
@@ -15,7 +16,7 @@ type info = {
   children?: Array<info>;
 };
 
-export default {
+const meta: Meta<typeof PegaExtensionsExpandableTable> = {
   title: 'Templates/Expandable Table',
   tags: ['Pega_Extensions_ExpandableTable'],
   argTypes: {
@@ -44,6 +45,8 @@ export default {
   },
   component: PegaExtensionsExpandableTable,
 };
+
+export default meta;
 
 const genResponse = () => {
   const demoView = {
@@ -190,12 +193,17 @@ export const Default: Story = {
             workarea: {
               caseInfo: {
                 content: {
-                  computers: [{ pxObjClass: 'Data-Computer' }],
+                  computers: [
+                    { pxObjClass: 'Data-Computer' },
+                    { pxObjClass: 'Data-Computer' },
+                    { pxObjClass: 'Data-Computer' },
+                  ],
                 },
               },
             },
           },
         }),
+        subscribe: () => () => {},
       }),
       createPConnect: (context: any) => ({
         getPConnect: () => ({
@@ -215,6 +223,10 @@ export const Default: Story = {
             return <Text>{`${val ?? ''}`}</Text>;
           },
           getTarget: () => 'workarea',
+          getActionsApi: () => ({
+            updateFieldValue: () => {},
+            triggerFieldChange: () => {},
+          }),
         }),
       }),
       getComponentsRegistry: () => ({
@@ -350,12 +362,22 @@ const createMockPCore = (args: ExpandableTableProps) => ({
         workarea: {
           caseInfo: {
             content: {
-              orders: [{ pxObjClass: 'Data-Order', LineItems: [{ pxObjClass: 'Data-LineItem' }] }],
+              orders: [
+                {
+                  pxObjClass: 'Data-Order',
+                  LineItems: [{ pxObjClass: 'Data-LineItem' }, { pxObjClass: 'Data-LineItem' }],
+                },
+                {
+                  pxObjClass: 'Data-Order',
+                  LineItems: [{ pxObjClass: 'Data-LineItem' }],
+                },
+              ],
             },
           },
         },
       },
     }),
+    subscribe: () => () => {},
   }),
   createPConnect: (context: any) => ({
     getPConnect: () => ({
@@ -367,7 +389,7 @@ const createMockPCore = (args: ExpandableTableProps) => ({
           if (f.config?.name === 'OrderLineItems') {
             const nestedView = genNestedLineItemsResponse();
             const nestedProps: ExpandableTableProps = {
-              detailViewName: '',
+              detailViewName: 'LineItemDetails',
               getPConnect: () => ({
                 meta: { name: 'NestedLineItems' },
                 options: { viewName: 'OrderLineItems', pageReference: pageRef },
@@ -403,6 +425,10 @@ const createMockPCore = (args: ExpandableTableProps) => ({
         return <Text>{`${val ?? ''}`}</Text>;
       },
       getTarget: () => 'workarea',
+      getActionsApi: () => ({
+        updateFieldValue: () => {},
+        triggerFieldChange: () => {},
+      }),
     }),
   }),
   getComponentsRegistry: () => ({
@@ -488,5 +514,428 @@ export const NestedTable: Story = {
   },
   args: {
     detailViewName: 'OrderLineItems',
+  },
+};
+
+const genAssetsWithIdUrlResponse = () => {
+  const demoView = {
+    name: 'assetsView',
+    type: 'View',
+    config: {
+      template: 'ExpandableTable',
+      ruleClass: 'Work-',
+      inheritedProps: { label: 'Linked assets' },
+    },
+    children: [
+      {
+        name: 'A',
+        type: 'Region',
+        children: [
+          {
+            config: {
+              value: ['Laptop', 'Monitor', 'Dock'],
+              componentType: 'TextInput',
+              label: 'Name',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: ['AST-1001', 'AST-1002', 'AST-1003'],
+              componentType: 'TextInput',
+              label: 'ID',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: [
+                'https://example.com/assets/AST-1001',
+                'https://example.com/assets/AST-1002',
+                'https://example.com/assets/AST-1003',
+              ],
+              componentType: 'URL',
+              label: 'Asset URL',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: ['Available', 'In Use', 'Available'],
+              componentType: 'TextInput',
+              label: 'Status',
+            },
+            type: 'ScalarList',
+          },
+        ] as Array<info>,
+        getPConnect: () => ({
+          getRawMetadata: () => demoView.children[0],
+        }),
+      },
+    ],
+    classID: 'Work-MyComponents',
+  };
+  return demoView;
+};
+
+/**
+ * When Region A includes an `ID` column immediately followed by a `URL` column,
+ * they are merged into one column: the cell is a link using the URL as href and the ID as the label.
+ */
+export const IdUrlLink: Story = {
+  render: (args: ExpandableTableProps) => {
+    (window as any).PCore = createMockPCore(args);
+
+    const assetsView = genAssetsWithIdUrlResponse();
+    const props: ExpandableTableProps = {
+      ...args,
+      getPConnect: () => ({
+        meta: { name: 'AssetsTable' },
+        options: { viewName: 'AssetsTable' },
+        getLocalizedValue: (val: string) => val,
+        getContextName: () => 'workarea',
+        getTarget: () => 'workarea',
+        getPageReference: () => 'caseInfo.content',
+        getCaseInfo: () => ({ getKey: () => 'S-123' }),
+        getValue: () => 'S-123',
+        getChildren: () => assetsView.children,
+        getRawMetadata: () => assetsView,
+        getInheritedProps: () => assetsView.config.inheritedProps,
+        setInheritedProp: () => {},
+        setValue: () => {},
+        resolveConfigProps: (fieldConfig: any) => ({
+          ...fieldConfig,
+          propref: fieldConfig.value,
+          pageref: 'assets',
+          contextClass: 'Data-Asset',
+        }),
+      }),
+    };
+
+    return <PegaExtensionsExpandableTable {...props} />;
+  },
+  args: {
+    detailViewName: 'AssetDetails',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Place a column with label `ID` immediately before a `URL` field. The table merges them into one column that renders a link: ID as the label, URL as the href.',
+      },
+    },
+  },
+};
+
+/** Mutable store helpers for interactive select-all demos */
+const getNestedPathValue = (obj: any, path: string) => {
+  return path.split('.').reduce((current: any, key) => {
+    if (current === null || current === undefined) {
+      return undefined;
+    }
+    if (key.includes('[') && key.includes(']')) {
+      const arrayKey = key.substring(0, key.indexOf('['));
+      const index = parseInt(key.substring(key.indexOf('[') + 1, key.indexOf(']')), 10);
+      return current[arrayKey]?.[index];
+    }
+    return current[key];
+  }, obj);
+};
+
+const createMutableStore = (initialContent: any) => {
+  const state = {
+    data: {
+      workarea: {
+        caseInfo: {
+          content: initialContent,
+        },
+      },
+    },
+  };
+  const listeners: Array<() => void> = [];
+
+  return {
+    getState: () => state,
+    subscribe: (listener: () => void) => {
+      listeners.push(listener);
+      return () => {
+        const idx = listeners.indexOf(listener);
+        if (idx >= 0) {
+          listeners.splice(idx, 1);
+        }
+      };
+    },
+    updateFieldValue: (pageReference: string, field: string, value: boolean) => {
+      const page = getNestedPathValue(state.data.workarea, pageReference);
+      const propKey = field.startsWith('.') ? field.slice(1) : field;
+      if (page && propKey) {
+        page[propKey] = value;
+        listeners.forEach((listener) => listener());
+      }
+    },
+  };
+};
+
+const genDocumentsResponse = (selectedValues: boolean[]) => {
+  const demoView = {
+    name: 'documentsView',
+    type: 'View',
+    config: {
+      template: 'ExpandableTable',
+      ruleClass: 'Work-',
+      inheritedProps: { label: 'Documents' },
+    },
+    children: [
+      {
+        name: 'A',
+        type: 'Region',
+        children: [
+          {
+            config: {
+              value: selectedValues,
+              componentType: 'Checkbox',
+              label: 'Selected',
+              name: 'IsSelected',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: ['Policy packet', 'Claims evidence'],
+              componentType: 'TextInput',
+              label: 'Name',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: ['Underwriting', 'Claims'],
+              componentType: 'TextInput',
+              label: 'Category',
+            },
+            type: 'ScalarList',
+          },
+        ] as Array<info>,
+        getPConnect: () => ({
+          getRawMetadata: () => demoView.children[0],
+        }),
+      },
+    ],
+    classID: 'Work-MyComponents',
+  };
+  return demoView;
+};
+
+const genNestedFilesResponse = (selectedValues: boolean[]) => {
+  const nestedView = {
+    name: 'nestedFilesView',
+    type: 'View',
+    config: {
+      template: 'ExpandableTable',
+      ruleClass: 'Data-Document',
+      inheritedProps: { label: 'Files' },
+    },
+    children: [
+      {
+        name: 'A',
+        type: 'Region',
+        children: [
+          {
+            config: {
+              value: selectedValues,
+              componentType: 'Checkbox',
+              label: 'Selected',
+              name: 'IsSelected',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: ['cover.pdf', 'appendix.pdf', 'notes.txt'].slice(0, selectedValues.length),
+              componentType: 'TextInput',
+              label: 'Filename',
+            },
+            type: 'ScalarList',
+          },
+        ] as Array<info>,
+        getPConnect: () => ({
+          getRawMetadata: () => nestedView.children[0],
+        }),
+      },
+    ],
+    classID: 'Data-Document',
+  };
+  return nestedView;
+};
+
+/**
+ * Interactive demo: checking a Document checkbox selects/unselects all nested File checkboxes.
+ * Expand a document row to see the Files table update in sync with the parent selection.
+ */
+export const SelectAllNested: Story = {
+  render: (args: ExpandableTableProps) => {
+    const storeContent = {
+      Documents: [
+        {
+          pxObjClass: 'Data-Document',
+          Name: 'Policy packet',
+          IsSelected: false,
+          Files: [
+            { pxObjClass: 'Data-File', Filename: 'cover.pdf', IsSelected: false },
+            { pxObjClass: 'Data-File', Filename: 'appendix.pdf', IsSelected: false },
+            { pxObjClass: 'Data-File', Filename: 'notes.txt', IsSelected: false },
+          ],
+        },
+        {
+          pxObjClass: 'Data-Document',
+          Name: 'Claims evidence',
+          IsSelected: false,
+          Files: [
+            { pxObjClass: 'Data-File', Filename: 'photo1.jpg', IsSelected: false },
+            { pxObjClass: 'Data-File', Filename: 'receipt.pdf', IsSelected: false },
+          ],
+        },
+      ],
+    };
+    const store = createMutableStore(storeContent);
+
+    const documentsView = genDocumentsResponse(storeContent.Documents.map((doc: any) => !!doc.IsSelected));
+
+    (window as any).PCore = {
+      getLocaleUtils: () => ({
+        getLocaleValue: (val: string) => val,
+      }),
+      getConstants: () => ({
+        CASE_INFO: {
+          CASE_INFO_ID: 'caseInfo.ID',
+        },
+      }),
+      getContextTreeManager: () => ({
+        addPageListNode: () => {},
+      }),
+      getViewResources: () => ({
+        fetchViewResources: (name: string, _pConnect: any, ruleClass: string) => ({
+          type: 'View',
+          config: {
+            name,
+            ruleClass,
+          },
+        }),
+        updateViewResources: () => Promise.resolve(),
+      }),
+      getRestClient: () => ({
+        invokeRestApi: () =>
+          Promise.resolve({
+            data: {
+              uiResources: {
+                root: {
+                  config: { name: args.detailViewName },
+                },
+              },
+            },
+          }),
+      }),
+      getStore: () => store,
+      createPConnect: (context: any) => ({
+        getPConnect: () => ({
+          createComponent: (f: any) => {
+            if (f.type === 'View' || f.config?.name) {
+              const pageRef: string = context.options.pageReference ?? '';
+              const rowIndex = getRowIndexFromPageRef(pageRef);
+
+              if (f.config?.name === 'DocumentFiles') {
+                const doc = storeContent.Documents[rowIndex];
+                const fileSelected = (doc?.Files ?? []).map((file: any) => !!file.IsSelected);
+                const nestedView = genNestedFilesResponse(fileSelected);
+                const nestedProps: ExpandableTableProps = {
+                  detailViewName: 'FileDetails',
+                  getPConnect: () => ({
+                    meta: { name: 'NestedFiles' },
+                    options: { viewName: 'DocumentFiles', pageReference: pageRef },
+                    getLocalizedValue: (val: string) => val,
+                    getContextName: () => 'workarea',
+                    getTarget: () => 'workarea',
+                    getPageReference: () => pageRef,
+                    getCaseInfo: () => ({ getKey: () => 'S-123' }),
+                    getValue: () => 'S-123',
+                    getChildren: () => nestedView.children,
+                    getRawMetadata: () => nestedView,
+                    getInheritedProps: () => nestedView.config.inheritedProps,
+                    setInheritedProp: () => {},
+                    setValue: () => {},
+                    resolveConfigProps: (fieldConfig: any) => ({
+                      ...fieldConfig,
+                      propref: fieldConfig.name ? `.${fieldConfig.name}` : fieldConfig.value,
+                      pageref: 'Files',
+                      contextClass: 'Data-File',
+                    }),
+                  }),
+                };
+                return <PegaExtensionsExpandableTable {...nestedProps} />;
+              }
+
+              return <MockDetailView rowIndex={rowIndex} viewName={f.config?.name ?? ''} />;
+            }
+            const pageRef: string = context.options.pageReference ?? '';
+            const rowIndex = getRowIndexFromPageRef(pageRef);
+            const val = Array.isArray(context.meta.config.value)
+              ? context.meta.config.value[rowIndex]
+              : context.meta.config.value;
+            return <Text>{`${val ?? ''}`}</Text>;
+          },
+          getTarget: () => 'workarea',
+          getActionsApi: () => ({
+            updateFieldValue: (field: string, value: boolean) => {
+              store.updateFieldValue(context.options.pageReference, field, value);
+            },
+            triggerFieldChange: () => {},
+          }),
+        }),
+      }),
+      getComponentsRegistry: () => ({
+        getLazyComponent: (f: string) => f,
+      }),
+      getAssetLoader: () => ({
+        getLoader: () => () => Promise.resolve(),
+      }),
+    };
+
+    const props: ExpandableTableProps = {
+      ...args,
+      getPConnect: () => ({
+        meta: { name: 'DocumentsTable' },
+        options: { viewName: 'DocumentsTable' },
+        getLocalizedValue: (val: string) => val,
+        getContextName: () => 'workarea',
+        getTarget: () => 'workarea',
+        getPageReference: () => 'caseInfo.content',
+        getCaseInfo: () => ({ getKey: () => 'S-123' }),
+        getValue: () => 'S-123',
+        getChildren: () => documentsView.children,
+        getRawMetadata: () => documentsView,
+        getInheritedProps: () => documentsView.config.inheritedProps,
+        setInheritedProp: () => {},
+        setValue: () => {},
+        resolveConfigProps: (fieldConfig: any) => ({
+          ...fieldConfig,
+          propref: fieldConfig.name ? `.${fieldConfig.name}` : fieldConfig.value,
+          pageref: 'Documents',
+          contextClass: 'Data-Document',
+        }),
+      }),
+    };
+
+    return <PegaExtensionsExpandableTable {...props} />;
+  },
+  args: {
+    detailViewName: 'DocumentFiles',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Add a boolean (`Checkbox`) column such as `IsSelected`. Checking it updates that row and every nested boolean under the row (for example, `Files[].IsSelected`). Expand a document to watch nested file checkboxes follow the parent selection.',
+      },
+    },
   },
 };
