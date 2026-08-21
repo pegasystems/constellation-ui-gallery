@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsBarCode, BarcodeType } from './index';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     },
   },
   component: PegaExtensionsBarCode,
-};
+} satisfies Meta<typeof PegaExtensionsBarCode>;
 
 const setPCore = () => {
   window.PCore = {/* Nothing */} as unknown as typeof PCore;

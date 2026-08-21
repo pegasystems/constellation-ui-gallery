@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsBanner } from './index';
 
 export default {
@@ -9,10 +9,10 @@ export default {
         disable: true,
       },
     },
-    dismissAction: { control: 'string', if: { arg: 'dismissible', eq: true } },
+    dismissAction: { control: 'text', if: { arg: 'dismissible', eq: true } },
   },
   component: PegaExtensionsBanner,
-};
+} satisfies Meta<typeof PegaExtensionsBanner>;
 
 const setPCore = () => {
   window.PCore = {

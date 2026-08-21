@@ -59,13 +59,13 @@ test('renders value when below low threshold', async () => {
 });
 
 test('applies green color when value is above high threshold', async () => {
-  PCore.getDataApiUtils = () => ({
+  PCore.getDataApiUtils = (() => ({
     getData: jest.fn().mockResolvedValue({
       data: {
         data: [{ TotalRevenue: 130 }],
       },
     }),
-  });
+  })) as unknown as typeof PCore.getDataApiUtils;
 
   render(<BasePegaExtensionsCustomKPIGauge thresholdLow={50} thresholdHigh={100} />);
   await waitFor(() => {
@@ -85,9 +85,9 @@ test('refresh button re-fetches data', async () => {
     },
   });
 
-  PCore.getDataApiUtils = () => ({
+  PCore.getDataApiUtils = (() => ({
     getData: getDataMock,
-  });
+  })) as unknown as typeof PCore.getDataApiUtils;
 
   render(<BasePegaExtensionsCustomKPIGauge />);
 

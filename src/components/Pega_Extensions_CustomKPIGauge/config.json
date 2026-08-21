@@ -3,7 +3,7 @@
     "label": "Custom KPI Gauge",
     "description": "A gauge widget that displays a single numeric value from a configurable data page with colored zones, target marker, trend indicator, and legend",
     "organization": "Pega",
-    "version": "5.0.3",
+    "version": "5.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_CustomKPIGauge",
@@ -32,7 +32,7 @@
         },
         {
             "name": "valueUnit",
-            "label": "Value unit (e.g. %, $, €, USD, items)",
+            "label": "Value unit (e.g. %, $, \u20ac, USD, items)",
             "format": "TEXT"
         },
         {
@@ -87,7 +87,7 @@
         },
         {
             "name": "targetLabel",
-            "label": "Target label (e.g. Target, Goal — leave blank to hide)",
+            "label": "Target label (e.g. Target, Goal \u2014 leave blank to hide)",
             "format": "TEXT"
         },
         {
@@ -133,7 +133,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.3, Fri Aug 07 2026, 26.1.0-103357",
+            "label": "Pega_Extensions 5.0.4, Fri Aug 21 2026, 26.1.0-103357",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -156,7 +156,7 @@
         "legendWarningLabel": "Warning",
         "legendGoodLabel": "Good"
     },
-    "buildDate": "2026-08-07T18:43:28.531Z",
+    "buildDate": "2026-08-21T20:00:45.494Z",
     "infinityVersion": "26.1.0-103357",
-    "packageCosmosVersion": "9.19.0"
+    "packageCosmosVersion": "9.23.3"
 }

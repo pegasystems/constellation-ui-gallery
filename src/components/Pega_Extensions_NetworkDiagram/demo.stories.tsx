@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsNetworkDiagram, type NetworkDiagramProps } from './index';
 
 export default {
@@ -39,7 +39,7 @@ export default {
     },
   },
   component: PegaExtensionsNetworkDiagram,
-};
+} satisfies Meta;
 
 const setPCore = (Example: string) => {
   let data = {};

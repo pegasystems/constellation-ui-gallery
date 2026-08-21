@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsScheduler, type PegaExtensionsSchedulerProps } from './index';
 
 // Define extended props for the story
@@ -35,7 +35,7 @@ export default {
     },
   },
   component: PegaExtensionsScheduler,
-};
+} satisfies Meta;
 
 const genValue = (args: any) => {
   const obj = {

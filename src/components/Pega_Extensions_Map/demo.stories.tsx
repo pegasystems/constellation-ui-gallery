@@ -136,6 +136,8 @@ export const Default: Story = {
       ...args,
       getPConnect: () => {
         return {
+          viewName: '',
+          getComponentName: () => '',
           meta: {
             name: '',
           },

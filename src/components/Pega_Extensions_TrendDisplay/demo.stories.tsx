@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsTrendDisplay, type TrendDisplayProps } from './index';
 
 export default {
@@ -37,7 +37,7 @@ export default {
     },
   },
   component: PegaExtensionsTrendDisplay,
-};
+} satisfies Meta;
 
 type Story = StoryObj<typeof PegaExtensionsTrendDisplay>;
 

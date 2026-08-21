@@ -1,9 +1,9 @@
 {
     "name": "Pega_Extensions_ExpandableTable",
     "label": "Expandable Table",
-    "description": "Read-only table with expandable rows for viewing embedded data object details",
+    "description": "Read-only table with expandable rows; boolean columns act as select-all for nested checkboxes",
     "organization": "Pega",
-    "version": "5.0.3",
+    "version": "5.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_ExpandableTable",
@@ -33,12 +33,12 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.3, Fri Aug 07 2026, 26.1.0-103357",
+            "label": "Pega_Extensions 5.0.4, Fri Aug 21 2026, 26.1.0-103357",
             "name": "PegaAboutData",
             "variant": "primary"
         }
     ],
-    "buildDate": "2026-08-07T18:43:29.125Z",
+    "buildDate": "2026-08-21T20:00:45.494Z",
     "infinityVersion": "26.1.0-103357",
-    "packageCosmosVersion": "9.19.0"
+    "packageCosmosVersion": "9.23.3"
 }

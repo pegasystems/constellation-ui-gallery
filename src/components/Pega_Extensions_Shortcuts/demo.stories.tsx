@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PegaExtensionsShortcuts } from './index';
 
 export default {
@@ -15,7 +15,7 @@ export default {
     },
   },
   component: PegaExtensionsShortcuts,
-};
+} satisfies Meta<typeof PegaExtensionsShortcuts>;
 
 const setPCore = () => {
   window.PCore = {

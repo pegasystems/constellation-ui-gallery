@@ -17,7 +17,7 @@ export const getNestedStoreValue = (obj: any, path: string) => {
     return undefined;
   }
   return path.split('.').reduce((current: any, key) => {
-    if (current == null) {
+    if (current === null || current === undefined) {
       return undefined;
     }
     if (key.includes('[') && key.includes(']')) {
@@ -33,10 +33,194 @@ export const getNestedStoreValue = (obj: any, path: string) => {
   }, obj);
 };
 
+const isPlainObject = (value: any): boolean => !!value && typeof value === 'object' && !Array.isArray(value);
+
+/** True when a column should render as an interactive checkbox. */
+export const isBooleanField = (field: any, rowIndex?: number): boolean => {
+  if (field?.componentType === 'Checkbox') {
+    return true;
+  }
+  if (typeof rowIndex === 'number') {
+    return typeof field?.value?.[rowIndex] === 'boolean';
+  }
+  return Array.isArray(field?.value) && field.value.some((val: any) => typeof val === 'boolean');
+};
+
+/** True when a column label is exactly `ID` (used for ID + URL merging). */
+export const isIdColumn = (field: any): boolean => field?.label === 'ID';
+
+/** True when a column is a URL field type. */
+export const isUrlColumn = (field: any): boolean => field?.componentType === 'URL';
+
+export type DisplayColumn =
+  | { kind: 'field'; field: any; index: number }
+  | { kind: 'idUrlLink'; idField: any; urlField: any; idIndex: number; urlIndex: number };
+
+/**
+ * Collapses consecutive ID + URL columns into a single display column.
+ * Boolean (checkbox) columns are sorted to the front so they appear first after the expand control.
+ */
+export const buildDisplayColumns = (fields: any[]): DisplayColumn[] => {
+  const columns: DisplayColumn[] = [];
+  for (let i = 0; i < fields.length; i += 1) {
+    const field = fields[i];
+    const next = fields[i + 1];
+    if (isIdColumn(field) && next && isUrlColumn(next)) {
+      columns.push({
+        kind: 'idUrlLink',
+        idField: field,
+        urlField: next,
+        idIndex: i,
+        urlIndex: i + 1,
+      });
+      i += 1;
+    } else {
+      columns.push({ kind: 'field', field, index: i });
+    }
+  }
+
+  const booleanColumns = columns.filter((col) => col.kind === 'field' && isBooleanField(col.field));
+  const otherColumns = columns.filter((col) => !(col.kind === 'field' && isBooleanField(col.field)));
+  return [...booleanColumns, ...otherColumns];
+};
+
+/** Resolves a relative property name (e.g. `.IsSelected`) from field metadata. */
+export const getRelativePropName = (field: any): string => {
+  const candidates = [field?.propref, field?.name];
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && candidate) {
+      const cleaned = candidate.replace(/^@P\s+/, '');
+      const segment = cleaned.includes('.') ? cleaned.slice(cleaned.lastIndexOf('.') + 1) : cleaned;
+      const prop = segment.replace(/\[\d*\]/g, '');
+      if (prop) {
+        return `.${prop}`;
+      }
+    }
+  }
+  return '';
+};
+
+const createActionsForPage = (contextName: string, pageReference: string, target?: string) => {
+  const messageConfig = {
+    meta: { type: 'Page', config: { context: contextName } },
+    options: { context: contextName, pageReference, target },
+  };
+  const c11nEnv = PCore.createPConnect(messageConfig);
+  return c11nEnv?.getPConnect()?.getActionsApi();
+};
+
+const updateBooleanFieldsOnPage = (config: {
+  pageRef: string;
+  pageData: any;
+  checked: boolean;
+  contextName: string;
+  target?: string;
+}) => {
+  const { pageRef, pageData, checked, contextName, target } = config;
+  const actions = createActionsForPage(contextName, pageRef, target);
+  if (!actions || !isPlainObject(pageData)) {
+    return;
+  }
+  Object.entries(pageData).forEach(([key, val]) => {
+    if (typeof val === 'boolean') {
+      actions.updateFieldValue(`.${key}`, checked);
+    }
+  });
+};
+
+/**
+ * Walk nested pages and page lists under a row and set every boolean field to `checked`.
+ * Unlike CheckboxRow, children live on nested objects — not as siblings on the same page.
+ */
+export const updateNestedBooleanFields = (config: {
+  pageRef: string;
+  pageData: any;
+  checked: boolean;
+  contextName: string;
+  target?: string;
+}) => {
+  const { pageRef, pageData, checked, contextName, target } = config;
+  if (!isPlainObject(pageData)) {
+    return;
+  }
+
+  Object.entries(pageData).forEach(([key, val]) => {
+    if (Array.isArray(val)) {
+      val.forEach((item, index) => {
+        if (!isPlainObject(item)) {
+          return;
+        }
+        const childPageRef = `${pageRef}.${key}[${index}]`;
+        updateBooleanFieldsOnPage({
+          pageRef: childPageRef,
+          pageData: item,
+          checked,
+          contextName,
+          target,
+        });
+        updateNestedBooleanFields({
+          pageRef: childPageRef,
+          pageData: item,
+          checked,
+          contextName,
+          target,
+        });
+      });
+      return;
+    }
+    if (isPlainObject(val)) {
+      const childPageRef = `${pageRef}.${key}`;
+      updateBooleanFieldsOnPage({
+        pageRef: childPageRef,
+        pageData: val,
+        checked,
+        contextName,
+        target,
+      });
+      updateNestedBooleanFields({
+        pageRef: childPageRef,
+        pageData: val,
+        checked,
+        contextName,
+        target,
+      });
+    }
+  });
+};
+
+/** Updates the row's boolean property, then select/unselect nested boolean children. */
+export const applyBooleanSelectAll = (config: {
+  rowPageRef: string;
+  field: any;
+  checked: boolean;
+  contextName: string;
+  target?: string;
+  storeData: any;
+}) => {
+  const { rowPageRef, field, checked, contextName, target, storeData } = config;
+  const actions = createActionsForPage(contextName, rowPageRef, target);
+  const propName = getRelativePropName(field);
+  if (actions && propName) {
+    actions.updateFieldValue(propName, checked);
+  }
+
+  const rowData = getNestedStoreValue(storeData, rowPageRef);
+  updateNestedBooleanFields({
+    pageRef: rowPageRef,
+    pageData: rowData,
+    checked,
+    contextName,
+    target,
+  });
+};
+
 /** Returns the page reference for the current view context (supports nested embeds). */
 export const getBasePageReference = (getPConnect: () => typeof PConnect): string => {
   const pConn = getPConnect();
-  const pageRef = pConn.getPageReference?.() || 'caseInfo.content';
+  const pageRef =
+    pConn.getPageReference?.() ||
+    (pConn as unknown as { options?: { pageReference?: string } }).options?.pageReference ||
+    'caseInfo.content';
   if (pageRef === 'content') {
     return 'caseInfo.content';
   }
@@ -85,6 +269,47 @@ export const buildRowPageReference = (basePageRef: string, embedDataRef: string,
 
   const lastSegment = segments[segments.length - 1];
   return `${current}.${lastSegment}[${rowIndex}]`;
+};
+
+/**
+ * Re-reads boolean column values from the Redux store so nested tables re-render
+ * after a parent select-all updates IsSelected via SetProperty.
+ */
+export const syncBooleanFieldValuesFromStore = (config: {
+  fields: any[];
+  storeData: any;
+  basePageRef: string;
+  embedDataRef: string;
+}): { fields: any[]; changed: boolean } => {
+  const { fields, storeData, basePageRef, embedDataRef } = config;
+  let changed = false;
+
+  const nextFields = fields.map((field) => {
+    if (!isBooleanField(field) || !Array.isArray(field.value)) {
+      return field;
+    }
+    const propName = getRelativePropName(field);
+    const propKey = propName.startsWith('.') ? propName.slice(1) : propName;
+    if (!propKey) {
+      return field;
+    }
+    const nextValues = field.value.map((current: any, rowIndex: number) => {
+      const rowPageRef = buildRowPageReference(basePageRef, embedDataRef, rowIndex);
+      const rowData = getNestedStoreValue(storeData, rowPageRef);
+      const storeValue = rowData?.[propKey];
+      if (typeof storeValue === 'boolean') {
+        return storeValue;
+      }
+      return current;
+    });
+    if (nextValues.some((val: any, index: number) => val !== field.value[index])) {
+      changed = true;
+      return { ...field, value: nextValues };
+    }
+    return field;
+  });
+
+  return { fields: nextFields, changed };
 };
 
 /** Builds the referenceList option for createPConnect. */
