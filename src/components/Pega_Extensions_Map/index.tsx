@@ -270,7 +270,7 @@ export const PegaExtensionsMap = (props: MapProps) => {
       PCore.getContextTreeManager().addPageListNode(
         getPConnect().getContextName(),
         'caseInfo.content',
-        getPConnect().viewName ?? getPConnect().getComponentName() ?? '',
+        getPConnect().viewName ?? getPConnect().getComponentName?.() ?? '',
         'Locations',
         {},
       );
