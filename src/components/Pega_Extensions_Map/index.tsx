@@ -19,7 +19,7 @@ import { getAllFields, renderShapes, createGraphic, deletePoints, addPoint, addS
 import '../shared/create-nonce';
 import { getMappedKey } from '../shared/utils';
 
-const ARCGIS_VERSION = '5.0';
+const ARCGIS_VERSION = '5.1';
 type MapProps = {
   getPConnect: () => typeof PConnect;
   heading?: string;
