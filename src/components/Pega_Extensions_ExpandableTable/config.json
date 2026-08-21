@@ -1,7 +1,7 @@
 {
   "name": "Pega_Extensions_ExpandableTable",
   "label": "Expandable Table",
-  "description": "Read-only table with expandable rows for viewing embedded data object details",
+  "description": "Read-only table with expandable rows; boolean columns act as select-all for nested checkboxes",
   "organization": "Pega",
   "version": "1.0.0",
   "library": "Extensions",
