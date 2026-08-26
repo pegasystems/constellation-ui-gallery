@@ -1,7 +1,7 @@
 {
     "name": "Pega_Extensions_ExpandableTable",
     "label": "Expandable Table",
-    "description": "Read-only table with expandable rows; boolean columns act as select-all for nested checkboxes",
+    "description": "Read-only expandable list as a table, accordion list, or category tabs; boolean columns act as select-all for nested checkboxes",
     "organization": "Pega",
     "version": "5.0.4",
     "library": "Extensions",
@@ -18,6 +18,27 @@
                 "Fields"
             ],
             "allowCreatingGroup": false
+        },
+        {
+            "name": "variant",
+            "label": "Variant",
+            "format": "SELECT",
+            "defaultValue": "table",
+            "required": true,
+            "source": [
+                {
+                    "key": "table",
+                    "value": "Table"
+                },
+                {
+                    "key": "list",
+                    "value": "List"
+                },
+                {
+                    "key": "tabs",
+                    "value": "Tabs"
+                }
+            ]
         },
         {
             "name": "detailViewName",
