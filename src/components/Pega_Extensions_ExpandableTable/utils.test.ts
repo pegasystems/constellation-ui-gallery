@@ -12,6 +12,10 @@ import {
   applyBooleanSelectAll,
   updateNestedBooleanFields,
   syncBooleanFieldValuesFromStore,
+  groupRowsByCategory,
+  getRowTitle,
+  getRowHelpText,
+  isCategoryField,
 } from './utils';
 
 describe('ExpandableTable path utilities', () => {
@@ -61,6 +65,61 @@ describe('ExpandableTable path utilities', () => {
     expect(getNestedStoreValue(storeData, 'caseInfo.content.Orders[0].LineItems[0]')).toEqual({
       pxObjClass: 'Data-LineItem',
     });
+  });
+});
+
+describe('ExpandableTable tabs / list helpers', () => {
+  const fields = [
+    {
+      label: 'Category',
+      value: ['Feasibility', 'Feasibility', 'Project Management'],
+      componentType: 'TextInput',
+    },
+    {
+      label: 'Title',
+      value: ['1.1.1 - NDA', '1.2.2 - IVDR', '3.1.1 - Kickoff'],
+      componentType: 'TextInput',
+    },
+    {
+      label: 'Help',
+      value: ['NDA help', 'IVDR help', 'Kickoff help'],
+      componentType: 'TextInput',
+    },
+  ];
+
+  test('isCategoryField matches Category label case-insensitively', () => {
+    expect(isCategoryField({ label: 'Category' })).toBe(true);
+    expect(isCategoryField({ label: 'category' })).toBe(true);
+    expect(isCategoryField({ label: 'Title' })).toBe(false);
+  });
+
+  test('getRowTitle prefers Title column', () => {
+    expect(getRowTitle(fields, 0)).toBe('1.1.1 - NDA');
+  });
+
+  test('getRowHelpText reads Help column', () => {
+    expect(getRowHelpText(fields, 1)).toBe('IVDR help');
+  });
+
+  test('groupRowsByCategory groups preserving order', () => {
+    expect(groupRowsByCategory(fields, 3)).toEqual([
+      { id: 'category-0', name: 'Feasibility', rowIndexes: [0, 1] },
+      { id: 'category-1', name: 'Project Management', rowIndexes: [2] },
+    ]);
+  });
+
+  test('groupRowsByCategory falls back to one tab per row without Category', () => {
+    const noCategory = [
+      {
+        label: 'Brand',
+        value: ['HP', 'Lenovo'],
+        componentType: 'TextInput',
+      },
+    ];
+    expect(groupRowsByCategory(noCategory, 2)).toEqual([
+      { id: 'row-0', name: 'HP', rowIndexes: [0] },
+      { id: 'row-1', name: 'Lenovo', rowIndexes: [1] },
+    ]);
   });
 });
 

@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useCallback, type ChangeEvent } from 'react';
+import { Fragment, useState, useEffect, useCallback, useMemo, type ChangeEvent, type KeyboardEvent } from 'react';
 import {
   withConfiguration,
   Progress,
@@ -11,6 +11,11 @@ import {
   CardContent,
   Card,
   Checkbox,
+  Tabs,
+  TabPanel,
+  Flex,
+  AdditionalInfo,
+  FieldGroup,
 } from '@pega/cosmos-react-core';
 import StyledPegaExtensionsExpandableTableWrapper from './styles';
 import * as caretDownIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/caret-down.icon';
@@ -26,7 +31,12 @@ import getAllFields, {
   applyBooleanSelectAll,
   syncBooleanFieldValuesFromStore,
   buildDisplayColumns,
+  groupRowsByCategory,
+  getRowTitle,
+  getRowHelpText,
+  isCategoryField,
   type DisplayColumn,
+  type ExpandableTableVariant,
 } from './utils';
 
 type RowDetailPanelProps = {
@@ -139,13 +149,94 @@ const BooleanSelectAllCell = ({
   );
 };
 
+type ExpandableListItemProps = {
+  rowIndex: number;
+  title: string;
+  helpText?: string;
+  expanded: boolean;
+  onToggle: () => void;
+  detailViewName: string;
+  embedDataRef: string;
+  embedClass: string;
+  getPConnect: () => typeof PConnect;
+};
+
+const ExpandableListItem = ({
+  rowIndex,
+  title,
+  helpText,
+  expanded,
+  onToggle,
+  detailViewName,
+  embedDataRef,
+  embedClass,
+  getPConnect,
+}: ExpandableListItemProps) => {
+  const panelId = `expandable-list-panel-${rowIndex}`;
+  const headerId = `expandable-list-header-${rowIndex}`;
+
+  const onHeaderKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onToggle();
+    }
+  };
+
+  return (
+    <div className='expandable-list-item'>
+      <div className='expandable-list-item__toolbar'>
+        <button
+          type='button'
+          id={headerId}
+          className='expandable-list-item__header'
+          aria-expanded={expanded}
+          aria-controls={panelId}
+          onClick={onToggle}
+          onKeyDown={onHeaderKeyDown}
+        >
+          <Icon name={expanded ? 'caret-down' : 'caret-right'} />
+          <span className='expandable-list-item__title'>{title}</span>
+        </button>
+        {helpText ? (
+          <span className='expandable-list-item__help'>
+            <AdditionalInfo heading={getPConnect().getLocalizedValue('Additional information')} contextualLabel={title}>
+              {helpText}
+            </AdditionalInfo>
+          </span>
+        ) : null}
+      </div>
+      {expanded ? (
+        <div className='expandable-list-item__body' id={panelId} role='region' aria-labelledby={headerId}>
+          <RowDetailPanel
+            rowIndex={rowIndex}
+            detailViewName={detailViewName}
+            embedDataRef={embedDataRef}
+            embedClass={embedClass}
+            getPConnect={getPConnect}
+          />
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 export type ExpandableTableProps = {
+  /** Visual layout: table (default), accordion list, or category tabs */
+  variant?: ExpandableTableVariant;
   detailViewName?: string;
   getPConnect: () => typeof PConnect;
 };
 
+const normalizeVariant = (variant?: string): ExpandableTableVariant => {
+  if (variant === 'list' || variant === 'tabs') {
+    return variant;
+  }
+  return 'table';
+};
+
 export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
-  const { detailViewName, getPConnect } = props;
+  const { detailViewName, getPConnect, variant: variantProp } = props;
+  const variant = normalizeVariant(variantProp);
   const [numFields, setNumFields] = useState<number>(0);
   const [numRows, setNumRows] = useState<number>(0);
   const [fields, setFields] = useState<Array<any>>([]);
@@ -155,6 +246,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
   const [expandedRows, setExpandedRows] = useState<Set<number>>(() => new Set());
   const [embedClass, setEmbedClass] = useState<string>('');
   const [basePageRef, setBasePageRef] = useState<string>('caseInfo.content');
+  const [currentTabId, setCurrentTabId] = useState<string>('');
 
   const inheritedProps = { ...getPConnect().getInheritedProps() };
 
@@ -318,6 +410,21 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     return store.subscribe(syncFromStore);
   }, [getPConnect, basePageRef, embedDataRef]);
 
+  const categoryGroups = useMemo(() => groupRowsByCategory(fields, numRows), [fields, numRows]);
+  const hasCategoryColumn = useMemo(() => fields.some((field) => isCategoryField(field)), [fields]);
+
+  useEffect(() => {
+    if (variant !== 'tabs' || categoryGroups.length === 0) {
+      return;
+    }
+    setCurrentTabId((prev) => {
+      if (prev && categoryGroups.some((group) => group.id === prev)) {
+        return prev;
+      }
+      return categoryGroups[0].id;
+    });
+  }, [variant, categoryGroups]);
+
   if (loading) {
     return (
       <Progress
@@ -341,10 +448,75 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
     return typeof label === 'string' && label.trim().length > 0;
   });
 
+  const renderListItems = (rowIndexes: number[]) => (
+    <div className='expandable-list' role='list'>
+      {rowIndexes.map((rowIndex) => (
+        <div key={`list-item-${rowIndex}`} role='listitem'>
+          <ExpandableListItem
+            rowIndex={rowIndex}
+            title={getRowTitle(fields, rowIndex)}
+            helpText={getRowHelpText(fields, rowIndex)}
+            expanded={expandedRows.has(rowIndex)}
+            onToggle={() => toggleRow(rowIndex)}
+            detailViewName={detailViewName || ''}
+            embedDataRef={embedDataRef}
+            embedClass={embedClass}
+            getPConnect={getPConnect}
+          />
+        </div>
+      ))}
+    </div>
+  );
+
+  if (variant === 'list') {
+    return (
+      <FieldGroup name={inheritedProps.label}>
+        <StyledPegaExtensionsExpandableTableWrapper className='variant-list'>
+          {renderListItems(Array.from({ length: numRows }, (_, i) => i))}
+        </StyledPegaExtensionsExpandableTableWrapper>
+      </FieldGroup>
+    );
+  }
+
+  if (variant === 'tabs') {
+    const tabs = categoryGroups.map((group) => ({
+      name: group.name,
+      id: group.id,
+    }));
+    const activeTabId = currentTabId || tabs[0]?.id || '';
+
+    return (
+      <FieldGroup name={inheritedProps.label}>
+        <StyledPegaExtensionsExpandableTableWrapper className='variant-tabs'>
+          <Flex container={{ direction: 'column' }}>
+            <Tabs tabs={tabs} currentTabId={activeTabId} onTabClick={(id: string) => setCurrentTabId(id)} />
+            <div className='tabs-panel-container'>
+              {categoryGroups.map((group) => (
+                <TabPanel tabId={group.id} currentTabId={activeTabId} key={group.id}>
+                  {hasCategoryColumn || group.rowIndexes.length > 1 ? (
+                    renderListItems(group.rowIndexes)
+                  ) : (
+                    <RowDetailPanel
+                      rowIndex={group.rowIndexes[0]}
+                      detailViewName={detailViewName || ''}
+                      embedDataRef={embedDataRef}
+                      embedClass={embedClass}
+                      getPConnect={getPConnect}
+                    />
+                  )}
+                </TabPanel>
+              ))}
+            </div>
+          </Flex>
+        </StyledPegaExtensionsExpandableTableWrapper>
+      </FieldGroup>
+    );
+  }
+
   return (
     <Card>
       <CardContent>
-        <StyledPegaExtensionsExpandableTableWrapper>
+        <StyledPegaExtensionsExpandableTableWrapper className='variant-table'>
           <table>
             <caption>
               <Text variant='h3'>{inheritedProps.label}</Text>

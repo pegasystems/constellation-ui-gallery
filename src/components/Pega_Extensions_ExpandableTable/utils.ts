@@ -52,6 +52,97 @@ export const isIdColumn = (field: any): boolean => field?.label === 'ID';
 /** True when a column is a URL field type. */
 export const isUrlColumn = (field: any): boolean => field?.componentType === 'URL';
 
+export type ExpandableTableVariant = 'table' | 'list' | 'tabs';
+
+const normalizeLabel = (label: unknown): string => (typeof label === 'string' ? label.trim().toLowerCase() : '');
+
+/** Category column used to group rows into tabs (label must be `Category`). */
+export const isCategoryField = (field: any): boolean => normalizeLabel(field?.label) === 'category';
+
+/** Optional help / description column shown via AdditionalInfo on list rows. */
+export const isHelpField = (field: any): boolean => {
+  const label = normalizeLabel(field?.label);
+  return label === 'help' || label === 'help text' || label === 'description' || label === 'additional information';
+};
+
+/** Preferred title columns for list / tabs row headers. */
+export const isTitleField = (field: any): boolean => {
+  const label = normalizeLabel(field?.label);
+  return label === 'title' || label === 'name' || label === 'label';
+};
+
+export const formatCellValue = (value: any): string => {
+  if (value === null || value === undefined) {
+    return '';
+  }
+  return `${value}`.trim();
+};
+
+/**
+ * Returns the display title for a row in list / tabs variants.
+ * Prefers Title / Name / Label columns, otherwise the first non-meta text value.
+ */
+export const getRowTitle = (fields: any[], rowIndex: number): string => {
+  const titleField = fields.find((field) => isTitleField(field) && !isBooleanField(field, rowIndex));
+  if (titleField) {
+    const title = formatCellValue(titleField.value?.[rowIndex]);
+    if (title) {
+      return title;
+    }
+  }
+  for (const field of fields) {
+    if (isBooleanField(field, rowIndex) || isCategoryField(field) || isHelpField(field) || isUrlColumn(field)) {
+      continue;
+    }
+    const value = formatCellValue(field?.value?.[rowIndex]);
+    if (value) {
+      return value;
+    }
+  }
+  return `Row ${rowIndex + 1}`;
+};
+
+export const getRowHelpText = (fields: any[], rowIndex: number): string => {
+  const helpField = fields.find((field) => isHelpField(field));
+  return formatCellValue(helpField?.value?.[rowIndex]);
+};
+
+export type CategoryGroup = {
+  id: string;
+  name: string;
+  rowIndexes: number[];
+};
+
+/**
+ * Groups page-list rows by the `Category` column for the tabs variant.
+ * When no Category column exists, each row becomes its own tab (items-as-tabs).
+ */
+export const groupRowsByCategory = (fields: any[], numRows: number): CategoryGroup[] => {
+  const categoryField = fields.find((field) => isCategoryField(field));
+  if (!categoryField) {
+    return Array.from({ length: numRows }, (_, rowIndex) => ({
+      id: `row-${rowIndex}`,
+      name: getRowTitle(fields, rowIndex),
+      rowIndexes: [rowIndex],
+    }));
+  }
+
+  const groups: CategoryGroup[] = [];
+  const indexByName = new Map<string, number>();
+
+  for (let rowIndex = 0; rowIndex < numRows; rowIndex += 1) {
+    const name = formatCellValue(categoryField.value?.[rowIndex]) || 'Other';
+    const existing = indexByName.get(name);
+    if (existing === undefined) {
+      indexByName.set(name, groups.length);
+      groups.push({ id: `category-${groups.length}`, name, rowIndexes: [rowIndex] });
+    } else {
+      groups[existing].rowIndexes.push(rowIndex);
+    }
+  }
+  return groups;
+};
+
 export type DisplayColumn =
   | { kind: 'field'; field: any; index: number }
   | { kind: 'idUrlLink'; idField: any; urlField: any; idIndex: number; urlIndex: number };
