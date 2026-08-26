@@ -1,9 +1,16 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { composeStories } from '@storybook/react';
 import * as DemoStories from './demo.stories';
 
-const { Default, NestedTable, SelectAllNested, IdUrlLink } = composeStories(DemoStories);
+const { Default, NestedTable, SelectAllNested, IdUrlLink, ListVariant, TabsVariant, TabsItemsAsTabs } =
+  composeStories(DemoStories);
+
+beforeAll(() => {
+  if (!Element.prototype.scrollIntoView) {
+    Element.prototype.scrollIntoView = () => {};
+  }
+});
 
 test('renders expandable table component with default args', async () => {
   render(<Default />);
@@ -123,4 +130,42 @@ test('merges adjacent ID and URL columns into a single linked ID column', async 
   const link = await screen.findByRole('link', { name: /AST-1001/ });
   expect(link).toHaveAttribute('href', 'https://example.com/assets/AST-1001');
   expect(screen.getByRole('link', { name: /AST-1002/ })).toHaveAttribute('href', 'https://example.com/assets/AST-1002');
+});
+
+test('list variant renders expandable accordion items', async () => {
+  render(<ListVariant />);
+  expect(await screen.findByText('Budget checklist')).toBeVisible();
+  expect(screen.getByText(/1\.2\.2 - IVDR Requirements/)).toBeVisible();
+  const headers = screen.getAllByRole('button', { expanded: false });
+  expect(headers.length).toBeGreaterThan(0);
+  fireEvent.click(headers[0]);
+  expect(await screen.findByText(/Status:/i)).toBeVisible();
+});
+
+test('tabs variant groups categories and switches panels', async () => {
+  render(<TabsVariant />);
+  expect(await screen.findByText('Budget checklist')).toBeVisible();
+  const feasibilityTab = await screen.findByRole('tab', { name: /Feasibility/i });
+  expect(feasibilityTab).toHaveAttribute('aria-selected', 'true');
+  expect(screen.getByText(/1\.2\.2 - IVDR Requirements/)).toBeVisible();
+
+  fireEvent.click(screen.getByRole('tab', { name: /Project Management/i }));
+  expect(await screen.findByText(/3\.1\.1 - Project kickoff checklist completed/)).toBeVisible();
+  expect(screen.getByRole('tab', { name: /Project Management/i })).toHaveAttribute('aria-selected', 'true');
+  expect(screen.getByText(/1\.2\.2 - IVDR Requirements/)).not.toBeVisible();
+});
+
+test('tabs without category treat each item as a tab', async () => {
+  render(<TabsItemsAsTabs />);
+  expect(await screen.findByText('Computer inventory')).toBeVisible();
+  expect(screen.getByRole('tab', { name: 'HP EliteBook' })).toHaveAttribute('aria-selected', 'true');
+
+  const activePanel = screen.getByRole('tabpanel');
+  expect(await within(activePanel).findByText(/Serial number/i)).toBeVisible();
+  expect(within(activePanel).getByText(/New York/i)).toBeVisible();
+
+  fireEvent.click(screen.getByRole('tab', { name: 'Apple MacBook' }));
+  expect(screen.getByRole('tab', { name: 'Apple MacBook' })).toHaveAttribute('aria-selected', 'true');
+  const macPanel = screen.getByRole('tabpanel');
+  expect(await within(macPanel).findByText(/San Francisco/i)).toBeVisible();
 });
