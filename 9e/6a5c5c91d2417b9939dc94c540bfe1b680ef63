@@ -1,0 +1,165 @@
+src/components/Pega_Extensions_Calendar/config.json
+  s_b4466e2a098571::t_713e7177c6965e 92,105-106
+src/components/Pega_Extensions_UtilityList/config.json
+  s_b4466e2a098571::t_713e7177c6965e 74,84-85
+src/components/Pega_Extensions_TrendDisplay/config.json
+  s_b4466e2a098571::t_713e7177c6965e 240,249-250
+src/components/Pega_Extensions_ExpandableTable/demo.stories.tsx
+  s_b4466e2a098571::t_713e7177c6965e 1031-1050
+  s_b4466e2a098571::t_c9033f3858a365 285
+  s_b4466e2a098571::t_fcee2508103a07 953-1030,1051-1288
+  s_b4466e2a098571::t_9a7c88dca4d18b 23-32
+src/components/Pega_Extensions_ExpandableTable/utils.test.ts
+  s_b4466e2a098571::t_907763601977ed 15-18,71-122
+src/components/Pega_Extensions_ActionableButton/config.json
+  s_b4466e2a098571::t_713e7177c6965e 54,63-64
+src/components/Pega_Extensions_ChatGenAI/config.json
+  s_b4466e2a098571::t_713e7177c6965e 44,55-56
+src/components/Pega_Extensions_FieldGroupAsRow/config.json
+  s_b4466e2a098571::t_713e7177c6965e 36,41-42
+src/components/Pega_Extensions_AutoSave/config.json
+  s_b4466e2a098571::t_713e7177c6965e 26,32-33
+src/components/Pega_Extensions_ImageCarousel/config.json
+  s_b4466e2a098571::t_713e7177c6965e 220,232-233
+src/components/Pega_Extensions_ExpandableTable/styles.ts
+  s_b4466e2a098571::t_b983721bdd7a82 151-157
+  s_b4466e2a098571::t_dbfcdf616c698f 1,4-11,19,33,36,112,120-121,127,129,136-150,158-244
+src/components/Pega_Extensions_BannerInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 84,94-95
+src/components/Pega_Extensions_StarRatingInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 125,134-135
+src/components/Pega_Extensions_FormWithVerticalStepper/config.json
+  s_b4466e2a098571::t_713e7177c6965e 82,87-88
+src/components/Pega_Extensions_CaseReference/config.json
+  s_b4466e2a098571::t_713e7177c6965e 65,75-76
+src/components/Pega_Extensions_DateInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 109,118-119
+src/components/Pega_Extensions_ExpandableTable/Docs.mdx
+  s_b4466e2a098571::t_9acf3a5342c794 8,12,14,18-19,34-37,43-44,52,123-142
+  s_b4466e2a098571::t_713e7177c6965e 38-42
+src/components/Pega_Extensions_SignatureCapture/config.json
+  s_b4466e2a098571::t_713e7177c6965e 103,113-114
+src/components/Pega_Extensions_OAuthConnect/config.json
+  s_b4466e2a098571::t_713e7177c6965e 83,88-89
+src/components/Pega_Extensions_Shortcuts/config.json
+  s_b4466e2a098571::t_713e7177c6965e 64,72-73
+src/components/Pega_Extensions_Scheduler/config.json
+  s_b4466e2a098571::t_713e7177c6965e 69,79-80
+src/components/Pega_Extensions_RangeSlider/config.json
+  s_b4466e2a098571::t_713e7177c6965e 66,71-72
+src/components/Pega_Extensions_EditableTableLayout/config.json
+  s_b4466e2a098571::t_713e7177c6965e 30,35-36
+src/components/Pega_Extensions_DynamicTemplate/config.json
+  s_b4466e2a098571::t_713e7177c6965e 93,98-99
+src/components/Pega_Extensions_CameraCapture/config.json
+  s_b4466e2a098571::t_713e7177c6965e 27,35-36
+src/components/Pega_Extensions_ImageMagnify/config.json
+  s_b4466e2a098571::t_713e7177c6965e 305,337-338
+src/components/Pega_Extensions_GanttChart/config.json
+  s_b4466e2a098571::t_713e7177c6965e 144,164-165
+src/components/Pega_Extensions_CaseLauncher/config.json
+  s_b4466e2a098571::t_713e7177c6965e 67,73-74
+src/components/Pega_Extensions_CardGallery/config.json
+  s_b4466e2a098571::t_713e7177c6965e 78,88-89
+src/components/Pega_Extensions_Meter/config.json
+  s_b4466e2a098571::t_713e7177c6965e 80,89-90
+src/components/Pega_Extensions_DisplayAttachments/config.json
+  s_b4466e2a098571::t_713e7177c6965e 89,102-103
+src/components/Pega_Extensions_Map/config.json
+  s_b4466e2a098571::t_713e7177c6965e 131,148-149
+src/components/Pega_Extensions_OrgBuilder/config.json
+  s_b4466e2a098571::t_713e7177c6965e 63,75-76
+src/components/Pega_Extensions_CheckboxRow/config.json
+  s_b4466e2a098571::t_713e7177c6965e 109,118-119
+src/components/Pega_Extensions_RatingLayout/config.json
+  s_b4466e2a098571::t_713e7177c6965e 35,43-44
+src/components/Pega_Extensions_CPQTree/config.json
+  s_b4466e2a098571::t_713e7177c6965e 71,84-85
+src/components/Pega_Extensions_StatusBadge/config.json
+  s_b4466e2a098571::t_713e7177c6965e 88,102-103
+src/components/Pega_Extensions_ExpandableTable/index.tsx
+  s_b4466e2a098571::t_01807ddf04ebc4 493
+  s_b4466e2a098571::t_8771f94fafd1c7 187
+  s_b4466e2a098571::t_0bf69bf01ce30d 415-416
+  s_b4466e2a098571::t_f56c1171fdb38d 498-508
+  s_b4466e2a098571::t_713e7177c6965e 1,494
+  s_b4466e2a098571::t_50dcc0d8c00c98 14-18,34-37,39,152-186,188-222,224-225,230-236,238-239,249,417-429,453-492,495-497,509-517,521
+src/components/Pega_Extensions_HierarchicalFormAsTasks/config.json
+  s_b4466e2a098571::t_713e7177c6965e 37,42-43
+src/components/Pega_Extensions_IframeWrapper/config.json
+  s_b4466e2a098571::t_713e7177c6965e 62,73-74
+src/components/Pega_Extensions_Banner/config.json
+  s_b4466e2a098571::t_713e7177c6965e 75,80-81
+src/components/Pega_Extensions_ExpandableTable/utils.ts
+  s_b4466e2a098571::t_713e7177c6965e 57
+  s_b4466e2a098571::t_42a34a54222901 55-56,58-145
+src/components/Pega_Extensions_SecureRichText/config.json
+  s_b4466e2a098571::t_713e7177c6965e 157,170-171
+src/components/Pega_Extensions_QRCode/config.json
+  s_b4466e2a098571::t_713e7177c6965e 93,103-104
+src/components/Pega_Extensions_LangSwitch/config.json
+  s_b4466e2a098571::t_713e7177c6965e 77,93-94
+src/components/Pega_Extensions_KanbanBoard/config.json
+  s_b4466e2a098571::t_713e7177c6965e 81,92-93
+src/components/Pega_Extensions_CheckboxTrigger/config.json
+  s_b4466e2a098571::t_713e7177c6965e 110,119-120
+src/components/Pega_Extensions_JapaneseInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 157,168-169
+store/Pega_Extensions/4.0.6/componentsconfig.json
+  s_b4466e2a098571::t_713e7177c6965e 1
+src/components/Pega_Extensions_DynamicHierarchicalForm/config.json
+  s_b4466e2a098571::t_713e7177c6965e 54,62-63
+src/components/Pega_Extensions_DisplayPDF/config.json
+  s_b4466e2a098571::t_713e7177c6965e 70,81-82
+src/components/Pega_Extensions_NetworkDiagram/config.json
+  s_b4466e2a098571::t_713e7177c6965e 89,100-101
+src/components/Pega_Extensions_PasswordInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 104,113-114
+src/components/Pega_Extensions_MarkdownInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 132,142-143
+src/components/Pega_Extensions_ExpandableTable/localizations.json
+  s_b4466e2a098571::t_3758549d86a84a 6-8
+src/components/Pega_Extensions_JawLayout/config.json
+  s_b4466e2a098571::t_713e7177c6965e 37,42-43
+src/components/Pega_Extensions_CompareTableLayout/config.json
+  s_b4466e2a098571::t_713e7177c6965e 81,86-87
+src/components/Pega_Extensions_MaskedInput/config.json
+  s_b4466e2a098571::t_713e7177c6965e 110,119-120
+src/components/Pega_Extensions_ExpandableTable/demo.test.tsx
+  s_b4466e2a098571::t_d1cb0e41bd0898 164,170
+  s_b4466e2a098571::t_559d5eb0f6c511 154-155
+  s_b4466e2a098571::t_931b53170e7ffd 6-7,134-153,156-161,166-167
+  s_b4466e2a098571::t_a08b6d3af8cfc0 2,9-13,162-163,165,168-169
+src/components/Pega_Extensions_Toggle/config.json
+  s_b4466e2a098571::t_713e7177c6965e 175,185-186
+src/components/Pega_Extensions_ExpandableTable/config.json
+  s_b4466e2a098571::t_a50e9422fd79f2 4,22-41
+  s_b4466e2a098571::t_713e7177c6965e 57,62-63
+src/components/Pega_Extensions_FormFullWidth/config.json
+  s_b4466e2a098571::t_713e7177c6965e 49,59-60
+src/components/Pega_Extensions_TaskList/config.json
+  s_b4466e2a098571::t_713e7177c6965e 47,53-54
+src/components/Pega_Extensions_BarCode/config.json
+  s_b4466e2a098571::t_713e7177c6965e 139,149-150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "9e6a5c5c91d2417b9939dc94c540bfe1b680ef63",
+  "prompts": {},
+  "humans": {
+    "h_fddf624f9ff6a8": {
+      "author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  },
+  "sessions": {
+    "s_b4466e2a098571": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "9f02549a-0def-4046-b2a2-ebba9c9d8a3d",
+        "model": "default"
+      },
+      "human_author": "Richard Marsot <richard.marsot@pega.com>"
+    }
+  }
+}
