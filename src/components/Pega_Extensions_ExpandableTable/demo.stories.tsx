@@ -20,6 +20,16 @@ const meta: Meta<typeof PegaExtensionsExpandableTable> = {
   title: 'Templates/Expandable Table',
   tags: ['Pega_Extensions_ExpandableTable'],
   argTypes: {
+    variant: {
+      control: { type: 'select' },
+      options: ['table', 'list', 'tabs'],
+      labels: {
+        table: 'Table',
+        list: 'List',
+        tabs: 'Tabs',
+      },
+      description: 'Layout variant: expandable table, accordion list, or category tabs',
+    },
     detailViewName: {
       control: 'text',
       description: 'Name of the Pega view to render when a row is expanded',
@@ -272,6 +282,7 @@ export const Default: Story = {
     return <PegaExtensionsExpandableTable {...props} />;
   },
   args: {
+    variant: 'table',
     detailViewName: 'ComputerDetails',
   },
 };
@@ -935,6 +946,342 @@ export const SelectAllNested: Story = {
       description: {
         story:
           'Add a boolean (`Checkbox`) column such as `IsSelected`. Checking it updates that row and every nested boolean under the row (for example, `Files[].IsSelected`). Expand a document to watch nested file checkboxes follow the parent selection.',
+      },
+    },
+  },
+};
+
+const genChecklistResponse = () => {
+  const demoView = {
+    name: 'checklistView',
+    type: 'View',
+    config: {
+      template: 'ExpandableTable',
+      ruleClass: 'Work-',
+      inheritedProps: { label: 'Budget checklist' },
+    },
+    children: [
+      {
+        name: 'A',
+        type: 'Region',
+        children: [
+          {
+            config: {
+              value: [
+                'Feasibility',
+                'Feasibility',
+                'Feasibility',
+                'Feasibility',
+                'Contract and Budget Management',
+                'Contract and Budget Management',
+                'Project Management',
+                'Project Management',
+              ],
+              componentType: 'TextInput',
+              label: 'Category',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: [
+                '1.2.2 - IVDR Requirements',
+                '1.1.1 - Confidentiality Agreement(s) fully executed / NDA in place',
+                '1.2.1 - Project Scope clearly defined and aligned with rate card assumptions',
+                '1.3.1 - Site feasibility questionnaire completed',
+                '2.1.1 - Budget line items mapped to approved rate card',
+                '2.2.1 - Payment schedule agreed with finance',
+                '3.1.1 - Project kickoff checklist completed',
+                '3.2.1 - Risk register reviewed with stakeholders',
+              ],
+              componentType: 'TextInput',
+              label: 'Title',
+            },
+            type: 'ScalarList',
+          },
+          {
+            config: {
+              value: [
+                'Confirm IVDR documentation is current for this study.',
+                'Ensure all parties have signed confidentiality agreements before sharing data.',
+                'Validate scope boundaries against the contracted rate card.',
+                'Capture site capability responses for feasibility scoring.',
+                'Cross-check each budget row against the approved rate card codes.',
+                'Confirm payment milestones with the finance stakeholder.',
+                'Complete kickoff tasks before first subject enrollment.',
+                'Review open risks and owners with the project team.',
+              ],
+              componentType: 'TextInput',
+              label: 'Help',
+            },
+            type: 'ScalarList',
+          },
+        ] as Array<info>,
+        getPConnect: () => ({
+          getRawMetadata: () => demoView.children[0],
+        }),
+      },
+    ],
+    classID: 'Work-MyComponents',
+  };
+  return demoView;
+};
+
+const MockChecklistDetail = ({ rowIndex }: { rowIndex: number }) => {
+  const statuses = [
+    'In progress',
+    'Complete',
+    'Not started',
+    'In review',
+    'Complete',
+    'In progress',
+    'Not started',
+    'In review',
+  ];
+  const owners = [
+    'Alex Rivera',
+    'Sam Chen',
+    'Jordan Lee',
+    'Taylor Brooks',
+    'Casey Morgan',
+    'Riley Quinn',
+    'Jamie Ortiz',
+    'Morgan Ellis',
+  ];
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem 2rem', padding: '0.5rem 0' }}>
+      <Text>
+        <strong>Status:</strong> {statuses[rowIndex] ?? ''}
+      </Text>
+      <Text>
+        <strong>Owner:</strong> {owners[rowIndex] ?? ''}
+      </Text>
+      <Text>
+        <strong>Last updated:</strong> 2026-08-12
+      </Text>
+    </div>
+  );
+};
+
+const createChecklistMockPCore = (args: ExpandableTableProps) => ({
+  getLocaleUtils: () => ({
+    getLocaleValue: (val: string) => val,
+  }),
+  getConstants: () => ({
+    CASE_INFO: {
+      CASE_INFO_ID: 'caseInfo.ID',
+    },
+  }),
+  getContextTreeManager: () => ({
+    addPageListNode: () => {},
+  }),
+  getViewResources: () => ({
+    fetchViewResources: (name: string, _pConnect: any, ruleClass: string) => ({
+      type: 'View',
+      config: {
+        name,
+        ruleClass,
+      },
+    }),
+    updateViewResources: () => Promise.resolve(),
+  }),
+  getRestClient: () => ({
+    invokeRestApi: () =>
+      Promise.resolve({
+        data: {
+          uiResources: {
+            root: {
+              config: { name: args.detailViewName },
+            },
+          },
+        },
+      }),
+  }),
+  getStore: () => ({
+    getState: () => ({
+      data: {
+        workarea: {
+          caseInfo: {
+            content: {
+              checklist: Array.from({ length: 8 }, () => ({ pxObjClass: 'Data-ChecklistItem' })),
+            },
+          },
+        },
+      },
+    }),
+    subscribe: () => () => {},
+  }),
+  createPConnect: (context: any) => ({
+    getPConnect: () => ({
+      createComponent: (f: any) => {
+        if (f.type === 'View' || f.config?.name) {
+          const pageRef: string = context.options.pageReference ?? '';
+          const rowIndex = getRowIndexFromPageRef(pageRef);
+          return <MockChecklistDetail rowIndex={rowIndex} />;
+        }
+        const pageRef: string = context.options.pageReference ?? '';
+        const rowIndex = getRowIndexFromPageRef(pageRef);
+        const val = Array.isArray(context.meta.config.value)
+          ? context.meta.config.value[rowIndex]
+          : context.meta.config.value;
+        return <Text>{`${val ?? ''}`}</Text>;
+      },
+      getTarget: () => 'workarea',
+      getActionsApi: () => ({
+        updateFieldValue: () => {},
+        triggerFieldChange: () => {},
+      }),
+    }),
+  }),
+  getComponentsRegistry: () => ({
+    getLazyComponent: (f: string) => f,
+  }),
+  getAssetLoader: () => ({
+    getLoader: () => () => Promise.resolve(),
+  }),
+});
+
+/**
+ * Accordion list variant — each row is an expandable item with optional help text.
+ * Use a `Title` (or `Name`) column for the row header and an optional `Help` column for AdditionalInfo.
+ */
+export const ListVariant: Story = {
+  render: (args: ExpandableTableProps) => {
+    (window as any).PCore = createChecklistMockPCore(args);
+    const checklistView = genChecklistResponse();
+    const props: ExpandableTableProps = {
+      ...args,
+      getPConnect: () => ({
+        meta: { name: 'ChecklistList' },
+        options: { viewName: 'ChecklistList' },
+        getLocalizedValue: (val: string) => val,
+        getContextName: () => 'workarea',
+        getTarget: () => 'workarea',
+        getPageReference: () => 'caseInfo.content',
+        getCaseInfo: () => ({ getKey: () => 'S-123' }),
+        getValue: () => 'S-123',
+        getChildren: () => checklistView.children,
+        getRawMetadata: () => checklistView,
+        getInheritedProps: () => checklistView.config.inheritedProps,
+        setInheritedProp: () => {},
+        setValue: () => {},
+        resolveConfigProps: (fieldConfig: any) => ({
+          ...fieldConfig,
+          propref: fieldConfig.value,
+          pageref: 'checklist',
+          contextClass: 'Data-ChecklistItem',
+        }),
+      }),
+    };
+    return <PegaExtensionsExpandableTable {...props} />;
+  },
+  args: {
+    variant: 'list',
+    detailViewName: 'ChecklistItemDetails',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'List variant renders each embedded row as an accordion item. Row titles come from a `Title` / `Name` column; an optional `Help` column shows Cosmos AdditionalInfo.',
+      },
+    },
+  },
+};
+
+/**
+ * Tabs variant matching the category checklist design: Category values become tabs,
+ * and items in the selected category render as expandable list rows.
+ */
+export const TabsVariant: Story = {
+  render: (args: ExpandableTableProps) => {
+    (window as any).PCore = createChecklistMockPCore(args);
+    const checklistView = genChecklistResponse();
+    const props: ExpandableTableProps = {
+      ...args,
+      getPConnect: () => ({
+        meta: { name: 'ChecklistTabs' },
+        options: { viewName: 'ChecklistTabs' },
+        getLocalizedValue: (val: string) => val,
+        getContextName: () => 'workarea',
+        getTarget: () => 'workarea',
+        getPageReference: () => 'caseInfo.content',
+        getCaseInfo: () => ({ getKey: () => 'S-123' }),
+        getValue: () => 'S-123',
+        getChildren: () => checklistView.children,
+        getRawMetadata: () => checklistView,
+        getInheritedProps: () => checklistView.config.inheritedProps,
+        setInheritedProp: () => {},
+        setValue: () => {},
+        resolveConfigProps: (fieldConfig: any) => ({
+          ...fieldConfig,
+          propref: fieldConfig.value,
+          pageref: 'checklist',
+          contextClass: 'Data-ChecklistItem',
+        }),
+      }),
+    };
+    return <PegaExtensionsExpandableTable {...props} />;
+  },
+  args: {
+    variant: 'tabs',
+    detailViewName: 'ChecklistItemDetails',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Tabs variant groups rows by a `Category` column using Cosmos Tabs. Selecting a tab filters the expandable checklist items. Colors come from the theme (interactive / secondary background / border-line).',
+      },
+    },
+  },
+};
+
+/**
+ * Tabs without a Category column — each list item becomes its own tab and the panel shows the detail view.
+ */
+export const TabsItemsAsTabs: Story = {
+  render: (args: ExpandableTableProps) => {
+    (window as any).PCore = createMockPCore(args);
+
+    const props: ExpandableTableProps = {
+      ...args,
+      getPConnect: () => ({
+        meta: { name: '' },
+        options: { viewName: '' },
+        getLocalizedValue: (val: string) => val,
+        getContextName: () => 'workarea',
+        getTarget: () => 'workarea',
+        getCaseInfo: () => ({
+          getKey: () => 'S-123',
+        }),
+        getValue: () => 'S-123',
+        getPageReference: () => 'caseInfo.content',
+        getChildren: () => genResponse().children,
+        getRawMetadata: () => genResponse(),
+        getInheritedProps: () => genResponse().config.inheritedProps,
+        setInheritedProp: () => {},
+        setValue: () => {},
+        resolveConfigProps: (f: any) => ({
+          ...f,
+          propref: f.value,
+          pageref: 'computers',
+          contextClass: 'Data-Computer',
+        }),
+      }),
+    };
+
+    return <PegaExtensionsExpandableTable {...props} />;
+  },
+  args: {
+    variant: 'tabs',
+    detailViewName: 'ComputerDetails',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When Region A has no `Category` column, the tabs variant treats each row as its own tab. The tab label comes from the first display field (for example Brand), and the panel loads the detail view.',
       },
     },
   },

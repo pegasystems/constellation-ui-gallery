@@ -3,6 +3,8 @@
     "Expand row": "Expand row",
     "Collapse row": "Collapse row",
     "Row details": "Row details",
-    "No detail view configured": "No detail view configured"
+    "No detail view configured": "No detail view configured",
+    "Unable to load row details": "Unable to load row details",
+    "Additional information": "Additional information"
   }
 }

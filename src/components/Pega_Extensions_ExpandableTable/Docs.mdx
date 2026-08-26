@@ -5,16 +5,18 @@ import * as DemoStories from './demo.stories';
 
 # Overview
 
-The **Expandable Table** renders an embedded data list as a read-only table. Each row includes an expand / collapse toggle in the first column that loads a configurable Pega view for that row's embedded object — letting users see detailed information without leaving the table context.
+The **Expandable Table** renders an embedded data list with an expandable detail panel for each row. Choose a **Variant** to present the same data as a classic table, an accordion list, or category tabs.
 
 Key characteristics:
 
+- **Variants** — `table` (default expandable grid), `list` (accordion rows), or `tabs` (Cosmos Tabs grouping rows by a `Category` column).
 - **Read-only cells** — column values are rendered in display-only mode; no inline editing (except boolean select-all checkboxes).
-- **Row-level expand/collapse** — a chevron button in the first column toggles a detail panel beneath the row.
+- **Row-level expand/collapse** — a chevron control toggles a detail panel for that row.
 - **Configurable detail view** — the view rendered on expand is specified in authoring via the **Detail view name** property; the component delegates to the Constellation `createComponent` API so the view is fully interactive and theme-aware.
 - **ID + URL merge** — when a column labeled `ID` is immediately followed by a `URL` field, the two columns are merged into one: the cell shows a link with the ID as the label and the URL as the href.
 - **Boolean select-all** — boolean / `Checkbox` columns render as a narrow first data column (no visible label). Checking or unchecking updates that row and every nested boolean field under the row.
-- **Sticky first column** — the expand button column stays visible during horizontal scroll.
+- **Sticky first column** — in the table variant, the expand button column stays visible during horizontal scroll.
+- **Theme-aware styling** — borders, surfaces, and active tab colors use Cosmos theme tokens (no hardcoded palette values).
 - **Lazy component loading** — cell renderers are loaded on demand through the Constellation component registry before the table is displayed.
 
 <Primary />
@@ -29,7 +31,17 @@ In App Studio or Dev Studio, create a new view and select **Expandable Table** a
 
 In the **Region A (Columns)** content picker, drill down into your embedded data page-list property and select the fields you want to display as table columns.
 
-## Step 2 – Configure the detail view
+## Step 2 – Choose a variant
+
+Set **Variant** to one of:
+
+| Variant   | Behavior                                                                                                                                                                                        |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Table** | Classic expandable data table (default).                                                                                                                                                        |
+| **List**  | Accordion list; each row is an expandable item. Prefer a `Title` / `Name` column for the header and an optional `Help` column for AdditionalInfo.                                               |
+| **Tabs**  | Tabs. With a `Category` column, categories become tabs and matching rows render as expandable list items. Without `Category`, each row becomes its own tab and the panel shows the detail view. |
+
+## Step 3 – Configure the detail view
 
 In the **Detail view name** property, enter the name of the Pega view that should render when a row is expanded (for example, `ComputerDetails`). This view will be rendered in the context of the individual embedded object at the row's index.
 
@@ -37,7 +49,7 @@ The detail view receives the embedded object as its data context via `pageRefere
 
 ## How expand works at runtime
 
-When the user clicks the expand button on a row, the component calls `PCore.createPConnect` with:
+When the user expands a row, the component calls `PCore.createPConnect` with:
 
 - `meta.type = 'View'` and `meta.config.name` set to **detailViewName**
 - `options.pageReference` set to `caseInfo.content.<embedDataRef>[rowIndex]`
@@ -108,3 +120,23 @@ This is similar to [Checkbox Row](?path=/docs/fields-checkbox-row--docs), but ch
 Expand a document, then toggle its **Selected** checkbox. The nested **Files** checkboxes update together.
 
 <Story of={DemoStories.SelectAllNested} />
+
+# Examples
+
+## List variant
+
+Accordion-style checklist. Include a `Title` column for the row header and an optional `Help` column for the information popover.
+
+<Story of={DemoStories.ListVariant} />
+
+## Tabs variant (category checklist)
+
+Groups rows by a `Category` column into accessible Cosmos Tabs. Active tab styling uses the theme interactive color. Expand a row to load its detail view.
+
+<Story of={DemoStories.TabsVariant} />
+
+## Tabs without Category (items as tabs)
+
+When there is no `Category` column, each embedded item becomes its own tab and the panel shows the detail view for that item.
+
+<Story of={DemoStories.TabsItemsAsTabs} />
