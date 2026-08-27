@@ -142,7 +142,8 @@ export const Default: Story = {
   },
   args: {
     label: 'File #234-23',
-    width: '100%',
+    width: 100,
+    widthUnit: 'percent',
     height: 400,
     showToolbar: true,
     dataPage: '',

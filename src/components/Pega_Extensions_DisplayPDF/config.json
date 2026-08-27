@@ -35,8 +35,24 @@
         },
         {
             "name": "width",
-            "label": "width of the pdf in px or %",
-            "format": "TEXT"
+            "label": "Width of the PDF",
+            "format": "NUMBER"
+        },
+        {
+            "name": "widthUnit",
+            "label": "Width unit",
+            "format": "SELECT",
+            "defaultValue": "percent",
+            "source": [
+                {
+                    "key": "percent",
+                    "value": "%"
+                },
+                {
+                    "key": "pixel",
+                    "value": "px"
+                }
+            ]
         },
         {
             "name": "height",
@@ -76,7 +92,8 @@
         "label": "@L $this.label",
         "isContainerWidth": true,
         "height": 400,
-        "width": "100%"
+        "width": 100,
+        "widthUnit": "percent"
     },
     "buildDate": "2026-08-07T18:43:28.819Z",
     "infinityVersion": "26.1.0-103357",

@@ -19,15 +19,21 @@ export enum DisplayMode {
   DisplayOnly = 'DISPLAY_ONLY',
 }
 
+type WidthUnit = 'percent' | 'pixel';
+
 export type DisplayPDFProps = {
   /**  label of the field and title of the pdf */
   label: string;
   /**  contains the binary of the pdf  */
   value: string;
-  /**  width of the pdf in pixels or %
-   *   @default 100%
+  /**  width of the pdf
+   *   @default 100
    */
-  width?: string;
+  width?: number;
+  /**  unit used for the PDF width
+   *   @default percent
+   */
+  widthUnit?: WidthUnit;
   /**  height of the pdf in pixels
    *   @default 400
    */
@@ -82,12 +88,12 @@ const usePdfObjectUrl = (value: string) => {
 const ViewPDFModal = ({
   heading,
   height,
-  width,
+  formattedWidth,
   value,
   showToolbar,
 }: {
   heading: string;
-  width: string;
+  formattedWidth: string;
   height: number;
   value: string;
   showToolbar: boolean;
@@ -96,7 +102,12 @@ const ViewPDFModal = ({
   return (
     <Modal heading={heading}>
       {url ? (
-        <iframe src={`${url}${showToolbar ? '' : '#toolbar=0'}`} width={width} height={`${height}px`} title={heading} />
+        <iframe
+          src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
+          width={formattedWidth}
+          height={`${height}px`}
+          title={heading}
+        />
       ) : null}
     </Modal>
   );
@@ -104,14 +115,14 @@ const ViewPDFModal = ({
 
 const DisplayPDFEmbed = ({
   label,
-  width,
+  formattedWidth,
   height,
   showToolbar,
   value,
   hideLabel,
 }: {
   label: string;
-  width: string;
+  formattedWidth: string;
   height: number;
   showToolbar: boolean;
   value: string;
@@ -125,7 +136,7 @@ const DisplayPDFEmbed = ({
           <iframe
             name={label}
             src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
-            width={width}
+            width={formattedWidth}
             height={`${height}px`}
             title={label}
           />
@@ -138,7 +149,8 @@ const DisplayPDFEmbed = ({
 export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   const {
     label = '',
-    width = '100%',
+    width = 100,
+    widthUnit = 'percent',
     height = 400,
     showToolbar = true,
     value,
@@ -147,6 +159,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     displayMode = DisplayMode.Editable,
     getPConnect,
   } = props;
+  const formattedWidth = `${width}${widthUnit === 'pixel' ? 'px' : '%'}`;
   const [loading, setLoading] = useState<boolean>(true);
   const [pdfFiles, setPdfFiles] = useState<any[]>([]);
   const { create } = useModalManager();
@@ -183,7 +196,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
           viewAllModalRef.current = create(ViewPDFModal, {
             heading: label,
             height,
-            width,
+            formattedWidth,
             value,
             showToolbar,
           });
@@ -199,7 +212,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     return (
       <DisplayPDFEmbed
         label={label}
-        width={width}
+        formattedWidth={formattedWidth}
         height={height}
         showToolbar={showToolbar}
         value={value}
@@ -231,7 +244,7 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
               onClick={() => {
                 viewAllModalRef.current = create(ViewPDFModal, {
                   heading: file[getMappedKey('pyLabel')],
-                  width,
+                  formattedWidth,
                   height,
                   value: file[getMappedKey('pyContext')],
                   showToolbar,
