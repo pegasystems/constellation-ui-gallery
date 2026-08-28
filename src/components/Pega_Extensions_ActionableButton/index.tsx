@@ -17,7 +17,7 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
     const actionName = targetAction?.name || label;
     const LaunchLocalAction = async () => {
       const actionsAPI = getPConnect().getActionsApi();
-      if (getPConnect().getContainerName() === 'workarea') {
+      if (getPConnect().getContextName().indexOf('workarea') !== -1) {
         await actionsAPI.saveAssignment(getPConnect().getContextName());
       }
       const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
