@@ -1,0 +1,36 @@
+import { Meta, Primary, Controls } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+The **Duplicate Row button** is a field-level component intended for embedded-data **row views**. When clicked, it copies the current row's content and appends it to the bottom of the page list the row belongs to.
+
+For example, if the button is rendered in the context of `.Orders(1).LineItems(3)`, a new row is inserted at the bottom of the `LineItems` page list with the same field values as row 3. Nested embedded page lists and embedded pages within the row are copied recursively.
+
+This component uses the Constellation list-actions API (`getListActions().insert()`), which queues an **INSERT** page instruction for assignment submit or refresh. Changes follow the normal Constellation save flow.
+
+## When to use
+
+- Place the button inside a repeating row view for an embedded page list (for example, inside an Expandable Table detail view or a repeating layout row).
+- Use when users need to duplicate an existing row instead of adding an empty row.
+
+## When not to use
+
+- Do not use for case-level local actions (use **Actionable button** instead).
+- Do not use outside an embedded page-list row context; the button relies on `pageReference` containing a row index such as `.Items[2]`.
+
+## Comparison
+
+| Component | Behavior |
+| --- | --- |
+| **Duplicate Row button** | Copies the current row and appends it to the page list |
+| **Editable Table Layout add row** | Inserts an empty row at the bottom |
+| **Actionable button** | Launches a local action in a modal |
+
+<Primary />
+
+## Props
+
+<Controls />
