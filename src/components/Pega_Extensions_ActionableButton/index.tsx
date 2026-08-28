@@ -14,7 +14,7 @@ export const PegaExtensionsActionableButton = (props: ActionableButtonProps) => 
     const availableActions = getPConnect().getValue(PCore.getConstants().CASE_INFO.AVAILABLEACTIONS) || [];
     const targetAction = availableActions.find((action: { ID: string }) => action.ID === localAction);
     const localizedLabel =
-      getPConnect().getContainerName() === 'primary'
+      getPConnect().getContextName().indexOf('workarea') !== -1
         ? getPConnect().getLocalizedValue(
             label,
             undefined,
