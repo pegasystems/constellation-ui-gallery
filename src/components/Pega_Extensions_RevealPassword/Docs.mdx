@@ -1,0 +1,22 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This field-level component renders a password input that is masked by default and supports a "press-and-hold to reveal" interaction. An eye button is displayed alongside the input; when the user presses and holds the button (mouse or touch), or holds Space/Enter while focused on it, the password temporarily shows as plain text. Releasing the button, ending the touch, or moving focus away immediately re-masks the value.
+
+This behavior is implemented to support quick verification of the entered password while keeping the default state secure (masked).
+
+<Primary />
+
+## Accessibility
+
+- The reveal control is a keyboard-focusable button with a descriptive `aria-label` ("Press and hold to reveal password").
+- Space or Enter will reveal while held; releasing the key hides the value.
+- The control respects `disabled` and `readOnly` states and is hidden from interaction where appropriate.
+
+## Props
+
+<Controls />
