@@ -1,0 +1,254 @@
+import { Meta, Canvas, ArgsTable } from '@storybook/addon-docs';
+import * as DemoStories from './demo.stories';
+
+<Meta title="Fields/Speech to Text/Docs" of={DemoStories} />
+
+# Speech to Text Component
+
+## Overview
+
+The **Speech to Text** component leverages the Web Speech API to capture audio input from users and convert it to text. It's designed for hands-free data entry, accessibility enhancements, and improving user experience in mobile and voice-enabled applications.
+
+### Key Features
+
+- 🎤 **Real-time Speech Recognition**: Captures voice input and converts to text in real-time
+- 🌍 **Multi-language Support**: Supports 50+ languages (configurable via `language` prop)
+- ✏️ **Editable Text Output**: Users can manually edit the recognized text
+- 📱 **Mobile-Friendly**: Works on mobile devices with supporting browsers
+- ♿ **Accessible**: ARIA labels and keyboard navigation support
+- 🎨 **Visual Feedback**: Displays recording status, interim results, and user-friendly messages
+
+---
+
+## Usage
+
+### Basic Example
+
+```tsx
+import { PegaExtensionsSpeechToText } from './index';
+
+<PegaExtensionsSpeechToText
+  label="Your Voice Input"
+  value=""
+  placeholder="Click 'Start Recording' to begin..."
+  getPConnect={getPConnect}
+/>
+```
+
+### Props
+
+<ArgsTable story="Default" />
+
+---
+
+## Use Cases
+
+1. **Accessibility**: Enable users with mobility impairments to input data via voice
+2. **Mobile Forms**: Hands-free data entry on mobile devices
+3. **Transcription**: Quick note-taking and memo recording
+4. **Call Centers**: Agent scripts and call logging
+5. **Field Services**: On-site data collection and reporting
+
+---
+
+## Supported Languages
+
+The component supports all languages supported by the Web Speech API. Common examples:
+
+- `en-US` - English (US)
+- `en-GB` - English (UK)
+- `es-ES` - Spanish
+- `fr-FR` - French
+- `de-DE` - German
+- `it-IT` - Italian
+- `pt-BR` - Portuguese (Brazil)
+- `ja-JP` - Japanese
+- `zh-CN` - Chinese (Simplified)
+- `zh-TW` - Chinese (Traditional)
+
+---
+
+## Browser Support
+
+- ✅ Chrome 25+
+- ✅ Edge 79+
+- ✅ Safari 14.1+ (iOS 15+)
+- ✅ Firefox (limited support)
+- ⚠️ Internet Explorer (not supported)
+
+**Note**: HTTPS is required for Speech Recognition to work in production environments.
+
+---
+
+## States
+
+### Default (Editable)
+
+<Canvas of={DemoStories.Default} />
+
+The user can click "Start Recording" to begin capturing voice input. The recognized text appears in real-time and can be edited manually.
+
+### Read Only
+
+<Canvas of={DemoStories.ReadOnly} />
+
+Displays the recorded text in a read-only state without recording controls.
+
+### Display Only
+
+<Canvas of={DemoStories.DisplayOnly} />
+
+Shows only the text content without any interactive elements.
+
+---
+
+## Interaction Flow
+
+1. **User clicks "Start Recording"** → Component requests microphone permission
+2. **Recording begins** → Blue pulse indicator shows active listening
+3. **Interim results appear** → Grayed-out text shows words being recognized
+4. **User speaks naturally** → Final text is added to the field
+5. **User clicks "Stop Recording"** → Recording stops, final transcript is saved
+6. **User can edit or clear** → Manual edits are preserved
+
+---
+
+## Error Handling
+
+The component handles several error scenarios:
+
+- **No microphone permission**: Displays user-friendly error message
+- **Browser doesn't support Speech API**: Shows compatibility warning
+- **Network error during transcription**: Logs error and shows message
+- **Microphone not available**: Gracefully falls back
+
+---
+
+## Styling & Customization
+
+The component uses styled-components for theming. You can override styles via CSS classes:
+
+```css
+.listening-indicator { /* Customizing the listening state */ }
+.interim-text { /* Interim recognition results */ }
+.custom-toast { /* Toast notification messages */ }
+.pulse { /* Pulsing indicator animation */ }
+```
+
+---
+
+## Integration with Pega
+
+The component integrates seamlessly with Pega's PConnect API:
+
+- Updates the field value via `updateFieldValue()`
+- Triggers field change events via `triggerFieldChange()`
+- Validates input using `getValidationApi()`
+- Respects readOnly, disabled, and required states
+- Supports Pega's form metadata and field properties
+
+---
+
+## Performance Considerations
+
+- Speech recognition runs in the browser (no server calls needed)
+- Minimal performance impact on page load
+- Memory usage is minimal when not recording
+- Use `language` prop to optimize for specific regions
+
+---
+
+## Accessibility
+
+- ✅ ARIA live region for status updates
+- ✅ Keyboard-navigable buttons
+- ✅ Clear focus indicators
+- ✅ Screen reader friendly labels
+- ✅ Semantic HTML structure
+
+---
+
+## Troubleshooting
+
+### "Speech Recognition not supported"
+- Use a modern browser (Chrome, Edge, Safari 14.1+)
+- Ensure HTTPS is enabled in production
+
+### Microphone not recognized
+- Check browser microphone permissions
+- Restart browser or system
+- Try a different browser
+
+### Poor recognition accuracy
+- Speak clearly and at normal pace
+- Reduce background noise
+- Check if the correct language is selected
+- Use a quality microphone
+
+---
+
+## Related Components
+
+- **MarkdownInput** - For rich text editing
+- **MaskedInput** - For formatted text input
+- **SecureRichText** - For secure text entry
+- **CameraCapture** - For voice + camera multi-modal input
+
+---
+
+## Examples
+
+### Example 1: Customer Feedback
+
+```tsx
+<PegaExtensionsSpeechToText
+  label="Customer Feedback (Voice)"
+  language="en-US"
+  placeholder="Describe your experience..."
+  startButtonText="Record Feedback"
+  stopButtonText="Stop Recording"
+  getPConnect={getPConnect}
+/>
+```
+
+### Example 2: Multilingual Support
+
+```tsx
+<PegaExtensionsSpeechToText
+  label="Your Message"
+  language="es-ES" // Spanish
+  placeholder="Hable su mensaje..."
+  getPConnect={getPConnect}
+/>
+```
+
+### Example 3: Accessibility Feature
+
+```tsx
+<PegaExtensionsSpeechToText
+  label="Accessible Text Input"
+  language="en-US"
+  helperText="Use voice input for hands-free data entry"
+  required={true}
+  getPConnect={getPConnect}
+/>
+```
+
+---
+
+## Best Practices
+
+1. **Always provide a fallback** - Include manual text input option
+2. **Clear user feedback** - Show recording status visually and textually
+3. **Handle errors gracefully** - Don't block the UI on speech errors
+4. **Test in target devices** - Mobile recognition may differ from desktop
+5. **Consider context** - Use language prop matching user locale
+6. **Privacy notice** - Inform users that microphone access is required
+
+---
+
+## Version
+
+- **Component Version**: 4.0.0
+- **Pega Version**: 25.1.x
+- **Cosmos Version**: 8.21.5

@@ -1,0 +1,136 @@
+{
+  "name": "Pega_Extensions_SpeechToText",
+  "label": "Speech to Text",
+  "description": "Captures audio input using browser Speech Recognition API and converts it to text",
+  "organization": "Pega",
+  "version": "4.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_SpeechToText",
+  "type": "Field",
+  "subtype": "Text-Paragraph",
+  "icon": "images/pz-text-area-active.svg",
+  "properties": [
+    {
+      "name": "labelOption",
+      "label": "Label value",
+      "format": "SELECT",
+      "defaultValue": "custom",
+      "source": [
+        {
+          "key": "default",
+          "value": "Default"
+        },
+        {
+          "key": "custom",
+          "value": "Custom"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "label": "Custom label value",
+      "format": "VALUEINPUT",
+      "required": true,
+      "ruleType": "Paragraph"
+    },
+    {
+      "name": "readOnly",
+      "label": "Edit mode",
+      "format": "READONLY"
+    },
+    {
+      "label": "Input settings",
+      "format": "GROUP",
+      "visibility": "(!readOnly = true)",
+      "properties": [
+        {
+          "name": "startButtonText",
+          "label": "Start Button Text",
+          "format": "TEXT",
+          "defaultValue": "Start Recording"
+        },
+        {
+          "name": "stopButtonText",
+          "label": "Stop Button Text",
+          "format": "TEXT",
+          "defaultValue": "Stop Recording"
+        },
+        {
+          "name": "language",
+          "label": "Language Code",
+          "format": "TEXT",
+          "defaultValue": "en-US",
+          "description": "e.g., en-US, es-ES, fr-FR, de-DE"
+        },
+        {
+          "name": "placeholder",
+          "label": "Placeholder",
+          "format": "TEXT"
+        },
+        {
+          "name": "helperText",
+          "label": "Helper text",
+          "format": "TEXT"
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "required",
+          "label": "Required",
+          "format": "REQUIRED",
+          "visibility": "(!readOnly = true)"
+        },
+        {
+          "name": "disabled",
+          "label": "Disabled",
+          "format": "DISABLED",
+          "visibility": "(!readOnly = true)"
+        },
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    },
+    {
+      "format": "LABEL",
+      "label": "About",
+      "name": "PegaAboutLabel",
+      "variant": "h3"
+    },
+    {
+      "format": "LABEL",
+      "label": "Pega_Extensions 4.0.0, Sept 04 2026, 25.1.2-397",
+      "name": "PegaAboutData",
+      "variant": "primary"
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "detailFVLItem": true,
+    "isFormWidth": true
+  },
+  "buildDate": "2026-09-04T10:00:00.000Z",
+  "infinityVersion": "25.1.2-397",
+  "packageCosmosVersion": "8.21.5"
+}
