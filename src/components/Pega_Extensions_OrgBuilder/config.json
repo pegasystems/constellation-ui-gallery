@@ -60,7 +60,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.4, Fri Aug 21 2026, 26.1.0-103357",
+            "label": "Pega_Extensions 5.0.4, Mon Sep 14 2026, 26.1.0-103357",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -72,7 +72,7 @@
         "referenceHeading": "",
         "targetHeading": ""
     },
-    "buildDate": "2026-08-21T20:00:45.494Z",
+    "buildDate": "2026-09-14T17:32:42.895Z",
     "infinityVersion": "26.1.0-103357",
-    "packageCosmosVersion": "9.23.3"
+    "packageCosmosVersion": "9.25.0"
 }
