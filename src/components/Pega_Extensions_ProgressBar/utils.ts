@@ -1,6 +1,12 @@
 export type ProgressTone = 'accent' | 'success' | 'warning' | 'danger';
 export type ProgressSize = 'compact' | 'regular' | 'large';
 
+const progressTones: ProgressTone[] = ['accent', 'success', 'warning', 'danger'];
+
+export const isProgressTone = (value: unknown): value is ProgressTone =>
+  progressTones.includes(value as ProgressTone);
+
+
 export const normalizeProgress = (value: number, min: number, max: number): number => {
   if (!Number.isFinite(value) || !Number.isFinite(min) || !Number.isFinite(max) || max <= min) {
     return min;

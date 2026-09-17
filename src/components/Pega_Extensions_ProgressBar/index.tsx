@@ -15,7 +15,7 @@ import {
   StyledProgressTrack,
   StyledProgressValue,
 } from './styles';
-import { getPercentage, getProgressStatus, normalizeProgress, type ProgressSize, type ProgressTone } from './utils';
+import { getPercentage, getProgressStatus, isProgressTone, normalizeProgress, type ProgressSize, type ProgressTone } from './utils';
 
 export interface PegaExtensionsProgressBarProps {
   /** Widget label. */
@@ -28,6 +28,8 @@ export interface PegaExtensionsProgressBarProps {
   minProperty?: string;
   /** Property in the data page response holding the maximum progress value. */
   maxProperty?: string;
+  /** Property in the data page response holding the progress tone. Overrides the static `tone` prop when valid. */
+  toneProperty?: string;
   /** Supporting text shown below the label. */
   helperText?: string;
   /** Test identifier. */
@@ -50,6 +52,7 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
     valueProperty = 'Value',
     minProperty = 'Min',
     maxProperty = 'Max',
+    toneProperty = 'Tone',
     helperText,
     testId,
     tone = 'accent',
@@ -65,6 +68,7 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
   const [value, setValue] = useState<number | undefined>(undefined);
   const [min, setMin] = useState<number | undefined>(undefined);
   const [max, setMax] = useState<number | undefined>(undefined);
+  const [dataPageTone, setDataPageTone] = useState<ProgressTone | undefined>(undefined);
 
   const loadFromDataPage = useCallback(() => {
     if (!dataPage) return;
@@ -77,10 +81,11 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
           if (record[valueProperty] !== undefined) setValue(Number(record[valueProperty]));
           if (record[minProperty] !== undefined) setMin(Number(record[minProperty]));
           if (record[maxProperty] !== undefined) setMax(Number(record[maxProperty]));
+          if (isProgressTone(record[toneProperty])) setDataPageTone(record[toneProperty]);
         }
       })
       .catch(() => {});
-  }, [dataPage, valueProperty, minProperty, maxProperty, getPConnect]);
+  }, [dataPage, valueProperty, minProperty, maxProperty, toneProperty, getPConnect]);
 
   /* The PCore messaging service is the only trigger for refreshing this widget's progress. */
   useEffect(() => {
@@ -107,16 +112,13 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
   }, [dataPage, loadFromDataPage, getPConnect]);
 
   const indeterminate = value === undefined;
+  const effectiveTone = dataPageTone ?? tone;
   const normalizedMin = Number.isFinite(min) ? (min as number) : 0;
   const normalizedMax = Number.isFinite(max) && (max as number) > normalizedMin ? (max as number) : normalizedMin + 100;
   const normalizedValue = normalizeProgress(value ?? normalizedMin, normalizedMin, normalizedMax);
   const percentage = getPercentage(normalizedValue, normalizedMin, normalizedMax);
-  const progressText = indeterminate
-    ? localize('In progress')
-    : percentage === 100
-      ? localize('Complete')
-      : `${percentage}%`;
-  const statusText = localize(getProgressStatus(percentage, tone, indeterminate));
+  const progressText = percentage === 100 ? localize('Complete') : `${percentage}%`;
+  const statusText = localize(getProgressStatus(percentage, effectiveTone, indeterminate));
   const ariaValueText = indeterminate ? localize('In progress') : `${percentage}% ${localize('complete')}`;
   const progressId = `${id}-progress`;
   const helperId = `${id}-helper`;
@@ -130,9 +132,9 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
           {helperText}
         </Text>
       )}
-      {showValue && (
+      {showValue && !indeterminate && (
         <StyledProgressHeader>
-          <StyledProgressStatus $tone={tone}>{statusText}</StyledProgressStatus>
+          <StyledProgressStatus $tone={effectiveTone}>{statusText}</StyledProgressStatus>
           <StyledProgressValue>{progressText}</StyledProgressValue>
         </StyledProgressHeader>
       )}
@@ -152,7 +154,7 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
             $complete={percentage === 100 && !indeterminate}
             $indeterminate={indeterminate}
             $percentage={percentage}
-            $tone={tone}
+            $tone={effectiveTone}
           />
           {showMarkers && !indeterminate && (
             <StyledProgressMarkers aria-hidden='true'>

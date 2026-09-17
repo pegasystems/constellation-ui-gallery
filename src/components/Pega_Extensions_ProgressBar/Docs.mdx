@@ -9,6 +9,8 @@ import * as DemoStories from './demo.stories';
 
 On mount, the widget fetches `dataPage` via `PCore.getDataApiUtils().getData()` and subscribes to case updates with `PCore.getMessagingServiceManager().subscribe({ matcher: 'CASE', criteria: { caseId } }, ...)`. Every time the messaging service reports the case changed, the widget refetches the data page, so it can keep up with updates arriving multiple times per second; it unsubscribes on unmount. Until the first fetch resolves, the widget renders an indeterminate state.
 
+The data page can also drive the visual tone: if the record includes a valid `toneProperty` value (`accent`, `success`, `warning`, or `danger`), it overrides the static `tone` prop — useful for flipping to `danger` the moment a job reports a failure.
+
 <Primary />
 
 ## Props

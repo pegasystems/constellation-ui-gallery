@@ -41,7 +41,7 @@ test('stays indeterminate until the data page resolves', () => {
   const progress = screen.getByRole('progressbar', { name: 'Import job progress' });
   expect(progress).not.toHaveAttribute('aria-valuenow');
   expect(progress).toHaveAttribute('aria-valuetext', 'In progress');
-  expect(screen.getByText('In progress')).toBeVisible();
+  expect(screen.queryByText('Working')).not.toBeInTheDocument();
   expect(screen.queryByTestId('ProgressBar-12345678:marker:50')).not.toBeInTheDocument();
 });
 
@@ -73,6 +73,58 @@ test('offsets progress from a non-zero minimum reported by the data page', async
   expect(progress).toHaveAttribute('aria-valuemax', '100');
   expect(progress).toHaveAttribute('aria-valuenow', '50');
   expect(await screen.findByText('38%')).toBeVisible();
+});
+
+test('lets the data page override the static tone', async () => {
+  window.PCore = {
+    getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'caseInfoID' } }),
+    getDataApiUtils: () => ({
+      getData: () => Promise.resolve({ data: { data: [{ Value: 30, Max: 100, Tone: 'danger' }] } }),
+    }),
+    getMessagingServiceManager: () => ({
+      subscribe: () => 'subscription-id',
+      unsubscribe: () => {},
+    }),
+  } as unknown as typeof PCore;
+
+  const getPConnect = () =>
+    ({
+      getValue: () => 'WORK-1',
+      getLocalizedValue: (text: string) => text,
+      getContextName: () => 'primary',
+    }) as unknown as typeof PConnect;
+
+  render(
+    <PegaExtensionsProgressBar label='Failing job' tone='accent' dataPage='D_FailingJob' getPConnect={getPConnect} />,
+  );
+
+  expect(await screen.findByText('Needs attention')).toBeVisible();
+});
+
+test('ignores an invalid tone reported by the data page', async () => {
+  window.PCore = {
+    getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'caseInfoID' } }),
+    getDataApiUtils: () => ({
+      getData: () => Promise.resolve({ data: { data: [{ Value: 30, Max: 100, Tone: 'not-a-tone' }] } }),
+    }),
+    getMessagingServiceManager: () => ({
+      subscribe: () => 'subscription-id',
+      unsubscribe: () => {},
+    }),
+  } as unknown as typeof PCore;
+
+  const getPConnect = () =>
+    ({
+      getValue: () => 'WORK-1',
+      getLocalizedValue: (text: string) => text,
+      getContextName: () => 'primary',
+    }) as unknown as typeof PConnect;
+
+  render(
+    <PegaExtensionsProgressBar label='Steady job' tone='accent' dataPage='D_SteadyJob' getPConnect={getPConnect} />,
+  );
+
+  expect(await screen.findByText('On track')).toBeVisible();
 });
 
 test('subscribes to and unsubscribes from the PCore messaging service', () => {

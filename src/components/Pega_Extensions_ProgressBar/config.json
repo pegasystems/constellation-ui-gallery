@@ -44,8 +44,14 @@
             "defaultValue": "Max"
         },
         {
+            "name": "toneProperty",
+            "label": "Tone property name",
+            "format": "TEXT",
+            "defaultValue": "Tone"
+        },
+        {
             "name": "tone",
-            "label": "Progress tone",
+            "label": "Default progress tone",
             "format": "SELECT",
             "defaultValue": "accent",
             "source": [
@@ -153,6 +159,7 @@
         "valueProperty": "Value",
         "minProperty": "Min",
         "maxProperty": "Max",
+        "toneProperty": "Tone",
         "tone": "accent",
         "size": "regular",
         "showValue": true,
