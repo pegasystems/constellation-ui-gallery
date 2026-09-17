@@ -11,6 +11,8 @@ On mount, the widget fetches `dataPage` via `PCore.getDataApiUtils().getData()` 
 
 The data page can also drive the visual tone: if the record includes a valid `toneProperty` value (`accent`, `success`, `warning`, or `danger`), it overrides the static `tone` prop — useful for flipping to `danger` the moment a job reports a failure.
 
+Set `indeterminateOnly` to skip the data page and messaging service entirely and just show a never-ending progress animation — useful when work is happening but there's nothing to track it against.
+
 <Primary />
 
 ## Props
@@ -24,3 +26,5 @@ The data page can also drive the visual tone: if the record includes a valid `to
 <Story of={DemoStories.AtRisk} />
 
 <Story of={DemoStories.Loading} />
+
+<Story of={DemoStories.Continuous} />

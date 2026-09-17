@@ -20,34 +20,44 @@
             "required": true
         },
         {
+            "name": "indeterminateOnly",
+            "label": "Indeterminate only",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
             "name": "dataPage",
             "label": "Data page name",
             "format": "TEXT",
-            "required": true
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "valueProperty",
             "label": "Value property name",
             "format": "TEXT",
-            "defaultValue": "Value"
+            "defaultValue": "Value",
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "minProperty",
             "label": "Minimum property name",
             "format": "TEXT",
-            "defaultValue": "Min"
+            "defaultValue": "Min",
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "maxProperty",
             "label": "Maximum property name",
             "format": "TEXT",
-            "defaultValue": "Max"
+            "defaultValue": "Max",
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "toneProperty",
             "label": "Tone property name",
             "format": "TEXT",
-            "defaultValue": "Tone"
+            "defaultValue": "Tone",
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "tone",
@@ -97,13 +107,15 @@
             "name": "showValue",
             "label": "Show value",
             "format": "BOOLEAN",
-            "defaultValue": true
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "name": "showMarkers",
             "label": "Show milestone markers",
             "format": "BOOLEAN",
-            "defaultValue": true
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
         },
         {
             "label": "Input settings",
@@ -156,6 +168,7 @@
     ],
     "defaultConfig": {
         "label": "@L $this.label",
+        "indeterminateOnly": false,
         "valueProperty": "Value",
         "minProperty": "Min",
         "maxProperty": "Max",

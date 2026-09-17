@@ -20,8 +20,10 @@ import { getPercentage, getProgressStatus, isProgressTone, normalizeProgress, ty
 export interface PegaExtensionsProgressBarProps {
   /** Widget label. */
   label: string;
-  /** Name of the data page providing the progress value. Refreshed only via the PCore messaging service. */
-  dataPage: string;
+  /** Shows a never-ending progress animation, skipping the data page and messaging service entirely. */
+  indeterminateOnly?: boolean;
+  /** Name of the data page providing the progress value. Refreshed only via the PCore messaging service. Ignored when `indeterminateOnly` is set. */
+  dataPage?: string;
   /** Property in the data page response holding the current progress value. */
   valueProperty?: string;
   /** Property in the data page response holding the minimum progress value. */
@@ -48,6 +50,7 @@ export interface PegaExtensionsProgressBarProps {
 export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps) {
   const {
     label,
+    indeterminateOnly = false,
     dataPage,
     valueProperty = 'Value',
     minProperty = 'Min',
@@ -71,7 +74,7 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
   const [dataPageTone, setDataPageTone] = useState<ProgressTone | undefined>(undefined);
 
   const loadFromDataPage = useCallback(() => {
-    if (!dataPage) return;
+    if (indeterminateOnly || !dataPage) return;
     PCore.getDataApiUtils()
       .getData(dataPage, {}, getPConnect().getContextName())
       .then((response: any) => {
@@ -85,11 +88,11 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
         }
       })
       .catch(() => {});
-  }, [dataPage, valueProperty, minProperty, maxProperty, toneProperty, getPConnect]);
+  }, [indeterminateOnly, dataPage, valueProperty, minProperty, maxProperty, toneProperty, getPConnect]);
 
   /* The PCore messaging service is the only trigger for refreshing this widget's progress. */
   useEffect(() => {
-    if (!dataPage) return undefined;
+    if (indeterminateOnly || !dataPage) return undefined;
     /* On a case, listen for that case's updates; on a page (no case context), listen for the data page itself */
     let caseID: string | undefined;
     try {
@@ -109,9 +112,9 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
     return () => {
       PCore.getMessagingServiceManager().unsubscribe(subscriptionId);
     };
-  }, [dataPage, loadFromDataPage, getPConnect]);
+  }, [indeterminateOnly, dataPage, loadFromDataPage, getPConnect]);
 
-  const indeterminate = value === undefined;
+  const indeterminate = indeterminateOnly || value === undefined;
   const effectiveTone = dataPageTone ?? tone;
   const normalizedMin = Number.isFinite(min) ? (min as number) : 0;
   const normalizedMax = Number.isFinite(max) && (max as number) > normalizedMin ? (max as number) : normalizedMin + 100;

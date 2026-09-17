@@ -127,3 +127,15 @@ export const Loading: Story = {
     helperText: 'Waiting for the import job to report its first update.',
   },
 };
+
+export const Continuous: Story = {
+  /* indeterminateOnly mode never fetches or subscribes */
+  render: (args) => renderProgressBar(args),
+  args: {
+    ...configProps,
+    label: 'Indexing job',
+    indeterminateOnly: true,
+    dataPage: undefined,
+    helperText: 'Runs continuously while the indexing job is in progress.',
+  },
+};

@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import * as DemoStories from './demo.stories';
 import { PegaExtensionsProgressBar } from './index';
 
-const { Default, Complete, AtRisk, Loading } = composeStories(DemoStories);
+const { Default, Complete, AtRisk, Loading, Continuous } = composeStories(DemoStories);
 
 test('loads its first value from the data page and renders accessible values', async () => {
   render(<Default />);
@@ -43,6 +43,16 @@ test('stays indeterminate until the data page resolves', () => {
   expect(progress).toHaveAttribute('aria-valuetext', 'In progress');
   expect(screen.queryByText('Working')).not.toBeInTheDocument();
   expect(screen.queryByTestId('ProgressBar-12345678:marker:50')).not.toBeInTheDocument();
+});
+
+test('runs continuously with no data page or PCore involved', () => {
+  delete (window as { PCore?: typeof PCore }).PCore;
+
+  render(<Continuous />);
+
+  const progress = screen.getByRole('progressbar', { name: 'Indexing job' });
+  expect(progress).not.toHaveAttribute('aria-valuenow');
+  expect(progress).toHaveAttribute('aria-valuetext', 'In progress');
 });
 
 test('offsets progress from a non-zero minimum reported by the data page', async () => {
