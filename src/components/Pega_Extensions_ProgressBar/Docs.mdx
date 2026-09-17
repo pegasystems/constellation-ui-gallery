@@ -5,7 +5,9 @@ import * as DemoStories from './demo.stories';
 
 # Progress Bar
 
-`Pega_Extensions_ProgressBar` is a theme-aware, accessible progress indicator for work that advances toward a known maximum or remains in progress while the final value is calculated.
+`Pega_Extensions_ProgressBar` is a theme-aware, accessible progress widget built for jobs that report rapid, frequent progress — for example once a second — rather than slow-moving milestones. It has no bound property of its own — it reads its `value`/`max` from the configured `dataPage`, and the PCore messaging service is the only mechanism that triggers a refresh.
+
+On mount, the widget fetches `dataPage` via `PCore.getDataApiUtils().getData()` and subscribes to case updates with `PCore.getMessagingServiceManager().subscribe({ matcher: 'CASE', criteria: { caseId } }, ...)`. Every time the messaging service reports the case changed, the widget refetches the data page, so it can keep up with updates arriving multiple times per second; it unsubscribes on unmount. Until the first fetch resolves, the widget renders an indeterminate state.
 
 <Primary />
 
@@ -19,4 +21,4 @@ import * as DemoStories from './demo.stories';
 
 <Story of={DemoStories.AtRisk} />
 
-<Story of={DemoStories.Indeterminate} />
+<Story of={DemoStories.Loading} />

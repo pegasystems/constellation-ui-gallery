@@ -1,43 +1,47 @@
 {
     "name": "Pega_Extensions_ProgressBar",
     "label": "Progress Bar",
-    "description": "Accessible progress indicator for determinate and in-progress work.",
+    "description": "Accessible progress widget for jobs that push rapid updates (for example once a second); it reads its value from a data page and refreshes only in response to PCore messaging service updates, never on a timer or by polling.",
     "organization": "Pega",
     "version": "5.0.4",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_ProgressBar",
-    "type": "Field",
-    "subtype": "Decimal-Percentage",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
     "properties": [
         {
-            "name": "labelOption",
-            "label": "Label value",
-            "format": "SELECT",
-            "defaultValue": "custom",
-            "source": [
-                {
-                    "key": "default",
-                    "value": "Default"
-                },
-                {
-                    "key": "custom",
-                    "value": "Custom"
-                }
-            ]
-        },
-        {
             "name": "label",
-            "label": "Custom label value",
-            "format": "VALUEINPUT",
-            "required": true,
-            "ruleType": "Paragraph"
+            "label": "Label",
+            "format": "TEXT",
+            "required": true
         },
         {
-            "name": "max",
-            "label": "Maximum value",
-            "format": "NUMBER",
-            "defaultValue": 100
+            "name": "dataPage",
+            "label": "Data page name",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "valueProperty",
+            "label": "Value property name",
+            "format": "TEXT",
+            "defaultValue": "Value"
+        },
+        {
+            "name": "minProperty",
+            "label": "Minimum property name",
+            "format": "TEXT",
+            "defaultValue": "Min"
+        },
+        {
+            "name": "maxProperty",
+            "label": "Maximum property name",
+            "format": "TEXT",
+            "defaultValue": "Max"
         },
         {
             "name": "tone",
@@ -96,12 +100,6 @@
             "defaultValue": true
         },
         {
-            "name": "indeterminate",
-            "label": "Indeterminate progress",
-            "format": "BOOLEAN",
-            "defaultValue": false
-        },
-        {
             "label": "Input settings",
             "format": "GROUP",
             "properties": [
@@ -152,13 +150,13 @@
     ],
     "defaultConfig": {
         "label": "@L $this.label",
-        "max": 100,
+        "valueProperty": "Value",
+        "minProperty": "Min",
+        "maxProperty": "Max",
         "tone": "accent",
         "size": "regular",
         "showValue": true,
-        "showMarkers": true,
-        "indeterminate": false,
-        "detailFVLItem": true
+        "showMarkers": true
     },
     "infinityVersion": "26.1.1",
     "packageCosmosVersion": "9.25.0"

@@ -1,20 +1,20 @@
 export type ProgressTone = 'accent' | 'success' | 'warning' | 'danger';
 export type ProgressSize = 'compact' | 'regular' | 'large';
 
-export const normalizeProgress = (value: number, max: number): number => {
-  if (!Number.isFinite(value) || !Number.isFinite(max) || max <= 0) {
-    return 0;
+export const normalizeProgress = (value: number, min: number, max: number): number => {
+  if (!Number.isFinite(value) || !Number.isFinite(min) || !Number.isFinite(max) || max <= min) {
+    return min;
   }
 
-  return Math.min(max, Math.max(0, value));
+  return Math.min(max, Math.max(min, value));
 };
 
-export const getPercentage = (value: number, max: number): number => {
-  if (max <= 0) {
+export const getPercentage = (value: number, min: number, max: number): number => {
+  if (max <= min) {
     return 0;
   }
 
-  return Math.round((value / max) * 100);
+  return Math.round(((value - min) / (max - min)) * 100);
 };
 
 export const getProgressStatus = (percentage: number, tone: ProgressTone, indeterminate: boolean): string => {

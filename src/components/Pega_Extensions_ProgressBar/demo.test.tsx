@@ -3,46 +3,142 @@ import { composeStories } from '@storybook/react-webpack5';
 import '@testing-library/jest-dom';
 
 import * as DemoStories from './demo.stories';
+import { PegaExtensionsProgressBar } from './index';
 
-const { Default, Complete, Indeterminate } = composeStories(DemoStories);
+const { Default, Complete, AtRisk, Loading } = composeStories(DemoStories);
 
-test('renders a labeled Progress Bar with accessible values', () => {
+test('loads its first value from the data page and renders accessible values', async () => {
   render(<Default />);
 
-  const progress = screen.getByRole('progressbar', { name: 'Project completion' });
-  expect(progress).toHaveAttribute('aria-valuenow', '68');
+  const progress = await screen.findByRole('progressbar', { name: 'Export job progress' });
+  expect(progress).toHaveAttribute('aria-valuenow', '12');
   expect(progress).toHaveAttribute('aria-valuemax', '100');
-  expect(screen.getByText('68%')).toBeVisible();
+  expect(screen.getByText('12%')).toBeVisible();
   expect(screen.getByText('On track')).toBeVisible();
-  expect(screen.queryByText('Halfway')).not.toBeInTheDocument();
-  expect(screen.queryByText('Start')).not.toBeInTheDocument();
   expect(screen.getByTestId('ProgressBar-12345678:marker:50')).toBeInTheDocument();
 });
 
-test('renders completion state', () => {
+test('renders completion state', async () => {
   render(<Complete />);
 
-  expect(screen.getByRole('progressbar', { name: 'Release readiness' })).toHaveAttribute('aria-valuenow', '100');
-  expect(screen.getByRole('progressbar', { name: 'Release readiness' })).toHaveAttribute(
-    'aria-valuetext',
-    '100% complete',
-  );
-  expect(screen.getAllByText('Complete')).not.toHaveLength(0);
+  const progress = await screen.findByRole('progressbar', { name: 'Backup job progress' });
+  expect(progress).toHaveAttribute('aria-valuenow', '100');
+  expect(progress).toHaveAttribute('aria-valuetext', '100% complete');
+  expect(screen.getAllByText('Complete').length).toBeGreaterThan(0);
 });
 
-test('supports indeterminate progress', () => {
-  render(<Indeterminate />);
+test('renders an at-risk state', async () => {
+  render(<AtRisk />);
 
-  const progress = screen.getByRole('progressbar', { name: 'Preparing workspace' });
+  const progress = await screen.findByRole('progressbar', { name: 'Sync job progress' });
+  expect(progress).toHaveAttribute('aria-valuenow', '42');
+  expect(screen.getByText('In review')).toBeVisible();
+});
+
+test('stays indeterminate until the data page resolves', () => {
+  render(<Loading />);
+
+  const progress = screen.getByRole('progressbar', { name: 'Import job progress' });
   expect(progress).not.toHaveAttribute('aria-valuenow');
   expect(progress).toHaveAttribute('aria-valuetext', 'In progress');
   expect(screen.getByText('In progress')).toBeVisible();
   expect(screen.queryByTestId('ProgressBar-12345678:marker:50')).not.toBeInTheDocument();
 });
 
-test('clamps values to the configured range', () => {
-  render(<Default value={140} max={120} />);
+test('offsets progress from a non-zero minimum reported by the data page', async () => {
+  window.PCore = {
+    getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'caseInfoID' } }),
+    getDataApiUtils: () => ({
+      getData: () => Promise.resolve({ data: { data: [{ Value: 50, Min: 20, Max: 100 }] } }),
+    }),
+    getMessagingServiceManager: () => ({
+      subscribe: () => 'subscription-id',
+      unsubscribe: () => {},
+    }),
+  } as unknown as typeof PCore;
 
-  expect(screen.getByRole('progressbar', { name: 'Project completion' })).toHaveAttribute('aria-valuenow', '120');
-  expect(screen.getAllByText('Complete')).not.toHaveLength(0);
+  const getPConnect = () =>
+    ({
+      getValue: () => 'WORK-1',
+      getLocalizedValue: (text: string) => text,
+      getContextName: () => 'primary',
+    }) as unknown as typeof PConnect;
+
+  render(
+    <PegaExtensionsProgressBar label='Gauge progress' dataPage='D_GaugeProgress' getPConnect={getPConnect} />,
+  );
+
+  const progress = await screen.findByRole('progressbar', { name: 'Gauge progress' });
+  expect(progress).toHaveAttribute('aria-valuemin', '20');
+  expect(progress).toHaveAttribute('aria-valuemax', '100');
+  expect(progress).toHaveAttribute('aria-valuenow', '50');
+  expect(await screen.findByText('38%')).toBeVisible();
+});
+
+test('subscribes to and unsubscribes from the PCore messaging service', () => {
+  const subscribe = jest.fn(() => 'subscription-id');
+  const unsubscribe = jest.fn();
+  window.PCore = {
+    getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'caseInfoID' } }),
+    getDataApiUtils: () => ({
+      getData: () => Promise.resolve({ data: { data: [{ Value: 10, Max: 100 }] } }),
+    }),
+    getMessagingServiceManager: () => ({
+      subscribe,
+      unsubscribe,
+    }),
+  } as unknown as typeof PCore;
+
+  const getPConnect = () =>
+    ({
+      getValue: () => 'WORK-1',
+      getLocalizedValue: (text: string) => text,
+      getContextName: () => 'primary',
+    }) as unknown as typeof PConnect;
+
+  const { unmount } = render(
+    <PegaExtensionsProgressBar label='Live export progress' dataPage='D_ExportJobProgress' getPConnect={getPConnect} />,
+  );
+
+  expect(subscribe).toHaveBeenCalledWith(
+    { matcher: 'CASE', criteria: { caseId: 'WORK-1' } },
+    expect.any(Function),
+    'primary',
+  );
+
+  unmount();
+
+  expect(unsubscribe).toHaveBeenCalledWith('subscription-id');
+});
+
+test('subscribes to data page updates when used on a page without a case context', () => {
+  const subscribe = jest.fn(() => 'subscription-id');
+  const unsubscribe = jest.fn();
+  window.PCore = {
+    getConstants: () => ({ CASE_INFO: { CASE_INFO_ID: 'caseInfoID' } }),
+    getDataApiUtils: () => ({
+      getData: () => Promise.resolve({ data: { data: [{ Value: 10, Max: 100 }] } }),
+    }),
+    getMessagingServiceManager: () => ({
+      subscribe,
+      unsubscribe,
+    }),
+  } as unknown as typeof PCore;
+
+  const getPConnect = () =>
+    ({
+      getValue: () => undefined,
+      getLocalizedValue: (text: string) => text,
+      getContextName: () => 'primary',
+    }) as unknown as typeof PConnect;
+
+  render(
+    <PegaExtensionsProgressBar label='Live export progress' dataPage='D_ExportJobProgress' getPConnect={getPConnect} />,
+  );
+
+  expect(subscribe).toHaveBeenCalledWith(
+    { matcher: 'DATAPAGE_UPDATED', criteria: { datapage: 'D_ExportJobProgress' } },
+    expect.any(Function),
+    'primary',
+  );
 });
