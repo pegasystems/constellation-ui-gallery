@@ -1,0 +1,165 @@
+{
+    "name": "Pega_Extensions_ProgressBar",
+    "label": "Progress Bar",
+    "description": "Accessible progress indicator for determinate and in-progress work.",
+    "organization": "Pega",
+    "version": "5.0.4",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_ProgressBar",
+    "type": "Field",
+    "subtype": "Decimal-Percentage",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "name": "max",
+            "label": "Maximum value",
+            "format": "NUMBER",
+            "defaultValue": 100
+        },
+        {
+            "name": "tone",
+            "label": "Progress tone",
+            "format": "SELECT",
+            "defaultValue": "accent",
+            "source": [
+                {
+                    "key": "accent",
+                    "value": "Accent"
+                },
+                {
+                    "key": "success",
+                    "value": "Success"
+                },
+                {
+                    "key": "warning",
+                    "value": "Warning"
+                },
+                {
+                    "key": "danger",
+                    "value": "Danger"
+                }
+            ]
+        },
+        {
+            "name": "size",
+            "label": "Bar size",
+            "format": "SELECT",
+            "defaultValue": "regular",
+            "source": [
+                {
+                    "key": "compact",
+                    "value": "Compact"
+                },
+                {
+                    "key": "regular",
+                    "value": "Regular"
+                },
+                {
+                    "key": "large",
+                    "value": "Large"
+                }
+            ]
+        },
+        {
+            "name": "showValue",
+            "label": "Show value",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "showMarkers",
+            "label": "Show milestone markers",
+            "format": "BOOLEAN",
+            "defaultValue": true
+        },
+        {
+            "name": "indeterminate",
+            "label": "Indeterminate progress",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.4",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "max": 100,
+        "tone": "accent",
+        "size": "regular",
+        "showValue": true,
+        "showMarkers": true,
+        "indeterminate": false,
+        "detailFVLItem": true
+    },
+    "infinityVersion": "26.1.1",
+    "packageCosmosVersion": "9.25.0"
+}

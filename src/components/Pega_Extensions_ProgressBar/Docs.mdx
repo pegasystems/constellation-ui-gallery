@@ -1,0 +1,22 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Progress Bar
+
+`Pega_Extensions_ProgressBar` is a theme-aware, accessible progress indicator for work that advances toward a known maximum or remains in progress while the final value is calculated.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Story of={DemoStories.Complete} />
+
+<Story of={DemoStories.AtRisk} />
+
+<Story of={DemoStories.Indeterminate} />
