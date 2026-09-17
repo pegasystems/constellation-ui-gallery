@@ -13,7 +13,7 @@ const StyledJsonEditorWrapper = styled.div(() => {
   `;
 });
 
-export const StyledJsonEditorSurface = styled.div(({ theme }) => {
+export const StyledJsonEditorSurface = styled.div<{ $lineNumberWidth: number }>(({ theme, $lineNumberWidth }) => {
   return css`
     position: relative;
     width: 100%;
@@ -26,7 +26,7 @@ export const StyledJsonEditorSurface = styled.div(({ theme }) => {
       caret-color: ${theme.base.palette.interactive};
       font-family: monospace;
       line-height: 1.5;
-      padding-inline-start: calc(${theme.base.spacing} * 4);
+      padding-inline-start: calc(${theme.base.spacing} * ${$lineNumberWidth});
 
       &::placeholder {
         color: ${theme.base.palette['foreground-color']};
@@ -38,74 +38,83 @@ export const StyledJsonEditorSurface = styled.div(({ theme }) => {
 
 StyledJsonEditorSurface.defaultProps = defaultThemeProp;
 
-export const StyledJsonEditorHighlight = styled.div<{ $labelHidden: boolean }>(({ theme, $labelHidden }) => {
-  return css`
-    position: absolute;
-    z-index: 1;
-    inset-inline: 0;
-    inset-block-end: 0;
-    inset-block-start: ${$labelHidden ? '0' : `calc(${theme.base.spacing} * 3)`};
-    overflow: hidden;
-    pointer-events: none;
-    color: ${theme.base.palette['foreground-color']};
-    font-family: monospace;
-    line-height: 1.5;
-    white-space: pre;
+export const StyledJsonEditorHighlight = styled.div<{ $hasInfo: boolean; $labelHidden: boolean }>(
+  ({ theme, $hasInfo, $labelHidden }) => {
+    return css`
+      position: absolute;
+      z-index: 1;
+      inset-inline: 0;
+      inset-block-end: ${$hasInfo ? `calc(${theme.base.spacing} * 2)` : '0'};
+      inset-block-start: ${$labelHidden ? '0' : `calc(${theme.base.spacing} * 3)`};
+      overflow: hidden;
+      pointer-events: none;
+      color: ${theme.base.palette['foreground-color']};
+      font-family: monospace;
+      line-height: 1.5;
+      white-space: pre;
 
-    .json-string {
-      color: ${theme.base.palette.pending};
-    }
+      .json-string {
+        color: ${theme.base.palette.pending};
+      }
 
-    .json-number {
-      color: ${theme.base.palette.success};
-    }
+      .json-number {
+        color: ${theme.base.palette.success};
+      }
 
-    .json-literal {
-      color: ${theme.base.palette.warn};
-    }
+      .json-literal {
+        color: ${theme.base.palette.warn};
+      }
 
-    .json-punctuation {
-      color: ${theme.base.palette.info};
-    }
-  `;
-});
+      .json-punctuation {
+        color: ${theme.base.palette.info};
+      }
+    `;
+  },
+);
 
 StyledJsonEditorHighlight.defaultProps = defaultThemeProp;
 
-export const StyledJsonEditorLineNumbers = styled.div<{ $scrollTop: number }>(({ theme, $scrollTop }) => {
-  return css`
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    width: calc(${theme.base.spacing} * 3.5);
-    padding: ${theme.components['text-area'].padding};
-    box-sizing: border-box;
-    border-inline-end: 0.0625rem solid ${theme.base.palette['border-line']};
-    color: ${theme.base.palette['foreground-color']};
-    opacity: ${theme.base.transparency['transparent-2']};
-    text-align: end;
-    transform: translateY(-${$scrollTop}px);
+export const StyledJsonEditorLineNumbers = styled.div<{ $lineNumberWidth: number; $scrollTop: number }>(
+  ({ theme, $lineNumberWidth, $scrollTop }) => {
+    return css`
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      z-index: 1;
+      width: calc(${theme.base.spacing} * ${$lineNumberWidth});
+      padding: ${theme.components['text-area'].padding};
+      box-sizing: border-box;
+      border-inline-end: 0.0625rem solid ${theme.base.palette['border-line']};
+      background-color: ${theme.base.palette['app-background']};
+      color: ${theme.base.palette['foreground-color']};
+      text-align: end;
+      transform: translateY(-${$scrollTop}px);
 
-    span {
-      display: block;
-      line-height: 1.5;
-    }
-  `;
-});
+      span {
+        display: block;
+        line-height: 1.5;
+        opacity: ${theme.base.transparency['transparent-2']};
+      }
+    `;
+  },
+);
 
 StyledJsonEditorLineNumbers.defaultProps = defaultThemeProp;
 
 export const StyledJsonEditorCode = styled.code<{
+  $lineNumberWidth: number;
   $scrollTop: number;
   $scrollLeft: number;
-}>(({ theme, $scrollTop, $scrollLeft }) => {
+}>(({ theme, $lineNumberWidth, $scrollTop, $scrollLeft }) => {
   return css`
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
     min-width: 100%;
     padding: ${theme.components['text-area'].padding};
-    padding-inline-start: calc(${theme.base.spacing} * 4);
+    padding-inline-start: calc(
+      ${theme.base.spacing} * ${$lineNumberWidth} + ${theme.components['form-control']['border-width']}
+    );
     box-sizing: border-box;
     transform: translate(-${$scrollLeft}px, -${$scrollTop}px);
   `;
@@ -199,6 +208,10 @@ export const StyledJsonEditorStatus = styled.span(({ theme }) => {
 
     &[data-status='invalid'] {
       color: ${theme.components['form-field'].error['status-color']};
+    }
+
+    &[data-status='valid'] {
+      color: ${theme.base.colors.green['dark']};
     }
 
     svg {
