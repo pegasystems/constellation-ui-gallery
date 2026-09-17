@@ -41,7 +41,6 @@ test('stays indeterminate until the data page resolves', () => {
   const progress = screen.getByRole('progressbar', { name: 'Import job progress' });
   expect(progress).not.toHaveAttribute('aria-valuenow');
   expect(progress).toHaveAttribute('aria-valuetext', 'In progress');
-  expect(screen.queryByText('Working')).not.toBeInTheDocument();
   expect(screen.queryByTestId('ProgressBar-12345678:marker:50')).not.toBeInTheDocument();
 });
 

@@ -121,7 +121,7 @@ export function PegaExtensionsProgressBar(props: PegaExtensionsProgressBarProps)
   const normalizedValue = normalizeProgress(value ?? normalizedMin, normalizedMin, normalizedMax);
   const percentage = getPercentage(normalizedValue, normalizedMin, normalizedMax);
   const progressText = percentage === 100 ? localize('Complete') : `${percentage}%`;
-  const statusText = localize(getProgressStatus(percentage, effectiveTone, indeterminate));
+  const statusText = localize(getProgressStatus(percentage, effectiveTone));
   const ariaValueText = indeterminate ? localize('In progress') : `${percentage}% ${localize('complete')}`;
   const progressId = `${id}-progress`;
   const helperId = `${id}-helper`;

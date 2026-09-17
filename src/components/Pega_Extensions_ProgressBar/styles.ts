@@ -41,6 +41,16 @@ const completionFlash = keyframes`
   }
 `;
 
+const stripeDrift = keyframes`
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 1rem 1rem;
+  }
+`;
+
 const getTrackHeight = (size: ProgressSize, spacing: string): string => {
   if (size === 'compact') {
     return `calc(${spacing} * 0.5)`;
@@ -225,11 +235,28 @@ export const StyledProgressFill = styled.div<{
     }
 
     @media (prefers-reduced-motion: reduce) {
-      animation: none;
       transition: none;
+
+      /* translucent texture on the same tone color (not a moving sweep or a contrasting stripe) keeps this readable and consistent with the solid fill look */
+      background: ${$indeterminate
+        ? css`repeating-linear-gradient(
+            135deg,
+            rgb(255 255 255 / 18%) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgb(255 255 255 / 18%) 50%,
+            rgb(255 255 255 / 18%) 75%,
+            transparent 75%,
+            transparent
+          ),
+            ${getToneColor($tone, theme)}`
+        : getToneColor($tone, theme)};
+      background-size: ${$indeterminate ? '1rem 1rem' : 'auto'};
+      animation: ${$indeterminate ? css`${stripeDrift} 900ms linear infinite` : 'none'};
 
       &::after {
         animation: none;
+        opacity: 0;
       }
     }
   `;
