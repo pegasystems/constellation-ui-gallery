@@ -1,0 +1,175 @@
+{
+    "name": "Pega_Extensions_JsonEditor",
+    "label": "JSON editor",
+    "description": "A multiline editor for JSON values with validation and formatting.",
+    "organization": "Pega",
+    "version": "5.0.4",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_JsonEditor",
+    "type": "Field",
+    "subtype": "Text-Paragraph",
+    "subtypeLabel": "Paragraph",
+    "icon": "images/pz-text-area-active.svg",
+    "properties": [
+        {
+            "name": "labelOption",
+            "label": "Label value",
+            "format": "SELECT",
+            "defaultValue": "custom",
+            "source": [
+                {
+                    "key": "default",
+                    "value": "Default"
+                },
+                {
+                    "key": "custom",
+                    "value": "Custom"
+                }
+            ]
+        },
+        {
+            "name": "label",
+            "label": "Custom label value",
+            "format": "VALUEINPUT",
+            "required": true,
+            "ruleType": "Paragraph"
+        },
+        {
+            "name": "readOnly",
+            "label": "Edit mode",
+            "format": "READONLY"
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "visibility": "(!readOnly = true)",
+            "properties": [
+                {
+                    "name": "placeholder",
+                    "label": "Placeholder",
+                    "format": "TEXT",
+                    "defaultValue": "{\n  \"title\": \"Constellation\",\n  \"count\": 3,\n  \"enabled\": true,\n  \"notes\": null,\n  \"tags\": [\"json\", \"editor\"],\n  \"settings\": {\n    \"theme\": \"light\"\n  }\n}"
+                },
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT",
+                    "defaultValue": "Supports objects, arrays, strings, numbers, booleans, and null."
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "required",
+                    "label": "Required",
+                    "format": "REQUIRED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "disabled",
+                    "label": "Disabled",
+                    "format": "DISABLED",
+                    "visibility": "(!readOnly = true)"
+                },
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "name": "indent",
+            "label": "Indent spaces",
+            "format": "TEXT"
+        },
+        {
+            "label": "Editor actions",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "showValidate",
+                    "label": "Show Validate action",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showFormat",
+                    "label": "Show Format action",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showMinify",
+                    "label": "Show Minify action",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showCopy",
+                    "label": "Show Copy action",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showClear",
+                    "label": "Show Clear action",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showCharacterCount",
+                    "label": "Show character count",
+                    "format": "BOOLEAN"
+                },
+                {
+                    "name": "showLineCount",
+                    "label": "Show line count",
+                    "format": "BOOLEAN"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.4",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "indent": "2",
+        "showValidate": true,
+        "showFormat": true,
+        "showMinify": true,
+        "showCopy": true,
+        "showClear": true,
+        "showCharacterCount": true,
+        "showLineCount": true,
+        "detailFVLItem": true,
+        "isFormWidth": false,
+        "isContainerWidth": false
+    },
+    "infinityVersion": "26.1.1",
+    "packageCosmosVersion": "9.25.0"
+}

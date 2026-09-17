@@ -1,0 +1,16 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Stories from './demo.stories';
+
+<Meta of={Stories} />
+
+# JSON editor
+
+`Pega_Extensions_JsonEditor` provides a multiline JSON field with syntax highlighting, validation, formatting, minification, copying, and clearing actions.
+
+## Example
+
+<Story of={Stories.BaseJsonEditor} />
+
+## Usage
+
+Use this component for editable JSON object or array values. The component updates the bound field through `getPConnect().getActionsApi()` and supports display-only and labels-left display modes.
