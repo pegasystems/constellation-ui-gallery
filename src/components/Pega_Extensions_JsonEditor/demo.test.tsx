@@ -11,6 +11,7 @@ test('renders JsonEditor', async () => {
   render(<BaseJsonEditor />);
 
   expect(await screen.findByRole('textbox', { name: 'JSON value' })).toHaveValue(configProps.value);
+  expect(screen.getByRole('textbox', { name: 'JSON value' })).toHaveAttribute('spellcheck', 'false');
   expect(screen.getByRole('button', { name: 'Format JSON' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Validate JSON' })).toContainElement(
     screen.getByTestId('JsonEditor-12345678:action:validate').querySelector('[data-icon-name="check"]'),

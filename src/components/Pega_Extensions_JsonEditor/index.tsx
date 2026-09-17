@@ -106,6 +106,7 @@ export function PegaExtensionsJsonEditor(props: PegaExtensionsJsonEditorProps) {
   const [scrollOffset, setScrollOffset] = useState({ top: 0, left: 0 });
   const copyStateTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const lineCount = useMemo(() => getLineCount(draft), [draft]);
+  const lineNumberWidth = Math.max(3.5, String(lineCount).length + 2);
   const highlightedDraft = useMemo(() => highlightJson(draft), [draft]);
   const lineNumbers = useMemo(
     () => Array.from({ length: Math.max(1, lineCount) }, (_, index) => index + 1),
@@ -185,6 +186,7 @@ export function PegaExtensionsJsonEditor(props: PegaExtensionsJsonEditorProps) {
   };
 
   const errorMessage = validation.message ? localize(validation.message) : validatemessage;
+  const hasInfo = Boolean(errorMessage || helperText);
   const errorLocation =
     validation.errorLine && validation.errorColumn
       ? `${localize('Line')} ${validation.errorLine}, ${localize('column')} ${validation.errorColumn}`
@@ -284,14 +286,27 @@ export function PegaExtensionsJsonEditor(props: PegaExtensionsJsonEditorProps) {
           )}
         </StyledJsonEditorToolbar>
       )}
-      <StyledJsonEditorSurface>
-        <StyledJsonEditorHighlight $labelHidden={hideLabel} aria-hidden='true' data-testid={highlightTestId}>
-          <StyledJsonEditorLineNumbers $scrollTop={scrollOffset.top} data-testid={lineNumbersTestId}>
+      <StyledJsonEditorSurface $lineNumberWidth={lineNumberWidth}>
+        <StyledJsonEditorHighlight
+          $hasInfo={hasInfo}
+          $labelHidden={hideLabel}
+          aria-hidden='true'
+          data-testid={highlightTestId}
+        >
+          <StyledJsonEditorLineNumbers
+            $lineNumberWidth={lineNumberWidth}
+            $scrollTop={scrollOffset.top}
+            data-testid={lineNumbersTestId}
+          >
             {lineNumbers.map((lineNumber) => (
               <span key={lineNumber}>{lineNumber}</span>
             ))}
           </StyledJsonEditorLineNumbers>
-          <StyledJsonEditorCode $scrollTop={scrollOffset.top} $scrollLeft={scrollOffset.left}>
+          <StyledJsonEditorCode
+            $lineNumberWidth={lineNumberWidth}
+            $scrollTop={scrollOffset.top}
+            $scrollLeft={scrollOffset.left}
+          >
             {highlightedDraft.map(({ className, key, text }) =>
               className ? (
                 <span className={className} key={key}>
@@ -316,6 +331,7 @@ export function PegaExtensionsJsonEditor(props: PegaExtensionsJsonEditorProps) {
           onChange={handleOnChange}
           onKeyDown={handleEditorKeyDown}
           onScroll={handleEditorScroll}
+          spellCheck={false}
           testId={editorTestId}
         />
       </StyledJsonEditorSurface>
