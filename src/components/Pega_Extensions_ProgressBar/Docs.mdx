@@ -1,0 +1,30 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Progress Bar
+
+`Pega_Extensions_ProgressBar` is a theme-aware, accessible progress widget built for jobs that report rapid, frequent progress — for example once a second — rather than slow-moving milestones. It has no bound property of its own — it reads its `value`/`max` from the configured `dataPage`, and the PCore messaging service is the only mechanism that triggers a refresh.
+
+On mount, the widget fetches `dataPage` via `PCore.getDataApiUtils().getData()` and subscribes to case updates with `PCore.getMessagingServiceManager().subscribe({ matcher: 'CASE', criteria: { caseId } }, ...)`. Every time the messaging service reports the case changed, the widget refetches the data page, so it can keep up with updates arriving multiple times per second; it unsubscribes on unmount. Until the first fetch resolves, the widget renders an indeterminate state.
+
+The data page can also drive the visual tone: if the record includes a valid `toneProperty` value (`accent`, `success`, `warning`, or `danger`), it overrides the static `tone` prop — useful for flipping to `danger` the moment a job reports a failure.
+
+Set `indeterminateOnly` to skip the data page and messaging service entirely and just show a never-ending progress animation — useful when work is happening but there's nothing to track it against.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Story of={DemoStories.Complete} />
+
+<Story of={DemoStories.AtRisk} />
+
+<Story of={DemoStories.Loading} />
+
+<Story of={DemoStories.Continuous} />
