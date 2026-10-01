@@ -4,6 +4,7 @@ import {
   extractPageRefFromConfig,
   getNestedStoreValue,
   getPageListRegistration,
+  isTableColumnField,
   getRelativePropName,
   isBooleanField,
   isIdColumn,
@@ -19,6 +20,12 @@ import {
 } from './utils';
 
 describe('ExpandableTable path utilities', () => {
+  test('excludes view references and EmbeddedDataMulti configuration from display columns', () => {
+    expect(isTableColumnField({ type: 'reference' })).toBe(false);
+    expect(isTableColumnField({ type: 'EmbeddedDataMulti' })).toBe(false);
+    expect(isTableColumnField({ type: 'ScalarList' })).toBe(true);
+  });
+
   test('extractPageRefFromConfig uses the innermost page list', () => {
     expect(extractPageRefFromConfig(' .computers[].Brand')).toBe('computers');
     expect(extractPageRefFromConfig(' .Orders[].LineItems[].ProductName')).toBe('Orders[].LineItems');

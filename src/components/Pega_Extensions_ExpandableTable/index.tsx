@@ -23,6 +23,7 @@ import * as caretRightIcon from '@pega/cosmos-react-core/lib/components/Icon/ico
 import '../shared/create-nonce';
 import getAllFields, {
   loadRowDetailView,
+  isTableColumnField,
   getBasePageReference,
   buildRowPageReference,
   buildReferenceList,
@@ -341,7 +342,7 @@ export const PegaExtensionsExpandableTable = (props: ExpandableTableProps) => {
 
   useEffect(() => {
     const tmpFields = getAllFields(getPConnect);
-    const columnFields = tmpFields.filter((field: any) => field.type !== 'reference');
+    const columnFields = tmpFields.filter(isTableColumnField);
     if (columnFields && columnFields[0] && columnFields[0].value) {
       const currentBasePageRef = getBasePageReference(getPConnect);
       const listRef = columnFields[0].pageref;
