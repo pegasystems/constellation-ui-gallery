@@ -15,6 +15,8 @@ beforeAll(() => {
 test('renders expandable table component with default args', async () => {
   render(<Default />);
   expect(await screen.findByText('Computer inventory')).toBeVisible();
+  expect(await screen.findByRole('columnheader', { name: 'Brand' })).toBeVisible();
+  expect(screen.queryByRole('columnheader', { name: 'Properties' })).not.toBeInTheDocument();
 });
 
 test('renders expand buttons for each row', async () => {

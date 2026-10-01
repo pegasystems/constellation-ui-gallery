@@ -54,6 +54,10 @@ export const isUrlColumn = (field: any): boolean => field?.componentType === 'UR
 
 export type ExpandableTableVariant = 'table' | 'list' | 'tabs';
 
+/** Excludes view/configuration nodes from the table's rendered data columns. */
+export const isTableColumnField = (field: any): boolean =>
+  field?.type !== 'reference' && field?.type !== 'EmbeddedDataMulti';
+
 const normalizeLabel = (label: unknown): string => (typeof label === 'string' ? label.trim().toLowerCase() : '');
 
 /** Category column used to group rows into tabs (label must be `Category`). */

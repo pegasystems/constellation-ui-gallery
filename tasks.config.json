@@ -30,12 +30,14 @@
         "questions_askOnce": "server,authService",
         "questions_askedOnce": "server,authService",
         "archiveRulesetName": "CustomDXArch",
-        "archiveRulesetVersion": "01-01-01"
+        "archiveRulesetVersion": "01-01-01",
+        "authorizeUri": "",
+        "tokenUri": ""
     },
     "component": {
         "library": "Extensions",
         "type": "",
-        "version": "5.0.4",
+        "version": "5.0.5",
         "subtype": "",
         "description": "",
         "icon": ""

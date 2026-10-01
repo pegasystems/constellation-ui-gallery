@@ -8,6 +8,10 @@ type configInfo = {
   label?: string;
   heading?: string;
   name?: string;
+  hideLabel?: boolean;
+  pagelistValue?: string;
+  repeatingView?: string;
+  targetObjectClass?: string;
 };
 
 type info = {
@@ -118,6 +122,16 @@ const genResponse = () => {
         label: 'Status',
       },
       type: 'ScalarList',
+    },
+    {
+      config: {
+        hideLabel: true,
+        label: 'Properties',
+        pagelistValue: '@P .computers',
+        repeatingView: 'ComputerDetails',
+        targetObjectClass: 'Data-Computer',
+      },
+      type: 'EmbeddedDataMulti',
     },
   ];
 
