@@ -146,7 +146,8 @@ export const PegaExtensionsDisplayAttachments = (props: UtilityListProps) => {
       const listOfFiles: Array<any> = [];
       const listOfCategories = categories.split(',');
       response.forEach((attachment: any) => {
-        const currentCategory = attachment[getMappedKey('pyCategory')]?.trim();
+        const currentCategory =
+          attachment[getMappedKey('category')]?.trim() || attachment[getMappedKey('pyCategory')]?.trim();
         if (useAttachmentEndpoint) {
           /* Filter the attachment categories */
           if (categories && listOfCategories.length > 0) {

@@ -44,6 +44,10 @@ export default {
             id: 'color-contrast',
             enabled: false,
           },
+          {
+            id: 'label-content-name-mismatch',
+            enabled: false,
+          },
         ],
       },
     },

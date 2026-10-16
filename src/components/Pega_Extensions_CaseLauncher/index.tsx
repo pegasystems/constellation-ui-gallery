@@ -1,4 +1,14 @@
-import { withConfiguration, Card, CardHeader, CardContent, CardFooter, Text, Button } from '@pega/cosmos-react-core';
+import { useRef, useState } from 'react';
+import {
+  withConfiguration,
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Text,
+  Button,
+  Progress,
+} from '@pega/cosmos-react-core';
 import StyledCard from './styles';
 import '../shared/create-nonce';
 import { getMappedKey } from '../shared/utils';
@@ -13,22 +23,43 @@ export type CaseLauncherProps = {
   classFilter: any;
   /** Primary button label  */
   labelPrimaryButton: string;
+  /** Show inline progress and disable the button while a case is being created */
+  showLoadingIndicator?: boolean | 'true' | 'false';
   getPConnect: () => typeof PConnect;
 };
 
 export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
-  const { heading, description, classFilter, labelPrimaryButton, getPConnect } = props;
+  const { heading, description, classFilter, labelPrimaryButton, showLoadingIndicator, getPConnect } = props;
   const pConn = getPConnect();
+  const [isCreating, setIsCreating] = useState(false);
+  const creationInProgressRef = useRef(false);
+  const shouldShowLoading = showLoadingIndicator === true || showLoadingIndicator === 'true';
 
   /* Create a new case on click of the selected button */
-  const createCase = (className: string) => {
+  const createCase = async (className: string) => {
+    if (shouldShowLoading && creationInProgressRef.current) {
+      return;
+    }
+
     const options = {
       flowType: getMappedKey('pyStartCase'),
       containerName: 'primary',
       openCaseViewAfterCreate: true,
     };
 
-    pConn.getActionsApi().createWork(className, options);
+    if (shouldShowLoading) {
+      creationInProgressRef.current = true;
+      setIsCreating(true);
+    }
+
+    try {
+      await pConn.getActionsApi().createWork(className, options);
+    } finally {
+      if (shouldShowLoading) {
+        creationInProgressRef.current = false;
+        setIsCreating(false);
+      }
+    }
   };
 
   return (
@@ -40,11 +71,16 @@ export const PegaExtensionsCaseLauncher = (props: CaseLauncherProps) => {
       <CardFooter justify='end'>
         <Button
           variant='primary'
+          disabled={shouldShowLoading && isCreating}
           onClick={() => {
             createCase(classFilter);
           }}
         >
-          {labelPrimaryButton}
+          {shouldShowLoading && isCreating ? (
+            <Progress placement='inline' message={labelPrimaryButton} />
+          ) : (
+            labelPrimaryButton
+          )}
         </Button>
       </CardFooter>
     </Card>

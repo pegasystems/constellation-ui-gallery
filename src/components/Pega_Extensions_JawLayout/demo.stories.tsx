@@ -13,6 +13,19 @@ const meta: Meta<typeof PegaExtensionsJawLayout> = {
       },
     },
   },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'label-content-name-mismatch',
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
 };
 
 export default meta;

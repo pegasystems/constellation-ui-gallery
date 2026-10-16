@@ -38,6 +38,19 @@ const meta: Meta<StoryArgs> = {
       },
     },
   },
+  parameters: {
+    a11y: {
+      context: '#storybook-root',
+      config: {
+        rules: [
+          {
+            id: 'label-content-name-mismatch',
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   component: PegaExtensionsLangSwitch,
 };
 

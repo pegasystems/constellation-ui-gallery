@@ -10,6 +10,9 @@ export default {
       options: ['Work-'],
       control: { control: 'select' },
     },
+    showLoadingIndicator: {
+      control: 'boolean' as const,
+    },
     getPConnect: {
       table: {
         disable: true,
@@ -59,5 +62,6 @@ export const Default: Story = {
     description: 'Short description about the case that you will be able to start',
     classFilter: 'Work-',
     labelPrimaryButton: 'Start a case',
+    showLoadingIndicator: false,
   },
 };
