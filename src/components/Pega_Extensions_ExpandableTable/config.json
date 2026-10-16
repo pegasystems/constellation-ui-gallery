@@ -3,12 +3,12 @@
     "label": "Expandable Table",
     "description": "Read-only expandable list as a table, accordion list, or category tabs; boolean columns act as select-all for nested checkboxes",
     "organization": "Pega",
-    "version": "5.0.5",
+    "version": "5.0.6",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_ExpandableTable",
     "type": "Template",
-    "subtype": "DETAILS",
+    "subtype": "FORM",
     "properties": [
         {
             "name": "A",
@@ -54,12 +54,12 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.5, Thu Oct 01 2026, 26.1.1-105720",
+            "label": "Pega_Extensions 5.0.6, Fri Oct 16 2026, 26.1.1-105720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
     ],
-    "buildDate": "2026-10-01T14:33:42.664Z",
+    "buildDate": "2026-10-16T18:11:38.742Z",
     "infinityVersion": "26.1.1-105720",
-    "packageCosmosVersion": "9.27.4"
+    "packageCosmosVersion": "9.25.1-11"
 }

@@ -3,7 +3,7 @@
     "label": "Image Magnify",
     "description": "Image Magnify",
     "organization": "Pega",
-    "version": "5.0.5",
+    "version": "5.0.6",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_ImageMagnify",
@@ -302,7 +302,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.5, Thu Oct 01 2026, 26.1.1-105720",
+            "label": "Pega_Extensions 5.0.6, Fri Oct 16 2026, 26.1.1-105720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -334,7 +334,7 @@
         "detailFVLItem": true,
         "isFormWidth": true
     },
-    "buildDate": "2026-10-01T14:33:43.249Z",
+    "buildDate": "2026-10-16T18:11:39.326Z",
     "infinityVersion": "26.1.1-105720",
-    "packageCosmosVersion": "9.27.4"
+    "packageCosmosVersion": "9.25.1-11"
 }

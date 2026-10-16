@@ -3,7 +3,7 @@
     "label": "Toggle",
     "description": "Boolean field rendered as a switch",
     "organization": "Pega",
-    "version": "5.0.5",
+    "version": "5.0.6",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_Toggle",
@@ -172,7 +172,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.5, Thu Oct 01 2026, 26.1.1-105720",
+            "label": "Pega_Extensions 5.0.6, Fri Oct 16 2026, 26.1.1-105720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -182,7 +182,7 @@
         "trueLabel": "@L Yes",
         "falseLabel": "@L No"
     },
-    "buildDate": "2026-10-01T14:33:44.741Z",
+    "buildDate": "2026-10-16T18:11:40.943Z",
     "infinityVersion": "26.1.1-105720",
-    "packageCosmosVersion": "9.27.4"
+    "packageCosmosVersion": "9.25.1-11"
 }

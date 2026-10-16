@@ -3,7 +3,7 @@
     "label": "Display Attachments",
     "description": "Display the attachments for a specific category",
     "organization": "Pega",
-    "version": "5.0.5",
+    "version": "5.0.6",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_DisplayAttachments",
@@ -86,7 +86,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.5, Thu Oct 01 2026, 26.1.1-105720",
+            "label": "Pega_Extensions 5.0.6, Fri Oct 16 2026, 26.1.1-105720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -99,7 +99,7 @@
         "useAttachmentEndpoint": true,
         "enableDownloadAll": false
     },
-    "buildDate": "2026-10-01T14:33:42.195Z",
+    "buildDate": "2026-10-16T18:11:38.279Z",
     "infinityVersion": "26.1.1-105720",
-    "packageCosmosVersion": "9.27.4"
+    "packageCosmosVersion": "9.25.1-11"
 }

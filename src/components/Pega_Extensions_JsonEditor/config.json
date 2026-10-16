@@ -3,7 +3,7 @@
     "label": "JSON editor",
     "description": "A multiline editor for JSON values with validation and formatting.",
     "organization": "Pega",
-    "version": "5.0.4",
+    "version": "5.0.6",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_JsonEditor",
@@ -151,7 +151,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 5.0.4",
+            "label": "Pega_Extensions 5.0.6, Fri Oct 16 2026, 26.1.1-105720",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -170,6 +170,7 @@
         "isFormWidth": false,
         "isContainerWidth": false
     },
-    "infinityVersion": "26.1.1",
-    "packageCosmosVersion": "9.25.0"
+    "infinityVersion": "26.1.1-105720",
+    "packageCosmosVersion": "9.25.1-11",
+    "buildDate": "2026-10-16T18:11:39.484Z"
 }
