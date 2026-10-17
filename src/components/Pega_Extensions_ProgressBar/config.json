@@ -1,0 +1,183 @@
+{
+    "name": "Pega_Extensions_ProgressBar",
+    "label": "Progress Bar",
+    "description": "Accessible progress widget for jobs that push rapid updates (for example once a second); it reads its value from a data page and refreshes only in response to PCore messaging service updates, never on a timer or by polling.",
+    "organization": "Pega",
+    "version": "5.0.4",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_ProgressBar",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "label",
+            "label": "Label",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "indeterminateOnly",
+            "label": "Indeterminate only",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "dataPage",
+            "label": "Data page name",
+            "format": "TEXT",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "valueProperty",
+            "label": "Value property name",
+            "format": "TEXT",
+            "defaultValue": "Value",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "minProperty",
+            "label": "Minimum property name",
+            "format": "TEXT",
+            "defaultValue": "Min",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "maxProperty",
+            "label": "Maximum property name",
+            "format": "TEXT",
+            "defaultValue": "Max",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "toneProperty",
+            "label": "Tone property name",
+            "format": "TEXT",
+            "defaultValue": "Tone",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "tone",
+            "label": "Default progress tone",
+            "format": "SELECT",
+            "defaultValue": "accent",
+            "source": [
+                {
+                    "key": "accent",
+                    "value": "Accent"
+                },
+                {
+                    "key": "success",
+                    "value": "Success"
+                },
+                {
+                    "key": "warning",
+                    "value": "Warning"
+                },
+                {
+                    "key": "danger",
+                    "value": "Danger"
+                }
+            ]
+        },
+        {
+            "name": "size",
+            "label": "Bar size",
+            "format": "SELECT",
+            "defaultValue": "regular",
+            "source": [
+                {
+                    "key": "compact",
+                    "value": "Compact"
+                },
+                {
+                    "key": "regular",
+                    "value": "Regular"
+                },
+                {
+                    "key": "large",
+                    "value": "Large"
+                }
+            ]
+        },
+        {
+            "name": "showValue",
+            "label": "Show value",
+            "format": "BOOLEAN",
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "showMarkers",
+            "label": "Show milestone markers",
+            "format": "BOOLEAN",
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.4",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "indeterminateOnly": false,
+        "valueProperty": "Value",
+        "minProperty": "Min",
+        "maxProperty": "Max",
+        "toneProperty": "Tone",
+        "tone": "accent",
+        "size": "regular",
+        "showValue": true,
+        "showMarkers": true
+    },
+    "infinityVersion": "26.1.1",
+    "packageCosmosVersion": "9.25.0"
+}
