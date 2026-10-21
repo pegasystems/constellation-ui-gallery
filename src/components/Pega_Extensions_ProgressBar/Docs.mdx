@@ -1,0 +1,54 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Progress Bar
+
+`Pega_Extensions_ProgressBar` is a theme-aware, accessible progress widget for jobs that report their progress through a data page. It has no bound property of its own: it reads the current value, minimum, maximum, and optional tone from the configured `dataPage`, and `updateStrategy` decides when that data page is fetched.
+
+| `updateStrategy`      | When the data page is fetched                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `messaging` (default) | On mount, then each time the PCore messaging service reports a matching update. Suited to jobs that push rapid updates, such as once a second. |
+| `interval`            | On mount, then every `refreshIntervalSeconds` seconds (default 30, minimum 10), whether or not anything changed.                               |
+| `onLoad`              | Once on mount. The value changes only when the page is reloaded.                                                                               |
+
+Until the first fetch succeeds, the widget shows an indeterminate state. If a fetch fails, the widget keeps its last known value.
+
+The data page can also drive the visual tone. If the record has a valid `toneProperty` value (`accent`, `success`, `warning`, or `danger`), it overrides the `tone` prop. This lets a job switch the bar to `danger` as soon as it reports a failure.
+
+Set `indeterminateOnly` to skip the data page and every refresh strategy and show a continuous progress animation. Use it when work is in progress but there is nothing to measure it against.
+
+## Update flow
+
+### Push (`messaging`)
+
+The runtime messaging service owns the WebSocket connection. On mount, the progress bar fetches the data page and subscribes through PCore. After that, it fetches the data page again each time the socket delivers a matching update, and it unsubscribes on unmount. If the messaging service is unavailable, the widget falls back to polling every `refreshIntervalSeconds`.
+
+In a case context, the subscription matches the `CASE` event for the current case. On a page without a case context, it matches the `DATAPAGE_UPDATED` event for the configured data page.
+
+### Polling (`interval`)
+
+A timer fetches the data page every `refreshIntervalSeconds` and never subscribes to messaging. Use it when the backend cannot push updates or a slower refresh is acceptable. The timer is cleared on unmount.
+
+### Load once (`onLoad`)
+
+The data page is fetched once on mount, with no timer and no messaging subscription. Use it for values that rarely change while the page is open.
+
+<Primary />
+
+## Props
+
+<Controls />
+
+## Examples
+
+<Story of={DemoStories.Complete} />
+
+<Story of={DemoStories.AtRisk} />
+
+<Story of={DemoStories.PollingInterval} />
+
+<Story of={DemoStories.LoadOnce} />
+
+<Story of={DemoStories.Continuous} />
