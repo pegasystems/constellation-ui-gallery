@@ -3,7 +3,7 @@
     "label": "Display PDF",
     "description": "Display PDF in read-only mode",
     "organization": "Pega",
-    "version": "4.0.7",
+    "version": "4.0.8",
     "library": "Extensions",
     "allowedApplications": [],
     "componentKey": "Pega_Extensions_DisplayPDF",
@@ -67,7 +67,7 @@
         },
         {
             "format": "LABEL",
-            "label": "Pega_Extensions 4.0.7, Tue Oct 20 2026, 25.1.4-107085",
+            "label": "Pega_Extensions 4.0.8, Thu Oct 22 2026, 25.1.4-107085",
             "name": "PegaAboutData",
             "variant": "primary"
         }
@@ -78,7 +78,7 @@
         "height": 400,
         "width": "100%"
     },
-    "buildDate": "2026-10-20T22:14:05.731Z",
+    "buildDate": "2026-10-22T17:07:52.534Z",
     "infinityVersion": "25.1.4-107085",
     "packageCosmosVersion": "8.34.5-1"
 }
