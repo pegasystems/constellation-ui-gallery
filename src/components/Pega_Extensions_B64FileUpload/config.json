@@ -1,0 +1,55 @@
+{
+    "name": "Pega_Extensions_B64FileUpload",
+    "label": "Base 64 File Upload Component",
+    "description": "Upload file into a Property",
+    "organization": "Pega",
+    "version": "5.0.6",
+    "library": "Extensions",
+    "componentKey": "Pega_Extensions_B64FileUpload",
+    "type": "Field",
+    "subtype": "Text",
+    "subtypeLabel": "File Upload",
+    "icon": "images/pz-url-active.svg",
+    "properties": [
+        {
+            "name": "fileBase64PropertyName",
+            "label": "File Base64 Property",
+            "description": "Property where the file content in base64 will be stored, without the start dot.",
+            "format": "TEXT",
+            "defaultValue": ""
+        },
+        {
+            "label": "Component Usage Instructions",
+            "format": "LABEL",
+            "name": "UsageLabel",
+            "variant": "h3"
+        },
+        {
+            "label": "This component allows users to upload files through drag-and-drop or click-to-browse. Upon selection, files are converted to Base64 and stored in the specified properties temporarily in the Pega clipboard. Use Pega OOTB File APIs to upload to the repository.",
+            "format": "LABEL",
+            "name": "UsageInfo",
+            "variant": "primary"
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.6, Thu Nov 05 2026, 26.1.1-105720",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "detailFVLItem": true,
+        "isFormWidth": false,
+        "isContainerWidth": false
+    },
+    "buildDate": "2026-11-05T09:10:28.543Z",
+    "infinityVersion": "26.1.1-105720",
+    "packageCosmosVersion": "9.25.1-11"
+}

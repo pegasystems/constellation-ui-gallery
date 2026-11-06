@@ -1,0 +1,10 @@
+{
+  "fields": {
+    "State name" : "State name",
+    "State code" : "State code",
+    "State list for": "State list for",
+    "Click to show/hide state list": "Click to show/hide state list",
+    "State list": "State list",
+    "Loading state list": "Loading state list"
+  }
+}
