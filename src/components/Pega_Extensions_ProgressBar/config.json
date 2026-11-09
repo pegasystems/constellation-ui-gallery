@@ -1,0 +1,214 @@
+{
+    "name": "Pega_Extensions_ProgressBar",
+    "label": "Progress Bar",
+    "description": "Accessible progress widget for jobs that report progress from a data page. The data page is fetched on each PCore messaging service update (default), on a polling interval, or once on page load.",
+    "organization": "Pega",
+    "version": "5.0.6",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_ProgressBar",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "properties": [
+        {
+            "name": "label",
+            "label": "Label",
+            "format": "TEXT",
+            "required": true
+        },
+        {
+            "name": "indeterminateOnly",
+            "label": "Indeterminate only",
+            "format": "BOOLEAN",
+            "defaultValue": false
+        },
+        {
+            "name": "dataPage",
+            "label": "Data page name",
+            "format": "TEXT",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "updateStrategy",
+            "label": "Update strategy",
+            "format": "SELECT",
+            "defaultValue": "messaging",
+            "source": [
+                {
+                    "key": "messaging",
+                    "value": "Push (PCore messaging service)"
+                },
+                {
+                    "key": "interval",
+                    "value": "Poll on an interval"
+                },
+                {
+                    "key": "onLoad",
+                    "value": "Load once on page load"
+                }
+            ],
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "refreshIntervalSeconds",
+            "label": "Refresh interval (seconds, minimum 10)",
+            "format": "NUMBER",
+            "defaultValue": 30,
+            "visibility": "$this.updateStrategy == 'interval' && $this.indeterminateOnly == false"
+        },
+        {
+            "name": "valueProperty",
+            "label": "Value property name",
+            "format": "TEXT",
+            "defaultValue": "Value",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "minProperty",
+            "label": "Minimum property name",
+            "format": "TEXT",
+            "defaultValue": "Min",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "maxProperty",
+            "label": "Maximum property name",
+            "format": "TEXT",
+            "defaultValue": "Max",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "toneProperty",
+            "label": "Tone property name",
+            "format": "TEXT",
+            "defaultValue": "Tone",
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "tone",
+            "label": "Default progress tone",
+            "format": "SELECT",
+            "defaultValue": "accent",
+            "source": [
+                {
+                    "key": "accent",
+                    "value": "Accent"
+                },
+                {
+                    "key": "success",
+                    "value": "Success"
+                },
+                {
+                    "key": "warning",
+                    "value": "Warning"
+                },
+                {
+                    "key": "danger",
+                    "value": "Danger"
+                }
+            ]
+        },
+        {
+            "name": "size",
+            "label": "Bar size",
+            "format": "SELECT",
+            "defaultValue": "regular",
+            "source": [
+                {
+                    "key": "compact",
+                    "value": "Compact"
+                },
+                {
+                    "key": "regular",
+                    "value": "Regular"
+                },
+                {
+                    "key": "large",
+                    "value": "Large"
+                }
+            ]
+        },
+        {
+            "name": "showValue",
+            "label": "Show status and percentage",
+            "format": "BOOLEAN",
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "name": "showFraction",
+            "label": "Show completed fraction",
+            "format": "BOOLEAN",
+            "defaultValue": true,
+            "visibility": "($this.indeterminateOnly = false)"
+        },
+        {
+            "label": "Input settings",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "helperText",
+                    "label": "Helper text",
+                    "format": "TEXT"
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "label": "Advanced",
+            "format": "GROUP",
+            "collapsible": true,
+            "properties": [
+                {
+                    "name": "testId",
+                    "label": "Test ID",
+                    "format": "TEXT",
+                    "ignorePattern": "[^-_\\p{N}\\p{L}]",
+                    "includeAnnotations": false
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.6, Wed Oct 21 2026, 27.1.0-SNAPSHOT",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "label": "@L $this.label",
+        "indeterminateOnly": false,
+        "updateStrategy": "messaging",
+        "refreshIntervalSeconds": 30,
+        "valueProperty": "Value",
+        "minProperty": "Min",
+        "maxProperty": "Max",
+        "toneProperty": "Tone",
+        "tone": "accent",
+        "size": "regular",
+        "showValue": true,
+        "showFraction": true
+    },
+    "infinityVersion": "27.1.0-SNAPSHOT",
+    "packageCosmosVersion": "9.25.1-11",
+    "buildDate": "2026-10-21T11:42:21.953Z"
+}
