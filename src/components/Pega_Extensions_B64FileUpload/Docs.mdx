@@ -1,0 +1,59 @@
+import { Meta, Primary, Controls, Story } from '@storybook/addon-docs/blocks';
+import * as DemoStories from './demo.stories';
+
+<Meta of={DemoStories} />
+
+# Overview
+
+This field-level component lets users upload a file by drag and drop or by clicking to select one. When a file is selected, it is read as Base64 and two values are written to the case: the file name, stored in the component's own property (the property the field is bound to), and the Base64 content, stored in the property set in `fileBase64PropertyName`.
+
+**Important:** the Base64 property must be added to the view for the component to work. It can be added as a hidden field so it isn't shown to the user, but the component will not work if it is missing.
+
+<Primary />
+
+## Setup
+
+1. Add the component to the view where the file should be uploaded.
+2. Bind the component to the property that will store the file name, for example `pyFileName`. The component writes the file name to this control property.
+3. Set `fileBase64PropertyName` to the property that will store the Base64 content, for example `pyFileBase64`.
+4. Add the Base64 property to the view as a hidden field. Without it, the component cannot write the content and will not work.
+
+Property names can be written with or without a leading dot. The component adds the dot internally, so `pyFileBase64` and `.pyFileBase64` behave the same way.
+
+## Props
+
+<Controls />
+
+| Prop                     | Required | Description                                                                       |
+| ------------------------ | -------- | --------------------------------------------------------------------------------- |
+| `fileBase64PropertyName` | Yes      | Property where the Base64 content of the file is stored, without the leading dot. |
+
+The file name is not a parameter. It is written to the property the component is bound to (the control's own value).
+
+## User interaction
+
+The component has two states:
+
+- **No file selected:** the component shows an upload box with a paperclip icon, the text "Drag and drop a file here or", and a "Select file" button. The user can drop a file on the box or use the "Select file" button to open the file browser. While a file is being dragged over the box, the box is highlighted.
+- **Loading:** while a file is being read and converted, the upload box shows the text "Reading..." with a spinning indicator. The indicator is not a percentage: it keeps turning until the file has been read and converted, and then it disappears. Removing the file during loading cancels it.
+- **File selected:** the component shows the file name and its size in MB, with a remove control (✕) on the right. Selecting the remove control clears the selected file and returns to the upload box. The remove control can also be activated with the Enter or Space key.
+
+## Data behavior
+
+- When a file is selected, the component reads it with the browser's `FileReader` and updates the control property (file name) and the Base64 property through the Pega actions API.
+- When a file is removed, both properties are cleared to empty values.
+- When the field is shown again, the file name comes from the control's value. The file size is calculated from the stored Base64 content, so it is shown as well.
+- The file name and Base64 content are sent to the properties only after the file has been fully read. Until then, the properties keep their previous values.
+- Only the first file is used. If several files are dropped or selected, the others are ignored.
+
+## Storage
+
+- The Base64 content is held temporarily in the Pega clipboard. To keep the file, use the Pega out-of-the-box file APIs to upload it to the repository.
+- Base64 text is about 33% larger than the original file.
+- The component does not check the file type or size itself. Validate these in the case if you need to restrict uploads.
+
+## Notes for developers
+
+- The upload text and the remove button labels go through the Pega localization helper, so they can be translated.
+- The component does not render a label. Use the surrounding field or view to label it.
+- **Known display issue in Dev Studio and App Studio (Infinity Studio):** the component's styles (borders, radius, padding, height and colors, defined in `styles.ts`) are not applied there. The upload box may appear without its dashed border and the file-loaded box without its border. The component works correctly, and the styles display as intended in the Constellation portal. Check the rendering in the portal, not in the studio.
