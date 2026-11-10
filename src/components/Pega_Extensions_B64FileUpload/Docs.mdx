@@ -24,9 +24,9 @@ Property names can be written with or without a leading dot. The component adds 
 
 <Controls />
 
-| Prop                     | Required | Description                                                                          |
-| ------------------------ | -------- | ------------------------------------------------------------------------------------ |
-| `fileBase64PropertyName` | Yes      | Property where the Base64 content of the file is stored, without the leading dot.   |
+| Prop                     | Required | Description                                                                       |
+| ------------------------ | -------- | --------------------------------------------------------------------------------- |
+| `fileBase64PropertyName` | Yes      | Property where the Base64 content of the file is stored, without the leading dot. |
 
 The file name is not a parameter. It is written to the property the component is bound to (the control's own value).
 
@@ -34,7 +34,7 @@ The file name is not a parameter. It is written to the property the component is
 
 The component has two states:
 
-- **No file selected:** the component shows an upload box with a paperclip icon and the text "Drag and drop a file here or click to select." The user can drop a file on the box or click it to open the file browser. While a file is being dragged over the box, the box is highlighted.
+- **No file selected:** the component shows an upload box with a paperclip icon, the text "Drag and drop a file here or", and a "Select file" button. The user can drop a file on the box or use the "Select file" button to open the file browser. While a file is being dragged over the box, the box is highlighted.
 - **Loading:** while a file is being read and converted, the upload box shows the text "Reading..." with a spinning indicator. The indicator is not a percentage: it keeps turning until the file has been read and converted, and then it disappears. Removing the file during loading cancels it.
 - **File selected:** the component shows the file name and its size in MB, with a remove control (✕) on the right. Selecting the remove control clears the selected file and returns to the upload box. The remove control can also be activated with the Enter or Space key.
 

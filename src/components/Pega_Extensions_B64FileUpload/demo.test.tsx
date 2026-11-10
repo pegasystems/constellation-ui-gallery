@@ -13,10 +13,16 @@ test('renders ExtensionsB64FileUpload upload box', () => {
   expect(screen.getByText(/Drag and drop a file here or/)).toBeVisible();
 });
 
-test('allows clicking to select file', () => {
+test('select file button opens the file picker', () => {
   render(<BaseExtensionsB64FileUpload />);
 
-  expect(screen.getByText(/click to select/i)).toBeInTheDocument();
+  const button = screen.getByRole('button', { name: 'Select file' });
+  const clickSpy = jest.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+
+  fireEvent.click(button);
+
+  expect(clickSpy).toHaveBeenCalled();
+  clickSpy.mockRestore();
 });
 
 test('reads the selected file and shows its name and size when done', async () => {

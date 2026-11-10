@@ -1,8 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
-import { Icon, Progress, withConfiguration } from '@pega/cosmos-react-core';
+import { Button, Icon, Progress, Text, registerIcon, withConfiguration } from '@pega/cosmos-react-core';
+import * as timesIcon from '@pega/cosmos-react-core/lib/components/Icon/icons/times.icon';
 import '../shared/create-nonce';
 
 import StyledB64FileUploadWrapper from './styles';
+
+registerIcon(timesIcon);
 
 type LoadPhase = 'idle' | 'reading' | 'encoding';
 
@@ -80,15 +83,7 @@ export const PegaExtensionsB64FileUpload = (props: B64FileUploadProps & any) => 
         console.error('Error updating file properties:', error);
       }
     }
-  }, [
-    fileBase64,
-    fileName,
-    fileNameProp,
-    fileBase64PropertyName,
-    PConnect,
-    fileSize,
-    normalizedFileBase64Prop,
-  ]);
+  }, [fileBase64, fileName, fileNameProp, fileBase64PropertyName, PConnect, fileSize, normalizedFileBase64Prop]);
 
   // After a reload the file name comes back from the control's value but the size does not.
   // Derive it from the stored Base64 content (about 3/4 of its length, minus the padding characters).
@@ -185,10 +180,6 @@ export const PegaExtensionsB64FileUpload = (props: B64FileUploadProps & any) => 
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          onClick={() => {
-            if (phase === 'idle') fileInputRef.current?.click();
-          }}
-          style={{ cursor: phase === 'idle' ? 'pointer' : 'progress' }}
         >
           {phase === 'idle' ? (
             <>
@@ -198,13 +189,18 @@ export const PegaExtensionsB64FileUpload = (props: B64FileUploadProps & any) => 
                 aria-label='attachment'
                 style={{ height: '2rem', width: '2rem', marginBottom: '0.5rem' }}
               />
-              <p className='upload-text'>
-                {PConnect.getLocalizedValue('Drag and drop a file here or click to select.', '', '')}
-              </p>
+              <Text as='p' variant='secondary' className='upload-text'>
+                {PConnect.getLocalizedValue('Drag and drop a file here or', '', '')}
+              </Text>
+              <Button variant='secondary' compact onClick={() => fileInputRef.current?.click()}>
+                {PConnect.getLocalizedValue('Select file', '', '')}
+              </Button>
             </>
           ) : (
             <div className='upload-progress'>
-              <p className='upload-text'>{PConnect.getLocalizedValue('Reading...', '', '')}</p>
+              <Text as='p' variant='secondary' className='upload-text'>
+                {PConnect.getLocalizedValue('Reading...', '', '')}
+              </Text>
               <Progress variant='ring' placement='inline' />
             </div>
           )}
@@ -226,26 +222,24 @@ export const PegaExtensionsB64FileUpload = (props: B64FileUploadProps & any) => 
               style={{ height: '1.5rem', width: '1.5rem', marginRight: '0.5rem' }}
             />
             <div className='file-details'>
-              <span className='file-name'>{fileName}</span>
-              {fileSize > 0 && <span className='file-size'>({fileSize.toFixed(2)} MB)</span>}
+              <Text className='file-name'>{fileName}</Text>
+              {fileSize > 0 && (
+                <Text variant='secondary' className='file-size'>
+                  ({fileSize.toFixed(2)} MB)
+                </Text>
+              )}
             </div>
           </div>
           <div className='file-actions'>
-            <div
-              className='remove-button'
+            <Button
+              variant='simple'
+              label={PConnect.getLocalizedValue('Remove file', '', '')}
+              icon
+              compact
               onClick={handleRemoveFile}
-              role='button'
-              tabIndex={0}
-              aria-label={PConnect.getLocalizedValue('Remove file', '', '')}
-              title={PConnect.getLocalizedValue('Remove and start over', '', '')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  handleRemoveFile();
-                }
-              }}
             >
-              ✕
-            </div>
+              <Icon name='times' />
+            </Button>
           </div>
         </div>
       )}
