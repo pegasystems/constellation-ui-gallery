@@ -57,8 +57,12 @@ Default operating mode:
    - `demo.stories.tsx` for Storybook
    - `demo.test.tsx` for unit coverage
    - optional `styles.ts`, `localizations.json`, and helper modules only when justified
-   - when a Storybook prop has a constrained set of supported values, expose it with a `select` control and human-readable labels rather than a free-text control
-   - place important custom props near the top of Storybook `argTypes` and set explicit defaults for common DX props such as `testId: ''` and `hideLabel: false` when relevant
+   - put Storybook props in the desired logical display order in the component props or story args type; the Props/Controls table follows the type's field order, not the order of `argTypes`
+   - document component props and story-only args with TypeScript/JSDoc comments so Storybook can infer their descriptions; do not duplicate descriptions in `argTypes`
+   - keep `argTypes` minimal and use it only to override inferred behavior when needed, such as conditional visibility (`if`), hiding a row (`table.disable`), or a control/default that Storybook cannot infer correctly; do not restate inferred controls such as `control: 'text'`
+   - use literal union types for constrained values and rely on Storybook's inferred controls when they are sufficient; add control options or labels only when inference does not provide the intended UI
+   - mirror relevant `config.json` visibility rules in Storybook controls with conditional `if` settings where Storybook supports them; avoid showing dependent controls when their parent option is inactive
+   - set explicit story defaults for common DX props such as `testId: ''` and `hideLabel: false` when relevant
    - for field-style components, keep `hideLabel` as the public component prop and pass `labelHidden={hideLabel}` only to the underlying Cosmos control when that control uses the Cosmos prop name
    - for field-style components, type `disabled`, `readOnly`, and `required` as boolean props, but preserve runtime compatibility by coercing `true` and string `'true'` values with the shared `[readOnly, required, disabled].map(...)` pattern used by `MaskedInput` and `DateInput`
    - prefer `getPConnect: () => typeof PConnect` for repo-aligned field component props (types from `@pega/pcore-pconnect-typedefs` via `src/pega-globals.d.ts`) and call `getActionsApi()`, `getStateProps()`, and `ignoreSuggestion()` from the returned object instead of introducing duplicate local `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces

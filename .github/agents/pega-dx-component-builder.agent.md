@@ -30,10 +30,13 @@ Your job is to translate a product requirement into a working gallery component 
 1. Start by identifying the closest existing component pattern in `src/components/` and reuse its structure.
 2. Use repository docs and the skill references to determine the expected file set, naming, property metadata, validation commands, and publishing constraints.
 3. Implement the component with typed props, `withConfiguration`, and the smallest viable PConnect or PCore integration that satisfies the requirement.
-4. For field-style components, follow the current `MaskedInput` prop pattern: keep `hideLabel` as the public API, pass `labelHidden={hideLabel}` only to Cosmos components, type `disabled`, `readOnly`, and `required` as booleans while preserving runtime string coercion, and use `getPConnect: () => typeof PConnect` (from `@pega/pcore-pconnect-typedefs` via `src/pega-globals.d.ts`) instead of one-off local PConnect helper interfaces. Prefer bare `PCore.*` over `(window as any).PCore`.
-5. For data, case identity, rule names, and navigation, follow Launchpad-safe patterns (`getMappedKey`, no hard-coded `py*` / `pz*` / `px*` keys, no hand-built URLs, capability checks for optional APIs).
-6. Update source-of-truth registration files if needed so the new component is discoverable in the gallery.
-7. Validate the result with relevant linting or tests, and report any remaining gaps explicitly — including Launchpad support assumptions.
+4. Define Storybook Props/Controls row order in the component props or story args type, not in `argTypes`; order fields logically and group related props.
+5. Add TypeScript/JSDoc comments to props and story-only args for Storybook descriptions. Keep `argTypes` minimal and use it only to override inferred behavior, such as visibility (`if`), hidden rows (`table.disable`), or controls/defaults that inference cannot express. Do not redundantly specify inferred text controls or descriptions.
+6. Use literal union types for constrained props and rely on inferred controls when sufficient; add explicit control options or labels only when needed. Mirror relevant `config.json` visibility with conditional controls where supported.
+7. For field-style components, follow the current `MaskedInput` prop pattern: keep `hideLabel` as the public API, pass `labelHidden={hideLabel}` only to Cosmos components, type `disabled`, `readOnly`, and `required` as booleans while preserving runtime string coercion, and use `getPConnect: () => typeof PConnect` (from `@pega/pcore-pconnect-typedefs` via `src/pega-globals.d.ts`) instead of one-off local PConnect helper interfaces. Prefer bare `PCore.*` over `(window as any).PCore`.
+8. For data, case identity, rule names, and navigation, follow Launchpad-safe patterns (`getMappedKey`, no hard-coded `py*` / `pz*` / `px*` keys, no hand-built URLs, capability checks for optional APIs).
+9. Update source-of-truth registration files if needed so the new component is discoverable in the gallery.
+10. Validate the result with relevant linting or tests, and report any remaining gaps explicitly — including Launchpad support assumptions.
 
 ## Output Format
 
