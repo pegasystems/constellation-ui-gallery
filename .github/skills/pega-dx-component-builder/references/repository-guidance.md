@@ -26,7 +26,11 @@ This repository is a Pega Constellation DX component gallery. Use the existing c
 - Use TypeScript React components and functional patterns.
 - Prefer `@pega/cosmos-react-core` primitives over custom UI or third-party design systems.
 - Keep Storybook stories realistic by mocking `PCore` or `getPConnect` only as much as needed.
-- For Storybook controls, prefer explicit `argTypes` ordering, use `select` controls for props with a known supported value list, and expose `hideLabel` as a single boolean control instead of `labelHidden`.
+- Storybook Props/Controls row order follows the component props or story args type declaration. Put fields in the desired logical display order there, grouping related fields such as `messageSource` and `content`; do not try to control row order through `argTypes`.
+- Put descriptions in TypeScript/JSDoc comments on component props and story-only args. Storybook uses those comments to populate the table, so avoid duplicating descriptions in `argTypes`.
+- Keep `argTypes` minimal: use it only to override inferred behavior, such as conditional visibility (`if`), hiding a row (`table.disable`), or a control/default that cannot be inferred correctly. Do not redundantly specify ordinary inferred controls such as `control: 'text'`.
+- Use literal union types for constrained values and rely on Storybook's inferred controls when sufficient; add options, labels, or a specific control only when inference does not provide the intended UI. Expose `hideLabel` as a single boolean control instead of `labelHidden`.
+- Mirror relevant `config.json` visibility rules with Storybook conditional controls (`if`) so dependent controls appear only when their parent option is active, to the extent supported by Storybook.
 - In story defaults, use `hideLabel: false` for field-style components and do not add a parallel `labelHidden` arg.
 - For field-style component props, keep `hideLabel` in the public TypeScript API even when the Cosmos component still expects `labelHidden={hideLabel}` internally.
 - Match repo field patterns by typing `disabled`, `readOnly`, and `required` as booleans while still coercing runtime string `'true'` values with the shared `[readOnly, required, disabled].map(...)` block used by `MaskedInput` and `DateInput`.

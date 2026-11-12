@@ -18,7 +18,11 @@ Use this checklist before concluding the task.
   - No `isLaunchpad` feature switches when mapping or capability detection suffices.
 - `Docs.mdx` explains the component and matches the live props.
 - `demo.stories.tsx` renders with workable mocks for missing runtime services, including `getNameSpaceUtils`, `getEnvironmentInfo().getKeyMapping`, and `getRestClient().doesRestApiExist` when used.
-- Storybook controls use `select` inputs for constrained props, keep key custom props near the top of the controls table, and use a single boolean `hideLabel` control when relevant.
+- Storybook Props/Controls row order is defined by the component props or story args type, with related fields grouped in the desired display order.
+- TypeScript/JSDoc comments on component props and story-only args provide the table descriptions.
+- `argTypes` only override inferred behavior when needed, such as conditional visibility, hidden rows, or controls/defaults that cannot be inferred; ordinary inferred controls and descriptions are not redundantly specified.
+- Storybook conditional controls reflect relevant `config.json` visibility rules where supported.
+- Constrained props use inferred controls from literal union types when sufficient; add explicit control options only when inference is inadequate. Use a single boolean `hideLabel` control when relevant.
 - Additional stories are referenced from `Docs.mdx` in an `Example` or `Examples` section.
 - `demo.test.tsx` covers the important behavior that can run in Jest.
 - `styles.ts` and `localizations.json` exist only when justified.

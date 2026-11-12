@@ -38,6 +38,7 @@ Closest existing component under `src/components/Pega_Extensions_<Name>/` is als
    - Do **not** use `if (isLaunchpad)` when key mapping or capability detection can solve the difference.
 5. **Stub PCore fully in Storybook/tests** for every helper the component calls (`getNameSpaceUtils`, `getKeyMapping`, `getData*`, Semantic URL utils, `doesRestApiExist`, …). Cast incomplete mocks with `as unknown as typeof PCore` / `as unknown as typeof PConnect`.
 6. **Match field-component conventions** when applicable: `hideLabel` public API, boolean `disabled`/`readOnly`/`required` with string `'true'` coercion, `getPConnect: () => typeof PConnect` (types from `@pega/pcore-pconnect-typedefs` via [`src/pega-globals.d.ts`](./src/pega-globals.d.ts)), prefer bare `PCore.*` over `(window as any).PCore`, `withConfiguration`, `../shared/create-nonce`. Do not invent local `PegaConnect` / `PegaActionsApi` interfaces.
+7. **Keep Storybook Props/Controls tables intentional.** Define row order in the component props or story args type, grouping related fields; `argTypes` ordering does not control the table order. Put descriptions in TypeScript/JSDoc comments on props and story-only args. Keep `argTypes` minimal and use it only to override inferred behavior, such as conditional visibility (`if`), hiding rows (`table.disable`), or controls/defaults that inference cannot express. Do not redundantly specify inferred text controls or descriptions. Mirror relevant `config.json` visibility rules with Storybook conditional controls where supported.
 
 ---
 

@@ -1,0 +1,437 @@
+{
+    "name": "Pega_Extensions_EventListener",
+    "label": "Event Listener",
+    "description": "Listens to messages from the Pega messaging service and displays a toast or refreshes the view. It has no UI.",
+    "organization": "Pega",
+    "version": "5.0.6",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_EventListener",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "icon": "OneColumnPage.svg",
+    "properties": [
+        {
+            "name": "action",
+            "label": "Action",
+            "format": "SELECT",
+            "defaultValue": "toast",
+            "source": [
+                {
+                    "key": "toast",
+                    "value": "Display toast"
+                },
+                {
+                    "key": "refresh",
+                    "value": "Refresh view"
+                }
+            ],
+            "additionalInfo": {
+                "content": "What to do when a message is received. Refresh view refreshes the case tab view where the widget is placed."
+            }
+        },
+        {
+            "label": "Subscription",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "matcher",
+                    "label": "Matcher",
+                    "format": "TEXT",
+                    "required": true,
+                    "defaultValue": "EVENT_LISTENER",
+                    "includeAnnotations": false,
+                    "additionalInfo": {
+                        "content": "Identifies the messages to receive. Must match the matcher used to publish the message."
+                    }
+                },
+                {
+                    "name": "criteriaCount",
+                    "label": "Number of criteria",
+                    "format": "SELECT",
+                    "defaultValue": "1",
+                    "source": [
+                        {
+                            "key": "1",
+                            "value": "1"
+                        },
+                        {
+                            "key": "2",
+                            "value": "2"
+                        },
+                        {
+                            "key": "3",
+                            "value": "3"
+                        },
+                        {
+                            "key": "4",
+                            "value": "4"
+                        },
+                        {
+                            "key": "5",
+                            "value": "5"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Each criterion creates a separate subscription with the same matcher. A message is displayed when its criteria exactly match one of the subscriptions."
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Criterion 1",
+            "format": "GROUP",
+            "visibility": "($this.criteriaCount == '1' || $this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')",
+            "properties": [
+                {
+                    "name": "criterion1Type",
+                    "label": "Criterion type",
+                    "format": "SELECT",
+                    "defaultValue": "case",
+                    "source": [
+                        {
+                            "key": "case",
+                            "value": "Current case"
+                        },
+                        {
+                            "key": "operator",
+                            "value": "Current operator"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "visibility": "($this.criteriaCount == '1' || $this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')",
+                    "additionalInfo": {
+                        "content": "Current case uses the criterion ID with the case key. Current operator uses the criterion userId with the operator ID in lowercase. Property uses a criterion name with the value of a property."
+                    }
+                },
+                {
+                    "name": "criterion1Name",
+                    "label": "Criterion name",
+                    "format": "TEXT",
+                    "placeholder": "Region",
+                    "includeAnnotations": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '1' || $this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion1Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Name of the criterion used to publish the message. Names are case-sensitive."
+                    }
+                },
+                {
+                    "name": "criterion1Property",
+                    "label": "Criterion value",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '1' || $this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion1Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Property that provides the criterion value. The subscription follows changes to the value and is skipped while the value is empty."
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Criterion 2",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "criterion2Type",
+                    "label": "Criterion type",
+                    "format": "SELECT",
+                    "defaultValue": "property",
+                    "source": [
+                        {
+                            "key": "case",
+                            "value": "Current case"
+                        },
+                        {
+                            "key": "operator",
+                            "value": "Current operator"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Current case uses the criterion ID with the case key. Current operator uses the criterion userId with the operator ID in lowercase. Property uses a criterion name with the value of a property."
+                    },
+                    "visibility": "($this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')"
+                },
+                {
+                    "name": "criterion2Name",
+                    "label": "Criterion name",
+                    "format": "TEXT",
+                    "placeholder": "Region",
+                    "includeAnnotations": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion2Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Name of the criterion used to publish the message. Names are case-sensitive."
+                    }
+                },
+                {
+                    "name": "criterion2Property",
+                    "label": "Criterion value",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion2Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Property that provides the criterion value. The subscription follows changes to the value and is skipped while the value is empty."
+                    }
+                }
+            ],
+            "visibility": "($this.criteriaCount == '2' || $this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')"
+        },
+        {
+            "label": "Criterion 3",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "criterion3Type",
+                    "label": "Criterion type",
+                    "format": "SELECT",
+                    "defaultValue": "property",
+                    "source": [
+                        {
+                            "key": "case",
+                            "value": "Current case"
+                        },
+                        {
+                            "key": "operator",
+                            "value": "Current operator"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Current case uses the criterion ID with the case key. Current operator uses the criterion userId with the operator ID in lowercase. Property uses a criterion name with the value of a property."
+                    },
+                    "visibility": "($this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')"
+                },
+                {
+                    "name": "criterion3Name",
+                    "label": "Criterion name",
+                    "format": "TEXT",
+                    "placeholder": "Region",
+                    "includeAnnotations": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion3Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Name of the criterion used to publish the message. Names are case-sensitive."
+                    }
+                },
+                {
+                    "name": "criterion3Property",
+                    "label": "Criterion value",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion3Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Property that provides the criterion value. The subscription follows changes to the value and is skipped while the value is empty."
+                    }
+                }
+            ],
+            "visibility": "($this.criteriaCount == '3' || $this.criteriaCount == '4' || $this.criteriaCount == '5')"
+        },
+        {
+            "label": "Criterion 4",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "criterion4Type",
+                    "label": "Criterion type",
+                    "format": "SELECT",
+                    "defaultValue": "property",
+                    "source": [
+                        {
+                            "key": "case",
+                            "value": "Current case"
+                        },
+                        {
+                            "key": "operator",
+                            "value": "Current operator"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Current case uses the criterion ID with the case key. Current operator uses the criterion userId with the operator ID in lowercase. Property uses a criterion name with the value of a property."
+                    },
+                    "visibility": "($this.criteriaCount == '4' || $this.criteriaCount == '5')"
+                },
+                {
+                    "name": "criterion4Name",
+                    "label": "Criterion name",
+                    "format": "TEXT",
+                    "placeholder": "Region",
+                    "includeAnnotations": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion4Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Name of the criterion used to publish the message. Names are case-sensitive."
+                    }
+                },
+                {
+                    "name": "criterion4Property",
+                    "label": "Criterion value",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '4' || $this.criteriaCount == '5') && ($this.criterion4Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Property that provides the criterion value. The subscription follows changes to the value and is skipped while the value is empty."
+                    }
+                }
+            ],
+            "visibility": "($this.criteriaCount == '4' || $this.criteriaCount == '5')"
+        },
+        {
+            "label": "Criterion 5",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "criterion5Type",
+                    "label": "Criterion type",
+                    "format": "SELECT",
+                    "defaultValue": "property",
+                    "source": [
+                        {
+                            "key": "case",
+                            "value": "Current case"
+                        },
+                        {
+                            "key": "operator",
+                            "value": "Current operator"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Current case uses the criterion ID with the case key. Current operator uses the criterion userId with the operator ID in lowercase. Property uses a criterion name with the value of a property."
+                    },
+                    "visibility": "($this.criteriaCount == '5')"
+                },
+                {
+                    "name": "criterion5Name",
+                    "label": "Criterion name",
+                    "format": "TEXT",
+                    "placeholder": "Region",
+                    "includeAnnotations": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '5') && ($this.criterion5Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Name of the criterion used to publish the message. Names are case-sensitive."
+                    }
+                },
+                {
+                    "name": "criterion5Property",
+                    "label": "Criterion value",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "($this.criteriaCount == '5') && ($this.criterion5Type == 'property')",
+                    "additionalInfo": {
+                        "content": "Property that provides the criterion value. The subscription follows changes to the value and is skipped while the value is empty."
+                    }
+                }
+            ],
+            "visibility": "($this.criteriaCount == '5')"
+        },
+        {
+            "label": "Notification",
+            "format": "GROUP",
+            "visibility": "$this.action == 'toast' || $this.action == undefined",
+            "properties": [
+                {
+                    "name": "messageSource",
+                    "label": "Message source",
+                    "format": "SELECT",
+                    "defaultValue": "message",
+                    "source": [
+                        {
+                            "key": "message",
+                            "value": "Field of the received message"
+                        },
+                        {
+                            "key": "property",
+                            "value": "Property"
+                        }
+                    ],
+                    "additionalInfo": {
+                        "content": "Where the toast text comes from: a field inside the message received from the messaging service, or the current value of a property."
+                    }
+                },
+                {
+                    "name": "contentField",
+                    "label": "Message text field",
+                    "format": "TEXT",
+                    "defaultValue": "content",
+                    "includeAnnotations": false,
+                    "visibility": "$this.messageSource != 'property'",
+                    "additionalInfo": {
+                        "content": "Field of the message that is displayed as the notification text. Messages without this field are ignored."
+                    }
+                },
+                {
+                    "name": "messageProperty",
+                    "label": "Message text property",
+                    "format": "PROPERTY",
+                    "useAnnotation": false,
+                    "required": true,
+                    "visibility": "$this.messageSource == 'property'",
+                    "additionalInfo": {
+                        "content": "Property whose value is displayed as the notification text when a message is received. Nothing is displayed while the value is empty."
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Conditions",
+            "format": "GROUP",
+            "properties": [
+                {
+                    "name": "visibility",
+                    "label": "Visibility",
+                    "format": "VISIBILITY"
+                }
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 5.0.6, Thu Nov 12 2026, 26.1.1-105720",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "action": "toast",
+        "matcher": "EVENT_LISTENER",
+        "criteriaCount": "1",
+        "criterion1Type": "case",
+        "messageSource": "message",
+        "contentField": "content"
+    },
+    "buildDate": "2026-11-12T21:27:18.890Z",
+    "infinityVersion": "26.1.1-105720",
+    "packageCosmosVersion": "9.25.1-11"
+}
